@@ -1,3 +1,3 @@
-class shy_message_common_logic_touch_prepared
+class shy_common_logic_touch_prepared_message
 {
 } ;

@@ -1,9 +1,9 @@
 class _shy_common_logic_salutation_timer_appear
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_salutation_timer_appear_run ) ;
-    static void receive ( so_called_message_common_logic_salutation_timer_update ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_salutation_timer_appear_run_message ) ;
+    static void receive ( so_called_common_logic_salutation_timer_update_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

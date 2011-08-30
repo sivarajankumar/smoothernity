@@ -170,7 +170,7 @@ void shy_guts :: create_mono_sound ( )
     so_called_platform_sound :: set_source_velocity ( shy_guts :: mono_sound_source , source_vel ) ;    
 }
 
-void _shy_common_logic_sound :: receive ( so_called_message_common_init )
+void _shy_common_logic_sound :: receive ( so_called_common_init_message )
 {
     shy_guts :: mono_sound_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: stereo_sound_created = so_called_platform_math_consts :: whole_false ;
@@ -224,12 +224,12 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_init )
     so_called_platform_sound :: set_listener_orientation ( look_at , up ) ;
 }
 
-void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_prepare_permit )
+void _shy_common_logic_sound :: receive ( so_called_common_logic_sound_prepare_permit_message )
 {
     shy_guts :: sound_prepare_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_update )
+void _shy_common_logic_sound :: receive ( so_called_common_logic_sound_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: sound_prepare_permitted ) )
     {
@@ -253,7 +253,7 @@ void _shy_common_logic_sound :: receive ( so_called_message_common_logic_sound_u
                 {
                     shy_guts :: create_stereo_sound ( ) ;
                     shy_guts :: stereo_sound_created = so_called_platform_math_consts :: whole_true ;
-                    so_called_common_logic_sound_prepared_sender :: send ( so_called_message_common_logic_sound_prepared ( ) ) ;
+                    so_called_common_logic_sound_prepared_sender :: send ( so_called_common_logic_sound_prepared_message ( ) ) ;
                 }
             }
         }

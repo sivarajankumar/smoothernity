@@ -83,14 +83,14 @@ void shy_guts :: render ( )
 
 void shy_guts :: replied_mesh_render ( )
 {
-    so_called_message_common_engine_render_mesh_render msg ;
+    so_called_common_engine_render_mesh_render_message msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
     so_called_common_engine_render_mesh_render_sender :: send ( msg ) ;
 }
 
 void shy_guts :: replied_mesh_transform ( )
 {
-    so_called_message_common_engine_render_mesh_set_transform msg ;
+    so_called_common_engine_render_mesh_set_transform_message msg ;
     msg . mesh = shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . msg_reply . mesh ;
     msg . transform = shy_guts :: logic_salutation_letters_animation_transform_state :: taker . msg_reply . transform ;
     so_called_common_engine_render_mesh_set_transform_sender :: send ( msg ) ;
@@ -123,18 +123,18 @@ void shy_guts :: request_meshes_amount_in_storage ( )
 void shy_guts :: send_render_finished ( )
 {
     so_called_common_logic_salutation_letters_renderer_render_reply_sender :: send
-        ( so_called_message_common_logic_salutation_letters_renderer_render_reply ( )
+        ( so_called_common_logic_salutation_letters_renderer_render_reply_message ( )
         ) ;
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_animation_transform_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_animation_transform_reply msg )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_common_logic_salutation_letters_animation_transform_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_animation_transform_state :: taker . should_handle ( should_handle , msg ) ;
@@ -142,7 +142,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
         shy_guts :: logic_salutation_letters_animation_transform_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_mesh_reply msg )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_common_logic_salutation_letters_meshes_storage_mesh_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: taker . should_handle ( should_handle , msg ) ;
@@ -150,7 +150,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
         shy_guts :: logic_salutation_letters_meshes_storage_mesh_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_meshes_storage_size_reply msg )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_common_logic_salutation_letters_meshes_storage_size_reply_message msg )
 {
     so_called_type_platform_math_num_whole should_handle ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . should_handle ( should_handle , msg ) ;
@@ -158,7 +158,7 @@ void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_messag
         shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_message_common_logic_salutation_letters_renderer_render_request )
+void _shy_common_logic_salutation_letters_renderer :: receive ( so_called_common_logic_salutation_letters_renderer_render_request_message )
 {
     shy_guts :: logic_salutation_letters_renderer_render_state :: on_request ( ) ;
 }

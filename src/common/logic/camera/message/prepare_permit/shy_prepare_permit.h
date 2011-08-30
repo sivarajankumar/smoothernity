@@ -1,3 +1,3 @@
-class shy_message_common_logic_camera_prepare_permit
+class shy_common_logic_camera_prepare_permit_message
 {
 } ;

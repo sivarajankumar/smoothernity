@@ -1,9 +1,9 @@
 class _shy_common_logic_salutation_animation
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_salutation_animation_transform_request ) ;
-    static void receive ( so_called_message_common_logic_salutation_animation_zoom_transform_reply ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_salutation_animation_transform_request_message ) ;
+    static void receive ( so_called_common_logic_salutation_animation_zoom_transform_reply_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

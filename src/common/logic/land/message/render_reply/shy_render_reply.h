@@ -1,3 +1,3 @@
-class shy_message_common_logic_land_render_reply
+class shy_common_logic_land_render_reply_message
 {
 } ;

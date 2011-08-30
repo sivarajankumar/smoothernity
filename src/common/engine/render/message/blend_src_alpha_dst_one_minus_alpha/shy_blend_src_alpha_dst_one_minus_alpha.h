@@ -1,3 +1,3 @@
-class shy_message_common_engine_render_blend_src_alpha_dst_one_minus_alpha
+class shy_common_engine_render_blend_src_alpha_dst_one_minus_alpha_message
 {
 } ;

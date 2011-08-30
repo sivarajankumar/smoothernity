@@ -1,3 +1,3 @@
-class shy_message_common_engine_render_blend_disable
+class shy_common_engine_render_blend_disable_message
 {
 } ;

@@ -10,22 +10,22 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter )
 {
-    so_called_message_common_logic_main_menu_letters_letter_add msg ;
+    so_called_common_logic_main_menu_letters_letter_add_message msg ;
     msg . letter = letter ;
     so_called_common_logic_main_menu_letters_letter_add_sender :: send ( msg ) ;
 }
 
 void shy_guts :: next_row ( )
 {
-    so_called_common_logic_main_menu_letters_next_row_sender :: send ( so_called_message_common_logic_main_menu_letters_next_row ( ) ) ;
+    so_called_common_logic_main_menu_letters_next_row_sender :: send ( so_called_common_logic_main_menu_letters_next_row_message ( ) ) ;
 }
 
 void shy_guts :: text_create_finished ( )
 {
-    so_called_common_logic_main_menu_letters_create_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_create_finished ( ) ) ;
+    so_called_common_logic_main_menu_letters_create_finished_sender :: send ( so_called_common_logic_main_menu_letters_create_finished_message ( ) ) ;
 }
 
-void _shy_common_logic_main_menu_letters_creation_director :: receive ( so_called_message_common_logic_main_menu_letters_create )
+void _shy_common_logic_main_menu_letters_creation_director :: receive ( so_called_common_logic_main_menu_letters_create_message )
 {
     typedef so_called_common_logic_text_consts :: alphabet_english eng ;
     so_called_type_common_logic_text_letter_id whitespace = so_called_common_logic_text_consts :: whitespace ;

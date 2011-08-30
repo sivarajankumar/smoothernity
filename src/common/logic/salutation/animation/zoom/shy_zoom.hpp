@@ -25,17 +25,17 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: send_transform ( )
 {
-    so_called_message_common_logic_salutation_animation_zoom_transform_reply msg ;
+    so_called_common_logic_salutation_animation_zoom_transform_reply_message msg ;
     msg . scale = shy_guts :: scale ;
     so_called_common_logic_salutation_animation_zoom_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_init_message )
 {
     shy_guts :: enabled = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_logic_salutation_animation_update )
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: enabled ) )
     {
@@ -45,13 +45,13 @@ void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_
     }
 }
 
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_logic_salutation_animation_zoom_play )
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_play_message )
 {
     shy_guts :: enabled = so_called_platform_math_consts :: whole_true ;
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_message_common_logic_salutation_animation_zoom_transform_request )
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_transform_request_message )
 {
     shy_guts :: compute_transform ( ) ;
     shy_guts :: send_transform ( ) ;

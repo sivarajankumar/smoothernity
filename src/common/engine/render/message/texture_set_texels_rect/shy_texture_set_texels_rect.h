@@ -1,4 +1,4 @@
-class shy_message_common_engine_render_texture_set_texels_rect
+class shy_common_engine_render_texture_set_texels_rect_message
 {
 public :
     so_called_type_common_engine_render_texture_id texture ;

@@ -1,3 +1,3 @@
-class shy_message_common_logic_fidget_prepare_permit
+class shy_common_logic_fidget_prepare_permit_message
 {
 } ;

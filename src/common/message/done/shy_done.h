@@ -1,3 +1,3 @@
-class shy_message_common_done
+class shy_common_done_message
 {
 } ;

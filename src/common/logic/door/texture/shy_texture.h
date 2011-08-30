@@ -1,11 +1,11 @@
 class _shy_common_logic_door_texture
 {
 public :
-    static void receive ( so_called_message_common_engine_rasterizer_finalize_reply ) ;
-    static void receive ( so_called_message_common_engine_render_texture_create_reply ) ;
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_door_texture_create ) ;
-    static void receive ( so_called_message_common_logic_door_texture_select_request ) ;
+    static void receive ( so_called_common_engine_rasterizer_finalize_reply_message ) ;
+    static void receive ( so_called_common_engine_render_texture_create_reply_message ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_door_texture_create_message ) ;
+    static void receive ( so_called_common_logic_door_texture_select_request_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

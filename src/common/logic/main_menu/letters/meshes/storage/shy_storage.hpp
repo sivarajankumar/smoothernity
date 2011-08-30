@@ -23,19 +23,19 @@ namespace shy_guts
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_main_menu_letters_meshes_storage > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_init_message )
 {
     shy_guts :: meshes_count = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_count_request )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_logic_main_menu_letters_meshes_count_request_message )
 {
-    so_called_message_common_logic_main_menu_letters_meshes_count_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_meshes_count_reply_message reply_msg ;
     reply_msg . meshes = shy_guts :: meshes_count ;
     so_called_common_logic_main_menu_letters_meshes_count_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_iterate_start )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_logic_main_menu_letters_meshes_iterate_start_message )
 {
     for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: meshes_count )
@@ -45,16 +45,16 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
         so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
         so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , i ) ;
         
-        so_called_message_common_logic_main_menu_letters_meshes_iteration iteration_msg ;
+        so_called_common_logic_main_menu_letters_meshes_iteration_message iteration_msg ;
         iteration_msg . row = mesh_state . get ( ) . row ;
         iteration_msg . col = mesh_state . get ( ) . col ;
         iteration_msg . mesh = mesh_state . get ( ) . mesh ;
         so_called_common_logic_main_menu_letters_meshes_iteration_sender :: send ( iteration_msg ) ;
     }
-    so_called_common_logic_main_menu_letters_meshes_iterate_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_meshes_iterate_finished ( ) ) ;
+    so_called_common_logic_main_menu_letters_meshes_iterate_finished_sender :: send ( so_called_common_logic_main_menu_letters_meshes_iterate_finished_message ( ) ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_has_been_created msg )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_logic_main_menu_letters_meshes_mesh_has_been_created_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
     so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , shy_guts :: meshes_count ) ;
@@ -64,23 +64,23 @@ void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_m
     so_called_platform_math :: inc_whole ( shy_guts :: meshes_count ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_id_request msg )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_logic_main_menu_letters_meshes_mesh_id_request_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
     so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , msg . index ) ;
     
-    so_called_message_common_logic_main_menu_letters_meshes_mesh_id_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_id_reply_message reply_msg ;
     reply_msg . index = msg . index ;
     reply_msg . mesh = mesh_state . get ( ) . mesh ;
     so_called_common_logic_main_menu_letters_meshes_mesh_id_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_request msg )
+void _shy_common_logic_main_menu_letters_meshes_storage :: receive ( so_called_common_logic_main_menu_letters_meshes_mesh_row_col_request_message msg )
 {
     so_called_type_platform_pointer_data < shy_guts :: mesh_state > mesh_state ;
     so_called_platform_static_array :: element_ptr ( mesh_state , shy_guts :: meshes , msg . index ) ;
 
-    so_called_message_common_logic_main_menu_letters_meshes_mesh_row_col_reply reply_msg ;
+    so_called_common_logic_main_menu_letters_meshes_mesh_row_col_reply_message reply_msg ;
     reply_msg . index = msg . index ;
     reply_msg . row = mesh_state . get ( ) . row ;
     reply_msg . col = mesh_state . get ( ) . col ;

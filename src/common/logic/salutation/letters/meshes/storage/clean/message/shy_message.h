@@ -1,3 +1,3 @@
-class shy_message_common_logic_salutation_letters_meshes_storage_clean
+class shy_common_logic_salutation_letters_meshes_storage_clean_message
 {
 } ;

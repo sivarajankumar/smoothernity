@@ -1,3 +1,3 @@
-class shy_message_common_logic_vacuum_update
+class shy_common_logic_vacuum_update_message
 {
 } ;

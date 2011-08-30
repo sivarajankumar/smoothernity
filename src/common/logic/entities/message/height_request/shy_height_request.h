@@ -1,3 +1,3 @@
-class shy_message_common_logic_entities_height_request
+class shy_common_logic_entities_height_request_message
 {
 } ;

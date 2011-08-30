@@ -1,11 +1,11 @@
 class _shy_common_logic_salutation_letters_meshes_generator
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_meshes_generator_generate ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_meshes_generator_update ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_meshes_creator_create_reply ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_text_storage_size_reply ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_meshes_generator_generate_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_meshes_generator_update_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_meshes_creator_create_reply_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_text_storage_size_reply_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

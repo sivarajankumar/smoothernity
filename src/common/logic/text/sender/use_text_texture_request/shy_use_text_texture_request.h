@@ -1,5 +1,5 @@
 class shy_common_logic_text_use_text_texture_request_sender
 {
 public :
-    static void send ( so_called_message_common_logic_text_use_text_texture_request ) ;
+    static void send ( so_called_common_logic_text_use_text_texture_request_message ) ;
 } ;

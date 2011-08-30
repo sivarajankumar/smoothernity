@@ -48,7 +48,7 @@ void shy_guts :: obtain_row_rect ( )
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: selected_row_index ;
 
-    so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg ;
+    so_called_common_logic_main_menu_letters_layout_row_rect_request_message msg ;
     msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
     so_called_common_logic_main_menu_letters_layout_row_rect_request_sender :: send ( msg ) ;
 }
@@ -64,7 +64,7 @@ void shy_guts :: received_row_rect ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_main_menu_selection_animation_idle_transform_reply reply_msg ;
+    so_called_common_logic_main_menu_selection_animation_idle_transform_reply_message reply_msg ;
     reply_msg . position = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: position ;
     reply_msg . scale_x = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_x ;
     reply_msg . scale_y = shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y ;
@@ -123,14 +123,14 @@ void shy_guts :: compute_empty_mesh_transform ( )
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: scale_y = zero ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_common_logic_main_menu_letters_layout_row_rect_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row , msg . row )
@@ -143,19 +143,19 @@ void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called
     }
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_row_selected msg )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_common_logic_main_menu_selection_animation_idle_row_selected_message msg )
 {
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: row_is_selected = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: selected_row_index = msg . row ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_transform_request )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_common_logic_main_menu_selection_animation_idle_transform_request_message )
 {
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_message_common_logic_main_menu_selection_animation_idle_void_selected )
+void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called_common_logic_main_menu_selection_animation_idle_void_selected_message )
 {
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: row_is_selected = so_called_platform_math_consts :: whole_false ;
 }

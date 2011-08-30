@@ -110,7 +110,7 @@ void shy_guts :: compute_transform ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_main_menu_letters_animation_disappear_transform_reply msg ;
+    so_called_common_logic_main_menu_letters_animation_disappear_transform_reply_message msg ;
     msg . row = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: row ;
     msg . col = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: col ;
     msg . scale = shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: scale ;
@@ -129,28 +129,28 @@ void shy_guts :: update_request_received ( )
     if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: logic_main_menu_update_state :: time , animation_time ) )
     {
         shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_false ;
-        so_called_common_logic_main_menu_letters_animation_disappear_finished_sender :: send ( so_called_message_common_logic_main_menu_letters_animation_disappear_finished ( ) ) ;
+        so_called_common_logic_main_menu_letters_animation_disappear_finished_sender :: send ( so_called_common_logic_main_menu_letters_animation_disappear_finished_message ( ) ) ;
     }
 }
 
-void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_launch_permit )
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_common_logic_main_menu_launch_permit_message )
 {
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_start )
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_common_logic_main_menu_letters_animation_disappear_start_message )
 {
     shy_guts :: logic_main_menu_update_state :: started = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_letters_animation_disappear_transform_request msg )
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_common_logic_main_menu_letters_animation_disappear_transform_request_message msg )
 {
     shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_letters_animation_disappear_transform_state :: row = msg . row ;
@@ -158,7 +158,7 @@ void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_cal
     shy_guts :: proceed_with_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_letters_animation_disappear :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: started ) )
         shy_guts :: update_request_received ( ) ;

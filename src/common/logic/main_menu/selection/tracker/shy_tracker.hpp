@@ -82,7 +82,7 @@ void shy_guts :: proceed_with_track ( )
 void shy_guts :: obtain_controls_state ( )
 {
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_controls_state_request_sender :: send ( so_called_message_common_logic_controls_state_request ( ) ) ;
+    so_called_common_logic_controls_state_request_sender :: send ( so_called_common_logic_controls_state_request_message ( ) ) ;
 }
 
 void shy_guts :: controls_state_received ( )
@@ -102,7 +102,7 @@ void shy_guts :: controls_state_received ( )
 void shy_guts :: obtain_rows_count ( )
 {
     shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_logic_main_menu_letters_rows_request_sender :: send ( so_called_message_common_logic_main_menu_letters_rows_request ( ) ) ;
+    so_called_common_logic_main_menu_letters_rows_request_sender :: send ( so_called_common_logic_main_menu_letters_rows_request_message ( ) ) ;
 }
 
 void shy_guts :: obtain_first_row_rect ( )
@@ -116,7 +116,7 @@ void shy_guts :: obtain_current_row_rect ( )
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
 
-    so_called_message_common_logic_main_menu_letters_layout_row_rect_request msg ;
+    so_called_common_logic_main_menu_letters_layout_row_rect_request_message msg ;
     msg . row = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row ;
     so_called_common_logic_main_menu_letters_layout_row_rect_request_sender :: send ( msg ) ;
 }
@@ -241,7 +241,7 @@ void shy_guts :: send_row_selected ( )
         shy_guts :: logic_main_menu_selection_track_state :: prev_selected_row_index = prev_selected_row_index ;
         shy_guts :: logic_main_menu_selection_track_state :: prev_selection_rect = row_rect ;
 
-        so_called_message_common_logic_main_menu_selection_track_row_selected msg ;
+        so_called_common_logic_main_menu_selection_track_row_selected_message msg ;
         msg . row = shy_guts :: logic_main_menu_selection_track_state :: current_row ;
         so_called_common_logic_main_menu_selection_track_row_selected_sender :: send ( msg ) ;        
     }
@@ -252,16 +252,16 @@ void shy_guts :: send_void_selected ( )
     if ( ! so_called_platform_conditions :: whole_is_false ( shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected ) )
     {
         shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected = so_called_platform_math_consts :: whole_false ;
-        so_called_common_logic_main_menu_selection_track_void_selected_sender :: send ( so_called_message_common_logic_main_menu_selection_track_void_selected ( ) ) ;
+        so_called_common_logic_main_menu_selection_track_void_selected_sender :: send ( so_called_common_logic_main_menu_selection_track_void_selected_message ( ) ) ;
     }
 }
 
 void shy_guts :: send_reply ( )
 {
-    so_called_common_logic_main_menu_selection_track_reply_sender :: send ( so_called_message_common_logic_main_menu_selection_track_reply ( ) ) ;
+    so_called_common_logic_main_menu_selection_track_reply_sender :: send ( so_called_common_logic_main_menu_selection_track_reply_message ( ) ) ;
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_controls_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_controls_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -272,7 +272,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
     shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_controls_state_reply msg )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common_logic_controls_state_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_controls_state :: requested ) )
     {
@@ -284,7 +284,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
     }
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_letters_layout_row_rect_reply msg )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common_logic_main_menu_letters_layout_row_rect_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested )
       && so_called_platform_conditions :: wholes_are_equal ( shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested_row , msg . row )
@@ -297,7 +297,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
     }
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_letters_rows_reply msg )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common_logic_main_menu_letters_rows_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_rows_state :: requested ) )
     {
@@ -308,7 +308,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_messag
     }
 }
 
-void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_message_common_logic_main_menu_selection_track_request )
+void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common_logic_main_menu_selection_track_request_message )
 {
     shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_track ( ) ;

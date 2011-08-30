@@ -68,32 +68,32 @@ void shy_guts :: compute_rotation ( )
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_blanket_animation_disappear_transform_reply msg ;
+    so_called_common_logic_blanket_animation_disappear_transform_reply_message msg ;
     msg . scale = shy_guts :: logic_blanket_animation_disappear_transform_state :: scale ;
     msg . rotation = shy_guts :: logic_blanket_animation_disappear_transform_state :: rotation ;
     so_called_common_logic_blanket_animation_disappear_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_init )
+void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_blanket_update_state :: started = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_blanket_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_logic_blanket_animation_disappear_start )
+void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_common_logic_blanket_animation_disappear_start_message )
 {
     shy_guts :: logic_blanket_update_state :: started = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_blanket_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_logic_blanket_animation_disappear_transform_request )
+void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_common_logic_blanket_animation_disappear_transform_request_message )
 {
     shy_guts :: compute_scale ( ) ;
     shy_guts :: compute_rotation ( ) ;
     shy_guts :: reply_transform ( ) ;
 }
 
-void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_message_common_logic_blanket_update )
+void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_common_logic_blanket_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_blanket_update_state :: started ) )
     {
@@ -112,7 +112,7 @@ void _shy_common_logic_blanket_animation_disappear :: receive ( so_called_messag
         if ( so_called_platform_conditions :: fract_greater_than_fract ( time , time_from_begin_to_end ) )
         {
             started = so_called_platform_math_consts :: whole_false ;
-            so_called_common_logic_blanket_animation_disappear_finished_sender :: send ( so_called_message_common_logic_blanket_animation_disappear_finished ( ) ) ;
+            so_called_common_logic_blanket_animation_disappear_finished_sender :: send ( so_called_common_logic_blanket_animation_disappear_finished_message ( ) ) ;
         }
 
         shy_guts :: logic_blanket_update_state :: time = time ;

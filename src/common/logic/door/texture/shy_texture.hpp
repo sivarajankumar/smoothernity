@@ -62,7 +62,7 @@ void shy_guts :: proceed_with_creation ( )
 void shy_guts :: request_texture_create ( )
 {
     shy_guts :: engine_render_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_render_texture_create_request_sender :: send ( so_called_message_common_engine_render_texture_create_request ( ) ) ;
+    so_called_common_engine_render_texture_create_request_sender :: send ( so_called_common_engine_render_texture_create_request_message ( ) ) ;
 }
 
 void shy_guts :: texture_created ( )
@@ -105,7 +105,7 @@ void shy_guts :: fill_texture_contents ( )
     texture_height = so_called_common_engine_render_consts :: texture_height ;
     texture = shy_guts :: engine_render_texture_create_state :: texture ;
 
-    so_called_message_common_engine_rasterizer_use_texture texture_msg ;
+    so_called_common_engine_rasterizer_use_texture_message texture_msg ;
     texture_msg . texture = texture ;
     texture_msg . origin_x = so_called_platform_math_consts :: whole_0 ;
     texture_msg . origin_y = so_called_platform_math_consts :: whole_0 ;
@@ -153,20 +153,20 @@ void shy_guts :: fill_texture_contents ( )
 
 void shy_guts :: finalize_texture ( )
 {
-    so_called_message_common_engine_render_texture_finalize msg ;
+    so_called_common_engine_render_texture_finalize_message msg ;
     msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
     so_called_common_engine_render_texture_finalize_sender :: send ( msg ) ;
 }
 
 void shy_guts :: reply_door_texture_created ( )
 {
-    so_called_common_logic_door_texture_creation_finished_sender :: send ( so_called_message_common_logic_door_texture_creation_finished ( ) ) ;
+    so_called_common_logic_door_texture_creation_finished_sender :: send ( so_called_common_logic_door_texture_creation_finished_message ( ) ) ;
 }
 
 void shy_guts :: request_rasterizer_finalize ( )
 {
     shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_rasterizer_finalize_request_sender :: send ( so_called_message_common_engine_rasterizer_finalize_request ( ) ) ;
+    so_called_common_engine_rasterizer_finalize_request_sender :: send ( so_called_common_engine_rasterizer_finalize_request_message ( ) ) ;
 }
 
 void shy_guts :: rasterizer_finalized ( )
@@ -177,7 +177,7 @@ void shy_guts :: rasterizer_finalized ( )
 
 void shy_guts :: use_texel ( so_called_type_platform_render_texel_data texel )
 {
-    so_called_message_common_engine_rasterizer_use_texel msg ;
+    so_called_common_engine_rasterizer_use_texel_message msg ;
     msg . texel = texel ;
     so_called_common_engine_rasterizer_use_texel_sender :: send ( msg ) ;
 }
@@ -189,7 +189,7 @@ void shy_guts :: draw_rect
     , so_called_type_platform_math_num_whole y2 
     )
 {
-    so_called_message_common_engine_rasterizer_draw_rect msg ;
+    so_called_common_engine_rasterizer_draw_rect_message msg ;
     msg . x1 = x1 ;
     msg . y1 = y1 ;
     msg . x2 = x2 ;
@@ -197,7 +197,7 @@ void shy_guts :: draw_rect
     so_called_common_engine_rasterizer_draw_rect_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine_rasterizer_finalize_reply )
+void _shy_common_logic_door_texture :: receive ( so_called_common_engine_rasterizer_finalize_reply_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_rasterizer_finalize_state :: requested ) )
     {
@@ -207,7 +207,7 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine
     }
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine_render_texture_create_reply msg )
+void _shy_common_logic_door_texture :: receive ( so_called_common_engine_render_texture_create_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_texture_create_state :: requested ) )
     {
@@ -218,7 +218,7 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_engine
     }
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_init )
+void _shy_common_logic_door_texture :: receive ( so_called_common_init_message )
 {
     shy_guts :: engine_rasterizer_finalize_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: engine_rasterizer_finalize_state :: requested = so_called_platform_math_consts :: whole_false ;
@@ -227,18 +227,18 @@ void _shy_common_logic_door_texture :: receive ( so_called_message_common_init )
     shy_guts :: logic_door_texture_create_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_create )
+void _shy_common_logic_door_texture :: receive ( so_called_common_logic_door_texture_create_message )
 {
     shy_guts :: logic_door_texture_create_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_creation ( ) ;
 }
 
-void _shy_common_logic_door_texture :: receive ( so_called_message_common_logic_door_texture_select_request )
+void _shy_common_logic_door_texture :: receive ( so_called_common_logic_door_texture_select_request_message )
 {
-    so_called_message_common_engine_render_texture_select msg ;
+    so_called_common_engine_render_texture_select_message msg ;
     msg . texture = shy_guts :: engine_render_texture_create_state :: texture ;
     so_called_common_engine_render_texture_select_sender :: send ( msg ) ;
-    so_called_common_logic_door_texture_select_reply_sender :: send ( so_called_message_common_logic_door_texture_select_reply ( ) ) ;
+    so_called_common_logic_door_texture_select_reply_sender :: send ( so_called_common_logic_door_texture_select_reply_message ( ) ) ;
 }
 
 void _shy_common_logic_door_texture :: register_in_scheduler ( )

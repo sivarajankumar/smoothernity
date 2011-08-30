@@ -1,8 +1,8 @@
-#ifndef _shy_message_common_logic_entities_prepared_injections_included
-#define _shy_message_common_logic_entities_prepared_injections_included
+#ifndef _shy_common_logic_entities_prepared_message_injections_included
+#define _shy_common_logic_entities_prepared_message_injections_included
 
 #include "./shy_prepared.h"
 
-typedef shy_message_common_logic_entities_prepared so_called_message_common_logic_entities_prepared ;
+typedef shy_common_logic_entities_prepared_message so_called_common_logic_entities_prepared_message ;
 
 #endif

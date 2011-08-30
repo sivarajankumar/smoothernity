@@ -1,4 +1,4 @@
-class shy_message_common_logic_salutation_letters_text_storage_letter_reply
+class shy_common_logic_salutation_letters_text_storage_letter_reply_message
 {
 public :
     so_called_type_common_logic_text_letter_id letter_id ;

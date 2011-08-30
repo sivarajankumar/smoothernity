@@ -1,4 +1,4 @@
-void shy_common_logic_main_menu_update_sender :: send ( so_called_message_common_logic_main_menu_update msg )
+void shy_common_logic_main_menu_update_sender :: send ( so_called_common_logic_main_menu_update_message msg )
 {
     so_called_common_logic_main_menu :: receive ( msg ) ;
     so_called_common_logic_main_menu_animation_shake :: receive ( msg ) ;

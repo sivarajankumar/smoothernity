@@ -1,11 +1,11 @@
 class _shy_common_logic_salutation_letters_text_storage
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_text_storage_add_letter ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_text_storage_clean ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_text_storage_letter_request ) ;
-    static void receive ( so_called_message_common_logic_salutation_letters_text_storage_size_request ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_text_storage_add_letter_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_text_storage_clean_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_text_storage_letter_request_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_text_storage_size_request_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

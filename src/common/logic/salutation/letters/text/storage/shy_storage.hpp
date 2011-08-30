@@ -54,12 +54,12 @@ void shy_guts :: trace_entry_index_is_out_of_range_error ( so_called_type_platfo
     }
 }
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_init )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_common_init_message )
 {
     shy_guts :: entries_count = so_called_platform_math_consts :: whole_0 ;
 }
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_add_letter msg )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_common_logic_salutation_letters_text_storage_add_letter_message msg )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: entries_count , so_called_common_logic_salutation_letters_consts :: max_letters ) )
     {
@@ -73,13 +73,13 @@ void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_me
         shy_guts :: trace_entries_overflow_error ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_clean )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_common_logic_salutation_letters_text_storage_clean_message )
 {
     shy_guts :: entries_count = so_called_platform_math_consts :: whole_0 ;
     shy_guts :: trace_entries_in_use ( ) ;
 }
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_letter_request msg )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_common_logic_salutation_letters_text_storage_letter_request_message msg )
 {
     so_called_type_common_logic_text_letter_id letter_id ;
     if ( so_called_platform_conditions :: whole_less_than_whole ( msg . letter_index , shy_guts :: entries_count ) )
@@ -94,15 +94,15 @@ void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_me
         shy_guts :: trace_entry_index_is_out_of_range_error ( msg . letter_index ) ;
     }
 
-    so_called_message_common_logic_salutation_letters_text_storage_letter_reply reply_msg ;
+    so_called_common_logic_salutation_letters_text_storage_letter_reply_message reply_msg ;
     reply_msg . letter_index = msg . letter_index ;
     reply_msg . letter_id = letter_id ;
     so_called_common_logic_salutation_letters_text_storage_letter_reply_sender :: send ( reply_msg ) ;
 }
 
-void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_message_common_logic_salutation_letters_text_storage_size_request )
+void _shy_common_logic_salutation_letters_text_storage :: receive ( so_called_common_logic_salutation_letters_text_storage_size_request_message )
 {
-    so_called_message_common_logic_salutation_letters_text_storage_size_reply msg ;
+    so_called_common_logic_salutation_letters_text_storage_size_reply_message msg ;
     msg . size = shy_guts :: entries_count ;
     so_called_common_logic_salutation_letters_text_storage_size_reply_sender :: send ( msg ) ;
 }

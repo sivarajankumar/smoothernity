@@ -28,7 +28,7 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: reply_transform ( )
 {
-    so_called_message_common_logic_main_menu_selection_animation_push_attention_transform_reply msg ;
+    so_called_common_logic_main_menu_selection_animation_push_attention_transform_reply_message msg ;
     msg . scale_x = shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: horizontal_scale ;
     msg . scale_y = shy_guts :: logic_main_menu_selection_animation_push_attention_transform_state :: vertical_scale ;
     so_called_common_logic_main_menu_selection_animation_push_attention_transform_reply_sender :: send ( msg ) ;
@@ -82,26 +82,26 @@ void shy_guts :: compute_animation_scale
     so_called_platform_math :: add_to_fract ( scale , offset ) ;        
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
     shy_guts :: logic_main_menu_update_state :: update_permitted = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_launch_permit )
+void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_common_logic_main_menu_launch_permit_message )
 {
     shy_guts :: logic_main_menu_update_state :: update_permitted = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_selection_animation_push_attention_transform_request )
+void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_common_logic_main_menu_selection_animation_push_attention_transform_request_message )
 {
     shy_guts :: compute_horizontal_scale ( ) ;
     shy_guts :: compute_vertical_scale ( ) ;
     shy_guts :: reply_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_selection_animation_push_attention :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: update_permitted ) )
     {

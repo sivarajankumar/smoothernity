@@ -1,9 +1,9 @@
 class _shy_common_logic_vacuum
 {
 public :
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_vacuum_render ) ;
-    static void receive ( so_called_message_common_logic_vacuum_update ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_vacuum_render_message ) ;
+    static void receive ( so_called_common_logic_vacuum_update_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

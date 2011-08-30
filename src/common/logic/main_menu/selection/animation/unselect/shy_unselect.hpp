@@ -75,25 +75,25 @@ void shy_guts :: compute_identity_scale ( )
 
 void shy_guts :: reply_computed_transform ( )
 {
-    so_called_message_common_logic_main_menu_selection_animation_unselect_transform_reply msg ;
+    so_called_common_logic_main_menu_selection_animation_unselect_transform_reply_message msg ;
     msg . scale_x = shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: horizontal_scale ;
     msg . scale_y = shy_guts :: logic_main_menu_selection_animation_unselect_transform_state :: vertical_scale ;
     so_called_common_logic_main_menu_selection_animation_unselect_transform_reply_sender :: send ( msg ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_init )
+void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_logic_main_menu_selection_animation_unselect_start )
+void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_common_logic_main_menu_selection_animation_unselect_start_message )
 {
     shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_true ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_logic_main_menu_selection_animation_unselect_transform_request )
+void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_common_logic_main_menu_selection_animation_unselect_transform_request_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: select_started ) )
     {
@@ -105,7 +105,7 @@ void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_ca
     shy_guts :: reply_computed_transform ( ) ;
 }
 
-void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_message_common_logic_main_menu_update )
+void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_called_common_logic_main_menu_update_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: select_started ) )
     {
@@ -122,7 +122,7 @@ void _shy_common_logic_main_menu_selection_animation_unselect :: receive ( so_ca
         if ( so_called_platform_conditions :: fract_greater_than_fract ( time , total_animation_time ) )
         {
             shy_guts :: logic_main_menu_update_state :: select_started = so_called_platform_math_consts :: whole_false ;
-            so_called_common_logic_main_menu_selection_animation_unselect_finished_sender :: send ( so_called_message_common_logic_main_menu_selection_animation_unselect_finished ( ) ) ;
+            so_called_common_logic_main_menu_selection_animation_unselect_finished_sender :: send ( so_called_common_logic_main_menu_selection_animation_unselect_finished_message ( ) ) ;
         }
 
         shy_guts :: logic_main_menu_update_state :: time = time ;

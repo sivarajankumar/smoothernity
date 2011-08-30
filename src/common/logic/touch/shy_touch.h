@@ -1,11 +1,11 @@
 class _shy_common_logic_touch
 {
 public :
-    static void receive ( so_called_message_common_engine_render_mesh_create_reply ) ;
-    static void receive ( so_called_message_common_init ) ;
-    static void receive ( so_called_message_common_logic_touch_prepare_permit ) ;
-    static void receive ( so_called_message_common_logic_touch_render ) ;
-    static void receive ( so_called_message_common_logic_touch_update ) ;
+    static void receive ( so_called_common_engine_render_mesh_create_reply_message ) ;
+    static void receive ( so_called_common_init_message ) ;
+    static void receive ( so_called_common_logic_touch_prepare_permit_message ) ;
+    static void receive ( so_called_common_logic_touch_render_message ) ;
+    static void receive ( so_called_common_logic_touch_update_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

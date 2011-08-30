@@ -51,7 +51,7 @@ void shy_guts :: proceed_with_planes ( )
 void shy_guts :: request_aspect ( )
 {
     shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_render_aspect_request_sender :: send ( so_called_message_common_engine_render_aspect_request ( ) ) ;
+    so_called_common_engine_render_aspect_request_sender :: send ( so_called_common_engine_render_aspect_request_message ( ) ) ;
 }
 
 void shy_guts :: compute_x_left ( )
@@ -114,7 +114,7 @@ void shy_guts :: compute_z_far ( )
 
 void shy_guts :: reply_planes ( )
 {
-    so_called_message_common_logic_ortho_planes_reply msg ;
+    so_called_common_logic_ortho_planes_reply_message msg ;
     msg . x_left = shy_guts :: logic_ortho_planes_state :: x_left ;
     msg . x_right = shy_guts :: logic_ortho_planes_state :: x_right ;
     msg . y_bottom = shy_guts :: logic_ortho_planes_state :: y_bottom ;
@@ -135,7 +135,7 @@ void shy_guts :: reply_computed_planes ( )
     shy_guts :: reply_planes ( ) ;
 }
 
-void _shy_common_logic_ortho :: receive ( so_called_message_common_engine_render_aspect_reply msg )
+void _shy_common_logic_ortho :: receive ( so_called_common_engine_render_aspect_reply_message msg )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: engine_render_aspect_state :: requested ) )
     {
@@ -147,14 +147,14 @@ void _shy_common_logic_ortho :: receive ( so_called_message_common_engine_render
     }
 }
 
-void _shy_common_logic_ortho :: receive ( so_called_message_common_init )
+void _shy_common_logic_ortho :: receive ( so_called_common_init_message )
 {
     shy_guts :: engine_render_aspect_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: engine_render_aspect_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 
-void _shy_common_logic_ortho :: receive ( so_called_message_common_logic_ortho_planes_request )
+void _shy_common_logic_ortho :: receive ( so_called_common_logic_ortho_planes_request_message )
 {
     shy_guts :: logic_ortho_planes_state :: requested = so_called_platform_math_consts :: whole_true ;
     shy_guts :: proceed_with_planes ( ) ;
