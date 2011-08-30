@@ -14,7 +14,7 @@ namespace shy_guts
 
     namespace logic_salutation_animation_zoom_transform_state
     {
-        static so_called_common_engine_taker_helper_new ( logic_salutation_animation_zoom_transform ) taker ;
+        static so_called_common_engine_taker_helper ( logic_salutation_animation_zoom_transform ) taker ;
         static void on_reply ( ) ;
     }
 
