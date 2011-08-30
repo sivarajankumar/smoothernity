@@ -2,7 +2,7 @@
 #define _shy_win_lib_std_new_injections_included 
 
 #ifdef shy_build_with_stl
-    #include "../../../../../lib/std/new/shy_new_injections.h"
+    #include "lib/std/new/shy_new_injections.h"
 #endif
 
 #endif

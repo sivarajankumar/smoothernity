@@ -1,10 +1,10 @@
 #include "./shy_macosx_scene.h"
-#include "../../facade/shy_facade_injections.h"
-#include "../../injections/lib/std/true/shy_true.h"
-#include "../../injections/lib/std/false/shy_false.h"
-#include "../../injections/platform/mouse/insider/shy_insider.h"
-#include "../../injections/platform/render/insider/shy_insider.h"
-#include "../../injections/platform/trace/insider/shy_insider.h"
+#include "facade/shy_facade_injections.h"
+#include "injections/lib/std/true/shy_true.h"
+#include "injections/lib/std/false/shy_false.h"
+#include "injections/platform/mouse/insider/shy_insider.h"
+#include "injections/platform/render/insider/shy_insider.h"
+#include "injections/platform/trace/insider/shy_insider.h"
 
 @implementation shy_macosx_scene
 

@@ -1,6 +1,6 @@
 #ifndef _shy_type_iphone_platform_pointer_data_injections_included
 #define _shy_type_iphone_platform_pointer_data_injections_included
 
-#include "../../../../../../platform/pointer/type/data/shy_data_injections.h"
+#include "platform/pointer/type/data/shy_data_injections.h"
 
 #endif
