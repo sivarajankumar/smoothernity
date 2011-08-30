@@ -1,7 +1,7 @@
 #ifndef _shy_type_loadable_fsm_content_system_container_injections_included
 #define _shy_type_loadable_fsm_content_system_container_injections_included
 
-#include "../system/shy_system_injections.h"
+#include "loadable/fsm/content/type/system/shy_system_injections.h"
 
 #include "./shy_system_container.h"
 
