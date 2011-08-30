@@ -1,1 +1,1 @@
-typedef so_called_lib_std_map < so_called_lib_std_string , so_called_type_loadable_fsm_content_machine > shy_type_loadable_fsm_content_machine_container ;
+typedef so_called_lib_std_map < so_called_lib_std_string , so_called_loadable_fsm_content_machine_type > shy_loadable_fsm_content_machine_container_type ;

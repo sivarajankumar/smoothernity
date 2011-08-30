@@ -159,7 +159,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_common_init_me
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_ortho_planes_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_ortho_planes_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_ortho_planes_state :: on_reply ( ) ;
@@ -167,7 +167,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_o
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_salutation_animation_transform_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_animation_transform_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_animation_transform_state :: on_reply ( ) ;
@@ -175,7 +175,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_s
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_salutation_letters_renderer_render_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_renderer_render_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_renderer_render_state :: on_reply ( ) ;
@@ -188,7 +188,7 @@ void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_s
 
 void _shy_common_logic_salutation_renderer :: receive ( so_called_common_logic_text_use_text_texture_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_text_use_text_texture_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_text_use_text_texture_state :: on_reply ( ) ;

@@ -2,16 +2,16 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_animation_selection_transform_state
     {
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_fract scale ;
-        static so_called_type_platform_math_num_fract weight ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_fract_type scale ;
+        static so_called_platform_math_num_fract_type weight ;
     }
     
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole launch_permitted ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type launch_permitted ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -34,16 +34,16 @@ void shy_guts :: proceed_with_transform ( )
 
 void shy_guts :: compute_weight ( )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract time_stable ;
-    so_called_type_platform_math_num_fract time_transition ;
-    so_called_type_platform_math_num_fract time_raise_begin ;
-    so_called_type_platform_math_num_fract time_raise_end ;
-    so_called_type_platform_math_num_fract time_fall_begin ;
-    so_called_type_platform_math_num_fract time_fall_end ;
-    so_called_type_platform_math_num_fract weight_low ;
-    so_called_type_platform_math_num_fract weight_high ;
-    so_called_type_platform_math_num_fract weight ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type time_stable ;
+    so_called_platform_math_num_fract_type time_transition ;
+    so_called_platform_math_num_fract_type time_raise_begin ;
+    so_called_platform_math_num_fract_type time_raise_end ;
+    so_called_platform_math_num_fract_type time_fall_begin ;
+    so_called_platform_math_num_fract_type time_fall_end ;
+    so_called_platform_math_num_fract_type weight_low ;
+    so_called_platform_math_num_fract_type weight_high ;
+    so_called_platform_math_num_fract_type weight ;
     
     time = shy_guts :: logic_main_menu_update_state :: time ;
     time_stable = so_called_common_logic_main_menu_letters_animation_consts :: selection_time_stable ;
@@ -88,10 +88,10 @@ void shy_guts :: compute_weight ( )
 
 void shy_guts :: invert_even_weight ( )
 {
-    so_called_type_platform_math_num_whole requested_row ;
-    so_called_type_platform_math_num_whole requested_col ;
-    so_called_type_platform_math_num_whole index ;
-    so_called_type_platform_math_num_fract weight ;
+    so_called_platform_math_num_whole_type requested_row ;
+    so_called_platform_math_num_whole_type requested_col ;
+    so_called_platform_math_num_whole_type index ;
+    so_called_platform_math_num_fract_type weight ;
     
     requested_row = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_row ;
     requested_col = shy_guts :: logic_main_menu_letters_animation_selection_transform_state :: requested_col ;
@@ -109,12 +109,12 @@ void shy_guts :: invert_even_weight ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract scale_min ;
-    so_called_type_platform_math_num_fract scale_max ;
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract weight_min ;
-    so_called_type_platform_math_num_fract weight_max ;
-    so_called_type_platform_math_num_fract weight ;
+    so_called_platform_math_num_fract_type scale_min ;
+    so_called_platform_math_num_fract_type scale_max ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type weight_min ;
+    so_called_platform_math_num_fract_type weight_max ;
+    so_called_platform_math_num_fract_type weight ;
     
     scale_min = so_called_common_logic_main_menu_letters_animation_consts :: selection_scale_min ;
     scale_max = so_called_common_logic_main_menu_letters_animation_consts :: selection_scale_max ;
@@ -166,7 +166,7 @@ void _shy_common_logic_main_menu_letters_animation_selection :: receive ( so_cal
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: launch_permitted ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }

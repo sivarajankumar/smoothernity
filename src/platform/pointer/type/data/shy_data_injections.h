@@ -1,10 +1,10 @@
-#ifndef _shy_type_platform_pointer_data_injections_included
-#define _shy_type_platform_pointer_data_injections_included
+#ifndef _shy_platform_pointer_data_type_injections_included
+#define _shy_platform_pointer_data_type_injections_included
 
 #include "injections/platform/consts/insider/shy_insider.h"
 
 #include "./shy_data.h"
 
-#define so_called_type_platform_pointer_data shy_type_platform_pointer_data
+#define so_called_platform_pointer_data_type shy_platform_pointer_data_type
 
 #endif

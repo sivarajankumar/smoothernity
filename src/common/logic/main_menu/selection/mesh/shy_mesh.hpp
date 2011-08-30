@@ -1,8 +1,8 @@
 namespace shy_guts
 {
-    static so_called_type_platform_math_num_whole animation_transform_requested ;
-    static so_called_type_platform_math_num_whole creation_requested ;
-    static so_called_type_common_engine_render_mesh_id mesh ;
+    static so_called_platform_math_num_whole_type animation_transform_requested ;
+    static so_called_platform_math_num_whole_type creation_requested ;
+    static so_called_common_engine_render_mesh_id_type mesh ;
 
     static void bake_mesh ( ) ;
     static void fill_mesh_content ( ) ;
@@ -11,21 +11,21 @@ namespace shy_guts
     static void render_mesh ( ) ;
     static void destroy_mesh ( ) ;
     static void mesh_set_vertex_position 
-        ( so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_fract x
-        , so_called_type_platform_math_num_fract y
-        , so_called_type_platform_math_num_fract z
+        ( so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_fract_type x
+        , so_called_platform_math_num_fract_type y
+        , so_called_platform_math_num_fract_type z
         ) ;
     static void mesh_set_vertex_color
-        ( so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_fract r
-        , so_called_type_platform_math_num_fract g
-        , so_called_type_platform_math_num_fract b
-        , so_called_type_platform_math_num_fract a
+        ( so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_fract_type r
+        , so_called_platform_math_num_fract_type g
+        , so_called_platform_math_num_fract_type b
+        , so_called_platform_math_num_fract_type a
         ) ;
     static void mesh_set_triangle_strip_index_value
-        ( so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_whole index
+        ( so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_whole_type index
         ) ;
 }
 
@@ -41,24 +41,24 @@ void shy_guts :: bake_mesh ( )
 
 void shy_guts :: fill_mesh_content ( )
 {
-    so_called_type_platform_math_num_fract half_size ;
-    so_called_type_platform_math_num_fract x_left ;
-    so_called_type_platform_math_num_fract x_right ;
-    so_called_type_platform_math_num_fract y_bottom ;
-    so_called_type_platform_math_num_fract y_top ;
-    so_called_type_platform_math_num_fract u_left ;
-    so_called_type_platform_math_num_fract u_right ;
-    so_called_type_platform_math_num_fract v_bottom ;
-    so_called_type_platform_math_num_fract v_top ;
-    so_called_type_platform_math_num_fract z ;
-    so_called_type_platform_math_num_fract color_r ;
-    so_called_type_platform_math_num_fract color_g ;
-    so_called_type_platform_math_num_fract color_b ;
-    so_called_type_platform_math_num_fract color_a ;
-    so_called_type_platform_math_num_whole index_left_top ;
-    so_called_type_platform_math_num_whole index_left_bottom ;
-    so_called_type_platform_math_num_whole index_right_top ;
-    so_called_type_platform_math_num_whole index_right_bottom ;
+    so_called_platform_math_num_fract_type half_size ;
+    so_called_platform_math_num_fract_type x_left ;
+    so_called_platform_math_num_fract_type x_right ;
+    so_called_platform_math_num_fract_type y_bottom ;
+    so_called_platform_math_num_fract_type y_top ;
+    so_called_platform_math_num_fract_type u_left ;
+    so_called_platform_math_num_fract_type u_right ;
+    so_called_platform_math_num_fract_type v_bottom ;
+    so_called_platform_math_num_fract_type v_top ;
+    so_called_platform_math_num_fract_type z ;
+    so_called_platform_math_num_fract_type color_r ;
+    so_called_platform_math_num_fract_type color_g ;
+    so_called_platform_math_num_fract_type color_b ;
+    so_called_platform_math_num_fract_type color_a ;
+    so_called_platform_math_num_whole_type index_left_top ;
+    so_called_platform_math_num_whole_type index_left_bottom ;
+    so_called_platform_math_num_whole_type index_right_top ;
+    so_called_platform_math_num_whole_type index_right_bottom ;
     
     so_called_platform_math :: div_fracts ( half_size , so_called_common_logic_main_menu_selection_consts :: mesh_size , so_called_platform_math_consts :: fract_2 ) ;
     so_called_platform_math :: mul_fracts ( x_left , half_size , so_called_platform_math_consts :: fract_minus_1 ) ;
@@ -96,10 +96,10 @@ void shy_guts :: fill_mesh_content ( )
 
 void shy_guts :: place_mesh ( )
 {
-    so_called_type_platform_matrix_data transform ;
-    so_called_type_platform_math_num_fract origin_x ;
-    so_called_type_platform_math_num_fract origin_y ;
-    so_called_type_platform_math_num_fract origin_z ;
+    so_called_platform_matrix_data_type transform ;
+    so_called_platform_math_num_fract_type origin_x ;
+    so_called_platform_math_num_fract_type origin_y ;
+    so_called_platform_math_num_fract_type origin_z ;
     
     origin_x = so_called_platform_math_consts :: fract_0 ;
     origin_y = so_called_platform_math_consts :: fract_0 ;
@@ -137,10 +137,10 @@ void shy_guts :: destroy_mesh ( )
 }
 
 void shy_guts :: mesh_set_vertex_position 
-    ( so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_fract x
-    , so_called_type_platform_math_num_fract y
-    , so_called_type_platform_math_num_fract z
+    ( so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_fract_type x
+    , so_called_platform_math_num_fract_type y
+    , so_called_platform_math_num_fract_type z
     )
 {
     so_called_common_engine_render_mesh_set_vertex_position_message msg ;
@@ -153,11 +153,11 @@ void shy_guts :: mesh_set_vertex_position
 }
 
 void shy_guts :: mesh_set_vertex_color
-    ( so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_fract r
-    , so_called_type_platform_math_num_fract g
-    , so_called_type_platform_math_num_fract b
-    , so_called_type_platform_math_num_fract a
+    ( so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_fract_type r
+    , so_called_platform_math_num_fract_type g
+    , so_called_platform_math_num_fract_type b
+    , so_called_platform_math_num_fract_type a
     )
 {
     so_called_common_engine_render_mesh_set_vertex_color_message msg ;
@@ -171,8 +171,8 @@ void shy_guts :: mesh_set_vertex_color
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value
-    ( so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_whole index
+    ( so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_whole_type index
     )
 {
     so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;

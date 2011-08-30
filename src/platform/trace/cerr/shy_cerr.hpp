@@ -56,7 +56,7 @@ void shy_platform_trace_cerr :: trace_end ( )
     so_called_lib_std_cerr << so_called_lib_std_endl ;
 }
 
-void shy_platform_trace_cerr :: trace_num_whole ( so_called_type_platform_math_num_whole num )
+void shy_platform_trace_cerr :: trace_num_whole ( so_called_platform_math_num_whole_type num )
 {
     so_called_lib_std_string str_begin ;
     so_called_lib_std_string str_end ;
@@ -71,7 +71,7 @@ void shy_platform_trace_cerr :: trace_num_whole ( so_called_type_platform_math_n
     so_called_lib_std_cerr << str_end ;
 }
 
-void shy_platform_trace_cerr :: trace_num_whole_error ( so_called_type_platform_math_num_whole num )
+void shy_platform_trace_cerr :: trace_num_whole_error ( so_called_platform_math_num_whole_type num )
 {
     so_called_lib_std_string str_begin ;
     so_called_lib_std_string str_end ;
@@ -86,7 +86,7 @@ void shy_platform_trace_cerr :: trace_num_whole_error ( so_called_type_platform_
     so_called_lib_std_cerr << str_end ;
 }
 
-void shy_platform_trace_cerr :: trace_const_int_32 ( so_called_type_platform_math_const_int_32 num )
+void shy_platform_trace_cerr :: trace_const_int_32 ( so_called_platform_math_const_int_32_type num )
 {
     so_called_lib_std_string str_begin ;
     so_called_lib_std_string str_end ;
@@ -99,7 +99,7 @@ void shy_platform_trace_cerr :: trace_const_int_32 ( so_called_type_platform_mat
     so_called_lib_std_cerr << str_end ;
 }
 
-void shy_platform_trace_cerr :: trace_const_int_32_error ( so_called_type_platform_math_const_int_32 num )
+void shy_platform_trace_cerr :: trace_const_int_32_error ( so_called_platform_math_const_int_32_type num )
 {
     so_called_lib_std_string str_begin ;
     so_called_lib_std_string str_end ;
@@ -113,8 +113,8 @@ void shy_platform_trace_cerr :: trace_const_int_32_error ( so_called_type_platfo
 }
 
 void shy_platform_trace_cerr :: trace_num_fract 
-    ( so_called_type_platform_math_const_int_32 numerator
-    , so_called_type_platform_math_const_int_32 denominator
+    ( so_called_platform_math_const_int_32_type numerator
+    , so_called_platform_math_const_int_32_type denominator
     )
 {
     so_called_lib_std_string str_begin ;
@@ -131,8 +131,8 @@ void shy_platform_trace_cerr :: trace_num_fract
 }
 
 void shy_platform_trace_cerr :: trace_num_fract_error
-    ( so_called_type_platform_math_const_int_32 numerator
-    , so_called_type_platform_math_const_int_32 denominator
+    ( so_called_platform_math_const_int_32_type numerator
+    , so_called_platform_math_const_int_32_type denominator
     )
 {
     so_called_lib_std_string str_begin ;

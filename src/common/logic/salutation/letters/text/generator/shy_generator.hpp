@@ -1,13 +1,13 @@
 namespace shy_guts
 {
-    static void add_letter ( so_called_type_common_logic_text_letter_id ) ;
+    static void add_letter ( so_called_common_logic_text_letter_id_type ) ;
     static void finish ( ) ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_text_generator > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
 
-void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter )
+void shy_guts :: add_letter ( so_called_common_logic_text_letter_id_type letter )
 {
     so_called_common_logic_salutation_letters_text_storage_add_letter_message msg ;
     msg . letter = letter ;

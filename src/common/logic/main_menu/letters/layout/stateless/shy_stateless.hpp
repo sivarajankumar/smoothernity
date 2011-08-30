@@ -1,29 +1,29 @@
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_unscaled_menu_size 
-    ( so_called_type_platform_math_num_fract & unscaled_menu_width
-    , so_called_type_platform_math_num_fract & unscaled_menu_height
-    , so_called_type_platform_math_num_whole max_cols
-    , so_called_type_platform_math_num_whole max_rows
-    , so_called_type_platform_math_num_fract horizontal_spacing
-    , so_called_type_platform_math_num_fract vertical_spacing
-    , so_called_type_platform_math_num_fract horizontal_border
-    , so_called_type_platform_math_num_fract vertical_border
-    , so_called_type_platform_math_num_fract letter_mesh_size
+    ( so_called_platform_math_num_fract_type & unscaled_menu_width
+    , so_called_platform_math_num_fract_type & unscaled_menu_height
+    , so_called_platform_math_num_whole_type max_cols
+    , so_called_platform_math_num_whole_type max_rows
+    , so_called_platform_math_num_fract_type horizontal_spacing
+    , so_called_platform_math_num_fract_type vertical_spacing
+    , so_called_platform_math_num_fract_type horizontal_border
+    , so_called_platform_math_num_fract_type vertical_border
+    , so_called_platform_math_num_fract_type letter_mesh_size
     )
 {
-    so_called_type_platform_math_num_fract letters_width ;
-    so_called_type_platform_math_num_fract letters_height ;
-    so_called_type_platform_math_num_fract letters_in_row ;
-    so_called_type_platform_math_num_fract letters_in_col ;
-    so_called_type_platform_math_num_fract spacings_width ;
-    so_called_type_platform_math_num_fract spacings_height ;
-    so_called_type_platform_math_num_fract spacings_in_row ;
-    so_called_type_platform_math_num_fract spacings_in_col ;
-    so_called_type_platform_math_num_fract borders_width ;
-    so_called_type_platform_math_num_fract borders_height ;
-    so_called_type_platform_math_num_fract menu_width ;
-    so_called_type_platform_math_num_fract menu_height ;
-    so_called_type_platform_math_num_fract fract_1 ;
-    so_called_type_platform_math_num_fract fract_2 ;
+    so_called_platform_math_num_fract_type letters_width ;
+    so_called_platform_math_num_fract_type letters_height ;
+    so_called_platform_math_num_fract_type letters_in_row ;
+    so_called_platform_math_num_fract_type letters_in_col ;
+    so_called_platform_math_num_fract_type spacings_width ;
+    so_called_platform_math_num_fract_type spacings_height ;
+    so_called_platform_math_num_fract_type spacings_in_row ;
+    so_called_platform_math_num_fract_type spacings_in_col ;
+    so_called_platform_math_num_fract_type borders_width ;
+    so_called_platform_math_num_fract_type borders_height ;
+    so_called_platform_math_num_fract_type menu_width ;
+    so_called_platform_math_num_fract_type menu_height ;
+    so_called_platform_math_num_fract_type fract_1 ;
+    so_called_platform_math_num_fract_type fract_2 ;
     
     so_called_platform_math :: make_num_fract ( fract_1 , 1 , 1 ) ;
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
@@ -54,16 +54,16 @@ void shy_common_logic_main_menu_letters_layout_stateless :: compute_unscaled_men
 }
 
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_menu_scale 
-    ( so_called_type_platform_math_num_fract & menu_scale
-    , so_called_type_platform_math_num_fract aspect_width
-    , so_called_type_platform_math_num_fract aspect_height
-    , so_called_type_platform_math_num_fract unscaled_menu_width
-    , so_called_type_platform_math_num_fract unscaled_menu_height
+    ( so_called_platform_math_num_fract_type & menu_scale
+    , so_called_platform_math_num_fract_type aspect_width
+    , so_called_platform_math_num_fract_type aspect_height
+    , so_called_platform_math_num_fract_type unscaled_menu_width
+    , so_called_platform_math_num_fract_type unscaled_menu_height
     )
 {
-    so_called_type_platform_math_num_fract screen_ratio ;
-    so_called_type_platform_math_num_fract menu_ratio ;
-    so_called_type_platform_math_num_fract fract_2 ;
+    so_called_platform_math_num_fract_type screen_ratio ;
+    so_called_platform_math_num_fract_type menu_ratio ;
+    so_called_platform_math_num_fract_type fract_2 ;
     
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     so_called_platform_math :: div_fracts ( screen_ratio , aspect_width , aspect_height ) ;
@@ -78,16 +78,16 @@ void shy_common_logic_main_menu_letters_layout_stateless :: compute_menu_scale
 }
 
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_menu_rect 
-    ( so_called_type_common_engine_rect & menu_rect
-    , so_called_type_platform_math_num_fract menu_scale
-    , so_called_type_platform_math_num_fract unscaled_menu_width
-    , so_called_type_platform_math_num_fract unscaled_menu_height
+    ( so_called_common_engine_rect_type & menu_rect
+    , so_called_platform_math_num_fract_type menu_scale
+    , so_called_platform_math_num_fract_type unscaled_menu_width
+    , so_called_platform_math_num_fract_type unscaled_menu_height
     )
 {
-    so_called_type_platform_math_num_fract scaled_menu_width ;
-    so_called_type_platform_math_num_fract scaled_menu_height ;
-    so_called_type_platform_math_num_fract fract_2 ;
-    so_called_type_platform_math_num_fract fract_minus_2 ;
+    so_called_platform_math_num_fract_type scaled_menu_width ;
+    so_called_platform_math_num_fract_type scaled_menu_height ;
+    so_called_platform_math_num_fract_type fract_2 ;
+    so_called_platform_math_num_fract_type fract_minus_2 ;
     
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     so_called_platform_math :: make_num_fract ( fract_minus_2 , - 2 , 1 ) ;
@@ -102,29 +102,29 @@ void shy_common_logic_main_menu_letters_layout_stateless :: compute_menu_rect
 }
 
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_row_rect 
-    ( so_called_type_common_engine_rect & row_rect
-    , so_called_type_platform_math_num_whole row
-    , so_called_type_platform_math_num_whole cols
-    , so_called_type_platform_math_num_fract menu_scale
-    , so_called_type_common_engine_rect menu_rect
-    , so_called_type_platform_math_num_fract vertical_border
-    , so_called_type_platform_math_num_fract horizontal_spacing
-    , so_called_type_platform_math_num_fract vertical_spacing
-    , so_called_type_platform_math_num_fract letter_mesh_size
+    ( so_called_common_engine_rect_type & row_rect
+    , so_called_platform_math_num_whole_type row
+    , so_called_platform_math_num_whole_type cols
+    , so_called_platform_math_num_fract_type menu_scale
+    , so_called_common_engine_rect_type menu_rect
+    , so_called_platform_math_num_fract_type vertical_border
+    , so_called_platform_math_num_fract_type horizontal_spacing
+    , so_called_platform_math_num_fract_type vertical_spacing
+    , so_called_platform_math_num_fract_type letter_mesh_size
     )
 {
-    so_called_type_platform_math_num_fract letters_width ;
-    so_called_type_platform_math_num_fract spacings_width ;
-    so_called_type_platform_math_num_fract border_height ;
-    so_called_type_platform_math_num_fract letters_in_row ;
-    so_called_type_platform_math_num_fract spacings_in_row ;
-    so_called_type_platform_math_num_fract row_width ;
-    so_called_type_platform_math_num_fract row_height ;
-    so_called_type_platform_math_num_fract row_number ;
-    so_called_type_platform_math_num_fract letter_size ;
-    so_called_type_platform_math_num_fract fract_1 ;
-    so_called_type_platform_math_num_fract fract_2 ;
-    so_called_type_platform_math_num_fract fract_minus_2 ;
+    so_called_platform_math_num_fract_type letters_width ;
+    so_called_platform_math_num_fract_type spacings_width ;
+    so_called_platform_math_num_fract_type border_height ;
+    so_called_platform_math_num_fract_type letters_in_row ;
+    so_called_platform_math_num_fract_type spacings_in_row ;
+    so_called_platform_math_num_fract_type row_width ;
+    so_called_platform_math_num_fract_type row_height ;
+    so_called_platform_math_num_fract_type row_number ;
+    so_called_platform_math_num_fract_type letter_size ;
+    so_called_platform_math_num_fract_type fract_1 ;
+    so_called_platform_math_num_fract_type fract_2 ;
+    so_called_platform_math_num_fract_type fract_minus_2 ;
     
     so_called_platform_math :: make_num_fract ( fract_1 , 1 , 1 ) ;
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
@@ -158,18 +158,18 @@ void shy_common_logic_main_menu_letters_layout_stateless :: compute_row_rect
 }
 
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_letter_rect 
-    ( so_called_type_common_engine_rect & letter_rect
-    , so_called_type_platform_math_num_whole col
-    , so_called_type_platform_math_num_fract menu_scale
-    , so_called_type_common_engine_rect row_rect
-    , so_called_type_platform_math_num_fract letter_mesh_size
-    , so_called_type_platform_math_num_fract horizontal_spacing
+    ( so_called_common_engine_rect_type & letter_rect
+    , so_called_platform_math_num_whole_type col
+    , so_called_platform_math_num_fract_type menu_scale
+    , so_called_common_engine_rect_type row_rect
+    , so_called_platform_math_num_fract_type letter_mesh_size
+    , so_called_platform_math_num_fract_type horizontal_spacing
     )
 {
-    so_called_type_platform_math_num_fract col_number ;
-    so_called_type_platform_math_num_fract col_width ;
-    so_called_type_platform_math_num_fract letter_size ;
-    so_called_type_platform_math_num_fract fract_1 ;
+    so_called_platform_math_num_fract_type col_number ;
+    so_called_platform_math_num_fract_type col_width ;
+    so_called_platform_math_num_fract_type letter_size ;
+    so_called_platform_math_num_fract_type fract_1 ;
     
     so_called_platform_math :: make_num_fract ( fract_1 , 1 , 1 ) ;
     
@@ -187,14 +187,14 @@ void shy_common_logic_main_menu_letters_layout_stateless :: compute_letter_rect
 }
 
 void shy_common_logic_main_menu_letters_layout_stateless :: compute_letter_position 
-    ( so_called_type_platform_vector_data & letter_position
-    , so_called_type_common_engine_rect letter_rect
-    , so_called_type_platform_math_num_fract letter_position_z
+    ( so_called_platform_vector_data_type & letter_position
+    , so_called_common_engine_rect_type letter_rect
+    , so_called_platform_math_num_fract_type letter_position_z
     )
 {
-    so_called_type_platform_math_num_fract letter_position_x ;
-    so_called_type_platform_math_num_fract letter_position_y ;
-    so_called_type_platform_math_num_fract fract_2 ;
+    so_called_platform_math_num_fract_type letter_position_x ;
+    so_called_platform_math_num_fract_type letter_position_y ;
+    so_called_platform_math_num_fract_type fract_2 ;
     
     so_called_platform_math :: make_num_fract ( fract_2 , 2 , 1 ) ;
     

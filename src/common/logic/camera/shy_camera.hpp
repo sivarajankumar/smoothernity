@@ -2,10 +2,10 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_whole change_origin_in_frames = so_called_platform_math :: init_num_whole ( 139 ) ;
-        static const so_called_type_platform_math_num_whole change_target_in_frames = so_called_platform_math :: init_num_whole ( 181 ) ;
-        static const so_called_type_platform_math_num_whole random_const_1 = so_called_platform_math :: init_num_whole ( 181 ) ;
-        static const so_called_type_platform_math_num_whole random_const_2 = so_called_platform_math :: init_num_whole ( 139 ) ;
+        static const so_called_platform_math_num_whole_type change_origin_in_frames = so_called_platform_math :: init_num_whole ( 139 ) ;
+        static const so_called_platform_math_num_whole_type change_target_in_frames = so_called_platform_math :: init_num_whole ( 181 ) ;
+        static const so_called_platform_math_num_whole_type random_const_1 = so_called_platform_math :: init_num_whole ( 181 ) ;
+        static const so_called_platform_math_num_whole_type random_const_2 = so_called_platform_math :: init_num_whole ( 139 ) ;
     }
 
     static void proceed_with_update ( ) ;
@@ -23,72 +23,72 @@ namespace shy_guts
     static void update_camera_matrix ( ) ;
     static void calc_desired_camera_target_pos ( ) ;
     static void calc_desired_camera_origin_pos ( ) ;
-    static void random_camera_origin_index ( so_called_type_platform_math_num_whole & ) ;
-    static void random_camera_target_index ( so_called_type_platform_math_num_whole & ) ;
-    static void camera_origin_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index ) ;
-    static void camera_target_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index ) ;
+    static void random_camera_origin_index ( so_called_platform_math_num_whole_type & ) ;
+    static void random_camera_target_index ( so_called_platform_math_num_whole_type & ) ;
+    static void camera_origin_index_is_duplicate ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type index ) ;
+    static void camera_target_index_is_duplicate ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type index ) ;
     static void get_random_index
-        ( so_called_type_platform_math_num_whole & result
-        , so_called_type_platform_math_num_whole index_min
-        , so_called_type_platform_math_num_whole index_max
+        ( so_called_platform_math_num_whole_type & result
+        , so_called_platform_math_num_whole_type index_min
+        , so_called_platform_math_num_whole_type index_max
         ) ;
 
-    static so_called_type_platform_matrix_data camera_matrix ;
-    static so_called_type_platform_math_num_whole camera_prepare_permitted ;
-    static so_called_type_platform_math_num_whole frames_to_change_camera_target ;
-    static so_called_type_platform_math_num_whole frames_to_change_camera_origin ;
-    static so_called_type_platform_math_num_whole random_seed ;
-    static so_called_type_platform_math_num_whole camera_created ;
-    static so_called_type_platform_math_num_fract origin_rubber ;
-    static so_called_type_platform_math_num_fract target_rubber ;
+    static so_called_platform_matrix_data_type camera_matrix ;
+    static so_called_platform_math_num_whole_type camera_prepare_permitted ;
+    static so_called_platform_math_num_whole_type frames_to_change_camera_target ;
+    static so_called_platform_math_num_whole_type frames_to_change_camera_origin ;
+    static so_called_platform_math_num_whole_type random_seed ;
+    static so_called_platform_math_num_whole_type camera_created ;
+    static so_called_platform_math_num_fract_type origin_rubber ;
+    static so_called_platform_math_num_fract_type target_rubber ;
     
-    static so_called_type_platform_math_num_whole entities_height_requested ;
-    static so_called_type_platform_math_num_whole entities_height_replied ;
-    static so_called_type_platform_math_num_fract entities_height ;
+    static so_called_platform_math_num_whole_type entities_height_requested ;
+    static so_called_platform_math_num_whole_type entities_height_replied ;
+    static so_called_platform_math_num_fract_type entities_height ;
     
-    static so_called_type_platform_math_num_whole entities_mesh_grid_requested ;
-    static so_called_type_platform_math_num_whole entities_mesh_grid_replied ;
-    static so_called_type_platform_math_num_whole entities_mesh_grid ;
+    static so_called_platform_math_num_whole_type entities_mesh_grid_requested ;
+    static so_called_platform_math_num_whole_type entities_mesh_grid_replied ;
+    static so_called_platform_math_num_whole_type entities_mesh_grid ;
     
-    static so_called_type_platform_math_num_whole near_plane_distance_requested ;
-    static so_called_type_platform_math_num_whole near_plane_distance_replied ;
-    static so_called_type_platform_math_num_fract near_plane_distance ;
+    static so_called_platform_math_num_whole_type near_plane_distance_requested ;
+    static so_called_platform_math_num_whole_type near_plane_distance_replied ;
+    static so_called_platform_math_num_fract_type near_plane_distance ;
     
-    static so_called_type_platform_math_num_whole filling_camera_schedules ;
-    static so_called_type_platform_math_num_whole fill_camera_schedules_index ;
+    static so_called_platform_math_num_whole_type filling_camera_schedules ;
+    static so_called_platform_math_num_whole_type fill_camera_schedules_index ;
     
-    static so_called_type_platform_math_num_whole fill_schedules_origin_requested ;
-    static so_called_type_platform_math_num_whole fill_schedules_origin_replied ;
-    static so_called_type_platform_math_num_whole fill_schedules_origin_index ;
-    static so_called_type_platform_vector_data fill_schedules_origin ;
+    static so_called_platform_math_num_whole_type fill_schedules_origin_requested ;
+    static so_called_platform_math_num_whole_type fill_schedules_origin_replied ;
+    static so_called_platform_math_num_whole_type fill_schedules_origin_index ;
+    static so_called_platform_vector_data_type fill_schedules_origin ;
     
-    static so_called_type_platform_math_num_whole fill_schedules_target_requested ;
-    static so_called_type_platform_math_num_whole fill_schedules_target_replied ;
-    static so_called_type_platform_math_num_whole fill_schedules_target_index ;
-    static so_called_type_platform_vector_data fill_schedules_target ;
+    static so_called_platform_math_num_whole_type fill_schedules_target_requested ;
+    static so_called_platform_math_num_whole_type fill_schedules_target_replied ;
+    static so_called_platform_math_num_whole_type fill_schedules_target_index ;
+    static so_called_platform_vector_data_type fill_schedules_target ;
     
-    static so_called_type_platform_math_num_whole desired_camera_origin_is_ready ;
-    static so_called_type_platform_vector_data desired_camera_origin ;
-    static so_called_type_platform_math_num_whole desired_camera_origin_new_requested ;
-    static so_called_type_platform_math_num_whole desired_camera_origin_new_index ;
-    static so_called_type_platform_vector_data desired_camera_origin_new_position ;
+    static so_called_platform_math_num_whole_type desired_camera_origin_is_ready ;
+    static so_called_platform_vector_data_type desired_camera_origin ;
+    static so_called_platform_math_num_whole_type desired_camera_origin_new_requested ;
+    static so_called_platform_math_num_whole_type desired_camera_origin_new_index ;
+    static so_called_platform_vector_data_type desired_camera_origin_new_position ;
     
-    static so_called_type_platform_math_num_whole desired_camera_target_is_ready ;
-    static so_called_type_platform_vector_data desired_camera_target ;
-    static so_called_type_platform_math_num_whole desired_camera_target_new_requested ;
-    static so_called_type_platform_math_num_whole desired_camera_target_new_index ;
-    static so_called_type_platform_vector_data desired_camera_target_new_position ;
+    static so_called_platform_math_num_whole_type desired_camera_target_is_ready ;
+    static so_called_platform_vector_data_type desired_camera_target ;
+    static so_called_platform_math_num_whole_type desired_camera_target_new_requested ;
+    static so_called_platform_math_num_whole_type desired_camera_target_new_index ;
+    static so_called_platform_vector_data_type desired_camera_target_new_position ;
     
-    static so_called_type_platform_vector_data current_camera_origin ;
-    static so_called_type_platform_vector_data current_camera_target ;
+    static so_called_platform_vector_data_type current_camera_origin ;
+    static so_called_platform_vector_data_type current_camera_target ;
     
-    static so_called_type_platform_math_num_whole render_aspect_requested ;
-    static so_called_type_platform_math_num_fract render_aspect_height ;
+    static so_called_platform_math_num_whole_type render_aspect_requested ;
+    static so_called_platform_math_num_fract_type render_aspect_height ;
     
-    static so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , 4 > scheduled_camera_origin_indices ;
-    static so_called_type_platform_static_array_data < so_called_type_platform_math_num_whole , 4 > scheduled_camera_target_indices ;
-    static so_called_type_platform_static_array_data < so_called_type_platform_vector_data , 4 > scheduled_camera_origins ;
-    static so_called_type_platform_static_array_data < so_called_type_platform_vector_data , 4 > scheduled_camera_targets ;
+    static so_called_platform_static_array_data_type < so_called_platform_math_num_whole_type , 4 > scheduled_camera_origin_indices ;
+    static so_called_platform_static_array_data_type < so_called_platform_math_num_whole_type , 4 > scheduled_camera_target_indices ;
+    static so_called_platform_static_array_data_type < so_called_platform_vector_data_type , 4 > scheduled_camera_origins ;
+    static so_called_platform_static_array_data_type < so_called_platform_vector_data_type , 4 > scheduled_camera_targets ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_camera > _scheduled_context_type ;
@@ -125,10 +125,10 @@ void shy_guts :: proceed_with_fill_camera_schedules ( )
         shy_guts :: fill_schedules_origin_replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: fill_schedules_target_replied = so_called_platform_math_consts :: whole_false ;
         
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_origin_index ;
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_target_index ;
-        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_origin_pos ;
-        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_target_pos ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_origin_index ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_target_index ;
+        so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_origin_pos ;
+        so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_target_pos ;
         
         so_called_platform_static_array :: element_ptr ( scheduled_origin_index , shy_guts :: scheduled_camera_origin_indices , shy_guts :: fill_camera_schedules_index ) ;
         so_called_platform_static_array :: element_ptr ( scheduled_target_index , shy_guts :: scheduled_camera_target_indices , shy_guts :: fill_camera_schedules_index ) ;
@@ -160,15 +160,15 @@ void shy_guts :: proceed_with_camera_update ( )
 
 void shy_guts :: proceed_with_update_desired_camera_target ( )
 {
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_3 ;
 
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_3 ;
 
     so_called_platform_static_array :: element_ptr ( scheduled_index_0 , shy_guts :: scheduled_camera_target_indices , so_called_platform_math_consts :: whole_0 ) ;
     so_called_platform_static_array :: element_ptr ( scheduled_index_1 , shy_guts :: scheduled_camera_target_indices , so_called_platform_math_consts :: whole_1 ) ;
@@ -198,15 +198,15 @@ void shy_guts :: proceed_with_update_desired_camera_target ( )
 
 void shy_guts :: proceed_with_update_desired_camera_origin ( )
 {
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index_3 ;
 
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_pos_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_pos_3 ;
 
     so_called_platform_static_array :: element_ptr ( scheduled_index_0 , shy_guts :: scheduled_camera_origin_indices , so_called_platform_math_consts :: whole_0 ) ;
     so_called_platform_static_array :: element_ptr ( scheduled_index_1 , shy_guts :: scheduled_camera_origin_indices , so_called_platform_math_consts :: whole_1 ) ;
@@ -261,8 +261,8 @@ void shy_guts :: fill_next_camera_schedule ( )
 
 void shy_guts :: reset_camera_rubber ( )
 {
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > origin_ptr ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > target_ptr ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > origin_ptr ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > target_ptr ;
     so_called_platform_static_array :: element_ptr ( origin_ptr , shy_guts :: scheduled_camera_origins , so_called_platform_math_consts :: whole_2 ) ;
     so_called_platform_static_array :: element_ptr ( target_ptr , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_2 ) ;
     shy_guts :: current_camera_origin = origin_ptr . get ( ) ;
@@ -320,10 +320,10 @@ void shy_guts :: update_desired_camera_target ( )
 
 void shy_guts :: update_current_camera_origin ( )
 {
-    so_called_type_platform_math_num_fract rubber ;
-    so_called_type_platform_math_num_fract inv_rubber ;
-    so_called_type_platform_vector_data old_part ;
-    so_called_type_platform_vector_data new_part ;
+    so_called_platform_math_num_fract_type rubber ;
+    so_called_platform_math_num_fract_type inv_rubber ;
+    so_called_platform_vector_data_type old_part ;
+    so_called_platform_vector_data_type new_part ;
 
     so_called_platform_math :: sub_fracts ( inv_rubber , so_called_platform_math_consts :: fract_1 , shy_guts :: origin_rubber ) ;
     so_called_platform_vector :: mul ( old_part , shy_guts :: current_camera_origin , shy_guts :: origin_rubber ) ;
@@ -333,10 +333,10 @@ void shy_guts :: update_current_camera_origin ( )
 
 void shy_guts :: update_current_camera_target ( )
 {
-    so_called_type_platform_math_num_fract rubber ;
-    so_called_type_platform_math_num_fract inv_rubber ;
-    so_called_type_platform_vector_data old_part ;
-    so_called_type_platform_vector_data new_part ;
+    so_called_platform_math_num_fract_type rubber ;
+    so_called_platform_math_num_fract_type inv_rubber ;
+    so_called_platform_vector_data_type old_part ;
+    so_called_platform_vector_data_type new_part ;
 
     so_called_platform_math :: sub_fracts ( inv_rubber , so_called_platform_math_consts :: fract_1 , shy_guts :: target_rubber ) ;
     so_called_platform_vector :: mul ( old_part , shy_guts :: current_camera_target , shy_guts :: target_rubber ) ;
@@ -346,15 +346,15 @@ void shy_guts :: update_current_camera_target ( )
 
 void shy_guts :: update_camera_matrix ( )
 {
-    so_called_type_platform_math_num_fract up_x ;
-    so_called_type_platform_math_num_fract up_y ;
-    so_called_type_platform_math_num_fract up_z ;
-    so_called_type_platform_math_num_fract shift_x ;
-    so_called_type_platform_math_num_fract shift_y ;
-    so_called_type_platform_math_num_fract shift_z ;
-    so_called_type_platform_vector_data up ;
-    so_called_type_platform_vector_data shift ;
-    so_called_type_platform_vector_data shifted_origin ;
+    so_called_platform_math_num_fract_type up_x ;
+    so_called_platform_math_num_fract_type up_y ;
+    so_called_platform_math_num_fract_type up_z ;
+    so_called_platform_math_num_fract_type shift_x ;
+    so_called_platform_math_num_fract_type shift_y ;
+    so_called_platform_math_num_fract_type shift_z ;
+    so_called_platform_vector_data_type up ;
+    so_called_platform_vector_data_type shift ;
+    so_called_platform_vector_data_type shifted_origin ;
     
     up_x = so_called_platform_math_consts :: fract_0 ;
     up_y = so_called_platform_math_consts :: fract_1 ;
@@ -373,19 +373,19 @@ void shy_guts :: update_camera_matrix ( )
 
 void shy_guts :: calc_desired_camera_target_pos ( )
 {
-    so_called_type_platform_math_num_fract fract_frames_to_change_camera_target ;
-    so_called_type_platform_math_num_fract fract_change_target_in_frames ;
-    so_called_type_platform_math_num_fract spline_pos ;
+    so_called_platform_math_num_fract_type fract_frames_to_change_camera_target ;
+    so_called_platform_math_num_fract_type fract_change_target_in_frames ;
+    so_called_platform_math_num_fract_type spline_pos ;
     so_called_platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_target , shy_guts :: frames_to_change_camera_target ) ;
     so_called_platform_math :: make_fract_from_whole ( fract_change_target_in_frames , shy_guts :: consts :: change_target_in_frames ) ;
     so_called_platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_target , fract_change_target_in_frames ) ;
     so_called_platform_math :: neg_fract ( spline_pos ) ;
     so_called_platform_math :: add_to_fract ( spline_pos , so_called_platform_math_consts :: fract_1 ) ;
     
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_3 ;
     
     so_called_platform_static_array :: element_ptr ( pos_0 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_0 ) ;
     so_called_platform_static_array :: element_ptr ( pos_1 , shy_guts :: scheduled_camera_targets , so_called_platform_math_consts :: whole_1 ) ;
@@ -397,19 +397,19 @@ void shy_guts :: calc_desired_camera_target_pos ( )
 
 void shy_guts :: calc_desired_camera_origin_pos ( )
 {
-    so_called_type_platform_math_num_fract fract_frames_to_change_camera_origin ;
-    so_called_type_platform_math_num_fract fract_change_origin_in_frames ;
-    so_called_type_platform_math_num_fract spline_pos ;
+    so_called_platform_math_num_fract_type fract_frames_to_change_camera_origin ;
+    so_called_platform_math_num_fract_type fract_change_origin_in_frames ;
+    so_called_platform_math_num_fract_type spline_pos ;
     so_called_platform_math :: make_fract_from_whole ( fract_frames_to_change_camera_origin , shy_guts :: frames_to_change_camera_origin ) ;
     so_called_platform_math :: make_fract_from_whole ( fract_change_origin_in_frames , shy_guts :: consts :: change_origin_in_frames ) ;
     so_called_platform_math :: div_fracts ( spline_pos , fract_frames_to_change_camera_origin , fract_change_origin_in_frames ) ;
     so_called_platform_math :: neg_fract ( spline_pos ) ;
     so_called_platform_math :: add_to_fract ( spline_pos , so_called_platform_math_consts :: fract_1 ) ;
 
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_0 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_1 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_2 ;
-    so_called_type_platform_pointer_data < so_called_type_platform_vector_data > pos_3 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_0 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_1 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_2 ;
+    so_called_platform_pointer_data_type < so_called_platform_vector_data_type > pos_3 ;
     
     so_called_platform_static_array :: element_ptr ( pos_0 , shy_guts :: scheduled_camera_origins , so_called_platform_math_consts :: whole_0 ) ;
     so_called_platform_static_array :: element_ptr ( pos_1 , shy_guts :: scheduled_camera_origins , so_called_platform_math_consts :: whole_1 ) ;
@@ -419,11 +419,11 @@ void shy_guts :: calc_desired_camera_origin_pos ( )
     so_called_common_engine_math_stateless :: catmull_rom_spline ( shy_guts :: desired_camera_origin , spline_pos , pos_0 . get ( ) , pos_1 . get ( ) , pos_2 . get ( ) , pos_3 . get ( ) ) ;
 }
 
-void shy_guts :: random_camera_origin_index ( so_called_type_platform_math_num_whole & result )
+void shy_guts :: random_camera_origin_index ( so_called_platform_math_num_whole_type & result )
 {
-    so_called_type_platform_math_num_whole index ;
-    so_called_type_platform_math_num_whole index_max ;
-    so_called_type_platform_math_num_whole is_duplicate ;
+    so_called_platform_math_num_whole_type index ;
+    so_called_platform_math_num_whole_type index_max ;
+    so_called_platform_math_num_whole_type is_duplicate ;
 
     index = so_called_platform_math_consts :: whole_0 ;
     so_called_platform_math :: div_wholes ( index_max , shy_guts :: entities_mesh_grid , so_called_platform_math_consts :: whole_2 ) ;
@@ -436,12 +436,12 @@ void shy_guts :: random_camera_origin_index ( so_called_type_platform_math_num_w
     result = index ;
 }
 
-void shy_guts :: random_camera_target_index ( so_called_type_platform_math_num_whole & result )
+void shy_guts :: random_camera_target_index ( so_called_platform_math_num_whole_type & result )
 {
-    so_called_type_platform_math_num_whole index ;
-    so_called_type_platform_math_num_whole index_min ;
-    so_called_type_platform_math_num_whole index_max ;
-    so_called_type_platform_math_num_whole is_duplicate ;
+    so_called_platform_math_num_whole_type index ;
+    so_called_platform_math_num_whole_type index_min ;
+    so_called_platform_math_num_whole_type index_max ;
+    so_called_platform_math_num_whole_type is_duplicate ;
 
     index = so_called_platform_math_consts :: whole_0 ;
     so_called_platform_math :: div_wholes ( index_min , shy_guts :: entities_mesh_grid , so_called_platform_math_consts :: whole_2 ) ;
@@ -455,15 +455,15 @@ void shy_guts :: random_camera_target_index ( so_called_type_platform_math_num_w
     result = index ;
 }
 
-void shy_guts :: camera_origin_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index )
+void shy_guts :: camera_origin_index_is_duplicate ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type index )
 {
     result = so_called_platform_math_consts :: whole_false ;
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0 
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_platform_math_consts :: whole_4 ) 
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index ;
         so_called_platform_static_array :: element_ptr ( scheduled_index , shy_guts :: scheduled_camera_origin_indices , i ) ;
         if ( so_called_platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
@@ -473,15 +473,15 @@ void shy_guts :: camera_origin_index_is_duplicate ( so_called_type_platform_math
     }
 }
 
-void shy_guts :: camera_target_index_is_duplicate ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole index )
+void shy_guts :: camera_target_index_is_duplicate ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type index )
 {
     result = so_called_platform_math_consts :: whole_false ;
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0 
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0 
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_platform_math_consts :: whole_4 ) 
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_index ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_index ;
         so_called_platform_static_array :: element_ptr ( scheduled_index , shy_guts :: scheduled_camera_target_indices , i ) ;
         if ( so_called_platform_conditions :: wholes_are_equal ( scheduled_index . get ( ) , index ) )
         {
@@ -492,12 +492,12 @@ void shy_guts :: camera_target_index_is_duplicate ( so_called_type_platform_math
 }
 
 void shy_guts :: get_random_index
-    ( so_called_type_platform_math_num_whole & result
-    , so_called_type_platform_math_num_whole index_min
-    , so_called_type_platform_math_num_whole index_max
+    ( so_called_platform_math_num_whole_type & result
+    , so_called_platform_math_num_whole_type index_min
+    , so_called_platform_math_num_whole_type index_max
     )
 {
-    so_called_type_platform_math_num_whole index_diff ;
+    so_called_platform_math_num_whole_type index_diff ;
     so_called_platform_math :: add_to_whole ( shy_guts :: random_seed , shy_guts :: consts :: random_const_1 ) ;
     so_called_platform_math :: mod_whole_by ( shy_guts :: random_seed , shy_guts :: consts :: random_const_2 ) ;
     so_called_platform_math :: sub_wholes ( index_diff , index_max , index_min ) ;
@@ -540,17 +540,17 @@ void _shy_common_logic_camera :: receive ( so_called_common_init_message )
     shy_guts :: desired_camera_origin_new_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: desired_camera_target_new_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_platform_math_consts :: whole_4 )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_vector_data origin_pos ;
-        so_called_type_platform_vector_data target_pos ;
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_origin_index ;
-        so_called_type_platform_pointer_data < so_called_type_platform_math_num_whole > scheduled_target_index ;
-        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_origin_pos ;
-        so_called_type_platform_pointer_data < so_called_type_platform_vector_data > scheduled_target_pos ;
+        so_called_platform_vector_data_type origin_pos ;
+        so_called_platform_vector_data_type target_pos ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_origin_index ;
+        so_called_platform_pointer_data_type < so_called_platform_math_num_whole_type > scheduled_target_index ;
+        so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_origin_pos ;
+        so_called_platform_pointer_data_type < so_called_platform_vector_data_type > scheduled_target_pos ;
     
         so_called_platform_static_array :: element_ptr ( scheduled_origin_index , shy_guts :: scheduled_camera_origin_indices , i ) ;
         so_called_platform_static_array :: element_ptr ( scheduled_target_index , shy_guts :: scheduled_camera_target_indices , i ) ;

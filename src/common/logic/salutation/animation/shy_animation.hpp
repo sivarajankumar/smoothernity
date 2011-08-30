@@ -2,9 +2,9 @@ namespace shy_guts
 {
     namespace consts
     {
-        static so_called_type_platform_math_num_fract origin_x = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-        static so_called_type_platform_math_num_fract origin_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-        static so_called_type_platform_math_num_fract origin_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+        static so_called_platform_math_num_fract_type origin_x = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+        static so_called_platform_math_num_fract_type origin_y = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
+        static so_called_platform_math_num_fract_type origin_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
     }
 
     namespace logic_salutation_animation_transform_state
@@ -42,7 +42,7 @@ void shy_guts :: request_animation_zoom_transform ( )
 
 void shy_guts :: send_computed_transform ( )
 {
-    so_called_type_platform_vector_data origin ;
+    so_called_platform_vector_data_type origin ;
     so_called_platform_vector :: xyz 
         ( origin
         , shy_guts :: consts :: origin_x
@@ -50,10 +50,10 @@ void shy_guts :: send_computed_transform ( )
         , shy_guts :: consts :: origin_z
         ) ;
 
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_math_num_fract_type scale ;
     scale = shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . msg_reply . scale ;
 
-    so_called_type_platform_matrix_data transform ;
+    so_called_platform_matrix_data_type transform ;
     so_called_common_engine_math_stateless :: scale ( transform , scale ) ;
     so_called_platform_matrix :: set_origin ( transform , origin ) ;
 
@@ -74,7 +74,7 @@ void _shy_common_logic_salutation_animation :: receive ( so_called_common_logic_
 
 void _shy_common_logic_salutation_animation :: receive ( so_called_common_logic_salutation_animation_zoom_transform_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_animation_zoom_transform_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_animation_zoom_transform_state :: on_reply ( ) ;

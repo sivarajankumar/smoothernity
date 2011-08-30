@@ -2,15 +2,15 @@ namespace shy_guts
 {
     namespace logic_door_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     namespace logic_door_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -51,12 +51,12 @@ void shy_guts :: reply_computed_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract origin_x ;
-    so_called_type_platform_math_num_fract origin_y ;
-    so_called_type_platform_math_num_fract origin_z ;
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_matrix_data transform ;
+    so_called_platform_math_num_fract_type origin_x ;
+    so_called_platform_math_num_fract_type origin_y ;
+    so_called_platform_math_num_fract_type origin_z ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_matrix_data_type transform ;
 
     origin_x = so_called_common_logic_door_animation_consts :: animation_origin_x ;
     origin_y = so_called_common_logic_door_animation_consts :: animation_origin_y ;

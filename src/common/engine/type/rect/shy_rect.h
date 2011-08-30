@@ -1,8 +1,8 @@
-class shy_type_common_engine_rect
+class shy_common_engine_rect_type
 {
 public :
-    so_called_type_platform_math_num_fract left ;
-    so_called_type_platform_math_num_fract right ;
-    so_called_type_platform_math_num_fract bottom ;
-    so_called_type_platform_math_num_fract top ;
+    so_called_platform_math_num_fract_type left ;
+    so_called_platform_math_num_fract_type right ;
+    so_called_platform_math_num_fract_type bottom ;
+    so_called_platform_math_num_fract_type top ;
 } ;

@@ -2,16 +2,16 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_animation_unselection_weight_state
     {
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole row_unselected ;
-        static so_called_type_platform_math_num_whole unselected_row_index ;
-        static so_called_type_platform_math_num_fract weight ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type row_unselected ;
+        static so_called_platform_math_num_whole_type unselected_row_index ;
+        static so_called_platform_math_num_fract_type weight ;
     }
     
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void proceed_with_weight ( ) ;
@@ -25,9 +25,9 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: proceed_with_weight ( )
 {
-    so_called_type_platform_math_num_whole row_unselected ;
-    so_called_type_platform_math_num_whole unselected_row_index ;
-    so_called_type_platform_math_num_whole requested_row ;
+    so_called_platform_math_num_whole_type row_unselected ;
+    so_called_platform_math_num_whole_type unselected_row_index ;
+    so_called_platform_math_num_whole_type requested_row ;
     
     row_unselected = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: row_unselected ;
     unselected_row_index = shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: unselected_row_index ;
@@ -46,14 +46,14 @@ void shy_guts :: proceed_with_weight ( )
 
 void shy_guts :: compute_weight ( )
 {
-    so_called_type_platform_math_num_fract time_to_begin ;
-    so_called_type_platform_math_num_fract time_from_begin_to_end ;
-    so_called_type_platform_math_num_fract time_begin ;
-    so_called_type_platform_math_num_fract time_end ;
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract weight_begin ;
-    so_called_type_platform_math_num_fract weight_end ;
-    so_called_type_platform_math_num_fract weight ;
+    so_called_platform_math_num_fract_type time_to_begin ;
+    so_called_platform_math_num_fract_type time_from_begin_to_end ;
+    so_called_platform_math_num_fract_type time_begin ;
+    so_called_platform_math_num_fract_type time_end ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type weight_begin ;
+    so_called_platform_math_num_fract_type weight_end ;
+    so_called_platform_math_num_fract_type weight ;
     
     time_to_begin = so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_to_begin ;
     time_from_begin_to_end = so_called_common_logic_main_menu_letters_animation_consts :: unselection_weight_time_from_begin_to_end ;
@@ -119,7 +119,7 @@ void _shy_common_logic_main_menu_letters_animation_unselection_weight :: receive
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: row_unselected ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }

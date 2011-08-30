@@ -2,19 +2,19 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_whole never = so_called_platform_math :: init_num_whole ( 9999 ) ;
-        static so_called_type_platform_math_const_int_32 max_letters = 32 ;
+        static const so_called_platform_math_num_whole_type never = so_called_platform_math :: init_num_whole ( 9999 ) ;
+        static so_called_platform_math_const_int_32_type max_letters = 32 ;
     }
     
     class letter_state
     {
     public :
-        so_called_type_platform_math_num_fract pos_radius ;
-        so_called_type_platform_math_num_fract pos_angle ;
-        so_called_type_platform_math_num_fract rot_angle ;
-        so_called_type_platform_math_num_fract scale ;
-        so_called_type_common_engine_render_mesh_id mesh ;
-        so_called_type_common_logic_text_letter_id letter ;
+        so_called_platform_math_num_fract_type pos_radius ;
+        so_called_platform_math_num_fract_type pos_angle ;
+        so_called_platform_math_num_fract_type rot_angle ;
+        so_called_platform_math_num_fract_type scale ;
+        so_called_common_engine_render_mesh_id_type mesh ;
+        so_called_common_logic_text_letter_id_type letter ;
     } ;
 
     static void title_create ( ) ;
@@ -30,80 +30,80 @@ namespace shy_guts
     static void proceed_with_render ( ) ;
     static void proceed_with_letter_creation ( ) ;
     static void add_letter 
-        ( so_called_type_common_logic_text_letter_id 
+        ( so_called_common_logic_text_letter_id_type 
         ) ;
     static void mesh_set_triangle_strip_index_value 
-        ( so_called_type_common_engine_render_mesh_id mesh
-        , so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_whole index 
+        ( so_called_common_engine_render_mesh_id_type mesh
+        , so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_whole_type index 
         ) ;
     static void mesh_set_vertex_tex_coord 
-        ( so_called_type_common_engine_render_mesh_id mesh 
-        , so_called_type_platform_math_num_whole offset 
-        , so_called_type_platform_math_num_fract u 
-        , so_called_type_platform_math_num_fract v 
+        ( so_called_common_engine_render_mesh_id_type mesh 
+        , so_called_platform_math_num_whole_type offset 
+        , so_called_platform_math_num_fract_type u 
+        , so_called_platform_math_num_fract_type v 
         ) ;
     static void mesh_set_vertex_position 
-        ( so_called_type_common_engine_render_mesh_id mesh
-        , so_called_type_platform_math_num_whole offset 
-        , so_called_type_platform_math_num_fract x 
-        , so_called_type_platform_math_num_fract y 
-        , so_called_type_platform_math_num_fract z 
+        ( so_called_common_engine_render_mesh_id_type mesh
+        , so_called_platform_math_num_whole_type offset 
+        , so_called_platform_math_num_fract_type x 
+        , so_called_platform_math_num_fract_type y 
+        , so_called_platform_math_num_fract_type z 
         ) ;
     static void mesh_set_vertex_color 
-        ( so_called_type_common_engine_render_mesh_id mesh
-        , so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_fract r
-        , so_called_type_platform_math_num_fract g
-        , so_called_type_platform_math_num_fract b
-        , so_called_type_platform_math_num_fract a
+        ( so_called_common_engine_render_mesh_id_type mesh
+        , so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_fract_type r
+        , so_called_platform_math_num_fract_type g
+        , so_called_platform_math_num_fract_type b
+        , so_called_platform_math_num_fract_type a
         ) ;
 
-    static so_called_type_platform_static_array_data < shy_guts :: letter_state , shy_guts :: consts :: max_letters > letters ;
+    static so_called_platform_static_array_data_type < shy_guts :: letter_state , shy_guts :: consts :: max_letters > letters ;
 
-    static so_called_type_platform_math_num_whole title_launch_permitted ;
-    static so_called_type_platform_math_num_whole title_created ;
-    static so_called_type_platform_math_num_whole title_finished ;
-    static so_called_type_platform_math_num_whole title_frames ;
-    static so_called_type_platform_math_num_whole title_appeared ;
-    static so_called_type_platform_math_num_whole letters_count ;
-    static so_called_type_platform_math_num_whole disappear_at_frames ;
-    static so_called_type_platform_math_num_whole bake_letter_index ;
+    static so_called_platform_math_num_whole_type title_launch_permitted ;
+    static so_called_platform_math_num_whole_type title_created ;
+    static so_called_platform_math_num_whole_type title_finished ;
+    static so_called_platform_math_num_whole_type title_frames ;
+    static so_called_platform_math_num_whole_type title_appeared ;
+    static so_called_platform_math_num_whole_type letters_count ;
+    static so_called_platform_math_num_whole_type disappear_at_frames ;
+    static so_called_platform_math_num_whole_type bake_letter_index ;
 
-    static so_called_type_platform_math_num_whole render_started ;
+    static so_called_platform_math_num_whole_type render_started ;
     
-    static so_called_type_platform_math_num_whole mesh_create_requested ;
-    static so_called_type_platform_math_num_whole mesh_create_replied ;
+    static so_called_platform_math_num_whole_type mesh_create_requested ;
+    static so_called_platform_math_num_whole_type mesh_create_replied ;
     
-    static so_called_type_platform_math_num_whole use_ortho_projection_requested ;
-    static so_called_type_platform_math_num_whole use_ortho_projection_replied ;
+    static so_called_platform_math_num_whole_type use_ortho_projection_requested ;
+    static so_called_platform_math_num_whole_type use_ortho_projection_replied ;
     
-    static so_called_type_platform_math_num_whole fidget_render_requested ;
-    static so_called_type_platform_math_num_whole fidget_render_replied ;
+    static so_called_platform_math_num_whole_type fidget_render_requested ;
+    static so_called_platform_math_num_whole_type fidget_render_replied ;
 
-    static so_called_type_platform_math_num_whole use_text_texture_requested ;
-    static so_called_type_platform_math_num_whole use_text_texture_replied ;
+    static so_called_platform_math_num_whole_type use_text_texture_requested ;
+    static so_called_platform_math_num_whole_type use_text_texture_replied ;
     
-    static so_called_type_platform_math_num_whole text_letter_big_tex_coords_requested ;
-    static so_called_type_platform_math_num_whole text_letter_big_tex_coords_replied ;
-    static so_called_type_common_logic_text_letter_id text_letter_big_tex_coords_letter ;
+    static so_called_platform_math_num_whole_type text_letter_big_tex_coords_requested ;
+    static so_called_platform_math_num_whole_type text_letter_big_tex_coords_replied ;
+    static so_called_common_logic_text_letter_id_type text_letter_big_tex_coords_letter ;
     
-    static so_called_type_platform_math_num_whole render_aspect_requested ;
-    static so_called_type_platform_math_num_fract render_aspect_width ;
+    static so_called_platform_math_num_whole_type render_aspect_requested ;
+    static so_called_platform_math_num_fract_type render_aspect_width ;
     
-    static so_called_type_platform_math_num_fract tex_coords_left ;
-    static so_called_type_platform_math_num_fract tex_coords_right ;
-    static so_called_type_platform_math_num_fract tex_coords_bottom ;
-    static so_called_type_platform_math_num_fract tex_coords_top ;
+    static so_called_platform_math_num_fract_type tex_coords_left ;
+    static so_called_platform_math_num_fract_type tex_coords_right ;
+    static so_called_platform_math_num_fract_type tex_coords_bottom ;
+    static so_called_platform_math_num_fract_type tex_coords_top ;
     
-    static so_called_type_platform_math_num_fract desired_pos_radius_coeff ;
-    static so_called_type_platform_math_num_fract desired_pos_angle ;
-    static so_called_type_platform_math_num_fract desired_rot_angle ;
-    static so_called_type_platform_math_num_fract desired_scale ;
-    static so_called_type_platform_math_num_fract scene_scale ;
-    static so_called_type_platform_math_num_fract scene_scale_frames ;
-    static so_called_type_platform_math_num_fract rubber_first ;
-    static so_called_type_platform_math_num_fract rubber_last ;
+    static so_called_platform_math_num_fract_type desired_pos_radius_coeff ;
+    static so_called_platform_math_num_fract_type desired_pos_angle ;
+    static so_called_platform_math_num_fract_type desired_rot_angle ;
+    static so_called_platform_math_num_fract_type desired_scale ;
+    static so_called_platform_math_num_fract_type scene_scale ;
+    static so_called_platform_math_num_fract_type scene_scale_frames ;
+    static so_called_platform_math_num_fract_type rubber_first ;
+    static so_called_platform_math_num_fract_type rubber_last ;
 } 
   
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_title > _scheduled_context_type ;
@@ -129,7 +129,7 @@ void shy_guts :: title_create ( )
 
 void shy_guts :: title_render ( )
 {
-    so_called_type_platform_matrix_data scene_tm ;
+    so_called_platform_matrix_data_type scene_tm ;
 
     so_called_platform_matrix :: set_axis_x ( scene_tm , shy_guts :: scene_scale , so_called_platform_math_consts :: fract_0 , so_called_platform_math_consts :: fract_0 ) ;
     so_called_platform_matrix :: set_axis_y ( scene_tm , so_called_platform_math_consts :: fract_0 , shy_guts :: scene_scale , so_called_platform_math_consts :: fract_0 ) ;
@@ -142,12 +142,12 @@ void shy_guts :: title_render ( )
     matrix_load_msg . matrix = scene_tm ;
     so_called_common_engine_render_matrix_load_sender :: send ( matrix_load_msg ) ;
     
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         so_called_common_engine_render_mesh_render_message mesh_render_msg ;
         mesh_render_msg . mesh = letter . get ( ) . mesh ;
@@ -158,11 +158,11 @@ void shy_guts :: title_render ( )
 
 void shy_guts :: title_update ( )
 {
-    so_called_type_platform_math_num_fract fract_letters_count ;
-    so_called_type_platform_math_num_fract letter_size ;
-    so_called_type_platform_math_num_fract desired_pos_radius ;
-    so_called_type_platform_math_num_fract offset_y ;
-    so_called_type_platform_math_num_fract fract_appear_duration_in_frames ;
+    so_called_platform_math_num_fract_type fract_letters_count ;
+    so_called_platform_math_num_fract_type letter_size ;
+    so_called_platform_math_num_fract_type desired_pos_radius ;
+    so_called_platform_math_num_fract_type offset_y ;
+    so_called_platform_math_num_fract_type fract_appear_duration_in_frames ;
     
     so_called_platform_math :: make_fract_from_whole ( fract_letters_count , shy_guts :: letters_count ) ;
     so_called_platform_math :: div_fracts ( letter_size , shy_guts :: render_aspect_width , fract_letters_count ) ;    
@@ -181,37 +181,37 @@ void shy_guts :: title_update ( )
         ) ;
     so_called_platform_math :: add_to_fract ( shy_guts :: scene_scale_frames , so_called_platform_math_consts :: fract_1 ) ;
                     
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_math_num_fract offset_x ;
-        so_called_type_platform_math_num_fract fract_i ;
-        so_called_type_platform_math_num_fract rot_cos ;
-        so_called_type_platform_math_num_fract rot_sin ;
-        so_called_type_platform_math_num_fract rot_neg_sin ;
-        so_called_type_platform_math_num_fract pos_cos ;
-        so_called_type_platform_math_num_fract pos_sin ;
-        so_called_type_platform_math_num_fract pos_neg_sin ;
-        so_called_type_platform_math_num_fract rubber ;
-        so_called_type_platform_math_num_fract pos_radius_old_part ;
-        so_called_type_platform_math_num_fract pos_radius_new_part ;
-        so_called_type_platform_math_num_fract pos_angle_old_part ;
-        so_called_type_platform_math_num_fract pos_angle_new_part ;
-        so_called_type_platform_math_num_fract rot_angle_old_part ;
-        so_called_type_platform_math_num_fract rot_angle_new_part ;
-        so_called_type_platform_math_num_fract scale_old_part ;
-        so_called_type_platform_math_num_fract scale_new_part ;
-        so_called_type_platform_math_num_whole starting_frame ;
-        so_called_type_platform_math_num_whole finishing_frame ;
-        so_called_type_platform_vector_data axis_x ;
-        so_called_type_platform_vector_data axis_y ;
-        so_called_type_platform_vector_data origin ;
-        so_called_type_platform_vector_data offset ;
-        so_called_type_platform_vector_data pos ;
-        so_called_type_platform_matrix_data tm ;
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_math_num_fract_type offset_x ;
+        so_called_platform_math_num_fract_type fract_i ;
+        so_called_platform_math_num_fract_type rot_cos ;
+        so_called_platform_math_num_fract_type rot_sin ;
+        so_called_platform_math_num_fract_type rot_neg_sin ;
+        so_called_platform_math_num_fract_type pos_cos ;
+        so_called_platform_math_num_fract_type pos_sin ;
+        so_called_platform_math_num_fract_type pos_neg_sin ;
+        so_called_platform_math_num_fract_type rubber ;
+        so_called_platform_math_num_fract_type pos_radius_old_part ;
+        so_called_platform_math_num_fract_type pos_radius_new_part ;
+        so_called_platform_math_num_fract_type pos_angle_old_part ;
+        so_called_platform_math_num_fract_type pos_angle_new_part ;
+        so_called_platform_math_num_fract_type rot_angle_old_part ;
+        so_called_platform_math_num_fract_type rot_angle_new_part ;
+        so_called_platform_math_num_fract_type scale_old_part ;
+        so_called_platform_math_num_fract_type scale_new_part ;
+        so_called_platform_math_num_whole_type starting_frame ;
+        so_called_platform_math_num_whole_type finishing_frame ;
+        so_called_platform_vector_data_type axis_x ;
+        so_called_platform_vector_data_type axis_y ;
+        so_called_platform_vector_data_type origin ;
+        so_called_platform_vector_data_type offset ;
+        so_called_platform_vector_data_type pos ;
+        so_called_platform_matrix_data_type tm ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         
@@ -294,12 +294,12 @@ void shy_guts :: title_update ( )
 
 void shy_guts :: delete_all_meshes ( )
 {
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: letters_count )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , i ) ;
         so_called_common_engine_render_mesh_delete_message mesh_delete_msg ;
         mesh_delete_msg . mesh = letter . get ( ) . mesh ;
@@ -369,7 +369,7 @@ void shy_guts :: bake_next_letter ( )
 {
     if ( so_called_platform_conditions :: whole_less_than_whole ( shy_guts :: bake_letter_index , shy_guts :: letters_count ) )
     {
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
         
         letter . get ( ) . scale = so_called_platform_math_consts :: fract_0 ;
@@ -448,17 +448,17 @@ void shy_guts :: proceed_with_letter_creation ( )
         shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_false ;
         shy_guts :: text_letter_big_tex_coords_replied = so_called_platform_math_consts :: whole_false ;
                 
-        so_called_type_platform_math_num_fract title_r = so_called_platform_math_consts :: fract_0 ;
-        so_called_type_platform_math_num_fract title_g = so_called_platform_math_consts :: fract_1 ;
-        so_called_type_platform_math_num_fract title_b = so_called_platform_math_consts :: fract_0 ;
-        so_called_type_platform_math_num_fract title_a = so_called_platform_math_consts :: fract_1 ;
-        so_called_type_platform_math_num_fract x_left = so_called_platform_math_consts :: fract_minus_1 ;
-        so_called_type_platform_math_num_fract x_right = so_called_platform_math_consts :: fract_1 ;
-        so_called_type_platform_math_num_fract y_bottom = so_called_platform_math_consts :: fract_minus_1 ;
-        so_called_type_platform_math_num_fract y_top = so_called_platform_math_consts :: fract_1 ;
-        so_called_type_platform_math_num_fract z = so_called_platform_math_consts :: fract_0 ;
+        so_called_platform_math_num_fract_type title_r = so_called_platform_math_consts :: fract_0 ;
+        so_called_platform_math_num_fract_type title_g = so_called_platform_math_consts :: fract_1 ;
+        so_called_platform_math_num_fract_type title_b = so_called_platform_math_consts :: fract_0 ;
+        so_called_platform_math_num_fract_type title_a = so_called_platform_math_consts :: fract_1 ;
+        so_called_platform_math_num_fract_type x_left = so_called_platform_math_consts :: fract_minus_1 ;
+        so_called_platform_math_num_fract_type x_right = so_called_platform_math_consts :: fract_1 ;
+        so_called_platform_math_num_fract_type y_bottom = so_called_platform_math_consts :: fract_minus_1 ;
+        so_called_platform_math_num_fract_type y_top = so_called_platform_math_consts :: fract_1 ;
+        so_called_platform_math_num_fract_type z = so_called_platform_math_consts :: fract_0 ;
         
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
         
         shy_guts :: mesh_set_triangle_strip_index_value ( letter . get ( ) . mesh , so_called_platform_math_consts :: whole_0 , so_called_platform_math_consts :: whole_0 ) ;
@@ -490,18 +490,18 @@ void shy_guts :: proceed_with_letter_creation ( )
     }
 }
 
-void shy_guts :: add_letter ( so_called_type_common_logic_text_letter_id letter )
+void shy_guts :: add_letter ( so_called_common_logic_text_letter_id_type letter )
 {
-    so_called_type_platform_pointer_data < shy_guts :: letter_state > letter_state ;
+    so_called_platform_pointer_data_type < shy_guts :: letter_state > letter_state ;
     so_called_platform_static_array :: element_ptr ( letter_state , shy_guts :: letters , shy_guts :: letters_count ) ;
     letter_state . get ( ) . letter = letter ;
     so_called_platform_math :: inc_whole ( shy_guts :: letters_count ) ;
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value 
-    ( so_called_type_common_engine_render_mesh_id mesh
-    , so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_whole index 
+    ( so_called_common_engine_render_mesh_id_type mesh
+    , so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_whole_type index 
     )
 {
     so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
@@ -512,10 +512,10 @@ void shy_guts :: mesh_set_triangle_strip_index_value
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
-    ( so_called_type_common_engine_render_mesh_id mesh 
-    , so_called_type_platform_math_num_whole offset 
-    , so_called_type_platform_math_num_fract u 
-    , so_called_type_platform_math_num_fract v 
+    ( so_called_common_engine_render_mesh_id_type mesh 
+    , so_called_platform_math_num_whole_type offset 
+    , so_called_platform_math_num_fract_type u 
+    , so_called_platform_math_num_fract_type v 
     )
 {
     so_called_common_engine_render_mesh_set_vertex_tex_coord_message msg ;
@@ -527,11 +527,11 @@ void shy_guts :: mesh_set_vertex_tex_coord
 }
 
 void shy_guts :: mesh_set_vertex_position 
-    ( so_called_type_common_engine_render_mesh_id mesh
-    , so_called_type_platform_math_num_whole offset 
-    , so_called_type_platform_math_num_fract x 
-    , so_called_type_platform_math_num_fract y 
-    , so_called_type_platform_math_num_fract z 
+    ( so_called_common_engine_render_mesh_id_type mesh
+    , so_called_platform_math_num_whole_type offset 
+    , so_called_platform_math_num_fract_type x 
+    , so_called_platform_math_num_fract_type y 
+    , so_called_platform_math_num_fract_type z 
     )
 {
     so_called_common_engine_render_mesh_set_vertex_position_message msg ;
@@ -544,12 +544,12 @@ void shy_guts :: mesh_set_vertex_position
 }
 
 void shy_guts :: mesh_set_vertex_color 
-    ( so_called_type_common_engine_render_mesh_id mesh
-    , so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_fract r
-    , so_called_type_platform_math_num_fract g
-    , so_called_type_platform_math_num_fract b
-    , so_called_type_platform_math_num_fract a
+    ( so_called_common_engine_render_mesh_id_type mesh
+    , so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_fract_type r
+    , so_called_platform_math_num_fract_type g
+    , so_called_platform_math_num_fract_type b
+    , so_called_platform_math_num_fract_type a
     )
 {
     so_called_common_engine_render_mesh_set_vertex_color_message msg ;
@@ -581,7 +581,7 @@ void _shy_common_logic_title :: receive ( so_called_common_engine_render_mesh_cr
     {
         shy_guts :: mesh_create_requested = so_called_platform_math_consts :: whole_false ;
         shy_guts :: mesh_create_replied = so_called_platform_math_consts :: whole_true ;
-        so_called_type_platform_pointer_data < shy_guts :: letter_state > letter ;
+        so_called_platform_pointer_data_type < shy_guts :: letter_state > letter ;
         so_called_platform_static_array :: element_ptr ( letter , shy_guts :: letters , shy_guts :: bake_letter_index ) ;
         letter . get ( ) . mesh = msg . mesh ;
         shy_guts :: proceed_with_letter_creation ( ) ;
@@ -636,7 +636,7 @@ void _shy_common_logic_title :: receive ( so_called_common_logic_fidget_render_r
 
 void _shy_common_logic_title :: receive ( so_called_common_logic_text_letter_big_tex_coords_reply_message msg )
 {
-    so_called_type_platform_math_num_whole letters_are_equal ;
+    so_called_platform_math_num_whole_type letters_are_equal ;
     so_called_common_logic_text_stateless :: are_letters_equal ( letters_are_equal , shy_guts :: text_letter_big_tex_coords_letter , msg . letter ) ;
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: text_letter_big_tex_coords_requested ) 
       && so_called_platform_conditions :: whole_is_true ( letters_are_equal )

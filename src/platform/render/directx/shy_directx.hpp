@@ -73,12 +73,12 @@ void shy_platform_render_directx :: done ( )
 }
 
 void shy_platform_render_directx :: _load_texture_subdata 
-    ( so_called_type_platform_render_directx_texture_id arg_texture_id 
-    , so_called_type_platform_math_num_whole x_offset 
-    , so_called_type_platform_math_num_whole y_offset 
-    , so_called_type_platform_math_num_whole width
-    , so_called_type_platform_math_num_whole height
-    , const so_called_type_platform_render_directx_texel_data * data_ptr
+    ( so_called_platform_render_directx_texture_id_type arg_texture_id 
+    , so_called_platform_math_num_whole_type x_offset 
+    , so_called_platform_math_num_whole_type y_offset 
+    , so_called_platform_math_num_whole_type width
+    , so_called_platform_math_num_whole_type height
+    , const so_called_platform_render_directx_texel_data_type * data_ptr
     )
 {
     so_called_lib_directx_HRESULT hr ;
@@ -120,16 +120,16 @@ void shy_platform_render_directx :: _load_texture_subdata
     {
         so_called_lib_std_int32_t d3d_y = y + y_offset_int ;
         so_called_lib_std_char * dst_data_ptr = 0 ;
-        const so_called_type_platform_render_directx_texel_data * src_data_ptr = 0 ;
+        const so_called_platform_render_directx_texel_data_type * src_data_ptr = 0 ;
         dst_data_ptr = ( so_called_lib_std_char * ) locked_rect . pBits ;
         dst_data_ptr += locked_rect . Pitch * d3d_y ;
-        dst_data_ptr += x_offset_int * sizeof ( so_called_type_platform_render_directx_texel_data ) ;
+        dst_data_ptr += x_offset_int * sizeof ( so_called_platform_render_directx_texel_data_type ) ;
         src_data_ptr = data_ptr ;
         src_data_ptr += width_int * y ;
         so_called_lib_std_memcpy 
             ( dst_data_ptr 
             , src_data_ptr 
-            , width_int * sizeof ( so_called_type_platform_render_directx_texel_data ) 
+            , width_int * sizeof ( so_called_platform_render_directx_texel_data_type ) 
             ) ;
     }
     so_called_lib_directx_V
@@ -232,12 +232,12 @@ void shy_platform_render_directx :: fog_disable ( )
 }
 
 void shy_platform_render_directx :: fog_linear 
-    ( so_called_type_platform_math_num_fract znear 
-    , so_called_type_platform_math_num_fract zfar 
-    , so_called_type_platform_math_num_fract r 
-    , so_called_type_platform_math_num_fract g 
-    , so_called_type_platform_math_num_fract b 
-    , so_called_type_platform_math_num_fract a 
+    ( so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
+    , so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
+    , so_called_platform_math_num_fract_type a 
     )
 {
     so_called_lib_std_float r_float ;
@@ -296,8 +296,8 @@ void shy_platform_render_directx :: fog_linear
 }
 
 void shy_platform_render_directx :: create_texture_id 
-    ( so_called_type_platform_render_directx_texture_id & arg_texture_id 
-    , so_called_type_platform_math_num_whole size_pow2_base 
+    ( so_called_platform_render_directx_texture_id_type & arg_texture_id 
+    , so_called_platform_math_num_whole_type size_pow2_base 
     )
 {
     so_called_lib_directx_HRESULT hr ;
@@ -322,7 +322,7 @@ void shy_platform_render_directx :: create_texture_id
         ) ;
 }
 
-void shy_platform_render_directx :: use_texture ( so_called_type_platform_render_directx_texture_id arg_texture_id )
+void shy_platform_render_directx :: use_texture ( so_called_platform_render_directx_texture_id_type arg_texture_id )
 {
     so_called_lib_directx_HRESULT hr ;
     so_called_lib_directx_V
@@ -334,11 +334,11 @@ void shy_platform_render_directx :: use_texture ( so_called_type_platform_render
 }
 
 void shy_platform_render_directx :: set_texel_color 
-    ( so_called_type_platform_render_directx_texel_data & texel 
-    , so_called_type_platform_math_num_fract r 
-    , so_called_type_platform_math_num_fract g 
-    , so_called_type_platform_math_num_fract b 
-    , so_called_type_platform_math_num_fract a 
+    ( so_called_platform_render_directx_texel_data_type & texel 
+    , so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
+    , so_called_platform_math_num_fract_type a 
     )
 {
     so_called_lib_std_float r_float ;
@@ -356,9 +356,9 @@ void shy_platform_render_directx :: set_texel_color
 }
 
 void shy_platform_render_directx :: clear_screen 
-    ( so_called_type_platform_math_num_fract r 
-    , so_called_type_platform_math_num_fract g 
-    , so_called_type_platform_math_num_fract b 
+    ( so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
     )
 {
     so_called_lib_directx_HRESULT hr ;
@@ -387,12 +387,12 @@ void shy_platform_render_directx :: clear_screen
 }
 
 void shy_platform_render_directx :: projection_frustum 
-    ( so_called_type_platform_math_num_fract left 
-    , so_called_type_platform_math_num_fract right 
-    , so_called_type_platform_math_num_fract bottom 
-    , so_called_type_platform_math_num_fract top 
-    , so_called_type_platform_math_num_fract znear 
-    , so_called_type_platform_math_num_fract zfar 
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
     )
 {
     so_called_lib_std_float float_left = 0 ;
@@ -428,12 +428,12 @@ void shy_platform_render_directx :: projection_frustum
 }
 
 void shy_platform_render_directx :: projection_ortho 
-    ( so_called_type_platform_math_num_fract left 
-    , so_called_type_platform_math_num_fract right 
-    , so_called_type_platform_math_num_fract bottom 
-    , so_called_type_platform_math_num_fract top 
-    , so_called_type_platform_math_num_fract znear 
-    , so_called_type_platform_math_num_fract zfar 
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
     )
 {
     so_called_lib_std_float float_left = 0 ;
@@ -469,8 +469,8 @@ void shy_platform_render_directx :: projection_ortho
 }
 
 void shy_platform_render_directx :: create_vertex_buffer 
-    ( so_called_type_platform_render_directx_vertex_buffer_id & arg_buffer_id 
-    , so_called_type_platform_math_num_whole elements 
+    ( so_called_platform_render_directx_vertex_buffer_id_type & arg_buffer_id 
+    , so_called_platform_math_num_whole_type elements 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -478,7 +478,7 @@ void shy_platform_render_directx :: create_vertex_buffer
     so_called_platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
 	so_called_lib_directx_V 
         ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateVertexBuffer 
-		    ( sizeof ( so_called_type_platform_render_directx_vertex_data ) * int_elements
+		    ( sizeof ( so_called_platform_render_directx_vertex_data_type ) * int_elements
 		    , so_called_lib_directx_D3DUSAGE_WRITEONLY
 		    , so_called_lib_directx_D3DFVF_XYZ 
                 | so_called_lib_directx_D3DFVF_DIFFUSE 
@@ -491,8 +491,8 @@ void shy_platform_render_directx :: create_vertex_buffer
 }
 
 void shy_platform_render_directx :: map_vertex_buffer
-    ( so_called_type_platform_render_directx_vertex_buffer_mapped_data & data 
-    , so_called_type_platform_render_directx_vertex_buffer_id arg_buffer_id 
+    ( so_called_platform_render_directx_vertex_buffer_mapped_data_type & data 
+    , so_called_platform_render_directx_vertex_buffer_id_type arg_buffer_id 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -506,7 +506,7 @@ void shy_platform_render_directx :: map_vertex_buffer
         ) ;
 }
 
-void shy_platform_render_directx :: unmap_vertex_buffer ( so_called_type_platform_render_directx_vertex_buffer_id arg_buffer_id )
+void shy_platform_render_directx :: unmap_vertex_buffer ( so_called_platform_render_directx_vertex_buffer_id_type arg_buffer_id )
 {
 	so_called_lib_directx_HRESULT hr ;
 	so_called_lib_directx_V 
@@ -515,23 +515,23 @@ void shy_platform_render_directx :: unmap_vertex_buffer ( so_called_type_platfor
 }
 
 void shy_platform_render_directx :: mapped_vertex_buffer_element
-    ( so_called_type_platform_pointer_data < so_called_type_platform_render_directx_vertex_data > & ptr 
-    , so_called_type_platform_render_directx_vertex_buffer_mapped_data data
-    , so_called_type_platform_math_num_whole index
+    ( so_called_platform_pointer_data_type < so_called_platform_render_directx_vertex_data_type > & ptr 
+    , so_called_platform_render_directx_vertex_buffer_mapped_data_type data
+    , so_called_platform_math_num_whole_type index
     )
 {
-    so_called_type_platform_render_directx_vertex_data * mapped_vertices = 0 ;
-    mapped_vertices = ( so_called_type_platform_render_directx_vertex_data * ) data . _data ;
+    so_called_platform_render_directx_vertex_data_type * mapped_vertices = 0 ;
+    mapped_vertices = ( so_called_platform_render_directx_vertex_data_type * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( ptr , mapped_vertices [ index_int ] ) ;
 }
 
 void shy_platform_render_directx :: set_vertex_position 
-    ( so_called_type_platform_render_directx_vertex_data & vertex 
-    , so_called_type_platform_math_num_fract x 
-    , so_called_type_platform_math_num_fract y 
-    , so_called_type_platform_math_num_fract z 
+    ( so_called_platform_render_directx_vertex_data_type & vertex 
+    , so_called_platform_math_num_fract_type x 
+    , so_called_platform_math_num_fract_type y 
+    , so_called_platform_math_num_fract_type z 
     )
 {
 	so_called_platform_math_insider :: num_fract_value_get ( vertex . _x , x ) ;
@@ -540,9 +540,9 @@ void shy_platform_render_directx :: set_vertex_position
 }
 
 void shy_platform_render_directx :: set_vertex_tex_coord 
-    ( so_called_type_platform_render_directx_vertex_data & vertex 
-    , so_called_type_platform_math_num_fract u 
-    , so_called_type_platform_math_num_fract v 
+    ( so_called_platform_render_directx_vertex_data_type & vertex 
+    , so_called_platform_math_num_fract_type u 
+    , so_called_platform_math_num_fract_type v 
     )
 {
 	so_called_platform_math_insider :: num_fract_value_get ( vertex . _u , u ) ;
@@ -550,11 +550,11 @@ void shy_platform_render_directx :: set_vertex_tex_coord
 }
 
 void shy_platform_render_directx :: set_vertex_color 
-    ( so_called_type_platform_render_directx_vertex_data & vertex 
-    , so_called_type_platform_math_num_fract r 
-    , so_called_type_platform_math_num_fract g 
-    , so_called_type_platform_math_num_fract b 
-    , so_called_type_platform_math_num_fract a 
+    ( so_called_platform_render_directx_vertex_data_type & vertex 
+    , so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
+    , so_called_platform_math_num_fract_type a 
     )
 {
     so_called_lib_std_float float_r = 0 ;
@@ -574,8 +574,8 @@ void shy_platform_render_directx :: set_vertex_color
 }
 
 void shy_platform_render_directx :: create_index_buffer 
-    ( so_called_type_platform_render_directx_index_buffer_id & arg_buffer_id 
-    , so_called_type_platform_math_num_whole elements 
+    ( so_called_platform_render_directx_index_buffer_id_type & arg_buffer_id 
+    , so_called_platform_math_num_whole_type elements 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -583,7 +583,7 @@ void shy_platform_render_directx :: create_index_buffer
     so_called_platform_math_insider :: num_whole_value_get ( int_elements , elements ) ;
 	so_called_lib_directx_V 
         ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateIndexBuffer
-            ( sizeof ( so_called_type_platform_render_directx_index_data ) * int_elements
+            ( sizeof ( so_called_platform_render_directx_index_data_type ) * int_elements
             , so_called_lib_directx_D3DUSAGE_WRITEONLY
             , so_called_lib_directx_D3DFMT_INDEX32
             , so_called_lib_directx_D3DPOOL_MANAGED
@@ -594,8 +594,8 @@ void shy_platform_render_directx :: create_index_buffer
 }
 
 void shy_platform_render_directx :: map_index_buffer
-    ( so_called_type_platform_render_directx_index_buffer_mapped_data & data 
-    , so_called_type_platform_render_directx_index_buffer_id arg_buffer_id 
+    ( so_called_platform_render_directx_index_buffer_mapped_data_type & data 
+    , so_called_platform_render_directx_index_buffer_id_type arg_buffer_id 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -609,7 +609,7 @@ void shy_platform_render_directx :: map_index_buffer
         ) ;
 }
 
-void shy_platform_render_directx :: unmap_index_buffer ( so_called_type_platform_render_directx_index_buffer_id arg_buffer_id )
+void shy_platform_render_directx :: unmap_index_buffer ( so_called_platform_render_directx_index_buffer_id_type arg_buffer_id )
 {
 	so_called_lib_directx_HRESULT hr ;
 	so_called_lib_directx_V 
@@ -618,19 +618,19 @@ void shy_platform_render_directx :: unmap_index_buffer ( so_called_type_platform
 }
 
 void shy_platform_render_directx :: mapped_index_buffer_element
-    ( so_called_type_platform_pointer_data < so_called_type_platform_render_directx_index_data > & ptr 
-    , so_called_type_platform_render_directx_index_buffer_mapped_data data
-    , so_called_type_platform_math_num_whole index
+    ( so_called_platform_pointer_data_type < so_called_platform_render_directx_index_data_type > & ptr 
+    , so_called_platform_render_directx_index_buffer_mapped_data_type data
+    , so_called_platform_math_num_whole_type index
     )
 {
-    so_called_type_platform_render_directx_index_data * mapped_indices = 0 ;
-    mapped_indices = ( so_called_type_platform_render_directx_index_data * ) data . _data ;
+    so_called_platform_render_directx_index_data_type * mapped_indices = 0 ;
+    mapped_indices = ( so_called_platform_render_directx_index_data_type * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;
     so_called_platform_pointer :: bind ( ptr , mapped_indices [ index_int ] ) ;
 }
 
-void shy_platform_render_directx :: set_index_value ( so_called_type_platform_render_directx_index_data & data , so_called_type_platform_math_num_whole index )
+void shy_platform_render_directx :: set_index_value ( so_called_platform_render_directx_index_data_type & data , so_called_platform_math_num_whole_type index )
 {
     so_called_lib_std_int32_t int_index = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( int_index , index ) ;
@@ -653,7 +653,7 @@ void shy_platform_render_directx :: matrix_identity ( )
         ) ;
 }
 
-void shy_platform_render_directx :: matrix_load ( const so_called_type_platform_matrix_data & matrix )
+void shy_platform_render_directx :: matrix_load ( const so_called_platform_matrix_data_type & matrix )
 {
     so_called_lib_directx_HRESULT hr ;
     const so_called_lib_std_float * matrix_elements = 0 ;
@@ -671,7 +671,7 @@ void shy_platform_render_directx :: matrix_load ( const so_called_type_platform_
         ) ;
 }
 
-void shy_platform_render_directx :: matrix_mult ( const so_called_type_platform_matrix_data & matrix )
+void shy_platform_render_directx :: matrix_mult ( const so_called_platform_matrix_data_type & matrix )
 {
     so_called_lib_directx_HRESULT hr ;
     const so_called_lib_std_float * matrix_elements = 0 ;
@@ -712,9 +712,9 @@ void shy_platform_render_directx :: matrix_pop ( )
 }
 
 void shy_platform_render_directx :: draw_triangle_strip 
-    ( so_called_type_platform_render_directx_vertex_buffer_id vertices_buffer 
-    , so_called_type_platform_render_directx_index_buffer_id indices_buffer 
-    , so_called_type_platform_math_num_whole indices_count 
+    ( so_called_platform_render_directx_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_directx_index_buffer_id_type indices_buffer 
+    , so_called_platform_math_num_whole_type indices_count 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -725,7 +725,7 @@ void shy_platform_render_directx :: draw_triangle_strip
             ( 0 
             , vertices_buffer . _buffer 
             , 0 
-            , sizeof ( so_called_type_platform_render_directx_vertex_data ) 
+            , sizeof ( so_called_platform_render_directx_vertex_data_type ) 
             ) 
         ) ;
 	so_called_lib_directx_V 
@@ -751,9 +751,9 @@ void shy_platform_render_directx :: draw_triangle_strip
 }
 
 void shy_platform_render_directx :: draw_triangle_fan
-    ( so_called_type_platform_render_directx_vertex_buffer_id vertices_buffer 
-    , so_called_type_platform_render_directx_index_buffer_id indices_buffer 
-    , so_called_type_platform_math_num_whole indices_count 
+    ( so_called_platform_render_directx_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_directx_index_buffer_id_type indices_buffer 
+    , so_called_platform_math_num_whole_type indices_count 
     )
 {
 	so_called_lib_directx_HRESULT hr ;
@@ -764,7 +764,7 @@ void shy_platform_render_directx :: draw_triangle_fan
             ( 0 
             , vertices_buffer . _buffer 
             , 0 
-            , sizeof ( so_called_type_platform_render_directx_vertex_data ) 
+            , sizeof ( so_called_platform_render_directx_vertex_data_type ) 
             ) 
         ) ;
 	so_called_lib_directx_V 
@@ -789,40 +789,40 @@ void shy_platform_render_directx :: draw_triangle_fan
         ) ;
 }
 
-void shy_platform_render_directx :: get_aspect_width ( so_called_type_platform_math_num_fract & result )
+void shy_platform_render_directx :: get_aspect_width ( so_called_platform_math_num_fract_type & result )
 {
     so_called_lib_std_float float_aspect_width = 0 ;
     so_called_platform_render_directx_insider :: get_aspect_width ( float_aspect_width ) ;
     so_called_platform_math_insider :: num_fract_value_set ( result , float_aspect_width ) ;
 }
 
-void shy_platform_render_directx :: get_aspect_height ( so_called_type_platform_math_num_fract & result )
+void shy_platform_render_directx :: get_aspect_height ( so_called_platform_math_num_fract_type & result )
 {
     so_called_lib_std_float float_aspect_height = 0 ;
     so_called_platform_render_directx_insider :: get_aspect_height ( float_aspect_height ) ;
     so_called_platform_math_insider :: num_fract_value_set ( result , float_aspect_height ) ;
 }
 
-void shy_platform_render_directx :: get_frame_loss ( so_called_type_platform_math_num_whole & result )
+void shy_platform_render_directx :: get_frame_loss ( so_called_platform_math_num_whole_type & result )
 {
     so_called_lib_std_bool bool_frame_loss = so_called_lib_std_false ;
     so_called_platform_render_directx_insider :: get_frame_loss ( bool_frame_loss ) ;
     so_called_platform_math_insider :: num_whole_value_set ( result , bool_frame_loss ) ;
 }
 
-void shy_platform_render_directx :: delete_vertex_buffer ( so_called_type_platform_render_directx_vertex_buffer_id & arg_buffer_id )
+void shy_platform_render_directx :: delete_vertex_buffer ( so_called_platform_render_directx_vertex_buffer_id_type & arg_buffer_id )
 {
     arg_buffer_id . _buffer -> Release ( ) ;
     arg_buffer_id . _buffer = 0 ;
 }
 
-void shy_platform_render_directx :: delete_index_buffer ( so_called_type_platform_render_directx_index_buffer_id & arg_buffer_id )
+void shy_platform_render_directx :: delete_index_buffer ( so_called_platform_render_directx_index_buffer_id_type & arg_buffer_id )
 {
     arg_buffer_id . _buffer -> Release ( ) ;
     arg_buffer_id . _buffer = 0 ;
 }
 
-void shy_platform_render_directx :: delete_texture_id ( so_called_type_platform_render_directx_texture_id & arg_texture_id )
+void shy_platform_render_directx :: delete_texture_id ( so_called_platform_render_directx_texture_id_type & arg_texture_id )
 {
     arg_texture_id . _texture -> Release ( ) ;
     arg_texture_id . _texture = 0 ;

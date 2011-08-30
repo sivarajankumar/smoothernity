@@ -2,74 +2,74 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole row ;
-        static so_called_type_platform_math_num_whole col ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type row ;
+        static so_called_platform_math_num_whole_type col ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     namespace logic_main_menu_letters_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_letters_animation_disappear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_letters_animation_selection_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_letters_animation_selection_push_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     namespace logic_main_menu_letters_animation_selection_weight_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract weight ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type weight ;
     }
     
     namespace logic_main_menu_letters_animation_unselection_weight_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract weight ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type weight ;
     }
     
     namespace logic_main_menu_letters_animation_idle_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole requested_col ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_vector_data position ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type requested_col ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_vector_data_type position ;
+        static so_called_platform_math_num_fract_type scale ;
     }
     
     static void proceed_with_transform ( ) ;
@@ -224,20 +224,20 @@ void shy_guts :: all_transforms_received ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_matrix_data transform ;
-    so_called_type_platform_vector_data position ;
-    so_called_type_platform_math_num_fract scale_appear ;
-    so_called_type_platform_math_num_fract scale_disappear ;
-    so_called_type_platform_math_num_fract scale_selection ;
-    so_called_type_platform_math_num_fract scale_selection_push ;
-    so_called_type_platform_math_num_fract scale_selection_weighted ;
-    so_called_type_platform_math_num_fract scale_idle ;
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract weight_selection ;
-    so_called_type_platform_math_num_fract weight_unselection ;
-    so_called_type_platform_math_num_fract weight ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_math_num_fract final_selection_scale ;
+    so_called_platform_matrix_data_type transform ;
+    so_called_platform_vector_data_type position ;
+    so_called_platform_math_num_fract_type scale_appear ;
+    so_called_platform_math_num_fract_type scale_disappear ;
+    so_called_platform_math_num_fract_type scale_selection ;
+    so_called_platform_math_num_fract_type scale_selection_push ;
+    so_called_platform_math_num_fract_type scale_selection_weighted ;
+    so_called_platform_math_num_fract_type scale_idle ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type weight_selection ;
+    so_called_platform_math_num_fract_type weight_unselection ;
+    so_called_platform_math_num_fract_type weight ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_math_num_fract_type final_selection_scale ;
     
     position = shy_guts :: logic_main_menu_letters_animation_idle_transform_state :: position ;
     scale_appear = shy_guts :: logic_main_menu_letters_animation_appear_transform_state :: scale ;

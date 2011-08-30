@@ -5,10 +5,10 @@ public :
     static void bind ( pointer_type & ptr , typename pointer_type :: _data_type & data ) ;
 
     template < typename pointer_type >
-    static void are_equal ( so_called_type_platform_math_num_whole & , pointer_type , pointer_type ) ;
+    static void are_equal ( so_called_platform_math_num_whole_type & , pointer_type , pointer_type ) ;
 
     template < typename pointer_type >
-    static void is_bound_to ( so_called_type_platform_math_num_whole & , pointer_type , typename pointer_type :: _data_type & data ) ;
+    static void is_bound_to ( so_called_platform_math_num_whole_type & , pointer_type , typename pointer_type :: _data_type & data ) ;
 } ;
 
 template < typename pointer_type >
@@ -19,7 +19,7 @@ void shy_platform_pointer :: bind ( pointer_type & ptr , typename pointer_type :
 
 template < typename pointer_type >
 void shy_platform_pointer :: are_equal 
-    ( so_called_type_platform_math_num_whole & result 
+    ( so_called_platform_math_num_whole_type & result 
     , pointer_type pointer1 
     , pointer_type pointer2 
     )
@@ -29,7 +29,7 @@ void shy_platform_pointer :: are_equal
 
 template < typename pointer_type >
 void shy_platform_pointer :: is_bound_to 
-    ( so_called_type_platform_math_num_whole & result 
+    ( so_called_platform_math_num_whole_type & result 
     , pointer_type pointer 
     , typename pointer_type :: _data_type & data 
     )

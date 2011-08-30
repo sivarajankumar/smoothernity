@@ -2,20 +2,20 @@ namespace shy_guts
 {
     namespace logic_door_texture_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_platform_math_num_whole_type requested ;
     }
 
     namespace engine_render_texture_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_common_engine_render_texture_id texture ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_common_engine_render_texture_id_type texture ;
     }
 
     namespace engine_rasterizer_finalize_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     static void proceed_with_creation ( ) ;
@@ -27,13 +27,13 @@ namespace shy_guts
     static void request_rasterizer_finalize ( ) ;
     static void rasterizer_finalized ( ) ;
     static void use_texel 
-        ( so_called_type_platform_render_texel_data 
+        ( so_called_platform_render_texel_data_type 
         ) ;
     static void draw_rect 
-        ( so_called_type_platform_math_num_whole x1 
-        , so_called_type_platform_math_num_whole y1 
-        , so_called_type_platform_math_num_whole x2 
-        , so_called_type_platform_math_num_whole y2 
+        ( so_called_platform_math_num_whole_type x1 
+        , so_called_platform_math_num_whole_type y1 
+        , so_called_platform_math_num_whole_type x2 
+        , so_called_platform_math_num_whole_type y2 
         ) ;
 }
 
@@ -73,25 +73,25 @@ void shy_guts :: texture_created ( )
 
 void shy_guts :: fill_texture_contents ( )
 {
-    so_called_type_platform_math_num_fract pen_r ;
-    so_called_type_platform_math_num_fract pen_g ;
-    so_called_type_platform_math_num_fract pen_b ;
-    so_called_type_platform_math_num_fract pen_a ;
-    so_called_type_platform_math_num_fract paper_r ;
-    so_called_type_platform_math_num_fract paper_g ;
-    so_called_type_platform_math_num_fract paper_b ;
-    so_called_type_platform_math_num_fract paper_a ;
-    so_called_type_platform_math_num_whole x_left ;
-    so_called_type_platform_math_num_whole x_right ;
-    so_called_type_platform_math_num_whole y_bottom ;
-    so_called_type_platform_math_num_whole y_top ;
-    so_called_type_platform_math_num_whole texture_width ;
-    so_called_type_platform_math_num_whole texture_height ;
-    so_called_type_platform_math_num_whole stripes ;
-    so_called_type_platform_math_num_whole colored_stripe ;
-    so_called_type_common_engine_render_texture_id texture ;
-    so_called_type_platform_render_texel_data pen ;
-    so_called_type_platform_render_texel_data paper ;
+    so_called_platform_math_num_fract_type pen_r ;
+    so_called_platform_math_num_fract_type pen_g ;
+    so_called_platform_math_num_fract_type pen_b ;
+    so_called_platform_math_num_fract_type pen_a ;
+    so_called_platform_math_num_fract_type paper_r ;
+    so_called_platform_math_num_fract_type paper_g ;
+    so_called_platform_math_num_fract_type paper_b ;
+    so_called_platform_math_num_fract_type paper_a ;
+    so_called_platform_math_num_whole_type x_left ;
+    so_called_platform_math_num_whole_type x_right ;
+    so_called_platform_math_num_whole_type y_bottom ;
+    so_called_platform_math_num_whole_type y_top ;
+    so_called_platform_math_num_whole_type texture_width ;
+    so_called_platform_math_num_whole_type texture_height ;
+    so_called_platform_math_num_whole_type stripes ;
+    so_called_platform_math_num_whole_type colored_stripe ;
+    so_called_common_engine_render_texture_id_type texture ;
+    so_called_platform_render_texel_data_type pen ;
+    so_called_platform_render_texel_data_type paper ;
 
     pen_r = so_called_common_logic_door_consts :: texture_pen_r ;
     pen_g = so_called_common_logic_door_consts :: texture_pen_g ;
@@ -124,14 +124,14 @@ void shy_guts :: fill_texture_contents ( )
 
     shy_guts :: use_texel ( pen ) ;
     colored_stripe = so_called_platform_math_consts :: whole_false ;
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , stripes )
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_math_num_whole next_i ;
-        so_called_type_platform_math_num_whole stripe_y_top ;
-        so_called_type_platform_math_num_whole stripe_y_bottom ;
+        so_called_platform_math_num_whole_type next_i ;
+        so_called_platform_math_num_whole_type stripe_y_top ;
+        so_called_platform_math_num_whole_type stripe_y_bottom ;
 
         so_called_platform_math :: add_wholes ( next_i , i , so_called_platform_math_consts :: whole_1 ) ;
 
@@ -175,7 +175,7 @@ void shy_guts :: rasterizer_finalized ( )
     shy_guts :: reply_door_texture_created ( ) ;
 }
 
-void shy_guts :: use_texel ( so_called_type_platform_render_texel_data texel )
+void shy_guts :: use_texel ( so_called_platform_render_texel_data_type texel )
 {
     so_called_common_engine_rasterizer_use_texel_message msg ;
     msg . texel = texel ;
@@ -183,10 +183,10 @@ void shy_guts :: use_texel ( so_called_type_platform_render_texel_data texel )
 }
 
 void shy_guts :: draw_rect 
-    ( so_called_type_platform_math_num_whole x1 
-    , so_called_type_platform_math_num_whole y1 
-    , so_called_type_platform_math_num_whole x2 
-    , so_called_type_platform_math_num_whole y2 
+    ( so_called_platform_math_num_whole_type x1 
+    , so_called_platform_math_num_whole_type y1 
+    , so_called_platform_math_num_whole_type x2 
+    , so_called_platform_math_num_whole_type y2 
     )
 {
     so_called_common_engine_rasterizer_draw_rect_message msg ;

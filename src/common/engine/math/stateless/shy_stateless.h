@@ -2,95 +2,95 @@ class shy_common_engine_math_stateless
 {
 public :
     static void catmull_rom_spline 
-        ( so_called_type_platform_vector_data & result 
-        , so_called_type_platform_math_num_fract t 
-        , so_called_type_platform_vector_data p0 
-        , so_called_type_platform_vector_data p1 
-        , so_called_type_platform_vector_data p2 
-        , so_called_type_platform_vector_data p3 
+        ( so_called_platform_vector_data_type & result 
+        , so_called_platform_math_num_fract_type t 
+        , so_called_platform_vector_data_type p0 
+        , so_called_platform_vector_data_type p1 
+        , so_called_platform_vector_data_type p2 
+        , so_called_platform_vector_data_type p3 
         ) ;
     static void catmull_rom_spline 
-        ( so_called_type_platform_math_num_fract & result 
-        , so_called_type_platform_math_num_fract t 
-        , so_called_type_platform_math_num_fract p0 
-        , so_called_type_platform_math_num_fract p1 
-        , so_called_type_platform_math_num_fract p2 
-        , so_called_type_platform_math_num_fract p3 
+        ( so_called_platform_math_num_fract_type & result 
+        , so_called_platform_math_num_fract_type t 
+        , so_called_platform_math_num_fract_type p0 
+        , so_called_platform_math_num_fract_type p1 
+        , so_called_platform_math_num_fract_type p2 
+        , so_called_platform_math_num_fract_type p3 
         ) ;
     static void lerp 
-        ( so_called_type_platform_math_num_fract & result_value 
-        , so_called_type_platform_math_num_fract weight 
-        , so_called_type_platform_math_num_fract from_value 
-        , so_called_type_platform_math_num_fract from_weight 
-        , so_called_type_platform_math_num_fract to_value 
-        , so_called_type_platform_math_num_fract to_weight 
+        ( so_called_platform_math_num_fract_type & result_value 
+        , so_called_platform_math_num_fract_type weight 
+        , so_called_platform_math_num_fract_type from_value 
+        , so_called_platform_math_num_fract_type from_weight 
+        , so_called_platform_math_num_fract_type to_value 
+        , so_called_platform_math_num_fract_type to_weight 
         ) ;
     static void easy_in_easy_out 
-        ( so_called_type_platform_math_num_fract & result_value 
-        , so_called_type_platform_math_num_fract weight 
-        , so_called_type_platform_math_num_fract from_value 
-        , so_called_type_platform_math_num_fract from_weight 
-        , so_called_type_platform_math_num_fract to_value 
-        , so_called_type_platform_math_num_fract to_weight 
+        ( so_called_platform_math_num_fract_type & result_value 
+        , so_called_platform_math_num_fract_type weight 
+        , so_called_platform_math_num_fract_type from_value 
+        , so_called_platform_math_num_fract_type from_weight 
+        , so_called_platform_math_num_fract_type to_value 
+        , so_called_platform_math_num_fract_type to_weight 
         ) ;
     static void easy_in_hard_out 
-        ( so_called_type_platform_math_num_fract & result_value 
-        , so_called_type_platform_math_num_fract weight 
-        , so_called_type_platform_math_num_fract from_value 
-        , so_called_type_platform_math_num_fract from_weight 
-        , so_called_type_platform_math_num_fract to_value 
-        , so_called_type_platform_math_num_fract to_weight 
+        ( so_called_platform_math_num_fract_type & result_value 
+        , so_called_platform_math_num_fract_type weight 
+        , so_called_platform_math_num_fract_type from_value 
+        , so_called_platform_math_num_fract_type from_weight 
+        , so_called_platform_math_num_fract_type to_value 
+        , so_called_platform_math_num_fract_type to_weight 
         ) ;
     static void hard_in_easy_out 
-        ( so_called_type_platform_math_num_fract & result_value 
-        , so_called_type_platform_math_num_fract weight 
-        , so_called_type_platform_math_num_fract from_value 
-        , so_called_type_platform_math_num_fract from_weight 
-        , so_called_type_platform_math_num_fract to_value 
-        , so_called_type_platform_math_num_fract to_weight 
+        ( so_called_platform_math_num_fract_type & result_value 
+        , so_called_platform_math_num_fract_type weight 
+        , so_called_platform_math_num_fract_type from_value 
+        , so_called_platform_math_num_fract_type from_weight 
+        , so_called_platform_math_num_fract_type to_value 
+        , so_called_platform_math_num_fract_type to_weight 
         ) ;
     static void hard_attack_easy_decay 
-        ( so_called_type_platform_math_num_fract & result_value 
-        , so_called_type_platform_math_num_fract weight 
-        , so_called_type_platform_math_num_fract from_value 
-        , so_called_type_platform_math_num_fract from_weight 
-        , so_called_type_platform_math_num_fract mid_value
-        , so_called_type_platform_math_num_fract mid_weight
-        , so_called_type_platform_math_num_fract to_value
-        , so_called_type_platform_math_num_fract to_weight
+        ( so_called_platform_math_num_fract_type & result_value 
+        , so_called_platform_math_num_fract_type weight 
+        , so_called_platform_math_num_fract_type from_value 
+        , so_called_platform_math_num_fract_type from_weight 
+        , so_called_platform_math_num_fract_type mid_value
+        , so_called_platform_math_num_fract_type mid_weight
+        , so_called_platform_math_num_fract_type to_value
+        , so_called_platform_math_num_fract_type to_weight
         ) ;
     static void clamp_fract 
-        ( so_called_type_platform_math_num_fract & result 
-        , so_called_type_platform_math_num_fract num 
-        , so_called_type_platform_math_num_fract from 
-        , so_called_type_platform_math_num_fract to 
+        ( so_called_platform_math_num_fract_type & result 
+        , so_called_platform_math_num_fract_type num 
+        , so_called_platform_math_num_fract_type from 
+        , so_called_platform_math_num_fract_type to 
         ) ;
     static void clamp_fract 
-        ( so_called_type_platform_math_num_fract & num 
-        , so_called_type_platform_math_num_fract from 
-        , so_called_type_platform_math_num_fract to 
+        ( so_called_platform_math_num_fract_type & num 
+        , so_called_platform_math_num_fract_type from 
+        , so_called_platform_math_num_fract_type to 
         ) ;
     static void clamp_whole
-        ( so_called_type_platform_math_num_whole & result 
-        , so_called_type_platform_math_num_whole num 
-        , so_called_type_platform_math_num_whole from 
-        , so_called_type_platform_math_num_whole to 
+        ( so_called_platform_math_num_whole_type & result 
+        , so_called_platform_math_num_whole_type num 
+        , so_called_platform_math_num_whole_type from 
+        , so_called_platform_math_num_whole_type to 
         ) ;
     static void min_whole 
-        ( so_called_type_platform_math_num_whole & result 
-        , so_called_type_platform_math_num_whole a 
-        , so_called_type_platform_math_num_whole b 
+        ( so_called_platform_math_num_whole_type & result 
+        , so_called_platform_math_num_whole_type a 
+        , so_called_platform_math_num_whole_type b 
         ) ;
     static void max_whole 
-        ( so_called_type_platform_math_num_whole & result 
-        , so_called_type_platform_math_num_whole a 
-        , so_called_type_platform_math_num_whole b 
+        ( so_called_platform_math_num_whole_type & result 
+        , so_called_platform_math_num_whole_type a 
+        , so_called_platform_math_num_whole_type b 
         ) ;
     static void rotation_z 
-        ( so_called_type_platform_vector_data & axis_x 
-        , so_called_type_platform_vector_data & axis_y 
-        , so_called_type_platform_math_num_fract angle 
+        ( so_called_platform_vector_data_type & axis_x 
+        , so_called_platform_vector_data_type & axis_y 
+        , so_called_platform_math_num_fract_type angle 
         ) ;
-    static void abs_whole ( so_called_type_platform_math_num_whole & result , so_called_type_platform_math_num_whole a ) ;
-    static void scale ( so_called_type_platform_matrix_data & matrix , so_called_type_platform_math_num_fract scale ) ;
+    static void abs_whole ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type a ) ;
+    static void scale ( so_called_platform_matrix_data_type & matrix , so_called_platform_math_num_fract_type scale ) ;
 } ;

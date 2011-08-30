@@ -2,14 +2,14 @@ namespace shy_guts
 {
     namespace logic_blanket_place_state
     {
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_platform_math_num_whole_type requested ;
     }
 
     namespace logic_blanket_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     static void proceed_with_place ( ) ;

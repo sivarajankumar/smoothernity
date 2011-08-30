@@ -9,9 +9,9 @@ namespace shy_guts
         static void injections_hpp_path ( so_called_lib_std_string & , so_called_lib_std_string ) ;
     }
 
-    static void hpp_contents ( so_called_lib_std_string & , so_called_type_loadable_consts_content_module_container :: const_iterator ) ;
-    static void hpp_values_fract ( so_called_lib_std_string & , so_called_type_loadable_consts_content_module_container :: const_iterator ) ;
-    static void hpp_values_whole ( so_called_lib_std_string & , so_called_type_loadable_consts_content_module_container :: const_iterator ) ;
+    static void hpp_contents ( so_called_lib_std_string & , so_called_loadable_consts_content_module_container_type :: const_iterator ) ;
+    static void hpp_values_fract ( so_called_lib_std_string & , so_called_loadable_consts_content_module_container_type :: const_iterator ) ;
+    static void hpp_values_whole ( so_called_lib_std_string & , so_called_loadable_consts_content_module_container_type :: const_iterator ) ;
     static void signed_value ( so_called_lib_std_string & , so_called_lib_std_string , so_called_lib_std_string ) ;
 }
 
@@ -52,7 +52,7 @@ void shy_guts :: consts :: hpp_value_fract
     )
 {
     result . clear ( ) ;
-    result += "const so_called_type_platform_math_num_fract so_called_common_" ;
+    result += "const so_called_platform_math_num_fract_type so_called_common_" ;
     result += module ;
     result += "_consts :: " ;
     result += value ;
@@ -71,7 +71,7 @@ void shy_guts :: consts :: hpp_value_whole
     )
 {
     result . clear ( ) ;
-    result += "const so_called_type_platform_math_num_whole so_called_common_" ;
+    result += "const so_called_platform_math_num_whole_type so_called_common_" ;
     result += module ;
     result += "_consts :: " ;
     result += value ;
@@ -80,7 +80,7 @@ void shy_guts :: consts :: hpp_value_whole
     result += " ) ;\n" ;
 }
 
-void shy_guts :: hpp_contents ( so_called_lib_std_string & result , so_called_type_loadable_consts_content_module_container :: const_iterator module_i )
+void shy_guts :: hpp_contents ( so_called_lib_std_string & result , so_called_loadable_consts_content_module_container_type :: const_iterator module_i )
 {
     so_called_lib_std_string values_fract ;
     so_called_lib_std_string values_whole ;
@@ -93,10 +93,10 @@ void shy_guts :: hpp_contents ( so_called_lib_std_string & result , so_called_ty
     result += values_whole ;
 }
 
-void shy_guts :: hpp_values_fract ( so_called_lib_std_string & result , so_called_type_loadable_consts_content_module_container :: const_iterator module_i )
+void shy_guts :: hpp_values_fract ( so_called_lib_std_string & result , so_called_loadable_consts_content_module_container_type :: const_iterator module_i )
 {
     result . clear ( ) ;
-    for ( so_called_type_loadable_consts_content_value_fract_container :: const_iterator value_i = module_i -> second . name_to_fract . begin ( )
+    for ( so_called_loadable_consts_content_value_fract_container_type :: const_iterator value_i = module_i -> second . name_to_fract . begin ( )
         ; value_i != module_i -> second . name_to_fract . end ( )
         ; ++ value_i
         )
@@ -129,10 +129,10 @@ void shy_guts :: hpp_values_fract ( so_called_lib_std_string & result , so_calle
     }
 }
 
-void shy_guts :: hpp_values_whole ( so_called_lib_std_string & result , so_called_type_loadable_consts_content_module_container :: const_iterator module_i )
+void shy_guts :: hpp_values_whole ( so_called_lib_std_string & result , so_called_loadable_consts_content_module_container_type :: const_iterator module_i )
 {
     result . clear ( ) ;
-    for ( so_called_type_loadable_consts_content_value_whole_container :: const_iterator value_i = module_i -> second . name_to_whole . begin ( )
+    for ( so_called_loadable_consts_content_value_whole_container_type :: const_iterator value_i = module_i -> second . name_to_whole . begin ( )
         ; value_i != module_i -> second . name_to_whole . end ( )
         ; ++ value_i
         )
@@ -169,9 +169,9 @@ void shy_guts :: signed_value ( so_called_lib_std_string & result , so_called_li
 void shy_loadable_consts_generator :: generate ( so_called_lib_std_string & result )
 {
     result . clear ( ) ;
-    so_called_type_loadable_consts_content_module_container * module_container = 0 ;
+    so_called_loadable_consts_content_module_container_type * module_container = 0 ;
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
-    for ( so_called_type_loadable_consts_content_module_container :: const_iterator module_i = module_container -> begin ( )
+    for ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i = module_container -> begin ( )
         ; module_i != module_container -> end ( )
         ; ++ module_i
         )

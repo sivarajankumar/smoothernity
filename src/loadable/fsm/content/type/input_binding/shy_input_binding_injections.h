@@ -1,10 +1,10 @@
-#ifndef _shy_type_loadable_fsm_content_input_binding_injections_included
-#define _shy_type_loadable_fsm_content_input_binding_injections_included
+#ifndef _shy_loadable_fsm_content_input_binding_type_injections_included
+#define _shy_loadable_fsm_content_input_binding_type_injections_included
 
 #include "loadable/fsm/content/type/arbitrary_inputs/shy_arbitrary_inputs_injections.h"
 
 #include "./shy_input_binding.h"
 
-typedef shy_type_loadable_fsm_content_input_binding so_called_type_loadable_fsm_content_input_binding ;
+typedef shy_loadable_fsm_content_input_binding_type so_called_loadable_fsm_content_input_binding_type ;
 
 #endif

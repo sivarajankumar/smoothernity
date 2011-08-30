@@ -2,20 +2,20 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_animation_idle_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole row_is_selected ;
-        static so_called_type_platform_math_num_whole selected_row_index ;
-        static so_called_type_platform_vector_data position ;
-        static so_called_type_platform_math_num_fract scale_x ;
-        static so_called_type_platform_math_num_fract scale_y ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type row_is_selected ;
+        static so_called_platform_math_num_whole_type selected_row_index ;
+        static so_called_platform_vector_data_type position ;
+        static so_called_platform_math_num_fract_type scale_x ;
+        static so_called_platform_math_num_fract_type scale_y ;
     }
 
     namespace logic_main_menu_letters_layout_row_rect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_common_engine_rect row_rect ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_common_engine_rect_type row_rect ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -73,18 +73,18 @@ void shy_guts :: reply_transform ( )
 
 void shy_guts :: compute_row_rect_mesh_transform ( )
 {
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_math_num_fract half ;
-    so_called_type_platform_math_num_fract scale_x ;
-    so_called_type_platform_math_num_fract scale_y ;
-    so_called_type_platform_math_num_fract pos_x ;
-    so_called_type_platform_math_num_fract pos_y ;
-    so_called_type_platform_math_num_fract pos_z ;
-    so_called_type_platform_math_num_fract width ;
-    so_called_type_platform_math_num_fract height ;
-    so_called_type_platform_math_num_fract mesh_size ;
-    so_called_type_common_engine_rect row_rect ;
-    so_called_type_platform_vector_data position ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_math_num_fract_type half ;
+    so_called_platform_math_num_fract_type scale_x ;
+    so_called_platform_math_num_fract_type scale_y ;
+    so_called_platform_math_num_fract_type pos_x ;
+    so_called_platform_math_num_fract_type pos_y ;
+    so_called_platform_math_num_fract_type pos_z ;
+    so_called_platform_math_num_fract_type width ;
+    so_called_platform_math_num_fract_type height ;
+    so_called_platform_math_num_fract_type mesh_size ;
+    so_called_common_engine_rect_type row_rect ;
+    so_called_platform_vector_data_type position ;
     
     row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
     mesh_size = so_called_common_logic_main_menu_selection_consts :: mesh_size ;
@@ -111,8 +111,8 @@ void shy_guts :: compute_row_rect_mesh_transform ( )
 
 void shy_guts :: compute_empty_mesh_transform ( )
 {
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_vector_data position ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_vector_data_type position ;
     
     zero = so_called_platform_math_consts :: fract_0 ;
     

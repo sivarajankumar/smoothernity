@@ -7,8 +7,8 @@ namespace shy_guts
 }
 
 void shy_trace_common_engine_render :: meshes_in_use 
-    ( so_called_type_platform_math_num_whole current 
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current 
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -35,8 +35,8 @@ void shy_trace_common_engine_render :: meshes_underflow_error ( )
 }
 
 void shy_trace_common_engine_render :: mesh_index_offset_out_of_range_error
-    ( so_called_type_platform_math_num_whole current
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -49,8 +49,8 @@ void shy_trace_common_engine_render :: mesh_index_offset_out_of_range_error
 }
 
 void shy_trace_common_engine_render :: mesh_index_value_out_of_range_error
-    ( so_called_type_platform_math_num_whole current
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -63,8 +63,8 @@ void shy_trace_common_engine_render :: mesh_index_value_out_of_range_error
 }
 
 void shy_trace_common_engine_render :: mesh_vertex_out_of_range_error
-    ( so_called_type_platform_math_num_whole current
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -77,8 +77,8 @@ void shy_trace_common_engine_render :: mesh_vertex_out_of_range_error
 }
 
 void shy_trace_common_engine_render :: mesh_too_many_indices_error
-    ( so_called_type_platform_math_num_whole current
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -91,8 +91,8 @@ void shy_trace_common_engine_render :: mesh_too_many_indices_error
 }
 
 void shy_trace_common_engine_render :: mesh_too_many_vertices_error
-    ( so_called_type_platform_math_num_whole current
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
@@ -112,8 +112,8 @@ void shy_trace_common_engine_render :: trying_to_modify_finalized_mesh_error ( )
 }
 
 void shy_trace_common_engine_render :: textures_in_use
-    ( so_called_type_platform_math_num_whole current 
-    , so_called_type_platform_math_num_whole total
+    ( so_called_platform_math_num_whole_type current 
+    , so_called_platform_math_num_whole_type total
     )
 {
     so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;

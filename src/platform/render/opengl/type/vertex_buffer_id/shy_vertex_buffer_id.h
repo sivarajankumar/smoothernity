@@ -1,8 +1,8 @@
-class shy_type_platform_render_opengl_vertex_buffer_id
+class shy_platform_render_opengl_vertex_buffer_id_type
 {
     friend class shy_platform_render_opengl ;
 public :
-    shy_type_platform_render_opengl_vertex_buffer_id ( ) ;
+    shy_platform_render_opengl_vertex_buffer_id_type ( ) ;
 private :
     so_called_lib_opengl_GLuint _buffer_id ;
 } ;

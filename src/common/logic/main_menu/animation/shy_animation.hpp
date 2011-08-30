@@ -2,15 +2,15 @@ namespace shy_guts
 {
     namespace logic_main_menu_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_matrix_data view ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_matrix_data_type view ;
     }
     
     namespace logic_main_menu_animation_shake_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract shift_x ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type shift_x ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -51,11 +51,11 @@ void shy_guts :: compute_and_reply_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_matrix_data view ;
-    so_called_type_platform_math_num_fract shake_shift_x ;
-    so_called_type_platform_math_num_fract origin_x ;
-    so_called_type_platform_math_num_fract origin_y ;
-    so_called_type_platform_math_num_fract origin_z ;
+    so_called_platform_matrix_data_type view ;
+    so_called_platform_math_num_fract_type shake_shift_x ;
+    so_called_platform_math_num_fract_type origin_x ;
+    so_called_platform_math_num_fract_type origin_y ;
+    so_called_platform_math_num_fract_type origin_z ;
 
     shake_shift_x = shy_guts :: logic_main_menu_animation_shake_transform_state :: shift_x ;
 

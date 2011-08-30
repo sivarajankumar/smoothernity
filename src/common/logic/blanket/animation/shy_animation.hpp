@@ -2,31 +2,31 @@ namespace shy_guts
 {
     namespace logic_blanket_animation_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_matrix_data_type transform ;
     }
 
     namespace logic_blanket_animation_appear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
-        static so_called_type_platform_math_num_fract rotation ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
+        static so_called_platform_math_num_fract_type rotation ;
     }
 
     namespace logic_blanket_animation_disappear_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
-        static so_called_type_platform_math_num_fract rotation ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
+        static so_called_platform_math_num_fract_type rotation ;
     }
 
     namespace logic_blanket_animation_fit_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type scale ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -91,22 +91,22 @@ void shy_guts :: reply_computed_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract origin_x ;
-    so_called_type_platform_math_num_fract origin_y ;
-    so_called_type_platform_math_num_fract origin_z ;
-    so_called_type_platform_math_num_fract appear_scale ;
-    so_called_type_platform_math_num_fract appear_rotation ;
-    so_called_type_platform_math_num_fract disappear_scale ;
-    so_called_type_platform_math_num_fract disappear_rotation ;
-    so_called_type_platform_math_num_fract fit_scale ;
-    so_called_type_platform_math_num_fract one ;
-    so_called_type_platform_math_num_fract zero ;
-    so_called_type_platform_math_num_fract scale ;
-    so_called_type_platform_math_num_fract rotation ;
-    so_called_type_platform_vector_data axis_x ;
-    so_called_type_platform_vector_data axis_y ;
-    so_called_type_platform_vector_data axis_z ;
-    so_called_type_platform_matrix_data transform ;
+    so_called_platform_math_num_fract_type origin_x ;
+    so_called_platform_math_num_fract_type origin_y ;
+    so_called_platform_math_num_fract_type origin_z ;
+    so_called_platform_math_num_fract_type appear_scale ;
+    so_called_platform_math_num_fract_type appear_rotation ;
+    so_called_platform_math_num_fract_type disappear_scale ;
+    so_called_platform_math_num_fract_type disappear_rotation ;
+    so_called_platform_math_num_fract_type fit_scale ;
+    so_called_platform_math_num_fract_type one ;
+    so_called_platform_math_num_fract_type zero ;
+    so_called_platform_math_num_fract_type scale ;
+    so_called_platform_math_num_fract_type rotation ;
+    so_called_platform_vector_data_type axis_x ;
+    so_called_platform_vector_data_type axis_y ;
+    so_called_platform_vector_data_type axis_z ;
+    so_called_platform_matrix_data_type transform ;
 
     origin_x = so_called_common_logic_blanket_animation_consts :: animation_origin_x ;
     origin_y = so_called_common_logic_blanket_animation_consts :: animation_origin_y ;

@@ -45,7 +45,7 @@ void shy_guts :: logic_text_letter_mesh_create_state :: on_reply ( )
 
 void shy_guts :: request_letter_from_storage ( )
 {
-    so_called_type_platform_math_num_whole letter_index ;
+    so_called_platform_math_num_whole_type letter_index ;
     letter_index = shy_guts :: logic_salutation_letters_meshes_creator_create_state :: msg_request . letter_index ;
 
     shy_guts :: logic_salutation_letters_text_storage_letter_state :: taker . msg_request . letter_index = letter_index ;
@@ -54,7 +54,7 @@ void shy_guts :: request_letter_from_storage ( )
 
 void shy_guts :: request_mesh_creation ( )
 {
-    so_called_type_common_logic_text_letter_id letter ;
+    so_called_common_logic_text_letter_id_type letter ;
 
     letter = shy_guts :: logic_salutation_letters_text_storage_letter_state :: taker . msg_reply . letter_id ;
 
@@ -98,7 +98,7 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_common_logic_salutation_letters_text_storage_letter_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_text_storage_letter_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_text_storage_letter_state :: on_reply ( ) ;
@@ -106,7 +106,7 @@ void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_
 
 void _shy_common_logic_salutation_letters_meshes_creator :: receive ( so_called_common_logic_text_letter_mesh_create_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_text_letter_mesh_create_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_text_letter_mesh_create_state :: on_reply ( ) ;

@@ -2,16 +2,16 @@ namespace shy_guts
 {
     namespace logic_blanket_animation_fit_transform_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_fract scale ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_fract_type scale ;
     }
 
     namespace engine_render_aspect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract width ;
-        static so_called_type_platform_math_num_fract height ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type width ;
+        static so_called_platform_math_num_fract_type height ;
     }
 
     static void proceed_with_transform ( ) ;
@@ -52,9 +52,9 @@ void shy_guts :: reply_computed_transform ( )
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_math_num_fract width ;
-    so_called_type_platform_math_num_fract height ;
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_math_num_fract_type width ;
+    so_called_platform_math_num_fract_type height ;
+    so_called_platform_math_num_fract_type scale ;
 
     width = shy_guts :: engine_render_aspect_state :: width ;
     height = shy_guts :: engine_render_aspect_state :: height ;

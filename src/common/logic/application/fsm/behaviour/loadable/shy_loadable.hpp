@@ -1,9 +1,9 @@
 namespace shy_guts
 {
-    static so_called_loadable_fsm_behaviour < so_called_type_common_logic_application_fsm_inputs > behaviour ;
+    static so_called_loadable_fsm_behaviour < so_called_common_logic_application_fsm_inputs_type > behaviour ;
 }
 
-void shy_common_logic_application_fsm_behaviour_loadable :: determine_behaviour_inputs_change ( so_called_type_platform_math_num_whole & result )
+void shy_common_logic_application_fsm_behaviour_loadable :: determine_behaviour_inputs_change ( so_called_platform_math_num_whole_type & result )
 {
     shy_guts :: behaviour . determine_behaviour_inputs_change ( result ) ;
 }
@@ -14,7 +14,7 @@ void shy_common_logic_application_fsm_behaviour_loadable :: init ( )
     shy_guts :: behaviour . init ( ) ;
 }
 
-void shy_common_logic_application_fsm_behaviour_loadable :: is_fsm_running ( so_called_type_platform_math_num_whole & result )
+void shy_common_logic_application_fsm_behaviour_loadable :: is_fsm_running ( so_called_platform_math_num_whole_type & result )
 {
     shy_guts :: behaviour . is_fsm_running ( result ) ;
 }
@@ -40,8 +40,8 @@ void shy_common_logic_application_fsm_behaviour_loadable :: run_fsm_end ( )
 }
 
 void shy_common_logic_application_fsm_behaviour_loadable :: set_inputs 
-    ( so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_current
-    , so_called_type_platform_pointer_data < so_called_type_common_logic_application_fsm_inputs > inputs_fixed
+    ( so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_current
+    , so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_fixed
     )
 {
     shy_guts :: behaviour . set_inputs ( inputs_current , inputs_fixed ) ;

@@ -2,16 +2,16 @@ namespace shy_guts
 {
     namespace logic_controls_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole primary_button_down ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type primary_button_down ;
     }
 
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole prev_primary_button_down ;
-        static so_called_type_platform_math_num_whole row_selected ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type prev_primary_button_down ;
+        static so_called_platform_math_num_whole_type row_selected ;
     }
 
     static void proceed_with_update ( ) ;
@@ -44,9 +44,9 @@ void shy_guts :: obtain_controls_state ( )
 
 void shy_guts :: controls_state_received ( )
 {
-    so_called_type_platform_math_num_whole row_selected ;
-    so_called_type_platform_math_num_whole primary_button_down ;
-    so_called_type_platform_math_num_whole prev_primary_button_down ;
+    so_called_platform_math_num_whole_type row_selected ;
+    so_called_platform_math_num_whole_type primary_button_down ;
+    so_called_platform_math_num_whole_type prev_primary_button_down ;
 
     row_selected = shy_guts :: logic_main_menu_update_state :: row_selected ;
     primary_button_down = shy_guts :: logic_controls_state :: primary_button_down ;

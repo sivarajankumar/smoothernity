@@ -2,13 +2,13 @@ namespace shy_guts
 {
     namespace consts
     {
-        static const so_called_type_platform_math_num_fract spot_r = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
-        static const so_called_type_platform_math_num_fract spot_g = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
-        static const so_called_type_platform_math_num_fract spot_b = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
-        static const so_called_type_platform_math_num_fract spot_pos_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
-        static const so_called_type_platform_math_num_fract spot_size = so_called_platform_math :: init_num_fract ( 3 , 10 ) ;
-        static const so_called_type_platform_math_num_whole spot_edges = so_called_platform_math :: init_num_whole ( 32 ) ;
-        static const so_called_type_platform_math_num_whole spot_lifetime_in_frames = so_called_platform_math :: init_num_whole ( 60 ) ;
+        static const so_called_platform_math_num_fract_type spot_r = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_platform_math_num_fract_type spot_g = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_platform_math_num_fract_type spot_b = so_called_platform_math :: init_num_fract ( 255 , 255 ) ;
+        static const so_called_platform_math_num_fract_type spot_pos_z = so_called_platform_math :: init_num_fract ( - 3 , 1 ) ;
+        static const so_called_platform_math_num_fract_type spot_size = so_called_platform_math :: init_num_fract ( 3 , 10 ) ;
+        static const so_called_platform_math_num_whole_type spot_edges = so_called_platform_math :: init_num_whole ( 32 ) ;
+        static const so_called_platform_math_num_whole_type spot_lifetime_in_frames = so_called_platform_math :: init_num_whole ( 60 ) ;
     }
 
     static void update_spot ( ) ;
@@ -19,15 +19,15 @@ namespace shy_guts
     static void render_spot_mesh ( ) ;
     static void create_spot_mesh ( ) ;
 
-    static so_called_type_platform_math_num_whole spot_frames_left ;
-    static so_called_type_platform_math_num_whole spot_mesh_created ;
-    static so_called_type_platform_math_num_whole spot_prepare_permitted ;
-    static so_called_type_platform_math_num_whole should_place_new_spot ;
-    static so_called_type_platform_math_num_whole mesh_create_requested ;
-    static so_called_type_platform_math_num_fract spot_x ;
-    static so_called_type_platform_math_num_fract spot_y ;
-    static so_called_type_common_engine_render_mesh_id spot_mesh_id ;
-    static so_called_type_platform_vector_data spot_position ;
+    static so_called_platform_math_num_whole_type spot_frames_left ;
+    static so_called_platform_math_num_whole_type spot_mesh_created ;
+    static so_called_platform_math_num_whole_type spot_prepare_permitted ;
+    static so_called_platform_math_num_whole_type should_place_new_spot ;
+    static so_called_platform_math_num_whole_type mesh_create_requested ;
+    static so_called_platform_math_num_fract_type spot_x ;
+    static so_called_platform_math_num_fract_type spot_y ;
+    static so_called_common_engine_render_mesh_id_type spot_mesh_id ;
+    static so_called_platform_vector_data_type spot_position ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_touch > _scheduled_context_type ;
@@ -49,7 +49,7 @@ void shy_guts :: decrease_spot_lifetime ( )
 
 void shy_guts :: poll_touchscreen ( )
 {
-    so_called_type_platform_math_num_whole touch ;
+    so_called_platform_math_num_whole_type touch ;
     so_called_platform_touch :: occured ( touch ) ;
     if ( so_called_platform_conditions :: whole_is_true ( touch ) )
     {
@@ -61,7 +61,7 @@ void shy_guts :: poll_touchscreen ( )
 
 void shy_guts :: poll_mouse ( )
 {
-    so_called_type_platform_math_num_whole mouse_button ;
+    so_called_platform_math_num_whole_type mouse_button ;
     so_called_platform_mouse :: left_button_down ( mouse_button ) ;
     if ( so_called_platform_conditions :: whole_is_true ( mouse_button ) )
     {
@@ -83,10 +83,10 @@ void shy_guts :: place_new_spot ( )
 
 void shy_guts :: render_spot_mesh ( )
 {
-    so_called_type_platform_matrix_data matrix ;
-    so_called_type_platform_math_num_fract fract_spot_frames_left ;
-    so_called_type_platform_math_num_fract fract_spot_lifetime_in_frames ;
-    so_called_type_platform_math_num_fract scale ;
+    so_called_platform_matrix_data_type matrix ;
+    so_called_platform_math_num_fract_type fract_spot_frames_left ;
+    so_called_platform_math_num_fract_type fract_spot_lifetime_in_frames ;
+    so_called_platform_math_num_fract_type scale ;
 
     so_called_platform_math :: make_fract_from_whole ( fract_spot_frames_left , shy_guts :: spot_frames_left ) ;
     so_called_platform_math :: make_fract_from_whole ( fract_spot_lifetime_in_frames , shy_guts :: consts :: spot_lifetime_in_frames ) ;
@@ -111,25 +111,25 @@ void shy_guts :: render_spot_mesh ( )
 
 void shy_guts :: create_spot_mesh ( )
 {
-    so_called_type_platform_math_num_fract fract_spot_edges ;
+    so_called_platform_math_num_fract_type fract_spot_edges ;
     so_called_platform_math :: make_fract_from_whole ( fract_spot_edges , shy_guts :: consts :: spot_edges ) ;
             
-    for ( so_called_type_platform_math_num_whole i = so_called_platform_math_consts :: whole_0
+    for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , shy_guts :: consts :: spot_edges ) 
         ; so_called_platform_math :: inc_whole ( i )
         )
     {
-        so_called_type_platform_math_num_fract angle ;
-        so_called_type_platform_math_num_fract fract_i ;
-        so_called_type_platform_math_num_fract angle_cos ;
-        so_called_type_platform_math_num_fract angle_sin ;
-        so_called_type_platform_math_num_fract vertex_x ;
-        so_called_type_platform_math_num_fract vertex_y ;
-        so_called_type_platform_math_num_fract vertex_z ;
-        so_called_type_platform_math_num_fract vertex_r ;
-        so_called_type_platform_math_num_fract vertex_g ;
-        so_called_type_platform_math_num_fract vertex_b ;
-        so_called_type_platform_math_num_fract vertex_a ;
+        so_called_platform_math_num_fract_type angle ;
+        so_called_platform_math_num_fract_type fract_i ;
+        so_called_platform_math_num_fract_type angle_cos ;
+        so_called_platform_math_num_fract_type angle_sin ;
+        so_called_platform_math_num_fract_type vertex_x ;
+        so_called_platform_math_num_fract_type vertex_y ;
+        so_called_platform_math_num_fract_type vertex_z ;
+        so_called_platform_math_num_fract_type vertex_r ;
+        so_called_platform_math_num_fract_type vertex_g ;
+        so_called_platform_math_num_fract_type vertex_b ;
+        so_called_platform_math_num_fract_type vertex_a ;
 
         so_called_platform_math :: make_fract_from_whole ( fract_i , i ) ;
         so_called_platform_math :: mul_fracts ( angle , so_called_platform_math_consts :: fract_2pi , fract_i ) ;

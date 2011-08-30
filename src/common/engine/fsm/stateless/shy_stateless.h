@@ -4,20 +4,20 @@ public :
     template < typename fsm , typename fsm_behaviour >
     static void run_fsm ( ) ;
 
-    static void tick_single_fsm ( so_called_type_platform_pointer_data < so_called_type_common_engine_fsm_state > & ) ;
+    static void tick_single_fsm ( so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > & ) ;
 } ;
 
 template < typename fsm, typename fsm_behaviour >
 void shy_common_engine_fsm_stateless :: run_fsm ( )
 {
-    so_called_type_platform_math_num_whole is_running ;
+    so_called_platform_math_num_whole_type is_running ;
     fsm_behaviour :: is_fsm_running ( is_running ) ;
     if ( so_called_platform_conditions :: whole_is_false ( is_running ) )
     {
         fsm_behaviour :: run_fsm_begin ( ) ;
 
-        so_called_type_platform_math_num_whole behaviour_inputs_changed ;
-        so_called_type_platform_math_num_whole inputs_changed ;
+        so_called_platform_math_num_whole_type behaviour_inputs_changed ;
+        so_called_platform_math_num_whole_type inputs_changed ;
         for ( ; ; )
         {
             fsm_behaviour :: recalc_current_behaviour_inputs ( ) ;

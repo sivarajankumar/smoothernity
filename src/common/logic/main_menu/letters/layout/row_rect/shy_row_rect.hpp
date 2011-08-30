@@ -2,31 +2,31 @@ namespace shy_guts
 {
     namespace logic_main_menu_letters_layout_row_rect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole requested_row ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type requested_row ;
         
-        static so_called_type_platform_math_num_fract unscaled_menu_width ;
-        static so_called_type_platform_math_num_fract unscaled_menu_height ;
-        static so_called_type_platform_math_num_fract menu_scale ;
+        static so_called_platform_math_num_fract_type unscaled_menu_width ;
+        static so_called_platform_math_num_fract_type unscaled_menu_height ;
+        static so_called_platform_math_num_fract_type menu_scale ;
 
-        static so_called_type_common_engine_rect menu_rect ;
-        static so_called_type_common_engine_rect row_rect ;
+        static so_called_common_engine_rect_type menu_rect ;
+        static so_called_common_engine_rect_type row_rect ;
     }
     
     namespace logic_main_menu_letters_boundaries_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole rows ;
-        static so_called_type_platform_math_num_whole cols ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type rows ;
+        static so_called_platform_math_num_whole_type cols ;
     }
 
     namespace engine_render_aspect_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_fract width ;
-        static so_called_type_platform_math_num_fract height ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_fract_type width ;
+        static so_called_platform_math_num_fract_type height ;
     }
 
     static void proceed_with_row_rect ( ) ;
@@ -120,12 +120,12 @@ void shy_guts :: compute_row_rect ( )
 
 void shy_guts :: decorate_row_rect ( )
 {
-    so_called_type_common_engine_rect row_rect ;
-    so_called_type_platform_math_num_fract horizontal_border ;
-    so_called_type_platform_math_num_fract letter_mesh_scale ;
-    so_called_type_platform_math_num_fract menu_scale ;
-    so_called_type_platform_math_num_fract scaled_horizontal_border ;
-    so_called_type_platform_math_num_fract final_scale ;
+    so_called_common_engine_rect_type row_rect ;
+    so_called_platform_math_num_fract_type horizontal_border ;
+    so_called_platform_math_num_fract_type letter_mesh_scale ;
+    so_called_platform_math_num_fract_type menu_scale ;
+    so_called_platform_math_num_fract_type scaled_horizontal_border ;
+    so_called_platform_math_num_fract_type final_scale ;
     
     row_rect = shy_guts :: logic_main_menu_letters_layout_row_rect_state :: row_rect ;
     horizontal_border = so_called_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_border ;

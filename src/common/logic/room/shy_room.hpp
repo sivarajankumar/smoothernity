@@ -2,25 +2,25 @@ namespace shy_guts
 {
     namespace logic_room_update_state
     {
-        static so_called_type_platform_math_num_whole launch_permitted ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type launch_permitted ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     namespace logic_room_creation_permit_state
     {
-        static so_called_type_platform_math_num_whole creation_permitted ;
+        static so_called_platform_math_num_whole_type creation_permitted ;
     }
 
     namespace logic_room_mesh_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     namespace logic_room_texture_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
     }
 
     static void proceed_with_creation ( ) ;
@@ -116,9 +116,9 @@ void _shy_common_logic_room :: receive ( so_called_common_logic_room_update_mess
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_room_update_state :: launch_permitted ) )
     {
-        so_called_type_platform_math_num_fract time ;
-        so_called_type_platform_math_num_fract time_step ;
-        so_called_type_platform_math_num_fract show_time ;
+        so_called_platform_math_num_fract_type time ;
+        so_called_platform_math_num_fract_type time_step ;
+        so_called_platform_math_num_fract_type show_time ;
 
         time = shy_guts :: logic_room_update_state :: time ;
         show_time = so_called_common_logic_room_consts :: room_show_time ;

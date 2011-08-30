@@ -2,24 +2,24 @@ namespace shy_guts
 {
     namespace logic_main_menu_selection_animation_push_attention_transform_state
     {
-        static so_called_type_platform_math_num_fract horizontal_scale ;
-        static so_called_type_platform_math_num_fract vertical_scale ;
+        static so_called_platform_math_num_fract_type horizontal_scale ;
+        static so_called_platform_math_num_fract_type vertical_scale ;
     }
 
     namespace logic_main_menu_update_state
     {
-        static so_called_type_platform_math_num_whole update_permitted ;
-        static so_called_type_platform_math_num_fract time ;
+        static so_called_platform_math_num_whole_type update_permitted ;
+        static so_called_platform_math_num_fract_type time ;
     }
 
     static void reply_transform ( ) ;
     static void compute_horizontal_scale ( ) ;
     static void compute_vertical_scale ( ) ;
     static void compute_animation_scale
-        ( so_called_type_platform_math_num_fract & scale
-        , so_called_type_platform_math_num_fract scale_min
-        , so_called_type_platform_math_num_fract scale_max
-        , so_called_type_platform_math_num_fract period_in_seconds
+        ( so_called_platform_math_num_fract_type & scale
+        , so_called_platform_math_num_fract_type scale_min
+        , so_called_platform_math_num_fract_type scale_max
+        , so_called_platform_math_num_fract_type period_in_seconds
         ) ;
 }
 
@@ -55,16 +55,16 @@ void shy_guts :: compute_vertical_scale ( )
 }
 
 void shy_guts :: compute_animation_scale
-    ( so_called_type_platform_math_num_fract & scale
-    , so_called_type_platform_math_num_fract scale_min
-    , so_called_type_platform_math_num_fract scale_max
-    , so_called_type_platform_math_num_fract period_in_seconds
+    ( so_called_platform_math_num_fract_type & scale
+    , so_called_platform_math_num_fract_type scale_min
+    , so_called_platform_math_num_fract_type scale_max
+    , so_called_platform_math_num_fract_type period_in_seconds
     )
 {
-    so_called_type_platform_math_num_fract time ;
-    so_called_type_platform_math_num_fract phase ;
-    so_called_type_platform_math_num_fract amplitude ;
-    so_called_type_platform_math_num_fract offset ;
+    so_called_platform_math_num_fract_type time ;
+    so_called_platform_math_num_fract_type phase ;
+    so_called_platform_math_num_fract_type amplitude ;
+    so_called_platform_math_num_fract_type offset ;
     
     time = shy_guts :: logic_main_menu_update_state :: time ;
     
@@ -105,7 +105,7 @@ void _shy_common_logic_main_menu_selection_animation_push_attention :: receive (
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: logic_main_menu_update_state :: update_permitted ) )
     {
-        so_called_type_platform_math_num_fract time_step ;
+        so_called_platform_math_num_fract_type time_step ;
         so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
         so_called_platform_math :: add_to_fract ( shy_guts :: logic_main_menu_update_state :: time , time_step ) ;
     }

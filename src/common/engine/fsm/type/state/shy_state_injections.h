@@ -1,8 +1,8 @@
-#ifndef _shy_type_common_engine_fsm_state_injections_included
-#define _shy_type_common_engine_fsm_state_injections_included
+#ifndef _shy_common_engine_fsm_state_type_injections_included
+#define _shy_common_engine_fsm_state_type_injections_included
 
 #include "./shy_state.h"
 
-typedef shy_type_common_engine_fsm_state so_called_type_common_engine_fsm_state ;
+typedef shy_common_engine_fsm_state_type so_called_common_engine_fsm_state_type ;
 
 #endif

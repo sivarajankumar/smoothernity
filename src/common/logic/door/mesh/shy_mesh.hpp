@@ -2,22 +2,22 @@ namespace shy_guts
 {
     namespace logic_door_mesh_consts
     {
-        static const so_called_type_platform_math_num_whole mesh_vertices_count = so_called_platform_math :: init_num_whole ( 4 ) ;
-        static const so_called_type_platform_math_num_whole mesh_triangle_strip_indices_count = so_called_platform_math :: init_num_whole ( 4 ) ;
-        static const so_called_type_platform_math_num_whole mesh_triangle_fan_indices_count = so_called_platform_math :: init_num_whole ( 0 ) ;
+        static const so_called_platform_math_num_whole_type mesh_vertices_count = so_called_platform_math :: init_num_whole ( 4 ) ;
+        static const so_called_platform_math_num_whole_type mesh_triangle_strip_indices_count = so_called_platform_math :: init_num_whole ( 4 ) ;
+        static const so_called_platform_math_num_whole_type mesh_triangle_fan_indices_count = so_called_platform_math :: init_num_whole ( 0 ) ;
     }
 
     namespace engine_render_mesh_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
-        static so_called_type_platform_math_num_whole replied ;
-        static so_called_type_platform_math_num_whole finalized ;
-        static so_called_type_common_engine_render_mesh_id mesh ;
+        static so_called_platform_math_num_whole_type requested ;
+        static so_called_platform_math_num_whole_type replied ;
+        static so_called_platform_math_num_whole_type finalized ;
+        static so_called_common_engine_render_mesh_id_type mesh ;
     }
 
     namespace logic_door_mesh_create_state
     {
-        static so_called_type_platform_math_num_whole requested ;
+        static so_called_platform_math_num_whole_type requested ;
     }
 
     static void proceed_with_creation ( ) ;
@@ -27,26 +27,26 @@ namespace shy_guts
     static void finalize_mesh ( ) ;
     static void reply_creation_finished ( ) ;
     static void mesh_set_triangle_strip_index_value 
-        ( so_called_type_platform_math_num_whole offset 
-        , so_called_type_platform_math_num_whole index 
+        ( so_called_platform_math_num_whole_type offset 
+        , so_called_platform_math_num_whole_type index 
         ) ;
     static void mesh_set_vertex_tex_coord 
-        ( so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_fract u 
-        , so_called_type_platform_math_num_fract v 
+        ( so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_fract_type u 
+        , so_called_platform_math_num_fract_type v 
         ) ;
     static void mesh_set_vertex_position 
-        ( so_called_type_platform_math_num_whole offset
-        , so_called_type_platform_math_num_fract x
-        , so_called_type_platform_math_num_fract y
-        , so_called_type_platform_math_num_fract z 
+        ( so_called_platform_math_num_whole_type offset
+        , so_called_platform_math_num_fract_type x
+        , so_called_platform_math_num_fract_type y
+        , so_called_platform_math_num_fract_type z 
         ) ;
     static void mesh_set_vertex_color 
-        ( so_called_type_platform_math_num_whole offset 
-        , so_called_type_platform_math_num_fract r
-        , so_called_type_platform_math_num_fract g
-        , so_called_type_platform_math_num_fract b
-        , so_called_type_platform_math_num_fract a
+        ( so_called_platform_math_num_whole_type offset 
+        , so_called_platform_math_num_fract_type r
+        , so_called_platform_math_num_fract_type g
+        , so_called_platform_math_num_fract_type b
+        , so_called_platform_math_num_fract_type a
         ) ;
 }
 
@@ -86,24 +86,24 @@ void shy_guts :: mesh_created ( )
 
 void shy_guts :: fill_mesh_contents ( )
 {
-    so_called_type_platform_math_num_fract x_left ;
-    so_called_type_platform_math_num_fract x_right ;
-    so_called_type_platform_math_num_fract y_top ;
-    so_called_type_platform_math_num_fract y_bottom ;
-    so_called_type_platform_math_num_fract u_top_left ;
-    so_called_type_platform_math_num_fract v_top_left ;
-    so_called_type_platform_math_num_fract u_top_right ;
-    so_called_type_platform_math_num_fract v_top_right ;
-    so_called_type_platform_math_num_fract u_bottom_left ;
-    so_called_type_platform_math_num_fract v_bottom_left ;
-    so_called_type_platform_math_num_fract u_bottom_right ;
-    so_called_type_platform_math_num_fract v_bottom_right ;
-    so_called_type_platform_math_num_fract z ;
-    so_called_type_platform_math_num_fract color_r ;
-    so_called_type_platform_math_num_fract color_g ;
-    so_called_type_platform_math_num_fract color_b ;
-    so_called_type_platform_math_num_fract color_a ; 
-    so_called_type_platform_math_num_whole current_index ;
+    so_called_platform_math_num_fract_type x_left ;
+    so_called_platform_math_num_fract_type x_right ;
+    so_called_platform_math_num_fract_type y_top ;
+    so_called_platform_math_num_fract_type y_bottom ;
+    so_called_platform_math_num_fract_type u_top_left ;
+    so_called_platform_math_num_fract_type v_top_left ;
+    so_called_platform_math_num_fract_type u_top_right ;
+    so_called_platform_math_num_fract_type v_top_right ;
+    so_called_platform_math_num_fract_type u_bottom_left ;
+    so_called_platform_math_num_fract_type v_bottom_left ;
+    so_called_platform_math_num_fract_type u_bottom_right ;
+    so_called_platform_math_num_fract_type v_bottom_right ;
+    so_called_platform_math_num_fract_type z ;
+    so_called_platform_math_num_fract_type color_r ;
+    so_called_platform_math_num_fract_type color_g ;
+    so_called_platform_math_num_fract_type color_b ;
+    so_called_platform_math_num_fract_type color_a ; 
+    so_called_platform_math_num_whole_type current_index ;
     
     x_left = so_called_common_logic_door_consts :: mesh_x_left ;
     x_right = so_called_common_logic_door_consts :: mesh_x_right ;
@@ -165,8 +165,8 @@ void shy_guts :: reply_creation_finished ( )
 }
 
 void shy_guts :: mesh_set_triangle_strip_index_value 
-    ( so_called_type_platform_math_num_whole offset 
-    , so_called_type_platform_math_num_whole index 
+    ( so_called_platform_math_num_whole_type offset 
+    , so_called_platform_math_num_whole_type index 
     )
 {
     so_called_common_engine_render_mesh_set_triangle_strip_index_value_message msg ;
@@ -177,9 +177,9 @@ void shy_guts :: mesh_set_triangle_strip_index_value
 }
 
 void shy_guts :: mesh_set_vertex_tex_coord 
-    ( so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_fract u 
-    , so_called_type_platform_math_num_fract v 
+    ( so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_fract_type u 
+    , so_called_platform_math_num_fract_type v 
     )
 {
     so_called_common_engine_render_mesh_set_vertex_tex_coord_message msg ;
@@ -191,10 +191,10 @@ void shy_guts :: mesh_set_vertex_tex_coord
 }
 
 void shy_guts :: mesh_set_vertex_position 
-    ( so_called_type_platform_math_num_whole offset
-    , so_called_type_platform_math_num_fract x
-    , so_called_type_platform_math_num_fract y
-    , so_called_type_platform_math_num_fract z 
+    ( so_called_platform_math_num_whole_type offset
+    , so_called_platform_math_num_fract_type x
+    , so_called_platform_math_num_fract_type y
+    , so_called_platform_math_num_fract_type z 
     )
 {
     so_called_common_engine_render_mesh_set_vertex_position_message msg ;
@@ -207,11 +207,11 @@ void shy_guts :: mesh_set_vertex_position
 }
 
 void shy_guts :: mesh_set_vertex_color 
-    ( so_called_type_platform_math_num_whole offset 
-    , so_called_type_platform_math_num_fract r
-    , so_called_type_platform_math_num_fract g
-    , so_called_type_platform_math_num_fract b
-    , so_called_type_platform_math_num_fract a
+    ( so_called_platform_math_num_whole_type offset 
+    , so_called_platform_math_num_fract_type r
+    , so_called_platform_math_num_fract_type g
+    , so_called_platform_math_num_fract_type b
+    , so_called_platform_math_num_fract_type a
     )
 {
     so_called_common_engine_render_mesh_set_vertex_color_message msg ;

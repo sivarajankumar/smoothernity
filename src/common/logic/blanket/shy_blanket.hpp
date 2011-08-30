@@ -1,6 +1,6 @@
 namespace shy_guts
 {
-    static so_called_type_platform_math_num_whole created ;
+    static so_called_platform_math_num_whole_type created ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_blanket > _scheduled_context_type ;

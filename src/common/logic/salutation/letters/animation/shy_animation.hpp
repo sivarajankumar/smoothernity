@@ -9,7 +9,7 @@ namespace shy_guts
     namespace logic_salutation_letters_animation_transform_state
     {
         static so_called_common_logic_salutation_letters_animation_transform_request_message msg_request ;
-        static so_called_type_platform_matrix_data transform ;
+        static so_called_platform_matrix_data_type transform ;
         static void on_request ( ) ;
     }
 
@@ -34,18 +34,18 @@ void shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on
 
 void shy_guts :: request_animation_layout_transform ( )
 {
-    so_called_type_platform_math_num_whole letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request . letter ;
+    so_called_platform_math_num_whole_type letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request . letter ;
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_request . letter = letter ;
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . request ( ) ;
 }
 
 void shy_guts :: compute_transform ( )
 {
-    so_called_type_platform_vector_data final_origin ;
-    so_called_type_platform_math_num_fract final_scale ;
-    so_called_type_platform_vector_data layout_origin ;
-    so_called_type_platform_math_num_fract layout_scale ;
-    so_called_type_platform_matrix_data transform ;
+    so_called_platform_vector_data_type final_origin ;
+    so_called_platform_math_num_fract_type final_scale ;
+    so_called_platform_vector_data_type layout_origin ;
+    so_called_platform_math_num_fract_type layout_scale ;
+    so_called_platform_matrix_data_type transform ;
 
     layout_origin = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . origin ;
     layout_scale = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . scale ;
@@ -74,7 +74,7 @@ void _shy_common_logic_salutation_letters_animation :: receive ( so_called_commo
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_logic_salutation_letters_animation_layout_transform_reply_message msg )
 {
-    so_called_type_platform_math_num_whole should_handle ;
+    so_called_platform_math_num_whole_type should_handle ;
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . should_handle ( should_handle , msg ) ;
     if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
         shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_reply ( ) ;
