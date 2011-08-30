@@ -36,7 +36,7 @@ void shy_guts :: consts :: injections_hpp_path ( so_called_lib_std_string & path
 void shy_guts :: consts :: injections_hpp_contents ( so_called_lib_std_string & result , so_called_lib_std_string module )
 {
     result . clear ( ) ;
-    result += "#include \"../../../injections/platform/math/shy_math.h\"\n" ;
+    result += "#include \"injections/platform/math/shy_math.h\"\n" ;
     result += "\n" ;
     result += "#include \"./shy_" ;
     result += module ;

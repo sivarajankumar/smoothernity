@@ -1356,7 +1356,7 @@ void shy_guts :: consts :: injections_h_contents ( so_called_lib_std_string & re
     result += system ;
     result += "_fsm_behaviour_static_injections_included\n" ;
     result += "\n" ;
-    result += "#include \"../../../injections/platform/pointer/type/data/shy_data.h\"\n" ;
+    result += "#include \"injections/platform/pointer/type/data/shy_data.h\"\n" ;
     result += "\n" ;
     result += "#include \"./shy_" ;
     result += system ;
@@ -1374,9 +1374,9 @@ void shy_guts :: consts :: injections_h_contents ( so_called_lib_std_string & re
 void shy_guts :: consts :: injections_hpp_contents ( so_called_lib_std_string & result , so_called_lib_std_string system )
 {
     result . clear ( ) ;
-    result += "#include \"../../engine/fsm/stateless/shy_stateless_injections.h\"\n" ;
+    result += "#include \"common/engine/fsm/stateless/shy_stateless_injections.h\"\n" ;
     result += "\n" ;
-    result += "#include \"../../../injections/platform/math/consts/shy_consts.h\"\n" ;
+    result += "#include \"injections/platform/math/consts/shy_consts.h\"\n" ;
     result += "\n" ;
     result += "#include \"./shy_" ;
     result += system ;
