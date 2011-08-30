@@ -33,7 +33,7 @@ else :
     for dir , dirs , files in os . walk ( arg_dir_path ) :
         for file in files :
             file_path = os . path . join ( dir , file )
-            if len ( file_path . split ( consts . exclude_dir ) ) == 0 :
+            if len ( file_path . split ( consts . exclude_dir ) ) == 1 :
                 old_lines = open ( file_path , consts . mode_read ) . readlines ( ) 
                 new_lines = [ ]
                 changed = False
