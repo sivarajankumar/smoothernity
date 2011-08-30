@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_appear_finished_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_appear_finished_sender_injections_included
 
-#include "../../message/appear_finished/shy_appear_finished_injections.h"
+#include "common/logic/main_menu/selection/animation/message/appear_finished/shy_appear_finished_injections.h"
 
 #include "./shy_appear_finished.h"
 

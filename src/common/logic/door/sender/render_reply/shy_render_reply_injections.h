@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_door_render_reply_sender_injections_included
 #define _shy_common_logic_door_render_reply_sender_injections_included
 
-#include "../../message/render_reply/shy_render_reply_injections.h"
+#include "common/logic/door/message/render_reply/shy_render_reply_injections.h"
 
 #include "./shy_render_reply.h"
 

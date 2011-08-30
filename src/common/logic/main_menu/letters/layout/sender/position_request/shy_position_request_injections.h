@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_layout_position_request_sender_injections_included
 #define _shy_common_logic_main_menu_letters_layout_position_request_sender_injections_included
 
-#include "../../message/position_request/shy_position_request_injections.h"
+#include "common/logic/main_menu/letters/layout/message/position_request/shy_position_request_injections.h"
 
 #include "./shy_position_request.h"
 

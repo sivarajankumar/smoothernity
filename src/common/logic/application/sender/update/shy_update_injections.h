@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_application_update_sender_injections_included
 #define _shy_common_logic_application_update_sender_injections_included
 
-#include "../../message/update/shy_update_injections.h"
+#include "common/logic/application/message/update/shy_update_injections.h"
 
 #include "./shy_update.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_enable_face_culling_sender_injections_included
 #define _shy_common_engine_render_enable_face_culling_sender_injections_included
 
-#include "../../message/enable_face_culling/shy_enable_face_culling_injections.h"
+#include "common/engine/render/message/enable_face_culling/shy_enable_face_culling_injections.h"
 
 #include "./shy_enable_face_culling.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_text_letter_small_tex_coords_reply_sender_injections_included
 #define _shy_common_logic_text_letter_small_tex_coords_reply_sender_injections_included
 
-#include "../../message/letter_small_tex_coords_reply/shy_letter_small_tex_coords_reply_injections.h"
+#include "common/logic/text/message/letter_small_tex_coords_reply/shy_letter_small_tex_coords_reply_injections.h"
 
 #include "./shy_letter_small_tex_coords_reply.h"
 

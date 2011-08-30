@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_created_sender_injections_included
 #define _shy_common_logic_main_menu_created_sender_injections_included
 
-#include "../../message/created/shy_created_injections.h"
+#include "common/logic/main_menu/message/created/shy_created_injections.h"
 
 #include "./shy_created.h"
 

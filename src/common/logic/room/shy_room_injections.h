@@ -1,13 +1,13 @@
 #ifndef _shy_common_logic_room_injections_included
 #define _shy_common_logic_room_injections_included
 
-#include "./message/creation_permit/shy_creation_permit_injections.h"
-#include "./message/launch_permit/shy_launch_permit_injections.h"
-#include "./message/mesh_creation_finished/shy_mesh_creation_finished_injections.h"
-#include "./message/texture_creation_finished/shy_texture_creation_finished_injections.h"
-#include "./message/update/shy_update_injections.h"
-#include "../../message/init/shy_init_injections.h"
-#include "../../../injections/platform/scheduler/shy_scheduler.h"
+#include "common/logic/room/message/creation_permit/shy_creation_permit_injections.h"
+#include "common/logic/room/message/launch_permit/shy_launch_permit_injections.h"
+#include "common/logic/room/message/mesh_creation_finished/shy_mesh_creation_finished_injections.h"
+#include "common/logic/room/message/texture_creation_finished/shy_texture_creation_finished_injections.h"
+#include "common/logic/room/message/update/shy_update_injections.h"
+#include "common/message/init/shy_init_injections.h"
+#include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_room.h"
 

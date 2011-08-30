@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_entities_mesh_grid_reply_sender_injections_included
 #define _shy_common_logic_entities_mesh_grid_reply_sender_injections_included
 
-#include "../../message/mesh_grid_reply/shy_mesh_grid_reply_injections.h"
+#include "common/logic/entities/message/mesh_grid_reply/shy_mesh_grid_reply_injections.h"
 
 #include "./shy_mesh_grid_reply.h"
 

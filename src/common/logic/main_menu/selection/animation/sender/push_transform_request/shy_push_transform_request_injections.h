@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_push_transform_request_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_push_transform_request_sender_injections_included
 
-#include "../../message/push_transform_request/shy_push_transform_request_injections.h"
+#include "common/logic/main_menu/selection/animation/message/push_transform_request/shy_push_transform_request_injections.h"
 
 #include "./shy_push_transform_request.h"
 

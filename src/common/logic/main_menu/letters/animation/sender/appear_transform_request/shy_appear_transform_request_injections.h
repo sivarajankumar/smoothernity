@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_animation_appear_transform_request_sender_injections_included
 #define _shy_common_logic_main_menu_letters_animation_appear_transform_request_sender_injections_included
 
-#include "../../message/appear_transform_request/shy_appear_transform_request_injections.h"
+#include "common/logic/main_menu/letters/animation/message/appear_transform_request/shy_appear_transform_request_injections.h"
 
 #include "./shy_appear_transform_request.h"
 

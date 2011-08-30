@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_observer_animation_flight_transform_reply_message_injections_included
 #define _shy_common_logic_observer_animation_flight_transform_reply_message_injections_included
 
-#include "../../../../../../injections/platform/vector/type/data/shy_data.h"
+#include "injections/platform/vector/type/data/shy_data.h"
 
 #include "./shy_flight_transform_reply.h"
 

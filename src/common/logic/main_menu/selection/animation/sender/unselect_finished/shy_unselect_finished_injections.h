@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_selection_animation_unselect_finished_sender_injections_included
 #define _shy_common_logic_main_menu_selection_animation_unselect_finished_sender_injections_included
 
-#include "../../message/unselect_finished/shy_unselect_finished_injections.h"
+#include "common/logic/main_menu/selection/animation/message/unselect_finished/shy_unselect_finished_injections.h"
 
 #include "./shy_unselect_finished.h"
 

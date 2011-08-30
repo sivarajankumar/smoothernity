@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_animation_selection_weight_unselect_row_sender_injections_included
 #define _shy_common_logic_main_menu_letters_animation_selection_weight_unselect_row_sender_injections_included
 
-#include "../../message/selection_weight_unselect_row/shy_selection_weight_unselect_row_injections.h"
+#include "common/logic/main_menu/letters/animation/message/selection_weight_unselect_row/shy_selection_weight_unselect_row_injections.h"
 
 #include "./shy_selection_weight_unselect_row.h"
 

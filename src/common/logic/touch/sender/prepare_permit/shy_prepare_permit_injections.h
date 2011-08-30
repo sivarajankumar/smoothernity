@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_touch_prepare_permit_sender_injections_included
 #define _shy_common_logic_touch_prepare_permit_sender_injections_included
 
-#include "../../message/prepare_permit/shy_prepare_permit_injections.h"
+#include "common/logic/touch/message/prepare_permit/shy_prepare_permit_injections.h"
 
 #include "./shy_prepare_permit.h"
 

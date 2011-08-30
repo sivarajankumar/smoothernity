@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_cols_reply_sender_injections_included
 #define _shy_common_logic_main_menu_letters_cols_reply_sender_injections_included
 
-#include "../../message/cols_reply/shy_cols_reply_injections.h"
+#include "common/logic/main_menu/letters/message/cols_reply/shy_cols_reply_injections.h"
 
 #include "./shy_cols_reply.h"
 

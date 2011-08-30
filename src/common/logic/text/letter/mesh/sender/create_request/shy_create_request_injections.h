@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_text_letter_mesh_create_request_sender_injections_included
 #define _shy_common_logic_text_letter_mesh_create_request_sender_injections_included
 
-#include "../../message/create_request/shy_create_request_injections.h"
+#include "common/logic/text/letter/mesh/message/create_request/shy_create_request_injections.h"
 #include "./shy_create_request.h"
 
 typedef shy_common_logic_text_letter_mesh_create_request_sender so_called_common_logic_text_letter_mesh_create_request_sender ;

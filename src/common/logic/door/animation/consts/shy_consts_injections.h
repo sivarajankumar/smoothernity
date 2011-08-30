@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_door_animation_consts_injections_included
 #define _shy_common_logic_door_animation_consts_injections_included
 
-#include "../../../../../injections/platform/math/type/num_fract/shy_num_fract.h"
+#include "injections/platform/math/type/num_fract/shy_num_fract.h"
 
 #include "./shy_consts.h"
 

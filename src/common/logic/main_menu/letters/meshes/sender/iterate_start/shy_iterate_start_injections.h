@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_meshes_iterate_start_sender_injections_included
 #define _shy_common_logic_main_menu_letters_meshes_iterate_start_sender_injections_included
 
-#include "../../message/iterate_start/shy_iterate_start_injections.h"
+#include "common/logic/main_menu/letters/meshes/message/iterate_start/shy_iterate_start_injections.h"
 
 #include "./shy_iterate_start.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_animation_shake_transform_reply_sender_injections_included
 #define _shy_common_logic_main_menu_animation_shake_transform_reply_sender_injections_included
 
-#include "../../message/shake_transform_reply/shy_shake_transform_reply_injections.h"
+#include "common/logic/main_menu/animation/message/shake_transform_reply/shy_shake_transform_reply_injections.h"
 
 #include "./shy_shake_transform_reply.h"
 

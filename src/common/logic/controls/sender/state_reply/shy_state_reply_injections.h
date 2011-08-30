@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_controls_state_reply_sender_injections_included
 #define _shy_common_logic_controls_state_reply_sender_injections_included
 
-#include "../../message/state_reply/shy_state_reply_injections.h"
+#include "common/logic/controls/message/state_reply/shy_state_reply_injections.h"
 
 #include "./shy_state_reply.h"
 

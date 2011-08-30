@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_next_row_sender_injections_included
 #define _shy_common_logic_main_menu_letters_next_row_sender_injections_included
 
-#include "../../message/next_row/shy_next_row_injections.h"
+#include "common/logic/main_menu/letters/message/next_row/shy_next_row_injections.h"
 
 #include "./shy_next_row.h"
 

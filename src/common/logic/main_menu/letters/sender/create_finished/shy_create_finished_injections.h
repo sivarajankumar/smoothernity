@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_create_finished_sender_injections_included
 #define _shy_common_logic_main_menu_letters_create_finished_sender_injections_included
 
-#include "../../message/create_finished/shy_create_finished_injections.h"
+#include "common/logic/main_menu/letters/message/create_finished/shy_create_finished_injections.h"
 
 #include "./shy_create_finished.h"
 

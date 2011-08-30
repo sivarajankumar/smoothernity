@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_texture_create_reply_message_injections_included
 #define _shy_common_engine_render_texture_create_reply_message_injections_included
 
-#include "../../type/texture_id/shy_texture_id_injections.h"
+#include "common/engine/render/type/texture_id/shy_texture_id_injections.h"
 
 #include "./shy_texture_create_reply.h"
 

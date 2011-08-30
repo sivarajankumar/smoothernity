@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_main_menu_letters_meshes_iteration_sender_injections_included
 #define _shy_common_logic_main_menu_letters_meshes_iteration_sender_injections_included
 
-#include "../../message/iteration/shy_iteration_injections.h"
+#include "common/logic/main_menu/letters/meshes/message/iteration/shy_iteration_injections.h"
 
 #include "./shy_iteration.h"
 
