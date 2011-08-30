@@ -4,6 +4,8 @@ import os
 class consts :
     def msg_done ( self , file ) :
         return "File \"" + file + "\" done."
+    exclude_prefix = "\""
+    exclude_postfix = "\""
     mode_read = "r"
     mode_write = "w"
     prefix_shy = "shy_"
@@ -53,9 +55,12 @@ else :
             for line in old_lines :
                 replace_list = { }
                 for word in line . split ( ) :
-                    check_replace ( replace_list , word , consts . prefix_shy , str ( ) , arg_prefix )
-                    check_replace ( replace_list , word , consts . prefix_so_called , str ( ) , arg_prefix )
-                    check_replace ( replace_list , word , consts . prefix_underscored_shy , consts . postfix_injections_included , arg_prefix )
+                    if not word . startswith ( consts . exclude_prefix ) :
+                        if not word . endswith ( consts . exclude_postfix ) :
+                            check_replace ( replace_list , word , str ( ) , str ( ) , arg_prefix )
+                            check_replace ( replace_list , word , consts . prefix_shy , str ( ) , arg_prefix )
+                            check_replace ( replace_list , word , consts . prefix_so_called , str ( ) , arg_prefix )
+                            check_replace ( replace_list , word , consts . prefix_underscored_shy , consts . postfix_injections_included , arg_prefix )
                 for what , to_what in replace_list . items ( ) :
                     line = line . replace ( what , to_what )
                     changed = True
