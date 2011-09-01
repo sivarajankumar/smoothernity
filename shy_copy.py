@@ -3,6 +3,7 @@ import os
 
 class consts :
     cp = "cp"
+    cp_dir = "cp -R"
     makedirs = "mkdir -p"
     usage_long = str \
         ( "%prog [options] dir-from dir-to\n"
@@ -34,13 +35,20 @@ options , args = parser . parse_args ( )
 if len ( args ) < 2 :
     print consts . usage_short
 else :
-    new_dir = args [ 1 ]
+    arg_dir_from = args [ 0 ]
+    arg_dir_to = args [ 1 ]
+    new_dir = arg_dir_to
     new_name = os . path . basename ( new_dir )
     print consts . makedirs , new_dir
-    for old_dir , old_dirs , old_files in os . walk ( args [ 0 ] ) :
+    for old_dir , old_dirs , old_files in os . walk ( arg_dir_from ) :
         old_name = os . path . basename ( old_dir )
-        for old_file in old_files :
-            new_file = old_file . replace ( old_name , new_name )
-            new_path = os . path . join ( new_dir , new_file ) 
-            old_path = os . path . join ( old_dir , old_file )
-            print consts . cp , old_path , new_path
+        if old_dir == arg_dir_from :
+            for old_file in old_files :
+                new_file = old_file . replace ( old_name , new_name )
+                new_path = os . path . join ( new_dir , new_file ) 
+                old_path = os . path . join ( old_dir , old_file )
+                print consts . cp , old_path , new_path
+        else :
+            new_path = old_dir . replace ( arg_dir_from , arg_dir_to )
+            old_path = old_dir
+            print consts . cp_dir , old_path , new_path
