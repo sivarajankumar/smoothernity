@@ -15,7 +15,7 @@
 #include "common/logic/salutation/animation/zoom/play/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/appear/play/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/disappear/play/sender/shy_sender_injections.h"
-#include "common/logic/salutation/letters/animation/roll_in/play/sender/shy_sender_injections.h"
+#include "common/logic/salutation/letters/animation/roll/in/play/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/roll_out/play/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/update/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/meshes/cleaner/clean/sender/shy_sender_injections.h"
