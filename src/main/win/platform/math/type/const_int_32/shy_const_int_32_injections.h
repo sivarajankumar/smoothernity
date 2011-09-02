@@ -1,7 +1,0 @@
-#ifndef _shy_win_platform_math_const_int_32_type_injections_included
-#define _shy_win_platform_math_const_int_32_type_injections_included
-
-#include "platform/math/int_float/type/const_int_32/shy_const_int_32_injections.h"
-typedef so_called_platform_math_int_float_const_int_32_type so_called_platform_math_const_int_32_type ;
-
-#endif

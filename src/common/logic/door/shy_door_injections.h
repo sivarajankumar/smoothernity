@@ -1,12 +1,12 @@
 #ifndef _shy_common_logic_door_injections_included
 #define _shy_common_logic_door_injections_included
 
-#include "common/logic/door/message/creation_permit/shy_creation_permit_injections.h"
-#include "common/logic/door/message/launch_permit/shy_launch_permit_injections.h"
-#include "common/logic/door/message/mesh_creation_finished/shy_mesh_creation_finished_injections.h"
-#include "common/logic/door/message/texture_creation_finished/shy_texture_creation_finished_injections.h"
-#include "common/logic/door/message/update/shy_update_injections.h"
-#include "common/message/init/shy_init_injections.h"
+#include "common/logic/door/creation/permit/message/shy_message_injections.h"
+#include "common/logic/door/launch/permit/message/shy_message_injections.h"
+#include "common/logic/door/mesh/creation/finished/message/shy_message_injections.h"
+#include "common/logic/door/texture/creation/finished/message/shy_message_injections.h"
+#include "common/logic/door/update/message/shy_message_injections.h"
+#include "common/init/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_door.h"

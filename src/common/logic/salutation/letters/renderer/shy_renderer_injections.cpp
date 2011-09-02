@@ -1,7 +1,7 @@
 #include "./shy_renderer_injections.h"
 
-#include "common/engine/render/sender/mesh_render/shy_mesh_render_injections.h"
-#include "common/engine/render/sender/mesh_set_transform/shy_mesh_set_transform_injections.h"
+#include "common/engine/render/mesh/render/sender/shy_sender_injections.h"
+#include "common/engine/render/mesh/set/transform/sender/shy_sender_injections.h"
 #include "common/engine/taker/helper/shy_helper_injections.h"
 #include "common/logic/salutation/letters/animation/transform/checker/shy_checker_injections.h"
 #include "common/logic/salutation/letters/animation/transform/request/sender/shy_sender_injections.h"

@@ -1,8 +1,8 @@
 #ifndef _shy_common_logic_salutation_letters_meshes_storage_mesh_reply_message_injections_included
 #define _shy_common_logic_salutation_letters_meshes_storage_mesh_reply_message_injections_included
 
-#include "common/engine/render/type/mesh_id/shy_mesh_id_injections.h"
-#include "injections/platform/math/type/num_whole/shy_num_whole.h"
+#include "common/engine/render/mesh/id/type/shy_type_injections.h"
+#include "injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_message.h"
 

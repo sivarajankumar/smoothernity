@@ -1,7 +1,0 @@
-#ifndef _shy_iphone_platform_sound_sample_stereo_type_injections_included
-#define _shy_iphone_platform_sound_sample_stereo_type_injections_included
-
-#include "platform/sound/openal/type/sample_stereo/shy_sample_stereo_injections.h"
-typedef so_called_platform_sound_openal_sample_stereo_type so_called_platform_sound_sample_stereo_type ;
-
-#endif

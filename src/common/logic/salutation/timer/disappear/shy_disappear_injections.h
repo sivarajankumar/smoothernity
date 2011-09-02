@@ -3,7 +3,7 @@
 
 #include "common/logic/salutation/timer/disappear/run/message/shy_message_injections.h"
 #include "common/logic/salutation/timer/update/message/shy_message_injections.h"
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_disappear.h"

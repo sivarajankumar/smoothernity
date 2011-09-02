@@ -1,8 +1,0 @@
-#ifndef _shy_common_logic_main_menu_selection_track_void_selected_message_injections_included
-#define _shy_common_logic_main_menu_selection_track_void_selected_message_injections_included
-
-#include "./shy_track_void_selected.h"
-
-typedef shy_common_logic_main_menu_selection_track_void_selected_message so_called_common_logic_main_menu_selection_track_void_selected_message ;
-
-#endif

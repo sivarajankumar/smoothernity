@@ -3,6 +3,6 @@
 #endif
 
 #ifdef shy_scheduling_mode_direct_call
-    #include "platform/scheduler/direct_call/shy_direct_call_injections.hpp"
+    #include "platform/scheduler/direct/call/shy_call_injections.hpp"
 #endif
 

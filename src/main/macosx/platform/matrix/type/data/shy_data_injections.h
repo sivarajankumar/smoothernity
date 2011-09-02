@@ -1,8 +1,0 @@
-#ifndef _shy_macosx_platform_matrix_data_type_injections_included
-#define _shy_macosx_platform_matrix_data_type_injections_included
-
-#include "platform/matrix/float/type/data/shy_data_injections.h"
-typedef so_called_platform_matrix_float_data_type so_called_platform_matrix_data_type ;
-
-#endif
-

@@ -1,8 +1,8 @@
 #ifndef _shy_common_logic_salutation_letters_consts_injections_included
 #define _shy_common_logic_salutation_letters_consts_injections_included
 
-#include "injections/platform/math/type/const_int_32/shy_const_int_32.h"
-#include "injections/platform/math/type/num_whole/shy_num_whole.h"
+#include "injections/platform/math/const/int/32/type/shy_type.h"
+#include "injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_consts.h"
 

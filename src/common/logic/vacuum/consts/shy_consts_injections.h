@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_vacuum_consts_injections_included
 #define _shy_common_logic_vacuum_consts_injections_included
 
-#include "injections/platform/math/type/num_fract/shy_num_fract.h"
+#include "injections/platform/math/num/fract/type/shy_type.h"
 
 #include "./shy_consts.h"
 

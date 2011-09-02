@@ -9,9 +9,9 @@
 #include "injections/platform/math/consts/shy_consts.h"
 #include "injections/platform/math/shy_math.h"
 #include "injections/platform/pointer/shy_pointer.h"
-#include "injections/platform/pointer/type/data/shy_data.h"
-#include "injections/platform/static_array/shy_static_array.h"
-#include "injections/platform/static_array/type/data/shy_data.h"
+#include "injections/platform/pointer/data/type/shy_type.h"
+#include "injections/platform/static/array/shy_array.h"
+#include "injections/platform/static/array/data/type/shy_type.h"
 #include "trace/common/logic/salutation/letters/text/storage/shy_storage_injections.h"
 #include "trace/shy_trace_injections.h"
 

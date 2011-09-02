@@ -1,10 +1,10 @@
 #ifndef _shy_common_engine_math_stateless_injections_included
 #define _shy_common_engine_math_stateless_injections_included
 
-#include "injections/platform/math/type/num_fract/shy_num_fract.h"
-#include "injections/platform/math/type/num_whole/shy_num_whole.h"
-#include "injections/platform/matrix/type/data/shy_data.h"
-#include "injections/platform/vector/type/data/shy_data.h"
+#include "injections/platform/math/num/fract/type/shy_type.h"
+#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "injections/platform/matrix/data/type/shy_type.h"
+#include "injections/platform/vector/data/type/shy_type.h"
 
 #include "./shy_stateless.h"
 
