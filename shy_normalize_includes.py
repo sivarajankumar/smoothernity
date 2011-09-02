@@ -45,7 +45,7 @@ else :
                         include_path = line . strip ( ) . split ( consts . include ) [ 1 ]
                         if include_path . startswith ( consts . quote ) :
                             include_path = include_path . split ( consts . quote ) [ 1 ]
-                            replace_list [ include_path ] = make_normalized_path ( include_path )
+                            replace_list [ include_path ] = make_normalized_path ( file , include_path )
                     for what , to_what in replace_list . items ( ) :
                         line = line . replace ( what , to_what )
                         changed = True
