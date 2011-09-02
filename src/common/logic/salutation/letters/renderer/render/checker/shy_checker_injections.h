@@ -3,7 +3,7 @@
 
 #include "common/logic/salutation/letters/renderer/render/reply/message/shy_message_injections.h"
 #include "common/logic/salutation/letters/renderer/render/request/message/shy_message_injections.h"
-#include "injections/platform/math/type/num_whole/shy_num_whole.h"
+#include "injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_checker.h"
 

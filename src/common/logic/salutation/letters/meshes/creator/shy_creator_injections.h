@@ -3,8 +3,8 @@
 
 #include "common/logic/salutation/letters/meshes/creator/create/request/message/shy_message_injections.h"
 #include "common/logic/salutation/letters/text/storage/letter/reply/message/shy_message_injections.h"
-#include "common/logic/text/letter/mesh/message/create_reply/shy_create_reply_injections.h"
-#include "common/message/init/shy_init_injections.h"
+#include "common/logic/text/letter/mesh/create/reply/message/shy_message_injections.h"
+#include "common/init/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_creator.h"

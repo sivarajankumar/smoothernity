@@ -1,10 +1,10 @@
 #include "./shy_animation_injections.h"
 
 #include "common/logic/blanket/animation/consts/shy_consts_injections.h"
-#include "common/logic/blanket/animation/sender/appear_transform_request/shy_appear_transform_request_injections.h"
-#include "common/logic/blanket/animation/sender/disappear_transform_request/shy_disappear_transform_request_injections.h"
-#include "common/logic/blanket/animation/sender/fit_transform_request/shy_fit_transform_request_injections.h"
-#include "common/logic/blanket/animation/sender/transform_reply/shy_transform_reply_injections.h"
+#include "common/logic/blanket/animation/appear/transform/request/sender/shy_sender_injections.h"
+#include "common/logic/blanket/animation/disappear/transform/request/sender/shy_sender_injections.h"
+#include "common/logic/blanket/animation/fit/transform/request/sender/shy_sender_injections.h"
+#include "common/logic/blanket/animation/transform/reply/sender/shy_sender_injections.h"
 
 #include "common/engine/math/stateless/shy_stateless_injections.h"
 

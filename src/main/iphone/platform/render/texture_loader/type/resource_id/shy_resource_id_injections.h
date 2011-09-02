@@ -1,8 +1,0 @@
-#ifndef _shy_iphone_platform_render_texture_loader_resource_id_type_injections_included
-#define _shy_iphone_platform_render_texture_loader_resource_id_type_injections_included
-
-#include "platform/render/texture_loader/cocoa/type/resource_id/shy_resource_id_injections.h"
-typedef so_called_platform_render_texture_loader_cocoa_resource_id_type so_called_platform_render_texture_loader_resource_id_type ;
-
-#endif
-

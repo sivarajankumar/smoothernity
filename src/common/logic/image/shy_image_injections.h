@@ -1,15 +1,15 @@
 #ifndef _shy_common_logic_image_injections_included
 #define _shy_common_logic_image_injections_included
 
-#include "common/logic/image/message/prepare_permit/shy_prepare_permit_injections.h"
-#include "common/logic/image/message/render_request/shy_render_request_injections.h"
-#include "common/logic/image/message/update/shy_update_injections.h"
+#include "common/logic/image/prepare/permit/message/shy_message_injections.h"
+#include "common/logic/image/render/request/message/shy_message_injections.h"
+#include "common/logic/image/update/message/shy_message_injections.h"
 
-#include "common/engine/render/message/mesh_create_reply/shy_mesh_create_reply_injections.h"
-#include "common/engine/render/message/texture_create_reply/shy_texture_create_reply_injections.h"
-#include "common/engine/render/message/texture_loader_ready_reply/shy_texture_loader_ready_reply_injections.h"
+#include "common/engine/render/mesh/create/reply/message/shy_message_injections.h"
+#include "common/engine/render/texture/create/reply/message/shy_message_injections.h"
+#include "common/engine/render/texture/loader/ready/reply/message/shy_message_injections.h"
 
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 
 #include "injections/platform/scheduler/shy_scheduler.h"
 

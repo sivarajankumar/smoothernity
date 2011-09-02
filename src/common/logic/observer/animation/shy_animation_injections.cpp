@@ -1,7 +1,7 @@
 #include "./shy_animation_injections.h"
 
-#include "common/logic/observer/animation/sender/flight_transform_request/shy_flight_transform_request_injections.h"
-#include "common/logic/observer/animation/sender/transform_reply/shy_transform_reply_injections.h"
+#include "common/logic/observer/animation/flight/transform/request/sender/shy_sender_injections.h"
+#include "common/logic/observer/animation/transform/reply/sender/shy_sender_injections.h"
 
 #include "common/engine/camera/stateless/shy_stateless_injections.h"
 

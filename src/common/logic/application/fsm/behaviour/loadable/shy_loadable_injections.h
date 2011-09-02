@@ -1,8 +1,8 @@
 #ifndef _shy_common_logic_application_fsm_behaviour_loadable_injections_included
 #define _shy_common_logic_application_fsm_behaviour_loadable_injections_included
 
-#include "common/logic/application/fsm/type/inputs/shy_inputs_injections.h"
-#include "injections/platform/pointer/type/data/shy_data.h"
+#include "common/logic/application/fsm/inputs/type/shy_type_injections.h"
+#include "injections/platform/pointer/data/type/shy_type.h"
 
 #include "./shy_loadable.h"
 

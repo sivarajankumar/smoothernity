@@ -5,7 +5,7 @@
 #include "common/logic/salutation/letters/meshes/generator/generate/message/shy_message_injections.h"
 #include "common/logic/salutation/letters/meshes/generator/update/message/shy_message_injections.h"
 #include "common/logic/salutation/letters/text/storage/size/reply/message/shy_message_injections.h"
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_generator.h"

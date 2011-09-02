@@ -1,8 +1,8 @@
 #ifndef _shy_common_engine_camera_stateless_injections_included
 #define _shy_common_engine_camera_stateless_injections_included
 
-#include "injections/platform/matrix/type/data/shy_data.h"
-#include "injections/platform/vector/type/data/shy_data.h"
+#include "injections/platform/matrix/data/type/shy_type.h"
+#include "injections/platform/vector/data/type/shy_type.h"
 
 #include "./shy_stateless.h"
 

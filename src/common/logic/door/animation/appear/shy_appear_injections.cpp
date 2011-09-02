@@ -1,7 +1,7 @@
 #include "./shy_appear_injections.h"
 
 #include "common/logic/door/animation/consts/shy_consts_injections.h"
-#include "common/logic/door/animation/sender/appear_transform_reply/shy_appear_transform_reply_injections.h"
+#include "common/logic/door/animation/appear/transform/reply/sender/shy_sender_injections.h"
 
 #include "common/engine/math/stateless/shy_stateless_injections.h"
 

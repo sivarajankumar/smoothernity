@@ -1,12 +1,12 @@
 #ifndef _shy_common_logic_door_animation_appear_injections_included
 #define _shy_common_logic_door_animation_appear_injections_included
 
-#include "common/logic/door/animation/message/appear_start/shy_appear_start_injections.h"
-#include "common/logic/door/animation/message/appear_transform_request/shy_appear_transform_request_injections.h"
+#include "common/logic/door/animation/appear/start/message/shy_message_injections.h"
+#include "common/logic/door/animation/appear/transform/request/message/shy_message_injections.h"
 
-#include "common/logic/door/message/update/shy_update_injections.h"
+#include "common/logic/door/update/message/shy_message_injections.h"
 
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 
 #include "injections/platform/scheduler/shy_scheduler.h"
 

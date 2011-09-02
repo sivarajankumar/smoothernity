@@ -5,7 +5,7 @@
 #include "loadable/fsm/consts/shy_consts_injections.h"
 #include "loadable/fsm/content/shy_content_injections.h"
 #include "common/engine/fsm/stateless/shy_stateless_injections.h"
-#include "common/engine/fsm/type/state/shy_state_injections.h"
+#include "common/engine/fsm/state/type/shy_type_injections.h"
 #include "injections/lib/std/bool/shy_bool.h"
 #include "injections/lib/std/false/shy_false.h"
 #include "injections/lib/std/map/shy_map.h"
@@ -14,7 +14,7 @@
 #include "injections/platform/conditions/shy_conditions.h"
 #include "injections/platform/math/consts/shy_consts.h"
 #include "injections/platform/pointer/shy_pointer.h"
-#include "injections/platform/pointer/type/data/shy_data.h"
+#include "injections/platform/pointer/data/type/shy_type.h"
 #include "trace/loadable/fsm/behaviour/shy_behaviour_injections.h"
 #include "trace/shy_trace_injections.h"
 

@@ -1,6 +1,6 @@
 #include "./shy_controls_injections.h"
 
-#include "common/logic/controls/sender/state_reply/shy_state_reply_injections.h"
+#include "common/logic/controls/state/reply/sender/shy_sender_injections.h"
 
 #include "injections/platform/conditions/shy_conditions.h"
 #include "injections/platform/math/consts/shy_consts.h"

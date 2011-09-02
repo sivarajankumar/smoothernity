@@ -1,8 +1,8 @@
 #include "./shy_appear_injections.h"
 
 #include "common/logic/blanket/animation/consts/shy_consts_injections.h"
-#include "common/logic/blanket/animation/sender/appear_finished/shy_appear_finished_injections.h"
-#include "common/logic/blanket/animation/sender/appear_transform_reply/shy_appear_transform_reply_injections.h"
+#include "common/logic/blanket/animation/appear/finished/sender/shy_sender_injections.h"
+#include "common/logic/blanket/animation/appear/transform/reply/sender/shy_sender_injections.h"
 
 #include "common/engine/math/stateless/shy_stateless_injections.h"
 

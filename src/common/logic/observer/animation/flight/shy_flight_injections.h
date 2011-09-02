@@ -1,11 +1,11 @@
 #ifndef _shy_common_logic_observer_animation_flight_injections_included
 #define _shy_common_logic_observer_animation_flight_injections_included
 
-#include "common/logic/observer/animation/message/flight_transform_request/shy_flight_transform_request_injections.h"
+#include "common/logic/observer/animation/flight/transform/request/message/shy_message_injections.h"
 
-#include "common/logic/observer/message/update/shy_update_injections.h"
+#include "common/logic/observer/update/message/shy_message_injections.h"
 
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 
 #include "injections/platform/scheduler/shy_scheduler.h"
 

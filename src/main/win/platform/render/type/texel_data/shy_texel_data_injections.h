@@ -1,8 +1,0 @@
-#ifndef _shy_win_platform_render_texel_data_type_injections_included
-#define _shy_win_platform_render_texel_data_type_injections_included
-
-#include "platform/render/directx/type/texel_data/shy_texel_data_injections.h"
-typedef so_called_platform_render_directx_texel_data_type so_called_platform_render_texel_data_type ;
-
-#endif
-

@@ -1,7 +1,7 @@
 #include "./shy_cleaner_injections.h"
 
-#include "common/engine/render/sender/mesh_delete/shy_mesh_delete_injections.h"
-#include "common/engine/render/type/mesh_id/shy_mesh_id_injections.h"
+#include "common/engine/render/mesh/delete/sender/shy_sender_injections.h"
+#include "common/engine/render/mesh/id/type/shy_type_injections.h"
 #include "common/engine/taker/helper/shy_helper_injections.h"
 #include "common/logic/salutation/letters/meshes/cleaner/clean/finished/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/meshes/consts/shy_consts_injections.h"

@@ -1,8 +1,0 @@
-#ifndef _shy_win_platform_sound_sample_mono_type_injections_included
-#define _shy_win_platform_sound_sample_mono_type_injections_included
-
-#include "platform/sound/directx/type/sample_mono/shy_sample_mono_injections.h"
-typedef so_called_platform_sound_directx_sample_mono_type so_called_platform_sound_sample_mono_type ;
-
-#endif
-

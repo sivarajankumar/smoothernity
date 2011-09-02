@@ -1,7 +1,0 @@
-#ifndef _shy_win_platform_render_vertex_buffer_id_type_injections_included
-#define _shy_win_platform_render_vertex_buffer_id_type_injections_included
-
-#include "platform/render/directx/type/vertex_buffer_id/shy_vertex_buffer_id_injections.h"
-typedef so_called_platform_render_directx_vertex_buffer_id_type so_called_platform_render_vertex_buffer_id_type ;
-
-#endif

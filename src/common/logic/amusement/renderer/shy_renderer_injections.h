@@ -1,16 +1,16 @@
 #ifndef _shy_common_logic_amusement_renderer_injections_included
 #define _shy_common_logic_amusement_renderer_injections_included
 
-#include "common/logic/amusement/message/render/shy_render_injections.h"
+#include "common/logic/amusement/render/message/shy_message_injections.h"
 
-#include "common/logic/blanket/message/render_reply/shy_render_reply_injections.h"
-#include "common/logic/door/message/render_reply/shy_render_reply_injections.h"
-#include "common/logic/observer/animation/message/transform_reply/shy_transform_reply_injections.h"
-#include "common/logic/ortho/message/planes_reply/shy_planes_reply_injections.h"
-#include "common/logic/perspective/message/planes_reply/shy_planes_reply_injections.h"
-#include "common/logic/room/message/render_reply/shy_render_reply_injections.h"
+#include "common/logic/blanket/render/reply/message/shy_message_injections.h"
+#include "common/logic/door/render/reply/message/shy_message_injections.h"
+#include "common/logic/observer/animation/transform/reply/message/shy_message_injections.h"
+#include "common/logic/ortho/planes/reply/message/shy_message_injections.h"
+#include "common/logic/perspective/planes/reply/message/shy_message_injections.h"
+#include "common/logic/room/render/reply/message/shy_message_injections.h"
 
-#include "common/message/init/shy_init_injections.h"
+#include "common/init/message/shy_message_injections.h"
 
 #include "injections/platform/scheduler/shy_scheduler.h"
 
