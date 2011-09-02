@@ -37,7 +37,7 @@ else :
     for old_dir , old_dirs , old_files in os . walk ( arg_path ) :
         for old_file in old_files :
             old_path = os . path . join ( old_dir , old_file )
-            new_path = make_normalized_path ( old_path )
+            new_path = make_normalized_path ( str ( ) , old_path )
             if new_path != old_path :
                 new_dir , new_file = os . path . split ( new_path )
                 make_dirs . add ( new_dir )
