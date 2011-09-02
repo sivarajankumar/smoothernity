@@ -56,4 +56,6 @@ assert make_normalized_path ( "some_parent_dir/some_module/type/some_data/shy_so
 assert make_normalized_path ( "some_parent_dir/some_module/type/some_data/shy_some_data_injections.h" ) == "some/parent/dir/some/module/some/data/type/shy_type_injections.h"
 assert make_normalized_path ( "some_parent_dir/some_module/some_file.h" ) == "some_parent_dir/some_module/some_file.h"
 assert make_normalized_path ( "some_parent_dir/shy_some_module/some_file.h" ) == "some_parent_dir/shy_some_module/some_file.h"
+assert make_normalized_path ( "./shy_some_module.h" ) == "./shy_module.h"
+assert make_normalized_path ( "./shy_some_module_injections.cpp" ) == "./shy_module_injections.cpp"
 
