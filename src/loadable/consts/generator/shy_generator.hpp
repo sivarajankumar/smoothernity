@@ -177,7 +177,7 @@ void shy_loadable_consts_generator :: generate ( so_called_lib_std_string & resu
 
         module_name = module_i -> first ;
 
-        so_called_loadable_generator :: module_path ( module_path , module_name ) ;
+        so_called_loadable_reflection :: module_path ( module_path , module_name ) ;
         shy_guts :: consts :: hpp_path ( consts_hpp_path ) ;
         shy_guts :: consts :: injections_hpp_path ( consts_injections_hpp_path ) ;
         shy_guts :: consts :: injections_hpp_contents ( consts_injections_hpp_contents ) ;
