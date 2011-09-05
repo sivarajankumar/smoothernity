@@ -1,5 +1,11 @@
 namespace shy_guts
 {
+    namespace engine_render_aspect_state
+    {
+        static so_called_common_engine_taker_helper ( engine_render_aspect ) taker ;
+        static void on_reply ( ) ;
+    }
+
     namespace logic_salutation_letters_animation_layout_transform_state
     {
         static so_called_common_logic_salutation_letters_animation_layout_transform_request_message msg_request ;
@@ -23,6 +29,11 @@ void shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on
 
 void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply ( )
 {
+    shy_guts :: engine_render_aspect_state :: taker . request ( ) ;
+}
+
+void shy_guts :: engine_render_aspect_state :: on_reply ( )
+{
     so_called_platform_vector_data_type origin ;
     so_called_platform_vector :: xyz
         ( origin
@@ -44,6 +55,14 @@ void shy_guts :: logic_salutation_letters_meshes_storage_size_state :: on_reply 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
+}
+
+void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_common_engine_render_aspect_reply_message msg )
+{
+    so_called_platform_math_num_whole_type should_handle ;
+    shy_guts :: engine_render_aspect_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: engine_render_aspect_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_common_logic_salutation_letters_meshes_storage_size_reply_message msg )
