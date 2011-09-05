@@ -1,5 +1,7 @@
 #include "./shy_layout_injections.h"
 
+#include "common/engine/render/aspect/checker/shy_checker_injections.h"
+#include "common/engine/render/aspect/request/sender/shy_sender_injections.h"
 #include "common/engine/taker/helper/shy_helper_injections.h"
 #include "common/logic/salutation/letters/animation/layout/transform/reply/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/meshes/storage/size/checker/shy_checker_injections.h"

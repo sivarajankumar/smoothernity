@@ -8,6 +8,7 @@
 #include "common/logic/main/menu/letters/layout/row/rect/shy_rect_injections.h"
 #include "common/logic/ortho/shy_ortho_injections.h"
 #include "common/logic/perspective/shy_perspective_injections.h"
+#include "common/logic/salutation/letters/animation/layout/shy_layout_injections.h"
 #include "common/logic/title/shy_title_injections.h"
 
 #include "./shy_sender.hpp"
