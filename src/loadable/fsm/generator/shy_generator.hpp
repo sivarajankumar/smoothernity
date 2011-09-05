@@ -2757,7 +2757,7 @@ void shy_loadable_fsm_generator :: generate ( so_called_lib_std_string & result 
 
         system_name = system_i -> first ;
 
-        so_called_loadable_generator :: module_path ( system_path , system_name ) ;
+        so_called_loadable_reflection :: module_path ( system_path , system_name ) ;
         shy_guts :: consts :: h_path ( fsm_h_path ) ;
         shy_guts :: consts :: hpp_path ( fsm_hpp_path ) ;
         shy_guts :: consts :: injections_h_path ( fsm_injections_h_path ) ;
