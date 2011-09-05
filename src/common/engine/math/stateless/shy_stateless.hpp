@@ -333,6 +333,30 @@ void shy_common_engine_math_stateless :: max_whole
         result = b ;
 }
     
+void shy_common_engine_math_stateless :: min_fract 
+    ( so_called_platform_math_num_fract_type & result 
+    , so_called_platform_math_num_fract_type a 
+    , so_called_platform_math_num_fract_type b 
+    )
+{
+    if ( so_called_platform_conditions :: fract_less_than_fract ( a , b ) )
+        result = a ;
+    else
+        result = b ;
+}
+
+void shy_common_engine_math_stateless :: max_fract 
+    ( so_called_platform_math_num_fract_type & result 
+    , so_called_platform_math_num_fract_type a 
+    , so_called_platform_math_num_fract_type b 
+    )
+{
+    if ( so_called_platform_conditions :: fract_greater_than_fract ( a , b ) )
+        result = a ;
+    else
+        result = b ;
+}
+    
 void shy_common_engine_math_stateless :: abs_whole ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type a )
 {
     if ( so_called_platform_conditions :: whole_less_than_zero ( a ) )
