@@ -76,10 +76,20 @@ public :
         , so_called_platform_math_num_whole_type from 
         , so_called_platform_math_num_whole_type to 
         ) ;
+    static void min_fract
+        ( so_called_platform_math_num_fract_type & result 
+        , so_called_platform_math_num_fract_type a 
+        , so_called_platform_math_num_fract_type b 
+        ) ;
     static void min_whole 
         ( so_called_platform_math_num_whole_type & result 
         , so_called_platform_math_num_whole_type a 
         , so_called_platform_math_num_whole_type b 
+        ) ;
+    static void max_fract
+        ( so_called_platform_math_num_fract_type & result 
+        , so_called_platform_math_num_fract_type a 
+        , so_called_platform_math_num_fract_type b 
         ) ;
     static void max_whole 
         ( so_called_platform_math_num_whole_type & result 
