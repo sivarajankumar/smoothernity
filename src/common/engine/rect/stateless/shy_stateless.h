@@ -7,6 +7,13 @@ public :
         , so_called_platform_math_num_fract_type border_width
         , so_called_platform_math_num_fract_type border_height
         ) ;
+    static void compute_letters_row
+        ( so_called_common_engine_rect_type & result
+        , so_called_platform_math_num_whole_type letters
+        , so_called_platform_math_num_fract_type letter_height
+        , so_called_platform_math_num_fract_type letter_width
+        , so_called_platform_math_num_fract_type step
+        ) ;
     static void dims
         ( so_called_platform_math_num_fract_type & width
         , so_called_platform_math_num_fract_type & height
