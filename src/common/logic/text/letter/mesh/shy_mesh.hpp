@@ -92,25 +92,25 @@ void shy_guts :: fill_mesh_content ( )
     index_right_top = so_called_platform_math_consts :: whole_2 ;
     index_right_bottom = so_called_platform_math_consts :: whole_3 ;
     
-    so_called_common_engine_render_stateless :: mesh_set_triangle_strip_index_value ( mesh , index_left_top , index_left_top ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_color               ( mesh , index_left_top , color_r , color_g , color_b , color_a ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_tex_coord           ( mesh , index_left_top , u_left , v_top ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_position            ( mesh , index_left_top , x_left , y_top , z ) ;
+    so_called_common_engine_render_helper :: mesh_set_triangle_strip_index_value ( mesh , index_left_top , index_left_top ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_color               ( mesh , index_left_top , color_r , color_g , color_b , color_a ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_tex_coord           ( mesh , index_left_top , u_left , v_top ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_position            ( mesh , index_left_top , x_left , y_top , z ) ;
 
-    so_called_common_engine_render_stateless :: mesh_set_triangle_strip_index_value ( mesh , index_left_bottom , index_left_bottom ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_color               ( mesh , index_left_bottom , color_r , color_g , color_b , color_a ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_tex_coord           ( mesh , index_left_bottom , u_left , v_bottom ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_position            ( mesh , index_left_bottom , x_left , y_bottom , z ) ;
+    so_called_common_engine_render_helper :: mesh_set_triangle_strip_index_value ( mesh , index_left_bottom , index_left_bottom ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_color               ( mesh , index_left_bottom , color_r , color_g , color_b , color_a ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_tex_coord           ( mesh , index_left_bottom , u_left , v_bottom ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_position            ( mesh , index_left_bottom , x_left , y_bottom , z ) ;
 
-    so_called_common_engine_render_stateless :: mesh_set_triangle_strip_index_value ( mesh , index_right_top , index_right_top ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_color               ( mesh , index_right_top , color_r , color_g , color_b , color_a ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_tex_coord           ( mesh , index_right_top , u_right , v_top ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_position            ( mesh , index_right_top , x_right , y_top , z ) ;
+    so_called_common_engine_render_helper :: mesh_set_triangle_strip_index_value ( mesh , index_right_top , index_right_top ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_color               ( mesh , index_right_top , color_r , color_g , color_b , color_a ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_tex_coord           ( mesh , index_right_top , u_right , v_top ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_position            ( mesh , index_right_top , x_right , y_top , z ) ;
 
-    so_called_common_engine_render_stateless :: mesh_set_triangle_strip_index_value ( mesh , index_right_bottom , index_right_bottom ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
-    so_called_common_engine_render_stateless :: mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
+    so_called_common_engine_render_helper :: mesh_set_triangle_strip_index_value ( mesh , index_right_bottom , index_right_bottom ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_color               ( mesh , index_right_bottom , color_r , color_g , color_b , color_a ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_tex_coord           ( mesh , index_right_bottom , u_right , v_bottom ) ;
+    so_called_common_engine_render_helper :: mesh_set_vertex_position            ( mesh , index_right_bottom , x_right , y_bottom , z ) ;
 }
     
 void shy_guts :: send_engine_render_mesh_finalize ( )
