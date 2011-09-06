@@ -14,6 +14,14 @@ public :
         , so_called_platform_math_num_fract_type letter_width
         , so_called_platform_math_num_fract_type step
         ) ;
+    static void compute_letter_position
+        ( so_called_platform_math_num_fract_type & letter_x
+        , so_called_platform_math_num_whole_type letter_index
+        , so_called_platform_math_num_whole_type letters
+        , so_called_platform_math_num_fract_type letter_height
+        , so_called_platform_math_num_fract_type letter_width
+        , so_called_platform_math_num_fract_type step
+        ) ;
     static void dims
         ( so_called_platform_math_num_fract_type & width
         , so_called_platform_math_num_fract_type & height
