@@ -1,4 +1,28 @@
-void shy_common_engine_rect_stateless :: fit_to_center
+namespace shy_guts
+{
+    static void compute_letters_row
+        ( so_called_common_engine_rect_type & result
+        , so_called_platform_math_num_whole_type letters
+        , so_called_platform_math_num_fract_type letter_height
+        , so_called_platform_math_num_fract_type letter_width
+        , so_called_platform_math_num_fract_type step
+        ) ;
+    static void compute_letter_position
+        ( so_called_platform_math_num_fract_type & letter_x
+        , so_called_platform_math_num_whole_type letter_index
+        , so_called_platform_math_num_whole_type letters
+        , so_called_platform_math_num_fract_type letter_height
+        , so_called_platform_math_num_fract_type letter_width
+        , so_called_platform_math_num_fract_type step
+        ) ;
+    static void fit_to_center
+        ( so_called_platform_math_num_fract_type & scale
+        , so_called_common_engine_rect_type what
+        , so_called_common_engine_rect_type where
+        ) ;
+}
+
+void shy_guts :: fit_to_center
     ( so_called_platform_math_num_fract_type & scale
     , so_called_common_engine_rect_type what
     , so_called_common_engine_rect_type where
@@ -27,31 +51,7 @@ void shy_common_engine_rect_stateless :: fit_to_center
     so_called_common_engine_math_stateless :: min_fract ( scale , scale_height , scale_width ) ;
 }
 
-void shy_common_engine_rect_stateless :: dims
-    ( so_called_platform_math_num_fract_type & width
-    , so_called_platform_math_num_fract_type & height
-    , so_called_common_engine_rect_type of_what
-    )
-{
-    so_called_platform_math :: sub_fracts ( width , of_what . right , of_what . left ) ;
-    so_called_platform_math :: sub_fracts ( height , of_what . top , of_what . bottom ) ;
-}
-
-void shy_common_engine_rect_stateless :: add_border
-    ( so_called_common_engine_rect_type & result
-    , so_called_common_engine_rect_type to_what
-    , so_called_platform_math_num_fract_type border_width
-    , so_called_platform_math_num_fract_type border_height
-    )
-{
-    so_called_platform_math :: sub_fracts ( result . left , to_what . left , border_width ) ;
-    so_called_platform_math :: add_fracts ( result . right , to_what . right , border_width ) ;
-
-    so_called_platform_math :: sub_fracts ( result . bottom , to_what . bottom , border_height ) ;
-    so_called_platform_math :: add_fracts ( result . top , to_what . top , border_height ) ;
-}
-
-void shy_common_engine_rect_stateless :: compute_letters_row
+void shy_guts :: compute_letters_row
     ( so_called_common_engine_rect_type & result
     , so_called_platform_math_num_whole_type letters
     , so_called_platform_math_num_fract_type letter_height
@@ -81,7 +81,7 @@ void shy_common_engine_rect_stateless :: compute_letters_row
     so_called_platform_math :: div_fracts ( result . top , row_height , so_called_platform_math_consts :: fract_2 ) ;
 }
 
-void shy_common_engine_rect_stateless :: compute_letter_position
+void shy_guts :: compute_letter_position
     ( so_called_platform_math_num_fract_type & letter_x
     , so_called_platform_math_num_whole_type letter_index_whole
     , so_called_platform_math_num_whole_type letters
@@ -100,17 +100,97 @@ void shy_common_engine_rect_stateless :: compute_letter_position
     so_called_platform_math :: add_fracts ( letter_width_with_step , letter_width , step ) ;
     so_called_platform_math :: div_fracts ( letter_half_width , letter_width , so_called_platform_math_consts :: fract_2 ) ;
     so_called_platform_math :: make_fract_from_whole ( letter_index , letter_index_whole ) ;
-    so_called_common_engine_rect_stateless :: compute_letters_row
-        ( row
-        , letters
-        , letter_height
-        , letter_width
-        , step
-        ) ;
+    shy_guts :: compute_letters_row ( row , letters , letter_height , letter_width , step ) ;
 
     so_called_platform_math :: mul_fracts ( letter_offset_left , letter_width_with_step , letter_index ) ;
 
     so_called_platform_math :: add_fracts ( letter_offset_center , letter_offset_left , letter_half_width ) ;
 
     so_called_platform_math :: add_fracts ( letter_x , row . left , letter_offset_center ) ;
+}
+
+void shy_common_engine_rect_stateless :: dims
+    ( so_called_platform_math_num_fract_type & width
+    , so_called_platform_math_num_fract_type & height
+    , so_called_common_engine_rect_type of_what
+    )
+{
+    so_called_platform_math :: sub_fracts ( width , of_what . right , of_what . left ) ;
+    so_called_platform_math :: sub_fracts ( height , of_what . top , of_what . bottom ) ;
+}
+
+void shy_common_engine_rect_stateless :: add_border
+    ( so_called_common_engine_rect_type & result
+    , so_called_common_engine_rect_type to_what
+    , so_called_platform_math_num_fract_type border_width
+    , so_called_platform_math_num_fract_type border_height
+    )
+{
+    so_called_platform_math :: sub_fracts ( result . left , to_what . left , border_width ) ;
+    so_called_platform_math :: add_fracts ( result . right , to_what . right , border_width ) ;
+
+    so_called_platform_math :: sub_fracts ( result . bottom , to_what . bottom , border_height ) ;
+    so_called_platform_math :: add_fracts ( result . top , to_what . top , border_height ) ;
+}
+
+void shy_common_engine_rect_stateless :: layout_letters_in_a_row
+    ( so_called_platform_vector_data_type & letter_position
+    , so_called_platform_math_num_fract_type & letter_scale
+    , so_called_platform_math_num_whole_type letter_index
+    , so_called_platform_math_num_whole_type letters
+    , so_called_platform_math_num_fract_type letter_height
+    , so_called_platform_math_num_fract_type letter_width
+    , so_called_platform_math_num_fract_type step
+    , so_called_platform_math_num_fract_type border_width
+    , so_called_platform_math_num_fract_type border_height
+    , so_called_platform_math_num_fract_type aspect_width
+    , so_called_platform_math_num_fract_type aspect_height
+    )
+{
+    so_called_platform_math_num_fract_type letter_x_scaled ;
+    so_called_platform_math_num_fract_type letter_x_unscaled ;
+    so_called_common_engine_rect_type row ;
+    so_called_common_engine_rect_type row_bordered ;
+    so_called_common_engine_rect_type screen ;
+    
+    shy_guts :: compute_letter_position ( letter_x_unscaled , letter_index , letters , letter_height , letter_width , step ) ;
+    shy_guts :: compute_letters_row ( row , letters , letter_height , letter_width , step ) ;
+    so_called_common_engine_rect_stateless :: rect_from_axes ( screen , aspect_width , aspect_height ) ;
+
+    so_called_common_engine_rect_stateless :: add_border ( row_bordered , row , border_width , border_height ) ;
+
+    shy_guts :: fit_to_center ( letter_scale , row_bordered , screen ) ;
+
+    so_called_platform_math :: mul_fracts ( letter_x_scaled , letter_x_unscaled , letter_scale ) ;
+
+    so_called_platform_vector :: xyz
+        ( letter_position
+        , letter_x_scaled
+        , so_called_platform_math_consts :: fract_0
+        , so_called_platform_math_consts :: fract_0
+        ) ;
+}
+
+void shy_common_engine_rect_stateless :: rect_from_dims
+    ( so_called_common_engine_rect_type & rect
+    , so_called_platform_math_num_fract_type width
+    , so_called_platform_math_num_fract_type height
+    )
+{
+    so_called_platform_math :: mul_fracts ( rect . left , width , so_called_platform_math_consts :: fract_minus_2 ) ;
+    so_called_platform_math :: mul_fracts ( rect . right , width , so_called_platform_math_consts :: fract_2 ) ;
+    so_called_platform_math :: mul_fracts ( rect . bottom , height , so_called_platform_math_consts :: fract_minus_2 ) ;
+    so_called_platform_math :: mul_fracts ( rect . top , height , so_called_platform_math_consts :: fract_2 ) ;
+}
+
+void shy_common_engine_rect_stateless :: rect_from_axes
+    ( so_called_common_engine_rect_type & rect
+    , so_called_platform_math_num_fract_type half_width
+    , so_called_platform_math_num_fract_type half_height
+    )
+{
+    so_called_platform_math :: mul_fracts ( rect . left , half_width , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( rect . right , half_width , so_called_platform_math_consts :: fract_1 ) ;
+    so_called_platform_math :: mul_fracts ( rect . bottom , half_height , so_called_platform_math_consts :: fract_minus_1 ) ;
+    so_called_platform_math :: mul_fracts ( rect . top , half_height , so_called_platform_math_consts :: fract_1 ) ;
 }
