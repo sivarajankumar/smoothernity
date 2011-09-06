@@ -44,7 +44,7 @@ void shy_guts :: engine_render_aspect_state :: on_reply ( )
     so_called_platform_vector_data_type origin ;
     so_called_platform_math_num_fract_type scale ;
 
-    so_called_common_engine_rect_stateless :: layout_letters_in_a_row
+    so_called_common_logic_text_stateless :: layout_letters_in_a_row
         ( origin
         , scale
         , shy_guts :: logic_salutation_letters_animation_layout_transform_state :: msg_request . letter
