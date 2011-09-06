@@ -3,6 +3,7 @@
 
 #include "common/engine/rect/type/shy_type_injections.h"
 #include "injections/platform/math/num/whole/type/shy_type.h"
+#include "injections/platform/vector/data/type/shy_type.h"
 
 #include "./shy_stateless.h"
 

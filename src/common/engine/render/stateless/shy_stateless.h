@@ -39,5 +39,6 @@ public :
         , so_called_platform_math_num_fract_type r
         , so_called_platform_math_num_fract_type g
         , so_called_platform_math_num_fract_type b
-        , so_called_platform_math_num_fract_type a ) ;
+        , so_called_platform_math_num_fract_type a 
+        ) ;
 } ;
