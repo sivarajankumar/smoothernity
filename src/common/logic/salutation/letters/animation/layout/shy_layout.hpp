@@ -1,12 +1,5 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static const so_called_platform_math_num_fract_type step = so_called_platform_math :: init_num_fract ( 1 , 10 ) ;
-        static const so_called_platform_math_num_fract_type border_width = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-        static const so_called_platform_math_num_fract_type border_height = so_called_platform_math :: init_num_fract ( 0 , 1 ) ;
-    }
-
     namespace engine_render_aspect_state
     {
         static so_called_common_engine_taker_helper ( engine_render_aspect ) taker ;
@@ -51,9 +44,9 @@ void shy_guts :: engine_render_aspect_state :: on_reply ( )
         , shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . msg_reply . size
         , so_called_common_logic_salutation_letters_meshes_consts :: mesh_size
         , so_called_common_logic_salutation_letters_meshes_consts :: mesh_size
-        , shy_guts :: consts :: step
-        , shy_guts :: consts :: border_width
-        , shy_guts :: consts :: border_height
+        , so_called_common_logic_salutation_letters_animation_consts :: layout_step
+        , so_called_common_logic_salutation_letters_animation_consts :: layout_border_width
+        , so_called_common_logic_salutation_letters_animation_consts :: layout_border_height
         , shy_guts :: engine_render_aspect_state :: taker . msg_reply . width
         , shy_guts :: engine_render_aspect_state :: taker . msg_reply . height
         ) ;

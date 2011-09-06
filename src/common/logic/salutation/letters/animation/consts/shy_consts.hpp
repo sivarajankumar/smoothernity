@@ -1,0 +1,7 @@
+const so_called_platform_math_num_fract_type shy_common_logic_salutation_letters_animation_consts :: layout_border_height ;
+const so_called_platform_math_num_fract_type shy_common_logic_salutation_letters_animation_consts :: layout_border_width ;
+const so_called_platform_math_num_fract_type shy_common_logic_salutation_letters_animation_consts :: layout_step ;
+
+void shy_common_logic_salutation_letters_animation_consts :: binding ( )
+{
+}
