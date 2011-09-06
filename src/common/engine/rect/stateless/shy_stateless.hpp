@@ -36,3 +36,17 @@ void shy_common_engine_rect_stateless :: dims
     so_called_platform_math :: sub_fracts ( width , of_what . right , of_what . left ) ;
     so_called_platform_math :: sub_fracts ( height , of_what . top , of_what . bottom ) ;
 }
+
+void shy_common_engine_rect_stateless :: add_border
+    ( so_called_common_engine_rect_type & result
+    , so_called_common_engine_rect_type to_what
+    , so_called_platform_math_num_fract_type border_width
+    , so_called_platform_math_num_fract_type border_height
+    )
+{
+    so_called_platform_math :: sub_fracts ( result . left , to_what . left , border_width ) ;
+    so_called_platform_math :: add_fracts ( result . right , to_what . right , border_width ) ;
+
+    so_called_platform_math :: sub_fracts ( result . bottom , to_what . bottom , border_height ) ;
+    so_called_platform_math :: add_fracts ( result . top , to_what . top , border_height ) ;
+}
