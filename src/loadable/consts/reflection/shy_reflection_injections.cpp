@@ -18,6 +18,7 @@
     #include "loadable/consts/reflection/logic/perspective/shy_perspective_injections.h"
     #include "loadable/consts/reflection/logic/room/shy_room_injections.h"
     #include "loadable/consts/reflection/logic/salutation/animation/shy_animation_injections.h"
+    #include "loadable/consts/reflection/logic/salutation/letters/animation/shy_animation_injections.h"
     #include "loadable/consts/reflection/logic/salutation/letters/meshes/shy_meshes_injections.h"
     #include "loadable/consts/reflection/logic/salutation/renderer/shy_renderer_injections.h"
     #include "loadable/consts/reflection/logic/salutation/timer/shy_timer_injections.h"
