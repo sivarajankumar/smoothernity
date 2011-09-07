@@ -35,7 +35,7 @@ system logic_application
                 do logic_salutation_letters_animation_roll_in_step
                 do logic_salutation_timer_appear_tick
             to disappearing
-                if { logic_salutation_timer_appear_run_finished }
+                if { logic_salutation_timer_appear_finished }
         state disappearing
             on entry
                 do logic_salutation_timer_disappear_start
@@ -49,5 +49,5 @@ system logic_application
                 do logic_salutation_letters_animation_roll_out_step
                 do logic_salutation_timer_disappear_tick
             to finished
-                if { logic_salutation_timer_disappear_run_finished }
+                if { logic_salutation_timer_disappear_finished }
         state finished

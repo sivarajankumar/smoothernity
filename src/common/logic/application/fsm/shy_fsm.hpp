@@ -19,8 +19,8 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: inputs_current . logic_salutation_letters_meshes_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_letters_text_cleaner_clean_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_letters_text_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: inputs_current . logic_salutation_timer_appear_run_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: inputs_current . logic_salutation_timer_disappear_run_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . logic_salutation_timer_appear_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . logic_salutation_timer_disappear_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_title_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_title_finished = so_called_platform_math_consts :: whole_false ;
@@ -113,12 +113,12 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
             , shy_guts :: inputs_fixed . logic_salutation_letters_text_generator_generate_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_timer_appear_run_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_timer_appear_run_finished 
+            ( shy_guts :: inputs_current . logic_salutation_timer_appear_finished 
+            , shy_guts :: inputs_fixed . logic_salutation_timer_appear_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_timer_disappear_run_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_timer_disappear_run_finished 
+            ( shy_guts :: inputs_current . logic_salutation_timer_disappear_finished 
+            , shy_guts :: inputs_fixed . logic_salutation_timer_disappear_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_text_prepared 
@@ -251,15 +251,15 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salut
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_appear_run_finished_message )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_appear_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_timer_appear_run_finished = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: inputs_current . logic_salutation_timer_appear_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
-void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_disappear_run_finished_message )
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_disappear_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_timer_disappear_run_finished = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: inputs_current . logic_salutation_timer_disappear_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 

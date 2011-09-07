@@ -20,7 +20,7 @@ void _shy_common_logic_salutation_timer_disappear :: receive ( so_called_common_
 {
     so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
     if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: time , so_called_common_logic_salutation_timer_consts :: time_disappear ) )
-        so_called_common_logic_salutation_timer_disappear_run_finished_sender :: send ( so_called_common_logic_salutation_timer_disappear_run_finished_message ( ) ) ;
+        so_called_common_logic_salutation_timer_disappear_finished_sender :: send ( so_called_common_logic_salutation_timer_disappear_finished_message ( ) ) ;
 }
 
 void _shy_common_logic_salutation_timer_disappear :: register_in_scheduler ( )
