@@ -12,13 +12,18 @@ system logic_application
             on { logic_application_update }
                 discard logic_application_update
                 do logic_vacuum_update
-            to appearing
+            to prepare
                 if { ( machine salutation_generator is finished ) }
+        state prepare
+            on entry
+                do logic_salutation_animation_zoom_rewind
+                do logic_salutation_letters_animation_appear_rewind
+                do logic_salutation_letters_animation_disappear_rewind
+                do logic_salutation_letters_animation_roll_in_rewind
+                do logic_salutation_letters_animation_roll_out_rewind
+            to appearing
         state appearing
             on entry
-                do logic_salutation_animation_zoom_play
-                do logic_salutation_letters_animation_appear_play
-                do logic_salutation_letters_animation_roll_in_play
                 do logic_salutation_timer_appear_run
             on { logic_application_render }
                 discard logic_application_render
@@ -33,8 +38,6 @@ system logic_application
                 if { logic_salutation_timer_appear_run_finished }
         state disappearing
             on entry
-                do logic_salutation_letters_animation_disappear_play
-                do logic_salutation_letters_animation_roll_out_play
                 do logic_salutation_timer_disappear_run
             on { logic_application_render }
                 discard logic_application_render
