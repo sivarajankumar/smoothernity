@@ -12,8 +12,8 @@ public :
     static void logic_main_menu_launch_permit ( ) ;
     static void logic_main_menu_render ( ) ;
     static void logic_main_menu_update ( ) ;
-    static void logic_salutation_animation_update ( ) ;
     static void logic_salutation_animation_zoom_play ( ) ;
+    static void logic_salutation_animation_zoom_update ( ) ;
     static void logic_salutation_letters_animation_appear_play ( ) ;
     static void logic_salutation_letters_animation_disappear_play ( ) ;
     static void logic_salutation_letters_animation_roll_in_play ( ) ;
