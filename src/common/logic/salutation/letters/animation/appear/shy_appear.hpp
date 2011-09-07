@@ -1,5 +1,7 @@
 namespace shy_guts
 {
+    static so_called_platform_math_num_whole_type playing ;
+    static so_called_platform_math_num_fract_type time ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_salutation_letters_animation_appear > _scheduled_context_type ;
@@ -7,10 +9,14 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_init_message )
 {
+    shy_guts :: playing = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_play_message )
 {
+    shy_guts :: playing = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_transform_request_message msg )
@@ -23,6 +29,8 @@ void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_calle
 
 void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_update_message )
 {
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: playing ) )
+        so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation_appear :: register_in_scheduler ( )
