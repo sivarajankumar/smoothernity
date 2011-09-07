@@ -13,13 +13,13 @@ void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_ini
 
 void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_logic_salutation_timer_appear_run_message )
 {
-    shy_guts :: time = so_called_common_logic_salutation_timer_consts :: time_appear ;
+    shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_logic_salutation_timer_appear_update_message )
 {
-    so_called_common_engine_math_stateless :: sub_frame_from_time ( shy_guts :: time ) ;
-    if ( so_called_platform_conditions :: fract_less_than_fract ( shy_guts :: time , so_called_platform_math_consts :: fract_0 ) )
+    so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
+    if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: time , so_called_common_logic_salutation_timer_consts :: time_appear ) )
         so_called_common_logic_salutation_timer_appear_run_finished_sender :: send ( so_called_common_logic_salutation_timer_appear_run_finished_message ( ) ) ;
 }
 
