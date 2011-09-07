@@ -959,7 +959,7 @@ void shy_guts :: machine_salutation_performer_state_appearing_type :: on_input (
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_application_update ) )
     {
-        so_called_common_logic_application_fsm_actions :: logic_salutation_animation_update ( ) ;
+        so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_update ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_update ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_timer_update ( ) ;
         shy_guts :: inputs_current . get ( ) . logic_application_update = so_called_platform_math_consts :: whole_false ;
@@ -990,7 +990,7 @@ void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_inpu
     }
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_application_update ) )
     {
-        so_called_common_logic_application_fsm_actions :: logic_salutation_animation_update ( ) ;
+        so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_update ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_update ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_timer_update ( ) ;
         shy_guts :: inputs_current . get ( ) . logic_application_update = so_called_platform_math_consts :: whole_false ;

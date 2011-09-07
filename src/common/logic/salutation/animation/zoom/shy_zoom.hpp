@@ -2,7 +2,6 @@ namespace shy_guts
 {
     static so_called_platform_math_num_fract_type scale ;
     static so_called_platform_math_num_fract_type time ;
-    static so_called_platform_math_num_whole_type playing ;
 
     static void compute_transform ( ) ;
     static void send_transform ( ) ;
@@ -32,18 +31,11 @@ void shy_guts :: send_transform ( )
 
 void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_init_message )
 {
-    shy_guts :: playing = so_called_platform_math_consts :: whole_false ;
-}
-
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_update_message )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: playing ) )
-        so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
+    shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
 void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_play_message )
 {
-    shy_guts :: playing = so_called_platform_math_consts :: whole_true ;
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
@@ -51,6 +43,11 @@ void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_l
 {
     shy_guts :: compute_transform ( ) ;
     shy_guts :: send_transform ( ) ;
+}
+
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_update_message )
+{
+    so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
 }
 
 void _shy_common_logic_salutation_animation_zoom :: register_in_scheduler ( )

@@ -53,14 +53,14 @@ void shy_common_logic_application_fsm_actions :: logic_main_menu_update ( )
     so_called_common_logic_main_menu_update_sender :: send ( so_called_common_logic_main_menu_update_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_animation_update ( )
-{
-    so_called_common_logic_salutation_animation_update_sender :: send ( so_called_common_logic_salutation_animation_update_message ( ) ) ;
-}
-
 void shy_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_play ( )
 {
     so_called_common_logic_salutation_animation_zoom_play_sender :: send ( so_called_common_logic_salutation_animation_zoom_play_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_update ( )
+{
+    so_called_common_logic_salutation_animation_zoom_update_sender :: send ( so_called_common_logic_salutation_animation_zoom_update_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_play ( )
