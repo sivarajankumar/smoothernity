@@ -24,7 +24,7 @@ system logic_application
             to appearing
         state appearing
             on entry
-                do logic_salutation_timer_appear_run
+                do logic_salutation_timer_appear_start
             on { logic_application_render }
                 discard logic_application_render
                 do logic_salutation_renderer_render
@@ -38,7 +38,7 @@ system logic_application
                 if { logic_salutation_timer_appear_run_finished }
         state disappearing
             on entry
-                do logic_salutation_timer_disappear_run
+                do logic_salutation_timer_disappear_start
             on { logic_application_render }
                 discard logic_application_render
                 do logic_salutation_renderer_render
