@@ -405,3 +405,10 @@ void shy_common_engine_math_stateless :: scale ( so_called_platform_matrix_data_
     so_called_platform_matrix :: set_axis_z ( matrix , zero , zero , scale ) ;
 }
 
+void shy_common_engine_math_stateless :: add_frame_to_time ( so_called_platform_math_num_fract_type & time )
+{
+    so_called_platform_math_num_fract_type frame_time ;
+    so_called_platform_math :: make_num_fract ( frame_time , 1 , so_called_platform_consts :: frames_per_second ) ;
+    so_called_platform_math :: add_to_fract ( time , frame_time ) ;
+}
+
