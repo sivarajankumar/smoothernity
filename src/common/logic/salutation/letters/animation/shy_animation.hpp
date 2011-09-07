@@ -1,5 +1,11 @@
 namespace shy_guts
 {
+    namespace logic_salutation_letters_animation_appear_transform_state
+    {
+        static so_called_common_engine_taker_helper ( logic_salutation_letters_animation_appear_transform ) taker ;
+        static void on_reply ( ) ;
+    }
+
     namespace logic_salutation_letters_animation_layout_transform_state
     {
         static so_called_common_engine_taker_helper ( logic_salutation_letters_animation_layout_transform ) taker ;
@@ -14,6 +20,7 @@ namespace shy_guts
     }
 
     static void compute_transform ( );
+    static void request_animation_appear_transform ( ) ;
     static void request_animation_layout_transform ( ) ;
     static void send_computed_transform ( ) ;
 }
@@ -28,6 +35,11 @@ void shy_guts :: logic_salutation_letters_animation_transform_state :: on_reques
 
 void shy_guts :: logic_salutation_letters_animation_layout_transform_state :: on_reply ( )
 {
+    shy_guts :: request_animation_appear_transform ( ) ;
+}
+
+void shy_guts :: logic_salutation_letters_animation_appear_transform_state :: on_reply ( )
+{
     shy_guts :: compute_transform ( ) ;
     shy_guts :: send_computed_transform ( ) ;
 }
@@ -39,19 +51,31 @@ void shy_guts :: request_animation_layout_transform ( )
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . request ( ) ;
 }
 
+void shy_guts :: request_animation_appear_transform ( )
+{
+    so_called_platform_math_num_whole_type letter = shy_guts :: logic_salutation_letters_animation_transform_state :: msg_request . letter ;
+    shy_guts :: logic_salutation_letters_animation_appear_transform_state :: taker . msg_request . letter = letter ;
+    shy_guts :: logic_salutation_letters_animation_appear_transform_state :: taker . request ( ) ;
+}
+
 void shy_guts :: compute_transform ( )
 {
     so_called_platform_vector_data_type final_origin ;
     so_called_platform_math_num_fract_type final_scale ;
     so_called_platform_vector_data_type layout_origin ;
     so_called_platform_math_num_fract_type layout_scale ;
+    so_called_platform_math_num_fract_type appear_scale ;
     so_called_platform_matrix_data_type transform ;
 
     layout_origin = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . origin ;
     layout_scale = shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . msg_reply . scale ;
+    appear_scale = shy_guts :: logic_salutation_letters_animation_appear_transform_state :: taker . msg_reply . scale ;
 
     final_origin = layout_origin ;
-    final_scale = layout_scale ;
+    final_scale = so_called_platform_math_consts :: fract_1 ;
+    
+    so_called_platform_math :: mul_fract_by ( final_scale , layout_scale ) ;
+    so_called_platform_math :: mul_fract_by ( final_scale , appear_scale ) ;
 
     so_called_common_engine_math_stateless :: scale ( transform , final_scale ) ;
     so_called_platform_matrix :: set_origin ( transform , final_origin ) ;
@@ -70,6 +94,15 @@ void shy_guts :: send_computed_transform ( )
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_init_message )
 {
     shy_guts :: logic_salutation_letters_animation_layout_transform_state :: taker . init ( ) ;
+    shy_guts :: logic_salutation_letters_animation_appear_transform_state :: taker . init ( ) ;
+}
+
+void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_logic_salutation_letters_animation_appear_transform_reply_message msg )
+{
+    so_called_platform_math_num_whole_type should_handle ;
+    shy_guts :: logic_salutation_letters_animation_appear_transform_state :: taker . should_handle ( should_handle , msg ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( should_handle ) )
+        shy_guts :: logic_salutation_letters_animation_appear_transform_state :: on_reply ( ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation :: receive ( so_called_common_logic_salutation_letters_animation_layout_transform_reply_message msg )
