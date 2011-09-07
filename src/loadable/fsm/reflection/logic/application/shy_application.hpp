@@ -34,9 +34,9 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_salutation_letters_text_cleaner_clean ) ;
     shy_guts_bind_action ( logic_salutation_letters_text_generator_generate ) ;
     shy_guts_bind_action ( logic_salutation_renderer_render ) ;
-    shy_guts_bind_action ( logic_salutation_timer_appear_run ) ;
+    shy_guts_bind_action ( logic_salutation_timer_appear_start ) ;
     shy_guts_bind_action ( logic_salutation_timer_appear_tick ) ;
-    shy_guts_bind_action ( logic_salutation_timer_disappear_run ) ;
+    shy_guts_bind_action ( logic_salutation_timer_disappear_start ) ;
     shy_guts_bind_action ( logic_salutation_timer_disappear_tick ) ;
     shy_guts_bind_action ( logic_text_prepare_permit ) ;
     shy_guts_bind_action ( logic_text_update ) ;
