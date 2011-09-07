@@ -15,10 +15,13 @@ public :
     static void logic_salutation_animation_zoom_play ( ) ;
     static void logic_salutation_animation_zoom_update ( ) ;
     static void logic_salutation_letters_animation_appear_play ( ) ;
+    static void logic_salutation_letters_animation_appear_update ( ) ;
     static void logic_salutation_letters_animation_disappear_play ( ) ;
+    static void logic_salutation_letters_animation_disappear_update ( ) ;
     static void logic_salutation_letters_animation_roll_in_play ( ) ;
+    static void logic_salutation_letters_animation_roll_in_update ( ) ;
     static void logic_salutation_letters_animation_roll_out_play ( ) ;
-    static void logic_salutation_letters_animation_update ( ) ;
+    static void logic_salutation_letters_animation_roll_out_update ( ) ;
     static void logic_salutation_letters_meshes_cleaner_clean ( ) ;
     static void logic_salutation_letters_meshes_cleaner_update ( ) ;
     static void logic_salutation_letters_meshes_generator_generate ( ) ;

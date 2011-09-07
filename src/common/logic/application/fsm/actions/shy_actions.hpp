@@ -68,9 +68,19 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animat
     so_called_common_logic_salutation_letters_animation_appear_play_sender :: send ( so_called_common_logic_salutation_letters_animation_appear_play_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_update ( )
+{
+    so_called_common_logic_salutation_letters_animation_appear_update_sender :: send ( so_called_common_logic_salutation_letters_animation_appear_update_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_disappear_play ( )
 {
     so_called_common_logic_salutation_letters_animation_disappear_play_sender :: send ( so_called_common_logic_salutation_letters_animation_disappear_play_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_disappear_update ( )
+{
+    so_called_common_logic_salutation_letters_animation_disappear_update_sender :: send ( so_called_common_logic_salutation_letters_animation_disappear_update_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_play ( )
@@ -78,14 +88,19 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animat
     so_called_common_logic_salutation_letters_animation_roll_in_play_sender :: send ( so_called_common_logic_salutation_letters_animation_roll_in_play_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_update ( )
+{
+    so_called_common_logic_salutation_letters_animation_roll_in_update_sender :: send ( so_called_common_logic_salutation_letters_animation_roll_in_update_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_play ( )
 {
     so_called_common_logic_salutation_letters_animation_roll_out_play_sender :: send ( so_called_common_logic_salutation_letters_animation_roll_out_play_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_update ( )
+void shy_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_update ( )
 {
-    so_called_common_logic_salutation_letters_animation_update_sender :: send ( so_called_common_logic_salutation_letters_animation_update_message ( ) ) ;
+    so_called_common_logic_salutation_letters_animation_roll_out_update_sender :: send ( so_called_common_logic_salutation_letters_animation_roll_out_update_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_letters_meshes_cleaner_clean ( )

@@ -20,10 +20,13 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_salutation_animation_zoom_play ) ;
     shy_guts_bind_action ( logic_salutation_animation_zoom_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_appear_play ) ;
+    shy_guts_bind_action ( logic_salutation_letters_animation_appear_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_disappear_play ) ;
+    shy_guts_bind_action ( logic_salutation_letters_animation_disappear_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_roll_in_play ) ;
+    shy_guts_bind_action ( logic_salutation_letters_animation_roll_in_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_animation_roll_out_play ) ;
-    shy_guts_bind_action ( logic_salutation_letters_animation_update ) ;
+    shy_guts_bind_action ( logic_salutation_letters_animation_roll_out_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_meshes_cleaner_clean ) ;
     shy_guts_bind_action ( logic_salutation_letters_meshes_cleaner_update ) ;
     shy_guts_bind_action ( logic_salutation_letters_meshes_generator_generate ) ;
