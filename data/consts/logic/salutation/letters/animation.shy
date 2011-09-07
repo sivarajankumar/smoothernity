@@ -1,4 +1,8 @@
 consts logic_salutation_letters_animation
+    appear_scale_begin 0 / 1
+    appear_scale_end 1 / 1
+    appear_time 5 / 10
+    appear_time_shift_per_letter 1 / 10
     layout_step 1 / 10
     layout_border_width 0 / 1
     layout_border_height 0 / 1
