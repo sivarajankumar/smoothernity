@@ -138,9 +138,9 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_renderer_rende
     so_called_common_logic_salutation_renderer_render_sender :: send ( so_called_common_logic_salutation_renderer_render_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_run ( )
+void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_start ( )
 {
-    so_called_common_logic_salutation_timer_appear_run_sender :: send ( so_called_common_logic_salutation_timer_appear_run_message ( ) ) ;
+    so_called_common_logic_salutation_timer_appear_start_sender :: send ( so_called_common_logic_salutation_timer_appear_start_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_tick ( )
@@ -148,9 +148,9 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_t
     so_called_common_logic_salutation_timer_appear_tick_sender :: send ( so_called_common_logic_salutation_timer_appear_tick_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_run ( )
+void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_start ( )
 {
-    so_called_common_logic_salutation_timer_disappear_run_sender :: send ( so_called_common_logic_salutation_timer_disappear_run_message ( ) ) ;
+    so_called_common_logic_salutation_timer_disappear_start_sender :: send ( so_called_common_logic_salutation_timer_disappear_start_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_tick ( )

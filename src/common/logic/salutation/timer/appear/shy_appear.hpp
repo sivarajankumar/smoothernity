@@ -11,7 +11,7 @@ void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_ini
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_logic_salutation_timer_appear_run_message )
+void _shy_common_logic_salutation_timer_appear :: receive ( so_called_common_logic_salutation_timer_appear_start_message )
 {
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }

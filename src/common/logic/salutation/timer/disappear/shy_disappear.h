@@ -2,7 +2,7 @@ class _shy_common_logic_salutation_timer_disappear
 {
 public :
     static void receive ( so_called_common_init_message ) ;
-    static void receive ( so_called_common_logic_salutation_timer_disappear_run_message ) ;
+    static void receive ( so_called_common_logic_salutation_timer_disappear_start_message ) ;
     static void receive ( so_called_common_logic_salutation_timer_disappear_tick_message ) ;
     static void register_in_scheduler ( ) ;
 } ;

@@ -953,7 +953,7 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_generato
 
 void shy_guts :: machine_salutation_performer_state_appearing_type :: on_entry ( )
 {
-    so_called_common_logic_application_fsm_actions :: logic_salutation_timer_appear_run ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_timer_appear_start ( ) ;
 }
 
 void shy_guts :: machine_salutation_performer_state_appearing_type :: on_input ( )
@@ -983,7 +983,7 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performe
 
 void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_entry ( )
 {
-    so_called_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_run ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_start ( ) ;
 }
 
 void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_input ( )
