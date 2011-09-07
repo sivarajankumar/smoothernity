@@ -128,14 +128,9 @@ void shy_guts :: clean_next_mesh ( )
 
 void shy_guts :: advance_time ( )
 {
-    so_called_platform_math_num_fract_type time ;
-    so_called_platform_math_num_fract_type time_step ;
-
-    time = shy_guts :: logic_salutation_letters_meshes_cleaner_update :: time ;
-    so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
-    so_called_platform_math :: add_to_fract ( time , time_step ) ;
-
-    shy_guts :: logic_salutation_letters_meshes_cleaner_update :: time = time ;
+    so_called_common_engine_math_stateless :: add_frame_to_time
+        ( shy_guts :: logic_salutation_letters_meshes_cleaner_update :: time
+        ) ;
 }
 
 void shy_guts :: send_clean_finished ( )
