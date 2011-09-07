@@ -2,7 +2,7 @@
 #define _shy_common_logic_salutation_timer_disappear_injections_included
 
 #include "common/logic/salutation/timer/disappear/run/message/shy_message_injections.h"
-#include "common/logic/salutation/timer/disappear/update/message/shy_message_injections.h"
+#include "common/logic/salutation/timer/disappear/tick/message/shy_message_injections.h"
 #include "common/init/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 

@@ -968,7 +968,7 @@ void shy_guts :: machine_salutation_performer_state_appearing_type :: on_input (
         so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_step ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_step ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_step ( ) ;
-        so_called_common_logic_application_fsm_actions :: logic_salutation_timer_appear_update ( ) ;
+        so_called_common_logic_application_fsm_actions :: logic_salutation_timer_appear_tick ( ) ;
         shy_guts :: inputs_current . get ( ) . logic_application_update = so_called_platform_math_consts :: whole_false ;
     }
 }
@@ -998,7 +998,7 @@ void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_inpu
         so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_step ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_disappear_step ( ) ;
         so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_step ( ) ;
-        so_called_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_update ( ) ;
+        so_called_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_tick ( ) ;
         shy_guts :: inputs_current . get ( ) . logic_application_update = so_called_platform_math_consts :: whole_false ;
     }
 }
