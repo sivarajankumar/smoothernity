@@ -1,0 +1,4 @@
+syntax: glob
+
+src/main/macosx/smoothernity.xcodeproj/*.pbxuser
+src/main/macosx/smoothernity.xcodeproj/*.mode1v3
