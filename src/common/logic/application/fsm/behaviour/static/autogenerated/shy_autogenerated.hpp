@@ -301,6 +301,14 @@ namespace shy_guts
         virtual so_called_common_engine_fsm_state_type & transition ( ) ;
     } ;
 
+    class machine_salutation_performer_state_prepare_type
+    : public so_called_common_engine_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( ) ;
+        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
+    } ;
+
     class machine_salutation_performer_state_waiting_type
     : public so_called_common_engine_fsm_state_type
     {
@@ -438,6 +446,7 @@ namespace shy_guts
        static machine_salutation_performer_state_disappearing_type salutation_performer_state_disappearing ;
        static machine_salutation_performer_state_finished_type salutation_performer_state_finished ;
        static machine_salutation_performer_state_initial_type salutation_performer_state_initial ;
+       static machine_salutation_performer_state_prepare_type salutation_performer_state_prepare ;
        static machine_salutation_performer_state_waiting_type salutation_performer_state_waiting ;
        static machine_text_generator_state_finished_type text_generator_state_finished ;
        static machine_text_generator_state_generating_type text_generator_state_generating ;
@@ -944,9 +953,6 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_generato
 
 void shy_guts :: machine_salutation_performer_state_appearing_type :: on_entry ( )
 {
-    so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_play ( ) ;
-    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_play ( ) ;
-    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_play ( ) ;
     so_called_common_logic_application_fsm_actions :: logic_salutation_timer_appear_run ( ) ;
 }
 
@@ -977,8 +983,6 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performe
 
 void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_entry ( )
 {
-    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_disappear_play ( ) ;
-    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_play ( ) ;
     so_called_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_run ( ) ;
 }
 
@@ -1027,6 +1031,20 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performe
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
 
+void shy_guts :: machine_salutation_performer_state_prepare_type :: on_entry ( )
+{
+    so_called_common_logic_application_fsm_actions :: logic_salutation_animation_zoom_rewind ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_appear_rewind ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_disappear_rewind ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_in_rewind ( ) ;
+    so_called_common_logic_application_fsm_actions :: logic_salutation_letters_animation_roll_out_rewind ( ) ;
+}
+
+so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performer_state_prepare_type :: transition ( )
+{
+    return shy_guts :: states :: salutation_performer_state_appearing ;
+}
+
 void shy_guts :: machine_salutation_performer_state_waiting_type :: on_input ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_application_render ) )
@@ -1044,7 +1062,7 @@ void shy_guts :: machine_salutation_performer_state_waiting_type :: on_input ( )
 so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performer_state_waiting_type :: transition ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_state_is_finished ) )
-        return shy_guts :: states :: salutation_performer_state_appearing ;
+        return shy_guts :: states :: salutation_performer_state_prepare ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
