@@ -11,7 +11,7 @@ void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_calle
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
-void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_play_message )
+void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_rewind_message )
 {
     shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
 }
