@@ -104,5 +104,4 @@ public :
     static void abs_whole ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type a ) ;
     static void scale ( so_called_platform_matrix_data_type & matrix , so_called_platform_math_num_fract_type scale ) ;
     static void add_frame_to_time ( so_called_platform_math_num_fract_type & ) ;
-    static void sub_frame_from_time ( so_called_platform_math_num_fract_type & ) ;
 } ;
