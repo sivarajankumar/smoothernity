@@ -4,6 +4,8 @@
 #include "common/engine/taker/helper/shy_helper_injections.h"
 #include "common/logic/salutation/letters/animation/appear/transform/checker/shy_checker_injections.h"
 #include "common/logic/salutation/letters/animation/appear/transform/request/sender/shy_sender_injections.h"
+#include "common/logic/salutation/letters/animation/disappear/transform/checker/shy_checker_injections.h"
+#include "common/logic/salutation/letters/animation/disappear/transform/request/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/layout/transform/checker/shy_checker_injections.h"
 #include "common/logic/salutation/letters/animation/layout/transform/request/sender/shy_sender_injections.h"
 #include "common/logic/salutation/letters/animation/transform/reply/sender/shy_sender_injections.h"
