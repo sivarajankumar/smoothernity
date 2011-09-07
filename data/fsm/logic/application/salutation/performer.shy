@@ -30,9 +30,9 @@ system logic_application
                 do logic_salutation_renderer_render
             on { logic_application_update }
                 discard logic_application_update
-                do logic_salutation_animation_zoom_update
-                do logic_salutation_letters_animation_appear_update
-                do logic_salutation_letters_animation_roll_in_update
+                do logic_salutation_animation_zoom_step
+                do logic_salutation_letters_animation_appear_step
+                do logic_salutation_letters_animation_roll_in_step
                 do logic_salutation_timer_appear_update
             to disappearing
                 if { logic_salutation_timer_appear_run_finished }
@@ -44,9 +44,9 @@ system logic_application
                 do logic_salutation_renderer_render
             on { logic_application_update }
                 discard logic_application_update
-                do logic_salutation_animation_zoom_update
-                do logic_salutation_letters_animation_disappear_update
-                do logic_salutation_letters_animation_roll_out_update
+                do logic_salutation_animation_zoom_step
+                do logic_salutation_letters_animation_disappear_step
+                do logic_salutation_letters_animation_roll_out_step
                 do logic_salutation_timer_disappear_update
             to finished
                 if { logic_salutation_timer_disappear_run_finished }
