@@ -9,7 +9,7 @@ void _shy_common_logic_salutation_letters_animation_roll_out :: receive ( so_cal
 {
 }
 
-void _shy_common_logic_salutation_letters_animation_roll_out :: receive ( so_called_common_logic_salutation_letters_animation_roll_out_update_message )
+void _shy_common_logic_salutation_letters_animation_roll_out :: receive ( so_called_common_logic_salutation_letters_animation_roll_out_step_message )
 {
 }
 
