@@ -16,20 +16,11 @@ void _shy_common_logic_salutation_timer_disappear :: receive ( so_called_common_
     shy_guts :: time = so_called_common_logic_salutation_timer_consts :: time_disappear ;
 }
 
-void _shy_common_logic_salutation_timer_disappear :: receive ( so_called_common_logic_salutation_timer_update_message )
+void _shy_common_logic_salutation_timer_disappear :: receive ( so_called_common_logic_salutation_timer_disappear_update_message )
 {
-    if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: time , so_called_platform_math_consts :: fract_0 ) )
-    {
-        so_called_platform_math_num_fract_type time_step ;
-        so_called_platform_math :: make_num_fract ( time_step , 1 , so_called_platform_consts :: frames_per_second ) ;
-        if ( so_called_platform_conditions :: fract_greater_than_fract ( shy_guts :: time , time_step ) )
-            so_called_platform_math :: sub_from_fract ( shy_guts :: time , time_step ) ;
-        else
-        {
-            shy_guts :: time = so_called_platform_math_consts :: fract_0 ;
-            so_called_common_logic_salutation_timer_disappear_run_finished_sender :: send ( so_called_common_logic_salutation_timer_disappear_run_finished_message ( ) ) ;
-        }
-    }
+    so_called_common_engine_math_stateless :: sub_frame_from_time ( shy_guts :: time ) ;
+    if ( so_called_platform_conditions :: fract_less_than_fract ( shy_guts :: time , so_called_platform_math_consts :: fract_0 ) )
+        so_called_common_logic_salutation_timer_disappear_run_finished_sender :: send ( so_called_common_logic_salutation_timer_disappear_run_finished_message ( ) ) ;
 }
 
 void _shy_common_logic_salutation_timer_disappear :: register_in_scheduler ( )

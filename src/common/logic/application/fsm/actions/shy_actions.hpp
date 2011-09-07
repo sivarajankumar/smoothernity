@@ -143,14 +143,19 @@ void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_r
     so_called_common_logic_salutation_timer_appear_run_sender :: send ( so_called_common_logic_salutation_timer_appear_run_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_salutation_timer_appear_update ( )
+{
+    so_called_common_logic_salutation_timer_appear_update_sender :: send ( so_called_common_logic_salutation_timer_appear_update_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_run ( )
 {
     so_called_common_logic_salutation_timer_disappear_run_sender :: send ( so_called_common_logic_salutation_timer_disappear_run_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_salutation_timer_update ( )
+void shy_common_logic_application_fsm_actions :: logic_salutation_timer_disappear_update ( )
 {
-    so_called_common_logic_salutation_timer_update_sender :: send ( so_called_common_logic_salutation_timer_update_message ( ) ) ;
+    so_called_common_logic_salutation_timer_disappear_update_sender :: send ( so_called_common_logic_salutation_timer_disappear_update_message ( ) ) ;
 }
 
 void shy_common_logic_application_fsm_actions :: logic_text_prepare_permit ( )
