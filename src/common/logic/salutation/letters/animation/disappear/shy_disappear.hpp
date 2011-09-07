@@ -13,6 +13,14 @@ void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_ca
 {
 }
 
+void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_called_common_logic_salutation_letters_animation_disappear_transform_request_message msg )
+{
+    so_called_common_logic_salutation_letters_animation_disappear_transform_reply_message msg_reply ;
+    msg_reply . letter = msg . letter ;
+    msg_reply . scale = so_called_platform_math_consts :: fract_1 ;
+    so_called_common_logic_salutation_letters_animation_disappear_transform_reply_sender :: send ( msg_reply ) ;
+}
+
 void _shy_common_logic_salutation_letters_animation_disappear :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
