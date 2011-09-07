@@ -14,8 +14,8 @@ public :
     so_called_platform_math_num_whole_type logic_salutation_letters_meshes_generator_generate_finished ;
     so_called_platform_math_num_whole_type logic_salutation_letters_text_cleaner_clean_finished ;
     so_called_platform_math_num_whole_type logic_salutation_letters_text_generator_generate_finished ;
-    so_called_platform_math_num_whole_type logic_salutation_timer_appear_run_finished ;
-    so_called_platform_math_num_whole_type logic_salutation_timer_disappear_run_finished ;
+    so_called_platform_math_num_whole_type logic_salutation_timer_appear_finished ;
+    so_called_platform_math_num_whole_type logic_salutation_timer_disappear_finished ;
     so_called_platform_math_num_whole_type stage_amusement_disabled ;
     so_called_platform_math_num_whole_type stage_amusement_enabled ;
     so_called_platform_math_num_whole_type stage_main_menu_disabled ;

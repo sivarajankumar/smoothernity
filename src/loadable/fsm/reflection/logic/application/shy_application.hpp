@@ -59,8 +59,8 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( logic_salutation_letters_meshes_generator_generate_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_text_cleaner_clean_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_text_generator_generate_finished ) ;
-    shy_guts_bind_input ( logic_salutation_timer_appear_run_finished ) ;
-    shy_guts_bind_input ( logic_salutation_timer_disappear_run_finished ) ;
+    shy_guts_bind_input ( logic_salutation_timer_appear_finished ) ;
+    shy_guts_bind_input ( logic_salutation_timer_disappear_finished ) ;
     shy_guts_bind_input ( stage_amusement_disabled ) ;
     shy_guts_bind_input ( stage_amusement_enabled ) ;
     shy_guts_bind_input ( stage_main_menu_disabled ) ;

@@ -975,7 +975,7 @@ void shy_guts :: machine_salutation_performer_state_appearing_type :: on_input (
 
 so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performer_state_appearing_type :: transition ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_salutation_timer_appear_run_finished ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_salutation_timer_appear_finished ) )
         return shy_guts :: states :: salutation_performer_state_disappearing ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
@@ -1005,7 +1005,7 @@ void shy_guts :: machine_salutation_performer_state_disappearing_type :: on_inpu
 
 so_called_common_engine_fsm_state_type & shy_guts :: machine_salutation_performer_state_disappearing_type :: transition ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_salutation_timer_disappear_run_finished ) )
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_salutation_timer_disappear_finished ) )
         return shy_guts :: states :: salutation_performer_state_finished ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
