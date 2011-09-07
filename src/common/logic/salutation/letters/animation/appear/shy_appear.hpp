@@ -9,6 +9,14 @@ void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_calle
 {
 }
 
+void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_transform_request_message msg )
+{
+    so_called_common_logic_salutation_letters_animation_appear_transform_reply_message msg_reply ;
+    msg_reply . letter = msg . letter ;
+    msg_reply . scale = so_called_platform_math_consts :: fract_1 ;
+    so_called_common_logic_salutation_letters_animation_appear_transform_reply_sender :: send ( msg_reply ) ;
+}
+
 void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_update_message )
 {
 }
