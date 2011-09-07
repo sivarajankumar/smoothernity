@@ -9,7 +9,7 @@ void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_ca
 {
 }
 
-void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_called_common_logic_salutation_letters_animation_update_message )
+void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_called_common_logic_salutation_letters_animation_disappear_update_message )
 {
 }
 
