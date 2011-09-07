@@ -30,8 +30,9 @@ public :
     static void logic_salutation_letters_text_generator_generate ( ) ;
     static void logic_salutation_renderer_render ( ) ;
     static void logic_salutation_timer_appear_run ( ) ;
+    static void logic_salutation_timer_appear_update ( ) ;
     static void logic_salutation_timer_disappear_run ( ) ;
-    static void logic_salutation_timer_update ( ) ;
+    static void logic_salutation_timer_disappear_update ( ) ;
     static void logic_text_prepare_permit ( ) ;
     static void logic_text_update ( ) ;
     static void logic_title_launch_permit ( ) ;
