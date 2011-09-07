@@ -24,7 +24,7 @@ void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_calle
     so_called_common_logic_salutation_letters_animation_appear_transform_reply_sender :: send ( msg_reply ) ;
 }
 
-void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_update_message )
+void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_called_common_logic_salutation_letters_animation_appear_step_message )
 {
     so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
 }

@@ -45,7 +45,7 @@ void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_l
     shy_guts :: send_transform ( ) ;
 }
 
-void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_update_message )
+void _shy_common_logic_salutation_animation_zoom :: receive ( so_called_common_logic_salutation_animation_zoom_step_message )
 {
     so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
 }
