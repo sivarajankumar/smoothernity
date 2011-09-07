@@ -33,7 +33,7 @@ system logic_application
                 do logic_salutation_animation_zoom_step
                 do logic_salutation_letters_animation_appear_step
                 do logic_salutation_letters_animation_roll_in_step
-                do logic_salutation_timer_appear_update
+                do logic_salutation_timer_appear_tick
             to disappearing
                 if { logic_salutation_timer_appear_run_finished }
         state disappearing
@@ -47,7 +47,7 @@ system logic_application
                 do logic_salutation_animation_zoom_step
                 do logic_salutation_letters_animation_disappear_step
                 do logic_salutation_letters_animation_roll_out_step
-                do logic_salutation_timer_disappear_update
+                do logic_salutation_timer_disappear_tick
             to finished
                 if { logic_salutation_timer_disappear_run_finished }
         state finished
