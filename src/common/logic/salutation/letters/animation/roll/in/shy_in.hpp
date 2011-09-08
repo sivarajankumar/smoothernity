@@ -13,6 +13,16 @@ void _shy_common_logic_salutation_letters_animation_roll_in :: receive ( so_call
 {
 }
 
+void _shy_common_logic_salutation_letters_animation_roll_in :: receive ( so_called_common_logic_salutation_letters_animation_roll_in_transform_request_message msg )
+{
+    so_called_common_logic_salutation_letters_animation_roll_in_transform_reply_message msg_reply ;
+    msg_reply . letter = msg . letter ;
+    msg_reply . position_radius = so_called_platform_math_consts :: fract_0 ;
+    msg_reply . position_spin_periods = so_called_platform_math_consts :: fract_0 ;
+    msg_reply . rotation_periods = so_called_platform_math_consts :: fract_0 ;
+    so_called_common_logic_salutation_letters_animation_roll_in_transform_reply_sender :: send ( msg_reply ) ;
+}
+
 void _shy_common_logic_salutation_letters_animation_roll_in :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;

@@ -103,5 +103,16 @@ public :
         ) ;
     static void abs_whole ( so_called_platform_math_num_whole_type & result , so_called_platform_math_num_whole_type a ) ;
     static void scale ( so_called_platform_matrix_data_type & matrix , so_called_platform_math_num_fract_type scale ) ;
+    static void scale_rotation_z
+        ( so_called_platform_matrix_data_type & matrix
+        , so_called_platform_math_num_fract_type scale
+        , so_called_platform_math_num_fract_type angle
+        ) ;
     static void add_frame_to_time ( so_called_platform_math_num_fract_type & ) ;
+    static void make_radians_from_periods ( so_called_platform_math_num_fract_type & , so_called_platform_math_num_fract_type ) ;
+    static void make_cartesian_from_polar 
+        ( so_called_platform_vector_data_type & result
+        , so_called_platform_math_num_fract_type radius
+        , so_called_platform_math_num_fract_type angle
+        ) ;
 } ;
