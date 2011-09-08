@@ -3,6 +3,7 @@ class _shy_common_logic_salutation_letters_animation_roll_out
 public :
     static void receive ( so_called_common_logic_salutation_letters_animation_roll_out_rewind_message ) ;
     static void receive ( so_called_common_logic_salutation_letters_animation_roll_out_step_message ) ;
+    static void receive ( so_called_common_logic_salutation_letters_animation_roll_out_transform_request_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

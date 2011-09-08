@@ -3,6 +3,7 @@
 
 #include "common/logic/salutation/letters/animation/roll/out/rewind/message/shy_message_injections.h"
 #include "common/logic/salutation/letters/animation/roll/out/step/message/shy_message_injections.h"
+#include "common/logic/salutation/letters/animation/roll/out/transform/request/message/shy_message_injections.h"
 #include "injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_out.h"
