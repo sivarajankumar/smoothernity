@@ -443,7 +443,7 @@ void shy_common_engine_math_stateless :: add_frame_to_time ( so_called_platform_
 
 void shy_common_engine_math_stateless :: make_radians_from_periods ( so_called_platform_math_num_fract_type & result , so_called_platform_math_num_fract_type periods )
 {
-    result = so_called_platform_math_consts :: fract_0 ;
+    so_called_platform_math :: mul_fracts ( result , periods , so_called_platform_math_consts :: fract_2pi ) ;
 }
 
 void shy_common_engine_math_stateless :: make_cartesian_from_polar 
@@ -452,10 +452,17 @@ void shy_common_engine_math_stateless :: make_cartesian_from_polar
     , so_called_platform_math_num_fract_type angle
     )
 {
+    so_called_platform_math_num_fract_type rot_sin ;
+    so_called_platform_math_num_fract_type rot_cos ;
+
+    so_called_platform_math :: sin ( rot_sin , angle ) ;
+    so_called_platform_math :: cos ( rot_cos , angle ) ;
+
     so_called_platform_vector :: xyz
         ( result
-        , so_called_platform_math_consts :: fract_0
-        , so_called_platform_math_consts :: fract_0
+        , rot_cos
+        , rot_sin
         , so_called_platform_math_consts :: fract_0
         ) ;
+    so_called_platform_vector :: mul_by ( result , radius ) ;
 }
