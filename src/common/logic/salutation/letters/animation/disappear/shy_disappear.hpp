@@ -18,6 +18,7 @@ void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_ca
 
 void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_called_common_logic_salutation_letters_animation_disappear_step_message )
 {
+    so_called_common_engine_math_stateless :: add_frame_to_time ( shy_guts :: time ) ;
 }
 
 void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_called_common_logic_salutation_letters_animation_disappear_transform_request_message msg )
