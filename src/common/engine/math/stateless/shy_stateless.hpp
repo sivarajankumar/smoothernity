@@ -411,7 +411,27 @@ void shy_common_engine_math_stateless :: scale_rotation_z
     , so_called_platform_math_num_fract_type angle
     )
 {
-    so_called_common_engine_math_stateless :: scale ( matrix , scale ) ;
+    so_called_platform_vector_data_type axis_x ;
+    so_called_platform_vector_data_type axis_y ;
+    so_called_platform_vector_data_type axis_z ;
+
+    so_called_platform_matrix :: identity ( matrix ) ;
+
+    so_called_platform_vector :: xyz
+        ( axis_z
+        , so_called_platform_math_consts :: fract_0
+        , so_called_platform_math_consts :: fract_0
+        , so_called_platform_math_consts :: fract_1
+        ) ;
+    so_called_common_engine_math_stateless :: rotation_z ( axis_x , axis_y , angle ) ;
+
+    so_called_platform_vector :: mul_by ( axis_x , scale ) ;
+    so_called_platform_vector :: mul_by ( axis_y , scale ) ;
+    so_called_platform_vector :: mul_by ( axis_z , scale ) ;
+
+    so_called_platform_matrix :: set_axis_x ( matrix , axis_x ) ;
+    so_called_platform_matrix :: set_axis_y ( matrix , axis_y ) ;
+    so_called_platform_matrix :: set_axis_z ( matrix , axis_z ) ;
 }
 
 void shy_common_engine_math_stateless :: add_frame_to_time ( so_called_platform_math_num_fract_type & time )
