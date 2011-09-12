@@ -23,11 +23,19 @@ void _shy_common_logic_salutation_letters_animation_roll_in :: receive ( so_call
 
 void _shy_common_logic_salutation_letters_animation_roll_in :: receive ( so_called_common_logic_salutation_letters_animation_roll_in_transform_request_message msg )
 {
+    so_called_platform_math_num_fract_type position_radius ;
+    so_called_platform_math_num_fract_type position_spin_periods ;
+    so_called_platform_math_num_fract_type rotation_periods ;
+
+    position_radius = so_called_platform_math_consts :: fract_0 ;
+    position_spin_periods = so_called_platform_math_consts :: fract_0 ;
+    rotation_periods = so_called_platform_math_consts :: fract_0 ;
+
     so_called_common_logic_salutation_letters_animation_roll_in_transform_reply_message msg_reply ;
     msg_reply . letter = msg . letter ;
-    msg_reply . position_radius = so_called_platform_math_consts :: fract_0 ;
-    msg_reply . position_spin_periods = so_called_platform_math_consts :: fract_0 ;
-    msg_reply . rotation_periods = so_called_platform_math_consts :: fract_0 ;
+    msg_reply . position_radius = position_radius ;
+    msg_reply . position_spin_periods = position_spin_periods ;
+    msg_reply . rotation_periods = rotation_periods ;
     so_called_common_logic_salutation_letters_animation_roll_in_transform_reply_sender :: send ( msg_reply ) ;
 }
 
