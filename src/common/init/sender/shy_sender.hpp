@@ -74,6 +74,8 @@ void shy_common_init_sender :: send ( so_called_common_init_message msg )
     so_called_common_logic_salutation_letters_animation_appear :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_animation_disappear :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_animation_layout :: receive ( msg ) ;
+    so_called_common_logic_salutation_letters_animation_roll_in :: receive ( msg ) ;
+    so_called_common_logic_salutation_letters_animation_roll_out :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_meshes_cleaner :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_meshes_creator :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_meshes_generator :: receive ( msg ) ;
