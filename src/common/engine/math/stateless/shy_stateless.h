@@ -115,4 +115,10 @@ public :
         , so_called_platform_math_num_fract_type radius
         , so_called_platform_math_num_fract_type angle
         ) ;
+    static void shift
+        ( so_called_platform_math_num_fract_type & result
+        , so_called_platform_math_num_fract_type value
+        , so_called_platform_math_num_fract_type shifter
+        , so_called_platform_math_num_whole_type times
+        ) ;
 } ;

@@ -466,3 +466,18 @@ void shy_common_engine_math_stateless :: make_cartesian_from_polar
         ) ;
     so_called_platform_vector :: mul_by ( result , radius ) ;
 }
+
+void shy_common_engine_math_stateless :: shift
+    ( so_called_platform_math_num_fract_type & result
+    , so_called_platform_math_num_fract_type value
+    , so_called_platform_math_num_fract_type shifter
+    , so_called_platform_math_num_whole_type times_whole
+    )
+{
+    so_called_platform_math_num_fract_type times ;
+    so_called_platform_math_num_fract_type total_shift ;
+
+    so_called_platform_math :: make_fract_from_whole ( times , times_whole ) ;
+    so_called_platform_math :: mul_fracts ( total_shift , times , shifter ) ;
+    so_called_platform_math :: sub_fracts ( result , value , total_shift ) ;
+}
