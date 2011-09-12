@@ -25,17 +25,16 @@ void _shy_common_logic_salutation_letters_animation_disappear :: receive ( so_ca
 {
     so_called_platform_math_num_fract_type scale ;
     so_called_platform_math_num_fract_type scale_cut_off ;
-    so_called_platform_math_num_fract_type letter_index ;
-    so_called_platform_math_num_fract_type letter_time_shift ;
     so_called_platform_math_num_fract_type shifted_time ;
-    so_called_platform_math_num_fract_type time_shift_per_letter ;
 
     scale_cut_off = so_called_common_logic_salutation_letters_animation_consts :: disappear_scale_cut_off ;
-    time_shift_per_letter = so_called_common_logic_salutation_letters_animation_consts :: disappear_time_shift_per_letter ;
 
-    so_called_platform_math :: make_fract_from_whole ( letter_index , msg . letter ) ;
-    so_called_platform_math :: mul_fracts ( letter_time_shift , letter_index , time_shift_per_letter ) ;
-    so_called_platform_math :: sub_fracts ( shifted_time , shy_guts :: time , letter_time_shift ) ;
+    so_called_common_engine_math_stateless :: shift
+        ( shifted_time
+        , shy_guts :: time
+        , so_called_common_logic_salutation_letters_animation_consts :: disappear_time_shift_per_letter
+        , msg . letter
+        ) ;
 
     so_called_common_engine_math_stateless :: hard_in_easy_out
         ( scale

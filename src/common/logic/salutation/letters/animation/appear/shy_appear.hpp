@@ -20,7 +20,6 @@ void _shy_common_logic_salutation_letters_animation_appear :: receive ( so_calle
 {
     so_called_platform_math_num_fract_type scale ;
     so_called_platform_math_num_fract_type shifted_time ;
-    so_called_platform_math_num_fract_type time_shift_per_letter ;
 
     so_called_common_engine_math_stateless :: shift
         ( shifted_time
