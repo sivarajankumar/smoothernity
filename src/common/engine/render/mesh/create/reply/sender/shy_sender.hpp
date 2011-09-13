@@ -10,7 +10,6 @@ void shy_common_engine_render_mesh_create_reply_sender :: send ( so_called_commo
     so_called_common_logic_room_mesh :: receive ( msg ) ;
     so_called_common_logic_text :: receive ( msg ) ;
     so_called_common_logic_text_letter_mesh :: receive ( msg ) ;
-    so_called_common_logic_title :: receive ( msg ) ;
     so_called_common_logic_touch :: receive ( msg ) ;
 }
 

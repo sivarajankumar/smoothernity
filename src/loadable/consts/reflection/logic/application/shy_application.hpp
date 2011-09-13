@@ -18,8 +18,4 @@ void shy_loadable_consts_reflection_logic_application :: prepare ( )
     shy_guts_bind_value ( skip_salutation ) ;
     shy_guts_bind_value_min ( 0 ) ;
     shy_guts_bind_value_max ( 1 ) ;
-
-    shy_guts_bind_value ( skip_title ) ;
-    shy_guts_bind_value_min ( 0 ) ;
-    shy_guts_bind_value_max ( 1 ) ;
 }

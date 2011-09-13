@@ -22,7 +22,6 @@
     #include "loadable/consts/reflection/logic/salutation/letters/meshes/shy_meshes_injections.h"
     #include "loadable/consts/reflection/logic/salutation/renderer/shy_renderer_injections.h"
     #include "loadable/consts/reflection/logic/salutation/timer/shy_timer_injections.h"
-    #include "loadable/consts/reflection/logic/title/shy_title_injections.h"
     #include "loadable/consts/reflection/logic/vacuum/shy_vacuum_injections.h"
 
     #include "./shy_reflection_injections.h"

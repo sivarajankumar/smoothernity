@@ -168,21 +168,6 @@ void shy_common_logic_application_fsm_actions :: logic_text_update ( )
     so_called_common_logic_text_update_sender :: send ( so_called_common_logic_text_update_message ( ) ) ;
 }
 
-void shy_common_logic_application_fsm_actions :: logic_title_launch_permit ( )
-{
-    so_called_common_logic_title_launch_permit_sender :: send ( so_called_common_logic_title_launch_permit_message ( ) ) ;
-}
-
-void shy_common_logic_application_fsm_actions :: logic_title_render ( )
-{
-    so_called_common_logic_title_render_sender :: send ( so_called_common_logic_title_render_message ( ) ) ;
-}
-
-void shy_common_logic_application_fsm_actions :: logic_title_update ( )
-{
-    so_called_common_logic_title_update_sender :: send ( so_called_common_logic_title_update_message ( ) ) ;
-}
-
 void shy_common_logic_application_fsm_actions :: logic_vacuum_render ( )
 {
     so_called_common_logic_vacuum_render_sender :: send ( so_called_common_logic_vacuum_render_message ( ) ) ;
