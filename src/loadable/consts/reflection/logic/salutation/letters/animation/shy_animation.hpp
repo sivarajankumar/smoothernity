@@ -56,11 +56,11 @@ void shy_loadable_consts_reflection_logic_salutation_letters_animation :: prepar
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_in_position_radius_begin ) ;
-    shy_guts_bind_value_min ( 0 , 1 ) ;
+    shy_guts_bind_value_min ( - 10 , 1 ) ;
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_in_position_radius_end ) ;
-    shy_guts_bind_value_min ( 0 , 1 ) ;
+    shy_guts_bind_value_min ( - 10 , 1 ) ;
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_in_position_spin_periods_begin ) ;
@@ -88,11 +88,11 @@ void shy_loadable_consts_reflection_logic_salutation_letters_animation :: prepar
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_out_position_radius_begin ) ;
-    shy_guts_bind_value_min ( 0 , 1 ) ;
+    shy_guts_bind_value_min ( - 10 , 1 ) ;
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_out_position_radius_end ) ;
-    shy_guts_bind_value_min ( 0 , 1 ) ;
+    shy_guts_bind_value_min ( - 10 , 1 ) ;
     shy_guts_bind_value_max ( 10 , 1 ) ;
 
     shy_guts_bind_value ( roll_out_position_spin_periods_begin ) ;
