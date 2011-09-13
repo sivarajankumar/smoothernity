@@ -1,7 +1,12 @@
 system logic_application
     machine performer
         state initial
+            to fader
+        state fader
+            on entry
+                command start to fader_performer
             to salutation
+                if { ( machine fader_performer is finished ) }
         state salutation
             on entry
                 command start to salutation_performer
