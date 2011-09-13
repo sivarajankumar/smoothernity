@@ -1,4 +1,4 @@
 consts logic_salutation_animation
     zoom_scale_from 7 / 10
     zoom_scale_to 10 / 10
-    zoom_time 10 / 1
+    zoom_time 7 / 1
