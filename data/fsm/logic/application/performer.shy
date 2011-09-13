@@ -5,13 +5,8 @@ system logic_application
         state salutation
             on entry
                 command start to salutation_performer
-            to title
-                if { ( machine salutation_performer is finished ) }
-        state title
-            on entry
-                command start to title_performer
             to main_menu
-                if { ( machine title_performer is finished ) }
+                if { ( machine salutation_performer is finished ) }
         state main_menu
             on entry
                 command start to main_menu_performer
