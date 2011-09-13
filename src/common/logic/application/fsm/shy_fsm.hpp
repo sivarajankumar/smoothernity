@@ -22,8 +22,6 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: inputs_current . logic_salutation_timer_appear_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_timer_disappear_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: inputs_current . logic_title_created = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: inputs_current . logic_title_finished = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
@@ -57,16 +55,6 @@ void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
     {
         shy_guts :: inputs_current . stage_salutation_disabled = so_called_platform_math_consts :: whole_false ;
         shy_guts :: inputs_current . stage_salutation_enabled = so_called_platform_math_consts :: whole_true ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_title ) )
-    {
-        shy_guts :: inputs_current . stage_title_disabled = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: inputs_current . stage_title_enabled = so_called_platform_math_consts :: whole_false ;
-    }
-    else
-    {
-        shy_guts :: inputs_current . stage_title_disabled = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: inputs_current . stage_title_enabled = so_called_platform_math_consts :: whole_true ;
     }
 }
 
@@ -125,14 +113,6 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
             , shy_guts :: inputs_fixed . logic_text_prepared 
             )
       && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_title_created 
-            , shy_guts :: inputs_fixed . logic_title_created 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_title_finished 
-            , shy_guts :: inputs_fixed . logic_title_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . stage_amusement_disabled 
             , shy_guts :: inputs_fixed . stage_amusement_disabled 
             )
@@ -155,14 +135,6 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . stage_salutation_enabled 
             , shy_guts :: inputs_fixed . stage_salutation_enabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_title_disabled 
-            , shy_guts :: inputs_fixed . stage_title_disabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_title_enabled 
-            , shy_guts :: inputs_fixed . stage_title_enabled 
             )
        )
     {
@@ -266,18 +238,6 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salut
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_text_prepared_message )
 {
     shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
-}
-
-void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_title_created_message )
-{
-    shy_guts :: inputs_current . logic_title_created = so_called_platform_math_consts :: whole_true ;
-    so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
-}
-
-void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_title_finished_message )
-{
-    shy_guts :: inputs_current . logic_title_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 

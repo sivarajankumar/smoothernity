@@ -19,8 +19,6 @@ public :
     static void receive ( so_called_common_logic_salutation_timer_appear_finished_message ) ;
     static void receive ( so_called_common_logic_salutation_timer_disappear_finished_message ) ;
     static void receive ( so_called_common_logic_text_prepared_message ) ;
-    static void receive ( so_called_common_logic_title_created_message ) ;
-    static void receive ( so_called_common_logic_title_finished_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
 

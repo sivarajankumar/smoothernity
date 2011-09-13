@@ -35,9 +35,6 @@ public :
     static void logic_salutation_timer_disappear_tick ( ) ;
     static void logic_text_prepare_permit ( ) ;
     static void logic_text_update ( ) ;
-    static void logic_title_launch_permit ( ) ;
-    static void logic_title_render ( ) ;
-    static void logic_title_update ( ) ;
     static void logic_vacuum_render ( ) ;
     static void logic_vacuum_update ( ) ;
 } ;

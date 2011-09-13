@@ -93,7 +93,6 @@
 #include "common/logic/sound/shy_sound_injections.h"
 #include "common/logic/text/letter/mesh/shy_mesh_injections.h"
 #include "common/logic/text/shy_text_injections.h"
-#include "common/logic/title/shy_title_injections.h"
 #include "common/logic/touch/shy_touch_injections.h"
 #include "common/logic/vacuum/shy_vacuum_injections.h"
 

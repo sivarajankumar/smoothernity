@@ -9,6 +9,5 @@ void shy_common_engine_render_aspect_reply_sender :: send ( so_called_common_eng
     so_called_common_logic_ortho :: receive ( msg ) ;
     so_called_common_logic_perspective :: receive ( msg ) ;
     so_called_common_logic_salutation_letters_animation_layout :: receive ( msg ) ;
-    so_called_common_logic_title :: receive ( msg ) ;
 }
 

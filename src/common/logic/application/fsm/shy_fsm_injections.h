@@ -15,8 +15,6 @@
 #include "common/logic/salutation/timer/appear/finished/message/shy_message_injections.h"
 #include "common/logic/salutation/timer/disappear/finished/message/shy_message_injections.h"
 #include "common/logic/text/prepared/message/shy_message_injections.h"
-#include "common/logic/title/created/message/shy_message_injections.h"
-#include "common/logic/title/finished/message/shy_message_injections.h"
 
 #include "common/init/message/shy_message_injections.h"
 

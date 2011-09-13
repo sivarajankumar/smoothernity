@@ -40,9 +40,6 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_salutation_timer_disappear_tick ) ;
     shy_guts_bind_action ( logic_text_prepare_permit ) ;
     shy_guts_bind_action ( logic_text_update ) ;
-    shy_guts_bind_action ( logic_title_launch_permit ) ;
-    shy_guts_bind_action ( logic_title_render ) ;
-    shy_guts_bind_action ( logic_title_update ) ;
     shy_guts_bind_action ( logic_vacuum_render ) ;
     shy_guts_bind_action ( logic_vacuum_update ) ;
 
@@ -51,8 +48,6 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( logic_application_render ) ;
     shy_guts_bind_input ( logic_application_update ) ;
     shy_guts_bind_input ( logic_text_prepared ) ;
-    shy_guts_bind_input ( logic_title_created ) ;
-    shy_guts_bind_input ( logic_title_finished ) ;
     shy_guts_bind_input ( logic_main_menu_created ) ;
     shy_guts_bind_input ( logic_main_menu_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_meshes_cleaner_clean_finished ) ;
@@ -67,6 +62,4 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( stage_main_menu_enabled ) ;
     shy_guts_bind_input ( stage_salutation_disabled ) ;
     shy_guts_bind_input ( stage_salutation_enabled ) ;
-    shy_guts_bind_input ( stage_title_disabled ) ;
-    shy_guts_bind_input ( stage_title_enabled ) ;
 }
