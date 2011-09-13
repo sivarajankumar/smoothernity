@@ -103,14 +103,6 @@ namespace shy_guts
         virtual so_called_common_engine_fsm_state_type & transition ( ) ;
     } ;
 
-    class machine_generator_state_title_type
-    : public so_called_common_engine_fsm_state_type
-    {
-    public :
-        virtual void on_entry ( ) ;
-        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
-    } ;
-
     class machine_main_menu_generator_state_finished_type
     : public so_called_common_engine_fsm_state_type
     {
@@ -184,14 +176,6 @@ namespace shy_guts
     } ;
 
     class machine_performer_state_salutation_type
-    : public so_called_common_engine_fsm_state_type
-    {
-    public :
-        virtual void on_entry ( ) ;
-        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
-    } ;
-
-    class machine_performer_state_title_type
     : public so_called_common_engine_fsm_state_type
     {
     public :
@@ -398,9 +382,7 @@ namespace shy_guts
         so_called_platform_math_num_whole_type machine_text_generator_command_start ;
         so_called_platform_math_num_whole_type machine_text_generator_state_is_finished ;
         so_called_platform_math_num_whole_type machine_title_generator_command_start ;
-        so_called_platform_math_num_whole_type machine_title_generator_state_is_finished ;
         so_called_platform_math_num_whole_type machine_title_performer_command_start ;
-        so_called_platform_math_num_whole_type machine_title_performer_state_is_finished ;
     } ;
 
     namespace states
@@ -419,7 +401,6 @@ namespace shy_guts
        static machine_generator_state_main_menu_type generator_state_main_menu ;
        static machine_generator_state_salutation_type generator_state_salutation ;
        static machine_generator_state_text_type generator_state_text ;
-       static machine_generator_state_title_type generator_state_title ;
        static machine_main_menu_generator_state_finished_type main_menu_generator_state_finished ;
        static machine_main_menu_generator_state_generating_type main_menu_generator_state_generating ;
        static machine_main_menu_generator_state_initial_type main_menu_generator_state_initial ;
@@ -431,7 +412,6 @@ namespace shy_guts
        static machine_performer_state_initial_type performer_state_initial ;
        static machine_performer_state_main_menu_type performer_state_main_menu ;
        static machine_performer_state_salutation_type performer_state_salutation ;
-       static machine_performer_state_title_type performer_state_title ;
        static machine_salutation_cleaner_state_cleaning_type salutation_cleaner_state_cleaning ;
        static machine_salutation_cleaner_state_cleaning_letters_meshes_type salutation_cleaner_state_cleaning_letters_meshes ;
        static machine_salutation_cleaner_state_cleaning_letters_text_type salutation_cleaner_state_cleaning_letters_text ;
@@ -649,7 +629,7 @@ void shy_guts :: machine_generator_state_salutation_type :: on_entry ( )
 so_called_common_engine_fsm_state_type & shy_guts :: machine_generator_state_salutation_type :: transition ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_state_is_finished ) )
-        return shy_guts :: states :: generator_state_title ;
+        return shy_guts :: states :: generator_state_main_menu ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
@@ -663,19 +643,6 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_generator_state_tex
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_text_generator_state_is_finished ) )
         return shy_guts :: states :: generator_state_salutation ;
-    else
-        return so_called_common_engine_fsm_state_type :: transition ( ) ;
-}
-
-void shy_guts :: machine_generator_state_title_type :: on_entry ( )
-{
-    shy_guts :: behaviour_actions :: title_generator_command_start ( ) ;
-}
-
-so_called_common_engine_fsm_state_type & shy_guts :: machine_generator_state_title_type :: transition ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_title_generator_state_is_finished ) )
-        return shy_guts :: states :: generator_state_main_menu ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
@@ -813,19 +780,6 @@ void shy_guts :: machine_performer_state_salutation_type :: on_entry ( )
 so_called_common_engine_fsm_state_type & shy_guts :: machine_performer_state_salutation_type :: transition ( )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_salutation_performer_state_is_finished ) )
-        return shy_guts :: states :: performer_state_title ;
-    else
-        return so_called_common_engine_fsm_state_type :: transition ( ) ;
-}
-
-void shy_guts :: machine_performer_state_title_type :: on_entry ( )
-{
-    shy_guts :: behaviour_actions :: title_performer_command_start ( ) ;
-}
-
-so_called_common_engine_fsm_state_type & shy_guts :: machine_performer_state_title_type :: transition ( )
-{
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_title_performer_state_is_finished ) )
         return shy_guts :: states :: performer_state_main_menu ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
@@ -1298,16 +1252,8 @@ void so_called_common_logic_application_fsm_behaviour_static :: determine_behavi
             , shy_guts :: behaviour_inputs_fixed . machine_title_generator_command_start
             )
       && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_title_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_title_generator_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
             ( shy_guts :: behaviour_inputs_current . machine_title_performer_command_start
             , shy_guts :: behaviour_inputs_fixed . machine_title_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_title_performer_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_title_performer_state_is_finished
             )
        )
     {
@@ -1418,16 +1364,6 @@ void so_called_common_logic_application_fsm_behaviour_static :: recalc_current_b
         ( shy_guts :: behaviour_inputs_current . machine_text_generator_state_is_finished
         , shy_guts :: machine_text_generator_state
         , shy_guts :: states :: text_generator_state_finished
-        ) ;
-    so_called_platform_pointer :: is_bound_to
-        ( shy_guts :: behaviour_inputs_current . machine_title_generator_state_is_finished
-        , shy_guts :: machine_title_generator_state
-        , shy_guts :: states :: title_generator_state_finished
-        ) ;
-    so_called_platform_pointer :: is_bound_to
-        ( shy_guts :: behaviour_inputs_current . machine_title_performer_state_is_finished
-        , shy_guts :: machine_title_performer_state
-        , shy_guts :: states :: title_performer_state_finished
         ) ;
 }
 

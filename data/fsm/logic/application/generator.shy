@@ -10,13 +10,8 @@ system logic_application
         state salutation
             on entry
                 command start to salutation_generator
-            to title
-                if { ( machine salutation_generator is finished ) }
-        state title
-            on entry
-                command start to title_generator
             to main_menu
-                if { ( machine title_generator is finished ) }
+                if { ( machine salutation_generator is finished ) }
         state main_menu
             on entry
                 command start to main_menu_generator
