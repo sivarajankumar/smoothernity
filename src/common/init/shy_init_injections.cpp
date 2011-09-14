@@ -22,6 +22,7 @@
 #include "common/logic/door/shy_door_injections.h"
 #include "common/logic/door/texture/shy_texture_injections.h"
 #include "common/logic/entities/shy_entities_injections.h"
+#include "common/logic/fader/shy_fader_injections.h"
 #include "common/logic/fidget/shy_fidget_injections.h"
 #include "common/logic/game/shy_game_injections.h"
 #include "common/logic/image/shy_image_injections.h"
