@@ -10,6 +10,8 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_amusement_launch_permit ) ;
     shy_guts_bind_action ( logic_amusement_render ) ;
     shy_guts_bind_action ( logic_amusement_update ) ;
+    shy_guts_bind_action ( logic_fader_render ) ;
+    shy_guts_bind_action ( logic_fader_update ) ;
     shy_guts_bind_action ( logic_game_launch_permit ) ;
     shy_guts_bind_action ( logic_game_render ) ;
     shy_guts_bind_action ( logic_game_update ) ;
