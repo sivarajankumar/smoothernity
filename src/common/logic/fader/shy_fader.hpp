@@ -16,6 +16,7 @@ void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_render_me
 
 void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_start_message )
 {
+    so_called_common_logic_fader_finished_sender :: send ( so_called_common_logic_fader_finished_message ( ) ) ;
 }
 
 void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_update_message )

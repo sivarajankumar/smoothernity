@@ -37,6 +37,7 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: inputs_current . logic_amusement_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_application_render = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_application_update = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . logic_fader_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_main_menu_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_main_menu_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished = so_called_platform_math_consts :: whole_false ;
@@ -89,6 +90,10 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_application_update 
             , shy_guts :: inputs_fixed . logic_application_update 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_guts :: inputs_current . logic_fader_finished
+            , shy_guts :: inputs_fixed . logic_fader_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_main_menu_created 
@@ -206,6 +211,12 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_appli
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_application_update_message )
 {
     shy_guts :: inputs_current . logic_application_update = so_called_platform_math_consts :: whole_true ;
+    so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
+}
+
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_fader_finished_message )
+{
+    shy_guts :: inputs_current . logic_fader_finished = so_called_platform_math_consts :: whole_true ;
     so_called_common_engine_fsm_stateless :: run_fsm < _shy_common_logic_application_fsm , so_called_common_logic_application_fsm_behaviour > ( ) ;
 }
 
