@@ -16,6 +16,8 @@ public :
     so_called_platform_math_num_whole_type logic_salutation_timer_disappear_finished ;
     so_called_platform_math_num_whole_type stage_amusement_disabled ;
     so_called_platform_math_num_whole_type stage_amusement_enabled ;
+    so_called_platform_math_num_whole_type stage_fader_disabled ;
+    so_called_platform_math_num_whole_type stage_fader_enabled ;
     so_called_platform_math_num_whole_type stage_main_menu_disabled ;
     so_called_platform_math_num_whole_type stage_main_menu_enabled ;
     so_called_platform_math_num_whole_type stage_salutation_disabled ;
