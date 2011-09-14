@@ -44,6 +44,27 @@ namespace shy_guts
         virtual so_called_common_engine_fsm_state_type & transition ( ) ;
     } ;
 
+    class machine_fader_performer_state_finished_type
+    : public so_called_common_engine_fsm_state_type
+    {
+    } ;
+
+    class machine_fader_performer_state_initial_type
+    : public so_called_common_engine_fsm_state_type
+    {
+    public :
+        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
+    } ;
+
+    class machine_fader_performer_state_performing_type
+    : public so_called_common_engine_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( ) ;
+        virtual void on_input ( ) ;
+        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
+    } ;
+
     class machine_game_performer_state_initial_type
     : public so_called_common_engine_fsm_state_type
     {
@@ -146,6 +167,14 @@ namespace shy_guts
     } ;
 
     class machine_performer_state_amusement_type
+    : public so_called_common_engine_fsm_state_type
+    {
+    public :
+        virtual void on_entry ( ) ;
+        virtual so_called_common_engine_fsm_state_type & transition ( ) ;
+    } ;
+
+    class machine_performer_state_fader_type
     : public so_called_common_engine_fsm_state_type
     {
     public :
@@ -329,6 +358,8 @@ namespace shy_guts
         so_called_platform_math_num_whole_type machine_amusement_generator_state_is_finished ;
         so_called_platform_math_num_whole_type machine_amusement_performer_command_start ;
         so_called_platform_math_num_whole_type machine_amusement_performer_state_is_finished ;
+        so_called_platform_math_num_whole_type machine_fader_performer_command_start ;
+        so_called_platform_math_num_whole_type machine_fader_performer_state_is_finished ;
         so_called_platform_math_num_whole_type machine_game_performer_command_start ;
         so_called_platform_math_num_whole_type machine_main_menu_generator_command_start ;
         so_called_platform_math_num_whole_type machine_main_menu_generator_state_is_finished ;
@@ -350,6 +381,9 @@ namespace shy_guts
        static machine_amusement_performer_state_finished_type amusement_performer_state_finished ;
        static machine_amusement_performer_state_initial_type amusement_performer_state_initial ;
        static machine_amusement_performer_state_performing_type amusement_performer_state_performing ;
+       static machine_fader_performer_state_finished_type fader_performer_state_finished ;
+       static machine_fader_performer_state_initial_type fader_performer_state_initial ;
+       static machine_fader_performer_state_performing_type fader_performer_state_performing ;
        static machine_game_performer_state_initial_type game_performer_state_initial ;
        static machine_game_performer_state_performing_type game_performer_state_performing ;
        static machine_generator_state_amusement_type generator_state_amusement ;
@@ -365,6 +399,7 @@ namespace shy_guts
        static machine_main_menu_performer_state_initial_type main_menu_performer_state_initial ;
        static machine_main_menu_performer_state_performing_type main_menu_performer_state_performing ;
        static machine_performer_state_amusement_type performer_state_amusement ;
+       static machine_performer_state_fader_type performer_state_fader ;
        static machine_performer_state_game_type performer_state_game ;
        static machine_performer_state_initial_type performer_state_initial ;
        static machine_performer_state_main_menu_type performer_state_main_menu ;
@@ -394,6 +429,7 @@ namespace shy_guts
     {
         static void amusement_generator_command_start ( ) ;
         static void amusement_performer_command_start ( ) ;
+        static void fader_performer_command_start ( ) ;
         static void game_performer_command_start ( ) ;
         static void main_menu_generator_command_start ( ) ;
         static void main_menu_performer_command_start ( ) ;
@@ -404,6 +440,7 @@ namespace shy_guts
 
     static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_amusement_generator_state ;
     static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_amusement_performer_state ;
+    static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_fader_performer_state ;
     static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_game_performer_state ;
     static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_generator_state ;
     static so_called_platform_pointer_data_type < so_called_common_engine_fsm_state_type > machine_main_menu_generator_state ;
@@ -506,6 +543,53 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_amusement_performer
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_amusement_finished ) )
         return shy_guts :: states :: amusement_performer_state_finished ;
+    else
+        return so_called_common_engine_fsm_state_type :: transition ( ) ;
+}
+
+so_called_common_engine_fsm_state_type & shy_guts :: machine_fader_performer_state_initial_type :: transition ( )
+{
+    if
+    (  so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . stage_fader_enabled )
+    && so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_fader_performer_command_start )
+    )
+    {
+        return shy_guts :: states :: fader_performer_state_performing ;
+    }
+    else if
+    (  so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . stage_fader_disabled )
+    && so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_fader_performer_command_start )
+    )
+    {
+        return shy_guts :: states :: fader_performer_state_finished ;
+    }
+    else
+        return so_called_common_engine_fsm_state_type :: transition ( ) ;
+}
+
+void shy_guts :: machine_fader_performer_state_performing_type :: on_entry ( )
+{
+    so_called_common_logic_application_fsm_actions :: logic_fader_start ( ) ;
+}
+
+void shy_guts :: machine_fader_performer_state_performing_type :: on_input ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_application_render ) )
+    {
+        so_called_common_logic_application_fsm_actions :: logic_fader_render ( ) ;
+        shy_guts :: inputs_current . get ( ) . logic_application_render = so_called_platform_math_consts :: whole_false ;
+    }
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_application_update ) )
+    {
+        so_called_common_logic_application_fsm_actions :: logic_fader_update ( ) ;
+        shy_guts :: inputs_current . get ( ) . logic_application_update = so_called_platform_math_consts :: whole_false ;
+    }
+}
+
+so_called_common_engine_fsm_state_type & shy_guts :: machine_fader_performer_state_performing_type :: transition ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: inputs_fixed . get ( ) . logic_fader_finished ) )
+        return shy_guts :: states :: fader_performer_state_finished ;
     else
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
@@ -696,6 +780,19 @@ so_called_common_engine_fsm_state_type & shy_guts :: machine_performer_state_amu
         return so_called_common_engine_fsm_state_type :: transition ( ) ;
 }
 
+void shy_guts :: machine_performer_state_fader_type :: on_entry ( )
+{
+    shy_guts :: behaviour_actions :: fader_performer_command_start ( ) ;
+}
+
+so_called_common_engine_fsm_state_type & shy_guts :: machine_performer_state_fader_type :: transition ( )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: behaviour_inputs_fixed . machine_fader_performer_state_is_finished ) )
+        return shy_guts :: states :: performer_state_salutation ;
+    else
+        return so_called_common_engine_fsm_state_type :: transition ( ) ;
+}
+
 void shy_guts :: machine_performer_state_game_type :: on_entry ( )
 {
     shy_guts :: behaviour_actions :: game_performer_command_start ( ) ;
@@ -703,7 +800,7 @@ void shy_guts :: machine_performer_state_game_type :: on_entry ( )
 
 so_called_common_engine_fsm_state_type & shy_guts :: machine_performer_state_initial_type :: transition ( )
 {
-    return shy_guts :: states :: performer_state_salutation ;
+    return shy_guts :: states :: performer_state_fader ;
 }
 
 void shy_guts :: machine_performer_state_main_menu_type :: on_entry ( )
@@ -1008,6 +1105,11 @@ void shy_guts :: behaviour_actions :: amusement_performer_command_start ( )
     shy_guts :: behaviour_inputs_current . machine_amusement_performer_command_start = so_called_platform_math_consts :: whole_true ;
 }
 
+void shy_guts :: behaviour_actions :: fader_performer_command_start ( )
+{
+    shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start = so_called_platform_math_consts :: whole_true ;
+}
+
 void shy_guts :: behaviour_actions :: game_performer_command_start ( )
 {
     shy_guts :: behaviour_inputs_current . machine_game_performer_command_start = so_called_platform_math_consts :: whole_true ;
@@ -1055,6 +1157,14 @@ void so_called_common_logic_application_fsm_behaviour_static :: determine_behavi
       && so_called_platform_conditions :: wholes_are_equal
             ( shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished
             , shy_guts :: behaviour_inputs_fixed . machine_amusement_performer_state_is_finished
+            )
+      && so_called_platform_conditions :: wholes_are_equal
+            ( shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start
+            , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_command_start
+            )
+      && so_called_platform_conditions :: wholes_are_equal
+            ( shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished
+            , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_state_is_finished
             )
       && so_called_platform_conditions :: wholes_are_equal
             ( shy_guts :: behaviour_inputs_current . machine_game_performer_command_start
@@ -1123,6 +1233,10 @@ void so_called_common_logic_application_fsm_behaviour_static :: init ( )
         , shy_guts :: states :: amusement_performer_state_initial
         ) ;
     so_called_platform_pointer :: bind
+        ( shy_guts :: machine_fader_performer_state
+        , shy_guts :: states :: fader_performer_state_initial
+        ) ;
+    so_called_platform_pointer :: bind
         ( shy_guts :: machine_game_performer_state
         , shy_guts :: states :: game_performer_state_initial
         ) ;
@@ -1178,6 +1292,11 @@ void so_called_common_logic_application_fsm_behaviour_static :: recalc_current_b
         , shy_guts :: states :: amusement_performer_state_finished
         ) ;
     so_called_platform_pointer :: is_bound_to
+        ( shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished
+        , shy_guts :: machine_fader_performer_state
+        , shy_guts :: states :: fader_performer_state_finished
+        ) ;
+    so_called_platform_pointer :: is_bound_to
         ( shy_guts :: behaviour_inputs_current . machine_main_menu_generator_state_is_finished
         , shy_guts :: machine_main_menu_generator_state
         , shy_guts :: states :: main_menu_generator_state_finished
@@ -1208,6 +1327,7 @@ void so_called_common_logic_application_fsm_behaviour_static :: reset_behaviour_
 {
     shy_guts :: behaviour_inputs_current . machine_amusement_generator_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_amusement_performer_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_game_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_main_menu_generator_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_main_menu_performer_command_start = so_called_platform_math_consts :: whole_false ;
@@ -1239,6 +1359,7 @@ void so_called_common_logic_application_fsm_behaviour_static :: tick_all_fsms ( 
 {
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_amusement_generator_state ) ;
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_amusement_performer_state ) ;
+    so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_fader_performer_state ) ;
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_game_performer_state ) ;
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_generator_state ) ;
     so_called_common_engine_fsm_stateless :: tick_single_fsm ( shy_guts :: machine_main_menu_generator_state ) ;
