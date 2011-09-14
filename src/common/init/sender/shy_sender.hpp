@@ -21,6 +21,7 @@ void shy_common_init_sender :: send ( so_called_common_init_message msg )
     so_called_common_logic_door_renderer :: receive ( msg ) ;
     so_called_common_logic_door_texture :: receive ( msg ) ;
     so_called_common_logic_entities :: receive ( msg ) ;
+    so_called_common_logic_fader :: receive ( msg ) ;
     so_called_common_logic_fidget :: receive ( msg ) ;
     so_called_common_logic_game :: receive ( msg ) ;
     so_called_common_logic_image :: receive ( msg ) ;

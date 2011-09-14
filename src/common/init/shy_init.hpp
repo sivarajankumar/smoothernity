@@ -24,6 +24,7 @@ void shy_common_init :: init ( )
     so_called_common_logic_door_renderer :: register_in_scheduler ( ) ;
     so_called_common_logic_door_texture :: register_in_scheduler ( ) ;
     so_called_common_logic_entities :: register_in_scheduler ( ) ;
+    so_called_common_logic_fader :: register_in_scheduler ( ) ;
     so_called_common_logic_fidget :: register_in_scheduler ( ) ;
     so_called_common_logic_game :: register_in_scheduler ( ) ;
     so_called_common_logic_image :: register_in_scheduler ( ) ;
