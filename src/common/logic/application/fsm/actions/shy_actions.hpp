@@ -18,6 +18,16 @@ void shy_common_logic_application_fsm_actions :: logic_amusement_update ( )
     so_called_common_logic_amusement_update_sender :: send ( so_called_common_logic_amusement_update_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_fader_render ( )
+{
+    so_called_common_logic_fader_render_sender :: send ( so_called_common_logic_fader_render_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_fader_update ( )
+{
+    so_called_common_logic_fader_update_sender :: send ( so_called_common_logic_fader_update_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_game_launch_permit ( )
 {
     so_called_common_logic_game_launch_permit_sender :: send ( so_called_common_logic_game_launch_permit_message ( ) ) ;

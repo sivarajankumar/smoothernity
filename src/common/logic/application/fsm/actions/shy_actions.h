@@ -5,6 +5,8 @@ public :
     static void logic_amusement_launch_permit ( ) ;
     static void logic_amusement_render ( ) ;
     static void logic_amusement_update ( ) ;
+    static void logic_fader_render ( ) ;
+    static void logic_fader_update ( ) ;
     static void logic_game_launch_permit ( ) ;
     static void logic_game_render ( ) ;
     static void logic_game_update ( ) ;
