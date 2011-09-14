@@ -11,6 +11,10 @@ void shy_loadable_consts_reflection_logic_application :: prepare ( )
     shy_guts_bind_value_min ( 0 ) ;
     shy_guts_bind_value_max ( 1 ) ;
 
+    shy_guts_bind_value ( skip_fader ) ;
+    shy_guts_bind_value_min ( 0 ) ;
+    shy_guts_bind_value_max ( 1 ) ;
+
     shy_guts_bind_value ( skip_main_menu ) ;
     shy_guts_bind_value_min ( 0 ) ;
     shy_guts_bind_value_max ( 1 ) ;

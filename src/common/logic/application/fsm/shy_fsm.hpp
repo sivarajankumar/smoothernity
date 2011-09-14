@@ -1,11 +1,35 @@
 namespace shy_guts
 {
+    static void make_inputs_from_value
+        ( so_called_platform_math_num_whole_type & enabled
+        , so_called_platform_math_num_whole_type & disabled
+        , so_called_platform_math_num_whole_type value
+        ) ;
+
     static so_called_common_logic_application_fsm_inputs_type inputs_current ;
     static so_called_common_logic_application_fsm_inputs_type inputs_fixed ;
 }
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_logic_application_fsm > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
+
+void shy_guts :: make_inputs_from_value
+    ( so_called_platform_math_num_whole_type & enabled
+    , so_called_platform_math_num_whole_type & disabled
+    , so_called_platform_math_num_whole_type value
+    )
+{
+    if ( so_called_platform_conditions :: whole_is_true ( value ) )
+    {
+        enabled = so_called_platform_math_consts :: whole_true ;
+        disabled = so_called_platform_math_consts :: whole_false ;
+    }
+    else
+    {
+        enabled = so_called_platform_math_consts :: whole_false ;
+        disabled = so_called_platform_math_consts :: whole_true ;
+    }
+}
 
 void _shy_common_logic_application_fsm :: reset_input_events ( )
 {
@@ -26,36 +50,26 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
 
 void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_amusement ) )
-    {
-        shy_guts :: inputs_current . stage_amusement_disabled = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: inputs_current . stage_amusement_enabled = so_called_platform_math_consts :: whole_false ;
-    }
-    else
-    {
-        shy_guts :: inputs_current . stage_amusement_disabled = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: inputs_current . stage_amusement_enabled = so_called_platform_math_consts :: whole_true ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_main_menu ) )
-    {
-        shy_guts :: inputs_current . stage_main_menu_disabled = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: inputs_current . stage_main_menu_enabled = so_called_platform_math_consts :: whole_false ;
-    }
-    else
-    {
-        shy_guts :: inputs_current . stage_main_menu_disabled = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: inputs_current . stage_main_menu_enabled = so_called_platform_math_consts :: whole_true ;
-    }
-    if ( so_called_platform_conditions :: whole_is_true ( so_called_common_logic_application_consts :: skip_salutation ) )
-    {
-        shy_guts :: inputs_current . stage_salutation_disabled = so_called_platform_math_consts :: whole_true ;
-        shy_guts :: inputs_current . stage_salutation_enabled = so_called_platform_math_consts :: whole_false ;
-    }
-    else
-    {
-        shy_guts :: inputs_current . stage_salutation_disabled = so_called_platform_math_consts :: whole_false ;
-        shy_guts :: inputs_current . stage_salutation_enabled = so_called_platform_math_consts :: whole_true ;
-    }
+    shy_guts :: make_inputs_from_value 
+        ( shy_guts :: inputs_current . stage_amusement_disabled
+        , shy_guts :: inputs_current . stage_amusement_enabled
+        , so_called_common_logic_application_consts :: skip_amusement 
+        ) ;
+    shy_guts :: make_inputs_from_value 
+        ( shy_guts :: inputs_current . stage_fader_disabled
+        , shy_guts :: inputs_current . stage_fader_enabled
+        , so_called_common_logic_application_consts :: skip_fader 
+        ) ;
+    shy_guts :: make_inputs_from_value 
+        ( shy_guts :: inputs_current . stage_main_menu_disabled
+        , shy_guts :: inputs_current . stage_main_menu_enabled
+        , so_called_common_logic_application_consts :: skip_main_menu 
+        ) ;
+    shy_guts :: make_inputs_from_value 
+        ( shy_guts :: inputs_current . stage_salutation_disabled
+        , shy_guts :: inputs_current . stage_salutation_enabled
+        , so_called_common_logic_application_consts :: skip_salutation 
+        ) ;
 }
 
 void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_platform_math_num_whole_type & inputs_changed )
@@ -119,6 +133,14 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . stage_amusement_enabled 
             , shy_guts :: inputs_fixed . stage_amusement_enabled 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_guts :: inputs_current . stage_fader_disabled 
+            , shy_guts :: inputs_fixed . stage_fader_disabled 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_guts :: inputs_current . stage_fader_enabled 
+            , shy_guts :: inputs_fixed . stage_fader_enabled 
             )
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . stage_main_menu_disabled 
