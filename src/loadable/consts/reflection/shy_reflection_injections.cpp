@@ -6,6 +6,7 @@
     #include "loadable/consts/reflection/logic/blanket/animation/shy_animation_injections.h"
     #include "loadable/consts/reflection/logic/door/shy_door_injections.h"
     #include "loadable/consts/reflection/logic/door/animation/shy_animation_injections.h"
+    #include "loadable/consts/reflection/logic/fader/shy_fader_injections.h"
     #include "loadable/consts/reflection/logic/fidget/shy_fidget_injections.h"
     #include "loadable/consts/reflection/logic/main/menu/animation/shy_animation_injections.h"
     #include "loadable/consts/reflection/logic/main/menu/letters/animation/shy_animation_injections.h"
