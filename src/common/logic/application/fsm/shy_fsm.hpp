@@ -194,8 +194,6 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_init_messag
 
     so_called_common_logic_application_fsm_behaviour :: set_inputs ( inputs_current , inputs_fixed ) ;
     so_called_common_logic_application_fsm_behaviour :: init ( ) ;
-
-    shy_guts :: run_fsm ( ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_amusement_created_message )
