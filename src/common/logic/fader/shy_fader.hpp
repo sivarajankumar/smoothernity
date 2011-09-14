@@ -14,6 +14,10 @@ void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_render_me
     so_called_common_engine_render_clear_screen_sender :: send ( msg ) ;
 }
 
+void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_start_message )
+{
+}
+
 void _shy_common_logic_fader :: receive ( so_called_common_logic_fader_update_message )
 {
 }

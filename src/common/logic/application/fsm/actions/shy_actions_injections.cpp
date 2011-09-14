@@ -5,6 +5,7 @@
 #include "common/logic/amusement/render/sender/shy_sender_injections.h"
 #include "common/logic/amusement/update/sender/shy_sender_injections.h"
 #include "common/logic/fader/render/sender/shy_sender_injections.h"
+#include "common/logic/fader/start/sender/shy_sender_injections.h"
 #include "common/logic/fader/update/sender/shy_sender_injections.h"
 #include "common/logic/game/launch/permit/sender/shy_sender_injections.h"
 #include "common/logic/game/render/sender/shy_sender_injections.h"

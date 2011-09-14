@@ -23,6 +23,11 @@ void shy_common_logic_application_fsm_actions :: logic_fader_render ( )
     so_called_common_logic_fader_render_sender :: send ( so_called_common_logic_fader_render_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_fader_start ( )
+{
+    so_called_common_logic_fader_start_sender :: send ( so_called_common_logic_fader_start_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_fader_update ( )
 {
     so_called_common_logic_fader_update_sender :: send ( so_called_common_logic_fader_update_message ( ) ) ;
