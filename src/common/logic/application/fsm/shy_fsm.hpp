@@ -6,7 +6,9 @@ namespace shy_guts
         , so_called_platform_math_num_whole_type value
         ) ;
     static void run_fsm ( ) ;
+    static void run_fsm_event ( so_called_platform_math_num_whole_type so_called_common_logic_application_fsm_inputs_type :: * ) ;
 
+    static so_called_platform_math_num_whole_type stabilized ;
     static so_called_common_logic_application_fsm_inputs_type inputs_current ;
     static so_called_common_logic_application_fsm_inputs_type inputs_fixed ;
 }
@@ -30,6 +32,17 @@ void shy_guts :: make_inputs_from_value
         enabled = so_called_platform_math_consts :: whole_false ;
         disabled = so_called_platform_math_consts :: whole_true ;
     }
+}
+
+void shy_guts :: run_fsm_event ( so_called_platform_math_num_whole_type so_called_common_logic_application_fsm_inputs_type :: * input )
+{
+    if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: stabilized ) )
+    {
+        shy_guts :: stabilized = so_called_platform_math_consts :: whole_true ;
+        shy_guts :: run_fsm ( ) ;
+    }
+    shy_guts :: inputs_current .* input = so_called_platform_math_consts :: whole_true ;
+    shy_guts :: run_fsm ( ) ;
 }
 
 void shy_guts :: run_fsm ( )
@@ -186,6 +199,8 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_init_messag
 {
     reset_input_events ( ) ;
 
+    shy_guts :: stabilized = so_called_platform_math_consts :: whole_false ;
+
     so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_current ;
     so_called_platform_pointer_data_type < so_called_common_logic_application_fsm_inputs_type > inputs_fixed ;
 
@@ -198,86 +213,72 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_init_messag
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_amusement_created_message )
 {
-    shy_guts :: inputs_current . logic_amusement_created = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_amusement_created ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_amusement_finished_message )
 {
-    shy_guts :: inputs_current . logic_amusement_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_amusement_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_application_render_message )
 {
-    shy_guts :: inputs_current . logic_application_render = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_application_render ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_application_update_message )
 {
-    shy_guts :: inputs_current . logic_application_update = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_application_update ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_fader_finished_message )
 {
-    shy_guts :: inputs_current . logic_fader_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_fader_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_main_menu_created_message )
 {
-    shy_guts :: inputs_current . logic_main_menu_created = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_main_menu_created ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_main_menu_finished_message )
 {
-    shy_guts :: inputs_current . logic_main_menu_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_main_menu_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_letters_meshes_cleaner_clean_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_meshes_generator_generate_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_letters_meshes_generator_generate_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_letters_meshes_generator_generate_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_text_cleaner_clean_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_letters_text_cleaner_clean_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_letters_text_cleaner_clean_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_letters_text_generator_generate_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_letters_text_generator_generate_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_letters_text_generator_generate_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_appear_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_timer_appear_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_timer_appear_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_salutation_timer_disappear_finished_message )
 {
-    shy_guts :: inputs_current . logic_salutation_timer_disappear_finished = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_salutation_timer_disappear_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_text_prepared_message )
 {
-    shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_true ;
-    shy_guts :: run_fsm ( ) ;
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_text_prepared ) ;
 }
 
 void _shy_common_logic_application_fsm :: register_in_scheduler ( )
