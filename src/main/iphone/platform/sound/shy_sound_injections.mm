@@ -1,1 +1,1 @@
-#include "platform/sound/openal/shy_openal_injections.hpp"
+#include "src/platform/sound/openal/shy_openal_injections.hpp"

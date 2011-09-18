@@ -1,1 +1,1 @@
-#include "platform/sound/openal/sample/stereo/type/shy_type_injections.hpp"
+#include "src/platform/sound/openal/sample/stereo/type/shy_type_injections.hpp"
