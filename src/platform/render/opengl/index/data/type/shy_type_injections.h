@@ -1,7 +1,7 @@
 #ifndef _shy_platform_render_opengl_index_data_type_injections_included
 #define _shy_platform_render_opengl_index_data_type_injections_included
 
-#include "injections/lib/opengl/shy_opengl.h"
+#include "src/injections/lib/opengl/shy_opengl.h"
 
 #include "./shy_type.h"
 

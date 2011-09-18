@@ -2,15 +2,15 @@
 #define _shy_injections_platform_static_array_insider_included
 
 #ifdef shy_build_for_iphone
-    #include "main/iphone/platform/static/array/insider/shy_insider_injections.h"
+    #include "src/main/iphone/platform/static/array/insider/shy_insider_injections.h"
 #endif
 
 #ifdef shy_build_for_macosx
-    #include "main/macosx/platform/static/array/insider/shy_insider_injections.h"
+    #include "src/main/macosx/platform/static/array/insider/shy_insider_injections.h"
 #endif
 
 #ifdef shy_build_for_win
-    #include "main/win/platform/static/array/insider/shy_insider_injections.h"
+    #include "src/main/win/platform/static/array/insider/shy_insider_injections.h"
 #endif
 
 #endif

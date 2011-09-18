@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_room_launch_permit_sender_injections_included
 #define _shy_common_logic_room_launch_permit_sender_injections_included
 
-#include "common/logic/room/launch/permit/message/shy_message_injections.h"
+#include "src/common/logic/room/launch/permit/message/shy_message_injections.h"
 
 #include "./shy_sender.h"
 

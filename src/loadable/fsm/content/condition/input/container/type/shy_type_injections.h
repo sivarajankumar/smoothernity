@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_fsm_content_condition_input_container_type_injections_included
 #define _shy_loadable_fsm_content_condition_input_container_type_injections_included
 
-#include "loadable/fsm/content/condition/input/type/shy_type_injections.h"
+#include "src/loadable/fsm/content/condition/input/type/shy_type_injections.h"
 
 #include "./shy_type.h"
 

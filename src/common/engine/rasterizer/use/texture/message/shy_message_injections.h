@@ -1,9 +1,9 @@
 #ifndef _shy_common_engine_rasterizer_use_texture_message_injections_included
 #define _shy_common_engine_rasterizer_use_texture_message_injections_included
 
-#include "common/engine/render/texture/id/type/shy_type_injections.h"
+#include "src/common/engine/render/texture/id/type/shy_type_injections.h"
 
-#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "src/injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_message.h"
 

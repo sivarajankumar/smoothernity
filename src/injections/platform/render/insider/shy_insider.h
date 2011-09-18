@@ -2,15 +2,15 @@
 #define _shy_injections_platform_render_insider_included
 
 #ifdef shy_build_for_iphone
-    #include "main/iphone/platform/render/insider/shy_insider_injections.h"
+    #include "src/main/iphone/platform/render/insider/shy_insider_injections.h"
 #endif
 
 #ifdef shy_build_for_macosx
-    #include "main/macosx/platform/render/insider/shy_insider_injections.h"
+    #include "src/main/macosx/platform/render/insider/shy_insider_injections.h"
 #endif
 
 #ifdef shy_build_for_win
-    #include "main/win/platform/render/insider/shy_insider_injections.h"
+    #include "src/main/win/platform/render/insider/shy_insider_injections.h"
 #endif
 
 #endif

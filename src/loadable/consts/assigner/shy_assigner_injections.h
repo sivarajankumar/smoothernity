@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_consts_assigner_injections_included
 #define _shy_loadable_consts_assigner_injections_included
 
-#include "injections/lib/std/bool/shy_bool.h"
+#include "src/injections/lib/std/bool/shy_bool.h"
 
 #include "./shy_assigner.h"
 

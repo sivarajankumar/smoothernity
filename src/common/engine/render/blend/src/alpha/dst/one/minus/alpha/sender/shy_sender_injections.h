@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender_injections_included
 #define _shy_common_engine_render_blend_src_alpha_dst_one_minus_alpha_sender_injections_included
 
-#include "common/engine/render/blend/src/alpha/dst/one/minus/alpha/message/shy_message_injections.h"
+#include "src/common/engine/render/blend/src/alpha/dst/one/minus/alpha/message/shy_message_injections.h"
 
 #include "./shy_sender.h"
 

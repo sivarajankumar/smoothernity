@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_animation_roll_in_transform_request_message_injections_included
 #define _shy_common_logic_salutation_letters_animation_roll_in_transform_request_message_injections_included
 
-#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "src/injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_message.h"
 

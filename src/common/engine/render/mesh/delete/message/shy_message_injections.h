@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_mesh_delete_message_injections_included
 #define _shy_common_engine_render_mesh_delete_message_injections_included
 
-#include "common/engine/render/mesh/id/type/shy_type_injections.h"
+#include "src/common/engine/render/mesh/id/type/shy_type_injections.h"
 
 #include "./shy_message.h"
 

@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_render_texture_loader_ready_reply_message_injections_included
 #define _shy_common_engine_render_texture_loader_ready_reply_message_injections_included
 
-#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "src/injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_message.h"
 

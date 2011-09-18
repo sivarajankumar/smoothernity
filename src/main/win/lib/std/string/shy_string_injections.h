@@ -2,7 +2,7 @@
 #define _shy_win_lib_std_string_injections_included 
 
 #ifdef shy_build_with_stl
-    #include "lib/std/string/shy_string_injections.h"
+    #include "src/lib/std/string/shy_string_injections.h"
 #endif
 
 #endif

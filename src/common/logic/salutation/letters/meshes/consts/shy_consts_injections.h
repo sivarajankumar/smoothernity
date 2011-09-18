@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_salutation_letters_meshes_consts_injections_included
 #define _shy_common_logic_salutation_letters_meshes_consts_injections_included
 
-#include "injections/platform/math/num/fract/type/shy_type.h"
+#include "src/injections/platform/math/num/fract/type/shy_type.h"
 
 #include "./shy_consts.h"
 

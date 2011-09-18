@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_rect_stateless_injections_included
 #define _shy_common_engine_rect_stateless_injections_included
 
-#include "common/engine/rect/type/shy_type_injections.h"
+#include "src/common/engine/rect/type/shy_type_injections.h"
 
 #include "./shy_stateless.h"
 

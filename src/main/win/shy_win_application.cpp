@@ -1,11 +1,11 @@
 #include <DXUT.h>
 #include <Windowsx.h>
-#include "facade/shy_facade_injections.h"
-#include "injections/lib/std/false/shy_false.h"
-#include "injections/lib/std/int32/t/shy_t.h"
-#include "injections/lib/std/true/shy_true.h"
-#include "injections/platform/mouse/insider/shy_insider.h"
-#include "injections/platform/render/insider/shy_insider.h"
+#include "src/facade/shy_facade_injections.h"
+#include "src/injections/lib/std/false/shy_false.h"
+#include "src/injections/lib/std/int32/t/shy_t.h"
+#include "src/injections/lib/std/true/shy_true.h"
+#include "src/injections/platform/mouse/insider/shy_insider.h"
+#include "src/injections/platform/render/insider/shy_insider.h"
 
 void smoothernity_init ( )
 {
