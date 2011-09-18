@@ -2,7 +2,7 @@
 #include <Windowsx.h>
 #include "facade/shy_facade_injections.h"
 #include "injections/lib/std/false/shy_false.h"
-#include "injections/lib/std/int32_t/shy_int32_t.h"
+#include "injections/lib/std/int32/t/shy_t.h"
 #include "injections/lib/std/true/shy_true.h"
 #include "injections/platform/mouse/insider/shy_insider.h"
 #include "injections/platform/render/insider/shy_insider.h"
