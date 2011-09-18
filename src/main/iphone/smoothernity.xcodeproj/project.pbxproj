@@ -22000,7 +22000,7 @@
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				HEADER_SEARCH_PATHS = ../../../src;
+				HEADER_SEARCH_PATHS = ../../..;
 				INFOPLIST_FILE = "smoothernity-Info.plist";
 				PRODUCT_NAME = Smoothernity;
 				SDKROOT = iphoneos;
@@ -22022,7 +22022,7 @@
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				HEADER_SEARCH_PATHS = ../../../src;
+				HEADER_SEARCH_PATHS = ../../..;
 				INFOPLIST_FILE = "smoothernity-Info.plist";
 				PRODUCT_NAME = Smoothernity;
 				SDKROOT = iphoneos;
