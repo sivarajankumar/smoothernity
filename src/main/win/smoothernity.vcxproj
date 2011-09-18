@@ -87,11 +87,11 @@
       <PrecompiledHeaderFile>DXUT.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)/Debug/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>false</TreatWarningAsError>
       <ForcedIncludeFiles>DXUT.h</ForcedIncludeFiles>
-      <ProgramDataBaseFileName>$(IntDir)/Debug/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
@@ -125,10 +125,10 @@
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ObjectFileName>$(IntDir)/Release/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
       <TreatWarningAsError>false</TreatWarningAsError>
       <ForcedIncludeFiles>DXUT.h</ForcedIncludeFiles>
-      <ProgramDataBaseFileName>$(IntDir)/Release/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
