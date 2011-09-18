@@ -1,0 +1,3 @@
+class shy_common_logic_main_menu_letters_animation_disappear_start_message
+{
+} ;

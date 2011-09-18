@@ -1,0 +1,18 @@
+#include "./shy_cleaner_injections.h"
+
+#include "src/common/engine/math/stateless/shy_stateless_injections.h"
+#include "src/common/engine/render/mesh/delete/sender/shy_sender_injections.h"
+#include "src/common/engine/render/mesh/id/type/shy_type_injections.h"
+#include "src/common/engine/taker/helper/shy_helper_injections.h"
+#include "src/common/logic/salutation/letters/meshes/cleaner/clean/finished/sender/shy_sender_injections.h"
+#include "src/common/logic/salutation/letters/meshes/consts/shy_consts_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/clean/sender/shy_sender_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/mesh/checker/shy_checker_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/mesh/request/sender/shy_sender_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/size/checker/shy_checker_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/size/request/sender/shy_sender_injections.h"
+#include "src/injections/platform/conditions/shy_conditions.h"
+#include "src/injections/platform/math/consts/shy_consts.h"
+#include "src/injections/platform/math/shy_math.h"
+
+#include "./shy_cleaner.hpp"

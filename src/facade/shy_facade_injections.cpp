@@ -1,0 +1,17 @@
+#include "./shy_facade_injections.h"
+
+#include "src/common/done/shy_done_injections.h"
+#include "src/common/init/shy_init_injections.h"
+#include "src/common/done/sender/shy_sender_injections.h"
+#include "src/common/init/sender/shy_sender_injections.h"
+#include "src/common/render/sender/shy_sender_injections.h"
+#include "src/common/update/sender/shy_sender_injections.h"
+#include "src/common/video/mode/changed/sender/shy_sender_injections.h"
+#include "src/injections/platform/math/consts/shy_consts.h"
+#include "src/injections/platform/render/shy_render.h"
+#include "src/injections/platform/render/texture/loader/shy_loader.h"
+#include "src/injections/platform/scheduler/shy_scheduler.h"
+#include "src/injections/platform/sound/loader/shy_loader.h"
+#include "src/loadable/loader/shy_loader_injections.h"
+
+#include "./shy_facade.hpp"

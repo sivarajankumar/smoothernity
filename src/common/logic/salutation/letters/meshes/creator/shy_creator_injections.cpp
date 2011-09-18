@@ -1,0 +1,15 @@
+#include "./shy_creator_injections.h"
+
+#include "src/common/engine/taker/helper/shy_helper_injections.h"
+#include "src/common/logic/salutation/letters/meshes/consts/shy_consts_injections.h"
+#include "src/common/logic/salutation/letters/meshes/creator/create/reply/sender/shy_sender_injections.h"
+#include "src/common/logic/salutation/letters/meshes/storage/add/mesh/sender/shy_sender_injections.h"
+#include "src/common/logic/salutation/letters/text/storage/letter/checker/shy_checker_injections.h"
+#include "src/common/logic/salutation/letters/text/storage/letter/request/sender/shy_sender_injections.h"
+#include "src/common/logic/text/letter/mesh/create/checker/shy_checker_injections.h"
+#include "src/common/logic/text/letter/mesh/create/request/sender/shy_sender_injections.h"
+#include "src/injections/platform/conditions/shy_conditions.h"
+#include "src/injections/platform/math/consts/shy_consts.h"
+#include "src/injections/platform/math/shy_math.h"
+
+#include "./shy_creator.hpp"

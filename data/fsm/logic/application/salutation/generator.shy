@@ -1,0 +1,23 @@
+system logic_application
+    machine salutation_generator
+        state initial
+            to generating
+                if { ( command start ) stage_salutation_enabled }
+            to finished
+                if { ( command start ) stage_salutation_disabled }
+        state generating
+            to generating_letters_text
+        state generating_letters_text
+            on entry
+                do logic_salutation_letters_text_generator_generate
+            to generating_letters_meshes
+                if { logic_salutation_letters_text_generator_generate_finished }
+        state generating_letters_meshes
+            on entry
+                do logic_salutation_letters_meshes_generator_generate
+            on { logic_application_update }
+                discard logic_application_update
+                do logic_salutation_letters_meshes_generator_update
+            to finished
+                if { logic_salutation_letters_meshes_generator_generate_finished }
+        state finished

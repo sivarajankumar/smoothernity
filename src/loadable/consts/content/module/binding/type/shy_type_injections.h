@@ -1,0 +1,8 @@
+#ifndef _shy_loadable_consts_content_module_binding_type_injections_included
+#define _shy_loadable_consts_content_module_binding_type_injections_included
+
+#include "./shy_type.h"
+
+typedef shy_loadable_consts_content_module_binding_type so_called_loadable_consts_content_module_binding_type ;
+
+#endif

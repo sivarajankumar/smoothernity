@@ -1,0 +1,6 @@
+#ifndef _shy_iphone_lib_std_endl_injections_included
+#define _shy_iphone_lib_std_endl_injections_included 
+
+no_endl_for_iphone
+
+#endif

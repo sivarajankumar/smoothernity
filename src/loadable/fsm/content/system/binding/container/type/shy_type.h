@@ -1,0 +1,2 @@
+typedef so_called_lib_std_map < so_called_loadable_fsm_content_system_binding_type , so_called_lib_std_string > shy_loadable_fsm_content_system_binding_container_type ;
+
