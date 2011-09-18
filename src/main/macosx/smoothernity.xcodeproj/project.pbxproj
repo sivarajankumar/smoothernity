@@ -27825,7 +27825,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OBJROOT = ../../../../temp/macosx;
 				SYMROOT = ../../../../build/macosx;
-				USER_HEADER_SEARCH_PATHS = ../../../src;
+				USER_HEADER_SEARCH_PATHS = ../../..;
 			};
 			name = Development;
 		};
@@ -27869,7 +27869,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OBJROOT = ../../../../temp/macosx;
 				SYMROOT = ../../../../build/macosx;
-				USER_HEADER_SEARCH_PATHS = ../../../src;
+				USER_HEADER_SEARCH_PATHS = ../../..;
 			};
 			name = Deployment;
 		};
