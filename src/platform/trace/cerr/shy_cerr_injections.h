@@ -1,10 +1,10 @@
 #ifndef _shy_platform_trace_cerr_injections_included
 #define _shy_platform_trace_cerr_injections_included
 
-#include "injections/lib/std/char/shy_char.h"
-#include "injections/lib/std/int32/t/shy_t.h"
-#include "injections/platform/math/const/int/32/type/shy_type.h"
-#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "src/injections/lib/std/char/shy_char.h"
+#include "src/injections/lib/std/int32/t/shy_t.h"
+#include "src/injections/platform/math/const/int/32/type/shy_type.h"
+#include "src/injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_cerr.h"
 

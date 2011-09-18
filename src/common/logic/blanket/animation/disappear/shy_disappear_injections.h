@@ -1,14 +1,14 @@
 #ifndef _shy_common_logic_blanket_animation_disappear_injections_included
 #define _shy_common_logic_blanket_animation_disappear_injections_included
 
-#include "common/logic/blanket/animation/disappear/start/message/shy_message_injections.h"
-#include "common/logic/blanket/animation/disappear/transform/request/message/shy_message_injections.h"
+#include "src/common/logic/blanket/animation/disappear/start/message/shy_message_injections.h"
+#include "src/common/logic/blanket/animation/disappear/transform/request/message/shy_message_injections.h"
 
-#include "common/logic/blanket/update/message/shy_message_injections.h"
+#include "src/common/logic/blanket/update/message/shy_message_injections.h"
 
-#include "common/init/message/shy_message_injections.h"
+#include "src/common/init/message/shy_message_injections.h"
 
-#include "injections/platform/scheduler/shy_scheduler.h"
+#include "src/injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_disappear.h"
 

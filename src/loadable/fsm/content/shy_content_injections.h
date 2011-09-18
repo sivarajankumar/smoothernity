@@ -1,8 +1,8 @@
 #ifndef _shy_loadable_fsm_content_injections_included
 #define _shy_loadable_fsm_content_injections_included
 
-#include "loadable/fsm/content/system/binding/container/type/shy_type_injections.h"
-#include "loadable/fsm/content/system/container/type/shy_type_injections.h"
+#include "src/loadable/fsm/content/system/binding/container/type/shy_type_injections.h"
+#include "src/loadable/fsm/content/system/container/type/shy_type_injections.h"
 
 #include "./shy_content.h"
 

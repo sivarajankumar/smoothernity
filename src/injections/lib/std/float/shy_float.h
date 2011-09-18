@@ -2,15 +2,15 @@
 #define _shy_injections_lib_std_float_included
 
 #ifdef shy_build_for_iphone
-    #include "main/iphone/lib/std/float/shy_float_injections.h"
+    #include "src/main/iphone/lib/std/float/shy_float_injections.h"
 #endif
 
 #ifdef shy_build_for_macosx
-    #include "main/macosx/lib/std/float/shy_float_injections.h"
+    #include "src/main/macosx/lib/std/float/shy_float_injections.h"
 #endif
 
 #ifdef shy_build_for_win
-    #include "main/win/lib/std/float/shy_float_injections.h"
+    #include "src/main/win/lib/std/float/shy_float_injections.h"
 #endif
 
 #endif

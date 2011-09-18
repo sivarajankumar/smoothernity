@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_consts_content_value_fract_binding_type_injections_included
 #define _shy_loadable_consts_content_value_fract_binding_type_injections_included
 
-#include "injections/platform/math/num/fract/type/shy_type.h"
+#include "src/injections/platform/math/num/fract/type/shy_type.h"
 
 #include "./shy_type.h"
 

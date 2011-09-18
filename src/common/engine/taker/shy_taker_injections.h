@@ -1,8 +1,8 @@
 #ifndef _shy_common_engine_taker_injections_included
 #define _shy_common_engine_taker_injections_included
 
-#include "injections/platform/conditions/shy_conditions.h"
-#include "injections/platform/math/consts/shy_consts.h"
+#include "src/injections/platform/conditions/shy_conditions.h"
+#include "src/injections/platform/math/consts/shy_consts.h"
 
 #include "./shy_taker.h"
 

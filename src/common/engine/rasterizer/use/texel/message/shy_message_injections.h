@@ -1,7 +1,7 @@
 #ifndef _shy_common_engine_rasterizer_use_texel_message_injections_included
 #define _shy_common_engine_rasterizer_use_texel_message_injections_included
 
-#include "injections/platform/render/texel/data/type/shy_type.h"
+#include "src/injections/platform/render/texel/data/type/shy_type.h"
 
 #include "./shy_message.h"
 

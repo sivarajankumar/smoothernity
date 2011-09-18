@@ -1,9 +1,9 @@
 #ifndef _shy_common_logic_main_menu_letters_creation_director_injections_included
 #define _shy_common_logic_main_menu_letters_creation_director_injections_included
 
-#include "common/logic/main/menu/letters/create/message/shy_message_injections.h"
+#include "src/common/logic/main/menu/letters/create/message/shy_message_injections.h"
 
-#include "injections/platform/scheduler/shy_scheduler.h"
+#include "src/injections/platform/scheduler/shy_scheduler.h"
 
 #include "./shy_director.h"
 

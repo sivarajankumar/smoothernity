@@ -1,1 +1,1 @@
-#include "platform/sound/directx/shy_directx_injections.hpp"
+#include "src/platform/sound/directx/shy_directx_injections.hpp"

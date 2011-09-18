@@ -2,7 +2,7 @@
 #define _shy_win_platform_trace_consts_injections_included
 
 #ifdef shy_build_with_trace
-    #include "platform/trace/consts/shy_consts_injections.h"
+    #include "src/platform/trace/consts/shy_consts_injections.h"
 #endif
 
 #endif

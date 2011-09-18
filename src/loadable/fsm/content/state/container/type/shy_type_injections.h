@@ -1,9 +1,9 @@
 #ifndef _shy_loadable_fsm_content_state_container_type_injections_included
 #define _shy_loadable_fsm_content_state_container_type_injections_included
 
-#include "loadable/fsm/content/state/type/shy_type_injections.h"
+#include "src/loadable/fsm/content/state/type/shy_type_injections.h"
 
-#include "injections/lib/std/map/shy_map.h"
+#include "src/injections/lib/std/map/shy_map.h"
 
 #include "./shy_type.h"
 

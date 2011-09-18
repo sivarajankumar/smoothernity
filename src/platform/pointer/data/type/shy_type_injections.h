@@ -1,7 +1,7 @@
 #ifndef _shy_platform_pointer_data_type_injections_included
 #define _shy_platform_pointer_data_type_injections_included
 
-#include "injections/platform/consts/insider/shy_insider.h"
+#include "src/injections/platform/consts/insider/shy_insider.h"
 
 #include "./shy_type.h"
 

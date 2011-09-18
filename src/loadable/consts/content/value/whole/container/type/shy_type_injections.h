@@ -1,7 +1,7 @@
 #ifndef _shy_loadable_consts_content_value_whole_container_type_injections_included
 #define _shy_loadable_consts_content_value_whole_container_type_injections_included
 
-#include "loadable/consts/content/value/whole/type/shy_type_injections.h"
+#include "src/loadable/consts/content/value/whole/type/shy_type_injections.h"
 
 #include "./shy_type.h"
 

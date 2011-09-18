@@ -1,9 +1,9 @@
 #ifndef _shy_common_logic_main_menu_letters_meshes_mesh_has_been_created_message_injections_included
 #define _shy_common_logic_main_menu_letters_meshes_mesh_has_been_created_message_injections_included
 
-#include "common/engine/render/mesh/id/type/shy_type_injections.h"
+#include "src/common/engine/render/mesh/id/type/shy_type_injections.h"
 
-#include "injections/platform/math/num/whole/type/shy_type.h"
+#include "src/injections/platform/math/num/whole/type/shy_type.h"
 
 #include "./shy_message.h"
 

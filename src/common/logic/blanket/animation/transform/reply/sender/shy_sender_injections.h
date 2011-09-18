@@ -1,7 +1,7 @@
 #ifndef _shy_common_logic_blanket_animation_transform_reply_sender_injections_included
 #define _shy_common_logic_blanket_animation_transform_reply_sender_injections_included
 
-#include "common/logic/blanket/animation/transform/reply/message/shy_message_injections.h"
+#include "src/common/logic/blanket/animation/transform/reply/message/shy_message_injections.h"
 
 #include "./shy_sender.h"
 
