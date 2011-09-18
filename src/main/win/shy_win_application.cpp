@@ -1,5 +1,11 @@
 #include <DXUT.h>
 #include <Windowsx.h>
+#include <fcntl.h>
+#include <fstream>
+#include <io.h>
+#include <iostream>
+#include <stdio.h>
+
 #include "src/facade/shy_facade_injections.h"
 #include "src/injections/lib/std/false/shy_false.h"
 #include "src/injections/lib/std/int32/t/shy_t.h"
@@ -33,6 +39,36 @@ void smoothernity_set_mouse_position ( so_called_lib_std_int32_t x_pixel , so_ca
         y *= so_called_lib_std_float ( viewport . Height ) / so_called_lib_std_float ( viewport . Width ) ;
     so_called_platform_mouse_insider :: set_x ( x ) ;
     so_called_platform_mouse_insider :: set_y ( - y ) ;
+}
+
+void smoothernity_redirect_io ( )
+{
+    int hConHandle ;
+    long lStdHandle ;
+
+    FILE * fp ;
+
+    AllocConsole ( ) ;
+
+    lStdHandle = ( long ) GetStdHandle ( STD_OUTPUT_HANDLE ) ;
+    hConHandle = _open_osfhandle ( lStdHandle , _O_TEXT ) ;
+    fp = _fdopen ( hConHandle , "w" ) ;
+    * stdout = * fp ;
+    setvbuf ( stdout , NULL , _IONBF , 0 ) ;
+
+    lStdHandle = ( long ) GetStdHandle ( STD_INPUT_HANDLE ) ;
+    hConHandle = _open_osfhandle ( lStdHandle , _O_TEXT ) ;
+    fp = _fdopen ( hConHandle , "r" ) ;
+    * stdin = * fp ;
+    setvbuf ( stdin , NULL , _IONBF , 0 ) ;
+
+    lStdHandle = ( long ) GetStdHandle ( STD_ERROR_HANDLE ) ;
+    hConHandle = _open_osfhandle ( lStdHandle , _O_TEXT ) ;
+    fp = _fdopen ( hConHandle , "w" ) ;
+    * stderr = * fp ;
+    setvbuf ( stderr , NULL , _IONBF , 0 ) ;
+
+    std :: ios :: sync_with_stdio ( ) ;
 }
 
 //--------------------------------------------------------------------------------------
@@ -170,6 +206,9 @@ int WINAPI wWinMain ( HINSTANCE hInstance , HINSTANCE hPrevInstance , LPWSTR lpC
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF ) ;
 #endif
+
+    // Redirect standard streams
+    smoothernity_redirect_io ( ) ;
 
     // DXUT will create and use the best device (either D3D9 or D3D11) 
     // that is available on the system depending on which D3D callbacks are set below
