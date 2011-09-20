@@ -6,8 +6,10 @@
 #include "src/injections/lib/std/int32/t/shy_t.h"
 #include "src/injections/lib/std/true/shy_true.h"
 #include "src/injections/platform/mouse/insider/shy_insider.h"
+#include "src/injections/platform/profile/insider/shy_insider.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
 #include "src/injections/platform/trace/insider/shy_insider.h"
+#include "src/profile/shy_profile_injections.h"
 #include "src/trace/shy_trace_injections.h"
 
 void smoothernity_init ( )
@@ -143,6 +145,7 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
     // Render the scene
     if ( SUCCEEDED ( pd3dDevice -> BeginScene ( ) ) )
     {
+        so_called_profile ( so_called_platform_profile_insider :: next_frame ( ) ) ;
         so_called_trace ( so_called_platform_trace_insider :: next_frame ( ) ) ;
         so_called_facade :: update ( ) ;
 		so_called_facade :: render ( ) ;

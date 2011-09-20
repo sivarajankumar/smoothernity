@@ -1,5 +1,6 @@
 void shy_facade :: init ( )
 {
+    so_called_profile ( so_called_platform_profile :: init ( ) ) ;
     so_called_profile ( so_called_profile_init :: init ( ) ) ;
 
     so_called_platform_render :: init ( ) ;
