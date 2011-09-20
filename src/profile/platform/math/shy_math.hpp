@@ -1,3 +1,7 @@
+void shy_profile_platform_math :: init ( )
+{
+}
+
 void shy_profile_platform_math :: fract_add_sub ( )
 {
 }
