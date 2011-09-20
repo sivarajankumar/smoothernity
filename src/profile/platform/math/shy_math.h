@@ -7,6 +7,7 @@ public :
     static void fract_make_from_whole ( ) ;
     static void fract_mul ( ) ;
     static void fract_sin_cos ( ) ;
+    static void init ( ) ;
     static void whole_add_sub ( ) ;
     static void whole_bitwise ( ) ;
     static void whole_div_mod ( ) ;
