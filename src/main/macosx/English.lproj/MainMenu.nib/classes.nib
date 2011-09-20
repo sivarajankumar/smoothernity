@@ -43,6 +43,14 @@
 			<key>SUPERCLASS</key>
 			<string>NSObject</string>
 		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>shy_application_delegate</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
 	</array>
 	<key>IBVersion</key>
 	<string>1</string>

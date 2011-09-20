@@ -23,6 +23,7 @@
 		19AE102111B269A300A5B332 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		19AE102211B269A300A5B332 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		19AE102311B269A300A5B332 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
+		8818596D1428ED6400BF0D4B /* shy_application_delegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8818596C1428ED6400BF0D4B /* shy_application_delegate.mm */; };
 		881C32EC141526B0000BE9E7 /* shy_stateless.h in Headers */ = {isa = PBXBuildFile; fileRef = 881C30D2141526AF000BE9E7 /* shy_stateless.h */; };
 		881C32ED141526B0000BE9E7 /* shy_stateless.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 881C30D3141526AF000BE9E7 /* shy_stateless.hpp */; };
 		881C32EE141526B0000BE9E7 /* shy_stateless_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 881C30D4141526AF000BE9E7 /* shy_stateless_injections.cpp */; };
@@ -363,6 +364,7 @@
 		88479A4E1416714100755F1B /* shy_sender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 884799461416714100755F1B /* shy_sender.hpp */; };
 		88479A4F1416714100755F1B /* shy_sender_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 884799471416714100755F1B /* shy_sender_injections.cpp */; };
 		88479A501416714100755F1B /* shy_sender_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 884799481416714100755F1B /* shy_sender_injections.h */; };
+		885D61501428EB07009A954A /* shy_application_delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 885D614E1428EB07009A954A /* shy_application_delegate.h */; };
 		8880552F1410FFC6009357E1 /* shy_message.h in Headers */ = {isa = PBXBuildFile; fileRef = 888044841410FFC4009357E1 /* shy_message.h */; };
 		888055301410FFC6009357E1 /* shy_message_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 888044851410FFC4009357E1 /* shy_message_injections.h */; };
 		888055311410FFC6009357E1 /* shy_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 888044871410FFC4009357E1 /* shy_sender.h */; };
@@ -3379,6 +3381,7 @@
 		8812CF36117DE7F9008F67D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = /System/Library/Frameworks/OpenAL.framework; sourceTree = "<absolute>"; };
 		8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		8812CF3E117DE82C008F67D9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		8818596C1428ED6400BF0D4B /* shy_application_delegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shy_application_delegate.mm; sourceTree = "<group>"; };
 		881C30D2141526AF000BE9E7 /* shy_stateless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_stateless.h; sourceTree = "<group>"; };
 		881C30D3141526AF000BE9E7 /* shy_stateless.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_stateless.hpp; sourceTree = "<group>"; };
 		881C30D4141526AF000BE9E7 /* shy_stateless_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_stateless_injections.cpp; sourceTree = "<group>"; };
@@ -3719,6 +3722,7 @@
 		884799461416714100755F1B /* shy_sender.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_sender.hpp; sourceTree = "<group>"; };
 		884799471416714100755F1B /* shy_sender_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_sender_injections.cpp; sourceTree = "<group>"; };
 		884799481416714100755F1B /* shy_sender_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sender_injections.h; sourceTree = "<group>"; };
+		885D614E1428EB07009A954A /* shy_application_delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_application_delegate.h; sourceTree = "<group>"; };
 		888044841410FFC4009357E1 /* shy_message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_message.h; sourceTree = "<group>"; };
 		888044851410FFC4009357E1 /* shy_message_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_message_injections.h; sourceTree = "<group>"; };
 		888044871410FFC4009357E1 /* shy_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sender.h; sourceTree = "<group>"; };
@@ -6745,6 +6749,8 @@
 				194C62E912CB94E80071A5BD /* shy_macosx_opengl_view.mm */,
 				194C630312CB94E80071A5BD /* shy_macosx_scene.h */,
 				194C630412CB94E80071A5BD /* shy_macosx_scene.mm */,
+				885D614E1428EB07009A954A /* shy_application_delegate.h */,
+				8818596C1428ED6400BF0D4B /* shy_application_delegate.mm */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				32CA4F630368D1EE00C91783 /* shy_pch.h */,
 			);
@@ -27085,6 +27091,7 @@
 				88E70C441428D37300173A61 /* shy_sender.h in Headers */,
 				88E70C451428D37300173A61 /* shy_sender.hpp in Headers */,
 				88E70C471428D37300173A61 /* shy_sender_injections.h in Headers */,
+				885D61501428EB07009A954A /* shy_application_delegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27778,6 +27785,7 @@
 				88DD0FA21428CBEF009F15AE /* shy_insider_injections.mm in Sources */,
 				88DD0FA41428CBEF009F15AE /* shy_vector_injections.mm in Sources */,
 				88E70C461428D37300173A61 /* shy_sender_injections.cpp in Sources */,
+				8818596D1428ED6400BF0D4B /* shy_application_delegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
