@@ -2,12 +2,8 @@
 #include "src/facade/shy_facade_injections.h"
 #include "src/injections/lib/std/true/shy_true.h"
 #include "src/injections/lib/std/false/shy_false.h"
-#include "src/injections/platform/profile/insider/shy_insider.h"
 #include "src/injections/platform/touch/insider/shy_insider.h"
-#include "src/injections/platform/trace/insider/shy_insider.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
-#include "src/profile/shy_profile_injections.h"
-#include "src/trace/shy_trace_injections.h"
 
 @implementation EAGLView
 
@@ -142,10 +138,7 @@
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
-    so_called_profile ( so_called_platform_profile_insider :: next_frame ( ) ) ;
-    so_called_trace ( so_called_platform_trace_insider :: next_frame ( ) ) ;
-    so_called_facade :: update ( ) ;
-    so_called_facade :: render ( ) ;
+    so_called_facade :: next_frame ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     CFAbsoluteTime finish_time = CFAbsoluteTimeGetCurrent ( ) ;

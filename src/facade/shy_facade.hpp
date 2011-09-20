@@ -28,15 +28,15 @@ void shy_facade :: done ( )
     so_called_platform_sound_loader :: done ( ) ;
 }
 
-void shy_facade :: render ( )
+void shy_facade :: next_frame ( )
 {
-    so_called_common_render_sender :: send ( so_called_common_render_message ( ) ) ;
-    so_called_platform_scheduler :: run ( ) ;
-}
+    so_called_profile ( so_called_platform_profile_insider :: next_frame ( ) ) ;
+    so_called_trace ( so_called_platform_trace_insider :: next_frame ( ) ) ;
 
-void shy_facade :: update ( )
-{
     so_called_common_update_sender :: send ( so_called_common_update_message ( ) ) ;
+    so_called_platform_scheduler :: run ( ) ;
+
+    so_called_common_render_sender :: send ( so_called_common_render_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }
 
