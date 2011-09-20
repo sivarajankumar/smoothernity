@@ -138,8 +138,7 @@
 {
     [ EAGLContext setCurrentContext : _gl_context ] ;
     glBindFramebufferOES ( GL_FRAMEBUFFER_OES , _gl_default_framebuffer ) ;
-    so_called_facade :: update ( ) ;
-    so_called_facade :: render ( ) ;
+    so_called_facade :: next_frame ( ) ;
     glBindRenderbufferOES ( GL_RENDERBUFFER_OES , _gl_color_renderbuffer ) ;
     [ _gl_context presentRenderbuffer : GL_RENDERBUFFER_OES ] ;
     CFAbsoluteTime finish_time = CFAbsoluteTimeGetCurrent ( ) ;

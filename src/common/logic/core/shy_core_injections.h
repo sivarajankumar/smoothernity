@@ -10,8 +10,7 @@
 #include "src/common/engine/render/aspect/reply/message/shy_message_injections.h"
 
 #include "src/common/init/message/shy_message_injections.h"
-#include "src/common/render/message/shy_message_injections.h"
-#include "src/common/update/message/shy_message_injections.h"
+#include "src/common/next/frame/message/shy_message_injections.h"
 #include "src/common/video/mode/changed/message/shy_message_injections.h"
 
 #include "src/injections/platform/scheduler/shy_scheduler.h"

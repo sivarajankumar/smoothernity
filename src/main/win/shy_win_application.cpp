@@ -141,8 +141,7 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
     // Render the scene
     if ( SUCCEEDED ( pd3dDevice -> BeginScene ( ) ) )
     {
-        so_called_facade :: update ( ) ;
-		so_called_facade :: render ( ) ;
+        so_called_facade :: next_frame ( ) ;
         V ( pd3dDevice -> EndScene ( ) ) ;
     }
 }
