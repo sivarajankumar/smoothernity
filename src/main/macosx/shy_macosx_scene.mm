@@ -5,6 +5,7 @@
 #include "src/injections/platform/mouse/insider/shy_insider.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
 #include "src/injections/platform/trace/insider/shy_insider.h"
+#include "src/trace/shy_trace_injections.h"
 
 @implementation shy_macosx_scene
 
@@ -79,7 +80,7 @@
 
 - ( void ) render
 {
-    so_called_platform_trace_insider :: next_frame ( ) ;
+    so_called_trace ( so_called_platform_trace_insider :: next_frame ( ) ) ;
     so_called_facade :: update ( ) ;
     so_called_facade :: render ( ) ;
     glFinish ( ) ;
