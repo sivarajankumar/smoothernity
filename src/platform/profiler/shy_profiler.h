@@ -1,4 +1,4 @@
-class shy_platform_profiler_cout
+class shy_platform_profiler
 {
 public :
     static void id_value_add ( so_called_platform_math_num_whole_type & , so_called_platform_math_num_whole_type ) ;
