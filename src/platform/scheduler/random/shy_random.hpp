@@ -36,6 +36,8 @@ void shy_platform_scheduler_random :: _register_context ( _abstract_scheduled_co
 {
     if ( _contexts_count < _max_scheduled_modules )
         _contexts [ _contexts_count ++ ] = & context ;
+    else if ( shy_guts :: consts :: trace_enabled )
+        so_called_trace ( so_called_trace_platform_scheduler_random :: modules_exceed_maximum_count_error ( _max_scheduled_modules ) ) ;
 }
 
 void shy_platform_scheduler_random :: _trace_messages_queue_size_exceeds_maximum_size_error
@@ -44,14 +46,7 @@ void shy_platform_scheduler_random :: _trace_messages_queue_size_exceeds_maximum
     )
 {
     if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace 
-            ( so_called_trace_platform_scheduler_random :: messages_queue_size_exceeds_maximum_size_error
-                ( current
-                , total
-            ) 
-        ) ;
-    }
+        so_called_trace ( so_called_trace_platform_scheduler_random :: messages_queue_size_exceeds_maximum_size_error ( current , total ) ) ;
 }
 
 void shy_platform_scheduler_random :: run ( )

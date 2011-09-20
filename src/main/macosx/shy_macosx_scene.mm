@@ -4,7 +4,6 @@
 #include "src/injections/lib/std/false/shy_false.h"
 #include "src/injections/platform/mouse/insider/shy_insider.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
-#include "src/injections/platform/trace/insider/shy_insider.h"
 
 @implementation shy_macosx_scene
 
@@ -79,9 +78,7 @@
 
 - ( void ) render
 {
-    so_called_platform_trace_insider :: next_frame ( ) ;
-    so_called_facade :: update ( ) ;
-    so_called_facade :: render ( ) ;
+    so_called_facade :: next_frame ( ) ;
     glFinish ( ) ;
 }
 

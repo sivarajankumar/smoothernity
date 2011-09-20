@@ -7,8 +7,7 @@ public :
     static void receive ( so_called_common_logic_core_use_ortho_projection_request_message ) ;
     static void receive ( so_called_common_logic_core_use_perspective_projection_request_message ) ;
     static void receive ( so_called_common_logic_fidget_prepared_message ) ;
-    static void receive ( so_called_common_render_message ) ;
-    static void receive ( so_called_common_update_message ) ;
+    static void receive ( so_called_common_next_frame_message ) ;
     static void receive ( so_called_common_video_mode_changed_message ) ;
     static void register_in_scheduler ( ) ;
 } ;
