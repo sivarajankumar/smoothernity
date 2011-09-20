@@ -8,6 +8,7 @@
 #include "src/common/update/sender/shy_sender_injections.h"
 #include "src/common/video/mode/changed/sender/shy_sender_injections.h"
 #include "src/injections/platform/math/consts/shy_consts.h"
+#include "src/injections/platform/profile/shy_profile.h"
 #include "src/injections/platform/render/shy_render.h"
 #include "src/injections/platform/render/texture/loader/shy_loader.h"
 #include "src/injections/platform/scheduler/shy_scheduler.h"
