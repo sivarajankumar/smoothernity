@@ -136,18 +136,15 @@ void _shy_common_logic_core :: receive ( so_called_common_logic_fidget_prepared_
     shy_guts :: fidget_prepared = so_called_platform_math_consts :: whole_true ;
 }
 
-void _shy_common_logic_core :: receive ( so_called_common_render_message )
-{
-    so_called_common_logic_application_render_sender :: send ( so_called_common_logic_application_render_message ( ) ) ;
-}
-
-void _shy_common_logic_core :: receive ( so_called_common_update_message )
+void _shy_common_logic_core :: receive ( so_called_common_next_frame_message )
 {
     if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: fidget_prepared ) )
         so_called_common_logic_application_update_sender :: send ( so_called_common_logic_application_update_message ( ) ) ;
     else
         so_called_common_logic_fidget_prepare_permit_sender :: send ( so_called_common_logic_fidget_prepare_permit_message ( ) ) ;
     so_called_common_logic_fidget_update_sender :: send ( so_called_common_logic_fidget_update_message ( ) ) ;
+
+    so_called_common_logic_application_render_sender :: send ( so_called_common_logic_application_render_message ( ) ) ;
 }
 
 void _shy_common_logic_core :: receive ( so_called_common_video_mode_changed_message )
