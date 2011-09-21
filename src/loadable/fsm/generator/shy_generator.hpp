@@ -2744,11 +2744,10 @@ void shy_guts :: lookup :: save_system_machine_condition_state
     shy_guts :: lookup :: system_machine_condition_state_name_container . contents [ system ] . contents [ machine ] . contents . insert ( state ) ;
 }
 
-void shy_loadable_fsm_generator :: generate ( so_called_lib_std_string & result )
+void shy_loadable_fsm_generator :: generate ( )
 {
     shy_guts :: prepare :: prepare ( ) ;
 
-    result . clear ( ) ;
     so_called_loadable_fsm_content_system_container_type * system_container = 0 ;
     so_called_loadable_fsm_content :: get_system_container ( system_container ) ;
     for ( so_called_loadable_fsm_content_system_container_type :: const_iterator system_i = system_container -> begin ( )
@@ -2762,10 +2761,6 @@ void shy_loadable_fsm_generator :: generate ( so_called_lib_std_string & result 
         so_called_lib_std_string fsm_hpp_path ;
         so_called_lib_std_string fsm_injections_h_path ;
         so_called_lib_std_string fsm_injections_hpp_path ;
-        so_called_lib_std_string generate_fsm_h ;
-        so_called_lib_std_string generate_fsm_hpp ;
-        so_called_lib_std_string generate_fsm_injections_h ;
-        so_called_lib_std_string generate_fsm_injections_hpp ;
         so_called_lib_std_string fsm_h_contents ;
         so_called_lib_std_string fsm_hpp_contents ;
         so_called_lib_std_string fsm_injections_h_contents ;
@@ -2796,30 +2791,21 @@ void shy_loadable_fsm_generator :: generate ( so_called_lib_std_string & result 
             ) ;
 
         so_called_loadable_generator_python :: generate_file 
-            ( generate_fsm_h 
-            , so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_h_path 
+            ( so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_h_path 
             , fsm_h_contents 
             ) ;
         so_called_loadable_generator_python :: generate_file 
-            ( generate_fsm_hpp 
-            , so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_hpp_path 
+            ( so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_hpp_path 
             , fsm_hpp_contents 
             ) ;
         so_called_loadable_generator_python :: generate_file 
-            ( generate_fsm_injections_h 
-            , so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_injections_h_path 
+            ( so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_injections_h_path 
             , fsm_injections_h_contents 
             ) ;
         so_called_loadable_generator_python :: generate_file 
-            ( generate_fsm_injections_hpp 
-            , so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_injections_hpp_path 
+            ( so_called_loadable_generator_consts :: common_folder_path + system_path + fsm_injections_hpp_path 
             , fsm_injections_hpp_contents 
             ) ;
-
-        result += generate_fsm_h ;
-        result += generate_fsm_hpp ;
-        result += generate_fsm_injections_h ;
-        result += generate_fsm_injections_hpp ;
     }
 }
 

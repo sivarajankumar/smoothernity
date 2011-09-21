@@ -164,9 +164,8 @@ void shy_guts :: signed_value ( so_called_lib_std_string & result , so_called_li
     result += number ;
 }
 
-void shy_loadable_consts_generator :: generate ( so_called_lib_std_string & result )
+void shy_loadable_consts_generator :: generate ( )
 {
-    result . clear ( ) ;
     so_called_loadable_consts_content_module_container_type * module_container = 0 ;
     so_called_loadable_consts_content :: get_module_container ( module_container ) ;
     for ( so_called_loadable_consts_content_module_container_type :: const_iterator module_i = module_container -> begin ( )
@@ -178,8 +177,6 @@ void shy_loadable_consts_generator :: generate ( so_called_lib_std_string & resu
         so_called_lib_std_string module_path ;
         so_called_lib_std_string consts_hpp_path ;
         so_called_lib_std_string consts_injections_hpp_path ;
-        so_called_lib_std_string generate_consts_hpp ;
-        so_called_lib_std_string generate_consts_injections_hpp ;
         so_called_lib_std_string consts_hpp_contents ;
         so_called_lib_std_string consts_injections_hpp_contents ;
 
@@ -192,18 +189,13 @@ void shy_loadable_consts_generator :: generate ( so_called_lib_std_string & resu
         shy_guts :: hpp_contents ( consts_hpp_contents , module_i ) ;
 
         so_called_loadable_generator_python :: generate_file 
-            ( generate_consts_hpp
-            , so_called_loadable_generator_consts :: common_folder_path + module_path + consts_hpp_path
+            ( so_called_loadable_generator_consts :: common_folder_path + module_path + consts_hpp_path
             , consts_hpp_contents
             ) ;
         so_called_loadable_generator_python :: generate_file 
-            ( generate_consts_injections_hpp 
-            , so_called_loadable_generator_consts :: common_folder_path + module_path + consts_injections_hpp_path 
+            ( so_called_loadable_generator_consts :: common_folder_path + module_path + consts_injections_hpp_path 
             , consts_injections_hpp_contents 
             ) ;
-
-        result += generate_consts_hpp ;
-        result += generate_consts_injections_hpp ;
     }
 }
 
