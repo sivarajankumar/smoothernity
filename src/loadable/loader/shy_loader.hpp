@@ -33,9 +33,8 @@ void shy_guts :: write_output ( )
     shy_guts :: get_error ( error ) ;
     if ( ! error )
     {
-        so_called_lib_std_string generated ;
-        so_called_loadable_generator :: generate ( generated ) ;
-        so_called_lib_std_cout << generated << so_called_lib_std_endl ;
+        so_called_loadable_generator :: generate ( ) ;
+        so_called_loadable_generator_python :: write ( ) ;
     }
 }
 

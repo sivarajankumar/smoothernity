@@ -14,6 +14,8 @@ namespace shy_guts
     }
 
     static so_called_lib_std_string content ;
+
+    static void main_script ( so_called_lib_std_string & ) ;
 }
 
 void shy_guts :: consts :: error_writing_to_file ( so_called_lib_std_string & result )
@@ -132,7 +134,7 @@ void shy_guts :: consts :: trace_null_function ( so_called_lib_std_string & resu
     result += "\n" ;
 }
 
-void shy_loadable_generator_python :: main_script ( so_called_lib_std_string & result )
+void shy_guts :: main_script ( so_called_lib_std_string & result )
 {
     so_called_lib_std_string error_writing_to_file ;
     so_called_lib_std_string file_generated ;
@@ -210,3 +212,9 @@ void shy_loadable_generator_python :: append ( so_called_lib_std_string content 
     shy_guts :: content += content ;
 }
 
+void shy_loadable_generator_python :: write ( )
+{
+    so_called_lib_std_string script ;
+    shy_guts :: main_script ( script ) ;
+    so_called_lib_std_cout << script ;
+}
