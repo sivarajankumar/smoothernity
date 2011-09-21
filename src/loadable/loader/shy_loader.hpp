@@ -33,7 +33,8 @@ void shy_guts :: write_output ( )
     shy_guts :: get_error ( error ) ;
     if ( ! error )
     {
-        so_called_loadable_generator :: generate ( ) ;
+        so_called_loadable_consts_generator :: generate ( ) ;
+        so_called_loadable_fsm_generator :: generate ( ) ;
         so_called_loadable_generator_python :: write ( ) ;
     }
 }

@@ -3326,10 +3326,6 @@
 		88E7DE3F142A39250044849B /* shy_python.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD28142A39250044849B /* shy_python.hpp */; };
 		88E7DE40142A39250044849B /* shy_python_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E7DD29142A39250044849B /* shy_python_injections.cpp */; };
 		88E7DE41142A39250044849B /* shy_python_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD2A142A39250044849B /* shy_python_injections.h */; };
-		88E7DE42142A39250044849B /* shy_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD2B142A39250044849B /* shy_generator.h */; };
-		88E7DE43142A39250044849B /* shy_generator.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD2C142A39250044849B /* shy_generator.hpp */; };
-		88E7DE44142A39250044849B /* shy_generator_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E7DD2D142A39250044849B /* shy_generator_injections.cpp */; };
-		88E7DE45142A39250044849B /* shy_generator_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD2E142A39250044849B /* shy_generator_injections.h */; };
 		88E7DE46142A39250044849B /* shy_loader.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD30142A39250044849B /* shy_loader.h */; };
 		88E7DE47142A39250044849B /* shy_loader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88E7DD31142A39250044849B /* shy_loader.hpp */; };
 		88E7DE48142A39250044849B /* shy_loader_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E7DD32142A39250044849B /* shy_loader_injections.cpp */; };
@@ -6673,10 +6669,6 @@
 		88E7DD28142A39250044849B /* shy_python.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_python.hpp; sourceTree = "<group>"; };
 		88E7DD29142A39250044849B /* shy_python_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_python_injections.cpp; sourceTree = "<group>"; };
 		88E7DD2A142A39250044849B /* shy_python_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_python_injections.h; sourceTree = "<group>"; };
-		88E7DD2B142A39250044849B /* shy_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator.h; sourceTree = "<group>"; };
-		88E7DD2C142A39250044849B /* shy_generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_generator.hpp; sourceTree = "<group>"; };
-		88E7DD2D142A39250044849B /* shy_generator_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_generator_injections.cpp; sourceTree = "<group>"; };
-		88E7DD2E142A39250044849B /* shy_generator_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_generator_injections.h; sourceTree = "<group>"; };
 		88E7DD30142A39250044849B /* shy_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_loader.h; sourceTree = "<group>"; };
 		88E7DD31142A39250044849B /* shy_loader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_loader.hpp; sourceTree = "<group>"; };
 		88E7DD32142A39250044849B /* shy_loader_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_loader_injections.cpp; sourceTree = "<group>"; };
@@ -24209,10 +24201,6 @@
 			children = (
 				88E7DD21142A39250044849B /* consts */,
 				88E7DD26142A39250044849B /* python */,
-				88E7DD2B142A39250044849B /* shy_generator.h */,
-				88E7DD2C142A39250044849B /* shy_generator.hpp */,
-				88E7DD2D142A39250044849B /* shy_generator_injections.cpp */,
-				88E7DD2E142A39250044849B /* shy_generator_injections.h */,
 			);
 			path = generator;
 			sourceTree = "<group>";
@@ -26977,9 +26965,6 @@
 				88E7DE3E142A39250044849B /* shy_python.h in Headers */,
 				88E7DE3F142A39250044849B /* shy_python.hpp in Headers */,
 				88E7DE41142A39250044849B /* shy_python_injections.h in Headers */,
-				88E7DE42142A39250044849B /* shy_generator.h in Headers */,
-				88E7DE43142A39250044849B /* shy_generator.hpp in Headers */,
-				88E7DE45142A39250044849B /* shy_generator_injections.h in Headers */,
 				88E7DE46142A39250044849B /* shy_loader.h in Headers */,
 				88E7DE47142A39250044849B /* shy_loader.hpp in Headers */,
 				88E7DE49142A39250044849B /* shy_loader_injections.h in Headers */,
@@ -27681,7 +27666,6 @@
 				88E7DE38142A39250044849B /* shy_reflection_injections.cpp in Sources */,
 				88E7DE3C142A39250044849B /* shy_consts_injections.cpp in Sources */,
 				88E7DE40142A39250044849B /* shy_python_injections.cpp in Sources */,
-				88E7DE44142A39250044849B /* shy_generator_injections.cpp in Sources */,
 				88E7DE48142A39250044849B /* shy_loader_injections.cpp in Sources */,
 				88E7DE4C142A39250044849B /* shy_consts_injections.cpp in Sources */,
 				88E7DE50142A39250044849B /* shy_parser_injections.cpp in Sources */,
