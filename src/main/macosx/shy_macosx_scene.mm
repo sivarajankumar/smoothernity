@@ -80,7 +80,7 @@
 
 - ( void ) video_mode_changed
 {
-    so_called_facade :: video_mode_changed ( ) ;
+    so_called_facade :: restart ( ) ;
 }
 
 @end
