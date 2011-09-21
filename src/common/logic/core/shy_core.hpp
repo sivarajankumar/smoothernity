@@ -147,11 +147,6 @@ void _shy_common_logic_core :: receive ( so_called_common_next_frame_message )
     so_called_common_logic_application_render_sender :: send ( so_called_common_logic_application_render_message ( ) ) ;
 }
 
-void _shy_common_logic_core :: receive ( so_called_common_video_mode_changed_message )
-{
-    shy_guts :: init_render ( ) ;
-}
-
 void _shy_common_logic_core :: register_in_scheduler ( )
 {
     _scheduled_context_type :: register_in_scheduler ( ) ;
