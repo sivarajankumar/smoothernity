@@ -1,4 +1,4 @@
-void shy_loadable_generator :: generate ( so_called_lib_std_string & result )
+void shy_loadable_generator :: generate ( )
 {
     so_called_lib_std_string consts_logic ;
     so_called_lib_std_string fsm_logic ;
@@ -8,6 +8,4 @@ void shy_loadable_generator :: generate ( so_called_lib_std_string & result )
 
     so_called_loadable_generator_python :: append ( consts_logic ) ;
     so_called_loadable_generator_python :: append ( fsm_logic ) ;
-
-    so_called_loadable_generator_python :: main_script ( result ) ;
 }
