@@ -26,6 +26,8 @@ void shy_facade :: done ( )
     so_called_platform_render_texture_loader :: done ( ) ;
     so_called_platform_scheduler :: done ( ) ;
     so_called_platform_sound_loader :: done ( ) ;
+
+    so_called_profile ( so_called_platform_profile_insider :: flush ( ) ) ;
 }
 
 void shy_facade :: next_frame ( )

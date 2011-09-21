@@ -1,17 +1,12 @@
 #include "./shy_application_delegate.h"
-#include <iostream>
+#include "src/facade/shy_facade_injections.h"
 
 @implementation shy_application_delegate
 
 - ( NSApplicationTerminateReply ) applicationShouldTerminate : ( NSApplication * ) sender
 {
-    std :: cerr << "should terminate" << std :: endl ;
+    so_called_facade :: done ( ) ;
     return NSTerminateNow ;
-}
-
-- ( void ) applicationDidFinishLaunching : ( NSNotification * ) notification
-{
-    std :: cerr << "did finish launching" << std :: endl ;
 }
 
 @end

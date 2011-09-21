@@ -12,10 +12,7 @@
     self = [ super init ] ;
     if ( self )
     {
-        so_called_platform_render_insider :: set_frame_loss ( so_called_lib_std_false ) ;
-        so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_false ) ;
         so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
-        
         so_called_facade :: init ( ) ;
     }
     return self ;
@@ -23,7 +20,6 @@
 
 - ( void ) dealloc
 {
-    so_called_facade :: done ( ) ;
     [ super dealloc ] ;
 }
 
