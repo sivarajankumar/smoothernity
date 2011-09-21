@@ -1,4 +1,4 @@
-class shy_loadable_loader_fribble
+class shy_loadable_loader
 {
 public :
     static void load ( ) ;

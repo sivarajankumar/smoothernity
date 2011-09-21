@@ -9,7 +9,7 @@ void shy_facade :: init ( )
     so_called_platform_sound_loader :: init ( ) ;
     so_called_common_init :: init ( ) ;
 
-    so_called_loadable_loader :: load ( ) ;
+    so_called_loadable ( so_called_loadable_loader :: load ( ) ) ;
 
     so_called_common_init_sender :: send ( so_called_common_init_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;

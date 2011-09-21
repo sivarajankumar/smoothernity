@@ -58,10 +58,11 @@ void shy_guts :: get_error ( so_called_lib_std_bool & error )
     error = parser_error || consts_assigner_error || fsm_assigner_error ;
 }
 
-void shy_loadable_loader_worker :: load ( )
+void shy_loadable_loader :: load ( )
 {
     shy_guts :: prepare ( ) ;
     shy_guts :: read_input ( ) ;
     shy_guts :: use_loaded_data ( ) ;
     shy_guts :: write_output ( ) ;
 }
+
