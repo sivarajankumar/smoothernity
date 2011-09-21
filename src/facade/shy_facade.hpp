@@ -39,8 +39,11 @@ void shy_facade :: next_frame ( )
     so_called_platform_scheduler :: run ( ) ;
 }
 
-void shy_facade :: video_mode_changed ( )
+void shy_facade :: restart ( )
 {
-    so_called_common_video_mode_changed_sender :: send ( so_called_common_video_mode_changed_message ( ) ) ;
+    so_called_common_done_sender :: send ( so_called_common_done_message ( ) ) ;
+    so_called_platform_scheduler :: run ( ) ;
+
+    so_called_common_init_sender :: send ( so_called_common_init_message ( ) ) ;
     so_called_platform_scheduler :: run ( ) ;
 }

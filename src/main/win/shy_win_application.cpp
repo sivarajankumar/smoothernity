@@ -10,8 +10,6 @@
 
 void smoothernity_init ( )
 {
-    so_called_platform_render_insider :: set_frame_loss ( so_called_lib_std_false ) ;
-    so_called_platform_mouse_insider :: set_left_button_down ( so_called_lib_std_false ) ;
     so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
     so_called_facade :: init ( ) ;
 }
@@ -19,6 +17,11 @@ void smoothernity_init ( )
 void smoothernity_done ( )
 {
     so_called_facade :: done ( ) ;
+}
+
+void smoothernity_restart ( )
+{
+    so_called_facade :: restart ( ) ;
 }
 
 void smoothernity_set_mouse_position ( so_called_lib_std_int32_t x_pixel , so_called_lib_std_int32_t y_pixel )
@@ -117,6 +120,7 @@ bool CALLBACK IsD3D9DeviceAcceptable ( D3DCAPS9 * pCaps , D3DFORMAT AdapterForma
 HRESULT CALLBACK OnD3D9CreateDevice ( IDirect3DDevice9 * pd3dDevice , const D3DSURFACE_DESC * pBackBufferSurfaceDesc ,
                                       void * pUserContext )
 {
+    smoothernity_init ( ) ;
     return S_OK ;
 }
 
@@ -127,7 +131,7 @@ HRESULT CALLBACK OnD3D9CreateDevice ( IDirect3DDevice9 * pd3dDevice , const D3DS
 HRESULT CALLBACK OnD3D9ResetDevice ( IDirect3DDevice9 * pd3dDevice , const D3DSURFACE_DESC * pBackBufferSurfaceDesc ,
                                      void * pUserContext )
 {
-    smoothernity_init ( ) ;
+    smoothernity_restart ( ) ;
     return S_OK ;
 }
 
@@ -151,7 +155,6 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 {
-    smoothernity_done ( ) ;
 }
 
 //--------------------------------------------------------------------------------------
@@ -159,6 +162,7 @@ void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice ( void * pUserContext )
 {
+    smoothernity_done ( ) ;
 }
 
 //--------------------------------------------------------------------------------------
