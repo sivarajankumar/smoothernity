@@ -2365,12 +2365,6 @@
 		888060141410FFC6009357E1 /* shy_sender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8880550F1410FFC6009357E1 /* shy_sender.hpp */; };
 		888060151410FFC6009357E1 /* shy_sender_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 888055101410FFC6009357E1 /* shy_sender_injections.cpp */; };
 		888060161410FFC6009357E1 /* shy_sender_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 888055111410FFC6009357E1 /* shy_sender_injections.h */; };
-		888060231410FFC6009357E1 /* shy_message.h in Headers */ = {isa = PBXBuildFile; fileRef = 888055281410FFC6009357E1 /* shy_message.h */; };
-		888060241410FFC6009357E1 /* shy_message_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 888055291410FFC6009357E1 /* shy_message_injections.h */; };
-		888060251410FFC6009357E1 /* shy_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 8880552B1410FFC6009357E1 /* shy_sender.h */; };
-		888060261410FFC6009357E1 /* shy_sender.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8880552C1410FFC6009357E1 /* shy_sender.hpp */; };
-		888060271410FFC6009357E1 /* shy_sender_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8880552D1410FFC6009357E1 /* shy_sender_injections.cpp */; };
-		888060281410FFC6009357E1 /* shy_sender_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 8880552E1410FFC6009357E1 /* shy_sender_injections.h */; };
 		8880602E1410FFD4009357E1 /* shy_facade.h in Headers */ = {isa = PBXBuildFile; fileRef = 8880602A1410FFD4009357E1 /* shy_facade.h */; };
 		8880602F1410FFD4009357E1 /* shy_facade.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8880602B1410FFD4009357E1 /* shy_facade.hpp */; };
 		888060301410FFD4009357E1 /* shy_facade_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8880602C1410FFD4009357E1 /* shy_facade_injections.cpp */; };
@@ -5723,12 +5717,6 @@
 		8880550F1410FFC6009357E1 /* shy_sender.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_sender.hpp; sourceTree = "<group>"; };
 		888055101410FFC6009357E1 /* shy_sender_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_sender_injections.cpp; sourceTree = "<group>"; };
 		888055111410FFC6009357E1 /* shy_sender_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sender_injections.h; sourceTree = "<group>"; };
-		888055281410FFC6009357E1 /* shy_message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_message.h; sourceTree = "<group>"; };
-		888055291410FFC6009357E1 /* shy_message_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_message_injections.h; sourceTree = "<group>"; };
-		8880552B1410FFC6009357E1 /* shy_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sender.h; sourceTree = "<group>"; };
-		8880552C1410FFC6009357E1 /* shy_sender.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_sender.hpp; sourceTree = "<group>"; };
-		8880552D1410FFC6009357E1 /* shy_sender_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_sender_injections.cpp; sourceTree = "<group>"; };
-		8880552E1410FFC6009357E1 /* shy_sender_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_sender_injections.h; sourceTree = "<group>"; };
 		8880602A1410FFD4009357E1 /* shy_facade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_facade.h; sourceTree = "<group>"; };
 		8880602B1410FFD4009357E1 /* shy_facade.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_facade.hpp; sourceTree = "<group>"; };
 		8880602C1410FFD4009357E1 /* shy_facade_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_facade_injections.cpp; sourceTree = "<group>"; };
@@ -8836,7 +8824,6 @@
 				888044821410FFC4009357E1 /* done */,
 				888046A21410FFC4009357E1 /* init */,
 				888046AF1410FFC4009357E1 /* logic */,
-				888055241410FFC6009357E1 /* video */,
 			);
 			name = common;
 			path = ../../common;
@@ -19057,51 +19044,6 @@
 			path = sender;
 			sourceTree = "<group>";
 		};
-		888055241410FFC6009357E1 /* video */ = {
-			isa = PBXGroup;
-			children = (
-				888055251410FFC6009357E1 /* mode */,
-			);
-			path = video;
-			sourceTree = "<group>";
-		};
-		888055251410FFC6009357E1 /* mode */ = {
-			isa = PBXGroup;
-			children = (
-				888055261410FFC6009357E1 /* changed */,
-			);
-			path = mode;
-			sourceTree = "<group>";
-		};
-		888055261410FFC6009357E1 /* changed */ = {
-			isa = PBXGroup;
-			children = (
-				888055271410FFC6009357E1 /* message */,
-				8880552A1410FFC6009357E1 /* sender */,
-			);
-			path = changed;
-			sourceTree = "<group>";
-		};
-		888055271410FFC6009357E1 /* message */ = {
-			isa = PBXGroup;
-			children = (
-				888055281410FFC6009357E1 /* shy_message.h */,
-				888055291410FFC6009357E1 /* shy_message_injections.h */,
-			);
-			path = message;
-			sourceTree = "<group>";
-		};
-		8880552A1410FFC6009357E1 /* sender */ = {
-			isa = PBXGroup;
-			children = (
-				8880552B1410FFC6009357E1 /* shy_sender.h */,
-				8880552C1410FFC6009357E1 /* shy_sender.hpp */,
-				8880552D1410FFC6009357E1 /* shy_sender_injections.cpp */,
-				8880552E1410FFC6009357E1 /* shy_sender_injections.h */,
-			);
-			path = sender;
-			sourceTree = "<group>";
-		};
 		888060291410FFD4009357E1 /* facade */ = {
 			isa = PBXGroup;
 			children = (
@@ -26024,11 +25966,6 @@
 				888060131410FFC6009357E1 /* shy_sender.h in Headers */,
 				888060141410FFC6009357E1 /* shy_sender.hpp in Headers */,
 				888060161410FFC6009357E1 /* shy_sender_injections.h in Headers */,
-				888060231410FFC6009357E1 /* shy_message.h in Headers */,
-				888060241410FFC6009357E1 /* shy_message_injections.h in Headers */,
-				888060251410FFC6009357E1 /* shy_sender.h in Headers */,
-				888060261410FFC6009357E1 /* shy_sender.hpp in Headers */,
-				888060281410FFC6009357E1 /* shy_sender_injections.h in Headers */,
 				8880602E1410FFD4009357E1 /* shy_facade.h in Headers */,
 				8880602F1410FFD4009357E1 /* shy_facade.hpp in Headers */,
 				888060311410FFD4009357E1 /* shy_facade_injections.h in Headers */,
@@ -27521,7 +27458,6 @@
 				8880600B1410FFC6009357E1 /* shy_sender_injections.cpp in Sources */,
 				8880600F1410FFC6009357E1 /* shy_vacuum_injections.cpp in Sources */,
 				888060151410FFC6009357E1 /* shy_sender_injections.cpp in Sources */,
-				888060271410FFC6009357E1 /* shy_sender_injections.cpp in Sources */,
 				888060301410FFD4009357E1 /* shy_facade_injections.cpp in Sources */,
 				888063261410FFEA009357E1 /* shy_render_injections.cpp in Sources */,
 				8880632A1410FFEA009357E1 /* shy_game_injections.cpp in Sources */,
