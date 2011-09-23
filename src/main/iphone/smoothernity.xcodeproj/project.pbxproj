@@ -21998,6 +21998,7 @@
 					shy_build_static_way,
                     shy_build_without_profile,
 					shy_build_without_trace,
+                    shy_build_without_generator,
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
@@ -22021,6 +22022,7 @@
 					shy_build_static_way,
                     shy_build_without_profile,
 					shy_build_without_trace,
+                    shy_build_without_generator,
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
