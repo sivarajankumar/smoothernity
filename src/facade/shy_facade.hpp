@@ -28,6 +28,7 @@ void shy_facade :: done ( )
     so_called_platform_sound_loader :: done ( ) ;
 
     so_called_profile ( so_called_platform_profile_insider :: flush ( ) ) ;
+    so_called_generator ( so_called_platform_generator :: write ( ) ) ;
 }
 
 void shy_facade :: next_frame ( )

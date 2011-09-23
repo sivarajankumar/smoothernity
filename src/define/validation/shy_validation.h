@@ -2,6 +2,24 @@
     #ifndef shy_build_with_stl
         #error "Loadable build requires STL."
     #endif
+    #ifndef shy_build_with_generator
+        #error "Loadable build requires generator."
+    #endif
+#endif
+
+#ifdef shy_build_with_generator
+    #ifndef shy_build_with_stl
+        #error "Build with generator requires STL."
+    #endif
+#endif
+
+#ifdef shy_build_with_profile
+    #ifndef shy_build_with_stl
+        #error "Build with profiling requires STL."
+    #endif
+    #ifndef shy_build_with_generator
+        #error "Build with profiling requires generator."
+    #endif
 #endif
 
 #ifdef shy_build_with_trace
@@ -10,16 +28,16 @@
     #endif
 #endif
 
-#ifdef shy_build_with_profile
-    #ifndef shy_build_with_stl
-        #error "Build with profiling requires STL."
-    #endif
-#endif
-
 #if ! ( ( (   defined shy_build_loadable_way ) && ( ! defined shy_build_static_way ) ) \
      || ( ( ! defined shy_build_loadable_way ) && (   defined shy_build_static_way ) ) \
       )
     #error "External data handling style must be specified."
+#endif
+
+#if ! ( ( (   defined shy_build_with_generator ) && ( ! defined shy_build_without_generator ) ) \
+     || ( ( ! defined shy_build_with_generator ) && (   defined shy_build_without_generator ) ) \
+      )
+    #error "Generator mode must be specified."
 #endif
 
 #if ! ( ( (   defined shy_build_with_profile ) && ( ! defined shy_build_without_profile ) ) \

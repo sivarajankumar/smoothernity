@@ -11,7 +11,6 @@
     #include "src/loadable/fsm/assigner/shy_assigner_injections.h"
     #include "src/loadable/fsm/generator/shy_generator_injections.h"
     #include "src/loadable/fsm/reflection/shy_reflection_injections.h"
-    #include "src/loadable/generator/python/shy_python_injections.h"
     #include "src/loadable/parser/shy_parser_injections.h"
 
     #include "./shy_loader.hpp"

@@ -35,7 +35,6 @@ void shy_guts :: write_output ( )
     {
         so_called_loadable_consts_generator :: generate ( ) ;
         so_called_loadable_fsm_generator :: generate ( ) ;
-        so_called_loadable_generator_python :: write ( ) ;
     }
 }
 

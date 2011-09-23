@@ -5,6 +5,8 @@
 #include "src/common/done/sender/shy_sender_injections.h"
 #include "src/common/done/shy_done_injections.h"
 #include "src/common/next/frame/sender/shy_sender_injections.h"
+#include "src/generator/shy_generator_injections.h"
+#include "src/injections/platform/generator/shy_generator.h"
 #include "src/injections/platform/math/consts/shy_consts.h"
 #include "src/injections/platform/profile/insider/shy_insider.h"
 #include "src/injections/platform/profile/shy_profile.h"
