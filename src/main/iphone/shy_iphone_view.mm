@@ -90,12 +90,14 @@
 
 - ( void ) _init_game
 {
-    so_called_facade :: init ( ) ;
+    so_called_facade :: application_init ( ) ;
+    so_called_facade :: game_init ( ) ;
 }
 
 - ( void ) _done_game
 {
-    so_called_facade :: done ( ) ;
+    so_called_facade :: game_done ( ) ;
+    so_called_facade :: application_done ( ) ;
 }
 
 + ( Class ) layerClass

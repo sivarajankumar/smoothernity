@@ -13,7 +13,8 @@
     if ( self )
     {
         so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
-        so_called_facade :: init ( ) ;
+        so_called_facade :: application_init ( ) ;
+        so_called_facade :: game_init ( ) ;
     }
     return self ;
 }
@@ -80,7 +81,8 @@
 
 - ( void ) video_mode_changed
 {
-    so_called_facade :: restart ( ) ;
+    so_called_facade :: game_done ( ) ;
+    so_called_facade :: game_init ( ) ;
 }
 
 @end
