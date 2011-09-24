@@ -5,7 +5,8 @@
 
 - ( NSApplicationTerminateReply ) applicationShouldTerminate : ( NSApplication * ) sender
 {
-    so_called_facade :: done ( ) ;
+    so_called_facade :: game_done ( ) ;
+    so_called_facade :: application_done ( ) ;
     return NSTerminateNow ;
 }
 

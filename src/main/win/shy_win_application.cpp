@@ -8,20 +8,25 @@
 #include "src/injections/platform/mouse/insider/shy_insider.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
 
-void smoothernity_init ( )
+void smoothernity_application_init ( )
 {
     so_called_platform_mouse_insider :: set_enabled ( so_called_lib_std_true ) ;
-    so_called_facade :: init ( ) ;
+    so_called_facade :: application_init ( ) ;
 }
 
-void smoothernity_done ( )
+void smoothernity_application_done ( )
 {
-    so_called_facade :: done ( ) ;
+    so_called_facade :: application_done ( ) ;
 }
 
-void smoothernity_restart ( )
+void smoothernity_game_init ( )
 {
-    so_called_facade :: restart ( ) ;
+    so_called_facade :: game_init ( ) ;
+}
+
+void smoothernity_game_done ( )
+{
+    so_called_facade :: game_done ( ) ;
 }
 
 void smoothernity_set_mouse_position ( so_called_lib_std_int32_t x_pixel , so_called_lib_std_int32_t y_pixel )
@@ -120,7 +125,6 @@ bool CALLBACK IsD3D9DeviceAcceptable ( D3DCAPS9 * pCaps , D3DFORMAT AdapterForma
 HRESULT CALLBACK OnD3D9CreateDevice ( IDirect3DDevice9 * pd3dDevice , const D3DSURFACE_DESC * pBackBufferSurfaceDesc ,
                                       void * pUserContext )
 {
-    smoothernity_init ( ) ;
     return S_OK ;
 }
 
@@ -131,7 +135,7 @@ HRESULT CALLBACK OnD3D9CreateDevice ( IDirect3DDevice9 * pd3dDevice , const D3DS
 HRESULT CALLBACK OnD3D9ResetDevice ( IDirect3DDevice9 * pd3dDevice , const D3DSURFACE_DESC * pBackBufferSurfaceDesc ,
                                      void * pUserContext )
 {
-    smoothernity_restart ( ) ;
+    smoothernity_game_init ( ) ;
     return S_OK ;
 }
 
@@ -155,6 +159,7 @@ void CALLBACK OnD3D9FrameRender ( IDirect3DDevice9 * pd3dDevice , double fTime ,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 {
+    smoothernity_game_done ( ) ;
 }
 
 //--------------------------------------------------------------------------------------
@@ -162,7 +167,6 @@ void CALLBACK OnD3D9LostDevice ( void * pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice ( void * pUserContext )
 {
-    smoothernity_done ( ) ;
 }
 
 //--------------------------------------------------------------------------------------
@@ -179,6 +183,9 @@ int main ( int , char * * )
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF ) ;
 #endif
+
+    smoothernity_application_init ( ) ;
+
     // DXUT will create and use the best device (either D3D9 or D3D11) 
     // that is available on the system depending on which D3D callbacks are set below
 
@@ -206,6 +213,8 @@ int main ( int , char * * )
     DXUTCreateDevice ( D3D_FEATURE_LEVEL_10_0 , true , 640 , 480 ) ;
 
     DXUTMainLoop ( ) ; // Enter into the DXUT render loop
+
+    smoothernity_application_done ( ) ;
 
     return DXUTGetExitCode ( ) ;
 }
