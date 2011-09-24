@@ -1,5 +1,5 @@
 del /q /s ..\..\..\..\build\windows\debug
-msbuild smoothernity.sln /p:Configuration=Debug
+msbuild smoothernity.sln /p:Configuration=Debug /m
 del /q /s /a ipch
 del /q /s /a *.user
 del /q /s /a *.suo
