@@ -658,49 +658,6 @@
     <ClCompile Include="..\..\common\logic\vacuum\update\sender\shy_sender_injections.cpp" />
     <ClCompile Include="..\..\common\next\frame\sender\shy_sender_injections.cpp" />
     <ClCompile Include="..\..\facade\shy_facade_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\assigner\shy_assigner_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\binder\shy_binder_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\content\shy_content_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\content\value\fract\type\shy_type_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\content\value\whole\type\shy_type_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\generator\shy_generator_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\amusement\shy_amusement_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\application\shy_application_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\blanket\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\blanket\shy_blanket_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\door\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\door\shy_door_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\fader\shy_fader_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\fidget\shy_fidget_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\letters\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\letters\layout\shy_layout_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\letters\meshes\shy_meshes_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\selection\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\selection\shy_selection_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\observer\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\ortho\shy_ortho_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\perspective\shy_perspective_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\room\shy_room_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\salutation\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\salutation\letters\animation\shy_animation_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\salutation\letters\meshes\shy_meshes_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\salutation\renderer\shy_renderer_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\salutation\timer\shy_timer_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\logic\vacuum\shy_vacuum_injections.cpp" />
-    <ClCompile Include="..\..\loadable\consts\reflection\shy_reflection_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\assigner\shy_assigner_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\behaviour\consts\shy_consts_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\binder\shy_binder_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\consts\shy_consts_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\content\shy_content_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\generator\shy_generator_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\reflection\logic\application\shy_application_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\reflection\shy_reflection_injections.cpp" />
-    <ClCompile Include="..\..\loadable\loader\shy_loader_injections.cpp" />
-    <ClCompile Include="..\..\loadable\parser\consts\shy_consts_injections.cpp" />
-    <ClCompile Include="..\..\loadable\parser\shy_parser_injections.cpp" />
-    <ClCompile Include="..\..\loadable\reflection\shy_reflection_injections.cpp" />
     <ClCompile Include="..\..\profile\init\shy_init_injections.cpp" />
     <ClCompile Include="..\..\trace\common\engine\render\shy_render_injections.cpp" />
     <ClCompile Include="..\..\trace\common\logic\game\shy_game_injections.cpp" />
@@ -721,6 +678,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="shy_loadable.vcxproj">
+      <Project>{575d2227-0633-48aa-9a3f-72dbb5811927}</Project>
+    </ProjectReference>
     <ProjectReference Include="shy_platform.vcxproj">
       <Project>{1a7bdce8-9f72-4549-bda7-e5b4de9d66f0}</Project>
     </ProjectReference>
