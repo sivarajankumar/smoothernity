@@ -147,40 +147,40 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\shy_common_engine\shy_common_engine.vcxproj">
-      <Project>{ca33fdde-d80d-442b-a74e-6f4e35eb1f6f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="shy_common\shy_common.vcxproj">
+    <ProjectReference Include="shy_common.vcxproj">
       <Project>{9533a99f-7bad-41ba-98f7-b7f8dbc3fa76}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic\shy_common_logic.vcxproj">
+    <ProjectReference Include="shy_common_engine.vcxproj">
+      <Project>{ca33fdde-d80d-442b-a74e-6f4e35eb1f6f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic.vcxproj">
       <Project>{b0ff2462-86bd-4414-b92f-3fa1f72a90bf}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_amusement\shy_common_logic_amusement.vcxproj">
+    <ProjectReference Include="shy_common_logic_amusement.vcxproj">
       <Project>{aedba387-44b7-4823-a9c0-5789efcb6a0c}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_application\shy_common_logic_application.vcxproj">
+    <ProjectReference Include="shy_common_logic_application.vcxproj">
       <Project>{2b8a104d-9b51-4785-8f1e-c38add570f62}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_blanket\shy_common_logic_blanket.vcxproj">
+    <ProjectReference Include="shy_common_logic_blanket.vcxproj">
       <Project>{a8eb774f-4992-41a6-bbf6-4bb304e0b5e6}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_door\shy_common_logic_door.vcxproj">
+    <ProjectReference Include="shy_common_logic_door.vcxproj">
       <Project>{2c44afd9-565f-45e9-bba9-d5fb47b25f65}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_main_menu\shy_common_logic_main_menu.vcxproj">
+    <ProjectReference Include="shy_common_logic_main_menu.vcxproj">
       <Project>{c8fa56c4-a49a-4c12-8deb-683f38e16a01}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_observer\shy_common_logic_observer.vcxproj">
+    <ProjectReference Include="shy_common_logic_observer.vcxproj">
       <Project>{e25c1217-ab01-4997-acb9-3e5fb9ed45ba}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_room\shy_common_logic_room.vcxproj">
+    <ProjectReference Include="shy_common_logic_room.vcxproj">
       <Project>{63dba964-41c6-4183-9362-47d0e6c5e227}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_salutation\shy_common_logic_salutation.vcxproj">
+    <ProjectReference Include="shy_common_logic_salutation.vcxproj">
       <Project>{07a7d1b3-44da-4f54-be49-e446c6b0cc0d}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_common_logic_text\shy_common_logic_text.vcxproj">
+    <ProjectReference Include="shy_common_logic_text.vcxproj">
       <Project>{8629a13f-7efb-4b24-bcd9-db6f0b1497ce}</Project>
     </ProjectReference>
     <ProjectReference Include="shy_loadable.vcxproj">
@@ -189,7 +189,7 @@
     <ProjectReference Include="shy_platform.vcxproj">
       <Project>{1a7bdce8-9f72-4549-bda7-e5b4de9d66f0}</Project>
     </ProjectReference>
-    <ProjectReference Include="shy_trace\shy_trace.vcxproj">
+    <ProjectReference Include="shy_trace.vcxproj">
       <Project>{5e082267-50ec-4c07-8f6e-b0087132bacf}</Project>
     </ProjectReference>
   </ItemGroup>
