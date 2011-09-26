@@ -57,7 +57,7 @@ void shy_guts :: generate_names ( so_called_lib_std_string & result )
             names << it -> second ;
             names << "\"\n" ;
         }
-        names << "}\n" ;
+        names << "    }\n" ;
     }
     result = names . str ( ) ;
 }
