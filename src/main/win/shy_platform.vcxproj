@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="platform\conditions\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\conditions\shy_conditions_injections.cpp" />
     <ClCompile Include="platform\generator\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\generator\shy_generator_injections.cpp" />
