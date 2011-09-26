@@ -8,7 +8,7 @@ void shy_facade :: application_init ( )
 
 void shy_facade :: application_done ( )
 {
-    so_called_profile ( so_called_platform_profile_insider :: flush ( ) ) ;
+    so_called_profile ( so_called_platform_profile_insider :: generate ( ) ) ;
     so_called_generator ( so_called_platform_generator :: write ( ) ) ;
 }
 
