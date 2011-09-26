@@ -1,7 +1,7 @@
 class shy_platform_profile_insider
 {
 public :
-    static void flush ( ) ;
+    static void generate ( ) ;
     static void id_value_add ( so_called_platform_math_num_whole_type , so_called_platform_math_num_whole_type ) ;
     static void id_value_max ( so_called_platform_math_num_whole_type , so_called_platform_math_num_whole_type ) ;
     static void init ( ) ;
