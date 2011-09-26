@@ -1,0 +1,6 @@
+#ifndef _shy_win_platform_conditions_profile_injections_included
+#define _shy_win_platform_conditions_profile_injections_included
+
+#include "src/profile/platform/conditions/shy_conditions_injections.h"
+
+#endif
