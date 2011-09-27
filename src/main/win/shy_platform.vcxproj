@@ -133,6 +133,7 @@
     <ClCompile Include="platform\math\shy_math_injections.cpp" />
     <ClCompile Include="platform\matrix\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\matrix\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\matrix\shy_matrix_injections.cpp" />
     <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\mouse\shy_mouse_injections.cpp" />
