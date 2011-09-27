@@ -160,6 +160,7 @@
     <ClCompile Include="platform\sound\buffer\id\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp" />
     <ClCompile Include="platform\sound\loader\stereo\resource\id\type\shy_type_injections.cpp" />
+    <ClCompile Include="platform\sound\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\sound\sample\mono\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\sample\stereo\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\shy_sound_injections.cpp" />
