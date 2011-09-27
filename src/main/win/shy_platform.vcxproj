@@ -175,6 +175,7 @@
     <ClCompile Include="platform\trace\shy_trace_injections.cpp" />
     <ClCompile Include="platform\vector\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\vector\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\vector\shy_vector_injections.cpp" />
     <ClCompile Include="shy_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

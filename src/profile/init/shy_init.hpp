@@ -10,4 +10,5 @@ void shy_profile_init :: init ( )
     so_called_profile_platform_sound :: init ( ) ;
     so_called_profile_platform_static_array :: init ( ) ;
     so_called_profile_platform_touch :: init ( ) ;
+    so_called_profile_platform_vector :: init ( ) ;
 }
