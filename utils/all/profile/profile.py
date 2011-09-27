@@ -13,4 +13,4 @@ for frame in frames . frames :
 
 print "operations" , "frames"
 for values , indices in reversed ( sorted ( ops_frame . items ( ) ) ) :
-    print "% 7i %s" % ( values , indices [ : 10 ] )
+    print "% 8i % 4i %s" % ( values , len ( indices ) , indices [ : 10 ] )
