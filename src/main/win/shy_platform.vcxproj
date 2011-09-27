@@ -154,6 +154,7 @@
     <ClCompile Include="platform\render\vertex\buffer\id\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\vertex\buffer\mapped\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\vertex\data\type\shy_type_injections.cpp" />
+    <ClCompile Include="platform\scheduler\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp" />
     <ClCompile Include="platform\scheduler\trace\shy_trace_injections.cpp" />
     <ClCompile Include="platform\sound\buffer\id\type\shy_type_injections.cpp" />
