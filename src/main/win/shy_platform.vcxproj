@@ -168,6 +168,7 @@
     <ClCompile Include="platform\static\array\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\terminal\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\touch\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\touch\shy_touch_injections.cpp" />
     <ClCompile Include="platform\trace\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\trace\insider\shy_insider_injections.cpp" />

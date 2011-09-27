@@ -9,5 +9,6 @@
     #include "src/profile/platform/scheduler/shy_scheduler_injections.h"
     #include "src/profile/platform/sound/shy_sound_injections.h"
     #include "src/profile/platform/static/array/shy_array_injections.h"
+    #include "src/profile/platform/touch/shy_touch_injections.h"
     #include "./shy_init.hpp"
 #endif
