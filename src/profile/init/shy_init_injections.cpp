@@ -4,5 +4,6 @@
     #include "src/profile/platform/math/shy_math_injections.h"
     #include "src/profile/platform/matrix/shy_matrix_injections.h"
     #include "src/profile/platform/mouse/shy_mouse_injections.h"
+    #include "src/profile/platform/pointer/shy_pointer_injections.h"
     #include "./shy_init.hpp"
 #endif

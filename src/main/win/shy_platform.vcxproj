@@ -138,6 +138,7 @@
     <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\mouse\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\mouse\shy_mouse_injections.cpp" />
+    <ClCompile Include="platform\pointer\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\profile\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\render\index\buffer\id\type\shy_type_injections.cpp" />
