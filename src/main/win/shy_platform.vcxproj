@@ -145,6 +145,7 @@
     <ClCompile Include="platform\render\index\buffer\mapped\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\index\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\insider\shy_insider_injections.cpp" />
+    <ClCompile Include="platform\render\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\render\shy_render_injections.cpp" />
     <ClCompile Include="platform\render\texel\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\texture\id\type\shy_type_injections.cpp" />
