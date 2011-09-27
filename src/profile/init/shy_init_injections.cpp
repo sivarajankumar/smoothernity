@@ -6,5 +6,6 @@
     #include "src/profile/platform/mouse/shy_mouse_injections.h"
     #include "src/profile/platform/pointer/shy_pointer_injections.h"
     #include "src/profile/platform/render/shy_render_injections.h"
+    #include "src/profile/platform/scheduler/shy_scheduler_injections.h"
     #include "./shy_init.hpp"
 #endif

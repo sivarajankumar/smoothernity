@@ -147,6 +147,7 @@ void shy_platform_scheduler_random
     :: module
     :: receive ( _message msg )
 {
+    so_called_profile ( so_called_profile_platform_scheduler :: receive ( ) ) ;
     _scheduled_receive ( msg ) ;
 }
 
