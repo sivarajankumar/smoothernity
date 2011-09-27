@@ -8,12 +8,14 @@
 #include "src/injections/platform/render/index/buffer/id/type/shy_type.h"
 #include "src/injections/platform/render/index/buffer/mapped/data/type/shy_type.h"
 #include "src/injections/platform/render/index/data/type/shy_type.h"
+#include "src/injections/platform/render/profile/shy_profile.h"
 #include "src/injections/platform/render/texel/data/type/shy_type.h"
 #include "src/injections/platform/render/texture/id/type/shy_type.h"
 #include "src/injections/platform/render/vertex/buffer/id/type/shy_type.h"
 #include "src/injections/platform/render/vertex/buffer/mapped/data/type/shy_type.h"
 #include "src/injections/platform/render/vertex/data/type/shy_type.h"
 #include "src/injections/platform/static/array/insider/shy_insider.h"
+#include "src/profile/shy_profile_injections.h"
 
 #include "./shy_directx.h"
 
