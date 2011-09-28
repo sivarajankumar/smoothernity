@@ -153,7 +153,6 @@
     <ClCompile Include="..\..\loadable\consts\reflection\logic\vacuum\shy_vacuum_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\shy_reflection_injections.cpp" />
     <ClCompile Include="..\..\loadable\fsm\assigner\shy_assigner_injections.cpp" />
-    <ClCompile Include="..\..\loadable\fsm\behaviour\consts\shy_consts_injections.cpp" />
     <ClCompile Include="..\..\loadable\fsm\binder\shy_binder_injections.cpp" />
     <ClCompile Include="..\..\loadable\fsm\consts\shy_consts_injections.cpp" />
     <ClCompile Include="..\..\loadable\fsm\content\shy_content_injections.cpp" />
