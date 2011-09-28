@@ -3,7 +3,7 @@ namespace shy_guts
     namespace consts
     {
         static const so_called_lib_std_char module_name [ ] = "common_logic_salutation_letters_text_storage" ;
-        static const so_called_platform_math_num_whole_type trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
+        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
     }
 }
 
@@ -12,7 +12,7 @@ void shy_trace_common_logic_salutation_letters_text_storage :: entries_in_use
     , so_called_platform_math_num_whole_type total
     )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+    if ( shy_guts :: consts :: trace_enabled )
     {
         so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
         so_called_platform_trace :: trace_string ( "Entries in use: " ) ;
@@ -26,7 +26,7 @@ void shy_trace_common_logic_salutation_letters_text_storage :: entries_in_use
 
 void shy_trace_common_logic_salutation_letters_text_storage :: entries_overflow_error ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+    if ( shy_guts :: consts :: trace_enabled )
     {
         so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
         so_called_platform_trace :: trace_string_error ( "Entries overflow error." ) ;
@@ -39,7 +39,7 @@ void shy_trace_common_logic_salutation_letters_text_storage :: entry_index_is_ou
     , so_called_platform_math_num_whole_type max_index
     )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
+    if ( shy_guts :: consts :: trace_enabled )
     {
         so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
         so_called_platform_trace :: trace_string_error ( "Entry index " ) ;
