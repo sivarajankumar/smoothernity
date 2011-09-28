@@ -1,10 +1,5 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
-    }
-
     static so_called_lib_std_bool error = so_called_lib_std_false ;
 }
 
@@ -39,8 +34,7 @@ void shy_loadable_fsm_assigner :: assign ( )
             if ( fsm_machine . states . find ( so_called_loadable_fsm_consts :: state_initial ) == fsm_machine . states . end ( ) )
             {
                 fsm_machine . states [ so_called_loadable_fsm_consts :: state_initial ] = so_called_loadable_fsm_content_state_type ( ) ;
-                if ( shy_guts :: consts :: trace_enabled )
-                    so_called_trace ( so_called_trace_loadable_fsm_assigner :: no_initial_state_in_machine_of_system_error ( fsm_machine_name . c_str ( ) , fsm_system_name . c_str ( ) ) ) ;
+                so_called_trace ( so_called_trace_loadable_fsm_assigner :: no_initial_state_in_machine_of_system_error ( fsm_machine_name . c_str ( ) , fsm_system_name . c_str ( ) ) ) ;
                 shy_guts :: error = so_called_lib_std_true ;
             }
         }
