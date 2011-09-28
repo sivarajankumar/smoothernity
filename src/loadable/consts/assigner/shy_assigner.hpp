@@ -1,10 +1,5 @@
 namespace shy_guts
 {
-    namespace consts
-    {
-        static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
-    }
-
     static so_called_lib_std_bool error = so_called_lib_std_false ;
 
     static void assign_module 
@@ -91,15 +86,12 @@ void shy_guts :: check_module_value_fract_min
 {
     if ( ! fract_i -> second . min_set )
     {
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace 
-                ( so_called_trace_loadable_consts_assigner :: no_min_for_module_attribute_fract_error 
-                    ( module_i -> first . c_str ( ) 
-                    , fract_i -> first . c_str ( ) 
-                    ) 
-                ) ;
-        }
+        so_called_trace 
+            ( so_called_trace_loadable_consts_assigner :: no_min_for_module_attribute_fract_error 
+                ( module_i -> first . c_str ( ) 
+                , fract_i -> first . c_str ( ) 
+                ) 
+            ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
 }
@@ -111,15 +103,12 @@ void shy_guts :: check_module_value_fract_max
 {
     if ( ! fract_i -> second . max_set )
     {
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace 
-                ( so_called_trace_loadable_consts_assigner :: no_max_for_module_attribute_fract_error 
-                    ( module_i -> first . c_str ( ) 
-                    , fract_i -> first . c_str ( ) 
-                    ) 
-                ) ;
-        }
+        so_called_trace 
+            ( so_called_trace_loadable_consts_assigner :: no_max_for_module_attribute_fract_error 
+                ( module_i -> first . c_str ( ) 
+                , fract_i -> first . c_str ( ) 
+                ) 
+            ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
 }
@@ -131,15 +120,12 @@ void shy_guts :: check_module_value_whole_min
 {
     if ( ! whole_i -> second . min_set )
     {
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace 
-                ( so_called_trace_loadable_consts_assigner :: no_min_for_module_attribute_whole_error 
-                    ( module_i -> first . c_str ( ) 
-                    , whole_i -> first . c_str ( ) 
-                    ) 
-                ) ;
-        }
+        so_called_trace 
+            ( so_called_trace_loadable_consts_assigner :: no_min_for_module_attribute_whole_error 
+                ( module_i -> first . c_str ( ) 
+                , whole_i -> first . c_str ( ) 
+                ) 
+            ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
 }
@@ -151,15 +137,12 @@ void shy_guts :: check_module_value_whole_max
 {
     if ( ! whole_i -> second . max_set )
     {
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace 
-                ( so_called_trace_loadable_consts_assigner :: no_max_for_module_attribute_whole_error 
-                    ( module_i -> first . c_str ( ) 
-                    , whole_i -> first . c_str ( ) 
-                    ) 
-                ) ;
-        }
+        so_called_trace 
+            ( so_called_trace_loadable_consts_assigner :: no_max_for_module_attribute_whole_error 
+                ( module_i -> first . c_str ( ) 
+                , whole_i -> first . c_str ( ) 
+                ) 
+            ) ;
         shy_guts :: error = so_called_lib_std_true ;
     }
 }
@@ -169,17 +152,14 @@ void shy_guts :: assign_module_value_fract_min
     , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace 
-            ( so_called_trace_loadable_consts_assigner :: min_limit_used_as_module_attribute_fract_value
-                ( fract_i -> second . min_numerator
-                , fract_i -> second . min_denominator
-                , module_i -> first . c_str ( ) 
-                , fract_i -> first . c_str ( ) 
-                ) 
-            ) ;
-    }
+    so_called_trace 
+        ( so_called_trace_loadable_consts_assigner :: min_limit_used_as_module_attribute_fract_value
+            ( fract_i -> second . min_numerator
+            , fract_i -> second . min_denominator
+            , module_i -> first . c_str ( ) 
+            , fract_i -> first . c_str ( ) 
+            ) 
+        ) ;
     so_called_platform_math :: make_num_fract ( * fract_i -> second . binding , fract_i -> second . min_numerator , fract_i -> second . min_denominator ) ;
 }
 
@@ -188,17 +168,14 @@ void shy_guts :: assign_module_value_fract_max
     , so_called_loadable_consts_content_value_fract_container_type :: const_iterator fract_i
     )
 {
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace 
-            ( so_called_trace_loadable_consts_assigner :: max_limit_used_as_module_attribute_fract_value
-                ( fract_i -> second . max_numerator
-                , fract_i -> second . max_denominator
-                , module_i -> first . c_str ( ) 
-                , fract_i -> first . c_str ( ) 
-                ) 
-            ) ;
-    }
+    so_called_trace 
+        ( so_called_trace_loadable_consts_assigner :: max_limit_used_as_module_attribute_fract_value
+            ( fract_i -> second . max_numerator
+            , fract_i -> second . max_denominator
+            , module_i -> first . c_str ( ) 
+            , fract_i -> first . c_str ( ) 
+            ) 
+        ) ;
     so_called_platform_math :: make_num_fract ( * fract_i -> second . binding , fract_i -> second . max_numerator , fract_i -> second . max_denominator ) ;
 }
 
@@ -207,16 +184,13 @@ void shy_guts :: assign_module_value_whole_min
     , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace 
-            ( so_called_trace_loadable_consts_assigner :: min_limit_used_as_module_attribute_whole_value
-                ( whole_i -> second . min_value
-                , module_i -> first . c_str ( ) 
-                , whole_i -> first . c_str ( ) 
-                ) 
-            ) ;
-    }
+    so_called_trace 
+        ( so_called_trace_loadable_consts_assigner :: min_limit_used_as_module_attribute_whole_value
+            ( whole_i -> second . min_value
+            , module_i -> first . c_str ( ) 
+            , whole_i -> first . c_str ( ) 
+            ) 
+        ) ;
     so_called_platform_math :: make_num_whole ( * whole_i -> second . binding , whole_i -> second . min_value ) ;
 }
 
@@ -225,16 +199,13 @@ void shy_guts :: assign_module_value_whole_max
     , so_called_loadable_consts_content_value_whole_container_type :: const_iterator whole_i
     )
 {
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace 
-            ( so_called_trace_loadable_consts_assigner :: max_limit_used_as_module_attribute_whole_value
-                ( whole_i -> second . max_value
-                , module_i -> first . c_str ( ) 
-                , whole_i -> first . c_str ( ) 
-                ) 
-            ) ;
-    }
+    so_called_trace 
+        ( so_called_trace_loadable_consts_assigner :: max_limit_used_as_module_attribute_whole_value
+            ( whole_i -> second . max_value
+            , module_i -> first . c_str ( ) 
+            , whole_i -> first . c_str ( ) 
+            ) 
+        ) ;
     so_called_platform_math :: make_num_whole ( * whole_i -> second . binding , whole_i -> second . max_value ) ;
 }
 
@@ -255,8 +226,7 @@ void shy_guts :: assign_module_value_fract
     if ( string_numerator . empty ( ) || string_denominator . empty ( ) )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
+        so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_fract_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
         if ( fract . min_set )
             shy_guts :: assign_module_value_fract_min ( module_i , fract_i ) ;
     }
@@ -269,8 +239,7 @@ void shy_guts :: assign_module_value_fract
         if ( int_denominator == 0 )
         {
             shy_guts :: error = so_called_lib_std_true ;
-            if ( shy_guts :: consts :: trace_enabled )
-                so_called_trace ( so_called_trace_loadable_consts_assigner :: zero_denominator_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
+            so_called_trace ( so_called_trace_loadable_consts_assigner :: zero_denominator_error ( module_name . c_str ( ) , fract_name . c_str ( ) ) ) ;
             if ( fract . min_set )
                 shy_guts :: assign_module_value_fract_min ( module_i , fract_i ) ;
         }
@@ -293,37 +262,31 @@ void shy_guts :: assign_module_value_fract_clamped
     if ( fract . min_set && value_numerator * fract . min_denominator < fract . min_numerator * value_denominator )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace
-                ( so_called_trace_loadable_consts_assigner :: module_attribute_fract_value_less_than_min_error
-                    ( module_name . c_str ( )
-                    , fract_name . c_str ( )
-                    , value_numerator
-                    , value_denominator
-                    , fract . min_numerator
-                    , fract . min_denominator
-                    )
-                ) ;
-        }
+        so_called_trace
+            ( so_called_trace_loadable_consts_assigner :: module_attribute_fract_value_less_than_min_error
+                ( module_name . c_str ( )
+                , fract_name . c_str ( )
+                , value_numerator
+                , value_denominator
+                , fract . min_numerator
+                , fract . min_denominator
+                )
+            ) ;
         shy_guts :: assign_module_value_fract_min ( module_i , fract_i ) ;
     }
     else if ( fract . max_set && value_numerator * fract . max_denominator > fract . max_numerator * value_denominator )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace
-                ( so_called_trace_loadable_consts_assigner :: module_attribute_fract_value_greater_than_max_error
-                    ( module_name . c_str ( )
-                    , fract_name . c_str ( )
-                    , value_numerator
-                    , value_denominator
-                    , fract . max_numerator
-                    , fract . max_denominator
-                    )
-                ) ;
-        }
+        so_called_trace
+            ( so_called_trace_loadable_consts_assigner :: module_attribute_fract_value_greater_than_max_error
+                ( module_name . c_str ( )
+                , fract_name . c_str ( )
+                , value_numerator
+                , value_denominator
+                , fract . max_numerator
+                , fract . max_denominator
+                )
+            ) ;
         shy_guts :: assign_module_value_fract_max ( module_i , fract_i ) ;
     }
     else
@@ -343,33 +306,27 @@ void shy_guts :: assign_module_value_whole_clamped
     if ( whole . min_set && value < whole . min_value )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace
-                ( so_called_trace_loadable_consts_assigner :: module_attribute_whole_value_less_than_min_error
-                    ( module_name . c_str ( )
-                    , whole_name . c_str ( )
-                    , value
-                    , whole . min_value
-                    )
-                ) ;
-        }
+        so_called_trace
+            ( so_called_trace_loadable_consts_assigner :: module_attribute_whole_value_less_than_min_error
+                ( module_name . c_str ( )
+                , whole_name . c_str ( )
+                , value
+                , whole . min_value
+                )
+            ) ;
         shy_guts :: assign_module_value_whole_min ( module_i , whole_i ) ;
     }
     else if ( whole . max_set && value > whole . max_value )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-        {
-            so_called_trace
-                ( so_called_trace_loadable_consts_assigner :: module_attribute_whole_value_greater_than_max_error
-                    ( module_name . c_str ( )
-                    , whole_name . c_str ( )
-                    , value
-                    , whole . max_value
-                    )
-                ) ;
-        }
+        so_called_trace
+            ( so_called_trace_loadable_consts_assigner :: module_attribute_whole_value_greater_than_max_error
+                ( module_name . c_str ( )
+                , whole_name . c_str ( )
+                , value
+                , whole . max_value
+                )
+            ) ;
         shy_guts :: assign_module_value_whole_max ( module_i , whole_i ) ;
     }
     else
@@ -392,8 +349,7 @@ void shy_guts :: assign_module_value_whole
     if ( string_value . empty ( ) )
     {
         shy_guts :: error = so_called_lib_std_true ;
-        if ( shy_guts :: consts :: trace_enabled )
-            so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ) ;
+        so_called_trace ( so_called_trace_loadable_consts_assigner :: no_value_assigned_to_module_attribute_whole_error ( module_name . c_str ( ) , whole_name . c_str ( ) ) ) ;
         if ( whole . min_set )
             shy_guts :: assign_module_value_whole_min ( module_i , whole_i ) ;
     }
