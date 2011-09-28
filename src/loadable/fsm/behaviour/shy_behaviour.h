@@ -203,45 +203,36 @@ shy_loadable_fsm_behaviour < fsm_inputs_type > :: fsm_state_type :: fsm_state_ty
 template < typename fsm_inputs_type >
 void shy_loadable_fsm_behaviour < fsm_inputs_type > :: fsm_state_type :: on_entry ( )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_entry )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_entry
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_entry
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            )
+        ) ;
     _execute_actions ( _state_i -> second . on_entry ) ;
 }
 
 template < typename fsm_inputs_type >
 void shy_loadable_fsm_behaviour < fsm_inputs_type > :: fsm_state_type :: on_exit ( )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_exit )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_exit
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_exit
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            )
+        ) ;
     _execute_actions ( _state_i -> second . on_exit ) ;
 }
 
 template < typename fsm_inputs_type >
 void shy_loadable_fsm_behaviour < fsm_inputs_type > :: fsm_state_type :: on_input ( )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_input )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_input
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_on_input
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            )
+        ) ;
     for ( so_called_loadable_fsm_content_on_input_container_type :: const_iterator on_input_i = _state_i -> second . on_input . begin ( )
         ; on_input_i != _state_i -> second . on_input . end ( )
         ; ++ on_input_i
@@ -472,17 +463,14 @@ void shy_loadable_fsm_behaviour < fsm_inputs_type >
 :: fsm_state_type 
 :: _execute_action_command ( so_called_loadable_fsm_content_action_command_container_type :: const_iterator command_i )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_command 
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                , command_i -> command . c_str ( )
-                , command_i -> machine . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_command 
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            , command_i -> command . c_str ( )
+            , command_i -> machine . c_str ( )
+            )
+        ) ;
 
     typename fsm_behaviour_input_command_container_type :: iterator fsm_behaviour_input_command_i ;
     typename fsm_behaviour_input_machine_container_type :: iterator fsm_behaviour_input_machine_i ;
@@ -501,16 +489,13 @@ void shy_loadable_fsm_behaviour < fsm_inputs_type >
 :: fsm_state_type 
 :: _execute_action_discard ( so_called_loadable_fsm_content_action_discard_container_type :: const_iterator action_discard_i )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_discard
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                , action_discard_i -> input . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_discard
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            , action_discard_i -> input . c_str ( )
+            )
+        ) ;
 
     so_called_loadable_fsm_content_input_binding_container_type :: const_iterator input_binding_i ;
     fsm_input_binding_type input_binding ;
@@ -528,16 +513,13 @@ void shy_loadable_fsm_behaviour < fsm_inputs_type >
 :: fsm_state_type 
 :: _execute_action_do ( so_called_loadable_fsm_content_action_do_container_type :: const_iterator action_do_i )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_action )
-    {
-        so_called_trace
-            ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_do
-                ( _machine_i -> first . c_str ( )
-                , _state_i -> first . c_str ( )
-                , action_do_i -> action . c_str ( )
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_loadable_fsm_behaviour :: machine_state_action_do
+            ( _machine_i -> first . c_str ( )
+            , _state_i -> first . c_str ( )
+            , action_do_i -> action . c_str ( )
+            )
+        ) ;
 
     so_called_loadable_fsm_content_action_binding_container_type :: const_iterator action_binding_i ;
     action_binding_i = _system_i -> second . actions . find ( action_do_i -> action ) ;
@@ -704,8 +686,7 @@ void shy_loadable_fsm_behaviour < fsm_inputs_type > :: set_inputs
 template < typename fsm_inputs_type >
 void shy_loadable_fsm_behaviour < fsm_inputs_type > :: tick_all_fsms ( )
 {
-    if ( so_called_loadable_fsm_behaviour_consts :: trace_tick )
-        so_called_trace ( so_called_trace_loadable_fsm_behaviour :: tick_all_fsms ( ) ) ;
+    so_called_trace ( so_called_trace_loadable_fsm_behaviour :: tick_all_fsms ( ) ) ;
     for ( typename fsm_machine_container_type :: iterator machine_i = _machines . begin ( )
         ; machine_i != _machines . end ( )
         ; ++ machine_i
