@@ -8,7 +8,6 @@ namespace shy_guts
         static const so_called_platform_math_num_fract_type fog_far_shift = so_called_platform_math :: init_num_fract ( 20 , 1 ) ;
         static const so_called_platform_math_num_fract_type fog_near_shift = so_called_platform_math :: init_num_fract ( 10 , 1 ) ;
         static const so_called_platform_math_num_whole_type fade_in_frames = so_called_platform_math :: init_num_whole ( 90 ) ;
-        static const so_called_platform_math_num_whole_type trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
     }
 
     static void clear_screen ( ) ;
@@ -202,8 +201,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_camera_matrix_re
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_camera_prepared_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: land_prepare_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: land_prepare_permitted ( ) ) ;
     so_called_common_logic_land_prepare_permit_sender :: send ( so_called_common_logic_land_prepare_permit_message ( ) ) ;
 }
 
@@ -240,8 +238,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_core_use_perspec
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_entities_prepared_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: image_prepare_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: image_prepare_permitted ( ) ) ;
     so_called_common_logic_image_prepare_permit_sender :: send ( so_called_common_logic_image_prepare_permit_message ( ) ) ;
 }
 
@@ -267,8 +264,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_fidget_render_re
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_game_launch_permit_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: game_launch_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: game_launch_permitted ( ) ) ;
     shy_guts :: game_launch_permitted = so_called_platform_math_consts :: whole_true ;
 }
 
@@ -289,8 +285,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_game_update_mess
     {
         if ( so_called_platform_conditions :: whole_is_false ( shy_guts :: game_launched ) )
         {
-            if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-                so_called_trace ( so_called_trace_common_logic_game :: camera_prepare_permitted ( ) ) ;
+            so_called_trace ( so_called_trace_common_logic_game :: camera_prepare_permitted ( ) ) ;
             so_called_common_logic_camera_prepare_permit_sender :: send ( so_called_common_logic_camera_prepare_permit_message ( ) ) ;
             shy_guts :: game_launched = so_called_platform_math_consts :: whole_true ;
         }
@@ -310,8 +305,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_game_update_mess
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_image_prepared_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: touch_prepare_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: touch_prepare_permitted ( ) ) ;
     so_called_common_logic_touch_prepare_permit_sender :: send ( so_called_common_logic_touch_prepare_permit_message ( ) ) ;
 }
 
@@ -327,8 +321,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_image_render_rep
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_land_prepared_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: entities_prepare_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: entities_prepare_permitted ( ) ) ;
     so_called_common_logic_entities_prepare_permit_sender :: send ( so_called_common_logic_entities_prepare_permit_message ( ) ) ;
 }
 
@@ -358,8 +351,7 @@ void _shy_common_logic_game :: receive ( so_called_common_logic_text_render_repl
 
 void _shy_common_logic_game :: receive ( so_called_common_logic_touch_prepared_message )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_game :: sound_prepare_permitted ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_game :: sound_prepare_permitted ( ) ) ;
     so_called_common_logic_sound_prepare_permit_sender :: send ( so_called_common_logic_sound_prepare_permit_message ( ) ) ;
 }
 
