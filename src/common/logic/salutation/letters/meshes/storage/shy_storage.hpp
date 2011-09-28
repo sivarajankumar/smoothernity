@@ -6,11 +6,6 @@ namespace shy_guts
         so_called_common_engine_render_mesh_id_type mesh ;
     } ;
 
-    namespace consts
-    {
-        static const so_called_platform_math_num_whole_type trace_enabled = so_called_platform_math :: init_num_whole ( so_called_lib_std_true ) ;
-    }
-
     static so_called_platform_static_array_data_type < entry_type , so_called_common_logic_salutation_letters_consts :: max_letters_int > entries_data ;
     static so_called_platform_math_num_whole_type entries_count ;
 
@@ -24,34 +19,27 @@ template < > _scheduled_context_type _scheduled_context_type :: _singleton = _sc
 
 void shy_guts :: trace_entries_in_use ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-    {
-        so_called_trace
-            ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entries_in_use
-                ( shy_guts :: entries_count
-                , so_called_common_logic_salutation_letters_consts :: max_letters
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entries_in_use
+            ( shy_guts :: entries_count
+            , so_called_common_logic_salutation_letters_consts :: max_letters
+            )
+        ) ;
 }
 
 void shy_guts :: trace_entries_overflow_error ( )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-        so_called_trace ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entries_overflow_error ( ) ) ;
+    so_called_trace ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entries_overflow_error ( ) ) ;
 }
 
 void shy_guts :: trace_entry_index_is_out_of_range_error ( so_called_platform_math_num_whole_type index )
 {
-    if ( so_called_platform_conditions :: whole_is_true ( shy_guts :: consts :: trace_enabled ) )
-    {
-        so_called_trace
-            ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entry_index_is_out_of_range_error
-                ( index
-                , shy_guts :: entries_count
-                )
-            ) ;
-    }
+    so_called_trace
+        ( so_called_trace_common_logic_salutation_letters_meshes_storage :: entry_index_is_out_of_range_error
+            ( index
+            , shy_guts :: entries_count
+            )
+        ) ;
 }
 
 void _shy_common_logic_salutation_letters_meshes_storage :: receive ( so_called_common_init_message )

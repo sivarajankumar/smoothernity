@@ -4,7 +4,6 @@
 #include "src/common/logic/salutation/letters/consts/shy_consts_injections.h"
 #include "src/common/logic/salutation/letters/meshes/storage/mesh/reply/sender/shy_sender_injections.h"
 #include "src/common/logic/salutation/letters/meshes/storage/size/reply/sender/shy_sender_injections.h"
-#include "src/injections/lib/std/true/shy_true.h"
 #include "src/injections/platform/conditions/shy_conditions.h"
 #include "src/injections/platform/math/consts/shy_consts.h"
 #include "src/injections/platform/math/shy_math.h"
