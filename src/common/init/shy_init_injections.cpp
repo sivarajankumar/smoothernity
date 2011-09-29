@@ -24,6 +24,8 @@
 #include "src/common/logic/entities/shy_entities_injections.h"
 #include "src/common/logic/fader/shy_fader_injections.h"
 #include "src/common/logic/fidget/shy_fidget_injections.h"
+#include "src/common/logic/font/mesh/generator/shy_generator_injections.h"
+#include "src/common/logic/font/texture/generator/shy_generator_injections.h"
 #include "src/common/logic/game/shy_game_injections.h"
 #include "src/common/logic/image/shy_image_injections.h"
 #include "src/common/logic/land/shy_land_injections.h"

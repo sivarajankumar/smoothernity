@@ -7,6 +7,8 @@
 #include "src/common/logic/application/render/message/shy_message_injections.h"
 #include "src/common/logic/application/update/message/shy_message_injections.h"
 #include "src/common/logic/fader/finished/message/shy_message_injections.h"
+#include "src/common/logic/font/mesh/generator/generate/finished/message/shy_message_injections.h"
+#include "src/common/logic/font/texture/generator/generate/finished/message/shy_message_injections.h"
 #include "src/common/logic/main/menu/created/message/shy_message_injections.h"
 #include "src/common/logic/main/menu/finished/message/shy_message_injections.h"
 #include "src/common/logic/salutation/letters/meshes/cleaner/clean/finished/message/shy_message_injections.h"
