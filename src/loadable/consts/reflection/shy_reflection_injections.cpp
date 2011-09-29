@@ -8,6 +8,7 @@
     #include "src/loadable/consts/reflection/logic/door/animation/shy_animation_injections.h"
     #include "src/loadable/consts/reflection/logic/fader/shy_fader_injections.h"
     #include "src/loadable/consts/reflection/logic/fidget/shy_fidget_injections.h"
+    #include "src/loadable/consts/reflection/logic/font/texture/shy_texture_injections.h"
     #include "src/loadable/consts/reflection/logic/main/menu/animation/shy_animation_injections.h"
     #include "src/loadable/consts/reflection/logic/main/menu/letters/animation/shy_animation_injections.h"
     #include "src/loadable/consts/reflection/logic/main/menu/letters/layout/shy_layout_injections.h"
