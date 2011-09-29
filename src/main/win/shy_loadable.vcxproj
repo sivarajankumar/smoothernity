@@ -135,6 +135,7 @@
     <ClCompile Include="..\..\loadable\consts\reflection\logic\door\shy_door_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\logic\fader\shy_fader_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\logic\fidget\shy_fidget_injections.cpp" />
+    <ClCompile Include="..\..\loadable\consts\reflection\logic\font\texture\shy_texture_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\animation\shy_animation_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\letters\animation\shy_animation_injections.cpp" />
     <ClCompile Include="..\..\loadable\consts\reflection\logic\main\menu\letters\layout\shy_layout_injections.cpp" />
