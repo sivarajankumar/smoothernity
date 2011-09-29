@@ -1,7 +1,12 @@
 system logic_application
     machine generator
         state initial
+            to font
+        state font
+            on entry
+                command start to font_generator
             to text
+                if { ( machine font_generator is finished ) }
         state text
             on entry
                 command start to text_generator
