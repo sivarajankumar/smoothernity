@@ -57,6 +57,8 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: inputs_current . logic_application_render = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_application_update = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_fader_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . logic_font_mesh_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . logic_font_texture_generator_generate_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_main_menu_created = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_main_menu_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished = so_called_platform_math_consts :: whole_false ;
@@ -113,6 +115,14 @@ void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_pl
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_fader_finished
             , shy_guts :: inputs_fixed . logic_fader_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_guts :: inputs_current . logic_font_mesh_generator_generate_finished 
+            , shy_guts :: inputs_fixed . logic_font_mesh_generator_generate_finished 
+            )
+      && so_called_platform_conditions :: wholes_are_equal 
+            ( shy_guts :: inputs_current . logic_font_texture_generator_generate_finished 
+            , shy_guts :: inputs_fixed . logic_font_texture_generator_generate_finished 
             )
       && so_called_platform_conditions :: wholes_are_equal 
             ( shy_guts :: inputs_current . logic_main_menu_created 
@@ -234,6 +244,16 @@ void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_appli
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_fader_finished_message )
 {
     shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_fader_finished ) ;
+}
+
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_font_mesh_generator_generate_finished_message )
+{
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_font_mesh_generator_generate_finished ) ;
+}
+
+void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_font_texture_generator_generate_finished_message )
+{
+    shy_guts :: run_fsm_event ( & so_called_common_logic_application_fsm_inputs_type :: logic_font_texture_generator_generate_finished ) ;
 }
 
 void _shy_common_logic_application_fsm :: receive ( so_called_common_logic_main_menu_created_message )

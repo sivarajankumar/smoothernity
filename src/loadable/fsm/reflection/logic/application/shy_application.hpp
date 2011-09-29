@@ -13,6 +13,10 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_action ( logic_fader_render ) ;
     shy_guts_bind_action ( logic_fader_start ) ;
     shy_guts_bind_action ( logic_fader_update ) ;
+    shy_guts_bind_action ( logic_font_mesh_generator_generate ) ;
+    shy_guts_bind_action ( logic_font_mesh_generator_update ) ;
+    shy_guts_bind_action ( logic_font_texture_generator_generate ) ;
+    shy_guts_bind_action ( logic_font_texture_generator_update ) ;
     shy_guts_bind_action ( logic_game_launch_permit ) ;
     shy_guts_bind_action ( logic_game_render ) ;
     shy_guts_bind_action ( logic_game_update ) ;
@@ -51,6 +55,8 @@ void shy_loadable_fsm_reflection_logic_application :: prepare ( )
     shy_guts_bind_input ( logic_application_render ) ;
     shy_guts_bind_input ( logic_application_update ) ;
     shy_guts_bind_input ( logic_fader_finished ) ;
+    shy_guts_bind_input ( logic_font_mesh_generator_generate_finished ) ;
+    shy_guts_bind_input ( logic_font_texture_generator_generate_finished ) ;
     shy_guts_bind_input ( logic_main_menu_created ) ;
     shy_guts_bind_input ( logic_main_menu_finished ) ;
     shy_guts_bind_input ( logic_salutation_letters_meshes_cleaner_clean_finished ) ;

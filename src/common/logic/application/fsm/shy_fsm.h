@@ -11,6 +11,8 @@ public :
     static void receive ( so_called_common_logic_application_render_message ) ;
     static void receive ( so_called_common_logic_application_update_message ) ;
     static void receive ( so_called_common_logic_fader_finished_message ) ;
+    static void receive ( so_called_common_logic_font_mesh_generator_generate_finished_message ) ;
+    static void receive ( so_called_common_logic_font_texture_generator_generate_finished_message ) ;
     static void receive ( so_called_common_logic_main_menu_created_message ) ;
     static void receive ( so_called_common_logic_main_menu_finished_message ) ;
     static void receive ( so_called_common_logic_salutation_letters_meshes_cleaner_clean_finished_message ) ;

@@ -6,6 +6,8 @@ public :
     so_called_platform_math_num_whole_type logic_application_render ;
     so_called_platform_math_num_whole_type logic_application_update ;
     so_called_platform_math_num_whole_type logic_fader_finished ;
+    so_called_platform_math_num_whole_type logic_font_mesh_generator_generate_finished ;
+    so_called_platform_math_num_whole_type logic_font_texture_generator_generate_finished ;
     so_called_platform_math_num_whole_type logic_main_menu_created ;
     so_called_platform_math_num_whole_type logic_main_menu_finished ;
     so_called_platform_math_num_whole_type logic_salutation_letters_meshes_cleaner_clean_finished ;

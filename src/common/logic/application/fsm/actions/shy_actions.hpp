@@ -33,6 +33,26 @@ void shy_common_logic_application_fsm_actions :: logic_fader_update ( )
     so_called_common_logic_fader_update_sender :: send ( so_called_common_logic_fader_update_message ( ) ) ;
 }
 
+void shy_common_logic_application_fsm_actions :: logic_font_mesh_generator_generate ( )
+{
+    so_called_common_logic_font_mesh_generator_generate_sender :: send ( so_called_common_logic_font_mesh_generator_generate_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_font_mesh_generator_update ( )
+{
+    so_called_common_logic_font_mesh_generator_update_sender :: send ( so_called_common_logic_font_mesh_generator_update_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_font_texture_generator_generate ( )
+{
+    so_called_common_logic_font_texture_generator_generate_sender :: send ( so_called_common_logic_font_texture_generator_generate_message ( ) ) ;
+}
+
+void shy_common_logic_application_fsm_actions :: logic_font_texture_generator_update ( )
+{
+    so_called_common_logic_font_texture_generator_update_sender :: send ( so_called_common_logic_font_texture_generator_update_message ( ) ) ;
+}
+
 void shy_common_logic_application_fsm_actions :: logic_game_launch_permit ( )
 {
     so_called_common_logic_game_launch_permit_sender :: send ( so_called_common_logic_game_launch_permit_message ( ) ) ;
