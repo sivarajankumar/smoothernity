@@ -2,7 +2,7 @@
 #define _shy_platform_pointer_injections_included
 
 #include "src/injections/platform/math/insider/shy_insider.h"
-#include "src/injections/platform/pointer/profile/shy_profile.h"
+#include "src/profile/platform/pointer/shy_pointer_injections.h"
 #include "src/profile/shy_profile_injections.h"
 
 #include "./shy_pointer.h"

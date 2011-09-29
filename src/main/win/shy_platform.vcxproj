@@ -121,7 +121,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="platform\conditions\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\conditions\shy_conditions_injections.cpp" />
     <ClCompile Include="platform\generator\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\generator\shy_generator_injections.cpp" />
@@ -129,23 +128,18 @@
     <ClCompile Include="platform\math\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\math\num\fract\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\math\num\whole\type\shy_type_injections.cpp" />
-    <ClCompile Include="platform\math\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\math\shy_math_injections.cpp" />
     <ClCompile Include="platform\matrix\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\matrix\insider\shy_insider_injections.cpp" />
-    <ClCompile Include="platform\matrix\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\matrix\shy_matrix_injections.cpp" />
     <ClCompile Include="platform\mouse\insider\shy_insider_injections.cpp" />
-    <ClCompile Include="platform\mouse\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\mouse\shy_mouse_injections.cpp" />
-    <ClCompile Include="platform\pointer\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\profile\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\render\index\buffer\id\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\index\buffer\mapped\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\index\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\insider\shy_insider_injections.cpp" />
-    <ClCompile Include="platform\render\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\render\shy_render_injections.cpp" />
     <ClCompile Include="platform\render\texel\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\texture\id\type\shy_type_injections.cpp" />
@@ -154,28 +148,23 @@
     <ClCompile Include="platform\render\vertex\buffer\id\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\vertex\buffer\mapped\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\render\vertex\data\type\shy_type_injections.cpp" />
-    <ClCompile Include="platform\scheduler\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp" />
     <ClCompile Include="platform\scheduler\trace\shy_trace_injections.cpp" />
     <ClCompile Include="platform\sound\buffer\id\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp" />
     <ClCompile Include="platform\sound\loader\stereo\resource\id\type\shy_type_injections.cpp" />
-    <ClCompile Include="platform\sound\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\sound\sample\mono\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\sample\stereo\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\sound\shy_sound_injections.cpp" />
     <ClCompile Include="platform\sound\source\id\type\shy_type_injections.cpp" />
-    <ClCompile Include="platform\static\array\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\terminal\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\touch\insider\shy_insider_injections.cpp" />
-    <ClCompile Include="platform\touch\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\touch\shy_touch_injections.cpp" />
     <ClCompile Include="platform\trace\consts\shy_consts_injections.cpp" />
     <ClCompile Include="platform\trace\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\trace\shy_trace_injections.cpp" />
     <ClCompile Include="platform\vector\data\type\shy_type_injections.cpp" />
     <ClCompile Include="platform\vector\insider\shy_insider_injections.cpp" />
-    <ClCompile Include="platform\vector\profile\shy_profile_injections.cpp" />
     <ClCompile Include="platform\vector\shy_vector_injections.cpp" />
     <ClCompile Include="shy_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

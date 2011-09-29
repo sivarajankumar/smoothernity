@@ -3,7 +3,7 @@
 
 #include "src/injections/platform/math/insider/shy_insider.h"
 #include "src/injections/platform/pointer/shy_pointer.h"
-#include "src/injections/platform/static/array/profile/shy_profile.h"
+#include "src/profile/platform/static/array/shy_array_injections.h"
 #include "src/profile/shy_profile_injections.h"
 
 #include "./shy_array.h"

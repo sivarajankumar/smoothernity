@@ -136,6 +136,17 @@
   <ItemGroup>
     <ClCompile Include="..\..\facade\shy_facade_injections.cpp" />
     <ClCompile Include="..\..\profile\init\shy_init_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\conditions\shy_conditions_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\math\shy_math_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\marix\shy_marix_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\mouse\shy_mouse_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\pointer\shy_pointer_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\render\shy_render_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\scheduler\shy_scheduler_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\sound\shy_sound_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\static\array\shy_array_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\touch\shy_touch_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\vector\shy_vector_injections.cpp" />
     <ClCompile Include="DXUT\Core\DXUT.cpp" />
     <ClCompile Include="DXUT\Core\DXUTDevice11.cpp" />
     <ClCompile Include="DXUT\Core\DXUTDevice9.cpp" />
