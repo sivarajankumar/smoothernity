@@ -5,4 +5,4 @@ consts logic_fader
     color_end_r 0 / 1
     color_end_g 0 / 1
     color_end_b 0 / 1
-    fade_time 8 / 10
+    fade_time 19 / 10
