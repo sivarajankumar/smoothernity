@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\common\logic\fidget\render\request\sender\shy_sender_injections.cpp" />
     <ClCompile Include="..\..\common\logic\fidget\shy_fidget_injections.cpp" />
     <ClCompile Include="..\..\common\logic\fidget\update\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\font\mesh\consts\shy_consts_injections.cpp" />
     <ClCompile Include="..\..\common\logic\font\mesh\generator\generate\finished\sender\shy_sender_injections.cpp" />
     <ClCompile Include="..\..\common\logic\font\mesh\generator\generate\sender\shy_sender_injections.cpp" />
     <ClCompile Include="..\..\common\logic\font\mesh\generator\shy_generator_injections.cpp" />
