@@ -27,6 +27,10 @@ namespace shy_guts
         , so_called_platform_math_num_whole_type x_radius
         , so_called_platform_math_num_whole_type y_radius 
         ) ;
+    static void to_global_space
+        ( so_called_platform_math_num_whole_type & x
+        , so_called_platform_math_num_whole_type & y
+        ) ;
 
     static so_called_common_engine_render_texture_id_type texture_id ;
     static so_called_platform_render_texel_data_type texel ;
@@ -36,6 +40,28 @@ namespace shy_guts
 
 typedef so_called_platform_scheduler :: scheduled_context < _shy_common_engine_rasterizer , 1000 > _scheduled_context_type ;
 template < > _scheduled_context_type _scheduled_context_type :: _singleton = _scheduled_context_type ( ) ;
+
+void shy_guts :: to_global_space
+    ( so_called_platform_math_num_whole_type & x
+    , so_called_platform_math_num_whole_type & y
+    )
+{
+    so_called_platform_math_num_whole_type x_new ;
+    so_called_platform_math_num_whole_type y_new ;
+    so_called_platform_math :: add_wholes ( x , x , shy_guts :: origin_x ) ;
+    so_called_platform_math :: add_wholes ( y , y , shy_guts :: origin_y ) ;
+    x_new = x ;
+    y_new = y ;
+    so_called_common_engine_render_stateless :: clamp_texture_coords ( x_new , y_new ) ;
+    if ( ! so_called_platform_conditions :: wholes_are_equal ( x , x_new )
+      || ! so_called_platform_conditions :: wholes_are_equal ( y , y_new )
+       )
+    {
+        so_called_trace ( so_called_trace_common_engine_rasterizer :: coords_out_of_range_error ( x , y ) ) ;
+    }
+    x = x_new ;
+    y = y_new ;
+}
 
 void shy_guts :: rasterize_horizontal_line 
     ( so_called_platform_math_num_whole_type x1
@@ -315,10 +341,10 @@ void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasteriz
     so_called_common_engine_math_stateless :: max_whole ( right , msg . x1 , msg . x2 ) ;
     so_called_common_engine_math_stateless :: min_whole ( bottom , msg . y1 , msg . y2 ) ;
     so_called_common_engine_math_stateless :: max_whole ( top , msg . y1 , msg . y2 ) ;
-    so_called_platform_math :: add_to_whole ( left , shy_guts :: origin_x ) ;
-    so_called_platform_math :: add_to_whole ( right , shy_guts :: origin_x ) ;
-    so_called_platform_math :: add_to_whole ( bottom , shy_guts :: origin_y ) ;
-    so_called_platform_math :: add_to_whole ( top , shy_guts :: origin_y ) ;
+
+    shy_guts :: to_global_space ( left , bottom ) ;
+    shy_guts :: to_global_space ( right , top ) ;
+
     {
         so_called_common_engine_render_texture_set_texels_rect_message texture_set_texels_rect_msg ;
         texture_set_texels_rect_msg . left = left ;
