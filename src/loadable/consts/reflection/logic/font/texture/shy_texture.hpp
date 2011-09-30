@@ -44,6 +44,6 @@ void shy_loadable_consts_reflection_logic_font_texture :: prepare ( )
     shy_guts_bind_value_max ( 1 , 1 ) ;
 
     shy_guts_bind_value ( time_between_letters_creation ) ;
-    shy_guts_bind_value_min ( 1 , 100 ) ;
-    shy_guts_bind_value_max ( 100 , 1 ) ;
+    shy_guts_bind_value_min ( 1 , 1000 ) ;
+    shy_guts_bind_value_max ( 1 , 1 ) ;
 }
