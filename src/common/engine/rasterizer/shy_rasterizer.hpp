@@ -74,9 +74,6 @@ void shy_guts :: rasterize_horizontal_line
 
     so_called_common_engine_math_stateless :: min_whole ( left , x1 , x2 ) ;
     so_called_common_engine_math_stateless :: max_whole ( right , x1 , x2 ) ;
-    so_called_platform_math :: add_to_whole ( left , origin_x ) ;
-    so_called_platform_math :: add_to_whole ( right , origin_x ) ;
-    so_called_platform_math :: add_to_whole ( y , origin_y ) ;
 
     {
         so_called_common_engine_render_texture_set_texels_rect_message texture_set_texels_rect_msg ;
@@ -305,6 +302,10 @@ void shy_guts :: rasterize_bresenham_ellipse
 
 void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasterizer_draw_ellipse_in_rect_message msg )
 {
+    so_called_platform_math_num_whole_type x1 ;
+    so_called_platform_math_num_whole_type x2 ;
+    so_called_platform_math_num_whole_type y1 ;
+    so_called_platform_math_num_whole_type y2 ;
     so_called_platform_math_num_whole_type width ;
     so_called_platform_math_num_whole_type height ;
     so_called_platform_math_num_whole_type y_center ;
@@ -312,12 +313,20 @@ void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasteriz
     so_called_platform_math_num_whole_type x_diff ;
     so_called_platform_math_num_whole_type y_diff ;
 
-    so_called_platform_math :: add_wholes ( y_center , msg . y1 , msg . y2 ) ;
+    x1 = msg . x1 ;
+    x2 = msg . x2 ;
+    y1 = msg . y1 ;
+    y2 = msg . y2 ;
+
+    shy_guts :: to_global_space ( x1 , y1 ) ;
+    shy_guts :: to_global_space ( x2 , y2 ) ;
+
+    so_called_platform_math :: add_wholes ( y_center , y1 , y2 ) ;
     so_called_platform_math :: div_whole_by ( y_center , so_called_platform_math_consts :: whole_2 ) ;
-    so_called_platform_math :: add_wholes ( x_center , msg . x1 , msg . x2 ) ;
+    so_called_platform_math :: add_wholes ( x_center , x1 , x2 ) ;
     so_called_platform_math :: div_whole_by ( x_center , so_called_platform_math_consts :: whole_2 ) ;
-    so_called_platform_math :: sub_wholes ( x_diff , msg . x1 , msg . x2 ) ;
-    so_called_platform_math :: sub_wholes ( y_diff , msg . y1 , msg . y2 ) ;
+    so_called_platform_math :: sub_wholes ( x_diff , x1 , x2 ) ;
+    so_called_platform_math :: sub_wholes ( y_diff , y1 , y2 ) ;
     so_called_common_engine_math_stateless :: abs_whole ( width , x_diff ) ;
     so_called_common_engine_math_stateless :: abs_whole ( height , y_diff ) ;
     
@@ -365,6 +374,10 @@ void _shy_common_engine_rasterizer :: receive ( so_called_common_engine_rasteriz
     so_called_platform_math_num_whole_type y2 = msg . y2 ;
     so_called_platform_math_num_whole_type x3 = msg . x3 ;
     so_called_platform_math_num_whole_type y3 = msg . y3 ;
+
+    shy_guts :: to_global_space ( x1 , y1 ) ;
+    shy_guts :: to_global_space ( x2 , y2 ) ;
+    shy_guts :: to_global_space ( x3 , y3 ) ;
 
     if ( so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y1 , y2 ) 
       && so_called_platform_conditions :: whole_greater_or_equal_to_whole ( y2 , y3 )
