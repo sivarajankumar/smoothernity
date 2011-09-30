@@ -15,4 +15,8 @@ public :
         , so_called_platform_math_num_fract_type b
         , so_called_platform_math_num_fract_type a 
         ) ;
+    static void clamp_texture_coords
+        ( so_called_platform_math_num_whole_type & x
+        , so_called_platform_math_num_whole_type & y
+        ) ;
 } ;

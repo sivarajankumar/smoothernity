@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\trace\common\engine\rasterizer\shy_rasterizer_injections.cpp" />
     <ClCompile Include="..\..\trace\common\engine\render\shy_render_injections.cpp" />
     <ClCompile Include="..\..\trace\common\logic\game\shy_game_injections.cpp" />
     <ClCompile Include="..\..\trace\common\logic\salutation\letters\meshes\storage\shy_storage_injections.cpp" />
