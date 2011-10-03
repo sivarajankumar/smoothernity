@@ -130,6 +130,21 @@ void shy_platform_trace_cerr :: trace_num_fract
     so_called_lib_std_cerr << str_end ;
 }
 
+void shy_platform_trace_cerr :: trace_num_fract ( so_called_platform_math_num_fract_type value )
+{
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
+    so_called_lib_std_float value_float = 0 ;
+
+    so_called_platform_math_insider :: num_fract_value_get ( value_float , value ) ;
+    so_called_platform_trace_consts :: number_begin ( str_begin ) ;
+    so_called_platform_trace_consts :: number_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
+    so_called_lib_std_cerr << value_float ;
+    so_called_lib_std_cerr << str_end ;
+}
+
 void shy_platform_trace_cerr :: trace_num_fract_error
     ( so_called_platform_math_const_int_32_type numerator
     , so_called_platform_math_const_int_32_type denominator
@@ -145,6 +160,21 @@ void shy_platform_trace_cerr :: trace_num_fract_error
     so_called_lib_std_cerr << numerator ;
     so_called_lib_std_cerr << shy_guts :: consts :: divide ;
     so_called_lib_std_cerr << denominator ;
+    so_called_lib_std_cerr << str_end ;
+}
+
+void shy_platform_trace_cerr :: trace_num_fract_error ( so_called_platform_math_num_fract_type value )
+{
+    so_called_lib_std_string str_begin ;
+    so_called_lib_std_string str_end ;
+    so_called_lib_std_float value_float = 0 ;
+
+    so_called_platform_math_insider :: num_fract_value_get ( value_float , value ) ;
+    so_called_platform_trace_consts :: number_error_begin ( str_begin ) ;
+    so_called_platform_trace_consts :: number_error_end ( str_end ) ;
+
+    so_called_lib_std_cerr << str_begin ;
+    so_called_lib_std_cerr << value_float ;
     so_called_lib_std_cerr << str_end ;
 }
 
