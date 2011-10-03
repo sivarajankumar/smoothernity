@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\trace\loadable\fsm\assigner\shy_assigner_injections.cpp" />
     <ClCompile Include="..\..\trace\loadable\fsm\behaviour\shy_behaviour_injections.cpp" />
     <ClCompile Include="..\..\trace\loadable\parser\shy_parser_injections.cpp" />
+    <ClCompile Include="..\..\trace\platform\math\shy_math_injections.cpp" />
     <ClCompile Include="shy_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
