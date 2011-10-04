@@ -68,6 +68,14 @@ void _shy_common_logic_application_fsm :: reset_input_events ( )
     shy_guts :: inputs_current . logic_salutation_timer_appear_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_salutation_timer_disappear_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: inputs_current . logic_text_prepared = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_amusement_disabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_amusement_enabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_fader_disabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_fader_enabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_main_menu_disabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_main_menu_enabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_salutation_disabled = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: inputs_current . stage_salutation_enabled = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
@@ -96,108 +104,56 @@ void _shy_common_logic_application_fsm :: recalc_current_inputs ( )
 
 void _shy_common_logic_application_fsm :: determine_inputs_change ( so_called_platform_math_num_whole_type & inputs_changed )
 {
-    if ( so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_amusement_created 
-            , shy_guts :: inputs_fixed . logic_amusement_created 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_amusement_finished 
-            , shy_guts :: inputs_fixed . logic_amusement_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_application_render 
-            , shy_guts :: inputs_fixed . logic_application_render 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_application_update 
-            , shy_guts :: inputs_fixed . logic_application_update 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_fader_finished
-            , shy_guts :: inputs_fixed . logic_fader_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_font_mesh_generator_generate_finished 
-            , shy_guts :: inputs_fixed . logic_font_mesh_generator_generate_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_font_texture_generator_generate_finished 
-            , shy_guts :: inputs_fixed . logic_font_texture_generator_generate_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_main_menu_created 
-            , shy_guts :: inputs_fixed . logic_main_menu_created 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_main_menu_finished 
-            , shy_guts :: inputs_fixed . logic_main_menu_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_letters_meshes_cleaner_clean_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_letters_meshes_generator_generate_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_letters_meshes_generator_generate_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_letters_text_cleaner_clean_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_letters_text_cleaner_clean_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_letters_text_generator_generate_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_letters_text_generator_generate_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_timer_appear_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_timer_appear_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_salutation_timer_disappear_finished 
-            , shy_guts :: inputs_fixed . logic_salutation_timer_disappear_finished 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . logic_text_prepared 
-            , shy_guts :: inputs_fixed . logic_text_prepared 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_amusement_disabled 
-            , shy_guts :: inputs_fixed . stage_amusement_disabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_amusement_enabled 
-            , shy_guts :: inputs_fixed . stage_amusement_enabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_fader_disabled 
-            , shy_guts :: inputs_fixed . stage_fader_disabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_fader_enabled 
-            , shy_guts :: inputs_fixed . stage_fader_enabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_main_menu_disabled 
-            , shy_guts :: inputs_fixed . stage_main_menu_disabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_main_menu_enabled 
-            , shy_guts :: inputs_fixed . stage_main_menu_enabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_salutation_disabled 
-            , shy_guts :: inputs_fixed . stage_salutation_disabled 
-            )
-      && so_called_platform_conditions :: wholes_are_equal 
-            ( shy_guts :: inputs_current . stage_salutation_enabled 
-            , shy_guts :: inputs_fixed . stage_salutation_enabled 
-            )
-       )
-    {
-        inputs_changed = so_called_platform_math_consts :: whole_false ;
-    }
-    else
+    if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_amusement_created , shy_guts :: inputs_fixed . logic_amusement_created ) )
         inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_amusement_finished , shy_guts :: inputs_fixed . logic_amusement_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_application_render , shy_guts :: inputs_fixed . logic_application_render ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_application_update , shy_guts :: inputs_fixed . logic_application_update ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_fader_finished , shy_guts :: inputs_fixed . logic_fader_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_font_mesh_generator_generate_finished , shy_guts :: inputs_fixed . logic_font_mesh_generator_generate_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_font_texture_generator_generate_finished , shy_guts :: inputs_fixed . logic_font_texture_generator_generate_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_main_menu_created , shy_guts :: inputs_fixed . logic_main_menu_created ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_main_menu_finished , shy_guts :: inputs_fixed . logic_main_menu_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_letters_meshes_cleaner_clean_finished , shy_guts :: inputs_fixed . logic_salutation_letters_meshes_cleaner_clean_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_letters_meshes_generator_generate_finished , shy_guts :: inputs_fixed . logic_salutation_letters_meshes_generator_generate_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_letters_text_cleaner_clean_finished , shy_guts :: inputs_fixed . logic_salutation_letters_text_cleaner_clean_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_letters_text_generator_generate_finished , shy_guts :: inputs_fixed . logic_salutation_letters_text_generator_generate_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_timer_appear_finished , shy_guts :: inputs_fixed . logic_salutation_timer_appear_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_salutation_timer_disappear_finished , shy_guts :: inputs_fixed . logic_salutation_timer_disappear_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . logic_text_prepared , shy_guts :: inputs_fixed . logic_text_prepared ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_amusement_disabled , shy_guts :: inputs_fixed . stage_amusement_disabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_amusement_enabled , shy_guts :: inputs_fixed . stage_amusement_enabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_fader_disabled , shy_guts :: inputs_fixed . stage_fader_disabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_fader_enabled , shy_guts :: inputs_fixed . stage_fader_enabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_main_menu_disabled , shy_guts :: inputs_fixed . stage_main_menu_disabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_main_menu_enabled , shy_guts :: inputs_fixed . stage_main_menu_enabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_salutation_disabled , shy_guts :: inputs_fixed . stage_salutation_disabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: inputs_current . stage_salutation_enabled , shy_guts :: inputs_fixed . stage_salutation_enabled ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else
+        inputs_changed = so_called_platform_math_consts :: whole_false ;
 }
 
 void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
@@ -208,6 +164,7 @@ void _shy_common_logic_application_fsm :: update_fixed_inputs ( )
 void _shy_common_logic_application_fsm :: receive ( so_called_common_init_message )
 {
     reset_input_events ( ) ;
+    update_fixed_inputs ( ) ;
 
     shy_guts :: stabilized = so_called_platform_math_consts :: whole_false ;
 
