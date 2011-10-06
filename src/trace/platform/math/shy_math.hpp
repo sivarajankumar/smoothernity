@@ -11,7 +11,7 @@ void shy_trace_platform_math :: check_num_fract_uninitialized ( so_called_platfo
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
-        so_called_lib_std_bool uninitialized = false ;
+        so_called_lib_std_bool uninitialized = so_called_lib_std_false ;
         so_called_platform_math_insider :: num_fract_uninitialized ( uninitialized , value ) ;
         if ( uninitialized )
         {
@@ -26,7 +26,7 @@ void shy_trace_platform_math :: check_num_whole_uninitialized ( so_called_platfo
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
-        so_called_lib_std_bool uninitialized = false ;
+        so_called_lib_std_bool uninitialized = so_called_lib_std_false ;
         so_called_platform_math_insider :: num_whole_uninitialized ( uninitialized , value ) ;
         if ( uninitialized )
         {
