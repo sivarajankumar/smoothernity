@@ -1432,23 +1432,23 @@ void so_called_common_logic_application_fsm_behaviour_static :: recalc_current_b
 void so_called_common_logic_application_fsm_behaviour_static :: reset_behaviour_input_events ( )
 {
     shy_guts :: behaviour_inputs_current . machine_amusement_generator_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_amusement_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_amusement_performer_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_font_generator_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_font_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_game_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_main_menu_generator_command_start = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_main_menu_performer_command_start = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_salutation_generator_command_start = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_salutation_performer_command_start = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_text_generator_command_start = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_amusement_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
-    shy_guts :: behaviour_inputs_current . machine_font_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_main_menu_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_main_menu_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_main_menu_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_salutation_generator_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_salutation_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_salutation_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_salutation_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_text_generator_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_text_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
 }
 
