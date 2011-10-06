@@ -1272,93 +1272,52 @@ void shy_guts :: behaviour_actions :: text_generator_command_start ( )
 
 void so_called_common_logic_application_fsm_behaviour_static :: determine_behaviour_inputs_change ( so_called_platform_math_num_whole_type & inputs_changed )
 {
-    if ( so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_amusement_generator_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_amusement_generator_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_amusement_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_amusement_generator_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_amusement_performer_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_amusement_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_amusement_performer_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_font_generator_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_font_generator_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_font_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_font_generator_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_game_performer_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_game_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_main_menu_generator_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_main_menu_generator_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_main_menu_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_main_menu_generator_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_main_menu_performer_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_main_menu_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_main_menu_performer_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_main_menu_performer_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_salutation_generator_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_salutation_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_salutation_performer_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_salutation_performer_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_salutation_performer_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_salutation_performer_state_is_finished
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_text_generator_command_start
-            , shy_guts :: behaviour_inputs_fixed . machine_text_generator_command_start
-            )
-      && so_called_platform_conditions :: wholes_are_equal
-            ( shy_guts :: behaviour_inputs_current . machine_text_generator_state_is_finished
-            , shy_guts :: behaviour_inputs_fixed . machine_text_generator_state_is_finished
-            )
-       )
-    {
-        inputs_changed = so_called_platform_math_consts :: whole_false ;
-    }
-    else
+    if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_amusement_generator_command_start , shy_guts :: behaviour_inputs_fixed . machine_amusement_generator_command_start ) )
         inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_amusement_generator_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_amusement_generator_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_amusement_performer_command_start , shy_guts :: behaviour_inputs_fixed . machine_amusement_performer_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_amusement_performer_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_fader_performer_command_start , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_fader_performer_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_font_generator_command_start , shy_guts :: behaviour_inputs_fixed . machine_font_generator_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_font_generator_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_font_generator_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_game_performer_command_start , shy_guts :: behaviour_inputs_fixed . machine_game_performer_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_main_menu_generator_command_start , shy_guts :: behaviour_inputs_fixed . machine_main_menu_generator_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_main_menu_generator_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_main_menu_generator_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_main_menu_performer_command_start , shy_guts :: behaviour_inputs_fixed . machine_main_menu_performer_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_main_menu_performer_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_main_menu_performer_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_salutation_generator_command_start , shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_salutation_generator_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_salutation_generator_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_salutation_performer_command_start , shy_guts :: behaviour_inputs_fixed . machine_salutation_performer_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_salutation_performer_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_salutation_performer_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_text_generator_command_start , shy_guts :: behaviour_inputs_fixed . machine_text_generator_command_start ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else if ( ! so_called_platform_conditions :: wholes_are_equal ( shy_guts :: behaviour_inputs_current . machine_text_generator_state_is_finished , shy_guts :: behaviour_inputs_fixed . machine_text_generator_state_is_finished ) )
+        inputs_changed = so_called_platform_math_consts :: whole_true ;
+    else
+        inputs_changed = so_called_platform_math_consts :: whole_false ;
 }
 
 void so_called_common_logic_application_fsm_behaviour_static :: init ( )
 {
     reset_behaviour_input_events ( ) ;
+    update_fixed_behaviour_inputs ( ) ;
 
     shy_guts :: fsm_running = so_called_platform_math_consts :: whole_false ;
 
@@ -1482,6 +1441,15 @@ void so_called_common_logic_application_fsm_behaviour_static :: reset_behaviour_
     shy_guts :: behaviour_inputs_current . machine_salutation_generator_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_salutation_performer_command_start = so_called_platform_math_consts :: whole_false ;
     shy_guts :: behaviour_inputs_current . machine_text_generator_command_start = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_amusement_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_amusement_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_fader_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_font_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_main_menu_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_main_menu_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_salutation_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_salutation_performer_state_is_finished = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: behaviour_inputs_current . machine_text_generator_state_is_finished = so_called_platform_math_consts :: whole_false ;
 }
 
 void so_called_common_logic_application_fsm_behaviour_static :: run_fsm_begin ( )
