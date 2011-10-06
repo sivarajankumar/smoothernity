@@ -3434,10 +3434,6 @@
 		88CE7BC3143B5B33008A8853 /* shy_parser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B8D143B5B33008A8853 /* shy_parser.hpp */; };
 		88CE7BC4143B5B33008A8853 /* shy_parser_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88CE7B8E143B5B33008A8853 /* shy_parser_injections.cpp */; };
 		88CE7BC5143B5B33008A8853 /* shy_parser_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B8F143B5B33008A8853 /* shy_parser_injections.h */; };
-		88CE7BC6143B5B33008A8853 /* shy_conditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B92143B5B33008A8853 /* shy_conditions.h */; };
-		88CE7BC7143B5B33008A8853 /* shy_conditions.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B93143B5B33008A8853 /* shy_conditions.hpp */; };
-		88CE7BC8143B5B33008A8853 /* shy_conditions_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88CE7B94143B5B33008A8853 /* shy_conditions_injections.cpp */; };
-		88CE7BC9143B5B33008A8853 /* shy_conditions_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B95143B5B33008A8853 /* shy_conditions_injections.h */; };
 		88CE7BCA143B5B33008A8853 /* shy_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B97143B5B33008A8853 /* shy_math.h */; };
 		88CE7BCB143B5B33008A8853 /* shy_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88CE7B98143B5B33008A8853 /* shy_math.hpp */; };
 		88CE7BCC143B5B33008A8853 /* shy_math_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88CE7B99143B5B33008A8853 /* shy_math_injections.cpp */; };
@@ -6887,10 +6883,6 @@
 		88CE7B8D143B5B33008A8853 /* shy_parser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_parser.hpp; sourceTree = "<group>"; };
 		88CE7B8E143B5B33008A8853 /* shy_parser_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_parser_injections.cpp; sourceTree = "<group>"; };
 		88CE7B8F143B5B33008A8853 /* shy_parser_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_parser_injections.h; sourceTree = "<group>"; };
-		88CE7B92143B5B33008A8853 /* shy_conditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_conditions.h; sourceTree = "<group>"; };
-		88CE7B93143B5B33008A8853 /* shy_conditions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_conditions.hpp; sourceTree = "<group>"; };
-		88CE7B94143B5B33008A8853 /* shy_conditions_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_conditions_injections.cpp; sourceTree = "<group>"; };
-		88CE7B95143B5B33008A8853 /* shy_conditions_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_conditions_injections.h; sourceTree = "<group>"; };
 		88CE7B97143B5B33008A8853 /* shy_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_math.h; sourceTree = "<group>"; };
 		88CE7B98143B5B33008A8853 /* shy_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_math.hpp; sourceTree = "<group>"; };
 		88CE7B99143B5B33008A8853 /* shy_math_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_math_injections.cpp; sourceTree = "<group>"; };
@@ -24853,22 +24845,10 @@
 		88CE7B90143B5B33008A8853 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				88CE7B91143B5B33008A8853 /* conditions */,
 				88CE7B96143B5B33008A8853 /* math */,
 				88CE7B9B143B5B33008A8853 /* scheduler */,
 			);
 			path = platform;
-			sourceTree = "<group>";
-		};
-		88CE7B91143B5B33008A8853 /* conditions */ = {
-			isa = PBXGroup;
-			children = (
-				88CE7B92143B5B33008A8853 /* shy_conditions.h */,
-				88CE7B93143B5B33008A8853 /* shy_conditions.hpp */,
-				88CE7B94143B5B33008A8853 /* shy_conditions_injections.cpp */,
-				88CE7B95143B5B33008A8853 /* shy_conditions_injections.h */,
-			);
-			path = conditions;
 			sourceTree = "<group>";
 		};
 		88CE7B96143B5B33008A8853 /* math */ = {
@@ -27718,9 +27698,6 @@
 				88CE7BC2143B5B33008A8853 /* shy_parser.h in Headers */,
 				88CE7BC3143B5B33008A8853 /* shy_parser.hpp in Headers */,
 				88CE7BC5143B5B33008A8853 /* shy_parser_injections.h in Headers */,
-				88CE7BC6143B5B33008A8853 /* shy_conditions.h in Headers */,
-				88CE7BC7143B5B33008A8853 /* shy_conditions.hpp in Headers */,
-				88CE7BC9143B5B33008A8853 /* shy_conditions_injections.h in Headers */,
 				88CE7BCA143B5B33008A8853 /* shy_math.h in Headers */,
 				88CE7BCB143B5B33008A8853 /* shy_math.hpp in Headers */,
 				88CE7BCD143B5B33008A8853 /* shy_math_injections.h in Headers */,
@@ -28444,7 +28421,6 @@
 				88CE7BBC143B5B33008A8853 /* shy_assigner_injections.cpp in Sources */,
 				88CE7BC0143B5B33008A8853 /* shy_behaviour_injections.cpp in Sources */,
 				88CE7BC4143B5B33008A8853 /* shy_parser_injections.cpp in Sources */,
-				88CE7BC8143B5B33008A8853 /* shy_conditions_injections.cpp in Sources */,
 				88CE7BCC143B5B33008A8853 /* shy_math_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
