@@ -60,6 +60,7 @@ void shy_guts :: engine_render_aspect_state :: on_reply ( )
 
 void _shy_common_logic_salutation_letters_animation_layout :: receive ( so_called_common_init_message )
 {
+    shy_guts :: engine_render_aspect_state :: taker . init ( ) ;
     shy_guts :: logic_salutation_letters_meshes_storage_size_state :: taker . init ( ) ;
 }
 

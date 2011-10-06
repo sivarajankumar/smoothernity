@@ -51,15 +51,16 @@ void shy_common_engine_taker < checker_type , message_reply_type , message_reque
     , message_reply_type msg
     )
 {
-    so_called_platform_math_num_whole_type match ;
-    checker_type :: check ( match , msg_request , msg ) ;
-    if ( so_called_platform_conditions :: whole_is_true ( _requested ) 
-      && so_called_platform_conditions :: whole_is_true ( match )
-       )
+    if ( so_called_platform_conditions :: whole_is_true ( _requested ) )
     {
-        _requested = so_called_platform_math_consts :: whole_false ;
-        msg_reply = msg ;
-        result = so_called_platform_math_consts :: whole_true ;
+        so_called_platform_math_num_whole_type match ;
+        checker_type :: check ( match , msg_request , msg ) ;
+        if ( so_called_platform_conditions :: whole_is_true ( match ) )
+        {
+            _requested = so_called_platform_math_consts :: whole_false ;
+            msg_reply = msg ;
+            result = so_called_platform_math_consts :: whole_true ;
+        }
     }
     else
         result = so_called_platform_math_consts :: whole_false ;

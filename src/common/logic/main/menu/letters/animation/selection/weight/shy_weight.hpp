@@ -33,8 +33,13 @@ void shy_guts :: proceed_with_weight ( )
     selected_row_index = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: selected_row_index ;
     requested_row = shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: requested_row ;
     
-    if ( so_called_platform_conditions :: wholes_are_equal ( selected_row_index , requested_row ) )
-        shy_guts :: compute_weight ( ) ;
+    if ( so_called_platform_conditions :: whole_is_true ( row_selected ) )
+    {
+        if ( so_called_platform_conditions :: wholes_are_equal ( selected_row_index , requested_row ) )
+            shy_guts :: compute_weight ( ) ;
+        else
+            shy_guts :: compute_identity_weight ( ) ;
+    }
     else
         shy_guts :: compute_identity_weight ( ) ;
 
@@ -89,6 +94,7 @@ void shy_guts :: reply_weight ( )
 
 void _shy_common_logic_main_menu_letters_animation_selection_weight :: receive ( so_called_common_init_message )
 {
+    shy_guts :: logic_main_menu_letters_animation_selection_weight_state :: row_selected = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 
