@@ -1,3 +1,12 @@
+void shy_platform_vector_float_insider :: data_uninitialized ( so_called_lib_std_bool & result , so_called_platform_vector_float_data_type vector )
+{
+    so_called_platform_vector_float_data_type uninitialized_vector ;
+    result = so_called_lib_std_false ;
+    result |= ( vector . _x == uninitialized_vector . _x ) ;
+    result |= ( vector . _y == uninitialized_vector . _y ) ;
+    result |= ( vector . _z == uninitialized_vector . _z ) ;
+}
+
 void shy_platform_vector_float_insider :: x_get ( so_called_lib_std_float & x , so_called_platform_vector_float_data_type v )
 {
     x = v . _x ;
