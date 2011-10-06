@@ -11,7 +11,7 @@ void shy_trace_platform_vector :: check_data_uninitialized ( so_called_platform_
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
-        so_called_lib_std_bool uninitialized = false ;
+        so_called_lib_std_bool uninitialized = so_called_lib_std_false ;
         so_called_platform_vector_insider :: data_uninitialized ( uninitialized , value ) ;
         if ( uninitialized )
         {

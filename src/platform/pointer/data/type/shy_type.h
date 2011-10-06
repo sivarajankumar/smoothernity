@@ -2,6 +2,7 @@ template < typename data_type >
 class shy_platform_pointer_data_type
 {
     friend class shy_platform_pointer ;
+    friend class shy_platform_pointer_insider ;
     typedef data_type _data_type ;
 public :
     shy_platform_pointer_data_type ( ) ;
