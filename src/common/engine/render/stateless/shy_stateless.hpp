@@ -34,7 +34,7 @@ void shy_common_engine_render_stateless :: clamp_texture_coords
     so_called_platform_math_num_whole_type width_minus_1 ;
     so_called_platform_math_num_whole_type height_minus_1 ;
     so_called_platform_math :: sub_wholes ( width_minus_1 , so_called_common_engine_render_consts :: texture_width , so_called_platform_math_consts :: whole_1 ) ;
-    so_called_platform_math :: sub_wholes ( width_minus_1 , so_called_common_engine_render_consts :: texture_height , so_called_platform_math_consts :: whole_1 ) ;
+    so_called_platform_math :: sub_wholes ( height_minus_1 , so_called_common_engine_render_consts :: texture_height , so_called_platform_math_consts :: whole_1 ) ;
     so_called_common_engine_math_stateless :: clamp_whole ( x , x , so_called_platform_math_consts :: whole_0 , width_minus_1 );
     so_called_common_engine_math_stateless :: clamp_whole ( y , y , so_called_platform_math_consts :: whole_0 , height_minus_1 );
 }

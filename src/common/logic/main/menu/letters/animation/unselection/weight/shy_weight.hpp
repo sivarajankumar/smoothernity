@@ -92,6 +92,7 @@ void shy_guts :: reply_weight ( )
 
 void _shy_common_logic_main_menu_letters_animation_unselection_weight :: receive ( so_called_common_init_message )
 {
+    shy_guts :: logic_main_menu_letters_animation_unselection_weight_state :: row_unselected = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_update_state :: time = so_called_platform_math_consts :: fract_0 ;
 }
 

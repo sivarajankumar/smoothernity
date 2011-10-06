@@ -269,6 +269,7 @@ void _shy_common_logic_main_menu_selection_tracker :: receive ( so_called_common
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letters_rows_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letters_rows_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_track_state :: prev_row_is_selected = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_track_state :: requested = so_called_platform_math_consts :: whole_false ;
 }
 

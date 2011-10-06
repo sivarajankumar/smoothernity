@@ -522,6 +522,8 @@ void _shy_common_logic_camera :: receive ( so_called_common_init_message )
     
     shy_guts :: camera_prepare_permitted = so_called_platform_math_consts :: whole_false ;
     shy_guts :: camera_created = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: desired_camera_origin_is_ready = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: desired_camera_target_is_ready = so_called_platform_math_consts :: whole_false ;
     shy_guts :: entities_height_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: entities_height_replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: entities_mesh_grid_requested = so_called_platform_math_consts :: whole_false ;
@@ -540,6 +542,7 @@ void _shy_common_logic_camera :: receive ( so_called_common_init_message )
     shy_guts :: desired_camera_origin_new_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: desired_camera_target_new_requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: render_aspect_requested = so_called_platform_math_consts :: whole_false ;
+    
     for ( so_called_platform_math_num_whole_type i = so_called_platform_math_consts :: whole_0
         ; so_called_platform_conditions :: whole_less_than_whole ( i , so_called_platform_math_consts :: whole_4 )
         ; so_called_platform_math :: inc_whole ( i )

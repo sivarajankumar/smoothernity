@@ -128,6 +128,7 @@ void _shy_common_logic_main_menu_selection_animation_idle :: receive ( so_called
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: replied = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_letters_layout_row_rect_state :: requested = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: requested = so_called_platform_math_consts :: whole_false ;
+    shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: row_is_selected = so_called_platform_math_consts :: whole_false ;
     shy_guts :: logic_main_menu_selection_animation_idle_transform_state :: selected_row_index = so_called_platform_math_consts :: whole_minus_1 ;
 }
 
