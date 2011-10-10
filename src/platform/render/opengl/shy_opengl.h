@@ -166,6 +166,11 @@ void shy_platform_render_opengl :: load_texture_subdata
     , const texels_array & data 
     )
 {
+    so_called_trace ( so_called_trace_platform_render :: check_texture_id_uninitialized ( arg_texture_id ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( x_offset ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( y_offset ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( width ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( height ) ) ;
     so_called_profile ( so_called_profile_platform_render :: texture_subdata ( ) ) ;
     const so_called_platform_render_opengl_texel_data_type * texels = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( texels , data ) ;

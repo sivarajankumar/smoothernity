@@ -16,6 +16,9 @@
 #include "src/injections/platform/static/array/insider/shy_insider.h"
 #include "src/profile/platform/render/shy_render_injections.h"
 #include "src/profile/shy_profile_injections.h"
+#include "src/trace/platform/math/shy_math_injections.h"
+#include "src/trace/platform/render/shy_render_injections.h"
+#include "src/trace/shy_trace_injections.h"
 
 #include "./shy_opengl.h"
 
