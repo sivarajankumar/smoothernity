@@ -133,6 +133,7 @@
     <ClCompile Include="..\..\trace\platform\math\shy_math_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\matrix\shy_matrix_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\pointer\shy_pointer_injections.cpp" />
+    <ClCompile Include="..\..\trace\platform\render\shy_render_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\vector\shy_vector_injections.cpp" />
     <ClCompile Include="shy_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
