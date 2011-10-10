@@ -9,5 +9,6 @@
 #include "src/injections/platform/matrix/insider/shy_insider.h"
 #include "src/injections/platform/pointer/shy_pointer.h"
 #include "src/injections/platform/render/insider/shy_insider.h"
+#include "src/trace/platform/matrix/shy_matrix_injections.h"
 
 #include "./shy_opengl.hpp"
