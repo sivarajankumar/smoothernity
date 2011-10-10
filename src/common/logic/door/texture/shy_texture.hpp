@@ -100,6 +100,7 @@ void shy_guts :: fill_texture_contents ( )
     paper_r = so_called_common_logic_door_consts :: texture_paper_r ;
     paper_g = so_called_common_logic_door_consts :: texture_paper_g ;
     paper_b = so_called_common_logic_door_consts :: texture_paper_b ;
+    paper_a = so_called_common_logic_door_consts :: texture_paper_a ;
     stripes = so_called_common_logic_door_consts :: texture_stripes ;
     texture_width = so_called_common_engine_render_consts :: texture_width ;
     texture_height = so_called_common_engine_render_consts :: texture_height ;
