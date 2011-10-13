@@ -5,6 +5,8 @@
 #include "src/injections/platform/render/texel/data/type/shy_type.h"
 #include "src/injections/platform/render/texture/loader/resource/id/type/shy_type.h"
 #include "src/injections/platform/static/array/insider/shy_insider.h"
+#include "src/trace/platform/render/texture/loader/shy_loader_injections.h"
+#include "src/trace/shy_trace_injections.h"
 
 #include "./shy_cocoa.h"
 
