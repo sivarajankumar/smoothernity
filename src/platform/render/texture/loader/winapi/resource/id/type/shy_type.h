@@ -1,6 +1,7 @@
 class shy_platform_render_texture_loader_winapi_resource_id_type
 {
     friend class shy_platform_render_texture_loader_winapi ;
+    friend class shy_platform_render_texture_loader_winapi_insider ;
 public :
     shy_platform_render_texture_loader_winapi_resource_id_type ( ) ;
 private :

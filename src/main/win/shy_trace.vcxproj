@@ -134,6 +134,7 @@
     <ClCompile Include="..\..\trace\platform\matrix\shy_matrix_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\pointer\shy_pointer_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\render\shy_render_injections.cpp" />
+    <ClCompile Include="..\..\trace\platform\render\texture\loader\shy_loader_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\sound\loader\shy_loader_injections.cpp" />
     <ClCompile Include="..\..\trace\platform\vector\shy_vector_injections.cpp" />
     <ClCompile Include="shy_pch.cpp">
