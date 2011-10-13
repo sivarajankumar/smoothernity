@@ -6,6 +6,8 @@
 #include "src/injections/platform/sound/loader/stereo/resource/id/type/shy_type.h"
 #include "src/injections/platform/sound/sample/stereo/type/shy_type.h"
 #include "src/injections/platform/static/array/insider/shy_insider.h"
+#include "src/trace/platform/sound/loader/shy_loader_injections.h"
+#include "src/trace/shy_trace_injections.h"
 
 #include "./shy_cocoa.h"
 

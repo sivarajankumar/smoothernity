@@ -8,9 +8,10 @@ void shy_platform_sound_loader_winapi :: done ( )
 
 void shy_platform_sound_loader_winapi :: create_stereo_resource_id 
     ( so_called_platform_sound_loader_winapi_stereo_resource_id_type &
-    , so_called_platform_math_num_whole_type
+    , so_called_platform_math_num_whole_type resource_index
     )
 {
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( resource_index ) ) ;
 }
 
 void shy_platform_sound_loader_winapi :: loader_ready ( so_called_platform_math_num_whole_type & )
