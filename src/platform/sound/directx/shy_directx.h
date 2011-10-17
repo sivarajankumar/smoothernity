@@ -49,6 +49,7 @@ void shy_platform_sound_directx :: create_mono_buffer
     , so_called_platform_math_num_whole_type samples_count 
     )
 {
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( samples_count ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: buffer_create ( ) ) ;
     const so_called_platform_sound_sample_mono_type * samples_ptr = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
@@ -63,6 +64,7 @@ void shy_platform_sound_directx :: create_stereo_buffer
     , so_called_platform_math_num_whole_type samples_count 
     )
 {
+    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( samples_count ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: buffer_create ( ) ) ;
     const so_called_platform_sound_sample_stereo_type * samples_ptr = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
