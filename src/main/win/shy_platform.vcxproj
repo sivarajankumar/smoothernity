@@ -152,6 +152,7 @@
     <ClCompile Include="platform\scheduler\shy_scheduler_injections.cpp" />
     <ClCompile Include="platform\scheduler\trace\shy_trace_injections.cpp" />
     <ClCompile Include="platform\sound\buffer\id\type\shy_type_injections.cpp" />
+    <ClCompile Include="platform\sound\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\sound\loader\insider\shy_insider_injections.cpp" />
     <ClCompile Include="platform\sound\loader\shy_loader_injections.cpp" />
     <ClCompile Include="platform\sound\loader\stereo\resource\id\type\shy_type_injections.cpp" />
