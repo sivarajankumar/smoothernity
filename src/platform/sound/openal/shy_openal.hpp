@@ -32,6 +32,8 @@ void shy_platform_sound_openal :: set_listener_velocity ( so_called_platform_vec
 
 void shy_platform_sound_openal :: set_listener_orientation ( so_called_platform_vector_data_type look_at , so_called_platform_vector_data_type up )
 {
+    so_called_trace ( so_called_trace_platform_vector :: check_zero_length ( look_at ) ) ;
+    so_called_trace ( so_called_trace_platform_vector :: check_zero_length ( up ) ) ;
     so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( look_at ) ) ;
     so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( up ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: listener_state ( ) ) ;
@@ -62,6 +64,7 @@ void shy_platform_sound_openal :: set_listener_orientation ( so_called_platform_
 
 void shy_platform_sound_openal :: set_sample_value ( so_called_platform_sound_sample_mono_type & sample , so_called_platform_math_num_fract_type value )
 {
+    so_called_trace ( so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( value , - 1 , 1 ) ) ;
     so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( value ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: buffer_set ( ) ) ;
     so_called_lib_std_float value_float = 0 ;
@@ -79,6 +82,7 @@ void shy_platform_sound_openal :: set_source_pitch ( const so_called_platform_so
 {
     so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
     so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( pitch ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_fract_non_positive ( pitch ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float pitch_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( pitch_float , pitch ) ;
@@ -89,6 +93,7 @@ void shy_platform_sound_openal :: set_source_gain ( const so_called_platform_sou
 {
     so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
     so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( gain ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_num_fract_non_positive ( gain ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float gain_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( gain_float , gain ) ;

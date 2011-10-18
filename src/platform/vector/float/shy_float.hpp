@@ -128,6 +128,7 @@ void shy_platform_vector_float :: length ( so_called_platform_math_num_fract_typ
 
 void shy_platform_vector_float :: normalize ( so_called_platform_vector_float_data_type & result , so_called_platform_vector_float_data_type v )
 {
+    so_called_trace ( so_called_trace_platform_vector :: check_zero_length ( v ) ) ;
     so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( v ) ) ;
     so_called_profile ( so_called_profile_platform_vector :: normalize ( ) ) ;
     so_called_lib_std_float inv_length = so_called_lib_std_float ( 1 ) / so_called_lib_std_float 

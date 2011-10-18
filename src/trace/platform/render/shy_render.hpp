@@ -81,3 +81,47 @@ void shy_trace_platform_render :: check_texture_id_uninitialized ( so_called_pla
         }
     }
 }
+
+void shy_trace_platform_render :: _check_args_load_texture_subdata
+    ( so_called_lib_std_int32_t texels_count
+    , so_called_platform_render_opengl_texture_id_type arg_texture_id 
+    , so_called_platform_math_num_whole_type x_offset 
+    , so_called_platform_math_num_whole_type y_offset 
+    , so_called_platform_math_num_whole_type width
+    , so_called_platform_math_num_whole_type height
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_texture_id_uninitialized ( arg_texture_id ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( x_offset ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( y_offset ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( width ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( height ) ;
+
+        so_called_lib_std_int32_t width_int = 0 ;
+        so_called_lib_std_int32_t height_int = 0 ;
+        so_called_lib_std_int32_t texture_width = 0 ;
+        so_called_lib_std_int32_t texture_height = 0 ;
+
+        so_called_platform_render_insider :: get_texture_size ( texture_width , texture_height , arg_texture_id ) ;
+        so_called_platform_math_insider :: num_whole_value_get ( width_int , width ) ;
+        so_called_platform_math_insider :: num_whole_value_get ( height_int , height ) ;
+
+        if ( width_int * height_int > texels_count )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Texture area " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( width_int * height_int ) ;
+            so_called_platform_trace :: trace_string_error ( " exceeds supplied array of " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( texels_count ) ;
+            so_called_platform_trace :: trace_string_error ( " texels." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( width , 1 , texture_width ) ;
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( height , 1 , texture_height ) ;
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( x_offset , 0 , texture_width - width_int ) ;
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( y_offset , 0 , texture_height - height_int ) ;
+    }
+}

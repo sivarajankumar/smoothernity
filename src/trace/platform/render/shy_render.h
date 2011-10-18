@@ -6,4 +6,36 @@ public :
     static void check_texture_id_uninitialized ( so_called_platform_render_texture_id_type ) ;
     static void check_vertex_buffer_id_uninitialized ( so_called_platform_render_vertex_buffer_id_type ) ;
     static void check_vertex_buffer_mapped_data_uninitialized ( so_called_platform_render_vertex_buffer_mapped_data_type ) ;
+
+    template < typename texels_array >
+    static void check_args_load_texture_subdata
+        ( so_called_platform_render_opengl_texture_id_type arg_texture_id 
+        , so_called_platform_math_num_whole_type x_offset 
+        , so_called_platform_math_num_whole_type y_offset 
+        , so_called_platform_math_num_whole_type width
+        , so_called_platform_math_num_whole_type height
+        ) ;
+private :
+    static void _check_args_load_texture_subdata
+        ( so_called_lib_std_int32_t texels_count
+        , so_called_platform_render_opengl_texture_id_type arg_texture_id 
+        , so_called_platform_math_num_whole_type x_offset 
+        , so_called_platform_math_num_whole_type y_offset 
+        , so_called_platform_math_num_whole_type width
+        , so_called_platform_math_num_whole_type height
+        ) ;
 } ;
+
+template < typename texels_array >
+void shy_trace_platform_render :: check_args_load_texture_subdata
+    ( so_called_platform_render_opengl_texture_id_type arg_texture_id 
+    , so_called_platform_math_num_whole_type x_offset 
+    , so_called_platform_math_num_whole_type y_offset 
+    , so_called_platform_math_num_whole_type width
+    , so_called_platform_math_num_whole_type height
+    )
+{
+    so_called_lib_std_int32_t texels_count = 0 ;
+    so_called_platform_static_array_insider :: template elements_count < texels_array > ( texels_count ) ;
+    _check_args_load_texture_subdata ( texels_count , arg_texture_id , x_offset , y_offset , width , height ) ;
+}
