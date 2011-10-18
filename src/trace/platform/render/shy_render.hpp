@@ -2,6 +2,7 @@ namespace shy_guts
 {
     namespace consts
     {
+        static const so_called_lib_std_int32_t max_texture_pow2 = 16 ;
         static const so_called_lib_std_char module_name [ ] = "platform_render" ;
         static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
     }
@@ -164,5 +165,14 @@ void shy_trace_platform_render :: check_args_fog_linear
             so_called_platform_trace :: trace_string_error ( "." ) ;
             so_called_platform_trace :: trace_end ( ) ;
         }
+    }
+}
+
+void shy_trace_platform_render :: check_args_create_texture_id ( so_called_platform_math_num_whole_type size_pow2_base )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( size_pow2_base ) ;
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( size_pow2_base , 0 , shy_guts :: consts :: max_texture_pow2 ) ;
     }
 }

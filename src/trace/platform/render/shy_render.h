@@ -9,6 +9,7 @@ public :
         , so_called_platform_math_num_fract_type b 
         , so_called_platform_math_num_fract_type a 
         ) ;
+    static void check_args_create_texture_id ( so_called_platform_math_num_whole_type ) ;
     static void check_index_buffer_id_uninitialized ( so_called_platform_render_index_buffer_id_type ) ;
     static void check_index_buffer_mapped_data_uninitialized ( so_called_platform_render_index_buffer_mapped_data_type ) ;
     static void check_texture_id_uninitialized ( so_called_platform_render_texture_id_type ) ;
