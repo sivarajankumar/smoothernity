@@ -151,7 +151,7 @@ void shy_platform_render_opengl :: create_texture_id
     , so_called_platform_math_num_whole_type size_pow2_base 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( size_pow2_base ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_create_texture_id ( size_pow2_base ) ) ;
     so_called_profile ( so_called_profile_platform_render :: texture_create ( ) ) ;
     so_called_lib_opengl_glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
     so_called_lib_std_int32_t size_pow2_base_int = 0 ;
