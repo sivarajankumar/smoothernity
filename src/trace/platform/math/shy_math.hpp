@@ -37,6 +37,73 @@ void shy_trace_platform_math :: check_num_whole_uninitialized ( so_called_platfo
     }
 }
 
+void shy_trace_platform_math :: check_num_whole_exceeds_range_int
+    ( so_called_platform_math_num_whole_type value_whole
+    , so_called_platform_math_const_int_32_type value_min
+    , so_called_platform_math_const_int_32_type value_max
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_lib_std_int32_t value = 0 ;
+        so_called_platform_math_insider :: num_whole_value_get ( value , value_whole ) ;
+        if ( value < value_min || value > value_max )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Whole value " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( value ) ;
+            so_called_platform_trace :: trace_string_error ( " exceeds range from " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( value_min ) ;
+            so_called_platform_trace :: trace_string_error ( " to " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( value_max ) ;
+            so_called_platform_trace :: trace_string_error ( "." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+    }
+}
+
+void shy_trace_platform_math :: check_num_fract_exceeds_range_int
+    ( so_called_platform_math_num_fract_type value_fract
+    , so_called_platform_math_const_int_32_type value_min
+    , so_called_platform_math_const_int_32_type value_max
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_lib_std_float value = 0 ;
+        so_called_platform_math_insider :: num_fract_value_get ( value , value_fract ) ;
+        if ( value < so_called_lib_std_float ( value_min ) || value > so_called_lib_std_float ( value_max ) )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Fract value " ) ;
+            so_called_platform_trace :: trace_num_fract_error ( value_fract ) ;
+            so_called_platform_trace :: trace_string_error ( " exceeds range from " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( value_min ) ;
+            so_called_platform_trace :: trace_string_error ( " to " ) ;
+            so_called_platform_trace :: trace_const_int_32_error ( value_max ) ;
+            so_called_platform_trace :: trace_string_error ( "." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+    }
+}
+
+void shy_trace_platform_math :: check_num_fract_non_positive ( so_called_platform_math_num_fract_type value_fract )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_lib_std_float value = 0 ;
+        so_called_platform_math_insider :: num_fract_value_get ( value , value_fract ) ;
+        if ( value <= so_called_lib_std_float ( 0 ) )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Fract value " ) ;
+            so_called_platform_trace :: trace_num_fract_error ( value_fract ) ;
+            so_called_platform_trace :: trace_string_error ( " is not positive." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+    }
+}
+
 void shy_trace_platform_math :: check_division_num_fract_by_zero ( so_called_platform_math_num_fract_type numerator , so_called_platform_math_num_fract_type denominator )
 {
     if ( shy_guts :: consts :: trace_enabled )

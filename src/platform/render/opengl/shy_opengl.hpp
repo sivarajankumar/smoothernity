@@ -161,6 +161,8 @@ void shy_platform_render_opengl :: create_texture_id
     so_called_lib_opengl_glGenTextures ( 1 , & arg_texture_id . _texture_id ) ;
     so_called_lib_std_int32_t size_pow2_base_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
+    arg_texture_id . _width = 1 << size_pow2_base_int ;
+    arg_texture_id . _height = 1 << size_pow2_base_int ;
     so_called_lib_opengl_GLsizei size = 1 << size_pow2_base_int ;
     so_called_lib_opengl_glPixelStorei ( so_called_lib_opengl_GL_UNPACK_ALIGNMENT , 1 ) ;
     so_called_lib_opengl_glBindTexture ( so_called_lib_opengl_GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;

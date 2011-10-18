@@ -35,6 +35,12 @@ void shy_platform_render_opengl_insider :: get_frame_loss ( so_called_lib_std_bo
     frame_loss = shy_guts :: frame_loss ;
 }
 
+void shy_platform_render_opengl_insider :: get_texture_size ( so_called_lib_std_int32_t & width , so_called_lib_std_int32_t & height , so_called_platform_render_opengl_texture_id_type texture_id )
+{
+    width = texture_id . _width ;
+    height = texture_id . _height ;
+}
+
 void shy_platform_render_opengl_insider :: index_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_opengl_index_buffer_id_type value )
 {
     so_called_platform_render_opengl_index_buffer_id_type uninitialized_value ;
@@ -51,6 +57,8 @@ void shy_platform_render_opengl_insider :: texture_id_uninitialized ( so_called_
 {
     so_called_platform_render_opengl_texture_id_type uninitialized_value ;
     result = value . _texture_id == uninitialized_value . _texture_id ;
+    result |= value . _width == uninitialized_value . _width ;
+    result |= value . _height == uninitialized_value . _height ;
 }
 
 void shy_platform_render_opengl_insider :: vertex_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_opengl_vertex_buffer_id_type value )
