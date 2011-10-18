@@ -2,6 +2,7 @@
 #define _shy_trace_platform_render_injections_included
 
 #ifdef shy_build_with_trace
+    #include "src/injections/platform/math/num/fract/type/shy_type.h"
     #include "src/injections/platform/math/num/whole/type/shy_type.h"
     #include "src/injections/platform/render/index/buffer/id/type/shy_type.h"
     #include "src/injections/platform/render/index/buffer/mapped/data/type/shy_type.h"
