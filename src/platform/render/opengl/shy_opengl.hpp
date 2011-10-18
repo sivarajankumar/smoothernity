@@ -122,12 +122,7 @@ void shy_platform_render_opengl :: fog_linear
     , so_called_platform_math_num_fract_type a 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_fog_linear ( znear , zfar , r , g , b , a ) ) ;
     so_called_profile ( so_called_profile_platform_render :: state ( ) ) ;
     so_called_lib_std_float r_float ;
     so_called_lib_std_float g_float ;
