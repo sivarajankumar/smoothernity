@@ -180,7 +180,7 @@ void shy_platform_render_opengl :: create_texture_id
 
 void shy_platform_render_opengl :: use_texture ( so_called_platform_render_opengl_texture_id_type arg_texture_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_texture_id_uninitialized ( arg_texture_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_use_texture ( arg_texture_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: texture_use ( ) ) ;
     so_called_lib_opengl_glBindTexture ( so_called_lib_opengl_GL_TEXTURE_2D , arg_texture_id . _texture_id ) ;
 }
@@ -193,10 +193,7 @@ void shy_platform_render_opengl :: set_texel_color
     , so_called_platform_math_num_fract_type a 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_set_texel_color ( r , g , b , a ) ) ;
     so_called_profile ( so_called_profile_platform_render :: texture_set ( ) ) ;
     so_called_lib_std_float r_float ;
     so_called_lib_std_float g_float ;
@@ -218,9 +215,7 @@ void shy_platform_render_opengl :: clear_screen
     , so_called_platform_math_num_fract_type b 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_clear_screen ( r , g , b ) ) ;
     so_called_profile ( so_called_profile_platform_render :: clear_screen ( ) ) ;
     so_called_lib_std_float r_float ;
     so_called_lib_std_float g_float ;

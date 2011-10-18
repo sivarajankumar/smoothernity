@@ -168,11 +168,56 @@ void shy_trace_platform_render :: check_args_fog_linear
     }
 }
 
+void shy_trace_platform_render :: check_args_set_texel_color
+    ( so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
+    , so_called_platform_math_num_fract_type a 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( r , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( g , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( b , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( a , 0 , 1 ) ;
+    }
+}
+
+void shy_trace_platform_render :: check_args_clear_screen
+    ( so_called_platform_math_num_fract_type r 
+    , so_called_platform_math_num_fract_type g 
+    , so_called_platform_math_num_fract_type b 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( r , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( g , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( b , 0 , 1 ) ;
+    }
+}
+
 void shy_trace_platform_render :: check_args_create_texture_id ( so_called_platform_math_num_whole_type size_pow2_base )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
         so_called_trace_platform_math :: check_num_whole_uninitialized ( size_pow2_base ) ;
         so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( size_pow2_base , 0 , shy_guts :: consts :: max_texture_pow2 ) ;
+    }
+}
+
+void shy_trace_platform_render :: check_args_use_texture ( so_called_platform_render_texture_id_type arg_texture_id )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_texture_id_uninitialized ( arg_texture_id ) ;
     }
 }
