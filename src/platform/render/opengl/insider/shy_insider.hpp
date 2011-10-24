@@ -41,6 +41,11 @@ void shy_platform_render_opengl_insider :: get_texture_size ( so_called_lib_std_
     height = texture_id . _height ;
 }
 
+void shy_platform_render_opengl_insider :: get_mapped_vertices_count ( so_called_lib_std_int32_t & elements , so_called_platform_render_opengl_vertex_buffer_mapped_data_type data )
+{
+    elements = data . _elements ;
+}
+
 void shy_platform_render_opengl_insider :: index_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_opengl_index_buffer_id_type value )
 {
     so_called_platform_render_opengl_index_buffer_id_type uninitialized_value ;

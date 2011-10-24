@@ -256,3 +256,17 @@ void shy_trace_platform_render :: check_args_unmap_vertex_buffer ( so_called_pla
         check_vertex_buffer_id_uninitialized ( arg_buffer_id ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_vertex_buffer_mapped_data_uninitialized ( data ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ;
+
+        so_called_lib_std_int32_t elements = 0 ;
+        so_called_platform_render_insider :: get_mapped_vertices_count ( elements , data ) ;
+
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( index , 0 , elements - 1 ) ;
+    }
+}
