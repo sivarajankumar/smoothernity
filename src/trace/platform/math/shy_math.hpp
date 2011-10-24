@@ -104,6 +104,23 @@ void shy_trace_platform_math :: check_num_fract_non_positive ( so_called_platfor
     }
 }
 
+void shy_trace_platform_math :: check_num_whole_non_positive ( so_called_platform_math_num_whole_type value_whole )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_lib_std_int32_t value = 0 ;
+        so_called_platform_math_insider :: num_whole_value_get ( value , value_whole ) ;
+        if ( value <= 0 )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Whole value " ) ;
+            so_called_platform_trace :: trace_num_whole_error ( value_whole ) ;
+            so_called_platform_trace :: trace_string_error ( " is not positive." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+    }
+}
+
 void shy_trace_platform_math :: check_num_fract_not_less_than_fract ( so_called_platform_math_num_fract_type value1_fract , so_called_platform_math_num_fract_type value2_fract )
 {
     if ( shy_guts :: consts :: trace_enabled )

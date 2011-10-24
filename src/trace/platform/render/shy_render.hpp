@@ -231,3 +231,12 @@ void shy_trace_platform_render :: check_args_projection
         so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( znear , zfar ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_create_vertex_buffer ( so_called_platform_math_num_whole_type elements )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( elements ) ;
+        so_called_trace_platform_math :: check_num_whole_non_positive ( elements ) ;
+    }
+}

@@ -295,6 +295,7 @@ void shy_platform_render_opengl :: create_vertex_buffer
     , so_called_platform_math_num_whole_type elements 
     )
 {
+    so_called_trace ( so_called_trace_platform_render :: check_args_create_vertex_buffer ( elements ) ) ;
     so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( elements ) ) ;
     so_called_profile ( so_called_profile_platform_render :: vertex_create ( ) ) ;
     so_called_lib_opengl_glGenBuffers ( 1 , & arg_buffer_id . _buffer_id ) ;
