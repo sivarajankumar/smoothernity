@@ -284,3 +284,15 @@ void shy_trace_platform_render :: check_args_set_vertex_position
         so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_set_vertex_tex_coord
+    ( so_called_platform_math_num_fract_type u
+    , so_called_platform_math_num_fract_type v
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( u ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( v ) ;
+    }
+}
