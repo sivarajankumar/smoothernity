@@ -425,7 +425,7 @@ void shy_platform_render_opengl :: map_index_buffer
     , so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id 
     )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( arg_buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_map_index_buffer ( arg_buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: index_map ( ) ) ;
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , so_called_lib_opengl_GL_WRITE_ONLY ) ;
@@ -433,7 +433,7 @@ void shy_platform_render_opengl :: map_index_buffer
 
 void shy_platform_render_opengl :: unmap_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( arg_buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_unmap_index_buffer ( arg_buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: index_unmap ( ) ) ;
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     so_called_lib_opengl_glUnmapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER ) ;
