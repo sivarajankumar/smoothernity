@@ -240,3 +240,11 @@ void shy_trace_platform_render :: check_args_create_vertex_buffer ( so_called_pl
         so_called_trace_platform_math :: check_num_whole_non_positive ( elements ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_map_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_vertex_buffer_id_uninitialized ( arg_buffer_id ) ;
+    }
+}
