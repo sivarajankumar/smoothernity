@@ -458,7 +458,7 @@ void shy_platform_render_opengl :: mapped_index_buffer_element
 
 void shy_platform_render_opengl :: set_index_value ( so_called_platform_render_opengl_index_data_type & data , so_called_platform_math_num_whole_type index )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_set_index_value ( index ) ) ;
     so_called_profile ( so_called_profile_platform_render :: index_set ( ) ) ;
     so_called_lib_std_int32_t index_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( index_int , index ) ;

@@ -390,3 +390,13 @@ void shy_trace_platform_render :: check_args_set_vertex_color
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( a , 0 , 1 ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_set_index_value ( so_called_platform_math_num_whole_type index )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ;
+        so_called_trace_platform_math :: check_num_whole_negative ( index ) ;
+    }
+}
+
