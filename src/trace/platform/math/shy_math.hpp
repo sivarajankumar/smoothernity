@@ -104,6 +104,27 @@ void shy_trace_platform_math :: check_num_fract_non_positive ( so_called_platfor
     }
 }
 
+void shy_trace_platform_math :: check_num_fract_not_less_than_fract ( so_called_platform_math_num_fract_type value1_fract , so_called_platform_math_num_fract_type value2_fract )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_lib_std_float value1 = 0 ;
+        so_called_lib_std_float value2 = 0 ;
+        so_called_platform_math_insider :: num_fract_value_get ( value1 , value1_fract ) ;
+        so_called_platform_math_insider :: num_fract_value_get ( value2 , value2_fract ) ;
+        if ( value1 >= value2 )
+        {
+            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
+            so_called_platform_trace :: trace_string_error ( "Error. Fract value " ) ;
+            so_called_platform_trace :: trace_num_fract_error ( value1_fract ) ;
+            so_called_platform_trace :: trace_string_error ( " is not less than " ) ;
+            so_called_platform_trace :: trace_num_fract_error ( value2_fract ) ;
+            so_called_platform_trace :: trace_string_error ( "." ) ;
+            so_called_platform_trace :: trace_end ( ) ;
+        }
+    }
+}
+
 void shy_trace_platform_math :: check_division_num_fract_by_zero ( so_called_platform_math_num_fract_type numerator , so_called_platform_math_num_fract_type denominator )
 {
     if ( shy_guts :: consts :: trace_enabled )

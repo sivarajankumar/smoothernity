@@ -145,26 +145,11 @@ void shy_trace_platform_render :: check_args_fog_linear
         so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ;
         so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ;
         so_called_trace_platform_math :: check_num_fract_non_positive ( znear ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( znear , zfar ) ;
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( r , 0 , 1 ) ;
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( g , 0 , 1 ) ;
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( b , 0 , 1 ) ;
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( a , 0 , 1 ) ;
-
-        so_called_lib_std_float near_float = 0 ;
-        so_called_lib_std_float far_float = 0 ;
-        so_called_platform_math_insider :: num_fract_value_get ( near_float , znear ) ;
-        so_called_platform_math_insider :: num_fract_value_get ( far_float , zfar ) ;
-
-        if ( far_float <= near_float )
-        {
-            so_called_platform_trace :: trace_begin ( shy_guts :: consts :: module_name ) ;
-            so_called_platform_trace :: trace_string_error ( "Error. Near Z plane " ) ;
-            so_called_platform_trace :: trace_num_fract_error ( znear ) ;
-            so_called_platform_trace :: trace_string_error ( " must be less than far Z plane " ) ;
-            so_called_platform_trace :: trace_num_fract_error ( zfar ) ;
-            so_called_platform_trace :: trace_string_error ( "." ) ;
-            so_called_platform_trace :: trace_end ( ) ;
-        }
     }
 }
 
@@ -219,5 +204,30 @@ void shy_trace_platform_render :: check_args_use_texture ( so_called_platform_re
     if ( shy_guts :: consts :: trace_enabled )
     {
         check_texture_id_uninitialized ( arg_texture_id ) ;
+    }
+}
+
+void shy_trace_platform_render :: check_args_projection
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( left ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( right ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( bottom ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( top ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ;
+        so_called_trace_platform_math :: check_num_fract_non_positive ( znear ) ;
+        so_called_trace_platform_math :: check_num_fract_non_positive ( zfar ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( left , right ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( bottom , top ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( znear , zfar ) ;
     }
 }

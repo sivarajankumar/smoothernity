@@ -237,12 +237,7 @@ void shy_platform_render_opengl :: projection_frustum
     , so_called_platform_math_num_fract_type zfar 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( left ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( right ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( bottom ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( top ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_projection ( left , right , bottom , top , znear , zfar ) ) ;
     so_called_profile ( so_called_profile_platform_render :: projection ( ) ) ;
     so_called_lib_std_float left_float ;
     so_called_lib_std_float right_float ;
@@ -273,12 +268,7 @@ void shy_platform_render_opengl :: projection_ortho
     , so_called_platform_math_num_fract_type zfar 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( left ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( right ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( bottom ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( top ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_projection ( left , right , bottom , top , znear , zfar ) ) ;
     so_called_profile ( so_called_profile_platform_render :: projection ( ) ) ;
     so_called_lib_std_float left_float ;
     so_called_lib_std_float right_float ;
