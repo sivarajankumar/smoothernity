@@ -367,8 +367,7 @@ void shy_platform_render_opengl :: set_vertex_tex_coord
     , so_called_platform_math_num_fract_type v 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( u ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( v ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_set_vertex_tex_coord ( u , v ) ) ;
     so_called_profile ( so_called_profile_platform_render :: vertex_set ( ) ) ;
     so_called_platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 0 ] , u ) ;
     so_called_platform_math_insider :: num_fract_value_get ( vertex . _tex_coord [ 1 ] , v ) ;

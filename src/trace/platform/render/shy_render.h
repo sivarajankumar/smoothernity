@@ -1,6 +1,14 @@
 class shy_trace_platform_render
 {
 public :
+    static void check_args_projection
+        ( so_called_platform_math_num_fract_type left 
+        , so_called_platform_math_num_fract_type right 
+        , so_called_platform_math_num_fract_type bottom 
+        , so_called_platform_math_num_fract_type top 
+        , so_called_platform_math_num_fract_type znear 
+        , so_called_platform_math_num_fract_type zfar 
+        ) ;
     static void check_args_fog_linear
         ( so_called_platform_math_num_fract_type znear 
         , so_called_platform_math_num_fract_type zfar 
@@ -25,18 +33,17 @@ public :
         , so_called_platform_math_num_fract_type g 
         , so_called_platform_math_num_fract_type b 
         ) ;
-    static void check_args_projection
-        ( so_called_platform_math_num_fract_type left 
-        , so_called_platform_math_num_fract_type right 
-        , so_called_platform_math_num_fract_type bottom 
-        , so_called_platform_math_num_fract_type top 
-        , so_called_platform_math_num_fract_type znear 
-        , so_called_platform_math_num_fract_type zfar 
+    static void check_args_set_vertex_tex_coord
+        ( so_called_platform_math_num_fract_type u
+        , so_called_platform_math_num_fract_type v
+        ) ;
+    static void check_args_mapped_vertex_buffer_element
+        ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type
+        , so_called_platform_math_num_whole_type 
         ) ;
     static void check_args_create_texture_id ( so_called_platform_math_num_whole_type ) ;
     static void check_args_create_vertex_buffer ( so_called_platform_math_num_whole_type ) ;
     static void check_args_map_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type ) ;
-    static void check_args_mapped_vertex_buffer_element ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type , so_called_platform_math_num_whole_type ) ;
     static void check_args_unmap_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type ) ;
     static void check_args_use_texture ( so_called_platform_render_texture_id_type ) ;
     static void check_index_buffer_id_uninitialized ( so_called_platform_render_index_buffer_id_type ) ;
