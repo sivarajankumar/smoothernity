@@ -412,6 +412,8 @@ void shy_platform_render_opengl :: create_index_buffer
     so_called_lib_std_int32_t elements_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
 
+    arg_buffer_id . _elements = elements_int ;
+
     so_called_lib_opengl_glBufferData
         ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER 
         , ( so_called_lib_opengl_GLsizeiptr ) ( so_called_lib_std_int32_t ( sizeof ( so_called_platform_render_opengl_index_data_type ) ) * elements_int ) 
@@ -429,6 +431,7 @@ void shy_platform_render_opengl :: map_index_buffer
     so_called_profile ( so_called_profile_platform_render :: index_map ( ) ) ;
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ELEMENT_ARRAY_BUFFER , so_called_lib_opengl_GL_WRITE_ONLY ) ;
+    data . _elements = arg_buffer_id . _elements ;
 }
 
 void shy_platform_render_opengl :: unmap_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
@@ -445,8 +448,7 @@ void shy_platform_render_opengl :: mapped_index_buffer_element
     , so_called_platform_math_num_whole_type index
     )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_index_buffer_mapped_data_uninitialized ( data ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_mapped_index_buffer_element ( data , index ) ) ;
     so_called_profile ( so_called_profile_platform_render :: index_element ( ) ) ;
     so_called_platform_render_opengl_index_data_type * mapped_indices = ( so_called_platform_render_opengl_index_data_type * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
