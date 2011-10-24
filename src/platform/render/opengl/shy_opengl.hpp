@@ -303,6 +303,8 @@ void shy_platform_render_opengl :: create_vertex_buffer
     so_called_lib_std_int32_t elements_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( elements_int , elements ) ;
 
+    arg_buffer_id . _elements = elements_int ;
+
     so_called_lib_opengl_glBufferData
         ( so_called_lib_opengl_GL_ARRAY_BUFFER 
         , ( so_called_lib_opengl_GLsizeiptr ) ( so_called_lib_std_int32_t ( sizeof ( so_called_platform_render_opengl_vertex_data_type ) ) * elements_int ) 
@@ -320,6 +322,7 @@ void shy_platform_render_opengl :: map_vertex_buffer
     so_called_profile ( so_called_profile_platform_render :: vertex_map ( ) ) ;
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     data . _data = so_called_lib_opengl_glMapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , so_called_lib_opengl_GL_WRITE_ONLY ) ;
+    data . _elements = arg_buffer_id . _elements ;
 }
 
 void shy_platform_render_opengl :: unmap_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
@@ -336,8 +339,7 @@ void shy_platform_render_opengl :: mapped_vertex_buffer_element
     , so_called_platform_math_num_whole_type index
     )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_vertex_buffer_mapped_data_uninitialized ( data ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_mapped_vertex_buffer_element ( data , index ) ) ;
     so_called_profile ( so_called_profile_platform_render :: vertex_element ( ) ) ;
     so_called_platform_render_opengl_vertex_data_type * mapped_vertices = ( so_called_platform_render_opengl_vertex_data_type * ) data . _data ;
     so_called_lib_std_int32_t index_int = 0 ;
