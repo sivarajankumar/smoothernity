@@ -1,7 +1,15 @@
 class shy_trace_platform_render
 {
 public :
-    static void check_args_projection
+    static void check_args_projection_frustum
+        ( so_called_platform_math_num_fract_type left 
+        , so_called_platform_math_num_fract_type right 
+        , so_called_platform_math_num_fract_type bottom 
+        , so_called_platform_math_num_fract_type top 
+        , so_called_platform_math_num_fract_type znear 
+        , so_called_platform_math_num_fract_type zfar 
+        ) ;
+    static void check_args_projection_ortho
         ( so_called_platform_math_num_fract_type left 
         , so_called_platform_math_num_fract_type right 
         , so_called_platform_math_num_fract_type bottom 
