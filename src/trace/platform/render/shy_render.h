@@ -20,6 +20,14 @@ public :
         , so_called_platform_math_num_fract_type g 
         , so_called_platform_math_num_fract_type b 
         ) ;
+    static void check_args_projection
+        ( so_called_platform_math_num_fract_type left 
+        , so_called_platform_math_num_fract_type right 
+        , so_called_platform_math_num_fract_type bottom 
+        , so_called_platform_math_num_fract_type top 
+        , so_called_platform_math_num_fract_type znear 
+        , so_called_platform_math_num_fract_type zfar 
+        ) ;
     static void check_args_create_texture_id ( so_called_platform_math_num_whole_type ) ;
     static void check_args_use_texture ( so_called_platform_render_texture_id_type ) ;
     static void check_index_buffer_id_uninitialized ( so_called_platform_render_index_buffer_id_type ) ;
