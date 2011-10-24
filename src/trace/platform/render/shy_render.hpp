@@ -331,3 +331,23 @@ void shy_trace_platform_render :: check_args_set_vertex_tex_coord
         so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( v , 0 , 1 ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_set_vertex_color
+    ( so_called_platform_math_num_fract_type r
+    , so_called_platform_math_num_fract_type g
+    , so_called_platform_math_num_fract_type b
+    , so_called_platform_math_num_fract_type a
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( r ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( g ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( r , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( g , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( b , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( a , 0 , 1 ) ;
+    }
+}
