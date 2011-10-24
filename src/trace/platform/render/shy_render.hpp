@@ -6,6 +6,64 @@ namespace shy_guts
         static const so_called_lib_std_char module_name [ ] = "platform_render" ;
         static const so_called_lib_std_bool trace_enabled = so_called_lib_std_true ;
     }
+
+    static void check_args_projection
+        ( so_called_platform_math_num_fract_type left 
+        , so_called_platform_math_num_fract_type right 
+        , so_called_platform_math_num_fract_type bottom 
+        , so_called_platform_math_num_fract_type top 
+        , so_called_platform_math_num_fract_type znear 
+        , so_called_platform_math_num_fract_type zfar 
+        ) ;
+}
+
+void shy_guts :: check_args_projection
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( left ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( right ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( bottom ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( top ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ;
+        so_called_trace_platform_math :: check_num_fract_non_positive ( znear ) ;
+        so_called_trace_platform_math :: check_num_fract_non_positive ( zfar ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( left , right ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( bottom , top ) ;
+        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( znear , zfar ) ;
+    }
+}
+
+void shy_trace_platform_render :: check_args_projection_frustum
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
+    )
+{
+    shy_guts :: check_args_projection ( left , right , bottom , top , znear , zfar ) ;
+}
+
+void shy_trace_platform_render :: check_args_projection_ortho
+    ( so_called_platform_math_num_fract_type left 
+    , so_called_platform_math_num_fract_type right 
+    , so_called_platform_math_num_fract_type bottom 
+    , so_called_platform_math_num_fract_type top 
+    , so_called_platform_math_num_fract_type znear 
+    , so_called_platform_math_num_fract_type zfar 
+    )
+{
+    shy_guts :: check_args_projection ( left , right , bottom , top , znear , zfar ) ;
 }
 
 void shy_trace_platform_render :: check_index_buffer_id_uninitialized ( so_called_platform_render_index_buffer_id_type value )
@@ -207,31 +265,6 @@ void shy_trace_platform_render :: check_args_use_texture ( so_called_platform_re
     }
 }
 
-void shy_trace_platform_render :: check_args_projection
-    ( so_called_platform_math_num_fract_type left 
-    , so_called_platform_math_num_fract_type right 
-    , so_called_platform_math_num_fract_type bottom 
-    , so_called_platform_math_num_fract_type top 
-    , so_called_platform_math_num_fract_type znear 
-    , so_called_platform_math_num_fract_type zfar 
-    )
-{
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( left ) ;
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( right ) ;
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( bottom ) ;
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( top ) ;
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( znear ) ;
-        so_called_trace_platform_math :: check_num_fract_uninitialized ( zfar ) ;
-        so_called_trace_platform_math :: check_num_fract_non_positive ( znear ) ;
-        so_called_trace_platform_math :: check_num_fract_non_positive ( zfar ) ;
-        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( left , right ) ;
-        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( bottom , top ) ;
-        so_called_trace_platform_math :: check_num_fract_not_less_than_fract ( znear , zfar ) ;
-    }
-}
-
 void shy_trace_platform_render :: check_args_create_vertex_buffer ( so_called_platform_math_num_whole_type elements )
 {
     if ( shy_guts :: consts :: trace_enabled )
@@ -294,5 +327,7 @@ void shy_trace_platform_render :: check_args_set_vertex_tex_coord
     {
         so_called_trace_platform_math :: check_num_fract_uninitialized ( u ) ;
         so_called_trace_platform_math :: check_num_fract_uninitialized ( v ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( u , 0 , 1 ) ;
+        so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( v , 0 , 1 ) ;
     }
 }
