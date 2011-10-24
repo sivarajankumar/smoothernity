@@ -270,3 +270,17 @@ void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_c
         so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( index , 0 , elements - 1 ) ;
     }
 }
+
+void shy_trace_platform_render :: check_args_set_vertex_position
+    ( so_called_platform_math_num_fract_type x 
+    , so_called_platform_math_num_fract_type y 
+    , so_called_platform_math_num_fract_type z 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ;
+    }
+}
