@@ -324,7 +324,7 @@ void shy_platform_render_opengl :: map_vertex_buffer
 
 void shy_platform_render_opengl :: unmap_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_vertex_buffer_id_uninitialized ( arg_buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_unmap_vertex_buffer ( arg_buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: vertex_unmap ( ) ) ;
     so_called_lib_opengl_glBindBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER , arg_buffer_id . _buffer_id ) ;
     so_called_lib_opengl_glUnmapBuffer ( so_called_lib_opengl_GL_ARRAY_BUFFER ) ;
