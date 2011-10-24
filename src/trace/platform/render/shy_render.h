@@ -55,6 +55,7 @@ public :
         ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type
         , so_called_platform_math_num_whole_type 
         ) ;
+    static void check_args_create_index_buffer ( so_called_platform_math_num_whole_type ) ;
     static void check_args_create_texture_id ( so_called_platform_math_num_whole_type ) ;
     static void check_args_create_vertex_buffer ( so_called_platform_math_num_whole_type ) ;
     static void check_args_map_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type ) ;
