@@ -51,6 +51,10 @@ public :
         ( so_called_platform_math_num_fract_type u
         , so_called_platform_math_num_fract_type v
         ) ;
+    static void check_args_mapped_index_buffer_element
+        ( so_called_platform_render_opengl_index_buffer_mapped_data_type
+        , so_called_platform_math_num_whole_type 
+        ) ;
     static void check_args_mapped_vertex_buffer_element
         ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type
         , so_called_platform_math_num_whole_type 
