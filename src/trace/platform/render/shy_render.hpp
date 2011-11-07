@@ -15,6 +15,11 @@ namespace shy_guts
         , so_called_platform_math_num_fract_type znear 
         , so_called_platform_math_num_fract_type zfar 
         ) ;
+    static void check_args_draw
+        ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
+        , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+        , so_called_platform_math_num_whole_type indices_count 
+        ) ;
 }
 
 void shy_guts :: check_args_projection
@@ -42,6 +47,24 @@ void shy_guts :: check_args_projection
     }
 }
 
+void shy_guts :: check_args_draw
+    ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+    , so_called_platform_math_num_whole_type indices_count 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_render :: check_vertex_buffer_id_uninitialized ( vertices_buffer ) ;
+        so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( indices_buffer ) ;
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( indices_count ) ;
+
+        so_called_lib_std_int32_t elements = 0 ;
+        so_called_platform_render_insider :: get_indices_count ( elements , indices_buffer ) ;
+
+        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( indices_count , 1 , elements ) ;
+    }
+}
 void shy_trace_platform_render :: check_args_projection_frustum
     ( so_called_platform_math_num_fract_type left 
     , so_called_platform_math_num_fract_type right 
@@ -412,21 +435,20 @@ void shy_trace_platform_render :: check_args_matrix_mult ( so_called_platform_ma
         so_called_trace_platform_matrix :: check_data_uninitialized ( m ) ;
 }
 
+void shy_trace_platform_render :: check_args_draw_triangle_fan
+    ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+    , so_called_platform_math_num_whole_type indices_count 
+    )
+{
+    shy_guts :: check_args_draw ( vertices_buffer , indices_buffer , indices_count ) ;
+}
+
 void shy_trace_platform_render :: check_args_draw_triangle_strip
     ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
     , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
     , so_called_platform_math_num_whole_type indices_count 
     )
 {
-    if ( shy_guts :: consts :: trace_enabled )
-    {
-        so_called_trace_platform_render :: check_vertex_buffer_id_uninitialized ( vertices_buffer ) ;
-        so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( indices_buffer ) ;
-        so_called_trace_platform_math :: check_num_whole_uninitialized ( indices_count ) ;
-
-        so_called_lib_std_int32_t elements = 0 ;
-        so_called_platform_render_insider :: get_indices_count ( elements , indices_buffer ) ;
-
-        so_called_trace_platform_math :: check_num_whole_exceeds_range_int ( indices_count , 1 , elements ) ;
-    }
+    shy_guts :: check_args_draw ( vertices_buffer , indices_buffer , indices_count ) ;
 }
