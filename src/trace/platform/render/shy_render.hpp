@@ -405,3 +405,9 @@ void shy_trace_platform_render :: check_args_matrix_load ( so_called_platform_ma
     if ( shy_guts :: consts :: trace_enabled )
         so_called_trace_platform_matrix :: check_data_uninitialized ( m ) ;
 }
+
+void shy_trace_platform_render :: check_args_matrix_mult ( so_called_platform_matrix_data_type m )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        so_called_trace_platform_matrix :: check_data_uninitialized ( m ) ;
+}
