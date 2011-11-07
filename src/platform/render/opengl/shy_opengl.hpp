@@ -581,13 +581,13 @@ void shy_platform_render_opengl :: get_frame_loss ( so_called_platform_math_num_
 
 void shy_platform_render_opengl :: delete_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type & arg_buffer_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_vertex_buffer_id_uninitialized ( arg_buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_delete_vertex_buffer ( arg_buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: vertex_delete ( ) ) ;
 }
 
 void shy_platform_render_opengl :: delete_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type & arg_buffer_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( arg_buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_delete_index_buffer ( arg_buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: index_delete ( ) ) ;
 }
 
