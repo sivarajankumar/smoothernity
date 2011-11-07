@@ -65,6 +65,7 @@ public :
     static void check_args_map_index_buffer ( so_called_platform_render_index_buffer_id_type ) ;
     static void check_args_map_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type ) ;
     static void check_args_matrix_load ( so_called_platform_matrix_data_type ) ;
+    static void check_args_matrix_mult ( so_called_platform_matrix_data_type ) ;
     static void check_args_set_index_value ( so_called_platform_math_num_whole_type ) ;
     static void check_args_unmap_index_buffer ( so_called_platform_render_index_buffer_id_type ) ;
     static void check_args_unmap_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type ) ;
