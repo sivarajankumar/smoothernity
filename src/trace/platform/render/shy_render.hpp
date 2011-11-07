@@ -288,6 +288,14 @@ void shy_trace_platform_render :: check_args_use_texture ( so_called_platform_re
     }
 }
 
+void shy_trace_platform_render :: check_args_delete_texture_id ( so_called_platform_render_texture_id_type arg_texture_id )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_texture_id_uninitialized ( arg_texture_id ) ;
+    }
+}
+
 void shy_trace_platform_render :: check_args_create_vertex_buffer ( so_called_platform_math_num_whole_type elements )
 {
     if ( shy_guts :: consts :: trace_enabled )

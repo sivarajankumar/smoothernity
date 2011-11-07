@@ -593,7 +593,7 @@ void shy_platform_render_opengl :: delete_index_buffer ( so_called_platform_rend
 
 void shy_platform_render_opengl :: delete_texture_id ( so_called_platform_render_opengl_texture_id_type & arg_texture_id )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_texture_id_uninitialized ( arg_texture_id ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_delete_texture_id ( arg_texture_id ) ) ;
     so_called_profile ( so_called_profile_platform_render :: texture_delete ( ) ) ;
 }
 
