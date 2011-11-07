@@ -7,5 +7,6 @@
     #include "src/injections/platform/render/insider/shy_insider.h"
     #include "src/injections/platform/trace/shy_trace.h"
     #include "src/trace/platform/math/shy_math_injections.h"
+    #include "src/trace/platform/matrix/shy_matrix_injections.h"
     #include "./shy_render.hpp"
 #endif

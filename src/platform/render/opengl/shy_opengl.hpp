@@ -473,7 +473,7 @@ void shy_platform_render_opengl :: matrix_identity ( )
 
 void shy_platform_render_opengl :: matrix_load ( const so_called_platform_matrix_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_matrix_load ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_render :: matrix_load ( ) ) ;
     const so_called_lib_std_float * elements = 0 ;
     so_called_platform_matrix_insider :: elements_ptr ( elements , matrix ) ;
