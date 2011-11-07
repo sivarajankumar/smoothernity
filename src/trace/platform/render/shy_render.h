@@ -47,6 +47,11 @@ public :
         , so_called_platform_math_num_fract_type g 
         , so_called_platform_math_num_fract_type b 
         ) ;
+    static void check_args_draw_triangle_fan
+        ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
+        , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+        , so_called_platform_math_num_whole_type indices_count 
+        ) ;
     static void check_args_draw_triangle_strip
         ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
         , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 

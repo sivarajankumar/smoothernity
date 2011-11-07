@@ -534,9 +534,7 @@ void shy_platform_render_opengl :: draw_triangle_fan
     , so_called_platform_math_num_whole_type indices_count 
     )
 {
-    so_called_trace ( so_called_trace_platform_render :: check_vertex_buffer_id_uninitialized ( vertices_buffer ) ) ;
-    so_called_trace ( so_called_trace_platform_render :: check_index_buffer_id_uninitialized ( indices_buffer ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( indices_count ) ) ;
+    so_called_trace ( so_called_trace_platform_render :: check_args_draw_triangle_fan ( vertices_buffer , indices_buffer , indices_count ) ) ;
     so_called_profile ( so_called_profile_platform_render :: draw ( ) ) ;
     so_called_lib_std_int32_t indices_count_int = 0 ;
     so_called_platform_math_insider :: num_whole_value_get ( indices_count_int , indices_count ) ;
