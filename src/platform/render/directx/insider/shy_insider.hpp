@@ -35,6 +35,27 @@ void shy_platform_render_directx_insider :: get_frame_loss ( so_called_lib_std_b
     frame_loss = shy_guts :: frame_loss ;
 }
 
+void shy_platform_render_directx_insider :: get_texture_size ( so_called_lib_std_int32_t & width , so_called_lib_std_int32_t & height , so_called_platform_render_directx_texture_id_type texture_id )
+{
+    width = texture_id . _width ;
+    height = texture_id . _height ;
+}
+
+void shy_platform_render_directx_insider :: get_mapped_vertices_count ( so_called_lib_std_int32_t & elements , so_called_platform_render_directx_vertex_buffer_mapped_data_type data )
+{
+    elements = data . _elements ;
+}
+
+void shy_platform_render_directx_insider :: get_mapped_indices_count ( so_called_lib_std_int32_t & elements , so_called_platform_render_directx_index_buffer_mapped_data_type data )
+{
+    elements = data . _elements ;
+}
+
+void shy_platform_render_directx_insider :: get_indices_count ( so_called_lib_std_int32_t & elements , so_called_platform_render_directx_index_buffer_id_type data )
+{
+    elements = data . _elements ;
+}
+
 void shy_platform_render_directx_insider :: index_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_index_buffer_id_type value )
 {
     so_called_platform_render_directx_index_buffer_id_type uninitialized_value ;
