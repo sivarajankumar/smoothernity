@@ -338,6 +338,22 @@ void shy_trace_platform_render :: check_args_unmap_index_buffer ( so_called_plat
     }
 }
 
+void shy_trace_platform_render :: check_args_delete_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_vertex_buffer_id_uninitialized ( arg_buffer_id ) ;
+    }
+}
+
+void shy_trace_platform_render :: check_args_delete_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_index_buffer_id_uninitialized ( arg_buffer_id ) ;
+    }
+}
+
 void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
 {
     if ( shy_guts :: consts :: trace_enabled )
