@@ -189,7 +189,7 @@ void shy_platform_render_texture_loader_cocoa :: create_resource_id
     , so_called_platform_math_num_whole_type resource_index 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( resource_index ) ) ;
+    so_called_trace ( so_called_trace_platform_render_texture_loader :: check_args_create_resource_id ( resource_index ) ) ;
     so_called_platform_math_insider :: num_whole_value_get ( resource_id . _resource_id , resource_index ) ;
 }
 
