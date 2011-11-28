@@ -29,7 +29,7 @@ void shy_platform_render_texture_loader_winapi :: load_resource
     , texels_array & data 
     )
 {
-    so_called_trace ( so_called_trace_platform_render_texture_loader :: template check_args_load_resource < texels_array > ( resource_id , size_pow2_base, data ) ) ;
+    so_called_trace ( so_called_trace_platform_render_texture_loader :: template check_args_load_resource < texels_array > ( resource_id , size_pow2_base ) ) ;
     so_called_platform_render_texel_data_type * texels = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( texels , data ) ;
     _load_resource ( resource_id , size_pow2_base , texels ) ;

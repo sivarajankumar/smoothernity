@@ -24,7 +24,7 @@ void shy_trace_platform_render_texture_loader :: check_resource_id_uninitialized
 }
 
 void shy_trace_platform_render_texture_loader :: _check_args_load_resource
-    ( so_called_platform_render_texture_loader_cocoa_resource_id_type resource_id 
+    ( so_called_platform_render_texture_loader_resource_id_type resource_id 
     , so_called_platform_math_num_whole_type size_pow2_base 
     , so_called_lib_std_int32_t texels_count
     )
@@ -54,3 +54,8 @@ void shy_trace_platform_render_texture_loader :: _check_args_load_resource
     }
 }
 
+void shy_trace_platform_render_texture_loader :: check_args_create_resource_id ( so_called_platform_math_num_whole_type index )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ;
+}
