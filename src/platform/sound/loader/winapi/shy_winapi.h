@@ -22,7 +22,7 @@ void shy_platform_sound_loader_winapi :: load_stereo_sample_data
     , const so_called_platform_sound_loader_winapi_stereo_resource_id_type & resource_id 
     )
 {
-    so_called_trace ( so_called_trace_platform_sound_loader :: check_stereo_resource_id_uninitialized ( resource_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound_loader :: template check_args_load_stereo_sample_data < samples_array > ( resource_id ) ) ;
     const so_called_platform_sound_sample_stereo_type * samples_ptr = 0 ;
     so_called_lib_std_int32_t samples_count = 0 ;
     so_called_platform_static_array_insider :: elements_ptr ( samples_ptr , samples ) ;
