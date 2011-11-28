@@ -5,5 +5,6 @@
     #include "src/injections/lib/std/true/shy_true.h"
     #include "src/injections/platform/sound/loader/insider/shy_insider.h"
     #include "src/injections/platform/trace/shy_trace.h"
+    #include "src/trace/platform/math/shy_math_injections.h"
     #include "./shy_loader.hpp"
 #endif

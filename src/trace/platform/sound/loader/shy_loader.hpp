@@ -22,6 +22,12 @@ void shy_trace_platform_sound_loader :: check_stereo_resource_id_uninitialized (
     }
 }
 
+void shy_trace_platform_sound_loader :: check_args_create_stereo_resource_id ( so_called_platform_math_num_whole_type index )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        so_called_trace_platform_math :: check_num_whole_uninitialized ( index ) ;
+}
+
 void shy_trace_platform_sound_loader :: _check_args_load_stereo_sample_data
     ( so_called_lib_std_int32_t samples_count 
     , so_called_platform_sound_loader_stereo_resource_id_type resource_id
