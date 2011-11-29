@@ -12,7 +12,7 @@
 #include "src/injections/platform/vector/data/type/shy_type.h"
 #include "src/profile/platform/sound/shy_sound_injections.h"
 #include "src/profile/shy_profile_injections.h"
-#include "src/trace/platform/math/shy_math_injections.h"
+#include "src/trace/platform/sound/shy_sound_injections.h"
 #include "src/trace/shy_trace_injections.h"
 
 #include "./shy_openal.h"
