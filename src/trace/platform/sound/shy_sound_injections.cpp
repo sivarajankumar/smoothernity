@@ -7,5 +7,6 @@
     #include "src/injections/platform/sound/insider/shy_insider.h"
     #include "src/injections/platform/trace/shy_trace.h"
     #include "src/trace/platform/math/shy_math_injections.h"
+    #include "src/trace/platform/vector/shy_vector_injections.h"
     #include "./shy_sound.hpp"
 #endif

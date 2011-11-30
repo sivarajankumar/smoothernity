@@ -1,6 +1,6 @@
 void shy_platform_sound_openal :: set_listener_position ( so_called_platform_vector_data_type position )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( position ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_listener_position ( position ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: listener_state ( ) ) ;
     so_called_lib_std_float x ;
     so_called_lib_std_float y ;
@@ -16,7 +16,7 @@ void shy_platform_sound_openal :: set_listener_position ( so_called_platform_vec
 
 void shy_platform_sound_openal :: set_listener_velocity ( so_called_platform_vector_data_type velocity )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( velocity ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_listener_velocity ( velocity ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: listener_state ( ) ) ;
     so_called_lib_std_float x ;
     so_called_lib_std_float y ;
@@ -32,10 +32,7 @@ void shy_platform_sound_openal :: set_listener_velocity ( so_called_platform_vec
 
 void shy_platform_sound_openal :: set_listener_orientation ( so_called_platform_vector_data_type look_at , so_called_platform_vector_data_type up )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_zero_length ( look_at ) ) ;
-    so_called_trace ( so_called_trace_platform_vector :: check_zero_length ( up ) ) ;
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( look_at ) ) ;
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( up ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_listener_orientation ( look_at , up ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: listener_state ( ) ) ;
     so_called_lib_std_float look_at_x ;
     so_called_lib_std_float look_at_y ;
@@ -64,8 +61,7 @@ void shy_platform_sound_openal :: set_listener_orientation ( so_called_platform_
 
 void shy_platform_sound_openal :: set_sample_value ( so_called_platform_sound_sample_mono_type & sample , so_called_platform_math_num_fract_type value )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_exceeds_range_int ( value , - 1 , 1 ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( value ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_sample_value ( value ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: buffer_set ( ) ) ;
     so_called_lib_std_float value_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( value_float , value ) ;
@@ -80,9 +76,7 @@ void shy_platform_sound_openal :: create_source ( so_called_platform_sound_sourc
 
 void shy_platform_sound_openal :: set_source_pitch ( const so_called_platform_sound_source_id_type & source_id , so_called_platform_math_num_fract_type pitch )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( pitch ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_non_positive ( pitch ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_pitch ( source_id , pitch ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float pitch_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( pitch_float , pitch ) ;
@@ -91,9 +85,7 @@ void shy_platform_sound_openal :: set_source_pitch ( const so_called_platform_so
 
 void shy_platform_sound_openal :: set_source_gain ( const so_called_platform_sound_source_id_type & source_id , so_called_platform_math_num_fract_type gain )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( gain ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_non_positive ( gain ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_gain ( source_id , gain ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float gain_float = 0 ;
     so_called_platform_math_insider :: num_fract_value_get ( gain_float , gain ) ;
@@ -102,8 +94,7 @@ void shy_platform_sound_openal :: set_source_gain ( const so_called_platform_sou
 
 void shy_platform_sound_openal :: set_source_position ( const so_called_platform_sound_source_id_type & source_id , so_called_platform_vector_data_type position )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( position ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_position ( source_id , position ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float x ;
     so_called_lib_std_float y ;
@@ -117,8 +108,7 @@ void shy_platform_sound_openal :: set_source_position ( const so_called_platform
 
 void shy_platform_sound_openal :: set_source_velocity ( const so_called_platform_sound_source_id_type & source_id , so_called_platform_vector_data_type velocity )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( velocity ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_velocity ( source_id , velocity ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_std_float x ;
     so_called_lib_std_float y ;
@@ -132,36 +122,35 @@ void shy_platform_sound_openal :: set_source_velocity ( const so_called_platform
 
 void shy_platform_sound_openal :: set_source_buffer ( const so_called_platform_sound_source_id_type & source_id , so_called_platform_sound_buffer_id_type & buffer_id )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
-    so_called_trace ( so_called_trace_platform_sound :: check_buffer_id_uninitialized ( buffer_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_buffer ( source_id , buffer_id ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_BUFFER , buffer_id . _buffer_id ) ;
 }
 
 void shy_platform_sound_openal :: set_source_playback_looping ( const so_called_platform_sound_source_id_type & source_id )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_playback_looping ( source_id ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_LOOPING , so_called_lib_openal_AL_TRUE ) ;
 }
 
 void shy_platform_sound_openal :: set_source_playback_once ( const so_called_platform_sound_source_id_type & source_id )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_set_source_playback_once ( source_id ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_state ( ) ) ;
     so_called_lib_openal_alSourcei ( source_id . _source_id , so_called_lib_openal_AL_LOOPING , so_called_lib_openal_AL_FALSE ) ;
 }
 
 void shy_platform_sound_openal :: source_play ( const so_called_platform_sound_source_id_type & source_id )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_source_play ( source_id ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_play ( ) ) ;
     so_called_lib_openal_alSourcePlay ( source_id . _source_id ) ;
 }
 
 void shy_platform_sound_openal :: source_stop ( const so_called_platform_sound_source_id_type & source_id )
 {
-    so_called_trace ( so_called_trace_platform_sound :: check_source_id_uninitialized ( source_id ) ) ;
+    so_called_trace ( so_called_trace_platform_sound :: check_args_source_stop ( source_id ) ) ;
     so_called_profile ( so_called_profile_platform_sound :: source_stop ( ) ) ;
     so_called_lib_openal_alSourceStop ( source_id . _source_id ) ;
 }
