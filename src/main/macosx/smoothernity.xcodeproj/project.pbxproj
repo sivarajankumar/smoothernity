@@ -23,6 +23,10 @@
 		19AE102111B269A300A5B332 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF36117DE7F9008F67D9 /* OpenAL.framework */; };
 		19AE102211B269A300A5B332 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3A117DE80B008F67D9 /* AudioToolbox.framework */; };
 		19AE102311B269A300A5B332 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812CF3E117DE82C008F67D9 /* QuartzCore.framework */; };
+		88093D4D1487CF93004EB704 /* shy_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 88093D491487CF93004EB704 /* shy_array.h */; };
+		88093D4E1487CF93004EB704 /* shy_array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 88093D4A1487CF93004EB704 /* shy_array.hpp */; };
+		88093D4F1487CF93004EB704 /* shy_array_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88093D4B1487CF93004EB704 /* shy_array_injections.cpp */; };
+		88093D501487CF93004EB704 /* shy_array_injections.h in Headers */ = {isa = PBXBuildFile; fileRef = 88093D4C1487CF93004EB704 /* shy_array_injections.h */; };
 		880CCF3614360D4100BE0F5E /* shy_consts.h in Headers */ = {isa = PBXBuildFile; fileRef = 880CCEE014360D4000BE0F5E /* shy_consts.h */; };
 		880CCF3714360D4100BE0F5E /* shy_consts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 880CCEE114360D4000BE0F5E /* shy_consts.hpp */; };
 		880CCF3814360D4100BE0F5E /* shy_consts_injections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880CCEE214360D4000BE0F5E /* shy_consts_injections.cpp */; };
@@ -3504,6 +3508,10 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* shy_pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_pch.h; sourceTree = "<group>"; };
 		4CC8EAF504A26E0D00CA0E34 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		88093D491487CF93004EB704 /* shy_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_array.h; sourceTree = "<group>"; };
+		88093D4A1487CF93004EB704 /* shy_array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_array.hpp; sourceTree = "<group>"; };
+		88093D4B1487CF93004EB704 /* shy_array_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_array_injections.cpp; sourceTree = "<group>"; };
+		88093D4C1487CF93004EB704 /* shy_array_injections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_array_injections.h; sourceTree = "<group>"; };
 		880CCEE014360D4000BE0F5E /* shy_consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shy_consts.h; sourceTree = "<group>"; };
 		880CCEE114360D4000BE0F5E /* shy_consts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shy_consts.hpp; sourceTree = "<group>"; };
 		880CCEE214360D4000BE0F5E /* shy_consts_injections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shy_consts_injections.cpp; sourceTree = "<group>"; };
@@ -7077,6 +7085,25 @@
 			children = (
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		88093D471487CF93004EB704 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				88093D481487CF93004EB704 /* array */,
+			);
+			path = static;
+			sourceTree = "<group>";
+		};
+		88093D481487CF93004EB704 /* array */ = {
+			isa = PBXGroup;
+			children = (
+				88093D491487CF93004EB704 /* shy_array.h */,
+				88093D4A1487CF93004EB704 /* shy_array.hpp */,
+				88093D4B1487CF93004EB704 /* shy_array_injections.cpp */,
+				88093D4C1487CF93004EB704 /* shy_array_injections.h */,
+			);
+			path = array;
 			sourceTree = "<group>";
 		};
 		880CCEDE14360D4000BE0F5E /* font */ = {
@@ -24954,6 +24981,7 @@
 		88DC3A26144C772F00A5B85A /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				88093D471487CF93004EB704 /* static */,
 				88DC3A27144C772F00A5B85A /* math */,
 				88DC3A2C144C772F00A5B85A /* matrix */,
 				88DC3A31144C772F00A5B85A /* pointer */,
@@ -27932,6 +27960,9 @@
 				88DC3A9C144C772F00A5B85A /* shy_vector.hpp in Headers */,
 				88DC3A9E144C772F00A5B85A /* shy_vector_injections.h in Headers */,
 				88DC3A9F144C772F00A5B85A /* shy_trace_injections.h in Headers */,
+				88093D4D1487CF93004EB704 /* shy_array.h in Headers */,
+				88093D4E1487CF93004EB704 /* shy_array.hpp in Headers */,
+				88093D501487CF93004EB704 /* shy_array_injections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27966,8 +27997,8 @@
 				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = 88CE0EE5117C860F00A1BF42 /* Build configuration list for PBXProject "smoothernity" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+            compatibilityVersion = "Xcode 3.2";
+            developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -28662,6 +28693,7 @@
 				88DC3A95144C772F00A5B85A /* shy_loader_injections.cpp in Sources */,
 				88DC3A99144C772F00A5B85A /* shy_sound_injections.cpp in Sources */,
 				88DC3A9D144C772F00A5B85A /* shy_vector_injections.cpp in Sources */,
+				88093D4F1487CF93004EB704 /* shy_array_injections.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
