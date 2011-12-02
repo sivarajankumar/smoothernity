@@ -207,3 +207,94 @@ void shy_trace_platform_math :: check_division_const_int_32_by_zero ( so_called_
         }
     }
 }
+
+void shy_trace_platform_math :: check_args_sin ( so_called_platform_math_num_fract_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_fract_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_cos ( so_called_platform_math_num_fract_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_fract_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_add_to_whole ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_sub_from_whole ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_sub_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_add_fracts ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_mul_fracts ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_mul_fract_by ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_make_num_fract
+    ( so_called_platform_math_const_int_32_type numerator 
+    , so_called_platform_math_const_int_32_type denominator 
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_division_const_int_32_by_zero ( numerator , denominator ) ;
+}
+
+void shy_trace_platform_math :: check_args_make_whole_from_fract ( so_called_platform_math_num_fract_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_fract_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_mod_wholes ( so_called_platform_math_num_whole_type value , so_called_platform_math_num_whole_type modulator )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( value ) ;
+        check_num_whole_uninitialized ( modulator ) ;
+        check_division_num_whole_by_zero ( value , modulator ) ;
+    }
+}
