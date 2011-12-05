@@ -120,23 +120,21 @@ void shy_platform_math_int_float :: mod_wholes
 
 void shy_platform_math_int_float :: div_fract_by ( so_called_platform_math_int_float_num_fract_type & a , so_called_platform_math_int_float_num_fract_type b )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_division_num_fract_by_zero ( a , b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_div_fract_by ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_div ( ) ) ;
     a . _value /= b . _value ;
 }
 
 void shy_platform_math_int_float :: neg_fract ( so_called_platform_math_int_float_num_fract_type & result , so_called_platform_math_int_float_num_fract_type a )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_neg_fract ( a ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_add_sub ( ) ) ;
     result . _value = - a . _value ;
 }
     
 void shy_platform_math_int_float :: make_fract_from_whole ( so_called_platform_math_int_float_num_fract_type & result , so_called_platform_math_int_float_num_whole_type whole )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( whole ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_make_fract_from_whole ( whole ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_make_from_whole ( ) ) ;
     result . _value = so_called_lib_std_float ( whole . _value ) ;
 }
@@ -147,23 +145,21 @@ void shy_platform_math_int_float :: sub_fracts
     , so_called_platform_math_int_float_num_fract_type what 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( from ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( what ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_sub_fracts ( from , what ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_add_sub ( ) ) ;
     result . _value = from . _value - what . _value ;
 }
 
 void shy_platform_math_int_float :: add_to_fract ( so_called_platform_math_int_float_num_fract_type & a , so_called_platform_math_int_float_num_fract_type b )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_add_to_fract ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_add_sub ( ) ) ;
     a . _value += b . _value ;
 }
 
 void shy_platform_math_int_float :: inc_whole ( so_called_platform_math_int_float_num_whole_type & a )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_inc_whole ( a ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_add_sub ( ) ) ;
     ++ a . _value ;
 }
@@ -174,8 +170,7 @@ void shy_platform_math_int_float :: mul_wholes
     , so_called_platform_math_int_float_num_whole_type b 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_mul_wholes ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_mul ( ) ) ;
     result . _value = a . _value * b . _value ;
 }
@@ -186,27 +181,21 @@ void shy_platform_math_int_float :: div_fracts
     , so_called_platform_math_int_float_num_fract_type b 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_division_num_fract_by_zero ( a , b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_div_fracts ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_div ( ) ) ;
     result . _value = a . _value / b . _value ;
 }
 
 void shy_platform_math_int_float :: mod_whole_by ( so_called_platform_math_int_float_num_whole_type & a , so_called_platform_math_int_float_num_whole_type b )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_division_num_whole_by_zero ( a , b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_mod_whole_by ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_div_mod ( ) ) ;
     a . _value %= b . _value ;
 }
 
 void shy_platform_math_int_float :: div_whole_by ( so_called_platform_math_int_float_num_whole_type & a , so_called_platform_math_int_float_num_whole_type b )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_division_num_whole_by_zero ( a , b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_div_whole_by ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_div_mod ( ) ) ;
     a . _value /= b . _value ;
 }
@@ -217,16 +206,14 @@ void shy_platform_math_int_float :: add_wholes
     , so_called_platform_math_int_float_num_whole_type b
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_add_wholes ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_add_sub ( ) ) ;
     result . _value = a . _value + b . _value ;
 }
 
 void shy_platform_math_int_float :: sub_from_fract ( so_called_platform_math_int_float_num_fract_type & from , so_called_platform_math_int_float_num_fract_type what )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( from ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( what ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_sub_from_fract ( from , what ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_add_sub ( ) ) ;
     from . _value -= what . _value ;
 }
@@ -237,16 +224,14 @@ void shy_platform_math_int_float :: xor_wholes
     , so_called_platform_math_int_float_num_whole_type b 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_xor_wholes ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_bitwise ( ) ) ;
     result . _value = a . _value ^ b . _value ;
 }
 
 void shy_platform_math_int_float :: mul_whole_by ( so_called_platform_math_int_float_num_whole_type & a , so_called_platform_math_int_float_num_whole_type b )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_mul_whole_by ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_mul ( ) ) ;
     a . _value *= b . _value ;
 }
@@ -257,30 +242,28 @@ void shy_platform_math_int_float :: div_wholes
     , so_called_platform_math_int_float_num_whole_type b 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( b ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_division_num_whole_by_zero ( a , b ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_div_wholes ( a , b ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_div_mod ( ) ) ;
     result . _value = a . _value / b . _value ;
 }
 
 void shy_platform_math_int_float :: dec_whole ( so_called_platform_math_int_float_num_whole_type & a )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_dec_whole ( a ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_add_sub ( ) ) ;
     -- a . _value ;
 }
 
 void shy_platform_math_int_float :: neg_fract ( so_called_platform_math_int_float_num_fract_type & a )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_neg_fract ( a ) ) ;
     so_called_profile ( so_called_profile_platform_math :: fract_add_sub ( ) ) ;
     a . _value = - a . _value ;
 }
 
 void shy_platform_math_int_float :: neg_whole ( so_called_platform_math_int_float_num_whole_type & result , so_called_platform_math_int_float_num_whole_type a )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_whole_uninitialized ( a ) ) ;
+    so_called_trace ( so_called_trace_platform_math :: check_args_neg_whole ( a ) ) ;
     so_called_profile ( so_called_profile_platform_math :: whole_add_sub ( ) ) ;
     result . _value = - a . _value ;
 }
