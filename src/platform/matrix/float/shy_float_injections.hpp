@@ -7,9 +7,7 @@
 #include "src/injections/platform/vector/insider/shy_insider.h"
 #include "src/profile/platform/matrix/shy_matrix_injections.h"
 #include "src/profile/shy_profile_injections.h"
-#include "src/trace/platform/math/shy_math_injections.h"
 #include "src/trace/platform/matrix/shy_matrix_injections.h"
-#include "src/trace/platform/vector/shy_vector_injections.h"
 #include "src/trace/shy_trace_injections.h"
 
 #include "./shy_float.hpp"
