@@ -17,9 +17,7 @@ void shy_platform_matrix_float :: set_axis_x
     , so_called_platform_math_num_fract_type z 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_x ( x , y , z ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 0 ] , x ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 1 ] , y ) ;
@@ -34,9 +32,7 @@ void shy_platform_matrix_float :: set_axis_y
     , so_called_platform_math_num_fract_type z 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_y ( x , y , z ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 4 ] , x ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 5 ] , y ) ;
@@ -51,9 +47,7 @@ void shy_platform_matrix_float :: set_axis_z
     , so_called_platform_math_num_fract_type z 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_z ( x , y , z ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 8 ] , x ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 9 ] , y ) ;
@@ -68,9 +62,7 @@ void shy_platform_matrix_float :: set_origin
     , so_called_platform_math_num_fract_type z 
     )
 {
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ) ;
-    so_called_trace ( so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_origin ( x , y , z ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 12 ] , x ) ;
     so_called_platform_math_insider :: num_fract_value_get ( matrix . _elements [ 13 ] , y ) ;
@@ -80,7 +72,7 @@ void shy_platform_matrix_float :: set_origin
 
 void shy_platform_matrix_float :: set_axis_x ( so_called_platform_matrix_float_data_type & matrix , so_called_platform_vector_data_type v )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( v ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_x ( v ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 0 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 1 ] , v ) ;
@@ -90,7 +82,7 @@ void shy_platform_matrix_float :: set_axis_x ( so_called_platform_matrix_float_d
 
 void shy_platform_matrix_float :: set_axis_y ( so_called_platform_matrix_float_data_type & matrix , so_called_platform_vector_data_type v )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( v ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_y ( v ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 4 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 5 ] , v ) ;
@@ -100,7 +92,7 @@ void shy_platform_matrix_float :: set_axis_y ( so_called_platform_matrix_float_d
 
 void shy_platform_matrix_float :: set_axis_z ( so_called_platform_matrix_float_data_type & matrix , so_called_platform_vector_data_type v )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( v ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_axis_z ( v ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_vector_insider :: x_get ( matrix . _elements [  8 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [  9 ] , v ) ;
@@ -110,7 +102,7 @@ void shy_platform_matrix_float :: set_axis_z ( so_called_platform_matrix_float_d
 
 void shy_platform_matrix_float :: set_origin ( so_called_platform_matrix_float_data_type & matrix , so_called_platform_vector_data_type v )
 {
-    so_called_trace ( so_called_trace_platform_vector :: check_data_uninitialized ( v ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_set_origin ( v ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_set ( ) ) ;
     so_called_platform_vector_insider :: x_get ( matrix . _elements [ 12 ] , v ) ;
     so_called_platform_vector_insider :: y_get ( matrix . _elements [ 13 ] , v ) ;
@@ -120,7 +112,7 @@ void shy_platform_matrix_float :: set_origin ( so_called_platform_matrix_float_d
 
 void shy_platform_matrix_float :: get_axis_x ( so_called_platform_vector_data_type & result , const so_called_platform_matrix_float_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_get_axis_x ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_get ( ) ) ;
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 0 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 1 ] ) ;
@@ -129,7 +121,7 @@ void shy_platform_matrix_float :: get_axis_x ( so_called_platform_vector_data_ty
 
 void shy_platform_matrix_float :: get_axis_y ( so_called_platform_vector_data_type & result , const so_called_platform_matrix_float_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_get_axis_y ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_get ( ) ) ;
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 4 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 5 ] ) ;
@@ -138,7 +130,7 @@ void shy_platform_matrix_float :: get_axis_y ( so_called_platform_vector_data_ty
 
 void shy_platform_matrix_float :: get_axis_z ( so_called_platform_vector_data_type & result , const so_called_platform_matrix_float_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_get_axis_z ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_get ( ) ) ;
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 8 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 9 ] ) ;
@@ -147,7 +139,7 @@ void shy_platform_matrix_float :: get_axis_z ( so_called_platform_vector_data_ty
 
 void shy_platform_matrix_float :: get_origin ( so_called_platform_vector_data_type & result , const so_called_platform_matrix_float_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_get_origin ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: row_get ( ) ) ;
     so_called_platform_vector_insider :: x_set ( result , matrix . _elements [ 12 ] ) ;
     so_called_platform_vector_insider :: y_set ( result , matrix . _elements [ 13 ] ) ;
@@ -168,7 +160,7 @@ void shy_platform_matrix_float :: identity ( so_called_platform_matrix_float_dat
 
 void shy_platform_matrix_float :: inverse_rotation_translation ( so_called_platform_matrix_float_data_type & matrix )
 {
-    so_called_trace ( so_called_trace_platform_matrix :: check_data_uninitialized ( matrix ) ) ;
+    so_called_trace ( so_called_trace_platform_matrix :: check_args_inverse_rotation_translation ( matrix ) ) ;
     so_called_profile ( so_called_profile_platform_matrix :: inverse ( ) ) ;
 
     so_called_platform_vector_data_type axis_x ;
