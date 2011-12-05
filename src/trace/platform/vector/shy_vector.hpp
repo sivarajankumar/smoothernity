@@ -40,3 +40,116 @@ void shy_trace_platform_vector :: check_zero_length ( so_called_platform_vector_
         }
     }
 }
+
+void shy_trace_platform_vector :: check_args_xyz 
+    ( so_called_platform_math_num_fract_type x
+    , so_called_platform_math_num_fract_type y
+    , so_called_platform_math_num_fract_type z
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( x ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( y ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( z ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_dot_product 
+    ( so_called_platform_vector_data_type v1
+    , so_called_platform_vector_data_type v2
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v1 ) ;
+        check_data_uninitialized ( v2 ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_cross_product 
+    ( so_called_platform_vector_data_type v1
+    , so_called_platform_vector_data_type v2
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v1 ) ;
+        check_data_uninitialized ( v2 ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_add 
+    ( so_called_platform_vector_data_type v1
+    , so_called_platform_vector_data_type v2
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v1 ) ;
+        check_data_uninitialized ( v2 ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_add_to
+    ( so_called_platform_vector_data_type v1
+    , so_called_platform_vector_data_type v2
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v1 ) ;
+        check_data_uninitialized ( v2 ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_sub
+    ( so_called_platform_vector_data_type v1
+    , so_called_platform_vector_data_type v2
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v1 ) ;
+        check_data_uninitialized ( v2 ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_mul 
+    ( so_called_platform_vector_data_type v
+    , so_called_platform_math_num_fract_type f
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( f ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_mul_by
+    ( so_called_platform_vector_data_type v
+    , so_called_platform_math_num_fract_type f
+    )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v ) ;
+        so_called_trace_platform_math :: check_num_fract_uninitialized ( f ) ;
+    }
+}
+
+void shy_trace_platform_vector :: check_args_length ( so_called_platform_vector_data_type v )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_data_uninitialized ( v ) ;
+}
+
+void shy_trace_platform_vector :: check_args_normalize ( so_called_platform_vector_data_type v )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_data_uninitialized ( v ) ;
+        check_zero_length ( v ) ;
+    }
+}
