@@ -289,12 +289,155 @@ void shy_trace_platform_math :: check_args_make_whole_from_fract ( so_called_pla
         check_num_fract_uninitialized ( a ) ;
 }
 
-void shy_trace_platform_math :: check_args_mod_wholes ( so_called_platform_math_num_whole_type value , so_called_platform_math_num_whole_type modulator )
+void shy_trace_platform_math :: check_args_make_fract_from_whole ( so_called_platform_math_num_whole_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_whole_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_mod_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
-        check_num_whole_uninitialized ( value ) ;
-        check_num_whole_uninitialized ( modulator ) ;
-        check_division_num_whole_by_zero ( value , modulator ) ;
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+        check_division_num_whole_by_zero ( a , b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_mod_whole_by ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+        check_division_num_whole_by_zero ( a , b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_div_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+        check_division_num_whole_by_zero ( a , b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_div_whole_by ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+        check_division_num_whole_by_zero ( a , b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_div_fract_by ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+        check_division_num_fract_by_zero ( a , b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_neg_fract ( so_called_platform_math_num_fract_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_fract_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_sub_fracts ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_add_to_fract ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_sub_from_fract ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_inc_whole ( so_called_platform_math_num_whole_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_whole_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_dec_whole ( so_called_platform_math_num_whole_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_whole_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_neg_whole ( so_called_platform_math_num_whole_type a )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+        check_num_whole_uninitialized ( a ) ;
+}
+
+void shy_trace_platform_math :: check_args_mul_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_mul_whole_by ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_add_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_xor_wholes ( so_called_platform_math_num_whole_type a , so_called_platform_math_num_whole_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_whole_uninitialized ( a ) ;
+        check_num_whole_uninitialized ( b ) ;
+    }
+}
+
+void shy_trace_platform_math :: check_args_div_fracts ( so_called_platform_math_num_fract_type a , so_called_platform_math_num_fract_type b )
+{
+    if ( shy_guts :: consts :: trace_enabled )
+    {
+        check_num_fract_uninitialized ( a ) ;
+        check_num_fract_uninitialized ( b ) ;
+        check_division_num_fract_by_zero ( a , b ) ;
     }
 }
