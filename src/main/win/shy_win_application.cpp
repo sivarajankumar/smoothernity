@@ -49,8 +49,8 @@ void smoothernity_set_mouse_position ( so_called_lib_std_int32_t x_pixel , so_ca
 //--------------------------------------------------------------------------------------
 bool CALLBACK ModifyDeviceSettings ( DXUTDeviceSettings * pDeviceSettings , void * pUserContext )
 {
-	pDeviceSettings -> d3d9 . pp . SwapEffect = D3DSWAPEFFECT_COPY ;
-	pDeviceSettings -> d3d9 . pp . PresentationInterval = D3DPRESENT_INTERVAL_ONE ;
+    pDeviceSettings -> d3d9 . pp . SwapEffect = D3DSWAPEFFECT_COPY ;
+    pDeviceSettings -> d3d9 . pp . PresentationInterval = D3DPRESENT_INTERVAL_ONE ;
     return true ;
 }
 
@@ -172,10 +172,10 @@ void CALLBACK OnD3D9DestroyDevice ( void * pUserContext )
 //--------------------------------------------------------------------------------------
 // Initialize everything and go into a render loop
 //--------------------------------------------------------------------------------------
-#ifdef shy_build_static_way
+#ifdef NDEBUG
 int WINAPI wWinMain ( HINSTANCE , HINSTANCE , LPWSTR , int )
 #endif
-#ifdef shy_build_loadable_way
+#ifdef DEBUG
 int main ( int , char * * )
 #endif
 {
