@@ -138,7 +138,7 @@
     <ClCompile Include="..\..\profile\init\shy_init_injections.cpp" />
     <ClCompile Include="..\..\profile\platform\conditions\shy_conditions_injections.cpp" />
     <ClCompile Include="..\..\profile\platform\math\shy_math_injections.cpp" />
-    <ClCompile Include="..\..\profile\platform\marix\shy_marix_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\matrix\shy_matrix_injections.cpp" />
     <ClCompile Include="..\..\profile\platform\mouse\shy_mouse_injections.cpp" />
     <ClCompile Include="..\..\profile\platform\pointer\shy_pointer_injections.cpp" />
     <ClCompile Include="..\..\profile\platform\render\shy_render_injections.cpp" />
