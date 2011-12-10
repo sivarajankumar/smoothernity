@@ -79,7 +79,10 @@ void shy_guts :: create_stereo_sound ( )
     so_called_platform_vector :: xyz ( source_vel , vel_x , vel_y , vel_z ) ;
     
     so_called_platform_sound_loader :: loaded_samples_count ( loaded_samples_count ) ;
-    so_called_platform_math :: sub_from_whole ( loaded_samples_count , shy_guts :: consts :: music_tail_cut ) ;
+    if ( so_called_platform_conditions :: whole_greater_than_zero ( loaded_samples_count ) )
+        so_called_platform_math :: sub_from_whole ( loaded_samples_count , shy_guts :: consts :: music_tail_cut ) ;
+    else
+        loaded_samples_count = so_called_platform_math_consts :: whole_1 ;
     
     so_called_platform_math_num_whole_type max_music_samples ;
     so_called_platform_math :: make_num_whole ( max_music_samples , shy_guts :: consts :: max_stereo_sound_samples ) ;
