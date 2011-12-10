@@ -16,8 +16,8 @@ namespace shy_guts
         , so_called_platform_math_num_fract_type zfar 
         ) ;
     static void check_args_draw
-        ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
-        , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+        ( so_called_platform_render_vertex_buffer_id_type vertices_buffer 
+        , so_called_platform_render_index_buffer_id_type indices_buffer 
         , so_called_platform_math_num_whole_type indices_count 
         ) ;
 }
@@ -48,8 +48,8 @@ void shy_guts :: check_args_projection
 }
 
 void shy_guts :: check_args_draw
-    ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
-    , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+    ( so_called_platform_render_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_index_buffer_id_type indices_buffer 
     , so_called_platform_math_num_whole_type indices_count 
     )
 {
@@ -166,7 +166,7 @@ void shy_trace_platform_render :: check_texture_id_uninitialized ( so_called_pla
 
 void shy_trace_platform_render :: _check_args_load_texture_subdata
     ( so_called_lib_std_int32_t texels_count
-    , so_called_platform_render_opengl_texture_id_type arg_texture_id 
+    , so_called_platform_render_texture_id_type arg_texture_id 
     , so_called_platform_math_num_whole_type x_offset 
     , so_called_platform_math_num_whole_type y_offset 
     , so_called_platform_math_num_whole_type width
@@ -314,7 +314,7 @@ void shy_trace_platform_render :: check_args_create_index_buffer ( so_called_pla
     }
 }
 
-void shy_trace_platform_render :: check_args_map_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_map_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -322,7 +322,7 @@ void shy_trace_platform_render :: check_args_map_vertex_buffer ( so_called_platf
     }
 }
 
-void shy_trace_platform_render :: check_args_map_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_map_index_buffer ( so_called_platform_render_index_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -330,7 +330,7 @@ void shy_trace_platform_render :: check_args_map_index_buffer ( so_called_platfo
     }
 }
 
-void shy_trace_platform_render :: check_args_unmap_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_unmap_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -338,7 +338,7 @@ void shy_trace_platform_render :: check_args_unmap_vertex_buffer ( so_called_pla
     }
 }
 
-void shy_trace_platform_render :: check_args_unmap_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_unmap_index_buffer ( so_called_platform_render_index_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -346,7 +346,7 @@ void shy_trace_platform_render :: check_args_unmap_index_buffer ( so_called_plat
     }
 }
 
-void shy_trace_platform_render :: check_args_delete_vertex_buffer ( so_called_platform_render_opengl_vertex_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_delete_vertex_buffer ( so_called_platform_render_vertex_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -354,7 +354,7 @@ void shy_trace_platform_render :: check_args_delete_vertex_buffer ( so_called_pl
     }
 }
 
-void shy_trace_platform_render :: check_args_delete_index_buffer ( so_called_platform_render_opengl_index_buffer_id_type arg_buffer_id )
+void shy_trace_platform_render :: check_args_delete_index_buffer ( so_called_platform_render_index_buffer_id_type arg_buffer_id )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -362,7 +362,7 @@ void shy_trace_platform_render :: check_args_delete_index_buffer ( so_called_pla
     }
 }
 
-void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_called_platform_render_opengl_vertex_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
+void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_called_platform_render_vertex_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -376,7 +376,7 @@ void shy_trace_platform_render :: check_args_mapped_vertex_buffer_element ( so_c
     }
 }
 
-void shy_trace_platform_render :: check_args_mapped_index_buffer_element ( so_called_platform_render_opengl_index_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
+void shy_trace_platform_render :: check_args_mapped_index_buffer_element ( so_called_platform_render_index_buffer_mapped_data_type data , so_called_platform_math_num_whole_type index )
 {
     if ( shy_guts :: consts :: trace_enabled )
     {
@@ -460,8 +460,8 @@ void shy_trace_platform_render :: check_args_matrix_mult ( so_called_platform_ma
 }
 
 void shy_trace_platform_render :: check_args_draw_triangle_fan
-    ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
-    , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+    ( so_called_platform_render_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_index_buffer_id_type indices_buffer 
     , so_called_platform_math_num_whole_type indices_count 
     )
 {
@@ -469,8 +469,8 @@ void shy_trace_platform_render :: check_args_draw_triangle_fan
 }
 
 void shy_trace_platform_render :: check_args_draw_triangle_strip
-    ( so_called_platform_render_opengl_vertex_buffer_id_type vertices_buffer 
-    , so_called_platform_render_opengl_index_buffer_id_type indices_buffer 
+    ( so_called_platform_render_vertex_buffer_id_type vertices_buffer 
+    , so_called_platform_render_index_buffer_id_type indices_buffer 
     , so_called_platform_math_num_whole_type indices_count 
     )
 {

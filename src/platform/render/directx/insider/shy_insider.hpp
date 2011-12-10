@@ -59,7 +59,7 @@ void shy_platform_render_directx_insider :: get_indices_count ( so_called_lib_st
 void shy_platform_render_directx_insider :: index_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_index_buffer_id_type value )
 {
     so_called_platform_render_directx_index_buffer_id_type uninitialized_value ;
-    result = value . _buffer_id == uninitialized_value . _buffer_id ;
+    result = value . _buffer == uninitialized_value . _buffer ;
 }
 
 void shy_platform_render_directx_insider :: index_buffer_mapped_data_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_index_buffer_mapped_data_type value )
@@ -71,13 +71,13 @@ void shy_platform_render_directx_insider :: index_buffer_mapped_data_uninitializ
 void shy_platform_render_directx_insider :: texture_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_texture_id_type value )
 {
     so_called_platform_render_directx_texture_id_type uninitialized_value ;
-    result = value . _texture_id == uninitialized_value . _texture_id ;
+    result = value . _texture == uninitialized_value . _texture ;
 }
 
 void shy_platform_render_directx_insider :: vertex_buffer_id_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_vertex_buffer_id_type value )
 {
     so_called_platform_render_directx_vertex_buffer_id_type uninitialized_value ;
-    result = value . _buffer_id == uninitialized_value . _buffer_id ;
+    result = value . _buffer == uninitialized_value . _buffer ;
 }
 
 void shy_platform_render_directx_insider :: vertex_buffer_mapped_data_uninitialized ( so_called_lib_std_bool & result , so_called_platform_render_directx_vertex_buffer_mapped_data_type value )

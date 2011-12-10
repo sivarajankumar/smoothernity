@@ -320,7 +320,7 @@ void shy_platform_render_directx :: create_texture_id
     so_called_platform_math_insider :: num_whole_value_get ( size_pow2_base_int , size_pow2_base ) ;
     arg_texture_id . _width = 1 << size_pow2_base_int ;
     arg_texture_id . _height = 1 << size_pow2_base_int ;
-    size = ( so_called_lib_directx_DWORD ) arg_texture_id . _size ;
+    size = ( so_called_lib_directx_DWORD ) ( 1 << size_pow2_base_int ) ;
 
     so_called_lib_directx_V
         ( so_called_lib_directx_DXUTGetD3D9Device ( ) -> CreateTexture
