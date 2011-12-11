@@ -207,7 +207,7 @@ int main ( int , char * * )
 
     DXUTInit ( true , true , NULL ) ; // Parse the command line, show msgboxes on error, no extra command line params
     DXUTSetCursorSettings ( true , true ) ; // Show the cursor and clip it when in full screen
-    DXUTCreateWindow ( L"Smoothernity version 2011-09-18" ) ;
+    DXUTCreateWindow ( L"Smoothernity version 2011-12-10" ) ;
 
     // Only require 10-level hardware
     DXUTCreateDevice ( D3D_FEATURE_LEVEL_10_0 , true , 640 , 480 ) ;
