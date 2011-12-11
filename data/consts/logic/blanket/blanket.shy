@@ -1,0 +1,10 @@
+consts logic_blanket
+    mesh_vertex_x_left - 1 / 2
+    mesh_vertex_x_right 1 / 2
+    mesh_vertex_y_bottom - 1 / 2
+    mesh_vertex_y_top 1 / 2
+    mesh_vertex_z 0 / 1
+    mesh_color_r 0 / 1
+    mesh_color_g 0 / 1
+    mesh_color_b 0 / 1
+    mesh_color_a 1 / 1

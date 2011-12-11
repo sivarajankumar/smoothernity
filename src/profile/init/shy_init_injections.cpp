@@ -1,0 +1,15 @@
+#ifdef shy_build_with_profile
+    #include "./shy_init_injections.h"
+    #include "src/profile/platform/conditions/shy_conditions_injections.h"
+    #include "src/profile/platform/math/shy_math_injections.h"
+    #include "src/profile/platform/matrix/shy_matrix_injections.h"
+    #include "src/profile/platform/mouse/shy_mouse_injections.h"
+    #include "src/profile/platform/pointer/shy_pointer_injections.h"
+    #include "src/profile/platform/render/shy_render_injections.h"
+    #include "src/profile/platform/scheduler/shy_scheduler_injections.h"
+    #include "src/profile/platform/sound/shy_sound_injections.h"
+    #include "src/profile/platform/static/array/shy_array_injections.h"
+    #include "src/profile/platform/touch/shy_touch_injections.h"
+    #include "src/profile/platform/vector/shy_vector_injections.h"
+    #include "./shy_init.hpp"
+#endif

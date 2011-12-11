@@ -1,0 +1,6 @@
+consts logic_observer_animation
+    flight_target_z - 1 / 1
+    flight_horizontal_offset_period 11 / 10
+    flight_horizontal_offset_amplitude 1 / 3
+    flight_vertical_offset_period 17 / 10
+    flight_vertical_offset_amplitude 1 / 3

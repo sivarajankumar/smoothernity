@@ -1,0 +1,19 @@
+system logic_application
+    machine amusement_performer
+        state initial
+            to performing
+                if { ( command start ) stage_amusement_enabled }
+            to finished
+                if { ( command start ) stage_amusement_disabled }
+        state performing
+            on entry
+                do logic_amusement_launch_permit
+            on { logic_application_render }
+                discard logic_application_render
+                do logic_amusement_render
+            on { logic_application_update }
+                discard logic_application_update
+                do logic_amusement_update
+            to finished
+                if { logic_amusement_finished }
+        state finished

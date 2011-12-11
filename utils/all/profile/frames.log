@@ -1,0 +1,198 @@
+i32s-imac:macosx user-i32$ ./run_development.sh 
+Frame    1. Module "loadable_fsm_behaviour". Machine "generator" leaves state "initial".
+Frame    1. Module "loadable_fsm_behaviour". Machine "generator" enters state "text".
+Frame    1. Module "loadable_fsm_behaviour". Machine "performer" leaves state "initial".
+Frame    1. Module "loadable_fsm_behaviour". Machine "performer" enters state "fader".
+Frame    1. Module "loadable_fsm_behaviour". Machine "fader_performer" leaves state "initial".
+Frame    1. Module "loadable_fsm_behaviour". Machine "fader_performer" enters state "performing".
+Frame    1. Module "loadable_fsm_behaviour". Machine "text_generator" leaves state "initial".
+Frame    1. Module "loadable_fsm_behaviour". Machine "text_generator" enters state "generating".
+Frame    1. Module "common_engine_render". Meshes in use: 1 of 100.
+Frame    2. Module "common_engine_render". Textures in use: 1 of 10.
+Frame    2. Module "common_engine_render". Meshes in use: 2 of 100.
+Frame    6. Module "loadable_fsm_behaviour". Machine "text_generator" leaves state "generating".
+Frame    6. Module "loadable_fsm_behaviour". Machine "text_generator" enters state "finished".
+Frame    6. Module "loadable_fsm_behaviour". Machine "generator" leaves state "text".
+Frame    6. Module "loadable_fsm_behaviour". Machine "generator" enters state "salutation".
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" leaves state "initial".
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" enters state "generating".
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" leaves state "generating".
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" enters state "generating_letters_text".
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 1 of 16.
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" leaves state "generating_letters_text".
+Frame    6. Module "loadable_fsm_behaviour". Machine "salutation_generator" enters state "generating_letters_meshes".
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 2 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 3 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 4 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 5 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 6 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 7 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 8 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 9 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 10 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 11 of 16.
+Frame    6. Module "common_logic_salutation_letters_text_storage". Entries in use: 12 of 16.
+Frame    9. Module "common_engine_render". Meshes in use: 3 of 100.
+Frame    9. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 1 of 16.
+Frame   12. Module "common_engine_render". Meshes in use: 4 of 100.
+Frame   12. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 2 of 16.
+Frame   15. Module "common_engine_render". Meshes in use: 5 of 100.
+Frame   15. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 3 of 16.
+Frame   18. Module "common_engine_render". Meshes in use: 6 of 100.
+Frame   18. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 4 of 16.
+Frame   21. Module "common_engine_render". Meshes in use: 7 of 100.
+Frame   21. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 5 of 16.
+Frame   24. Module "common_engine_render". Meshes in use: 8 of 100.
+Frame   24. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 6 of 16.
+Frame   27. Module "common_engine_render". Meshes in use: 9 of 100.
+Frame   27. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 7 of 16.
+Frame   30. Module "common_engine_render". Meshes in use: 10 of 100.
+Frame   30. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 8 of 16.
+Frame   33. Module "common_engine_render". Meshes in use: 11 of 100.
+Frame   33. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 9 of 16.
+Frame   36. Module "common_engine_render". Meshes in use: 12 of 100.
+Frame   36. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 10 of 16.
+Frame   39. Module "common_engine_render". Meshes in use: 13 of 100.
+Frame   39. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 11 of 16.
+Frame   42. Module "common_engine_render". Meshes in use: 14 of 100.
+Frame   42. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 12 of 16.
+Frame   45. Module "loadable_fsm_behaviour". Machine "salutation_generator" leaves state "generating_letters_meshes".
+Frame   45. Module "loadable_fsm_behaviour". Machine "salutation_generator" enters state "finished".
+Frame   45. Module "loadable_fsm_behaviour". Machine "generator" leaves state "salutation".
+Frame   45. Module "loadable_fsm_behaviour". Machine "generator" enters state "main_menu".
+Frame   45. Module "loadable_fsm_behaviour". Machine "main_menu_generator" leaves state "initial".
+Frame   45. Module "loadable_fsm_behaviour". Machine "main_menu_generator" enters state "generating".
+Frame   49. Module "common_engine_render". Meshes in use: 15 of 100.
+Frame   50. Module "loadable_fsm_behaviour". Machine "fader_performer" leaves state "performing".
+Frame   50. Module "loadable_fsm_behaviour". Machine "fader_performer" enters state "finished".
+Frame   50. Module "loadable_fsm_behaviour". Machine "performer" leaves state "fader".
+Frame   50. Module "loadable_fsm_behaviour". Machine "performer" enters state "salutation".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" leaves state "initial".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" enters state "waiting".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" leaves state "waiting".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" enters state "prepare".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" leaves state "prepare".
+Frame   50. Module "loadable_fsm_behaviour". Machine "salutation_performer" enters state "appearing".
+Frame   52. Module "common_engine_render". Meshes in use: 16 of 100.
+Frame   55. Module "common_engine_render". Meshes in use: 17 of 100.
+Frame   58. Module "common_engine_render". Meshes in use: 18 of 100.
+Frame   61. Module "common_engine_render". Meshes in use: 19 of 100.
+Frame   64. Module "common_engine_render". Meshes in use: 20 of 100.
+Frame   67. Module "common_engine_render". Meshes in use: 21 of 100.
+Frame   70. Module "common_engine_render". Meshes in use: 22 of 100.
+Frame   73. Module "common_engine_render". Meshes in use: 23 of 100.
+Frame   76. Module "common_engine_render". Meshes in use: 24 of 100.
+Frame   79. Module "common_engine_render". Meshes in use: 25 of 100.
+Frame   82. Module "common_engine_render". Meshes in use: 26 of 100.
+Frame   85. Module "common_engine_render". Meshes in use: 27 of 100.
+Frame   88. Module "common_engine_render". Meshes in use: 28 of 100.
+Frame   91. Module "common_engine_render". Meshes in use: 29 of 100.
+Frame   94. Module "common_engine_render". Meshes in use: 30 of 100.
+Frame   97. Module "common_engine_render". Meshes in use: 31 of 100.
+Frame  100. Module "common_engine_render". Meshes in use: 32 of 100.
+Frame  103. Module "common_engine_render". Meshes in use: 33 of 100.
+Frame  106. Module "common_engine_render". Meshes in use: 34 of 100.
+Frame  109. Module "common_engine_render". Meshes in use: 35 of 100.
+Frame  112. Module "common_engine_render". Meshes in use: 36 of 100.
+Frame  115. Module "common_engine_render". Meshes in use: 37 of 100.
+Frame  118. Module "common_engine_render". Meshes in use: 38 of 100.
+Frame  121. Module "common_engine_render". Meshes in use: 39 of 100.
+Frame  124. Module "common_engine_render". Meshes in use: 40 of 100.
+Frame  127. Module "common_engine_render". Meshes in use: 41 of 100.
+Frame  127. Module "loadable_fsm_behaviour". Machine "main_menu_generator" leaves state "generating".
+Frame  127. Module "loadable_fsm_behaviour". Machine "main_menu_generator" enters state "finished".
+Frame  127. Module "loadable_fsm_behaviour". Machine "generator" leaves state "main_menu".
+Frame  127. Module "loadable_fsm_behaviour". Machine "generator" enters state "amusement".
+Frame  127. Module "loadable_fsm_behaviour". Machine "amusement_generator" leaves state "initial".
+Frame  127. Module "loadable_fsm_behaviour". Machine "amusement_generator" enters state "generating".
+Frame  127. Module "common_engine_render". Meshes in use: 42 of 100.
+Frame  127. Module "common_engine_render". Meshes in use: 43 of 100.
+Frame  127. Module "common_engine_render". Textures in use: 2 of 10.
+Frame  127. Module "common_engine_render". Meshes in use: 44 of 100.
+Frame  127. Module "common_engine_render". Textures in use: 3 of 10.
+Frame  127. Module "loadable_fsm_behaviour". Machine "amusement_generator" leaves state "generating".
+Frame  127. Module "loadable_fsm_behaviour". Machine "amusement_generator" enters state "finished".
+Frame  127. Module "loadable_fsm_behaviour". Machine "generator" leaves state "amusement".
+Frame  127. Module "loadable_fsm_behaviour". Machine "generator" enters state "game".
+Frame  291. Module "loadable_fsm_behaviour". Machine "salutation_performer" leaves state "appearing".
+Frame  291. Module "loadable_fsm_behaviour". Machine "salutation_performer" enters state "disappearing".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_performer" leaves state "disappearing".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_performer" enters state "finished".
+Frame  412. Module "loadable_fsm_behaviour". Machine "performer" leaves state "salutation".
+Frame  412. Module "loadable_fsm_behaviour". Machine "performer" enters state "main_menu".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" leaves state "initial".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" enters state "cleaning".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" leaves state "cleaning".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" enters state "cleaning_letters_text".
+Frame  412. Module "loadable_fsm_behaviour". Machine "main_menu_performer" leaves state "initial".
+Frame  412. Module "loadable_fsm_behaviour". Machine "main_menu_performer" enters state "performing".
+Frame  412. Module "common_logic_salutation_letters_text_storage". Entries in use: 0 of 16.
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" leaves state "cleaning_letters_text".
+Frame  412. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" enters state "cleaning_letters_meshes".
+Frame  415. Module "common_engine_render". Meshes in use: 43 of 100.
+Frame  418. Module "common_engine_render". Meshes in use: 42 of 100.
+Frame  421. Module "common_engine_render". Meshes in use: 41 of 100.
+Frame  424. Module "common_engine_render". Meshes in use: 40 of 100.
+Frame  427. Module "common_engine_render". Meshes in use: 39 of 100.
+Frame  430. Module "common_engine_render". Meshes in use: 38 of 100.
+Frame  433. Module "common_engine_render". Meshes in use: 37 of 100.
+Frame  436. Module "common_engine_render". Meshes in use: 36 of 100.
+Frame  439. Module "common_engine_render". Meshes in use: 35 of 100.
+Frame  442. Module "common_engine_render". Meshes in use: 34 of 100.
+Frame  445. Module "common_engine_render". Meshes in use: 33 of 100.
+Frame  448. Module "common_engine_render". Meshes in use: 32 of 100.
+Frame  451. Module "common_logic_salutation_letters_meshes_storage". Entries in use: 0 of 16.
+Frame  451. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" leaves state "cleaning_letters_meshes".
+Frame  451. Module "loadable_fsm_behaviour". Machine "salutation_cleaner" enters state "finished".
+Frame 1162. Module "common_engine_render". Meshes in use: 31 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 30 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 29 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 28 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 27 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 26 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 25 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 24 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 23 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 22 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 21 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 20 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 19 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 18 of 100.
+Frame 1162. Module "loadable_fsm_behaviour". Machine "main_menu_performer" leaves state "performing".
+Frame 1162. Module "loadable_fsm_behaviour". Machine "main_menu_performer" enters state "finished".
+Frame 1162. Module "loadable_fsm_behaviour". Machine "performer" leaves state "main_menu".
+Frame 1162. Module "loadable_fsm_behaviour". Machine "performer" enters state "amusement".
+Frame 1162. Module "loadable_fsm_behaviour". Machine "amusement_performer" leaves state "initial".
+Frame 1162. Module "loadable_fsm_behaviour". Machine "amusement_performer" enters state "performing".
+Frame 1162. Module "common_engine_render". Meshes in use: 17 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 16 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 15 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 14 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 13 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 12 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 11 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 10 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 9 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 8 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 7 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 6 of 100.
+Frame 1162. Module "common_engine_render". Meshes in use: 5 of 100.
+Frame 1823. Module "loadable_fsm_behaviour". Machine "amusement_performer" leaves state "performing".
+Frame 1823. Module "loadable_fsm_behaviour". Machine "amusement_performer" enters state "finished".
+Frame 1823. Module "loadable_fsm_behaviour". Machine "performer" leaves state "amusement".
+Frame 1823. Module "loadable_fsm_behaviour". Machine "performer" enters state "game".
+Frame 1823. Module "loadable_fsm_behaviour". Machine "game_performer" leaves state "initial".
+Frame 1823. Module "loadable_fsm_behaviour". Machine "game_performer" enters state "performing".
+Frame 1823. Module "common_logic_game". Game launch permitted.
+Frame 1824. Module "common_logic_game". Camera preparation permitted.
+Frame 1824. Module "common_logic_game". Land preparation permitted.
+Frame 1825. Module "common_engine_render". Textures in use: 4 of 10.
+Frame 1855. Module "common_engine_render". Meshes in use: 6 of 100.
+Frame 1855. Module "common_logic_game". Entities preparation permitted.
+Frame 1856. Module "common_engine_render". Meshes in use: 7 of 100.
+Frame 2235. Module "common_logic_game". Image preparation permitted.
+Frame 2236. Module "common_engine_render". Meshes in use: 8 of 100.
+Frame 2236. Module "common_engine_render". Textures in use: 5 of 10.
+Frame 2242. Module "common_logic_game". Touch preparation permitted.
+Frame 2243. Module "common_engine_render". Meshes in use: 9 of 100.
+Frame 2243. Module "common_logic_game". Sound preparation permitted.

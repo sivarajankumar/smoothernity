@@ -1,0 +1,4 @@
+consts logic_amusement
+    renderer_clear_color_r 0 / 1
+    renderer_clear_color_g 0 / 1
+    renderer_clear_color_b 1 / 3

@@ -1,0 +1,8 @@
+#ifndef _shy_loadable_consts_reflection_logic_blanket_injections_included
+#define _shy_loadable_consts_reflection_logic_blanket_injections_included
+
+#include "./shy_blanket.h"
+
+typedef shy_loadable_consts_reflection_logic_blanket so_called_loadable_consts_reflection_logic_blanket ;
+
+#endif

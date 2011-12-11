@@ -1,0 +1,9 @@
+const so_called_platform_math_num_fract_type shy_common_logic_observer_animation_consts :: flight_horizontal_offset_amplitude ;
+const so_called_platform_math_num_fract_type shy_common_logic_observer_animation_consts :: flight_horizontal_offset_period ;
+const so_called_platform_math_num_fract_type shy_common_logic_observer_animation_consts :: flight_target_z ;
+const so_called_platform_math_num_fract_type shy_common_logic_observer_animation_consts :: flight_vertical_offset_amplitude ;
+const so_called_platform_math_num_fract_type shy_common_logic_observer_animation_consts :: flight_vertical_offset_period ;
+
+void shy_common_logic_observer_animation_consts :: binding ( )
+{
+}

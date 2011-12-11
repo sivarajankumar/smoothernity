@@ -1,0 +1,33 @@
+#ifdef shy_build_loadable_way
+
+    #include "src/loadable/consts/reflection/logic/amusement/shy_amusement_injections.h"
+    #include "src/loadable/consts/reflection/logic/application/shy_application_injections.h"
+    #include "src/loadable/consts/reflection/logic/blanket/shy_blanket_injections.h"
+    #include "src/loadable/consts/reflection/logic/blanket/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/door/shy_door_injections.h"
+    #include "src/loadable/consts/reflection/logic/door/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/fader/shy_fader_injections.h"
+    #include "src/loadable/consts/reflection/logic/fidget/shy_fidget_injections.h"
+    #include "src/loadable/consts/reflection/logic/font/mesh/shy_mesh_injections.h"
+    #include "src/loadable/consts/reflection/logic/font/texture/shy_texture_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/letters/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/letters/layout/shy_layout_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/letters/meshes/shy_meshes_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/selection/shy_selection_injections.h"
+    #include "src/loadable/consts/reflection/logic/main/menu/selection/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/observer/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/ortho/shy_ortho_injections.h"
+    #include "src/loadable/consts/reflection/logic/perspective/shy_perspective_injections.h"
+    #include "src/loadable/consts/reflection/logic/room/shy_room_injections.h"
+    #include "src/loadable/consts/reflection/logic/salutation/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/salutation/letters/animation/shy_animation_injections.h"
+    #include "src/loadable/consts/reflection/logic/salutation/letters/meshes/shy_meshes_injections.h"
+    #include "src/loadable/consts/reflection/logic/salutation/renderer/shy_renderer_injections.h"
+    #include "src/loadable/consts/reflection/logic/salutation/timer/shy_timer_injections.h"
+    #include "src/loadable/consts/reflection/logic/vacuum/shy_vacuum_injections.h"
+
+    #include "./shy_reflection_injections.h"
+    #include "./shy_reflection.hpp"
+
+#endif

@@ -1,0 +1,7 @@
+#ifndef _shy_macosx_platform_render_vertex_buffer_id_type_injections_included
+#define _shy_macosx_platform_render_vertex_buffer_id_type_injections_included
+
+#include "src/platform/render/opengl/vertex/buffer/id/type/shy_type_injections.h"
+typedef so_called_platform_render_opengl_vertex_buffer_id_type so_called_platform_render_vertex_buffer_id_type ;
+
+#endif

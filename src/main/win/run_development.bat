@@ -1,0 +1,1 @@
+(for /r ..\..\..\data %%i in (*) do @type %%i) | ..\..\..\..\build\windows\debug\smoothernity.exe | python

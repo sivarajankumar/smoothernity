@@ -1,0 +1,7 @@
+#ifndef _shy_iphone_lib_std_getline_injections_included
+#define _shy_iphone_lib_std_getline_injections_included 
+
+no_getline_for_iphone
+
+#endif
+

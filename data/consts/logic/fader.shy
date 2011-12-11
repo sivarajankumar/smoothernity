@@ -1,0 +1,8 @@
+consts logic_fader
+    color_begin_r 1 / 1
+    color_begin_g 1 / 1
+    color_begin_b 1 / 1
+    color_end_r 0 / 1
+    color_end_g 0 / 1
+    color_end_b 0 / 1
+    fade_time 19 / 10

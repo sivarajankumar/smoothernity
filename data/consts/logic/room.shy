@@ -1,0 +1,63 @@
+consts logic_room
+    mesh_color_left_r 1 / 1
+    mesh_color_left_g 0 / 1
+    mesh_color_left_b 0 / 1
+    mesh_color_left_a 1 / 1
+    mesh_color_right_r 0 / 1
+    mesh_color_right_g 1 / 1
+    mesh_color_right_b 0 / 1
+    mesh_color_right_a 1 / 1
+    mesh_color_near_r 1 / 1
+    mesh_color_near_g 1 / 1
+    mesh_color_near_b 0 / 1
+    mesh_color_near_a 1 / 1
+    mesh_color_far_r 0 / 1
+    mesh_color_far_g 0 / 1
+    mesh_color_far_b 1 / 1
+    mesh_color_far_a 1 / 1
+    mesh_color_bottom_r 0 / 1
+    mesh_color_bottom_g 1 / 1
+    mesh_color_bottom_b 1 / 1
+    mesh_color_bottom_a 1 / 1
+    mesh_color_top_r 1 / 1
+    mesh_color_top_g 0 / 1
+    mesh_color_top_b 1 / 1
+    mesh_color_top_a 1 / 1
+    mesh_position_x 0 / 1
+    mesh_position_y 0 / 1
+    mesh_position_z 0 / 1
+    mesh_x_left - 10 / 1
+    mesh_x_right 10 / 1
+    mesh_y_top 3 / 1 
+    mesh_y_bottom - 3 / 1
+    mesh_z_near 10 / 1
+    mesh_z_far - 10 / 1
+    mesh_left_side_u_left 0 / 1
+    mesh_left_side_u_right 1 / 1
+    mesh_left_side_v_top 1 / 3
+    mesh_left_side_v_bottom 0 / 1
+    mesh_right_side_u_left 0 / 1
+    mesh_right_side_u_right 1 / 1
+    mesh_right_side_v_top 1 / 3
+    mesh_right_side_v_bottom 0 / 1
+    mesh_near_side_u_left 0 / 1
+    mesh_near_side_u_right 1 / 1
+    mesh_near_side_v_top 1 / 3
+    mesh_near_side_v_bottom 0 / 1
+    mesh_far_side_u_left 0 / 1
+    mesh_far_side_u_right 1 / 1
+    mesh_far_side_v_top 1 / 3
+    mesh_far_side_v_bottom 0 / 1
+    mesh_bottom_side_u_left 0 / 1
+    mesh_bottom_side_u_right 1 / 1
+    mesh_bottom_side_v_top 1 / 1
+    mesh_bottom_side_v_bottom 0 / 1
+    mesh_top_side_u_left 0 / 1
+    mesh_top_side_u_right 1 / 1
+    mesh_top_side_v_top 1 / 1
+    mesh_top_side_v_bottom 0 / 1
+    room_show_time 10 / 1
+    texture_pen_intensity 1 / 1
+    texture_paper_intensity 3 / 4
+    texture_alpha 1 / 1
+    texture_grid_size 10

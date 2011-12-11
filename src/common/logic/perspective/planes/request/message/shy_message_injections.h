@@ -1,0 +1,10 @@
+#ifndef _shy_common_logic_perspective_planes_request_message_injections_included
+#define _shy_common_logic_perspective_planes_request_message_injections_included
+
+#include "src/common/logic/perspective/planes/request/message/shy_message_injections.h"
+
+#include "./shy_message.h"
+
+typedef shy_common_logic_perspective_planes_request_message so_called_common_logic_perspective_planes_request_message ;
+
+#endif

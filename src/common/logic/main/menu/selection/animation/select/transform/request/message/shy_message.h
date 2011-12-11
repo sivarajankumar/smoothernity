@@ -1,0 +1,3 @@
+class shy_common_logic_main_menu_selection_animation_select_transform_request_message
+{
+} ;

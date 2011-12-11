@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C8FA56C4-A49A-4C12-8DEB-683F38E16A01}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>shy_common_logic_main_menu</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../temp/windows/lib/common_logic_main_menu/debug/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../temp/windows/int/common_logic_main_menu/debug/</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EmbedManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../temp/windows/lib/common_logic_main_menu/release/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../temp/windows/int/common_logic_main_menu/release/</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</EmbedManifest>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../..;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shy_pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ForcedIncludeFiles>shy_pch.h</ForcedIncludeFiles>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <LargeAddressAware>true</LargeAddressAware>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>../../..;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shy_pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ForcedIncludeFiles>shy_pch.h</ForcedIncludeFiles>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <LargeAddressAware>true</LargeAddressAware>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\common\logic\main\menu\animation\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\shake\shy_shake_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\shake\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\shake\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\shy_animation_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\animation\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\choice\row\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\choice\shy_choice_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\choice\void\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\created\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\creation\permit\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\launch\permit\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\appear\shy_appear_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\appear\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\appear\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\disappear\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\disappear\shy_disappear_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\disappear\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\disappear\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\disappear\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\idle\shy_idle_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\idle\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\idle\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\push\shy_push_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\push\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\push\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\shy_selection_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\weight\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\weight\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\weight\select\row\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\weight\shy_weight_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\selection\weight\unselect\row\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\shy_animation_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\unselection\weight\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\unselection\weight\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\unselection\weight\select\row\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\unselection\weight\shy_weight_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\animation\unselection\weight\unselect\row\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\boundaries\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\boundaries\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\cols\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\cols\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\create\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\create\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\creation\director\shy_director_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\position\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\position\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\position\shy_position_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\row\rect\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\row\rect\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\row\rect\shy_rect_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\layout\stateless\shy_stateless_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\letter\add\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\letter\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\letter\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\count\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\count\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\create\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\creation\director\shy_director_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\creation\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\creator\shy_creator_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\destroyer\shy_destroyer_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\destroy\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\destroy\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\iterate\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\iterate\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\iteration\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\create\next\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\has\been\created\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\id\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\id\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\row\col\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\mesh\row\col\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\placement\shy_placement_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\place\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\renderer\shy_renderer_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\render\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\render\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\meshes\storage\shy_storage_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\next\row\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\rows\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\rows\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\letters\storage\shy_storage_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\renderer\shy_renderer_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\render\permit\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\render\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\row\chosen\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\appear\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\appear\shy_appear_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\appear\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\appear\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\appear\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\disappear\shy_disappear_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\disappear\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\disappear\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\disappear\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\attention\shy_attention_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\attention\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\attention\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\row\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\shy_idle_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\idle\void\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\attention\shy_attention_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\attention\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\attention\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\shy_push_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\weight\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\weight\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\push\weight\shy_weight_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\select\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\select\shy_select_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\select\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\select\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\select\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\shy_animation_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\unselect\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\unselect\shy_unselect_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\unselect\start\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\unselect\transform\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\animation\unselect\transform\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\consts\shy_consts_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\create\finished\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\create\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\destroy\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\destroy\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\place\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\render\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\render\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\mesh\shy_mesh_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\tracker\shy_tracker_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\tracking\director\shy_director_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\tracking\director\update\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\track\reply\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\track\request\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\track\row\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\selection\track\void\selected\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\shy_menu_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\update\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="..\..\common\logic\main\menu\void\chosen\sender\shy_sender_injections.cpp" />
+    <ClCompile Include="shy_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

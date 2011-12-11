@@ -1,0 +1,6 @@
+#ifndef _shy_iphone_lib_std_vector_injections_included
+#define _shy_iphone_lib_std_vector_injections_included 
+
+no_vector_for_iphone
+
+#endif

@@ -1,0 +1,47 @@
+class shy_common_logic_application_fsm_actions
+{
+public :
+    static void logic_amusement_creation_permit ( ) ;
+    static void logic_amusement_launch_permit ( ) ;
+    static void logic_amusement_render ( ) ;
+    static void logic_amusement_update ( ) ;
+    static void logic_fader_render ( ) ;
+    static void logic_fader_start ( ) ;
+    static void logic_fader_update ( ) ;
+    static void logic_font_mesh_generator_generate ( ) ;
+    static void logic_font_mesh_generator_update ( ) ;
+    static void logic_font_texture_generator_generate ( ) ;
+    static void logic_font_texture_generator_update ( ) ;
+    static void logic_game_launch_permit ( ) ;
+    static void logic_game_render ( ) ;
+    static void logic_game_update ( ) ;
+    static void logic_main_menu_creation_permit ( ) ;
+    static void logic_main_menu_launch_permit ( ) ;
+    static void logic_main_menu_render ( ) ;
+    static void logic_main_menu_update ( ) ;
+    static void logic_salutation_animation_zoom_rewind ( ) ;
+    static void logic_salutation_animation_zoom_step ( ) ;
+    static void logic_salutation_letters_animation_appear_rewind ( ) ;
+    static void logic_salutation_letters_animation_appear_step ( ) ;
+    static void logic_salutation_letters_animation_disappear_rewind ( ) ;
+    static void logic_salutation_letters_animation_disappear_step ( ) ;
+    static void logic_salutation_letters_animation_roll_in_rewind ( ) ;
+    static void logic_salutation_letters_animation_roll_in_step ( ) ;
+    static void logic_salutation_letters_animation_roll_out_rewind ( ) ;
+    static void logic_salutation_letters_animation_roll_out_step ( ) ;
+    static void logic_salutation_letters_meshes_cleaner_clean ( ) ;
+    static void logic_salutation_letters_meshes_cleaner_update ( ) ;
+    static void logic_salutation_letters_meshes_generator_generate ( ) ;
+    static void logic_salutation_letters_meshes_generator_update ( ) ;
+    static void logic_salutation_letters_text_cleaner_clean ( ) ;
+    static void logic_salutation_letters_text_generator_generate ( ) ;
+    static void logic_salutation_renderer_render ( ) ;
+    static void logic_salutation_timer_appear_start ( ) ;
+    static void logic_salutation_timer_appear_tick ( ) ;
+    static void logic_salutation_timer_disappear_start ( ) ;
+    static void logic_salutation_timer_disappear_tick ( ) ;
+    static void logic_text_prepare_permit ( ) ;
+    static void logic_text_update ( ) ;
+    static void logic_vacuum_render ( ) ;
+    static void logic_vacuum_update ( ) ;
+} ;
