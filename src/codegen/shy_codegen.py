@@ -1,6 +1,11 @@
+from hashlib import md5
+
 def reify ( data , open_func ) :
     for name , contents in data . items ( ) :
-        open_func ( name , 'w' ) . write ( contents )
+        old_md5 = md5 ( open_func ( name , 'r' ) . read ( ) ) . hexdigest ( )
+        new_md5 = md5 ( contents ) . hexdigest ( )
+        if new_md5 != old_md5 :
+            open_func ( name , 'w' ) . write ( contents )
 
 def generate ( lines ) :
     res = { }
