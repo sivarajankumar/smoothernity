@@ -5,22 +5,34 @@ class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         class file_mock :
             _files = { }
-            def __init__ ( self ) :
+            def __init__ ( self , to_read = str ( ) ) :
+                self . _to_read = to_read
                 self . _written = [ ]
             def write ( self , what ) :
                 self . _written . append ( what )
+            def read ( self ) :
+                return self . _to_read
         def open_mock ( name , mode ) :
-            if name not in file_mock . _files :
-                file_mock . _files [ name ] = { }
-            if mode not in file_mock . _files [ name ] :
-                file_mock . _files [ name ] [ mode ] = file_mock ( )
-            return file_mock . _files [ name ] [ mode ]
-        self . files = file_mock . _files
+            if name not in self . fs :
+                self . fs [ name ] = { }
+            if mode not in self . fs [ name ] :
+                self . fs [ name ] [ mode ] = file_mock ( )
+            return self . fs [ name ] [ mode ]
+        self . fm = file_mock
+        self . fs = file_mock . _files
         self . r = lambda x : shy_codegen . reify ( x , open_mock )
     def test_create_new_file ( self ) :
         self . r ( { 'file1' : 'contents1' } )
-        f = self . files [ 'file1' ] [ 'w' ]
+        f = self . fs [ 'file1' ] [ 'w' ]
         self . assertEqual ( f . _written , [ 'contents1' ] )
+    def test_check_existing_file ( self ) :
+        self . fs = {
+            'file1' : { 'r' : self . fm ( 'contents1' ) } ,
+            'file2' : { 'r' : self . fm ( 'contents2' ) } }
+        self . r ( { 'file1' : 'contents1' , 'file2' : 'contents3' } )
+        self . assertFalse ( 'w' in self . fs [ 'file1' ] )
+        f = self . fs [ 'file2' ] [ 'w' ]
+        self . assertEqual ( f . _written , [ 'contents3' ] )
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
