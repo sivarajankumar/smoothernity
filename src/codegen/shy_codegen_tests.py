@@ -1,6 +1,27 @@
 import shy_codegen
 import unittest
 
+class reify_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        class file_mock :
+            _files = { }
+            def __init__ ( self ) :
+                self . _written = [ ]
+            def write ( self , what ) :
+                self . _written . append ( what )
+        def open_mock ( name , mode ) :
+            if name not in file_mock . _files :
+                file_mock . _files [ name ] = { }
+            if mode not in file_mock . _files [ name ] :
+                file_mock . _files [ name ] [ mode ] = file_mock ( )
+            return file_mock . _files [ name ] [ mode ]
+        self . files = file_mock . _files
+        self . r = lambda x : shy_codegen . reify ( x , open_mock )
+    def test_create_new_file ( self ) :
+        self . r ( { 'file1' : 'contents1' } )
+        f = self . files [ 'file1' ] [ 'w' ]
+        self . assertEqual ( f . _written , [ 'contents1' ] )
+
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . fs = shy_codegen . generate ( [ ] )

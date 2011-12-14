@@ -1,3 +1,7 @@
+def reify ( data , open_func ) :
+    for name , contents in data . items ( ) :
+        open_func ( name , 'w' ) . write ( contents )
+
 def generate ( lines ) :
     res = { }
     res . update ( _generate_common_h ( ) )
