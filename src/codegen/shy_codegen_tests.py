@@ -1,9 +1,9 @@
 import shy_codegen
 import unittest
 
-class shy_essential_files_test_case ( unittest . TestCase ) :
+class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
-        self . fs = shy_codegen . shy_generate ( [ ] )
+        self . fs = shy_codegen . generate ( [ ] )
     def test_common_h ( self ) :
         self . assertEqual ( self . fs [ 'src/common/shy_common.h' ] ,
             'class shy_common\n'
