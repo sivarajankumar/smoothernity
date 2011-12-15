@@ -1,7 +1,8 @@
 from hashlib import md5
 
-def reify ( data , open_func , trace ) :
-    for name , contents in data . items ( ) :
+def reify ( data , open_func , trace , options ) :
+    for raw_name , contents in data . items ( ) :
+        name = options . file_prefix ( ) + raw_name
         try :
             old_md5 = md5 ( open_func ( name , 'r' ) . read ( ) ) . hexdigest ( )
         except :
