@@ -5,7 +5,11 @@ def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in data . items ( ) :
         name = options . file_prefix ( ) + raw_name
         dir = dirname ( name )
-        os_mod . makedirs ( dir )
+        try :
+            os_mod . makedirs ( dir )
+            trace . dir_created ( dir )
+        except :
+            pass
         try :
             old_md5 = md5 ( open_func ( name , 'r' ) . read ( ) ) . hexdigest ( )
         except :
