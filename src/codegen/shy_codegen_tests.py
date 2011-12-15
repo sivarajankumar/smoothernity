@@ -14,11 +14,17 @@ class reify_test_case ( unittest . TestCase ) :
                 return self . _to_read
             def _open ( self ) :
                 return self
+        class trace_mock :
+            def __init__ ( self ) :
+                self . _write_errors = [ ]
+            def write_error ( self , name , error ) :
+                self . _write_errors . append ( ( name , error ) )
         def open_mock ( name , mode ) :
             return self . fs [ name ] [ mode ] . _open ( )
         self . fm = file_mock
         self . fs = file_mock . _files
-        self . r = lambda x : shy_codegen . reify ( x , open_mock )
+        self . t = trace_mock ( )
+        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t )
     def test_overwrite_file ( self ) :
         self . fs = {
             'file1' : { 'r' : self . fm ( 'contents1' ) } ,
@@ -37,6 +43,15 @@ class reify_test_case ( unittest . TestCase ) :
         self . r ( { 'file1' : 'contents1' } )
         f = self . fs [ 'file1' ] [ 'w' ]
         self . assertEqual ( f . _written , [ 'contents1' ] )
+    def test_write_error ( self ) :
+        class file_ex :
+            def _open ( self ) :
+                raise Exception ( 'error1' )
+        self . fs = {
+            'file1' : { 'r' : file_ex ( ) ,
+                        'w' : file_ex ( ) } }
+        self . r ( { 'file1' : 'contents1' } )
+        self . assertEqual ( self . t . _write_errors , [ ( 'file1' , 'error1' ) ] )
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
