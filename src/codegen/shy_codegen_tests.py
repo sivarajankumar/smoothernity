@@ -25,12 +25,18 @@ class reify_test_case ( unittest . TestCase ) :
                 self . _created . append ( name )
             def overwritten ( self , name ) :
                 self . _overwritten . append ( name )
+        class options_mock :
+            def __init__ ( self ) :
+                self . _file_prefix = ''
+            def file_prefix ( self ) :
+                return self . _file_prefix
         def open_mock ( name , mode ) :
             return self . fs [ name ] [ mode ] . _open ( )
         self . fm = file_mock
         self . fs = file_mock . _files
         self . t = trace_mock ( )
-        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t )
+        self . op = options_mock ( )
+        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t , self . op )
     def test_overwrite_file ( self ) :
         self . fs = {
             'file1' : { 'r' : self . fm ( 'contents1' ) } ,
@@ -60,6 +66,14 @@ class reify_test_case ( unittest . TestCase ) :
                         'w' : file_ex ( ) } }
         self . r ( { 'file1' : 'contents1' } )
         self . assertEqual ( self . t . _write_errors , [ ( 'file1' , 'error1' ) ] )
+    def test_file_prefix ( self ) :
+        self . op . _file_prefix = 'prefix1'
+        self . fs = {
+            'prefix1file1' : { 'r' : self . fm ( ) ,
+                               'w' : self . fm ( ) } }
+        self . r ( { 'file1' : 'contents1' } )
+        f = self . fs [ 'prefix1file1' ] [ 'w' ]
+        self . assertEqual ( f . _written , [ 'contents1' ] )
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
