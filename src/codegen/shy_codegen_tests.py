@@ -18,12 +18,15 @@ class reify_test_case ( unittest . TestCase ) :
                 self . _write_errors = [ ]
                 self . _created = [ ]
                 self . _overwritten = [ ]
+                self . _dir_created = [ ]
             def write_error ( self , name , error ) :
                 self . _write_errors . append ( ( name , error ) )
             def created ( self , name ) :
                 self . _created . append ( name )
             def overwritten ( self , name ) :
                 self . _overwritten . append ( name )
+            def dir_created ( self , name ) :
+                self . _dir_created . append ( name )
         class options_mock :
             def __init__ ( self ) :
                 self . _file_prefix = ''
@@ -55,9 +58,9 @@ class reify_test_case ( unittest . TestCase ) :
         class file_ex :
             def _open ( self ) :
                 raise Exception ( )
-        self . fs = {
-            'file1' : { 'r' : file_ex ( ) ,
-                        'w' : self . fm ( ) } }
+        self . fs = { 'file1' : {
+            'r' : file_ex ( ) ,
+            'w' : self . fm ( ) } }
         self . r ( { 'file1' : 'contents1' } )
         f = self . fs [ 'file1' ] [ 'w' ]
         self . assertEqual ( f . _written , [ 'contents1' ] )
@@ -66,16 +69,16 @@ class reify_test_case ( unittest . TestCase ) :
         class file_ex :
             def _open ( self ) :
                 raise Exception ( 'error1' )
-        self . fs = {
-            'file1' : { 'r' : file_ex ( ) ,
-                        'w' : file_ex ( ) } }
+        self . fs = { 'file1' : { 
+            'r' : file_ex ( ) ,
+            'w' : file_ex ( ) } }
         self . r ( { 'file1' : 'contents1' } )
         self . assertEqual ( self . t . _write_errors , [ ( 'file1' , 'error1' ) ] )
     def test_file_prefix ( self ) :
         self . op . _file_prefix = 'prefix1'
-        self . fs = {
-            'prefix1file1' : { 'r' : self . fm ( ) ,
-                               'w' : self . fm ( ) } }
+        self . fs = { 'prefix1file1' : {
+            'r' : self . fm ( ) ,
+            'w' : self . fm ( ) } }
         self . r ( { 'file1' : 'contents1' } )
         f = self . fs [ 'prefix1file1' ] [ 'w' ]
         self . assertEqual ( f . _written , [ 'contents1' ] )
@@ -84,6 +87,17 @@ class reify_test_case ( unittest . TestCase ) :
         self . fs = { 'prefix1/dir1/file1' : { 'w' : self . fm ( ) } }
         self . r ( { 'dir1/file1' : 'contents1' } )
         self . assertEqual ( self . om . _makedirs , [ 'prefix1/dir1' ] )
+        self . assertEqual ( self . t . _dir_created , [ 'prefix1/dir1' ] )
+    def test_create_path_error ( self ) :
+        def makedirs_ex ( dirs ) :
+            raise Exception ( )
+        self . om . makedirs = makedirs_ex
+        self . op . _file_prefix = 'prefix1/'
+        self . fs = { 'prefix1/dir1/file1' : { 'w' : self . fm ( ) } }
+        self . r ( { 'dir1/file1' : 'contents1' } )
+        f = self . fs [ 'prefix1/dir1/file1' ] [ 'w' ]
+        self . assertEqual ( f . _written , [ 'contents1' ] )
+        self . assertEqual ( self . t . _dir_created , [ ] )
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
