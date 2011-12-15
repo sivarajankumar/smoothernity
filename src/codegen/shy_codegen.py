@@ -1,8 +1,11 @@
 from hashlib import md5
+from os . path import dirname
 
-def reify ( data , open_func , trace , options ) :
+def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in data . items ( ) :
         name = options . file_prefix ( ) + raw_name
+        dir = dirname ( name )
+        os_mod . makedirs ( dir )
         try :
             old_md5 = md5 ( open_func ( name , 'r' ) . read ( ) ) . hexdigest ( )
         except :

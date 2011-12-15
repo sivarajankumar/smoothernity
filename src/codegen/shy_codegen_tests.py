@@ -4,7 +4,6 @@ import unittest
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         class file_mock :
-            _files = { }
             def __init__ ( self , to_read = str ( ) ) :
                 self . _to_read = to_read
                 self . _written = [ ]
@@ -30,13 +29,19 @@ class reify_test_case ( unittest . TestCase ) :
                 self . _file_prefix = ''
             def file_prefix ( self ) :
                 return self . _file_prefix
+        class os_mock :
+            def __init__ ( self ) :
+                self . _makedirs = [ ]
+            def makedirs ( self , dir ) :
+                self . _makedirs . append ( dir )
         def open_mock ( name , mode ) :
             return self . fs [ name ] [ mode ] . _open ( )
         self . fm = file_mock
-        self . fs = file_mock . _files
+        self . fs = { }
         self . t = trace_mock ( )
         self . op = options_mock ( )
-        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t , self . op )
+        self . om = os_mock ( )
+        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t , self . op , self . om )
     def test_overwrite_file ( self ) :
         self . fs = {
             'file1' : { 'r' : self . fm ( 'contents1' ) } ,
@@ -74,6 +79,11 @@ class reify_test_case ( unittest . TestCase ) :
         self . r ( { 'file1' : 'contents1' } )
         f = self . fs [ 'prefix1file1' ] [ 'w' ]
         self . assertEqual ( f . _written , [ 'contents1' ] )
+    def test_create_path ( self ) :
+        self . op . _file_prefix = 'prefix1/'
+        self . fs = { 'prefix1/dir1/file1' : { 'w' : self . fm ( ) } }
+        self . r ( { 'dir1/file1' : 'contents1' } )
+        self . assertEqual ( self . om . _makedirs , [ 'prefix1/dir1' ] )
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
