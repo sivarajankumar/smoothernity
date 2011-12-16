@@ -1,8 +1,0 @@
-#ifndef _shy_loadable_consts_reflection_logic_salutation_timer_injections_included
-#define _shy_loadable_consts_reflection_logic_salutation_timer_injections_included
-
-#include "./shy_timer.h"
-
-typedef shy_loadable_consts_reflection_logic_salutation_timer so_called_loadable_consts_reflection_logic_salutation_timer ;
-
-#endif

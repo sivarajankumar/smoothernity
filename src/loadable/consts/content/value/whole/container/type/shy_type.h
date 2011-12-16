@@ -1,2 +1,0 @@
-typedef so_called_lib_std_map < so_called_lib_std_string , so_called_loadable_consts_content_value_whole_type > shy_loadable_consts_content_value_whole_container_type ;
-

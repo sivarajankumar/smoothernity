@@ -1,8 +1,0 @@
-#ifndef _shy_loadable_consts_reflection_logic_font_mesh_injections_included
-#define _shy_loadable_consts_reflection_logic_font_mesh_injections_included
-
-#include "./shy_mesh.h"
-
-typedef shy_loadable_consts_reflection_logic_font_mesh so_called_loadable_consts_reflection_logic_font_mesh ;
-
-#endif
