@@ -1,56 +1,56 @@
 module engine_render
 
-    request engine_render_aspect
+    request aspect
         with platform_render_get_aspect
             width reply_width
             height reply_height
 
-    receive engine_render_blend_disable
+    receive blend_disable
         platform_render_blend_disable
 
-    receive engine_render_blend_src_alpha_dst_one_minus_alpha
+    receive blend_src_alpha_dst_one_minus_alpha
         platform_render_blend_src_alpha_dst_one_minus_alpha
 
-    receive engine_render_clear_screen
+    receive clear_screen
         with msg
             platform_render_clear_screen r g b
 
-    receive engine_render_disable_depth_test
+    receive disable_depth_test
         platform_render_disable_depth_test
 
-    receive engine_render_enable_depth_test
+    receive enable_depth_test
         platform_render_enable_depth_test
 
-    receive engine_render_enable_face_culling
+    receive enable_face_culling
         platform_render_enable_face_culling
 
-    receive engine_render_fog_disable
+    receive fog_disable
         platform_render_fog_disable
 
-    receive engine_render_fog_linear
+    receive fog_linear
         with msg
             platform_render_fog_linear z_near z_far r g b a
 
-    request engine_render_frame_loss
+    request frame_loss
         platform_render_get_frame_loss reply_frame_loss
 
-    receive engine_render_matrix_identity
+    receive matrix_identity
         platform_render_matrix_identity
 
-    receive engine_render_matrix_load
+    receive matrix_load
         platform_render_matrix_load msg_matrix
 
-    receive engine_render_matrix_mult
+    receive matrix_mult
         platform_render_matrix_mult msg_matrix
 
-    request engine_render_mesh_create
+    request mesh_create
         vars
             * platform_math_num_whole vacant_mesh_id
             * guts_mesh_data mesh
         ops
             if platform_conditions_whole_less_than_whole
                             guts_next_vacant_mesh_id_index
-                            engine_render_consts_max_meshes
+                            consts_max_meshes
 
                 platform_static_array_element_ptr
                     vacant_mesh_id guts_vacant_mesh_ids
@@ -64,30 +64,27 @@ module engine_render
                         triangle_strip_indices
                     mesh_triangle_fan_indices_count <-
                         triangle_fan_indices
+                platform_matrix_identity mesh_transform
 
                 if platform_conditions_whole_greater_than_whole
-                            msg_vertices engine_render_consts_max_vertices
-                    mesh_vertices_count <- engine_render_consts_max_vertices
-                    engine_render_trace_mesh_too_many_vertices_error
-                        msg_vertices engine_render_consts_max_vertices
+                            msg_vertices consts_max_vertices
+                    mesh_vertices_count <- consts_max_vertices
+                    trace_mesh_too_many_vertices_error
+                        msg_vertices consts_max_vertices
 
                 if platform_conditions_whole_greater_than_whole
                             msg_triangle_strip_indices
-                            engine_render_consts_max_indices
-                    mesh_triangle_strip_indices_count <-
-                        engine_render_consts_max_indices
-                    engine_render_trace_mesh_too_many_indices_error
-                        msg_triangle_strip_indices
-                        engine_render_consts_max_indices
+                            consts_max_indices
+                    mesh_triangle_strip_indices_count <- consts_max_indices
+                    trace_mesh_too_many_indices_error
+                        msg_triangle_strip_indices consts_max_indices
 
                 if platform_conditions_whole_greater_than_whole
                             msg_triangle_fan_indices
-                            engine_render_consts_max_indices
-                    mesh_triangle_fan_indices_count <-
-                        engine_render_consts_max_indices
-                    engine_render_trace_mesh_too_many_indices_error
-                        msg_triangle_fan_indices
-                        engine_render_consts_max_indices
+                            consts_max_indices
+                    mesh_triangle_fan_indices_count <- consts_max_indices
+                    trace_mesh_too_many_indices_error
+                        msg_triangle_fan_indices consts_max_indices
 
                 with platform_render
                     with mesh
@@ -103,30 +100,96 @@ module engine_render
                 
                 reply_mesh_mesh_id <- vacant_mesh_id
                 platform_math_inc_whole guts_next_vacant_mesh_id_index
-                trace_common_engine_render_meshes_in_use
-                    guts_next_vacant_mesh_id_index
-                    engine_render_consts_max_meshes
+                trace_meshes_in_use
+                    guts_next_vacant_mesh_id_index consts_max_meshes
             else
-                reply_mesh <- engine_render_consts_null_mesh
-                trace_common_engine_render_meshes_overflow_error
+                reply_mesh <- consts_null_mesh
+                trace_meshes_overflow_error
 
-    receive common_engine_render_mesh_delete
+    receive mesh_delete
         vars
             * platform_math_num_whole vacant_mesh_id
         ops
             if platform_conditions_whole_less_than_whole
-                    msg_mesh_mesh_id common_engine_render_consts_max_meshes
+                            msg_mesh_mesh_id consts_max_meshes
                 if platform_conditions_whole_greater_than_zero
-                        guts_next_vacant_mesh_id_index
+                                guts_next_vacant_mesh_id_index
                     platform_math_dec_whole guts_next_vacant_mesh_id_index
-                    engine_render_trace_meshes_in_use
-                        guts_next_vacant_mesh_id_index
-                        engine_render_consts_max_meshes
+                    trace_meshes_in_use
+                        guts_next_vacant_mesh_id_index consts_max_meshes
                     platform_static_array_element_ptr vacant_mesh_id
                         guts_vacant_mesh_ids guts_next_vacant_mesh_id_index
                     vacant_mesh_id <- msg_mesh_mesh_id
                 else
-                    engine_render_trace_meshes_underflow_error
+                    trace_meshes_underflow_error
+
+    receive mesh_finalize
+        vars
+            * guts_mesh_data mesh
+        ops
+            if platform_conditions_whole_less_than_whole
+                            msg_mesh_mesh_id consts_max_meshes
+                platform_static_array_element_ptr
+                    mesh guts_meshes_datas msg_mesh_mesh_id
+                mesh_finalized <- true
+                with platform_render_unmap
+                    vertex_buffer mesh_vertex_buffer_id
+                    index_buffer mesh_triangle_strip_index_buffer_id
+                    index_buffer mesh_triangle_fan_index_buffer_id
+
+    receive mesh_render
+        vars
+            * guts_mesh_data mesh
+        ops
+            if platform_conditions_whole_less_than_whole
+                            msg_mesh_mesh_id consts_max_meshes
+                platform_static_array_element_ptr
+                    mesh guts_meshes_datas msg_mesh_mesh_id
+                if platform_conditions_whole_is_true mesh_finalized
+                    platform_render_matrix_push
+                    platform_render_matrix_mult mesh_transform
+                    with mesh
+                        if platform_conditions_whole_greater_than_zero
+                                        triangle_strip_indices_count
+                                platform_render_draw_triangle_strip
+                                    vertex_buffer_id
+                                    triangle_strip_index_buffer_id
+                                    triangle_strip_indices_count
+                        if platform_conditions_whole_greater_than_zero
+                                        triangle_fan_indices_count
+                                platform_render_draw_triangle_fan
+                                    vertex_buffer_id
+                                    triangle_strip_index_buffer_id
+                                    triangle_strip_indices_count
+                    platform_render_matrix_pop
+
+    receive set_triangle_fan_index_value
+        vars
+            * guts_mesh_data mesh
+            * platform_render_index_data index
+        ops
+            if platform_conditions_whole_less_than_whole
+                            msg_mesh_mesh_id consts_max_meshes
+                platform_static_array_element_ptr
+                    mesh guts_meshes_datas msg_mesh_mesh_id
+                if platform_conditions_whole_is_false mesh_finalized
+                    if platform_conditions_whole_less_than_whole 
+                                msg_offset mesh_triangle_fan_indices_count
+                        if platform_conditions_whole_less_than_whole
+                                    msg_index mesh_vertices_count
+                            platform_render_mapped_index_buffer_element
+                                index
+                                mesh_triangle_fan_index_buffer_mapped_data
+                                msg_offset
+                            platform_render_set_index_value index msg_index
+                        else
+                            trace_mesh_index_value_out_of_range_error
+                                msg_index mesh_vertices_count
+                    else
+                        trace_mesh_index_offset_out_of_range_error
+                            msg_offset mesh_triangle_fan_indices_count
+                else
+                    trace_trying_to_modify_finalized_mesh_error
 
     receive init
         vars
@@ -140,27 +203,27 @@ module engine_render
                 guts_next_vacant_mesh_id_index
             i <- 0
             while platform_conditions_whole_less_than_whole
-                        i engine_render_consts_max_meshes
+                        i consts_max_meshes
                 with platform_static_array_element_ptr
                     mesh guts_meshes_datas i
                     vacant_id guts_vacant_mesh_ids i
                 with platform_render_create
                     vertex_buffer mesh_vertex_buffer_id
-                                  engine_render_consts_max_vertices
+                                  consts_max_vertices
                     index_buffer mesh_triangle_strip_index_buffer_id
-                                 engine_render_consts_max_indices
+                                 consts_max_indices
                     index_buffer mesh_triangle_fan_index_buffer_id
-                                 engine_render_consts_max_indices
+                                 consts_max_indices
                 vacant_id <- i
                 platform_math_inc_whole i
             i <- 0
             while platform_conditions_whole_less_than_whole
-                        i engine_render_consts_max_textures
+                        i consts_max_textures
                 platform_static_array_element_ptr
                     texture guts_textures_datas i
                 platform_render_create_texture_id
                     texture_render_id
-                    engine_render_consts_texture_size_pow2_base
+                    consts_texture_size_pow2_base
 
     receive done
         vars
@@ -170,7 +233,7 @@ module engine_render
         ops
             i <- 0
             while platform_conditions_whole_less_than_whole
-                        i engine_render_consts_max_meshes
+                        i consts_max_meshes
                 platform_static_array_element_ptr mesh guts_meshes_datas i
                 with platform_render_delete
                     vertex_buffer mesh_vertex_buffer_id
@@ -179,7 +242,7 @@ module engine_render
                 platform_math_inc_whole i
             i <- 0
             while platform_conditions_whole_less_than_whole
-                        i engine_render_consts_max_textures
+                        i consts_max_textures
                 platform_static_array_element_ptr
                     texture guts_textures_datas i
                 platform_render_delete_texture_id texture_render_id
@@ -195,12 +258,12 @@ trace engine_render
             with platform_trace
                 trace_begin module_name
                 trace_string_error
-                    "Error. Requested mesh vertices count of "
+                    'Error. Requested mesh vertices count of '
                 trace_num_whole_error current
                 trace_string_error
-                    " exceeds maximum vertices count of "
+                    ' exceeds maximum vertices count of '
                 trace_num_whole_error total
-                trace_string_error "."
+                trace_string_error '.'
                 trace_end
 
     proc mesh_too_many_indices_error
@@ -211,10 +274,10 @@ trace engine_render
             with platform_trace
                 trace_begin module_name
                 trace_string_error
-                    "Error. Requested mesh indices count of "
+                    'Error. Requested mesh indices count of '
                 trace_num_whole_error current
                 trace_string_error
-                    " exceeds maximum indices count of "
+                    ' exceeds maximum indices count of '
                 trace_num_whole_error total
-                trace_string_error "."
+                trace_string_error '.'
                 trace_end
