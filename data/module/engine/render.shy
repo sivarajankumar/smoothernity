@@ -256,15 +256,15 @@ trace engine_render
             platform_math_num_whole total
         ops
             with platform_trace
-                trace_begin module_name
-                trace_string_error
+                begin module_name
+                string_error
                     'Error. Requested mesh vertices count of '
-                trace_num_whole_error current
-                trace_string_error
+                num_whole_error current
+                string_error
                     ' exceeds maximum vertices count of '
-                trace_num_whole_error total
-                trace_string_error '.'
-                trace_end
+                num_whole_error total
+                string_error '.'
+                end
 
     proc mesh_too_many_indices_error
         args
@@ -272,12 +272,12 @@ trace engine_render
             platform_math_num_whole total
         ops
             with platform_trace
-                trace_begin module_name
-                trace_string_error
+                begin module_name
+                string_error
                     'Error. Requested mesh indices count of '
-                trace_num_whole_error current
-                trace_string_error
+                num_whole_error current
+                string_error
                     ' exceeds maximum indices count of '
-                trace_num_whole_error total
-                trace_string_error '.'
-                trace_end
+                num_whole_error total
+                string_error '.'
+                end
