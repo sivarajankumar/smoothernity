@@ -191,6 +191,58 @@ module engine_render
                 else
                     trace_trying_to_modify_finalized_mesh_error
 
+    receive set_triangle_strip_index_value
+        vars
+            * guts_mesh_data mesh
+            * platform_render_index_data index
+        ops
+            if platform_conditions_whole_less_than_whole
+                            msg_mesh_mesh_id consts_max_meshes
+                platform_static_array_element_ptr
+                    mesh guts_meshes_datas msg_mesh_mesh_id
+                if platform_conditions_whole_is_false mesh_finalized
+                    if platform_conditions_whole_less_than_whole 
+                                msg_offset mesh_triangle_strip_indices_count
+                        if platform_conditions_whole_less_than_whole
+                                    msg_index mesh_vertices_count
+                            platform_render_mapped_index_buffer_element
+                                index
+                                mesh_triangle_strip_index_buffer_mapped_data
+                                msg_offset
+                            platform_render_set_index_value index msg_index
+                        else
+                            trace_mesh_index_value_out_of_range_error
+                                msg_index mesh_vertices_count
+                    else
+                        trace_mesh_index_offset_out_of_range_error
+                            msg_offset mesh_triangle_strip_indices_count
+                else
+                    trace_trying_to_modify_finalized_mesh_error
+
+    receive set_vertex_color
+        vars
+            * guts_mesh_data mesh
+            * platform_render_vertex_data_type vertex
+        ops
+            if platform_conditions_whole_less_than_whole
+                            msg_mesh_mesh_id consts_max_meshes
+                platform_static_array_element_ptr
+                    mesh guts_meshes_datas msg_mesh_mesh_id
+                if platform_conditions_whole_is_false mesh_finalized
+                    if platform_conditions_whole_less_than_whole
+                                    msg_offset mesh_vertices_count
+                        platform_render_mapped_vertex_buffer_element
+                            vertex
+                            mesh_vertex_buffer_mapped_data
+                            msg_offset
+                        with msg
+                            platform_render_set_vertex_color vertex r g b a
+                    else
+                        trace_mesh_vertex_out_of_range_error
+                            msg_offset mesh_vertices_count
+                else
+                    trace_trying_to_modify_finalized_mesh_error
+
     receive init
         vars
             * guts_mesh_data mesh
