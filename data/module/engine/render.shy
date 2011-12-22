@@ -1,31 +1,23 @@
 module engine_render
 
+    copy receive what platform_render_what
+    paste replace what with blend_disable
+    paste replace what with blend_src_alpha_dst_one_minus_alpha
+    paste replace what with disable_depth_test
+    paste replace what with enable_depth_test
+    paste replace what with enable_face_culling
+    paste replace what with fog_disable
+    paste replace what with matrix_identity
+    paste replace what with texture_mode_modulate
+
     request aspect
         with platform_render_get_aspect
             width reply_width
             height reply_height
 
-    receive blend_disable
-        platform_render_blend_disable
-
-    receive blend_src_alpha_dst_one_minus_alpha
-        platform_render_blend_src_alpha_dst_one_minus_alpha
-
     receive clear_screen
         with msg
             platform_render_clear_screen r g b
-
-    receive disable_depth_test
-        platform_render_disable_depth_test
-
-    receive enable_depth_test
-        platform_render_enable_depth_test
-
-    receive enable_face_culling
-        platform_render_enable_face_culling
-
-    receive fog_disable
-        platform_render_fog_disable
 
     receive fog_linear
         with msg
@@ -33,9 +25,6 @@ module engine_render
 
     request frame_loss
         platform_render_get_frame_loss reply_frame_loss
-
-    receive matrix_identity
-        platform_render_matrix_identity
 
     receive matrix_load
         platform_render_matrix_load msg_matrix
@@ -55,9 +44,6 @@ module engine_render
 
     request texture_loader_ready
         platform_render_texture_loader_ready reply_ready
-
-    receive texture_mode_modulate
-        platform_render_texture_mode_modulate
 
     receive texture_unselect
         platform_render_disable_texturing
