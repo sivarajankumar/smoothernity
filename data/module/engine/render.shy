@@ -1,3 +1,55 @@
+consts engine_render
+    max_vertices 300
+    max_indices 300
+    max_meshes 100
+    max_messages 3000
+    max_textures 10
+    texture_size_pow2_base 8
+    texture_size ( 1 << texture_size_pow2_base )
+    texture_size_in_texels ( texture_size * texture_size )
+
+types engine_render
+
+    guts_texture_data
+        platform_static_array_data
+            platform_render_texel_data
+            consts_texture_size_in_texels
+                texels
+        platform_render_texture_id render_id
+
+    guts_mesh_data
+        platform_math_num_whole finalized
+        platform_render_vertex_buffer_id vertex_buffer_id
+        platform_render_index_buffer_id
+            triangle_strip_index_buffer_id
+            triangle_fan_index_buffer_id
+        platform_render_vertex_buffer_mapped_data
+            vertex_buffer_mapped_data
+        platform_render_index_buffer_mapped_data 
+            triangle_strip_index_buffer_mapped_data
+            triangle_fan_index_buffer_mapped_data
+        platform_math_num_whole
+            vertices_count
+            triangle_strip_indices_count
+            triangle_fan_indices_count
+        platform_matrix_data transform
+
+vars engine_render
+
+    platform_static_array_data guts_texture_data consts_max_textures
+        guts_textures_datas
+    platform_static_array_data guts_mesh_data consts_max_meshes
+        guts_meshes_datas
+    platform_static_array_data platform_math_num_whole consts_max_meshes
+        guts_vacant_mesh_ids
+    platform_math_num_whole
+        guts_next_texture_id
+        guts_next_vacant_mesh_id_index
+
+messages engine_render
+    aspect reply platform_math_num_fract width height
+    clear_screen platform_math_num_fract r g b
+
 module engine_render
 
     copy receive what platform_render_what
@@ -404,7 +456,7 @@ trace engine_render
         replace place1 with 'textures'
         replace place2 with 'Textures'
 
-    proc meshes_overflow_error
+    proc meshes_underflow_error
         with platform_trace_trace
             begin module_name
             string_error 'Meshes underflow error.'
