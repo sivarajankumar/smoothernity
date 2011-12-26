@@ -10,6 +10,9 @@ consts engine_render
 
 types engine_render
 
+    mesh_id platform_math_num_whole mesh_id
+    texture_id platform_math_num_whole texture_id
+
     guts_texture_data
         platform_static_array_data
             platform_render_texel_data
@@ -47,8 +50,87 @@ vars engine_render
         guts_next_vacant_mesh_id_index
 
 messages engine_render
+
     aspect reply platform_math_num_fract width height
     clear_screen platform_math_num_fract r g b
+    fog_linear platform_math_num_fract z_near z_far r g b a
+    frame_loss reply platform_math_num_whole frame_loss
+    matrix_load platform_matrix_data matrix
+    matrix_mult platform_matrix_data matrix
+    mesh_delete mesh_id mesh
+    mesh_finalize mesh_id mesh
+    mesh_render mesh_id mesh
+
+    mesh_create
+        reply mesh_id mesh
+        request platform_math_num_whole
+                    vertices
+                    triangle_strip_indices
+                    triangle_fan_indices
+
+    mesh_set_transform
+        mesh_id mesh
+        platform_matrix_data transform
+
+    copy
+        mesh_set_triangle_what_index_value
+            mesh_id mesh
+            platform_math_num_whole offset index
+    paste replace what with fan
+    paste replace what with strip
+
+    copy
+        mesh_set_vertex_what
+            mesh_id mesh
+            platform_math_num_whole offset
+            platform_math_num_fract which
+    paste
+        replace what with color
+        replace which with r g b a
+    paste
+        replace what with position
+        replace which with x y z
+    paste
+        replace what with tex_coord
+        replace which with u v
+
+    copy
+        projection_what
+            platform_math_num_fract
+                x_left x_right y_bottom y_top z_near z_far
+    paste replace what with frustum
+    paste replace what with ortho
+
+    texture_create reply texture_id texture
+    texture_finalize texture_id texture
+    texture_load_from_resource
+        texture_id texture
+        platform_render_texture_loader_resource_id resource
+
+stateless engine_render
+
+    proc create_texture_resource_id
+        args
+            platform_math_num_whole resource_index
+            platform_render_texture_loader_resource_id resource_id
+        ops
+            platform_render_texture_loader_create_resource_id
+                resource_id resource_index
+
+    proc set_texel_color
+        args
+            platform_render_texel_data texel
+            platform_math_num_fract r g b a
+        ops
+            platform_render_set_texel_color texel r g b a
+
+    proc clamp_texture_coords
+        args
+            platform_math_num_whole x y
+        ops
+            engine_math_stateless_clamp_whole
+                x x 0 ( consts_texture_width - 1 )
+                y y 0 ( consts_texture_height - 1 )
 
 module engine_render
 
@@ -160,7 +242,7 @@ module engine_render
                 trace_meshes_in_use
                     guts_next_vacant_mesh_id_index consts_max_meshes
             else
-                reply_mesh <- consts_null_mesh
+                reply_mesh_mesh_id <- consts_max_meshes
                 trace_meshes_overflow_error
 
     receive mesh_delete

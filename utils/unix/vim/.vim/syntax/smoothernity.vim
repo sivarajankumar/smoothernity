@@ -1,8 +1,8 @@
 " smoothernity syntax file
 
-syntax keyword shy_statement system machine state consts on to is command if do input entry exit initial discard vars ops receive request module trace with else while args proc init done copy paste replace module_name types reply messages
+syntax keyword shy_statement system machine state consts on to is command if do input entry exit initial discard vars ops receive request module trace with else while args proc init done copy paste replace module_name types reply messages stateless
 syntax match shy_constant "\(\(^\| \)[\-]\? *\d\+\( *\/ *\d\+\)\?\)\|\<true\>\|\<false\>"
-syntax match shy_special "[\{\}\(\)\*]\|<\-\|\->\|\<msg\|\<reply\|\<guts\|\<trace\|\<consts\|\<platform"
+syntax match shy_special "[\{\}\(\)\*]\|<\-\|\->\|\<msg\|\<reply\|\<guts\|\<platform\|trace\|consts\|stateless"
 syntax match shy_string "'[^']*'"
 
 highlight def link shy_statement Statement
