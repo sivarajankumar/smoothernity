@@ -9,14 +9,11 @@ consts engine_render
     texture_size_in_texels ( texture_size * texture_size )
 
 types engine_render
-
     mesh_id index
     texture_id index
-
     guts_texture_data
         { platform_static_array_data _ consts_texture_size_in_texels } texels
         render_id
-
     guts_mesh_data
         finalized
         vertex_buffer_id
@@ -44,8 +41,6 @@ messages engine_render
     frame_loss reply frame_loss
     matrix_load matrix
     matrix_mult matrix
-    projection_frustum x_left x_right y_bottom y_top z_near z_far
-    projection_ortho x_left x_right y_bottom y_top z_near z_far
     texture_create reply texture
     texture_finalize texture
     texture_load_from_resource texture resource
@@ -66,18 +61,19 @@ messages engine_render
     mesh_create
         reply mesh
         request vertices triangle_strip_indices triangle_fan_indices
+    copy
+        projection_what x_left x_right y_bottom y_top z_near z_far
+    paste replace what with frustum
+    paste replace what with ortho
 
 stateless engine_render
-
     proc create_texture_resource_id
         args resource_index resource_id
         ops platform_render_texture_loader_create_resource_id
                 resource_id resource_index
-
     proc set_texel_color
         args texel r g b a
         ops platform_render_set_texel_color texel r g b a
-
     proc clamp_texture_coords
         args x y
         ops engine_math_stateless_clamp_whole
