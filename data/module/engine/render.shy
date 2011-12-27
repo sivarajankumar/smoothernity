@@ -106,6 +106,20 @@ messages engine_render
     texture_load_from_resource
         texture_id texture
         platform_render_texture_loader_resource_id resource
+    texture_loader_ready reply platform_math_num_whole ready
+    texture_select texture_id texture
+    texture_set_texel
+        texture_id texture
+        platform_math_num_whole x y
+        platform_render_texel_data texel
+    texture_set_texel_rgba
+        texture_id texture
+        platform_math_num_whole x y
+        platform_math_num_fract r g b a
+    texture_set_texels_rect
+        platform_render_texture_id texture
+        platform_math_num_whole left bottom right top
+        platform_render_texel_data texel
 
 stateless engine_render
 
