@@ -92,3 +92,20 @@ stateless engine_math
             p1 <- from_value
             p2 <- to_value
             platform_math_sub_fracts p3 to_value delta_value
+
+    proc hard_attack_easy_decay 
+        args result_value weight
+             from_value from_weight 
+             mid_value mid_weight
+             to_value to_weight
+        ops
+            if platform_conditions_fract_less_than_fract weight from_weight
+                result_value <- from_value
+            elif platform_conditions_fract_less_than_fract weight mid_weight
+                hard_in_easy_out result_value weight
+                                 from_value from_weight mid_value mid_weight
+            elif platform_conditions_fract_less_than_fract weight to_weight
+                easy_in_easy_out result_value weight
+                                 mid_value mid_weight to_value to_weight
+            else
+                result_value <- to_value
