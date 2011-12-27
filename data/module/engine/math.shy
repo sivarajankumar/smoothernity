@@ -1,0 +1,41 @@
+stateless engine_math
+    copy
+        proc catmull_rom_spline_what
+            args result t p0 p1 p2 p3
+            vars t2 t3 t2_mul_2 t2_mul_4 t2_mul_5 t3_mul_3
+                 p0_coeff p1_coeff p2_coeff p3_coeff
+                 p0_scaled p1_scaled p2_scaled p3_scaled
+                 result_p0_p1 result_p2_p3 result_p0_p1_p2_p3
+            ops
+                platform_math_mul_fracts
+                    t2 t t
+                    t3 t2 t
+                    t2_mul_2 t2 2
+                    t2_mul_4 t2 4
+                    t2_mul_5 t2 5
+                    t3_mul_3 t3 3
+                platform_math_sub_fracts p0_coeff t2_mul_2 t
+                platform_math_sub_from_fract p0_coeff t3
+                platform_math_sub_fracts p1_coeff t3_mul_3 t2_mul_5
+                platform_math_add_to_fract p1_coeff fract_2
+                platform_math_sub_fracts p2_coeff t2_mul_4 t3_mul_3
+                platform_math_add_to_fract p2_coeff t
+                platform_math_sub_fracts p3_coeff t3 t2
+                how_to_mul
+                    p0_scaled p0 p0_coeff
+                    p1_scaled p1 p1_coeff
+                    p2_scaled p2 p2_coeff
+                    p3_scaled p3 p3_coeff
+                how_to_add
+                    result_p0_p1 p0_scaled p1_scaled
+                    result_p2_p3 p2_scaled p3_scaled
+                    result_p0_p1_p2_p3 result_p0_p1 result_p2_p3
+                how_to_mul result result_p0_p1_p2_p3 1 / 2
+    paste
+        replace what with vector
+        replace how_to_mul with platform_vector_mul
+        replace how_to_add with platform_vector_add
+    paste
+        replace what with fracts
+        replace how_to_mul with platform_math_mul_fracts
+        replace how_to_add with platform_math_add_fracts
