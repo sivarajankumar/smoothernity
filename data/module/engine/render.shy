@@ -10,139 +10,77 @@ consts engine_render
 
 types engine_render
 
-    mesh_id platform_math_num_whole mesh_id
-    texture_id platform_math_num_whole texture_id
+    mesh_id index
+    texture_id index
 
     guts_texture_data
-        platform_static_array_data
-            platform_render_texel_data
-            consts_texture_size_in_texels
-                texels
-        platform_render_texture_id render_id
+        { platform_static_array_data _ consts_texture_size_in_texels } texels
+        render_id
 
     guts_mesh_data
-        platform_math_num_whole finalized
-        platform_render_vertex_buffer_id vertex_buffer_id
-        platform_render_index_buffer_id
-            triangle_strip_index_buffer_id
-            triangle_fan_index_buffer_id
-        platform_render_vertex_buffer_mapped_data
-            vertex_buffer_mapped_data
-        platform_render_index_buffer_mapped_data 
-            triangle_strip_index_buffer_mapped_data
-            triangle_fan_index_buffer_mapped_data
-        platform_math_num_whole
-            vertices_count
-            triangle_strip_indices_count
-            triangle_fan_indices_count
-        platform_matrix_data transform
+        finalized
+        vertex_buffer_id
+        triangle_strip_index_buffer_id
+        triangle_fan_index_buffer_id
+        vertex_buffer_mapped_data
+        triangle_strip_index_buffer_mapped_data
+        triangle_fan_index_buffer_mapped_data
+        vertices_count
+        triangle_strip_indices_count
+        triangle_fan_indices_count
+        transform
 
 vars engine_render
-
-    platform_static_array_data guts_texture_data consts_max_textures
-        guts_textures_datas
-    platform_static_array_data guts_mesh_data consts_max_meshes
-        guts_meshes_datas
-    platform_static_array_data platform_math_num_whole consts_max_meshes
-        guts_vacant_mesh_ids
-    platform_math_num_whole
-        guts_next_texture_id
-        guts_next_vacant_mesh_id_index
+    { platform_static_array_data _ consts_max_textures } guts_textures_datas
+    { platform_static_array_data _ consts_max_meshes } guts_meshes_datas
+    { platform_static_array_data _ consts_max_meshes } guts_vacant_mesh_ids
+    guts_next_texture_id
+    guts_next_vacant_mesh_id_index
 
 messages engine_render
-
-    aspect reply platform_math_num_fract width height
-    clear_screen platform_math_num_fract r g b
-    fog_linear platform_math_num_fract z_near z_far r g b a
-    frame_loss reply platform_math_num_whole frame_loss
-    matrix_load platform_matrix_data matrix
-    matrix_mult platform_matrix_data matrix
-    mesh_delete mesh_id mesh
-    mesh_finalize mesh_id mesh
-    mesh_render mesh_id mesh
-
+    aspect reply width height
+    clear_screen r g b
+    fog_linear z_near z_far r g b a
+    frame_loss reply frame_loss
+    matrix_load matrix
+    matrix_mult matrix
+    projection_frustum x_left x_right y_bottom y_top z_near z_far
+    projection_ortho x_left x_right y_bottom y_top z_near z_far
+    texture_create reply texture
+    texture_finalize texture
+    texture_load_from_resource texture resource
+    texture_loader_ready reply ready
+    texture_select texture
+    texture_set_texel texture x y texel
+    texture_set_texel_rgba texture x y r g b a
+    texture_set_texels_rect texture left bottom right top texel
+    mesh_delete mesh
+    mesh_finalize mesh
+    mesh_render mesh
+    mesh_set_transform mesh transform
+    mesh_set_triangle_fan_index_value mesh offset index
+    mesh_set_triangle_strip_index_value mesh offset index
+    mesh_set_vertex_color mesh offset r g b a
+    mesh_set_vertex_position mesh offset x y z
+    mesh_set_vertex_tex_coord mesh offset u v
     mesh_create
-        reply mesh_id mesh
-        request platform_math_num_whole
-                    vertices
-                    triangle_strip_indices
-                    triangle_fan_indices
-
-    mesh_set_transform
-        mesh_id mesh
-        platform_matrix_data transform
-
-    copy
-        mesh_set_triangle_what_index_value
-            mesh_id mesh
-            platform_math_num_whole offset index
-    paste replace what with fan
-    paste replace what with strip
-
-    copy
-        mesh_set_vertex_what
-            mesh_id mesh
-            platform_math_num_whole offset
-            platform_math_num_fract which
-    paste
-        replace what with color
-        replace which with r g b a
-    paste
-        replace what with position
-        replace which with x y z
-    paste
-        replace what with tex_coord
-        replace which with u v
-
-    copy
-        projection_what
-            platform_math_num_fract
-                x_left x_right y_bottom y_top z_near z_far
-    paste replace what with frustum
-    paste replace what with ortho
-
-    texture_create reply texture_id texture
-    texture_finalize texture_id texture
-    texture_load_from_resource
-        texture_id texture
-        platform_render_texture_loader_resource_id resource
-    texture_loader_ready reply platform_math_num_whole ready
-    texture_select texture_id texture
-    texture_set_texel
-        texture_id texture
-        platform_math_num_whole x y
-        platform_render_texel_data texel
-    texture_set_texel_rgba
-        texture_id texture
-        platform_math_num_whole x y
-        platform_math_num_fract r g b a
-    texture_set_texels_rect
-        platform_render_texture_id texture
-        platform_math_num_whole left bottom right top
-        platform_render_texel_data texel
+        reply mesh
+        request vertices triangle_strip_indices triangle_fan_indices
 
 stateless engine_render
 
     proc create_texture_resource_id
-        args
-            platform_math_num_whole resource_index
-            platform_render_texture_loader_resource_id resource_id
-        ops
-            platform_render_texture_loader_create_resource_id
+        args resource_index resource_id
+        ops platform_render_texture_loader_create_resource_id
                 resource_id resource_index
 
     proc set_texel_color
-        args
-            platform_render_texel_data texel
-            platform_math_num_fract r g b a
-        ops
-            platform_render_set_texel_color texel r g b a
+        args texel r g b a
+        ops platform_render_set_texel_color texel r g b a
 
     proc clamp_texture_coords
-        args
-            platform_math_num_whole x y
-        ops
-            engine_math_stateless_clamp_whole
+        args x y
+        ops engine_math_stateless_clamp_whole
                 x x 0 ( consts_texture_width - 1 )
                 y y 0 ( consts_texture_height - 1 )
 
@@ -197,9 +135,7 @@ module engine_render
         platform_render_disable_texturing
 
     request mesh_create
-        vars
-            * platform_math_num_whole vacant_mesh_id
-            * guts_mesh_data mesh
+        vars vacant_mesh_id mesh
         ops
             if platform_conditions_whole_less_than_whole
                             guts_next_vacant_mesh_id_index
@@ -251,20 +187,19 @@ module engine_render
                             triangle_fan_index_buffer_mapped_data
                             triangle_fan_index_buffer_id
                 
-                reply_mesh_mesh_id <- vacant_mesh_id
+                reply_mesh_index <- vacant_mesh_id
                 platform_math_inc_whole guts_next_vacant_mesh_id_index
                 trace_meshes_in_use
                     guts_next_vacant_mesh_id_index consts_max_meshes
             else
-                reply_mesh_mesh_id <- consts_max_meshes
+                reply_mesh_index <- consts_max_meshes
                 trace_meshes_overflow_error
 
     receive mesh_delete
-        vars
-            * platform_math_num_whole vacant_mesh_id
+        vars vacant_mesh_id
         ops
             if platform_conditions_whole_less_than_whole
-                            msg_mesh_mesh_id consts_max_meshes
+                            msg_mesh_index consts_max_meshes
                 if platform_conditions_whole_greater_than_zero
                                 guts_next_vacant_mesh_id_index
                     platform_math_dec_whole guts_next_vacant_mesh_id_index
@@ -272,18 +207,17 @@ module engine_render
                         guts_next_vacant_mesh_id_index consts_max_meshes
                     platform_static_array_element_ptr vacant_mesh_id
                         guts_vacant_mesh_ids guts_next_vacant_mesh_id_index
-                    vacant_mesh_id <- msg_mesh_mesh_id
+                    vacant_mesh_id <- msg_mesh_index
                 else
                     trace_meshes_underflow_error
 
     receive mesh_finalize
-        vars
-            * guts_mesh_data mesh
+        vars mesh
         ops
             if platform_conditions_whole_less_than_whole
-                            msg_mesh_mesh_id consts_max_meshes
+                            msg_mesh_index consts_max_meshes
                 platform_static_array_element_ptr
-                    mesh guts_meshes_datas msg_mesh_mesh_id
+                    mesh guts_meshes_datas msg_mesh_index
                 mesh_finalized <- true
                 with platform_render_unmap
                     vertex_buffer mesh_vertex_buffer_id
@@ -291,13 +225,12 @@ module engine_render
                     index_buffer mesh_triangle_fan_index_buffer_id
 
     receive mesh_render
-        vars
-            * guts_mesh_data mesh
+        vars mesh
         ops
             if platform_conditions_whole_less_than_whole
-                            msg_mesh_mesh_id consts_max_meshes
+                            msg_mesh_index consts_max_meshes
                 platform_static_array_element_ptr
-                    mesh guts_meshes_datas msg_mesh_mesh_id
+                    mesh guts_meshes_datas msg_mesh_index
                 if platform_conditions_whole_is_true mesh_finalized
                     platform_render_matrix_push
                     platform_render_matrix_mult mesh_transform
@@ -327,9 +260,7 @@ module engine_render
             trace_textures_overflow_error
 
     receive texture_set_texels_rect
-        vars
-            platform_math_num_whole texel_offset x y
-            * guts_texture_data texture
+        vars texel_offset x y texture
         ops
             if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
@@ -352,14 +283,12 @@ module engine_render
 
     copy
         receive mesh_set_triangle_what_index_value
-            vars
-                * guts_mesh_data mesh
-                * platform_render_index_data index
+            vars mesh index
             ops
                 if platform_conditions_whole_less_than_whole
-                                msg_mesh_mesh_id consts_max_meshes
+                                msg_mesh_index consts_max_meshes
                     platform_static_array_element_ptr
-                        mesh guts_meshes_datas msg_mesh_mesh_id
+                        mesh guts_meshes_datas msg_mesh_index
                     if platform_conditions_whole_is_false mesh_finalized
                         if platform_conditions_whole_less_than_whole 
                                     msg_offset mesh_triangle_what_indices_count
@@ -383,14 +312,12 @@ module engine_render
 
     copy
         receive mesh_set_vertex_what
-            vars
-                * guts_mesh_data mesh
-                * platform_render_vertex_data_type vertex
+            vars mesh vertex
             ops
                 if platform_conditions_whole_less_than_whole
-                                msg_mesh_mesh_id consts_max_meshes
+                                msg_mesh_index consts_max_meshes
                     platform_static_array_element_ptr
-                        mesh guts_meshes_datas msg_mesh_mesh_id
+                        mesh guts_meshes_datas msg_mesh_index
                     if platform_conditions_whole_is_false mesh_finalized
                         if platform_conditions_whole_less_than_whole
                                         msg_offset mesh_vertices_count
@@ -417,8 +344,7 @@ module engine_render
 
     copy
         receive texture_what
-            vars
-                * guts_texture_date texture
+            vars texture
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
@@ -445,10 +371,7 @@ module engine_render
 
     copy
         receive texture_what
-            vars
-                platform_math_num_whole texel_offset
-                * guts_texture_data texture
-                * platform_render_texel_data texel
+            vars texel_offset texture texel
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
@@ -469,11 +392,7 @@ module engine_render
             platform_render_set_texel_color texel with msg r g b a
 
     receive init
-        vars
-            * guts_mesh_data mesh
-            * guts_texture_data texture
-            * platform_math_num_whole vacant_id
-            platform_math_num_whole i
+        vars mesh texture vacant_id i
         ops
             0 ->
                 guts_next_texture_id
@@ -503,10 +422,7 @@ module engine_render
                     consts_texture_size_pow2_base
 
     receive done
-        vars
-            * guts_mesh_data mesh
-            * guts_texture_data texture
-            platform_math_num_whole i
+        vars mesh texture i
         ops
             i <- 0
             while platform_conditions_whole_less_than_whole
@@ -529,8 +445,7 @@ trace engine_render
 
     copy
         proc place1_in_use
-            args
-                platform_math_num_whole current total
+            args current total
             ops
                 with platform_trace_trace
                     begin module_name
@@ -560,8 +475,7 @@ trace engine_render
 
     copy
         proc mesh_place1_out_of_range_error
-            args
-                platform_math_num_whole current total
+            args current total
             ops
                 with platform_trace_trace
                     begin module_name
@@ -585,8 +499,7 @@ trace engine_render
         replace place3 with 'vertices'
 
     proc mesh_too_many_vertices_error
-        args
-            platform_math_num_whole current total
+        args current total
         ops
             with platform_trace_trace
                 begin module_name
@@ -598,8 +511,7 @@ trace engine_render
                 end
 
     proc mesh_too_many_indices_error
-        args
-            platform_math_num_whole current total
+        args current total
         ops
             with platform_trace_trace
                 begin module_name
