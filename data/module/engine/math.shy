@@ -39,3 +39,20 @@ stateless engine_math
         replace what with fracts
         replace how_to_mul with platform_math_mul_fracts
         replace how_to_add with platform_math_add_fracts
+
+    proc lerp
+        args result_value weight from_value from_weight to_value to_weight 
+        vars value_diff weight_diff current_diff
+        ops
+            if platform_conditions_fract_less_than_fract weight from_weight
+                result_value <- from_value
+            elif platform_conditions_fract_less_than_fract weight to_weight
+                platform_math_sub_fracts
+                    value_diff to_value from_value
+                    weight_diff to_weight from_weight
+                    current_diff weight from_weight
+                platform_math_mul_fracts result_value value_diff current_diff
+                platform_math_div_fract_by result_value weight_diff
+                platform_math_add_to_fract result_value from_value
+            else
+                result_value <- to_value
