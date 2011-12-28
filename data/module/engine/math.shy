@@ -109,3 +109,37 @@ stateless engine_math
                                  mid_value mid_weight to_value to_weight
             else
                 result_value <- to_value
+
+    copy
+        proc clamp_what_dest
+            args result num xfrom xto 
+            ops
+                if platform_conditions_what_less_than_what num xfrom
+                    result <- xfrom
+                elif platform_conditions_what_greater_than_what num xto
+                    result <- xto
+                else
+                    result <- num
+        proc clamp_what_direct
+            args num xfrom xto 
+            ops
+                if platform_conditions_what_less_than_what num xfrom
+                    num <- xfrom
+                elif platform_conditions_what_greater_than_what num xto
+                    num <- xto
+        proc min_what
+            args result a b
+            ops
+                if platform_conditions_what_less_than_what a b
+                    result <- a
+                else
+                    result <- b
+        proc max_what
+            args result a b
+            ops
+                if platform_conditions_what_greater_than_what a b
+                    result <- a
+                else
+                    result <- b
+    paste replace what with fract
+    paste replace what with whole
