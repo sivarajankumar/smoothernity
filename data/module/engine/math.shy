@@ -191,7 +191,6 @@ stateless engine_math
 
     proc add_frame_to_time
         args time
-        vars frame_time
         ops
-            platform_math_make_num_fract frame_time 1 platform_consts_frames_per_second
-            platform_math_add_to_fract time frame_time
+            platform_math_add_to_fract
+                time ( 1 / platform_consts_frames_per_second )
