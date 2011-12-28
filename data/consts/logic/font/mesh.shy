@@ -1,7 +1,0 @@
-consts logic_font_mesh
-    color_r 1 / 1
-    color_g 1 / 1
-    color_b 1 / 1
-    color_a 1 / 1
-    mesh_size 1 / 1
-    time_between_letters_creation 20 / 1000
