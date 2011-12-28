@@ -188,3 +188,10 @@ stateless engine_math
                 set_axis_x matrix axis_x
                 set_axis_y matrix axis_y
                 set_axis_z matrix axis_z
+
+    proc add_frame_to_time
+        args time
+        vars frame_time
+        ops
+            platform_math_make_num_fract frame_time 1 platform_consts_frames_per_second
+            platform_math_add_to_fract time frame_time
