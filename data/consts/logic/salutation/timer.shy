@@ -1,3 +1,0 @@
-consts logic_salutation_timer
-    time_appear 4 / 1
-    time_disappear 2 / 1

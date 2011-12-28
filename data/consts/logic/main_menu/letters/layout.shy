@@ -1,6 +1,0 @@
-consts logic_main_menu_letters_layout
-    letter_size_fract_horizontal_spacing 0 / 1
-    letter_size_fract_vertical_spacing 1 / 1
-    letter_size_fract_horizontal_border 1 / 1
-    letter_size_fract_vertical_border 1 / 1
-    menu_position_z - 3 / 1
