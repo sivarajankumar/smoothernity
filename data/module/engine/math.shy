@@ -113,8 +113,7 @@ stateless engine_math
     copy
         proc clamp_what_dest
             args result num xfrom xto 
-            ops
-                if platform_conditions_what_less_than_what num xfrom
+            ops if platform_conditions_what_less_than_what num xfrom
                     result <- xfrom
                 elif platform_conditions_what_greater_than_what num xto
                     result <- xto
@@ -122,24 +121,70 @@ stateless engine_math
                     result <- num
         proc clamp_what_direct
             args num xfrom xto 
-            ops
-                if platform_conditions_what_less_than_what num xfrom
+            ops if platform_conditions_what_less_than_what num xfrom
                     num <- xfrom
                 elif platform_conditions_what_greater_than_what num xto
                     num <- xto
         proc min_what
             args result a b
-            ops
-                if platform_conditions_what_less_than_what a b
+            ops if platform_conditions_what_less_than_what a b
                     result <- a
                 else
                     result <- b
         proc max_what
             args result a b
-            ops
-                if platform_conditions_what_greater_than_what a b
+            ops if platform_conditions_what_greater_than_what a b
                     result <- a
                 else
                     result <- b
     paste replace what with fract
     paste replace what with whole
+
+    proc abs_whole
+        args result a
+        ops if platform_conditions_whole_less_than_zero a
+                platform_math_neg_whole result a
+            else
+                result <- a
+
+    proc matrix_rotation_z 
+        args axis_x axis_y angle 
+        vars rot_sin rot_cos
+             axis_x_x axis_x_y axis_x_z
+             axis_y_x axis_y_y axis_y_z
+        ops
+            platform_math_sin rot_sin angle
+            platform_math_cos rot_cos angle
+            axis_x_x <- rot_cos
+            axis_x_y <- rot_sin
+            axis_x_z <- 0
+            platform_math_neg_fract axis_y_x rot_sin
+            axis_y_y <- rot_cos
+            axis_y_z <- 0
+            platform_vector_xyz
+                axis_x axis_x_x axis_x_y axis_x_z
+                axis_y axis_y_x axis_y_y axis_y_z
+
+    proc matrix_scale
+        args matrix scale
+        ops with platform_matrix
+                identity matrix
+                set_axis_x matrix scale 0 0
+                set_axis_y matrix 0 scale 0
+                set_axis_z matrix 0 0 scale
+
+    proc matrix_scale_rotation_z
+        args matrix scale angle
+        vars axis_x axis_y axis_z
+        ops
+            platform_matrix_identity matrix
+            platform_vector_xyz axis_z 0 0 1
+            matrix_rotation_z axis_x axis_y angle
+            platform_vector_mul_by
+                axis_x scale
+                axis_y scale
+                axis_z scale
+            with platform_matrix
+                set_axis_x matrix axis_x
+                set_axis_y matrix axis_y
+                set_axis_z matrix axis_z
