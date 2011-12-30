@@ -1,0 +1,31 @@
+consts engine_rasterizer
+    max_messages 1000
+
+messages engine_rasterizer
+    draw_ellipse_in_rect x1 y1 x2 y2
+    draw_rect x1 y1 x2 y2
+    draw_triangle x1 y1 x2 y2 x3 y3
+    use_texel texel
+    use_texture texture origin_x origin_y
+
+vars engine_rasterizer
+    guts_texture_id
+    guts_texel
+    guts_origin_x
+    guts_origin_y
+
+module engine_rasterizer
+    module_queue consts_max_messages
+
+    proc guts_to_global_space
+        args x y
+        vars x_new y_new
+        ops
+            platform_math_add_wholes
+                x x guts_origin_x
+                y y guts_origin_y
+            x_new y_new <- x y
+            engine_render_stateless_clamp_texture_coords x_new y_new
+            if any platform_conditions_wholes_are_not_equal x x_new y y_new
+                trace_coords_out_of_range_error x y
+            x y <- x_new y_new
