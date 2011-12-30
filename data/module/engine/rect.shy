@@ -1,0 +1,26 @@
+types engine_rect
+    data left right bottom top
+
+stateless engine_rect
+
+    proc dims
+        args width height of_what
+        ops with platform_math
+                sub_fracts width of_what_right of_what_left
+                sub_fracts height of_what_top of_what_bottom
+
+    proc add_border
+        args result to_what border_width border_height
+        ops with platform_math
+                sub_fracts result_left to_what_left border_width
+                add_fracts result_right to_what_right border_width
+                sub_fracts result_bottom to_what_bottom border_height
+                add_fracts result_top to_what_top border_height
+
+    proc from_dims
+        args rect width height
+        ops with platform_math
+                mul_fracts rect_left width - 2
+                mul_fracts rect_right width 2
+                mul_fracts rect_bottom height - 2
+                mul_fracts rect_top height 2
