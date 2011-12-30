@@ -5,9 +5,9 @@ stateless engine_rect
 
     proc dims
         args width height of_what
-        ops with platform_math
-                sub_fracts width of_what_right of_what_left
-                sub_fracts height of_what_top of_what_bottom
+        ops platform_math_sub_fracts
+                width of_what_right of_what_left
+                height of_what_top of_what_bottom
 
     proc add_border
         args result to_what border_width border_height
@@ -19,8 +19,16 @@ stateless engine_rect
 
     proc from_dims
         args rect width height
-        ops with platform_math
-                mul_fracts rect_left width - 2
-                mul_fracts rect_right width 2
-                mul_fracts rect_bottom height - 2
-                mul_fracts rect_top height 2
+        ops platform_math_mul_fracts
+                rect_left width - 2
+                rect_right width 2
+                rect_bottom height - 2
+                rect_top height 2
+
+    proc from_axes
+        args rect half_width half_height
+        ops platform_math_mul_fracts
+                rect_left half_width - 1
+                rect_right half_width 1
+                rect_bottom half_height - 1
+                rect_top half_height 1
