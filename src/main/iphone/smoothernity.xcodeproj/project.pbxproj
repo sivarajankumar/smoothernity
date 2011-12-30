@@ -21880,7 +21880,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0410;
+				LastUpgradeCheck = 0420;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "smoothernity" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -22584,7 +22584,7 @@
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../..;
 				INFOPLIST_FILE = "smoothernity-Info.plist";
 				PRODUCT_NAME = Smoothernity;
@@ -22609,7 +22609,7 @@
 					shy_scheduling_mode_direct_call,
 				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../..;
 				INFOPLIST_FILE = "smoothernity-Info.plist";
 				PRODUCT_NAME = Smoothernity;
