@@ -1,0 +1,3 @@
+consts logic_ortho
+    z_near 1 / 1
+    z_far 50 / 1

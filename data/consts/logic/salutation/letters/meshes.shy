@@ -1,0 +1,8 @@
+consts logic_salutation_letters_meshes
+    color_r 0 / 1
+    color_g 1 / 1
+    color_b 0 / 1
+    color_a 1 / 1
+    mesh_size 1 / 1
+    time_between_creation 50 / 1000
+    time_between_destruction 50 / 1000

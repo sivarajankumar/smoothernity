@@ -1,0 +1,7 @@
+#ifndef _shy_macosx_platform_math_const_int_32_type_injections_included
+#define _shy_macosx_platform_math_const_int_32_type_injections_included
+
+#include "src/platform/math/int/float/const/int/32/type/shy_type_injections.h"
+typedef so_called_platform_math_int_float_const_int_32_type so_called_platform_math_const_int_32_type ;
+
+#endif

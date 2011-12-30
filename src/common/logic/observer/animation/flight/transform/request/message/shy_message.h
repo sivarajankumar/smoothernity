@@ -1,0 +1,3 @@
+class shy_common_logic_observer_animation_flight_transform_request_message
+{
+} ;

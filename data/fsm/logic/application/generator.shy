@@ -1,0 +1,30 @@
+system logic_application
+    machine generator
+        state initial
+            to font
+        state font
+            on entry
+                command start to font_generator
+            to text
+                if { ( machine font_generator is finished ) }
+        state text
+            on entry
+                command start to text_generator
+            to salutation
+                if { ( machine text_generator is finished ) }
+        state salutation
+            on entry
+                command start to salutation_generator
+            to main_menu
+                if { ( machine salutation_generator is finished ) }
+        state main_menu
+            on entry
+                command start to main_menu_generator
+            to amusement
+                if { ( machine main_menu_generator is finished ) }
+        state amusement
+            on entry
+                command start to amusement_generator
+            to game
+                if { ( machine amusement_generator is finished ) }
+        state game

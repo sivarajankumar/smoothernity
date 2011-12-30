@@ -1,0 +1,4 @@
+consts logic_vacuum
+    color_r 0 / 1
+    color_g 0 / 1
+    color_b 1 / 1

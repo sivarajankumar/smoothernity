@@ -1,0 +1,8 @@
+#ifndef _shy_loadable_consts_reflection_logic_salutation_renderer_injections_included
+#define _shy_loadable_consts_reflection_logic_salutation_renderer_injections_included
+
+#include "./shy_renderer.h"
+
+typedef shy_loadable_consts_reflection_logic_salutation_renderer so_called_loadable_consts_reflection_logic_salutation_renderer ;
+
+#endif

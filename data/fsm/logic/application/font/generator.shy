@@ -1,0 +1,24 @@
+system logic_application
+    machine font_generator
+        state initial
+            to generating
+                if { ( command start ) }
+        state generating
+            to generating_texture
+        state generating_texture
+            on entry
+                do logic_font_texture_generator_generate
+            on { logic_application_update }
+                discard logic_application_update
+                do logic_font_texture_generator_update
+            to generating_mesh
+                if { logic_font_texture_generator_generate_finished }
+        state generating_mesh
+            on entry
+                do logic_font_mesh_generator_generate
+            on { logic_application_update }
+                discard logic_application_update
+                do logic_font_mesh_generator_update
+            to finished
+                if { logic_font_mesh_generator_generate_finished }
+        state finished

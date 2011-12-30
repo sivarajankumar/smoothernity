@@ -1,0 +1,14 @@
+consts logic_blanket_animation
+    animation_origin_x 0 / 1
+    animation_origin_y 0 / 1
+    animation_origin_z - 3 / 1
+    appear_scale_begin 0 / 1
+    appear_scale_end 1 / 1
+    appear_rotation_begin 0 / 1
+    appear_rotation_end 10 / 1
+    appear_time_from_begin_to_end 1 / 1
+    disappear_scale_begin 1 / 1
+    disappear_scale_end 0 / 1
+    disappear_rotation_begin 0 / 1
+    disappear_rotation_end 10 / 1
+    disappear_time_from_begin_to_end 1 / 1

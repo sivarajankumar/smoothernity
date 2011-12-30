@@ -1,0 +1,29 @@
+consts logic_salutation_letters_animation
+    appear_scale_begin 0 / 1
+    appear_scale_end 1 / 1
+    appear_time 20 / 10
+    appear_time_shift_per_letter 10 / 100
+    disappear_scale_begin 1 / 1
+    disappear_scale_cut_off 1 / 10
+    disappear_scale_end 0 / 1
+    disappear_time 15 / 10
+    disappear_time_shift_per_letter 10 / 100
+    layout_step 1 / 10
+    layout_border_width 1 / 1
+    layout_border_height 1 / 1
+    roll_in_position_radius_begin 0 / 1
+    roll_in_position_radius_end 1 / 1
+    roll_in_position_spin_periods_begin 0 / 1
+    roll_in_position_spin_periods_end 11 / 4
+    roll_in_rotation_periods_begin 0 / 1
+    roll_in_rotation_periods_end 5 / 1
+    roll_in_time 10 / 10
+    roll_in_time_shift_per_letter 10 / 100
+    roll_out_position_radius_begin 0 / 1
+    roll_out_position_radius_end - 1 / 1
+    roll_out_position_spin_periods_begin 0 / 1
+    roll_out_position_spin_periods_end 11 / 4
+    roll_out_rotation_periods_begin 0 / 1
+    roll_out_rotation_periods_end 5 / 1
+    roll_out_time 10 / 10
+    roll_out_time_shift_per_letter 10 / 100

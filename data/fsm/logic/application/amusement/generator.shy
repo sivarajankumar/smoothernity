@@ -1,0 +1,16 @@
+system logic_application
+    machine amusement_generator
+        state initial
+            to generating
+                if { ( command start ) stage_amusement_enabled }
+            to finished
+                if { ( command start ) stage_amusement_disabled }
+        state generating
+            on entry
+                do logic_amusement_creation_permit
+            on { logic_application_update }
+                discard logic_application_update
+                do logic_amusement_update
+            to finished
+                if { logic_amusement_created }
+        state finished

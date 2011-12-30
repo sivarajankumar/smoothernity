@@ -1,0 +1,27 @@
+system logic_application
+    machine performer
+        state initial
+            to fader
+        state fader
+            on entry
+                command start to fader_performer
+            to salutation
+                if { ( machine fader_performer is finished ) }
+        state salutation
+            on entry
+                command start to salutation_performer
+            to main_menu
+                if { ( machine salutation_performer is finished ) }
+        state main_menu
+            on entry
+                command start to main_menu_performer
+            to amusement
+                if { ( machine main_menu_performer is finished ) }
+        state amusement
+            on entry
+                command start to amusement_performer
+            to game
+                if { ( machine amusement_performer is finished ) }
+        state game
+            on entry
+                command start to game_performer
