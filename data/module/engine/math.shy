@@ -194,3 +194,25 @@ stateless engine_math
         ops
             platform_math_add_to_fract
                 time ( 1 / platform_consts_frames_per_second )
+
+    proc make_radians_from_periods
+        args result periods
+        ops
+            platform_math_mul_fracts result periods platform_math_consts_fract_2pi
+
+    proc make_cartesian_from_polar 
+        args result radius angle
+        vars rot_sin rot_cos
+        ops
+            platform_math_sin rot_sin angle
+            platform_math_cos rot_cos angle
+            platform_vector_xyz result rot_cos rot_sin 0
+            platform_vector_mul_by result radius
+
+    proc shift
+        args result value shifter times_whole
+        vars total_shift times
+        ops
+            platform_math_make_fract_from_whole times times_whole
+            platform_math_mul_fracts total_shift times shifter
+            platform_math_sub_fracts result value total_shift
