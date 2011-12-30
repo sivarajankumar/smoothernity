@@ -81,6 +81,7 @@ stateless engine_render
                 y y 0 ( consts_texture_height - 1 )
 
 module engine_render
+    module_queue consts_max_messages
 
     copy receive what platform_render_what
     paste replace what with blend_disable
