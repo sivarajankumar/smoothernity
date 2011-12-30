@@ -189,6 +189,22 @@ stateless engine_math
                 set_axis_y matrix axis_y
                 set_axis_z matrix axis_z
 
+    proc matrix_look_at
+        args matrix vfrom vto norm_up 
+        vars dir axis_x axis_y axis_z
+        ops
+            with platform_vector
+                sub dir vfrom vto
+                normalize axis_z dir
+                cross_product axis_x norm_up axis_z
+                cross_product axis_y axis_z axis_x
+            with platform_matrix
+                set_axis_x matrix axis_x
+                set_axis_y matrix axis_y
+                set_axis_z matrix axis_z
+                set_origin matrix from
+                inverse_rotation_translation matrix
+
     proc add_frame_to_time
         args time
         ops
