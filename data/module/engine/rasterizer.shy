@@ -29,3 +29,13 @@ module engine_rasterizer
             if any platform_conditions_wholes_are_not_equal x x_new y y_new
                 trace_coords_out_of_range_error x y
             x y <- x_new y_new
+
+    proc guts_rasterize_horizontal_line 
+        args x1 x2 y
+        vars left right
+        ops
+            with engine_math_stateless
+                min_whole left x1 x2
+                max_whole right x1 x2
+            send engine_render_texture_set_texels_rect
+                guts_texture_id xleft y xright y guts_texel
