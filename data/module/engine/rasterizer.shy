@@ -212,3 +212,14 @@ module engine_rasterizer
                 div_wholes half_height height 2
             guts_rasterize_bresenham_ellipse
                 x_center y_center half_width half_height
+
+    receive draw_rect
+        vars left right bottom top
+        ops
+            with msg
+                with engine_math_stateless
+                    min_whole left x1 x2 bottom y1 y2
+                    max_whole right x1 x2 top y1 y2
+            guts_to_global_space left bottom right top
+            send engine_render_texture_set_texels_rect
+                guts_texture_id left bottom right top guts_texel
