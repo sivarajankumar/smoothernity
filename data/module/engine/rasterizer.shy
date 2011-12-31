@@ -39,3 +39,33 @@ module engine_rasterizer
                 max_whole right x1 x2
             send engine_render_texture_set_texels_rect
                 guts_texture_id xleft y xright y guts_texel
+
+    proc guts_rasterize_top_triangle_part
+        args x_top y_top x_mid y_mid x_bottom y_bottom
+        vars y x_top_mid y_top_minus_y y_top_minus_y_mid x_mid_minus_x_top
+             x_top_bottom y_top_minus_y_bottom x_bottom_minus_x_top
+        ops
+            y <- y_top
+            while platform_conditions_whole_greater_or_equal_to_whole y y_mid
+                if platform_conditions_wholes_are_equal y_top y_mid
+                    x_top_mid <- x_mid
+                else
+                    with platform_math
+                        sub_wholes y_top_minus_y y_top y
+                        sub_wholes y_top_minus_y_mid y_top y_mid
+                        sub_wholes x_mid_minus_x_top x_mid x_top
+                        mul_wholes x_top_mid y_top_minus_y x_mid_minus_x_top
+                        div_whole_by x_top_mid y_top_minus_y_mid
+                        add_to_whole x_top_mid x_top
+                if platform_conditions_wholes_are_equal y_top y_bottom
+                    x_top_bottom <- x_top
+                else
+                    with platform_math
+                        sub_wholes y_top_minus_y y_top y
+                        sub_wholes y_top_minus_y_bottom y_top y_bottom
+                        sub_wholes x_bottom_minus_x_top x_bottom x_top
+                        mul_wholes x_top_bottom y_top_minus_y x_bottom_minus_x_top
+                        div_whole_by x_top_bottom y_top_minus_y_bottom
+                        add_to_whole x_top_bottom x_top
+                guts_rasterize_horizontal_line x_top_mid x_top_bottom y
+                platform_math_dec_whole y
