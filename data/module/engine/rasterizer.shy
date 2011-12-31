@@ -223,3 +223,33 @@ module engine_rasterizer
             guts_to_global_space left bottom right top
             send engine_render_texture_set_texels_rect
                 guts_texture_id left bottom right top guts_texel
+
+    receive draw_triangle_message
+        vars x1 y1 x2 y2 x3 y3
+        ops
+            x1 y1 x2 y2 x3 y3 <- msg_x1 msg_y1 msg_x2 msg_y2 msg_x3 msg_y3
+            guts_to_global_space x1 y1 x2 y2 x3 y3
+            if all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y1 y2 y2 y3
+                guts_rasterize_top_triangle_part x1 y1 x2 y2 x3 y3
+                guts_rasterize_bottom_triangle_part x1 y1 x2 y2 x3 y3
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y1 y3 y3 y2
+                guts_rasterize_top_triangle_part x1 y1 x3 y3 x2 y2
+                guts_rasterize_bottom_triangle_part x1 y1 x3 y3 x2 y2
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y3 y1 y1 y2
+                guts_rasterize_top_triangle_part x3 y3 x1 y1 x2 y2
+                guts_rasterize_bottom_triangle_part x3 y3 x1 y1 x2 y2
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y3 y2 y2 y1
+                guts_rasterize_top_triangle_part x3 y3 x2 y2 x1 y1
+                guts_rasterize_bottom_triangle_part x3 y3 x2 y2 x1 y1
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y2 y1 y1 y3
+                guts_rasterize_top_triangle_part x2 y2 x1 y1 x3 y3
+                guts_rasterize_bottom_triangle_part x2 y2 x1 y1 x3 y3
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y2 y3 y3 y1
+                guts_rasterize_top_triangle_part x2 y2 x3 y3 x1 y1
+                guts_rasterize_bottom_triangle_part x2 y2 x3 y3 x1 y1
