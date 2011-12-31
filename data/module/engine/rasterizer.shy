@@ -269,3 +269,19 @@ module engine_rasterizer
             guts_texture_id <- texture
             guts_origin_x <- origin_x
             guts_origin_y <- origin_y
+
+trace engine_rasterizer
+    proc coords_out_of_range_error
+        args x y
+        ops with platform_trace
+                begin module_name
+                string_error 'Error. Texture coordinates X = '
+                num_whole_error x
+                string_error ', Y = '
+                num_whole_error y
+                string_error ' are out of range 0 <= X < '
+                num_whole_error engine_render_consts_texture_width
+                string_error ', 0 <= Y < '
+                num_whole_error engine_render_consts_texture_height
+                string_error '.'
+                end
