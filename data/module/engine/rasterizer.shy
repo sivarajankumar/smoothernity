@@ -104,3 +104,89 @@ module engine_rasterizer
                         add_to_whole x_top_bottom x_top
                 guts_rasterize_horizontal_line x_mid_bottom x_top_bottom y
                 platform_math_dec_whole y
+
+    proc guts_rasterize_bresenham_ellipse
+        args cx cy x_radius y_radius
+        vars x y x_change y_change ellipse_error two_a_square two_b_square
+             stopping_x stopping_y x_radius_sq y_radius_sq x_radius_mul_2
+             y_radius_mul_2 cx_minus_x cx_plus_x cy_minus_y cy_plus_y
+             ellipse_error_mul_2_plus_x_change
+             ellipse_error_mul_2_plus_y_change
+        ops
+            with platform_math
+                mul_wholes x_radius_sq x_radius x_radius
+                mul_wholes y_radius_sq y_radius y_radius
+                mul_wholes x_radius_mul_2 x_radius 2
+                mul_wholes y_radius_mul_2 y_radius 2
+                mul_wholes two_a_square x_radius_sq 2
+                mul_wholes two_b_square y_radius_sq 2
+                sub_wholes x_change 1 x_radius_mul_2
+                mul_whole_by x_change y_radius_sq
+                mul_wholes stopping_x two_b_square x_radius
+            x y <- x_radius 0
+            y_change <- x_radius_sq
+            0 ->
+                ellipse_error
+                stopping_y
+            while platform_conditions_whole_greater_or_equal_to_whole
+                                                stopping_x stopping_y
+                with platform_math
+                    sub_wholes cx_minus_x cx x
+                    add_wholes cx_plus_x cx x
+                    sub_wholes cy_minus_y cy y
+                    add_wholes cy_plus_y cy y
+                    inc_whole y
+                    add_to_whole stopping_y two_a_square
+                    add_to_whole ellipse_error y_change
+                    add_to_whole y_change two_a_square
+                    mul_wholes
+                        ellipse_error_mul_2_plus_x_change
+                        ellipse_error
+                        2
+                    add_to_whole ellipse_error_mul_2_plus_x_change x_change
+                guts_rasterize_horizontal_line
+                    cx_minus_x cx_plus_x cy_minus_y
+                    cx_minus_x cx_plus_x cy_plus_y
+                if platform_conditions_whole_greater_than_zero 
+                                            ellipse_error_mul_2_plus_x_change
+                    with platform_math
+                        dec_whole x
+                        sub_from_whole stopping_x two_b_square
+                        add_to_whole ellipse_error x_change
+                        add_to_whole x_change two_b_square
+            
+            x y <- 0 y_radius
+            x_change <- y_radius_sq
+            0 ->
+                ellipse_error
+                stopping_x
+            with platform_math
+                sub_wholes y_change 1 y_radius_mul_2
+                mul_whole_by y_change x_radius_sq
+                mul_wholes stopping_y two_a_square y_radius
+            while platform_conditions_whole_less_or_equal_to_whole
+                                                        stopping_x stopping_y
+                with platform_math
+                    sub_wholes cx_minus_x cx x
+                    add_wholes cx_plus_x cx x
+                    sub_wholes cy_minus_y cy y
+                    add_wholes cy_plus_y cy y
+                    dec_whole x
+                    add_to_whole stopping_x two_b_square
+                    add_to_whole ellipse_error x_change
+                    add_to_whole x_change two_b_square
+                    mul_wholes
+                        ellipse_error_mul_2_plus_y_change
+                        ellipse_error
+                        2
+                    add_to_whole ellipse_error_mul_2_plus_y_change y_change
+                guts_rasterize_horizontal_line
+                    cx_minus_x cx_plus_x cy_minus_y
+                    cx_minus_x cx_plus_x cy_plus_y
+                if platform_conditions_whole_greater_than_zero
+                                            ellipse_error_mul_2_plus_y_change
+                    with platform_math
+                        dec_whole y
+                        sub_from_whole stopping_y two_a_square
+                        add_to_whole ellipse_error y_change
+                        add_to_whole y_change two_a_square
