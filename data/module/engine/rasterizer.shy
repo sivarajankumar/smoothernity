@@ -190,3 +190,25 @@ module engine_rasterizer
                         sub_from_whole stopping_y two_a_square
                         add_to_whole ellipse_error y_change
                         add_to_whole y_change two_a_square
+
+    receive draw_ellipse_in_rect
+        vars x1 x2 y1 y2 width height y_center x_center x_diff y_diff
+             half_width half_height
+        ops
+            x1 x2 y1 y2 <- msg_x1 msg_x2 msg_y1 msg_y2
+            guts_to_global_space x1 y1 x2 y2
+            with platform_math
+                add_wholes y_center y1 y2
+                div_whole_by y_center 2
+                add_wholes x_center x1 x2
+                div_whole_by x_center 2
+                sub_wholes x_diff x1 x2
+                sub_wholes y_diff y1 y2
+            engine_math_stateless_abs_whole
+                width x_diff
+                height y_diff
+            with platform_math
+                div_wholes half_width width 2
+                div_wholes half_height height 2
+            guts_rasterize_bresenham_ellipse
+                x_center y_center half_width half_height
