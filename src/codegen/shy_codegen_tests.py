@@ -1,6 +1,12 @@
 import shy_codegen
 import unittest
 
+class copy_paste_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . cp = shy_codegen . copy_paste
+    def test_empty ( self ) :
+        self . assertEqual ( self . cp ( [ ] ) , [ ] )
+
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         class file_mock :
