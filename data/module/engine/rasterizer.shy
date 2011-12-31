@@ -253,3 +253,19 @@ module engine_rasterizer
                                                                 y2 y3 y3 y1
                 guts_rasterize_top_triangle_part x2 y2 x3 y3 x1 y1
                 guts_rasterize_bottom_triangle_part x2 y2 x3 y3 x1 y1
+
+    request finalize
+    
+    receive init
+        0 ->
+            guts_origin_x
+            guts_origin_y
+
+    receive use_texel
+        guts_texel <- msg_texel
+
+    receive use_texture
+        with msg
+            guts_texture_id <- texture
+            guts_origin_x <- origin_x
+            guts_origin_y <- origin_y
