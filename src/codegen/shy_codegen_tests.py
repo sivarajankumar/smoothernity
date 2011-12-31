@@ -6,6 +6,9 @@ class copy_paste_test_case ( unittest . TestCase ) :
         self . cp = shy_codegen . copy_paste
     def test_empty ( self ) :
         self . assertEqual ( self . cp ( [ ] ) , [ ] )
+    def test_plain_text ( self ) :
+        ls = [ 'first line' , 'second line' ]
+        self . assertEqual ( self . cp ( ls ) , ls )
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
