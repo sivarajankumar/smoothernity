@@ -93,6 +93,14 @@ class preprocess_test_case ( unittest . TestCase ) :
                    , 'bla footest22' 
                    , '    test33bartest22' 
                    , '    test33foo  bla' ]
+    def test_indents ( self ) :
+        self . i = [ '  copy'
+                   , '    foo test1'
+                   , '      bar'
+                   , '  paste'
+                   , '    replace test1 with test222' ]
+        self . o = [ '  foo test222' 
+                   , '    bar' ]
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
