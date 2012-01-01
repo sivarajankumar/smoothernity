@@ -53,36 +53,23 @@ def _copy_paste_do_paste ( tokens , body ) :
         res = _copy_paste_do_replace ( res , replace_what , replace_with )
     return tokens , res
 
-def _copy_paste_do_replace ( body , what , with_what_arg ) :
+def _copy_paste_do_replace ( body , what , with_what ) :
     res = [ ]
     for indent , token in body :
         if what in token :
             parts = token . split ( what )
-            res_token = ''
-            res_indent = indent
-            while len ( parts ) > 1 :
-                part = parts [ 0 ]
-                parts = parts [ 1 : ]
+            res_indent , res_token = indent , ''
+            for part in parts [ : - 1 ] :
                 res_token += part
-                with_what = list ( with_what_arg )
-                if with_what :
-                    with_indent , with_token = with_what [ 0 ]
-                    with_what = with_what [ 1 : ]
-                    res_token += with_token
+                for with_indent , with_token in with_what [ : - 1 ] :
                     res_indent += with_indent
-                else :
-                    res . append ( ( res_indent , res_token ) )
-                    res_indent = indent
-                    res_token = ''
-                while with_what :
-                    res . append ( ( res_indent , res_token ) )
-                    res_indent = indent
-                    res_token = ''
-                    with_indent , with_token = with_what [ 0 ]
-                    with_what = with_what [ 1 : ]
                     res_token += with_token
-                    res_indent += with_indent
-            res_token += parts [ 0 ]
+                    res . append ( ( res_indent , res_token ) )
+                    res_indent , res_token = indent , ''
+                with_indent , with_token = with_what [ - 1 ]
+                res_token += with_token
+                res_indent += with_indent
+            res_token += parts [ - 1 ]
             res . append ( ( res_indent , res_token ) )
         else :
             res . append ( ( indent , token ) )
