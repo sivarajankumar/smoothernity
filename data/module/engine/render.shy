@@ -5,8 +5,8 @@ consts engine_render
     max_messages 3000
     max_textures 10
     texture_size_pow2_base 8
-    texture_size ( 1 << texture_size_pow2_base )
-    texture_size_in_texels ( texture_size * texture_size )
+    texture_size [ 1 << texture_size_pow2_base ]
+    texture_size_in_texels [ texture_size * texture_size ]
 
 types engine_render
     mesh_id index
@@ -77,8 +77,8 @@ stateless engine_render
     proc clamp_texture_coords
         args x y
         ops engine_math_stateless_clamp_whole
-                x x 0 ( consts_texture_width - 1 )
-                y y 0 ( consts_texture_height - 1 )
+                x x 0 [ consts_texture_width - 1 ]
+                y y 0 [ consts_texture_height - 1 ]
 
 module engine_render
     module_queue consts_max_messages

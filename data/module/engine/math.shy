@@ -209,7 +209,7 @@ stateless engine_math
         args time
         ops
             platform_math_add_to_fract
-                time ( 1 / platform_consts_frames_per_second )
+                time [ 1 / platform_consts_frames_per_second ]
 
     proc make_radians_from_periods
         args result periods
