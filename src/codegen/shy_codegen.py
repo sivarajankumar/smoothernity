@@ -8,8 +8,23 @@ def tokenize ( line ) :
             res . append ( ( line . find ( word ) , word ) )
     return res
 
+def stringize ( tokens ) :
+    res = ''
+    for indent , token in tokens :
+        res += ' ' * ( indent - len ( res ) )
+        res += token
+    return res
+
 def copy_paste ( lines ) :
-    return list ( lines )
+    res = [ ]
+    tlines = [ tokenize ( l ) for l in lines ]
+    while len ( tlines > 0 ) :
+        if len ( tlines [ 0 ] ) > 0 :
+            indent , token = tlines [ 0 ] [ 0 ]
+            tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+        else :
+            tlines = tlines [ 1 : ]
+    return [ stringize ( l ) for l in tlines ]
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
