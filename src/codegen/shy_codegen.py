@@ -62,7 +62,7 @@ def _copy_paste_do_replace ( body , what , with_what ) :
     for indent , token in body :
         if indent <= last_indent :
             shift_indent = 0
-        last_indent = indent
+        last_indent = indent + len ( token )
         indent += shift_indent
         if what in token :
             parts = token . split ( what )

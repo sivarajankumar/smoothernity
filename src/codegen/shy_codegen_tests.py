@@ -97,10 +97,14 @@ class preprocess_test_case ( unittest . TestCase ) :
         self . i = [ '  copy'
                    , '    foo test1'
                    , '      bar'
+                   , '      test1'
+                   , '        foobar'
                    , '  paste'
                    , '    replace test1 with test222' ]
         self . o = [ '  foo test222' 
-                   , '    bar' ]
+                   , '    bar'
+                   , '    test222'
+                   , '      foobar' ]
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
