@@ -9,17 +9,21 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . assertEqual ( shy_codegen . tokenize ( self . text ) , self . tokens )
         self . assertEqual ( shy_codegen . stringize ( self . tokens ) , self . text )
     def test_empty ( self ) :
-        self . text = ''
+        self . text = [ ]
         self . tokens = [ ]
     def test_token ( self ) :
-        self . text = 'test'
+        self . text = [ 'test' ]
         self . tokens = [ ( 0 , 'test' ) ]
     def test_tokens ( self ) :
-        self . text = '  test1 test2   test3'
+        self . text = \
+            [ '  test1 test2   test3'
+            , '    test4'
+            ]
         self . tokens = \
             [ ( 2 , 'test1' ) 
             , ( 8 , 'test2' )
             , ( 16 , 'test3' )
+            , ( 4 , 'test4' )
             ]
 
 class copy_paste_test_case ( unittest . TestCase ) :

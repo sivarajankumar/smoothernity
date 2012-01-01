@@ -1,30 +1,34 @@
 from hashlib import md5
 from os . path import dirname
 
-def tokenize ( line ) :
+def tokenize ( lines ) :
     res = [ ]
-    for word in line . split ( ' ' ) :
-        if len ( word ) > 0 :
-            res . append ( ( line . find ( word ) , word ) )
+    for line in lines :
+        for word in line . split ( ' ' ) :
+            if len ( word ) > 0 :
+                res . append ( ( line . find ( word ) , word ) )
     return res
 
 def stringize ( tokens ) :
-    res = ''
+    res = [ ]
     for indent , token in tokens :
-        res += ' ' * ( indent - len ( res ) )
-        res += token
+        if len ( res ) == 0 or indent < len ( res [ - 1 ] ) :
+            res . append ( '' )
+        res [ - 1 ] += ' ' * ( indent - len ( res [ - 1 ] ) )
+        res [ - 1 ] += token
     return res
 
 def copy_paste ( lines ) :
     res = [ ]
-    tlines = [ tokenize ( l ) for l in lines ]
-    while len ( tlines > 0 ) :
+    tlines = tokenize ( lines )
+    while len ( tlines ) > 0 :
         if len ( tlines [ 0 ] ) > 0 :
             indent , token = tlines [ 0 ] [ 0 ]
+            res += [ ( indent , token ) ]
             tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
         else :
             tlines = tlines [ 1 : ]
-    return [ stringize ( l ) for l in tlines ]
+    return stringize ( res )
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
