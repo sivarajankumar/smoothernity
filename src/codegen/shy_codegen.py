@@ -5,45 +5,58 @@ def tokenize ( lines ) :
     res = [ ]
     for line in lines :
         indent = 0
+        tline = [ ]
         for word in line . split ( ' ' ) :
             if len ( word ) > 0 :
-                res . append ( ( indent , word ) )
+                tline . append ( ( indent , word ) )
             indent += len ( word ) + 1
+        res . append ( tline )
     return res
 
-def stringize ( tokens ) :
+def stringize ( tlines ) :
     res = [ ]
-    for indent , token in tokens :
-        if len ( res ) == 0 or indent <= len ( res [ - 1 ] ) :
-            res . append ( '' )
-        res [ - 1 ] += ' ' * ( indent - len ( res [ - 1 ] ) )
-        res [ - 1 ] += token
+    for tokens in tlines :
+        res . append ( '' )
+        for indent , token in tokens :
+            res [ - 1 ] += ' ' * ( indent - len ( res [ - 1 ] ) )
+            res [ - 1 ] += token
     return res
 
 def preprocess ( lines ) :
-    res = [ ]
-    tokens = tokenize ( lines )
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
-        if token == 'copy' :
-            tokens , r = _copy_paste ( tokens )
-            res += r
+    res = [ [ ] ]
+    tlines = tokenize ( lines )
+    while tlines :
+        if tlines [ 0 ] :
+            indent , token = tlines [ 0 ] [ 0 ]
+            if token == 'copy' :
+                tlines , res = _copy_paste ( tlines , res )
+            else :
+                tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+                res [ - 1 ] . append ( ( indent , token ) )
         else :
-            tokens = tokens [ 1 : ]
-            res += [ ( indent , token ) ]
+            tlines = tlines [ 1 : ]
+            res . append ( [ ] )
+    if not res [ - 1 ] :
+        res = res [ : - 1 ]
     return stringize ( res )
 
-def _copy_paste ( tokens ) :
-    tokens , body , copy_indent = _copy_paste_read_body ( tokens )
-    res = [ ]
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
-        if indent == copy_indent and token == 'paste' :
-            tokens , paste = _copy_paste_do_paste ( tokens , body )
-            res += paste
+def _copy_paste ( tlines , res ) :
+    print tlines
+    tlines , body , copy_indent = _copy_paste_read_body ( tlines )
+    print body
+    print
+    return
+    while tlines :
+        if tlines [ 0 ] :
+            indent , token = tlines [ 0 ] [ 0 ]
+            if indent == copy_indent and token == 'paste' :
+                tlines , res = _copy_paste_do_paste ( tlines , body , res )
+            else :
+                break
         else :
-            break
-    return tokens , res
+            tlines = tlines [ 1 : ]
+            res . append ( [ ] )
+    return tlines , res
 
 def _copy_paste_do_paste ( tokens , body ) :
     indent , token = tokens [ 0 ]
@@ -92,7 +105,7 @@ def _copy_paste_read_replaces ( tokens ) :
         if indent == first_indent and token == 'replace' :
             tokens , what = _copy_paste_read_replace_what ( tokens )
             tokens , with_what = _copy_paste_read_replace_with_what ( tokens , first_indent )
-            replaces [ '' . join ( stringize ( what ) ) ] = with_what
+            replaces [ '' . join ( stringize ( [ what ] ) ) ] = with_what
         else :
             break
     return tokens , replaces
@@ -128,20 +141,28 @@ def _copy_paste_read_replace_with_what ( tokens , replace_indent ) :
             break
     return tokens , with_what
 
-def _copy_paste_read_body ( tokens ) :
-    copy_indent , token = tokens [ 0 ]
-    tokens = tokens [ 1 : ]
+def _copy_paste_read_body ( tlines ) :
+    copy_indent , token = tlines [ 0 ] [ 0 ]
+    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+    if not tlines [ 0 ] :
+        tlines = tlines [ 1 : ]
     assert token == 'copy'
-    indent , token = tokens [ 0 ]
+    indent , token = tlines [ 0 ] [ 0 ]
     first_indent = indent
-    body = [ ]
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
-        if indent <= copy_indent :
-            break
-        tokens = tokens [ 1 : ]
-        body . append ( ( indent - first_indent + copy_indent , token ) )
-    return tokens , body , copy_indent
+    body = [ [ ] ]
+    while tlines :
+        if tlines [ 0 ] :
+            indent , token = tlines [ 0 ] [ 0 ]
+            if indent <= copy_indent :
+                break
+            tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+            body [ - 1 ] . append ( ( indent - first_indent + copy_indent , token ) )
+        else :
+            tlines = tlines [ 1 : ]
+            body . append ( [ ] )
+    if not body [ - 1 ] :
+        body = body [ : - 1 ]
+    return tlines , body , copy_indent
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -267,6 +288,5 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     lines = stdin . readlines ( )
-    #print '\n' . join ( stringize ( tokenize ( [ l . replace ( '\n' , '' ) for l in lines ] ) ) )
     print '\n' . join ( preprocess ( [ l . replace ( '\n' , '' ) for l in lines ] ) )
     reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )

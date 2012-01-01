@@ -13,35 +13,33 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . tokens = [ ]
     def test_token ( self ) :
         self . text = [ 'test' ]
-        self . tokens = [ ( 0 , 'test' ) ]
+        self . tokens = [ [ ( 0 , 'test' ) ] ]
     def test_tokens ( self ) :
         self . text = \
             [ '  test1 test2   test3'
-            , '    test4'
-            ]
+            , '    test4' ]
         self . tokens = \
-            [ ( 2 , 'test1' ) 
-            , ( 8 , 'test2' )
-            , ( 16 , 'test3' )
-            , ( 4 , 'test4' )
-            ]
+            [ [ ( 2 , 'test1' ) 
+              , ( 8 , 'test2' )
+              , ( 16 , 'test3' ) ]
+            , [ ( 4 , 'test4' ) ] ]
     def test_same_name ( self ) :
         self . text = [ 'test test' ]
         self . tokens = \
-            [ ( 0 , 'test' )
-            , ( 5 , 'test' ) ]
+            [ [ ( 0 , 'test' )
+              , ( 5 , 'test' ) ] ]
     def test_short ( self ) :
         self . text = [ 'test t' ]
         self . tokens = \
-            [ ( 0 , 'test' )
-            , ( 5 , 't' ) ]
+            [ [ ( 0 , 'test' )
+              , ( 5 , 't' ) ] ]
     def test_overlap ( self ) :
         self . text = \
             [ 'test1'
             , '     test2' ]
         self . tokens = \
-            [ ( 0 , 'test1' )
-            , ( 5 , 'test2' ) ]
+            [ [ ( 0 , 'test1' ) ]
+            , [ ( 5 , 'test2' ) ] ]
 
 class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
