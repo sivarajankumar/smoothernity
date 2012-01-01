@@ -58,8 +58,8 @@ def _copy_paste_do_paste ( tokens , body ) :
 def _copy_paste_do_replace ( body , what , with_what ) :
     res = [ ]
     shift_indent = 0
+    last_indent = - 1
     for indent , token in body :
-        print indent , token
         indent += shift_indent
         if what in token :
             parts = token . split ( what )
@@ -79,6 +79,9 @@ def _copy_paste_do_replace ( body , what , with_what ) :
             shift_indent = len ( res_token ) - len ( token )
         else :
             res . append ( ( indent , token ) )
+        if indent <= last_indent :
+            shift_indent = 0
+        last_indent = indent
     return res
 
 def _copy_paste_read_replaces ( tokens ) :
