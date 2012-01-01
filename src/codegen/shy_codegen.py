@@ -4,17 +4,17 @@ from os . path import dirname
 def tokenize ( lines ) :
     res = [ ]
     for line in lines :
-        start_index = - 1
+        indent = 0
         for word in line . split ( ' ' ) :
             if len ( word ) > 0 :
-                start_index = line . find ( word , start_index + 1 )
-                res . append ( ( start_index , word ) )
+                res . append ( ( indent , word ) )
+            indent += len ( word ) + 1
     return res
 
 def stringize ( tokens ) :
     res = [ ]
     for indent , token in tokens :
-        if len ( res ) == 0 or indent < len ( res [ - 1 ] ) :
+        if len ( res ) == 0 or indent <= len ( res [ - 1 ] ) :
             res . append ( '' )
         res [ - 1 ] += ' ' * ( indent - len ( res [ - 1 ] ) )
         res [ - 1 ] += token
@@ -167,7 +167,6 @@ def reify ( data , open_func , trace , options , os_mod ) :
                 trace . write_error ( name , str ( e ) )
 
 def generate ( lines ) :
-    print '' . join ( preprocess ( lines ) )
     res = { }
     res . update ( _generate_common_h ( ) )
     res . update ( _generate_common_hpp ( ) )
@@ -266,4 +265,7 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    reify ( generate ( stdin . readlines ( ) ) , open , trace ( ) , options ( ) , os )
+    lines = stdin . readlines ( )
+    print '\n' . join ( stringize ( tokenize ( [ l . replace ( '\n' , '' ) for l in lines ] ) ) )
+    #print '\n' . join ( preprocess ( [ l . replace ( '\n' , '' ) for l in lines ] ) )
+    reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )

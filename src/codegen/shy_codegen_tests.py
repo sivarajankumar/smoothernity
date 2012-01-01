@@ -30,6 +30,18 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . tokens = \
             [ ( 0 , 'test' )
             , ( 5 , 'test' ) ]
+    def test_short ( self ) :
+        self . text = [ 'test t' ]
+        self . tokens = \
+            [ ( 0 , 'test' )
+            , ( 5 , 't' ) ]
+    def test_overlap ( self ) :
+        self . text = \
+            [ 'test1'
+            , '     test2' ]
+        self . tokens = \
+            [ ( 0 , 'test1' )
+            , ( 5 , 'test2' ) ]
 
 class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
