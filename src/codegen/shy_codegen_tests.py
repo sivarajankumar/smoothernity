@@ -3,28 +3,34 @@ import unittest
 
 class tokenize_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
-        self . t = shy_codegen . tokenize
+        self . text = None
+        self . tokens = None
+    def tearDown ( self ) :
+        self . assertEqual ( shy_codegen . tokenize ( self . text ) , self . tokens )
+        self . assertEqual ( shy_codegen . stringize ( self . tokens ) , self . text )
     def test_empty ( self ) :
-        self . assertEqual ( self . t ( '' ) , [ ] )
+        self . text = ''
+        self . tokens = [ ]
     def test_token ( self ) :
-        self . assertEqual ( self . t ( 'test' ) , [ ( 0 , 'test' ) ] )
+        self . text = 'test'
+        self . tokens = [ ( 0 , 'test' ) ]
     def test_tokens ( self ) :
-        ts = self . t ( '  test1 test2   test3   ' )
-        self . assertEqual ( ts ,
+        self . text = '  test1 test2   test3'
+        self . tokens = \
             [ ( 2 , 'test1' ) 
             , ( 8 , 'test2' )
             , ( 16 , 'test3' )
-            ] )
+            ]
 
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . cp = shy_codegen . copy_paste
-    def test_empty ( self ) :
+    def _test_empty ( self ) :
         self . assertEqual ( self . cp ( [ ] ) , [ ] )
-    def test_plain_text ( self ) :
+    def _test_plain_text ( self ) :
         ls = [ 'first line' , 'second line' ]
         self . assertEqual ( self . cp ( ls ) , ls )
-    def later_test_same_line ( self ) :
+    def _test_same_line ( self ) :
         ls = [ 'copy foo test1 bar', 'paste replace test1 with test2' ]
         self . assertEqual ( self . cp ( ls ) , [ 'foo test2 bar' ] )
 
