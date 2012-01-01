@@ -60,6 +60,9 @@ def _copy_paste_do_replace ( body , what , with_what ) :
     shift_indent = 0
     last_indent = - 1
     for indent , token in body :
+        if indent <= last_indent :
+            shift_indent = 0
+        last_indent = indent
         indent += shift_indent
         if what in token :
             parts = token . split ( what )
@@ -79,9 +82,6 @@ def _copy_paste_do_replace ( body , what , with_what ) :
             shift_indent = len ( res_token ) - len ( token )
         else :
             res . append ( ( indent , token ) )
-        if indent <= last_indent :
-            shift_indent = 0
-        last_indent = indent
     return res
 
 def _copy_paste_read_replaces ( tokens ) :
@@ -129,18 +129,19 @@ def _copy_paste_read_replace_with_what ( tokens , replace_indent ) :
     return tokens , with_what
 
 def _copy_paste_read_body ( tokens ) :
-    indent , token = tokens [ 0 ]
+    copy_indent , token = tokens [ 0 ]
     tokens = tokens [ 1 : ]
     assert token == 'copy'
+    indent , token = tokens [ 0 ]
     first_indent = indent
     body = [ ]
     while len ( tokens ) > 0 :
         indent , token = tokens [ 0 ]
-        if indent <= first_indent :
+        if indent <= copy_indent :
             break
         tokens = tokens [ 1 : ]
-        body . append ( ( indent - first_indent - len ( 'copy' ) - 1 , token ) )
-    return tokens , body , first_indent
+        body . append ( ( indent - first_indent + copy_indent , token ) )
+    return tokens , body , copy_indent
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
