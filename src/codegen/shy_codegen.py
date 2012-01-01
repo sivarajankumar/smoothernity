@@ -50,11 +50,11 @@ def _copy_paste_do_paste ( tokens , body , copy_indent ) :
     tokens , replaces = _copy_paste_read_replaces ( tokens )
     res = [ ]
     for indent , token in body :
-        if token in replaces :
-            for with_indent , with_token in replaces [ token ] :
-                res . append ( ( indent + with_indent , with_token ) )
-        else :
-            res . append ( ( indent , token ) )
+        for replace_what , replace_with in replaces . items ( ) :
+            if replace_what in token :
+                token = token . replace (
+                    replace_what , '' . join ( stringize ( replace_with ) ) )
+        res . append ( ( indent , token ) )
     return tokens , res
 
 def _copy_paste_read_replaces ( tokens ) :
