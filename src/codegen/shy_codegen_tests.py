@@ -35,11 +35,39 @@ class preprocess_test_case ( unittest . TestCase ) :
         ls = [ 'first line' , 'second line' ]
         self . assertEqual ( self . pp ( ls ) , ls )
     def test_copy_paste_same_line ( self ) :
-        ls = [ 'copy foo test1 bar', 'paste replace test1 with test2' ]
+        ls = [ 'copy foo test1 bar' , 'paste replace test1 with test2' ]
         self . assertEqual ( self . pp ( ls ) , [ 'foo test2 bar' ] )
     def test_copy_paste_substring ( self ) :
-        ls = [ 'copy blatest1bla', 'paste replace test1 with test2' ]
-        self . assertEqual ( self . pp ( ls ) , [ 'blatest2bla' ] )
+        ls = [ 'copy footest1bar' , 'paste replace test1 with test2' ]
+        self . assertEqual ( self . pp ( ls ) , [ 'footest2bar' ] )
+    def test_copy_paste_multi_substring ( self ) :
+        ls = [ 'copy footest1bartest1foo' , 'paste replace test1 with test2' ]
+        self . assertEqual ( self . pp ( ls ) , [ 'footest2bartest2foo' ] )
+    def test_copy_paste_multi_line ( self ) :
+        ls = [ 'copy foo test1 bar'
+             , 'paste replace test1 with'
+             , '          test2'
+             , '          test3' ]
+        self . assertEqual ( self . pp ( ls ) , 
+            [ 'foo test2' 
+            , '    test3 bar' ] )
+    def test_copy_paste_multi_line_substring ( self ) :
+        ls = [ 'copy footest1bar'
+             , 'paste replace test1 with'
+             , '          test2'
+             , '          test3' ]
+        self . assertEqual ( self . pp ( ls ) , 
+            [ 'footest2' 
+            , 'test3bar' ] )
+    def test_copy_paste_multi_line_multi_substring ( self ) :
+        ls = [ 'copy footest1bartest1foo'
+             , 'paste replace test1 with'
+             , '          test2'
+             , '          test3' ]
+        self . assertEqual ( self . pp ( ls ) , 
+            [ 'footest2' 
+            , 'test3bartest2' 
+            , 'test3foo' ] )
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

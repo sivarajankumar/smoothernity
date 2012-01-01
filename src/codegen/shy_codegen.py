@@ -37,25 +37,56 @@ def _copy_paste ( tokens ) :
     while len ( tokens ) > 0 :
         indent , token = tokens [ 0 ]
         if indent == copy_indent and token == 'paste' :
-            tokens , paste = _copy_paste_do_paste ( tokens , body , copy_indent )
+            tokens , paste = _copy_paste_do_paste ( tokens , body )
             res += paste
         else :
             break
     return tokens , res
 
-def _copy_paste_do_paste ( tokens , body , copy_indent ) :
+def _copy_paste_do_paste ( tokens , body ) :
     indent , token = tokens [ 0 ]
     tokens = tokens [ 1 : ]
     assert token == 'paste'
     tokens , replaces = _copy_paste_read_replaces ( tokens )
+    res = list ( body )
+    for replace_what , replace_with in replaces . items ( ) :
+        res = _copy_paste_do_replace ( res , replace_what , replace_with )
+    return tokens , res
+
+def _copy_paste_do_replace ( body , what , with_what_arg ) :
     res = [ ]
     for indent , token in body :
-        for replace_what , replace_with in replaces . items ( ) :
-            if replace_what in token :
-                token = token . replace (
-                    replace_what , '' . join ( stringize ( replace_with ) ) )
-        res . append ( ( indent , token ) )
-    return tokens , res
+        if what in token :
+            parts = token . split ( what )
+            res_token = ''
+            res_indent = indent
+            while len ( parts ) > 1 :
+                part = parts [ 0 ]
+                parts = parts [ 1 : ]
+                res_token += part
+                with_what = list ( with_what_arg )
+                if with_what :
+                    with_indent , with_token = with_what [ 0 ]
+                    with_what = with_what [ 1 : ]
+                    res_token += with_token
+                    res_indent += with_indent
+                else :
+                    res . append ( ( res_indent , res_token ) )
+                    res_indent = indent
+                    res_token = ''
+                while with_what :
+                    res . append ( ( res_indent , res_token ) )
+                    res_indent = indent
+                    res_token = ''
+                    with_indent , with_token = with_what [ 0 ]
+                    with_what = with_what [ 1 : ]
+                    res_token += with_token
+                    res_indent += with_indent
+            res_token += parts [ 0 ]
+            res . append ( ( res_indent , res_token ) )
+        else :
+            res . append ( ( indent , token ) )
+    return res
 
 def _copy_paste_read_replaces ( tokens ) :
     replaces = { }
