@@ -41,31 +41,31 @@ def preprocess ( lines ) :
     return stringize ( res )
 
 def _copy_paste ( tlines , res ) :
+    print
     print tlines
     tlines , body , copy_indent = _copy_paste_read_body ( tlines )
     print body
-    print
-    return
     while tlines :
-        if tlines [ 0 ] :
-            indent , token = tlines [ 0 ] [ 0 ]
-            if indent == copy_indent and token == 'paste' :
-                tlines , res = _copy_paste_do_paste ( tlines , body , res )
-            else :
-                break
+        indent , token = tlines [ 0 ] [ 0 ]
+        if indent == copy_indent and token == 'paste' :
+            tlines , res = _copy_paste_do_paste ( tlines , body , res )
         else :
-            tlines = tlines [ 1 : ]
-            res . append ( [ ] )
+            break
     return tlines , res
 
-def _copy_paste_do_paste ( tokens , body ) :
-    indent , token = tokens [ 0 ]
-    tokens = tokens [ 1 : ]
+def _copy_paste_do_paste ( tlines , body , res ) :
+    indent , token = tlines [ 0 ] [ 0 ]
+    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+    if not tlines [ 0 ] :
+        tlines = tlines [ 1 : ]
     assert token == 'paste'
-    tokens , replaces = _copy_paste_read_replaces ( tokens )
-    res = list ( body )
+    tlines , replaces = _copy_paste_read_replaces ( tlines )
+    print replaces
+    return
+    buf = list ( body )
     for replace_what , replace_with in replaces . items ( ) :
-        res = _copy_paste_do_replace ( res , replace_what , replace_with )
+        buf = _copy_paste_do_replace ( buf , replace_what , replace_with )
+    res . append ( buf )
     return tokens , res
 
 def _copy_paste_do_replace ( body , what , with_what ) :
@@ -97,49 +97,65 @@ def _copy_paste_do_replace ( body , what , with_what ) :
             res . append ( ( indent , token ) )
     return res
 
-def _copy_paste_read_replaces ( tokens ) :
+def _copy_paste_read_replaces ( tlines ) :
     replaces = { }
-    first_indent , token = tokens [ 0 ]
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
+    first_indent , token = tlines [ 0 ] [ 0 ]
+    while tlines :
+        indent , token = tlines [ 0 ] [ 0 ]
         if indent == first_indent and token == 'replace' :
-            tokens , what = _copy_paste_read_replace_what ( tokens )
-            tokens , with_what = _copy_paste_read_replace_with_what ( tokens , first_indent )
-            replaces [ '' . join ( stringize ( [ what ] ) ) ] = with_what
+            tlines , what = _copy_paste_read_replace_what ( tlines )
+            tlines , with_what = _copy_paste_read_replace_with_what ( tlines , first_indent )
+            replaces [ '' . join ( stringize ( what ) ) ] = with_what
         else :
             break
-    return tokens , replaces
+    return tlines , replaces
 
-def _copy_paste_read_replace_what ( tokens ) :
-    indent , token = tokens [ 0 ]
-    tokens = tokens [ 1 : ]
+def _copy_paste_read_replace_what ( tlines ) :
+    indent , token = tlines [ 0 ] [ 0 ]
+    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+    if not tlines [ 0 ] :
+        tlines = tlines [ 1 : ]
     assert token == 'replace'
-    first_indent , token = tokens [ 0 ]
-    what = [ ]
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
-        if token == 'with' or indent < first_indent :
-            break
+    first_indent , token = tlines [ 0 ] [ 0 ]
+    what = [ [ ] ]
+    while tlines :
+        if tlines [ 0 ] :
+            indent , token = tlines [ 0 ] [ 0 ]
+            if token == 'with' or indent < first_indent :
+                break
+            else :
+                what [ - 1 ] . append ( ( indent - first_indent , token ) )
+                tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
         else :
-            what . append ( ( indent - first_indent , token ) )
-            tokens = tokens [ 1 : ]
-    return tokens , what
+            tlines = tlines [ 1 : ]
+            what . append ( [ ] )
+    if not what [ - 1 ] :
+        what = what [ : - 1 ]
+    return tlines , what
 
-def _copy_paste_read_replace_with_what ( tokens , replace_indent ) :
-    indent , token = tokens [ 0 ]
-    tokens = tokens [ 1 : ]
+def _copy_paste_read_replace_with_what ( tlines , replace_indent ) :
+    indent , token = tlines [ 0 ] [ 0 ]
+    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+    if not tlines [ 0 ] :
+        tlines = tlines [ 1 : ]
     assert token == 'with'
     assert indent > replace_indent
-    first_indent , token = tokens [ 0 ]
-    with_what = [ ]
-    while len ( tokens ) > 0 :
-        indent , token = tokens [ 0 ]
-        if indent >= first_indent :
-            with_what . append ( ( indent - first_indent , token ) )
-            tokens = tokens [ 1 : ]
+    first_indent , token = tlines [ 0 ] [ 0 ]
+    with_what = [ [ ] ]
+    while tlines :
+        if tlines [ 0 ] :
+            indent , token = tlines [ 0 ] [ 0 ]
+            if indent >= first_indent :
+                with_what [ - 1 ] . append ( ( indent - first_indent , token ) )
+                tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+            else :
+                break
         else :
-            break
-    return tokens , with_what
+            tlines = tlines [ 1 : ]
+            with_what . append ( [ ] )
+    if not with_what [ - 1 ] :
+        with_what = with_what [ : - 1 ]
+    return tlines , with_what
 
 def _copy_paste_read_body ( tlines ) :
     copy_indent , token = tlines [ 0 ] [ 0 ]
