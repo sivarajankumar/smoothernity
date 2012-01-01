@@ -4,9 +4,11 @@ from os . path import dirname
 def tokenize ( lines ) :
     res = [ ]
     for line in lines :
+        start_index = - 1
         for word in line . split ( ' ' ) :
             if len ( word ) > 0 :
-                res . append ( ( line . find ( word ) , word ) )
+                start_index = line . find ( word , start_index + 1 )
+                res . append ( ( start_index , word ) )
     return res
 
 def stringize ( tokens ) :
@@ -55,7 +57,10 @@ def _copy_paste_do_paste ( tokens , body ) :
 
 def _copy_paste_do_replace ( body , what , with_what ) :
     res = [ ]
+    shift_indent = 0
     for indent , token in body :
+        print indent , token
+        indent += shift_indent
         if what in token :
             parts = token . split ( what )
             res_indent , res_token = indent , ''
@@ -71,6 +76,7 @@ def _copy_paste_do_replace ( body , what , with_what ) :
                 res_indent += with_indent
             res_token += parts [ - 1 ]
             res . append ( ( res_indent , res_token ) )
+            shift_indent = len ( res_token ) - len ( token )
         else :
             res . append ( ( indent , token ) )
     return res
