@@ -9,6 +9,9 @@ class copy_paste_test_case ( unittest . TestCase ) :
     def test_plain_text ( self ) :
         ls = [ 'first line' , 'second line' ]
         self . assertEqual ( self . cp ( ls ) , ls )
+    def later_test_same_line ( self ) :
+        ls = [ 'copy foo test1 bar', 'paste replace test1 with test2' ]
+        self . assertEqual ( self . cp ( ls ) , [ 'foo test2 bar' ] )
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
