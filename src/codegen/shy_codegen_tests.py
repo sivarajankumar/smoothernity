@@ -6,6 +6,8 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . t = shy_codegen . tokenize
     def test_empty ( self ) :
         self . assertEqual ( self . t ( '' ) , [ ] )
+    def test_token ( self ) :
+        self . assertEqual ( self . t ( 'test' ) , [ ( 0 , 'test' ) ] )
 
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

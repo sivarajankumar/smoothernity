@@ -1,8 +1,11 @@
 from hashlib import md5
 from os . path import dirname
 
-def tokenize ( lines ) :
-    return [ ]
+def tokenize ( line ) :
+    if len ( line ) > 0 :
+        return [ ( 0 , line ) ]
+    else :
+        return [ ]
 
 def copy_paste ( lines ) :
     return list ( lines )
