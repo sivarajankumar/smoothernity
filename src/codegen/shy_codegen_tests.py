@@ -8,6 +8,13 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . assertEqual ( self . t ( '' ) , [ ] )
     def test_token ( self ) :
         self . assertEqual ( self . t ( 'test' ) , [ ( 0 , 'test' ) ] )
+    def test_tokens ( self ) :
+        ts = self . t ( '  test1 test2   test3   ' )
+        self . assertEqual ( ts ,
+            [ ( 2 , 'test1' ) 
+            , ( 8 , 'test2' )
+            , ( 16 , 'test3' )
+            ] )
 
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

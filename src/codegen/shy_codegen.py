@@ -2,10 +2,11 @@ from hashlib import md5
 from os . path import dirname
 
 def tokenize ( line ) :
-    if len ( line ) > 0 :
-        return [ ( 0 , line ) ]
-    else :
-        return [ ]
+    res = [ ]
+    for word in line . split ( ' ' ) :
+        if len ( word ) > 0 :
+            res . append ( ( line . find ( word ) , word ) )
+    return res
 
 def copy_paste ( lines ) :
     return list ( lines )
