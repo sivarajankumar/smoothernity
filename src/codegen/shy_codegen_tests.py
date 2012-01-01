@@ -29,9 +29,9 @@ class tokenize_test_case ( unittest . TestCase ) :
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . cp = shy_codegen . copy_paste
-    def _test_empty ( self ) :
+    def test_empty ( self ) :
         self . assertEqual ( self . cp ( [ ] ) , [ ] )
-    def _test_plain_text ( self ) :
+    def test_plain_text ( self ) :
         ls = [ 'first line' , 'second line' ]
         self . assertEqual ( self . cp ( ls ) , ls )
     def _test_same_line ( self ) :

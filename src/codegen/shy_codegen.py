@@ -20,14 +20,11 @@ def stringize ( tokens ) :
 
 def copy_paste ( lines ) :
     res = [ ]
-    tlines = tokenize ( lines )
-    while len ( tlines ) > 0 :
-        if len ( tlines [ 0 ] ) > 0 :
-            indent , token = tlines [ 0 ] [ 0 ]
-            res += [ ( indent , token ) ]
-            tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
-        else :
-            tlines = tlines [ 1 : ]
+    tokens = tokenize ( lines )
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        res += [ ( indent , token ) ]
+        tokens = tokens [ 1 : ]
     return stringize ( res )
 
 def reify ( data , open_func , trace , options , os_mod ) :
