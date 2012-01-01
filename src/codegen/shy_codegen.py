@@ -41,10 +41,7 @@ def preprocess ( lines ) :
     return stringize ( res )
 
 def _copy_paste ( tlines , res ) :
-    print
-    print tlines
     tlines , body , copy_indent = _copy_paste_read_body ( tlines )
-    print body
     while tlines :
         indent , token = tlines [ 0 ] [ 0 ]
         if indent == copy_indent and token == 'paste' :
@@ -60,41 +57,43 @@ def _copy_paste_do_paste ( tlines , body , res ) :
         tlines = tlines [ 1 : ]
     assert token == 'paste'
     tlines , replaces = _copy_paste_read_replaces ( tlines )
-    print replaces
-    return
     buf = list ( body )
     for replace_what , replace_with in replaces . items ( ) :
         buf = _copy_paste_do_replace ( buf , replace_what , replace_with )
     res . append ( buf )
-    return tokens , res
+    return tlines , res
 
 def _copy_paste_do_replace ( body , what , with_what ) :
-    res = [ ]
+    res = [ [ ] ]
     shift_indent = 0
-    last_indent = - 1
-    for indent , token in body :
-        if indent <= last_indent :
-            shift_indent = 0
-        last_indent = indent + len ( token )
-        indent += shift_indent
-        if what in token :
-            parts = token . split ( what )
-            res_indent , res_token = indent , ''
-            for part in parts [ : - 1 ] :
-                res_token += part
-                for with_indent , with_token in with_what [ : - 1 ] :
-                    res_indent += with_indent
+    while body :
+        if body [ 0 ] :
+            indent , token = body [ 0 ] [ 0 ]
+            body [ 0 ] = body [ 0 ] [ 1 : ]
+            indent += shift_indent
+            if what in token :
+                parts = token . split ( what )
+                res_indent , res_token = indent , ''
+                for part in parts [ : - 1 ] :
+                    res_token += part
+                    # FIXME
+                    for with_indent , with_token in with_what [ : - 1 ] :
+                        res_indent += with_indent
+                        res_token += with_token
+                        res [ - 1 ] . append ( ( res_indent , res_token ) )
+                        res_indent , res_token = indent , ''
+                    with_indent , with_token = with_what [ - 1 ]
                     res_token += with_token
-                    res . append ( ( res_indent , res_token ) )
-                    res_indent , res_token = indent , ''
-                with_indent , with_token = with_what [ - 1 ]
-                res_token += with_token
-                res_indent += with_indent
-            res_token += parts [ - 1 ]
-            res . append ( ( res_indent , res_token ) )
-            shift_indent = len ( res_token ) - len ( token )
+                    res_indent += with_indent
+                res_token += parts [ - 1 ]
+                res [ - 1 ] . append ( ( res_indent , res_token ) )
+                shift_indent = len ( res_token ) - len ( token )
+            else :
+                res [ - 1 ] . append ( ( indent , token ) )
         else :
-            res . append ( ( indent , token ) )
+            body = body [ 1 : ]
+            shift_indent = 0
+            res . append ( [ ] )
     return res
 
 def _copy_paste_read_replaces ( tlines ) :
