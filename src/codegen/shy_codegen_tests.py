@@ -71,11 +71,15 @@ class preprocess_test_case ( unittest . TestCase ) :
             , 'test33bar' ] )
     def test_copy_paste_multi_line_multi_substring ( self ) :
         ls = [ 'copy bla footest1bartest1foo  bla'
+             , '     bla footest1bartest1foo  bla'
              , 'paste replace test1 with'
              , '          test22'
              , '          test33' ]
         self . assertEqual ( self . pp ( ls ) , 
             [ 'bla footest22' 
+            , '    test33bartest22' 
+            , '    test33foo  bla'
+            , 'bla footest22' 
             , '    test33bartest22' 
             , '    test33foo  bla' ] )
 
