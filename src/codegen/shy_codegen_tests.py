@@ -26,17 +26,17 @@ class tokenize_test_case ( unittest . TestCase ) :
             , ( 4 , 'test4' )
             ]
 
-class copy_paste_test_case ( unittest . TestCase ) :
+class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
-        self . cp = shy_codegen . copy_paste
+        self . pp = shy_codegen . preprocess
     def test_empty ( self ) :
-        self . assertEqual ( self . cp ( [ ] ) , [ ] )
+        self . assertEqual ( self . pp ( [ ] ) , [ ] )
     def test_plain_text ( self ) :
         ls = [ 'first line' , 'second line' ]
-        self . assertEqual ( self . cp ( ls ) , ls )
-    def _test_same_line ( self ) :
+        self . assertEqual ( self . pp ( ls ) , ls )
+    def test_copy_paste_same_line ( self ) :
         ls = [ 'copy foo test1 bar', 'paste replace test1 with test2' ]
-        self . assertEqual ( self . cp ( ls ) , [ 'foo test2 bar' ] )
+        self . assertEqual ( self . pp ( ls ) , [ 'foo test2 bar' ] )
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

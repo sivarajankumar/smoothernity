@@ -18,14 +18,102 @@ def stringize ( tokens ) :
         res [ - 1 ] += token
     return res
 
-def copy_paste ( lines ) :
+def preprocess ( lines ) :
     res = [ ]
     tokens = tokenize ( lines )
     while len ( tokens ) > 0 :
         indent , token = tokens [ 0 ]
-        res += [ ( indent , token ) ]
-        tokens = tokens [ 1 : ]
+        if token == 'copy' :
+            tokens , r = _copy_paste ( tokens )
+            res += r
+        else :
+            tokens = tokens [ 1 : ]
+            res += [ ( indent , token ) ]
     return stringize ( res )
+
+def _copy_paste ( tokens ) :
+    tokens , body , copy_indent = _copy_paste_read_body ( tokens )
+    res = [ ]
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        if indent == copy_indent and token == 'paste' :
+            tokens , paste = _copy_paste_do_paste ( tokens , body , copy_indent )
+            res += paste
+        else :
+            break
+    return tokens , res
+
+def _copy_paste_do_paste ( tokens , body , copy_indent ) :
+    indent , token = tokens [ 0 ]
+    tokens = tokens [ 1 : ]
+    assert token == 'paste'
+    tokens , replaces = _copy_paste_read_replaces ( tokens )
+    res = [ ]
+    for indent , token in body :
+        if token in replaces :
+            for with_indent , with_token in replaces [ token ] :
+                res . append ( ( indent + with_indent , with_token ) )
+        else :
+            res . append ( ( indent , token ) )
+    return tokens , res
+
+def _copy_paste_read_replaces ( tokens ) :
+    replaces = { }
+    first_indent , token = tokens [ 0 ]
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        if indent == first_indent and token == 'replace' :
+            tokens , what = _copy_paste_read_replace_what ( tokens )
+            tokens , with_what = _copy_paste_read_replace_with_what ( tokens , first_indent )
+            replaces [ '' . join ( stringize ( what ) ) ] = with_what
+        else :
+            break
+    return tokens , replaces
+
+def _copy_paste_read_replace_what ( tokens ) :
+    indent , token = tokens [ 0 ]
+    tokens = tokens [ 1 : ]
+    assert token == 'replace'
+    first_indent , token = tokens [ 0 ]
+    what = [ ]
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        if token == 'with' or indent < first_indent :
+            break
+        else :
+            what . append ( ( indent - first_indent , token ) )
+            tokens = tokens [ 1 : ]
+    return tokens , what
+
+def _copy_paste_read_replace_with_what ( tokens , replace_indent ) :
+    indent , token = tokens [ 0 ]
+    tokens = tokens [ 1 : ]
+    assert token == 'with'
+    assert indent > replace_indent
+    first_indent , token = tokens [ 0 ]
+    with_what = [ ]
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        if indent >= first_indent :
+            with_what . append ( ( indent - first_indent , token ) )
+            tokens = tokens [ 1 : ]
+        else :
+            break
+    return tokens , with_what
+
+def _copy_paste_read_body ( tokens ) :
+    indent , token = tokens [ 0 ]
+    tokens = tokens [ 1 : ]
+    assert token == 'copy'
+    first_indent = indent
+    body = [ ]
+    while len ( tokens ) > 0 :
+        indent , token = tokens [ 0 ]
+        if indent <= first_indent :
+            break
+        tokens = tokens [ 1 : ]
+        body . append ( ( indent - first_indent - len ( 'copy' ) - 1 , token ) )
+    return tokens , body , first_indent
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
