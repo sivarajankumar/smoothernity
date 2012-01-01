@@ -1,6 +1,12 @@
 import shy_codegen
 import unittest
 
+class tokenize_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . t = shy_codegen . tokenize
+    def test_empty ( self ) :
+        self . assertEqual ( self . t ( '' ) , [ ] )
+
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . cp = shy_codegen . copy_paste
