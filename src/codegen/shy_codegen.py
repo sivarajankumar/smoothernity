@@ -167,6 +167,7 @@ def reify ( data , open_func , trace , options , os_mod ) :
                 trace . write_error ( name , str ( e ) )
 
 def generate ( lines ) :
+    print '' . join ( preprocess ( lines ) )
     res = { }
     res . update ( _generate_common_h ( ) )
     res . update ( _generate_common_hpp ( ) )
