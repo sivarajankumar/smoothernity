@@ -37,6 +37,9 @@ class preprocess_test_case ( unittest . TestCase ) :
     def test_copy_paste_same_line ( self ) :
         ls = [ 'copy foo test1 bar', 'paste replace test1 with test2' ]
         self . assertEqual ( self . pp ( ls ) , [ 'foo test2 bar' ] )
+    def test_copy_paste_substring ( self ) :
+        ls = [ 'copy blatest1bla', 'paste replace test1 with test2' ]
+        self . assertEqual ( self . pp ( ls ) , [ 'blatest2bla' ] )
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
