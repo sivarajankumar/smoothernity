@@ -37,6 +37,8 @@ class tokenizer :
             self . _state = self . _state_word
         elif self . _char == "'" :
             self . _state = self . _state_opening_quote
+        elif self . _char == '_' :
+            self . _state = self . _state_underscore
         else :
             raise Exception ( 'Unknown char "%s"' % self . _char )
     def _state_whitespace ( self ) :
@@ -85,6 +87,19 @@ class tokenizer :
                 self . _state = self . _state_recognize_char
             else :
                 raise Exception ( 'Character after quoted string: "%s"' % self . _char )
+        else :
+            self . _write_token ( )
+            self . _state = self . _state_new_line
+    def _state_underscore ( self ) :
+        self . _token += self . _char
+        if self . _input [ 0 ] :
+            self . _char = self . _input [ 0 ] [ 0 ]
+            self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            if self . _char == ' ' :
+                self . _write_token ( )
+                self . _state = self . _state_recognize_char
+            else :
+                raise Exception ( 'Character after underscore: "%s"' % self . _char )
         else :
             self . _write_token ( )
             self . _state = self . _state_new_line
