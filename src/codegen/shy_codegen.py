@@ -93,6 +93,8 @@ class _input_tokens :
                 self . next_token ( )
     def state ( self ) :
         return self . _state
+    def tokens_count ( self ) :
+        return len ( [ t for tline in self . _tlines for t in tline ] )
     def _state_itoken ( self , itoken ) :
         return _token_state ( itoken = itoken )
     def _state_eol ( self ) :
@@ -271,27 +273,38 @@ class preprocessor :
                     for part in parts [ : - 1 ] :
                         res_token += part
                         shift_indent += len ( part )
-                        with_what = deepcopy ( with_what_args )
-                        while len ( [ t for tline in with_what for t in tline ] ) > 1 :
-                            if with_what [ 0 ] :
-                                with_indent , with_token = with_what [ 0 ] [ 0 ]
-                                with_what [ 0 ] = with_what [ 0 ] [ 1 : ]
+                        with_what = _input_tokens ( deepcopy ( with_what_args ) )
+                        while with_what . tokens_count ( ) :
+                            if with_what . state ( ) . itoken ( ) :
+                                with_indent , with_token = with_what . state ( ) . itoken ( )
+                                with_what . next_token ( )
                                 res_indent += with_indent
                                 res_token += with_token
                                 res . itoken ( res_indent , res_token )
                                 shift_indent = len ( stringize ( [ res . get_contents ( ) [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
                                 res_indent , res_token = indent , ''
-                            else :
-                                with_what = with_what [ 1 : ]
+                            elif with_what . state ( ) . eol ( ) :
+                                with_what . next_token ( )
                                 res . new_line ( )
                                 shift_indent = - len ( token )
-                        while with_what and not with_what [ 0 ] :
-                            with_what = with_what [ 1 : ]
-                            res . new_line ( )
-                            shift_indent = - len ( token )
-                        with_indent , with_token = with_what [ 0 ] [ 0 ]
-                        res_token += with_token
-                        res_indent += with_indent
+                            elif with_what . state ( ) . eof ( ) :
+                                break
+                            else :
+                                with_what . next_token ( )
+                        while True :
+                            if with_what . state ( ) . itoken ( ) :
+                                with_indent , with_token = with_what . state ( ) . itoken ( )
+                                res_token += with_token
+                                res_indent += with_indent
+                                break
+                            elif with_what . state ( ) . eol ( ) :
+                                with_what . next_token ( )
+                                res . new_line ( )
+                                shift_indent = - len ( token )
+                            elif with_what . state ( ) . eof ( ) :
+                                break
+                            else :
+                                with_what . next_token ( )
                     part = parts [ - 1 ]
                     res_token += part
                     res . itoken ( res_indent , res_token )
