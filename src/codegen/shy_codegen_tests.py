@@ -58,8 +58,8 @@ class preprocess_test_case ( unittest . TestCase ) :
         self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22' ]
         self . o = [ 'foo test22 bar' ]
     def test_copy_paste_multi_token ( self ) :
-        self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22 test23' ]
-        self . o = [ 'foo test22 test23 bar' ]
+        self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22 test33' ]
+        self . o = [ 'foo test22 test33 bar' ]
     def test_copy_paste_multi_replace ( self ) :
         self . i = [ 'copy foo bar' 
                    , 'paste replace foo with test1' 
