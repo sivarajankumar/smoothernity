@@ -256,7 +256,7 @@ class preprocessor :
         return with_what . get_contents ( )
 
     def _copy_paste_do_replace ( self , arg_body , what , with_what_args ) :
-        res = [ [ ] ]
+        res = _output_tokens ( )
         shift_indent = 0
         body = _input_tokens ( arg_body )
         while True :
@@ -278,40 +278,35 @@ class preprocessor :
                                 with_what [ 0 ] = with_what [ 0 ] [ 1 : ]
                                 res_indent += with_indent
                                 res_token += with_token
-                                res [ - 1 ] . append ( ( res_indent , res_token ) )
-                                shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
+                                res . itoken ( res_indent , res_token )
+                                shift_indent = len ( stringize ( [ res . get_contents ( ) [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
                                 res_indent , res_token = indent , ''
                             else :
                                 with_what = with_what [ 1 : ]
-                                if res [ - 1 ] :
-                                    res . append ( [ ] )
+                                res . new_line ( )
                                 shift_indent = - len ( token )
                         while with_what and not with_what [ 0 ] :
                             with_what = with_what [ 1 : ]
-                            if res [ - 1 ] :
-                                res . append ( [ ] )
+                            res . new_line ( )
                             shift_indent = - len ( token )
                         with_indent , with_token = with_what [ 0 ] [ 0 ]
                         res_token += with_token
                         res_indent += with_indent
                     part = parts [ - 1 ]
                     res_token += part
-                    res [ - 1 ] . append ( ( res_indent , res_token ) )
-                    shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
+                    res . itoken ( res_indent , res_token )
+                    shift_indent = len ( stringize ( [ res . get_contents ( ) [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
                 else :
-                    res [ - 1 ] . append ( ( indent , token ) )
+                    res . itoken ( indent , token )
             elif body . state ( ) . eol ( ) :
                 body . next_token ( )
                 shift_indent = 0
-                if res [ - 1 ] :
-                    res . append ( [ ] )
+                res . new_line ( )
             elif body . state ( ) . eof ( ) :
                 break
             else :
                 body . next_token ( )
-        if not res [ - 1 ] :
-            res = res [ : - 1 ]
-        return res
+        return res . get_contents ( )
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
