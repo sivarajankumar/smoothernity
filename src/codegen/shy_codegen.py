@@ -35,6 +35,8 @@ class tokenizer :
             self . _state = self . _state_whitespace
         elif self . _char . isalpha ( ) :
             self . _state = self . _state_word
+        elif self . _char . isdigit ( ) :
+            self . _state = self . _state_number
         elif self . _char == "'" :
             self . _state = self . _state_opening_quote
         elif self . _char == '_' :
@@ -61,6 +63,20 @@ class tokenizer :
             self . _state = self . _state_recognize_char
         else :
             raise Exception ( 'Wrong char "%s" in word' % self . _char )
+    def _state_number ( self ) :
+        if self . _char . isdigit ( ) :
+            self . _token += self . _char
+            if self . _input [ 0 ] :
+                self . _char = self . _input [ 0 ] [ 0 ]
+                self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            else :
+                self . _write_token ( )
+                self . _state = self . _state_new_line
+        elif self . _char == ' ' :
+            self . _write_token ( )
+            self . _state = self . _state_recognize_char
+        else :
+            raise Exception ( 'Wrong char "%s" in number' % self . _char )
     def _state_opening_quote ( self ) :
         self . _token += self . _char
         if self . _input [ 0 ] :

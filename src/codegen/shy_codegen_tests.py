@@ -52,6 +52,9 @@ class tokenize_test_case ( unittest . TestCase ) :
     def test_underscore_in_word ( self ) :
         self . text = [ 'some_word' ]
         self . tokens = [ [ ( 0 , 'some_word' ) ] ]
+    def test_number ( self ) :
+        self . text = [ '123' ]
+        self . tokens = [ [ ( 0 , '123' ) ] ]
 
 class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
