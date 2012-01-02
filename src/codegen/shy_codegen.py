@@ -143,23 +143,12 @@ class tokenizer :
         self . _indent += len ( self . _token )
         self . _token = ''
 
-class _input_token_state :
-    def __init__ ( self , itoken = None , eol = False , eof = False ) :
-        self . _itoken = itoken
-        self . _eol = eol
-        self . _eof = eof
-    def itoken ( self ) :
-        return self . _itoken
-    def eol ( self ) :
-        return self . _eol
-    def eof ( self ) :
-        return self . _eof
-
 class preprocessor :
 
     def __init__ ( self , lines ) :
         self . _input = _input_tokens ( tokenizer ( lines ) . run ( ) )
         self . _output = _output_tokens ( )
+        self . _continue = None
         self . _state = None
         self . _indent = None
         self . _token = None
@@ -168,8 +157,11 @@ class preprocessor :
         self . _copy_body_indent = None
         self . _copy_replace_what = None
         self . _copy_replace_with_what = None
+        self . _copy_result_indent = None
+        self . _copy_result_token = None
         self . _copy_result_input = None
         self . _copy_result_output = None
+        self . _copy_shift_indent = None
         self . _replaces = None
         self . _replace_indent = None
         self . _replace_what = None
@@ -179,7 +171,8 @@ class preprocessor :
     def run ( self ) :
         self . _state = self . _state_read_token
         self . _input . next_token ( )
-        while not self . _input . state ( ) . eof ( ) :
+        self . _continue = True
+        while self . _continue :
             self . _state ( )
         return stringize ( self . _output . get_contents ( ) )
     def _state_read_token ( self ) :
@@ -188,6 +181,8 @@ class preprocessor :
             self . _state = self . _state_recognize_token
         elif self . _input . state ( ) . eol ( ) :
             self . _state = self . _state_new_line
+        elif self . _input . state ( ) . eof ( ) :
+            self . _continue = False
     def _state_new_line ( self ) :
         assert self . _input . state ( ) . eol ( )
         self . _output . new_line ( )
@@ -217,6 +212,8 @@ class preprocessor :
             self . _state = self . _state_copy_paste_read_body_token
         elif self . _input . state ( ) . eol ( ) :
             self . _state = self . _state_copy_paste_read_body_new_line
+        elif self . _input . state ( ) . eof ( ) :
+            raise Exception ( 'Unexpected EOF in "copy" body' )
     def _state_copy_paste_read_body_token ( self ) :
         if self . _indent > self . _copy_indent :
             self . _copy_body . itoken ( 
@@ -292,6 +289,11 @@ class preprocessor :
             self . _state = self . _state_copy_paste_read_replace_with_what_token
         elif self . _input . state ( ) . eol ( ) :
             self . _state = self . _state_copy_paste_read_replace_with_what_new_line
+        elif self . _input . state ( ) . eof ( ) :
+            what = '' . join ( stringize ( self . _replace_what . get_contents ( ) ) )
+            with_what = self . _replace_with_what . get_contents ( )
+            self . _replaces [ what ] = with_what
+            self . _state = self . _state_copy_paste_do_paste_begin
     def _state_copy_paste_read_replace_with_what_token ( self ) :
         if self . _indent >= self . _replace_with_what_indent :
             self . _replace_with_what . itoken (
@@ -319,7 +321,27 @@ class preprocessor :
         self . _copy_replace_with_what = \
             self . _replaces . pop ( self . _copy_replace_what  )
         self . _copy_result_output = _output_tokens ( )
-        self . _state = self . _state_copy_paste_do_replace_end
+        self . _copy_shift_indent = 0
+        self . _copy_result_input . next_token ( )
+        self . _state = self . _state_copy_paste_do_replace_read_body
+    def _state_copy_paste_do_replace_read_body ( self ) :
+        if self . _copy_result_input . state ( ) . itoken ( ) :
+            self . _copy_result_indent , self . _copy_result_token = \
+                self . _copy_result_input . state ( ) . itoken ( )
+            self . _state = self . _state_copy_paste_do_replace_read_token
+        elif self . _copy_result_input . state ( ) . eol ( ) :
+            self . _state = self . _state_copy_paste_do_replace_read_new_line
+        elif self . _copy_result_input . state ( ) . eof ( ) :
+            self . _state = self . _state_copy_paste_do_replace_end
+    def _state_copy_paste_do_replace_read_token ( self ) :
+        self . _copy_result_output . itoken ( 
+            self . _copy_result_indent , self . _copy_result_token )
+        self . _copy_result_input . next_token ( )
+        self . _state = self . _state_copy_paste_do_replace_read_body
+    def _state_copy_paste_do_replace_read_new_line ( self ) :
+        self . _copy_result_output . new_line ( )
+        self . _copy_result_input . next_token ( )
+        self . _state = self . _state_copy_paste_do_replace_read_body
     def _state_copy_paste_do_replace_end ( self ) :
         self . _copy_result_input = _input_tokens (
             self . _copy_result_output . get_contents ( ) )
@@ -329,6 +351,7 @@ class preprocessor :
             self . _state = self . _state_copy_paste_do_paste_end
     def _state_copy_paste_do_paste_end ( self ) :
         self . _output . tokens ( self . _copy_result_output )
+        self . _output . new_line ( )
         if self . _token == 'paste' :
             self . _state = self . _state_copy_paste_read_paste
         else :
@@ -432,6 +455,18 @@ def generate ( lines ) :
     res . update ( _generate_loadable_injections_h ( ) )
     res . update ( _generate_loadable_injections_cpp ( ) )
     return res
+
+class _input_token_state :
+    def __init__ ( self , itoken = None , eol = False , eof = False ) :
+        self . _itoken = itoken
+        self . _eol = eol
+        self . _eof = eof
+    def itoken ( self ) :
+        return self . _itoken
+    def eol ( self ) :
+        return self . _eol
+    def eof ( self ) :
+        return self . _eof
 
 class _input_tokens :
     def __init__ ( self , tlines ) :
