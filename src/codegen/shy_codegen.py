@@ -80,8 +80,10 @@ def _copy_paste_do_replace ( body , what , with_what_args ) :
             if what in token :
                 parts = token . split ( what )
                 res_indent , res_token = indent , ''
+                shift_indent = - len ( token )
                 for part in parts [ : - 1 ] :
                     res_token += part
+                    shift_indent += len ( part )
                     with_what = deepcopy ( with_what_args )
                     while len ( [ t for tline in with_what for t in tline ] ) > 1 :
                         if with_what [ 0 ] :
@@ -90,21 +92,25 @@ def _copy_paste_do_replace ( body , what , with_what_args ) :
                             res_indent += with_indent
                             res_token += with_token
                             res [ - 1 ] . append ( ( res_indent , res_token ) )
+                            shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
                             res_indent , res_token = indent , ''
                         else :
                             with_what = with_what [ 1 : ]
                             if res [ - 1 ] :
                                 res . append ( [ ] )
+                            shift_indent = - len ( token )
                     while with_what and not with_what [ 0 ] :
                         with_what = with_what [ 1 : ]
                         if res [ - 1 ] :
                             res . append ( [ ] )
+                        shift_indent = - len ( token )
                     with_indent , with_token = with_what [ 0 ] [ 0 ]
                     res_token += with_token
                     res_indent += with_indent
-                res_token += parts [ - 1 ]
+                part = parts [ - 1 ]
+                res_token += part
                 res [ - 1 ] . append ( ( res_indent , res_token ) )
-                shift_indent = len ( res_token ) - len ( token )
+                shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
             else :
                 res [ - 1 ] . append ( ( indent , token ) )
         else :

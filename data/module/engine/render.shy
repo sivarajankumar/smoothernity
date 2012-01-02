@@ -458,11 +458,11 @@ trace engine_render
                 string_error 'place2 overflow error.'
                 end
     paste
-        replace place1 with 'meshes'
-        replace place2 with 'Meshes'
+        replace place1 with meshes
+        replace place2 with Meshes
     paste
-        replace place1 with 'textures'
-        replace place2 with 'Textures'
+        replace place1 with textures
+        replace place2 with Textures
 
     proc meshes_underflow_error
         with platform_trace_trace
@@ -483,17 +483,17 @@ trace engine_render
                     string_error '.'
                     end
     paste
-        replace place1 with 'index_offset'
-        replace place2 with 'index offset'
-        replace place3 with 'indices'
+        replace place1 with index_offset
+        replace place2 with index offset
+        replace place3 with indices
     paste
-        replace place1 with 'index_value'
-        replace place2 with 'index value'
-        replace place3 with 'vertices'
+        replace place1 with index_value
+        replace place2 with index value
+        replace place3 with vertices
     paste
-        replace place1 with 'vertex'
-        replace place2 with 'vertex subscript'
-        replace place3 with 'vertices'
+        replace place1 with vertex
+        replace place2 with vertex subscript
+        replace place3 with vertices
 
     proc mesh_too_many_vertices_error
         args current total
