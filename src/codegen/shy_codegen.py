@@ -100,11 +100,30 @@ class _input_tokens :
     def _state_eof ( self ) :
         return _token_state ( eof = True )
 
+class _output_tokens :
+    def __init__ ( self ) :
+        self . _tlines = [ ]
+        self . _newline = False
+    def itoken ( self , indent , token ) :
+        if not self . _tlines :
+            self . _tlines . append ( [ ] )
+        if self . _newline :
+            if self . _tlines [ - 1 ] :
+                self . _tlines . append ( [ ] )
+            self . _newline = False
+        self . _tlines [ - 1 ] . append ( ( indent , token ) )
+    def new_line ( self ) :
+        self . _newline = True
+    def get_contents ( self ) :
+        return self . _tlines
+    def tokens ( self , tokens ) :
+        self . _tlines += tokens
+
 class preprocessor :
 
     def __init__ ( self , lines ) :
         self . _input = _input_tokens ( tokenize ( lines ) )
-        self . _output = [ [ ] ]
+        self . _output = _output_tokens ( )
 
     def run ( self ) :
         while True :
@@ -113,20 +132,18 @@ class preprocessor :
                 if token == 'copy' :
                     self . _copy_paste ( )
                 else :
-                    _add_last_token ( self . _output , indent , token )
+                    self . _output . itoken ( indent , token )
                     self . _input . next_token ( )
             elif self . _input . state ( ) . eol ( ) :
-                self . _output = _make_last_empty_line ( self . _output )
+                self . _output . new_line ( )
                 self . _input . next_token ( )
             elif self . _input . state ( ) . eof ( ) :
                 break
             else :
                 self . _input . next_token ( )
-        self . _output = _trim_last_empty_line ( self . _output )
-        return stringize ( self . _output )
+        return stringize ( self . _output . get_contents ( ) )
 
     def _copy_paste ( self ) :
-        self . _output = _trim_last_empty_line ( self . _output )
         body , copy_indent = self . _copy_paste_read_body ( )
         while True :
             if self . _input . state ( ) . itoken ( ) :
@@ -139,7 +156,7 @@ class preprocessor :
                 break
             else :
                 self . _input . next_token ( )
-        self . _output = _make_last_empty_line ( self . _output )
+        self . _output . new_line ( )
 
     def _copy_paste_read_body ( self ) :
         copy_indent , token = self . _input . state ( ) . itoken ( )
@@ -147,21 +164,19 @@ class preprocessor :
         self . _input . next_itoken ( )
         indent , token = self . _input . state ( ) . itoken ( )
         first_indent = indent
-        body = [ [ ] ]
+        body = _output_tokens ( )
         while True :
             if self . _input . state ( ) . itoken ( ) :
                 indent , token = self . _input . state ( ) . itoken ( )
                 if indent <= copy_indent :
                     break
                 self . _input . next_token ( )
-                body [ - 1 ] . append ( ( indent - first_indent + copy_indent , token ) )
+                body . itoken ( indent - first_indent + copy_indent , token )
             elif self . _input . state ( ) . eol ( ) :
                 self . _input . next_token ( )
-                body . append ( [ ] )
+                body . new_line ( )
             elif self . _input . state ( ) . eof ( ) :
                 break
-        if not body [ - 1 ] :
-            body = body [ : - 1 ]
         return body , copy_indent
 
     def _copy_paste_do_paste ( self , body ) :
@@ -169,10 +184,10 @@ class preprocessor :
         assert token == 'paste'
         self . _input . next_itoken ( )
         replaces = self . _copy_paste_read_replaces ( )
-        buf = deepcopy ( body )
+        buf = deepcopy ( body . get_contents ( ) )
         for replace_what , replace_with in replaces . items ( ) :
             buf = self . _copy_paste_do_replace ( buf , replace_what , replace_with )
-        self . _output += buf
+        self . _output . tokens ( buf )
 
     def _copy_paste_read_replaces ( self ) :
         replaces = { }
