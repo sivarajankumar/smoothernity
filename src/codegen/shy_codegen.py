@@ -345,6 +345,7 @@ class preprocessor :
             self . _copy_result_input . next_token ( )
             self . _state = self . _state_copy_paste_do_replace_read_body
     def _state_copy_paste_do_replace_split ( self ) :
+        # TODO: use whitespace count instead of absolute indentation in tokens
         self . _copy_result_output . itoken ( 
             self . _copy_result_indent , self . _copy_result_token )
         self . _copy_result_input . next_token ( )
