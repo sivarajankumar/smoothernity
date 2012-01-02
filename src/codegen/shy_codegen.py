@@ -33,12 +33,15 @@ def preprocess ( lines ) :
                 if not res [ - 1 ] :
                     res = res [ : - 1 ]
                 tlines , res = _copy_paste ( tlines , res )
+                if res [ - 1 ] :
+                    res . append ( [ ] )
             else :
                 tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
                 res [ - 1 ] . append ( ( indent , token ) )
         else :
             tlines = tlines [ 1 : ]
-            res . append ( [ ] )
+            if res [ - 1 ] :
+                res . append ( [ ] )
     if not res [ - 1 ] :
         res = res [ : - 1 ]
     return stringize ( res )
