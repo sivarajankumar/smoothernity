@@ -39,10 +39,8 @@ class tokenizer :
             self . _state = self . _state_number
         elif self . _char == "'" :
             self . _state = self . _state_opening_quote
-        elif self . _char in [ "'" , '/' , '_' ] :
-            self . _state = self . _state_single_char
         else :
-            raise Exception ( 'Unknown char "%s"' % self . _char )
+            self . _state = self . _state_arbitrary_token
     def _state_whitespace ( self ) :
         self . _indent += 1
         self . _token = ''
@@ -87,7 +85,7 @@ class tokenizer :
             raise Exception ( 'Opening quote at the end of the line' )
     def _state_quoted_string ( self ) :
         if self . _char == "'" :
-            self . _state = self . _state_single_char
+            self . _state = self . _state_closing_quote
         else :
             self . _token += self . _char
             if self . _input [ 0 ] :
@@ -95,8 +93,7 @@ class tokenizer :
                 self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
             else :
                 raise Exception ( 'End of the line encountered in quoted string' )
-    def _state_single_char ( self ) :
-        ch = self . _char
+    def _state_closing_quote ( self ) :
         self . _token += self . _char
         if self . _input [ 0 ] :
             self . _char = self . _input [ 0 ] [ 0 ]
@@ -105,10 +102,27 @@ class tokenizer :
                 self . _write_token ( )
                 self . _state = self . _state_recognize_char
             else :
-                raise Exception ( 'Unexpected character "%s" after "%s"' % self . _char , ch )
+                raise Exception ( 'Unexpected character "%s" after closing quote' % self . _char , ch )
         else :
             self . _write_token ( )
             self . _state = self . _state_new_line
+    def _state_arbitrary_token ( self ) :
+        if self . _char == ' ' :
+            self . _check_arbitrary_token ( )
+            self . _write_token ( )
+            self . _state = self . _state_whitespace
+        else :
+            self . _token += self . _char
+            if self . _input [ 0 ] :
+                self . _char = self . _input [ 0 ] [ 0 ]
+                self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            else :
+                self . _check_arbitrary_token ( )
+                self . _write_token ( )
+                self . _state = self . _state_new_line
+    def _check_arbitrary_token ( self ) :
+        if self . _token not in [ '_' , '/' ] :
+            raise Exception ( 'Unknown arbitrary token "%s"' % self . _token )
     def _write_token ( self ) :
         if self . _new_line :
             self . _output . append ( [ ] )
