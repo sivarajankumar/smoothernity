@@ -23,28 +23,31 @@ def stringize ( tlines ) :
             res [ - 1 ] += token
     return res
 
-def preprocess ( lines ) :
-    res = [ [ ] ]
-    tlines = tokenize ( lines )
-    while tlines :
-        if tlines [ 0 ] :
-            indent , token = tlines [ 0 ] [ 0 ]
-            if token == 'copy' :
-                if not res [ - 1 ] :
-                    res = res [ : - 1 ]
-                tlines , res = _copy_paste ( tlines , res )
+class Preprocessor :
+    def __init__ ( self , lines ) :
+        self . _lines = lines
+    def run ( self ) :
+        res = [ [ ] ]
+        tlines = tokenize ( self . _lines )
+        while tlines :
+            if tlines [ 0 ] :
+                indent , token = tlines [ 0 ] [ 0 ]
+                if token == 'copy' :
+                    if not res [ - 1 ] :
+                        res = res [ : - 1 ]
+                    tlines , res = _copy_paste ( tlines , res )
+                    if res [ - 1 ] :
+                        res . append ( [ ] )
+                else :
+                    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
+                    res [ - 1 ] . append ( ( indent , token ) )
+            else :
+                tlines = tlines [ 1 : ]
                 if res [ - 1 ] :
                     res . append ( [ ] )
-            else :
-                tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
-                res [ - 1 ] . append ( ( indent , token ) )
-        else :
-            tlines = tlines [ 1 : ]
-            if res [ - 1 ] :
-                res . append ( [ ] )
-    if not res [ - 1 ] :
-        res = res [ : - 1 ]
-    return stringize ( res )
+        if not res [ - 1 ] :
+            res = res [ : - 1 ]
+        return stringize ( res )
 
 def _copy_paste ( tlines , res ) :
     tlines , body , copy_indent = _copy_paste_read_body ( tlines )
