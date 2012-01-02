@@ -155,6 +155,7 @@ class preprocessor :
         self . _copy_indent = None
         self . _copy_body = None
         self . _copy_body_indent = None
+        self . _copy_replace_parts = None
         self . _copy_replace_what = None
         self . _copy_replace_with_what = None
         self . _copy_result_indent = None
@@ -259,7 +260,6 @@ class preprocessor :
             self . _indent , self . _token = self . _input . state ( ) . itoken ( )
             self . _replace_what_indent = self . _indent
             self . _replace_what = _output_tokens ( )
-            self . _input . next_token ( )
             self . _state = self . _state_copy_paste_read_replace_what_body
         else :
             raise Exception ( 'Expected token after "replace" keyword' )
@@ -335,6 +335,16 @@ class preprocessor :
         elif self . _copy_result_input . state ( ) . eof ( ) :
             self . _state = self . _state_copy_paste_do_replace_end
     def _state_copy_paste_do_replace_read_token ( self ) :
+        if self . _copy_replace_what in self . _copy_result_token :
+            self . _copy_replace_parts = self . _copy_result_token . split ( 
+                self . _copy_replace_what )
+            self . _state = self . _state_copy_paste_do_replace_split
+        else :
+            self . _copy_result_output . itoken ( 
+                self . _copy_result_indent , self . _copy_result_token )
+            self . _copy_result_input . next_token ( )
+            self . _state = self . _state_copy_paste_do_replace_read_body
+    def _state_copy_paste_do_replace_split ( self ) :
         self . _copy_result_output . itoken ( 
             self . _copy_result_indent , self . _copy_result_token )
         self . _copy_result_input . next_token ( )
