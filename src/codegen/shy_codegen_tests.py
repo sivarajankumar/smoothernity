@@ -52,6 +52,9 @@ class tokenize_test_case ( unittest . TestCase ) :
     def test_divide ( self ) :
         self . text = [ '/' ]
         self . tokens = [ [ ( 0 , '/' ) ] ]
+    def test_left_arrow ( self ) :
+        self . text = [ '<-' ]
+        self . tokens = [ [ ( 0 , '<-' ) ] ]
     def test_underscore_in_word ( self ) :
         self . text = [ 'some_word' ]
         self . tokens = [ [ ( 0 , 'some_word' ) ] ]
