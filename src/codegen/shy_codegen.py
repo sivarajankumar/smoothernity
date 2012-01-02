@@ -213,25 +213,23 @@ class preprocessor :
         assert token == 'replace'
         self . _input . next_itoken ( )
         first_indent , token = self . _input . state ( ) . itoken ( )
-        what = [ [ ] ]
+        what = _output_tokens ( )
         while True :
             if self . _input . state ( ) . itoken ( ) :
                 indent , token = self . _input . state ( ) . itoken ( )
                 if token == 'with' or indent < first_indent :
                     break
                 else :
-                    what [ - 1 ] . append ( ( indent - first_indent , token ) )
+                    what . itoken ( indent - first_indent , token )
                     self . _input . next_token ( )
             elif self . _input . state ( ) . eol ( ) :
-                what . append ( [ ] )
+                what . newline ( )
                 self . _input . next_token ( )
             elif self . _input . state ( ) . eof ( ) :
                 break
             else :
                 self . _input . next_token ( )
-        if not what [ - 1 ] :
-            what = what [ : - 1 ]
-        return what
+        return what . get_contents ( )
 
     def _copy_paste_read_replace_with_what ( self , replace_indent ) :
         indent , token = self . _input . state ( ) . itoken ( )
