@@ -58,6 +58,9 @@ class tokenize_test_case ( unittest . TestCase ) :
     def test_divide ( self ) :
         self . text = [ '/' ]
         self . tokens = [ [ ( 0 , '/' ) ] ]
+    def test_minus ( self ) :
+        self . text = [ '-' ]
+        self . tokens = [ [ ( 0 , '-' ) ] ]
     def test_left_arrow ( self ) :
         self . text = [ '<-' ]
         self . tokens = [ [ ( 0 , '<-' ) ] ]
