@@ -51,6 +51,9 @@ class preprocess_test_case ( unittest . TestCase ) :
         self . i = self . o = [ ]
     def test_plain_text ( self ) :
         self . i = self . o = [ 'first line' , 'second line' ]
+    def test_empty_lines ( self ) :
+        self . i = [ '' , '' ]
+        self . o = [ ]
     def test_copy_paste_same_line ( self ) :
         self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22' ]
         self . o = [ 'foo test22 bar' ]
@@ -103,6 +106,14 @@ class preprocess_test_case ( unittest . TestCase ) :
                    , '    bar'
                    , '    test222'
                    , '      foobar' ]
+    def test_plain_text_after_paste ( self ) :
+        self . i = [ '  copy'
+                   , '    test1'
+                   , '  paste'
+                   , '    replace test1 with test222'
+                   , '  next line' ]
+        self . o = [ '  test222' 
+                   , '  next line' ]
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
