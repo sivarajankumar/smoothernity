@@ -46,6 +46,9 @@ class tokenize_test_case ( unittest . TestCase ) :
             [ [ ( 0 , "'test1 test2'" )
               , ( 14 , 'test3' )
               ] ]
+    def test_underscore ( self ) :
+        self . text = [ '_' ]
+        self . tokens = [ [ ( 0 , '_' ) ] ]
 
 class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
