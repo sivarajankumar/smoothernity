@@ -1,5 +1,6 @@
 from hashlib import md5
 from os . path import dirname
+from copy import deepcopy
 
 def tokenize ( lines ) :
     res = [ ]
@@ -29,6 +30,8 @@ def preprocess ( lines ) :
         if tlines [ 0 ] :
             indent , token = tlines [ 0 ] [ 0 ]
             if token == 'copy' :
+                if not res [ - 1 ] :
+                    res = res [ : - 1 ]
                 tlines , res = _copy_paste ( tlines , res )
             else :
                 tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
@@ -57,13 +60,13 @@ def _copy_paste_do_paste ( tlines , body , res ) :
         tlines = tlines [ 1 : ]
     assert token == 'paste'
     tlines , replaces = _copy_paste_read_replaces ( tlines )
-    buf = list ( body )
+    buf = deepcopy ( body )
     for replace_what , replace_with in replaces . items ( ) :
         buf = _copy_paste_do_replace ( buf , replace_what , replace_with )
-    res . append ( buf )
+    res += buf
     return tlines , res
 
-def _copy_paste_do_replace ( body , what , with_what ) :
+def _copy_paste_do_replace ( body , what , with_what_args ) :
     res = [ [ ] ]
     shift_indent = 0
     while body :
@@ -76,13 +79,24 @@ def _copy_paste_do_replace ( body , what , with_what ) :
                 res_indent , res_token = indent , ''
                 for part in parts [ : - 1 ] :
                     res_token += part
-                    # FIXME
-                    for with_indent , with_token in with_what [ : - 1 ] :
-                        res_indent += with_indent
-                        res_token += with_token
-                        res [ - 1 ] . append ( ( res_indent , res_token ) )
-                        res_indent , res_token = indent , ''
-                    with_indent , with_token = with_what [ - 1 ]
+                    with_what = deepcopy ( with_what_args )
+                    while len ( [ t for tline in with_what for t in tline ] ) > 1 :
+                        if with_what [ 0 ] :
+                            with_indent , with_token = with_what [ 0 ] [ 0 ]
+                            with_what [ 0 ] = with_what [ 0 ] [ 1 : ]
+                            res_indent += with_indent
+                            res_token += with_token
+                            res [ - 1 ] . append ( ( res_indent , res_token ) )
+                            res_indent , res_token = indent , ''
+                        else :
+                            with_what = with_what [ 1 : ]
+                            if res [ - 1 ] :
+                                res . append ( [ ] )
+                    while with_what and not with_what [ 0 ] :
+                        with_what = with_what [ 1 : ]
+                        if res [ - 1 ] :
+                            res . append ( [ ] )
+                    with_indent , with_token = with_what [ 0 ] [ 0 ]
                     res_token += with_token
                     res_indent += with_indent
                 res_token += parts [ - 1 ]
@@ -93,7 +107,10 @@ def _copy_paste_do_replace ( body , what , with_what ) :
         else :
             body = body [ 1 : ]
             shift_indent = 0
-            res . append ( [ ] )
+            if res [ - 1 ] :
+                res . append ( [ ] )
+    if not res [ - 1 ] :
+        res = res [ : - 1 ]
     return res
 
 def _copy_paste_read_replaces ( tlines ) :
