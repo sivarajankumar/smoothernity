@@ -206,7 +206,7 @@ class _output_tokens :
     def get_contents ( self ) :
         return self . _tlines
     def tokens ( self , tokens ) :
-        self . _tlines += tokens
+        self . _tlines += tokens . _tlines
 
 class preprocessor :
 
@@ -219,6 +219,8 @@ class preprocessor :
         self . _copy_indent = None
         self . _copy_body = None
         self . _copy_body_indent = None
+        self . _copy_result_input = None
+        self . _copy_result_output = None
         self . _replaces = None
         self . _replace_indent = None
         self . _replace_what = None
@@ -378,9 +380,26 @@ class preprocessor :
         self . _state = self . _state_copy_paste_read_replace_with_what_body
 
     def _state_copy_paste_do_paste_begin ( self ) :
-        self . _state = self . _state_copy_paste_do_paste_end
+        self . _copy_result_input = _input_tokens ( 
+            self . _copy_body . get_contents ( ) )
+        self . _state = self . _state_copy_paste_do_replace_begin
+
+    def _state_copy_paste_do_replace_begin ( self ) :
+        k = sorted ( self . _replaces . keys ( ) ) [ 0 ]
+        v = self . _replaces . pop ( k )
+        self . _copy_result_output = _output_tokens ( )
+        self . _state = self . _state_copy_paste_do_replace_end
+
+    def _state_copy_paste_do_replace_end ( self ) :
+        self . _copy_result_input = _input_tokens (
+            self . _copy_result_output . get_contents ( ) )
+        if self . _replaces :
+            self . _state = self . _state_copy_paste_do_replace_begin
+        else :
+            self . _state = self . _state_copy_paste_do_paste_end
 
     def _state_copy_paste_do_paste_end ( self ) :
+        self . _output . tokens ( self . _copy_result_output )
         if self . _token == 'paste' :
             self . _state = self . _state_copy_paste_read_paste
         else :
