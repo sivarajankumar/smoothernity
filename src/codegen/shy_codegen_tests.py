@@ -110,10 +110,8 @@ class preprocess_test_case ( unittest . TestCase ) :
                    , '    test222'
                    , '      foobar' ]
     def test_plain_text_after_paste ( self ) :
-        self . i = [ '  copy'
-                   , '    test1'
-                   , '  paste'
-                   , '    replace test1 with test222'
+        self . i = [ '  copy test1'
+                   , '  paste replace test1 with test222'
                    , '  next line' ]
         self . o = [ '  test222' 
                    , '  next line' ]
