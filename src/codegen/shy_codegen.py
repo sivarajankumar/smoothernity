@@ -217,7 +217,8 @@ class preprocessor :
     def _state_copy_paste_read_body_token ( self ) :
         if self . _indent > self . _copy_indent :
             self . _copy_body . itoken ( 
-                self . _indent - self . _copy_body_indent , self . _token )
+                self . _indent - self . _copy_body_indent + self . _copy_indent ,
+                self . _token )
             self . _input . next_token ( )
             self . _state = self . _state_copy_paste_read_body
         else :
