@@ -46,7 +46,9 @@ class tokenizer :
         self . _token = ''
         self . _state = self . _state_first_char
     def _state_word ( self ) :
-        if self . _char . isalpha ( ) or self . _char . isdigit ( ) :
+        if self . _char . isalpha ( ) \
+        or self . _char . isdigit ( ) \
+        or self . _char == '_' :
             self . _token += self . _char
             if self . _input [ 0 ] :
                 self . _char = self . _input [ 0 ] [ 0 ]
