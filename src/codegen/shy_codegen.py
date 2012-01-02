@@ -123,7 +123,7 @@ class tokenizer :
                 self . _write_token ( )
                 self . _state = self . _state_new_line
     def _check_arbitrary_token ( self ) :
-        if self . _token not in [ '_' , '-' , '/' , '<-' , '->' ] :
+        if self . _token not in [ '_' , '-' , '/' , '{' , '<-' , '->' ] :
             raise Exception ( 'Unknown arbitrary token "%s"' % self . _token )
     def _write_token ( self ) :
         if self . _new_line :
