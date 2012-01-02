@@ -138,42 +138,10 @@ def stringize ( tlines ) :
     for tokens in tlines :
         res . append ( '' )
         for indent , token in tokens :
+            assert indent >= len ( res [ - 1 ] )
             res [ - 1 ] += ' ' * ( indent - len ( res [ - 1 ] ) )
             res [ - 1 ] += token
     return res
-
-def _tokens_in_line ( tlines ) :
-    return tlines [ 0 ]
-
-def _lines_count ( tlines ) :
-    return len ( tlines ) > 0
-
-def _first_token ( tlines ) :
-    return tlines [ 0 ] [ 0 ]
-
-def _trim_last_empty_line ( tlines ) :
-    if not tlines [ - 1 ] :
-        return tlines [ : - 1 ]
-    else :
-        return tlines
-
-def _make_last_empty_line ( tlines ) :
-    if tlines :
-        if tlines [ - 1 ] :
-            return tlines + [ [ ] ]
-        else :
-            return tlines
-    else :
-        return [ [ ] ]
-
-def _pop_first_token ( tlines ) :
-    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
-
-def _add_last_token ( tlines , indent , token ) :
-    tlines [ - 1 ] . append ( ( indent , token ) )
-
-def _pop_first_line ( tlines ) :
-    return tlines [ 1 : ]
 
 class _token_state :
     def __init__ ( self , itoken = None , eol = False , eof = False ) :
@@ -245,24 +213,178 @@ class preprocessor :
     def __init__ ( self , lines ) :
         self . _input = _input_tokens ( tokenizer ( lines ) . run ( ) )
         self . _output = _output_tokens ( )
+        self . _state = None
+        self . _indent = None
+        self . _token = None
+        self . _copy_indent = None
+        self . _copy_body = None
+        self . _copy_body_indent = None
+        self . _replaces = None
+        self . _replace_indent = None
+        self . _replace_what = None
+        self . _replace_what_indent = None
+        self . _replace_with_what = None
+        self . _replace_with_what_indent = None
 
     def run ( self ) :
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if token == 'copy' :
-                    self . _copy_paste ( )
-                else :
-                    self . _output . itoken ( indent , token )
-                    self . _input . next_token ( )
-            elif self . _input . state ( ) . eol ( ) :
-                self . _output . new_line ( )
-                self . _input . next_token ( )
-            elif self . _input . state ( ) . eof ( ) :
-                break
-            else :
-                self . _input . next_token ( )
+        self . _state = self . _state_read_token
+        self . _input . next_token ( )
+        while not self . _input . state ( ) . eof ( ) :
+            self . _state ( )
         return stringize ( self . _output . get_contents ( ) )
+
+    def _state_read_token ( self ) :
+        if self . _input . state ( ) . itoken ( ) :
+            self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+            self . _state = self . _state_recognize_token
+        elif self . _input . state ( ) . eol ( ) :
+            self . _state = self . _state_new_line
+
+    def _state_new_line ( self ) :
+        assert self . _input . state ( ) . eol ( )
+        self . _output . new_line ( )
+        self . _input . next_token ( )
+        self . _state = self . _state_read_token
+
+    def _state_recognize_token ( self ) :
+        assert self . _input . state ( ) . itoken ( )
+        if self . _token == 'copy' :
+            self . _state = self . _state_copy_paste_begin
+        else :
+            self . _state = self . _state_write_token
+
+    def _state_write_token ( self ) :
+        self . _output . itoken ( self . _indent , self . _token )
+        self . _input . next_token ( )
+        self . _state = self . _state_read_token
+
+    def _state_copy_paste_begin ( self ) :
+        assert self . _token == 'copy'
+        self . _copy_indent = self . _indent
+        self . _input . next_itoken ( )
+        self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+        self . _copy_body_indent = self . _indent
+        self . _copy_body = _output_tokens ( )
+        self . _state = self . _state_copy_paste_read_body_token
+
+    def _state_copy_paste_read_body ( self ) :
+        if self . _input . state ( ) . itoken ( ) :
+            self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+            self . _state = self . _state_copy_paste_read_body_token
+        elif self . _input . state ( ) . eol ( ) :
+            self . _state = self . _state_copy_paste_read_body_new_line
+
+    def _state_copy_paste_read_body_token ( self ) :
+        if self . _indent > self . _copy_indent :
+            self . _copy_body . itoken ( self . _indent - self . _copy_body_indent , self . _token )
+            self . _input . next_token ( )
+            self . _state = self . _state_copy_paste_read_body
+        else :
+            self . _state = self . _state_copy_paste_read_paste
+
+    def _state_copy_paste_read_body_new_line ( self ) :            
+        self . _copy_body . new_line ( )
+        self . _input . next_token ( )
+        self . _state = self . _state_copy_paste_read_body
+
+    def _state_copy_paste_read_paste ( self ) :
+        assert self . _input . state ( ) . itoken ( )
+        if self . _indent == self . _copy_indent :
+            if self . _token == 'paste' :
+                self . _input . next_itoken ( )
+                self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+                self . _state = self . _state_copy_paste_read_replace_begin
+            else :
+                raise Exception ( 'Expected "paste", got "%s" instead', self . _token )
+        else :
+            raise Exception ( 'Unexpected indent of "paste" section' )
+
+    def _state_copy_paste_read_replace_begin ( self ) :
+        if self . _indent > self . _copy_indent :
+            self . _replaces = { }
+            self . _replace_indent = self . _indent
+            self . _state = self . _state_copy_paste_read_replace_keyword
+        else :
+            raise Exception ( 'Unexpected first indent of "replace" section' )
+
+    def _state_copy_paste_read_replace_keyword ( self ) :
+        if self . _indent == self . _replace_indent :
+            if self . _token == 'replace' :
+                self . _input . next_token ( )
+                self . _state = self . _state_copy_paste_read_replace_what_begin
+            else :
+                raise Exception ( 'Expected "replace", got "%s" instead', self . _token )
+        else :
+            raise Exception ( 'Unexpected indent of "replace" section' )
+
+    def _state_copy_paste_read_replace_what_begin ( self ) :
+        if self . _input . state ( ) . itoken ( ) :
+            self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+            self . _replace_what_indent = self . _indent
+            self . _replace_what = _output_tokens ( )
+            self . _input . next_token ( )
+            self . _state = self . _state_copy_paste_read_replace_what_body
+        else :
+            raise Exception ( 'Expected token after "replace" keyword' )
+
+    def _state_copy_paste_read_replace_what_body ( self ) :
+        if self . _input . state ( ) . itoken ( ) :
+            self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+            assert self . _indent >= self . _replace_what_indent
+            if self . _token == 'with' :
+                self . _input . next_itoken ( )
+                self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+                self . _state = self . _state_copy_paste_read_replace_with_what_begin
+            else :
+                self . _replace_what . itoken ( 
+                    self . _indent - self . _replace_what_indent , self . _token )
+                self . _input . next_token ( )
+        else :
+            raise Exception ( 'Expected token in "replace what" section' )
+
+    def _state_copy_paste_read_replace_with_what_begin ( self ) :
+        if self . _indent > self . _replace_indent :
+            self . _replace_with_what = _output_tokens ( )
+            self . _replace_with_what_indent = self . _indent
+            self . _state = self . _state_copy_paste_read_replace_with_what_token
+        else :
+            raise Exception ( 'Unexpected indent in "replace with" section' )
+
+    def _state_copy_paste_read_replace_with_what_body ( self ) :
+        if self . _input . state ( ) . itoken ( ) :
+            self . _indent , self . _token = self . _input . state ( ) . itoken ( )
+            self . _state = self . _state_copy_paste_read_replace_with_what_token
+        elif self . _input . state ( ) . eol ( ) :
+            self . _state = self . _state_copy_paste_read_replace_with_what_new_line
+
+    def _state_copy_paste_read_replace_with_what_token ( self ) :
+        if self . _indent >= self . _replace_with_what_indent :
+            self . _replace_with_what . itoken (
+                self . _indent - self . _replace_with_what_indent , self . _token )
+            self . _input . next_token ( )
+            self . _state = self . _state_copy_paste_read_replace_with_what_body
+        else :
+            self . _replaces [ '' . join ( stringize ( 
+                self . _replace_what . get_contents ( ) ) ) ] = \
+                    self . _replace_with_what . get_contents ( )
+            if self . _token == 'replace' :
+                self . _state = self . _state_copy_paste_read_replace_keyword
+            else :
+                self . _state = self . _state_copy_paste_do_paste_begin
+
+    def _state_copy_paste_read_replace_with_what_new_line ( self ) :
+        self . _replace_with_what . new_line ( )
+        self . _input . next_token ( )
+        self . _state = self . _state_copy_paste_read_replace_with_what_body
+
+    def _state_copy_paste_do_paste_begin ( self ) :
+        self . _state = self . _state_copy_paste_do_paste_end
+
+    def _state_copy_paste_do_paste_end ( self ) :
+        if self . _token == 'paste' :
+            self . _state = self . _state_copy_paste_read_paste
+        else :
+            self . _state = self . _state_read_token
 
     def _copy_paste ( self ) :
         body , copy_indent = self . _copy_paste_read_body ( )
@@ -279,27 +401,6 @@ class preprocessor :
                 self . _input . next_token ( )
         self . _output . new_line ( )
 
-    def _copy_paste_read_body ( self ) :
-        copy_indent , token = self . _input . state ( ) . itoken ( )
-        assert token == 'copy'
-        self . _input . next_itoken ( )
-        indent , token = self . _input . state ( ) . itoken ( )
-        first_indent = indent
-        body = _output_tokens ( )
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if indent <= copy_indent :
-                    break
-                self . _input . next_token ( )
-                body . itoken ( indent - first_indent + copy_indent , token )
-            elif self . _input . state ( ) . eol ( ) :
-                self . _input . next_token ( )
-                body . new_line ( )
-            elif self . _input . state ( ) . eof ( ) :
-                break
-        return body , copy_indent
-
     def _copy_paste_do_paste ( self , body ) :
         indent , token = self . _input . state ( ) . itoken ( )
         assert token == 'paste'
@@ -309,72 +410,6 @@ class preprocessor :
         for replace_what , replace_with in replaces . items ( ) :
             buf = self . _copy_paste_do_replace ( buf , replace_what , replace_with )
         self . _output . tokens ( buf )
-
-    def _copy_paste_read_replaces ( self ) :
-        replaces = { }
-        first_indent , token = self . _input . state ( ) . itoken ( )
-        assert token == 'replace'
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if indent == first_indent and token == 'replace' :
-                    what = self . _copy_paste_read_replace_what ( )
-                    with_what = self . _copy_paste_read_replace_with_what ( first_indent )
-                    replaces [ '' . join ( stringize ( what ) ) ] = with_what
-                else :
-                    break
-            elif self . _input . state ( ) . eof ( ) :
-                break
-            else :
-                self . _input . next_token ( )
-        return replaces
-
-    def _copy_paste_read_replace_what ( self ) :
-        indent , token = self . _input . state ( ) . itoken ( )
-        assert token == 'replace'
-        self . _input . next_itoken ( )
-        first_indent , token = self . _input . state ( ) . itoken ( )
-        what = _output_tokens ( )
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if token == 'with' or indent < first_indent :
-                    break
-                else :
-                    what . itoken ( indent - first_indent , token )
-                    self . _input . next_token ( )
-            elif self . _input . state ( ) . eol ( ) :
-                what . new_line ( )
-                self . _input . next_token ( )
-            elif self . _input . state ( ) . eof ( ) :
-                break
-            else :
-                self . _input . next_token ( )
-        return what . get_contents ( )
-
-    def _copy_paste_read_replace_with_what ( self , replace_indent ) :
-        indent , token = self . _input . state ( ) . itoken ( )
-        assert token == 'with'
-        assert indent > replace_indent
-        self . _input . next_itoken ( )
-        first_indent , token = self . _input . state ( ) . itoken ( )
-        with_what = _output_tokens ( )
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if indent >= first_indent :
-                    with_what . itoken ( indent - first_indent , token )
-                    self . _input . next_token ( )
-                else :
-                    break
-            elif self . _input . state ( ) . eol ( ) :
-                with_what . new_line ( )
-                self . _input . next_token ( )
-            elif self . _input . state ( ) . eof ( ) :
-                break
-            else :
-                self . _input . next_token ( )
-        return with_what . get_contents ( )
 
     def _copy_paste_do_replace ( self , arg_body , what , arg_with_what ) :
         res = _output_tokens ( )
