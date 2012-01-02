@@ -46,7 +46,7 @@ class preprocess_test_case ( unittest . TestCase ) :
         self . i = None
         self . o = None
     def tearDown ( self ) :
-        self . assertEqual ( shy_codegen . Preprocessor ( self . i ) . run ( ) , self . o )
+        self . assertEqual ( shy_codegen . preprocessor ( self . i ) . run ( ) , self . o )
     def test_empty ( self ) :
         self . i = self . o = [ ]
     def test_plain_text ( self ) :
