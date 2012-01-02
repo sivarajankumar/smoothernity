@@ -386,21 +386,6 @@ class preprocessor :
         else :
             self . _state = self . _state_read_token
 
-    def _copy_paste ( self ) :
-        body , copy_indent = self . _copy_paste_read_body ( )
-        while True :
-            if self . _input . state ( ) . itoken ( ) :
-                indent , token = self . _input . state ( ) . itoken ( )
-                if indent == copy_indent and token == 'paste' :
-                    self . _copy_paste_do_paste ( body )
-                else :
-                    break
-            elif self . _input . state ( ) . eof ( ) :
-                break
-            else :
-                self . _input . next_token ( )
-        self . _output . new_line ( )
-
     def _copy_paste_do_paste ( self , body ) :
         indent , token = self . _input . state ( ) . itoken ( )
         assert token == 'paste'
