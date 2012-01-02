@@ -171,7 +171,7 @@ class preprocessor :
         replaces = self . _copy_paste_read_replaces ( )
         buf = deepcopy ( body )
         for replace_what , replace_with in replaces . items ( ) :
-            buf = _copy_paste_do_replace ( buf , replace_what , replace_with )
+            buf = self . _copy_paste_do_replace ( buf , replace_what , replace_with )
         self . _output += buf
 
     def _copy_paste_read_replaces ( self ) :
@@ -244,58 +244,63 @@ class preprocessor :
             with_what = with_what [ : - 1 ]
         return with_what
 
-def _copy_paste_do_replace ( body , what , with_what_args ) :
-    res = [ [ ] ]
-    shift_indent = 0
-    while body :
-        if body [ 0 ] :
-            indent , token = body [ 0 ] [ 0 ]
-            body [ 0 ] = body [ 0 ] [ 1 : ]
-            indent += shift_indent
-            if what in token :
-                parts = token . split ( what )
-                res_indent , res_token = indent , ''
-                shift_indent = - len ( token )
-                for part in parts [ : - 1 ] :
-                    res_token += part
-                    shift_indent += len ( part )
-                    with_what = deepcopy ( with_what_args )
-                    while len ( [ t for tline in with_what for t in tline ] ) > 1 :
-                        if with_what [ 0 ] :
-                            with_indent , with_token = with_what [ 0 ] [ 0 ]
-                            with_what [ 0 ] = with_what [ 0 ] [ 1 : ]
-                            res_indent += with_indent
-                            res_token += with_token
-                            res [ - 1 ] . append ( ( res_indent , res_token ) )
-                            shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
-                            res_indent , res_token = indent , ''
-                        else :
+    def _copy_paste_do_replace ( self , arg_body , what , with_what_args ) :
+        res = [ [ ] ]
+        shift_indent = 0
+        body = _input_tokens ( arg_body )
+        while True :
+            if body . state ( ) . itoken ( ) :
+                indent , token = body . state ( ) . itoken ( )
+                body . next_token ( )
+                indent += shift_indent
+                if what in token :
+                    parts = token . split ( what )
+                    res_indent , res_token = indent , ''
+                    shift_indent = - len ( token )
+                    for part in parts [ : - 1 ] :
+                        res_token += part
+                        shift_indent += len ( part )
+                        with_what = deepcopy ( with_what_args )
+                        while len ( [ t for tline in with_what for t in tline ] ) > 1 :
+                            if with_what [ 0 ] :
+                                with_indent , with_token = with_what [ 0 ] [ 0 ]
+                                with_what [ 0 ] = with_what [ 0 ] [ 1 : ]
+                                res_indent += with_indent
+                                res_token += with_token
+                                res [ - 1 ] . append ( ( res_indent , res_token ) )
+                                shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
+                                res_indent , res_token = indent , ''
+                            else :
+                                with_what = with_what [ 1 : ]
+                                if res [ - 1 ] :
+                                    res . append ( [ ] )
+                                shift_indent = - len ( token )
+                        while with_what and not with_what [ 0 ] :
                             with_what = with_what [ 1 : ]
                             if res [ - 1 ] :
                                 res . append ( [ ] )
                             shift_indent = - len ( token )
-                    while with_what and not with_what [ 0 ] :
-                        with_what = with_what [ 1 : ]
-                        if res [ - 1 ] :
-                            res . append ( [ ] )
-                        shift_indent = - len ( token )
-                    with_indent , with_token = with_what [ 0 ] [ 0 ]
-                    res_token += with_token
-                    res_indent += with_indent
-                part = parts [ - 1 ]
-                res_token += part
-                res [ - 1 ] . append ( ( res_indent , res_token ) )
-                shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
+                        with_indent , with_token = with_what [ 0 ] [ 0 ]
+                        res_token += with_token
+                        res_indent += with_indent
+                    part = parts [ - 1 ]
+                    res_token += part
+                    res [ - 1 ] . append ( ( res_indent , res_token ) )
+                    shift_indent = len ( stringize ( [ res [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
+                else :
+                    res [ - 1 ] . append ( ( indent , token ) )
+            elif body . state ( ) . eol ( ) :
+                body . next_token ( )
+                shift_indent = 0
+                if res [ - 1 ] :
+                    res . append ( [ ] )
+            elif body . state ( ) . eof ( ) :
+                break
             else :
-                res [ - 1 ] . append ( ( indent , token ) )
-        else :
-            body = body [ 1 : ]
-            shift_indent = 0
-            if res [ - 1 ] :
-                res . append ( [ ] )
-    if not res [ - 1 ] :
-        res = res [ : - 1 ]
-    return res
+                body . next_token ( )
+        if not res [ - 1 ] :
+            res = res [ : - 1 ]
+        return res
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
