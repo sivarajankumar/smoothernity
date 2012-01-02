@@ -70,7 +70,7 @@ class _token_state :
 
 class _input_tokens :
     def __init__ ( self , tlines ) :
-        self . _tlines = tlines
+        self . _tlines = deepcopy ( tlines )
         self . _state = _token_state ( )
     def next_token ( self ) :
         if self . _tlines :
@@ -117,7 +117,7 @@ class _output_tokens :
     def new_line ( self ) :
         self . _newline = True
     def get_contents ( self ) :
-        return self . _tlines
+        return deepcopy ( self . _tlines )
     def tokens ( self , tokens ) :
         self . _tlines += tokens
 
@@ -257,7 +257,7 @@ class preprocessor :
                 self . _input . next_token ( )
         return with_what . get_contents ( )
 
-    def _copy_paste_do_replace ( self , arg_body , what , with_what_args ) :
+    def _copy_paste_do_replace ( self , arg_body , what , arg_with_what ) :
         res = _output_tokens ( )
         shift_indent = 0
         body = _input_tokens ( arg_body )
@@ -273,7 +273,7 @@ class preprocessor :
                     for part in parts [ : - 1 ] :
                         res_token += part
                         shift_indent += len ( part )
-                        with_what = _input_tokens ( deepcopy ( with_what_args ) )
+                        with_what = _input_tokens ( arg_with_what )
                         while with_what . tokens_count ( ) :
                             if with_what . state ( ) . itoken ( ) :
                                 with_indent , with_token = with_what . state ( ) . itoken ( )
