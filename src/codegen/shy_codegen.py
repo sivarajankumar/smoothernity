@@ -364,9 +364,9 @@ class preprocessor :
             self . _input . next_token ( )
             self . _state = self . _state_copy_paste_read_replace_with_what_body
         else :
-            self . _replaces [ '' . join ( stringize ( 
-                self . _replace_what . get_contents ( ) ) ) ] = \
-                    self . _replace_with_what . get_contents ( )
+            what = '' . join ( stringize ( self . _replace_what . get_contents ( ) ) )
+            with_what = self . _replace_with_what . get_contents ( )
+            self . _replaces [ what ] = with_what
             if self . _token == 'replace' :
                 self . _state = self . _state_copy_paste_read_replace_keyword
             else :
