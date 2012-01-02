@@ -54,17 +54,17 @@ def _popFirstLine ( tlines ) :
     return tlines [ 1 : ]
 
 class Preprocessor :
+
     def __init__ ( self , lines ) :
         self . _input = tokenize ( lines )
         self . _output = [ [ ] ]
+
     def run ( self ) :
         while _linesCount ( self . _input ) :
             if _tokensInLine ( self . _input ) :
                 indent , token = _firstToken ( self . _input )
                 if token == 'copy' :
-                    self . _output = _trimLastEmptyLine ( self . _output )
-                    self . _input , self . _output = _copy_paste ( self . _input , self . _output )
-                    self . _output = _makeLastEmptyLine ( self . _output )
+                    self . _copy_paste ( )
                 else :
                     _popFirstToken ( self . _input )
                     _addLastToken ( self . _output , indent , token )
@@ -74,15 +74,16 @@ class Preprocessor :
         self . _output = _trimLastEmptyLine ( self . _output )
         return stringize ( self . _output )
 
-def _copy_paste ( tlines , res ) :
-    tlines , body , copy_indent = _copy_paste_read_body ( tlines )
-    while tlines :
-        indent , token = tlines [ 0 ] [ 0 ]
-        if indent == copy_indent and token == 'paste' :
-            tlines , res = _copy_paste_do_paste ( tlines , body , res )
-        else :
-            break
-    return tlines , res
+    def _copy_paste ( self ) :
+        self . _output = _trimLastEmptyLine ( self . _output )
+        self . _input , body , copy_indent = _copy_paste_read_body ( self . _input )
+        while self . _input :
+            indent , token = self . _input [ 0 ] [ 0 ]
+            if indent == copy_indent and token == 'paste' :
+                self . _input , self . _output = _copy_paste_do_paste ( self . _input , body , self . _output )
+            else :
+                break
+        self . _output = _makeLastEmptyLine ( self . _output )
 
 def _copy_paste_do_paste ( tlines , body , res ) :
     indent , token = tlines [ 0 ] [ 0 ]
