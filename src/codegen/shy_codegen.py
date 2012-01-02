@@ -223,7 +223,7 @@ class preprocessor :
                     what . itoken ( indent - first_indent , token )
                     self . _input . next_token ( )
             elif self . _input . state ( ) . eol ( ) :
-                what . newline ( )
+                what . new_line ( )
                 self . _input . next_token ( )
             elif self . _input . state ( ) . eof ( ) :
                 break
@@ -237,25 +237,23 @@ class preprocessor :
         assert indent > replace_indent
         self . _input . next_itoken ( )
         first_indent , token = self . _input . state ( ) . itoken ( )
-        with_what = [ [ ] ]
+        with_what = _output_tokens ( )
         while True :
             if self . _input . state ( ) . itoken ( ) :
                 indent , token = self . _input . state ( ) . itoken ( )
                 if indent >= first_indent :
-                    with_what [ - 1 ] . append ( ( indent - first_indent , token ) )
+                    with_what . itoken ( indent - first_indent , token )
                     self . _input . next_token ( )
                 else :
                     break
             elif self . _input . state ( ) . eol ( ) :
-                with_what . append ( [ ] )
+                with_what . new_line ( )
                 self . _input . next_token ( )
             elif self . _input . state ( ) . eof ( ) :
                 break
             else :
                 self . _input . next_token ( )
-        if not with_what [ - 1 ] :
-            with_what = with_what [ : - 1 ]
-        return with_what
+        return with_what . get_contents ( )
 
     def _copy_paste_do_replace ( self , arg_body , what , with_what_args ) :
         res = [ [ ] ]
