@@ -445,5 +445,5 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     lines = stdin . readlines ( )
-    print '\n' . join ( preprocess ( [ l . replace ( '\n' , '' ) for l in lines ] ) )
+    print '\n' . join ( preprocessor ( [ l . replace ( '\n' , '' ) for l in lines ] ) . run ( ) )
     reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )
