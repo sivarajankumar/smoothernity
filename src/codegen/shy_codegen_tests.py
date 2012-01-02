@@ -46,6 +46,12 @@ class tokenize_test_case ( unittest . TestCase ) :
             [ [ ( 0 , "'test1 test2'" )
               , ( 14 , 'test3' )
               ] ]
+    def test_expression ( self ) :
+        self . text = [ '[test1 test2] test3' ]
+        self . tokens = \
+            [ [ ( 0 , '[test1 test2]' )
+              , ( 14 , 'test3' )
+              ] ]
     def test_underscore ( self ) :
         self . text = [ '_' ]
         self . tokens = [ [ ( 0 , '_' ) ] ]

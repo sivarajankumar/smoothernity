@@ -10,6 +10,7 @@ class tokenizer :
         self . _token = ''
         self . _indent = 0
         self . _state = self . _state_first_char
+        self . _closing_char = None
         self . _new_line = True
     def run ( self ) :
         while self . _input :
@@ -37,8 +38,8 @@ class tokenizer :
             self . _state = self . _state_word
         elif self . _char . isdigit ( ) :
             self . _state = self . _state_number
-        elif self . _char == "'" :
-            self . _state = self . _state_opening_quote
+        elif self . _char in [ "'" , '[' ] :
+            self . _state = self . _state_citation_begin
         else :
             self . _state = self . _state_arbitrary_token
     def _state_whitespace ( self ) :
@@ -75,25 +76,26 @@ class tokenizer :
             self . _state = self . _state_recognize_char
         else :
             raise Exception ( 'Wrong char "%s" in number' % self . _char )
-    def _state_opening_quote ( self ) :
+    def _state_citation_begin ( self ) :
         self . _token += self . _char
+        self . _closing_char = { "'" : "'" , '[' : ']' } [ self . _char ]
         if self . _input [ 0 ] :
             self . _char = self . _input [ 0 ] [ 0 ]
             self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
-            self . _state = self . _state_quoted_string
+            self . _state = self . _state_citation_content
         else :
-            raise Exception ( 'Opening quote at the end of the line' )
-    def _state_quoted_string ( self ) :
-        if self . _char == "'" :
-            self . _state = self . _state_closing_quote
+            raise Exception ( 'Opening tag "%s" at the end of the line' % self . _char )
+    def _state_citation_content ( self ) :
+        if self . _char == self . _closing_char :
+            self . _state = self . _state_citation_end
         else :
             self . _token += self . _char
             if self . _input [ 0 ] :
                 self . _char = self . _input [ 0 ] [ 0 ]
                 self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
             else :
-                raise Exception ( 'End of the line encountered in quoted string' )
-    def _state_closing_quote ( self ) :
+                raise Exception ( 'End of the line encountered in citation' )
+    def _state_citation_end ( self ) :
         self . _token += self . _char
         if self . _input [ 0 ] :
             self . _char = self . _input [ 0 ] [ 0 ]
@@ -102,7 +104,7 @@ class tokenizer :
                 self . _write_token ( )
                 self . _state = self . _state_recognize_char
             else :
-                raise Exception ( 'Unexpected character "%s" after closing quote' % self . _char , ch )
+                raise Exception ( 'Unexpected character "%s" after closing tag "%s"' % ( self . _char , self . _closing_char ) )
         else :
             self . _write_token ( )
             self . _state = self . _state_new_line
