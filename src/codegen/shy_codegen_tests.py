@@ -64,6 +64,9 @@ class tokenize_test_case ( unittest . TestCase ) :
     def test_curly_open ( self ) :
         self . text = [ '{' ]
         self . tokens = [ [ ( 0 , '{' ) ] ]
+    def test_curly_close ( self ) :
+        self . text = [ '}' ]
+        self . tokens = [ [ ( 0 , '}' ) ] ]
     def test_left_arrow ( self ) :
         self . text = [ '<-' ]
         self . tokens = [ [ ( 0 , '<-' ) ] ]
