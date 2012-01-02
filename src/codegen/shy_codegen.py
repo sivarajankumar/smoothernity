@@ -25,29 +25,28 @@ def stringize ( tlines ) :
 
 class Preprocessor :
     def __init__ ( self , lines ) :
-        self . _lines = lines
+        self . _input = tokenize ( lines )
+        self . _output = [ [ ] ]
     def run ( self ) :
-        res = [ [ ] ]
-        tlines = tokenize ( self . _lines )
-        while tlines :
-            if tlines [ 0 ] :
-                indent , token = tlines [ 0 ] [ 0 ]
+        while self . _input :
+            if self . _input [ 0 ] :
+                indent , token = self . _input [ 0 ] [ 0 ]
                 if token == 'copy' :
-                    if not res [ - 1 ] :
-                        res = res [ : - 1 ]
-                    tlines , res = _copy_paste ( tlines , res )
-                    if res [ - 1 ] :
-                        res . append ( [ ] )
+                    if not self . _output [ - 1 ] :
+                        self . _output = self . _output [ : - 1 ]
+                    self . _input , self . _output = _copy_paste ( self . _input , self . _output )
+                    if self . _output [ - 1 ] :
+                        self . _output . append ( [ ] )
                 else :
-                    tlines [ 0 ] = tlines [ 0 ] [ 1 : ]
-                    res [ - 1 ] . append ( ( indent , token ) )
+                    self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+                    self . _output [ - 1 ] . append ( ( indent , token ) )
             else :
-                tlines = tlines [ 1 : ]
-                if res [ - 1 ] :
-                    res . append ( [ ] )
-        if not res [ - 1 ] :
-            res = res [ : - 1 ]
-        return stringize ( res )
+                self . _input = self . _input [ 1 : ]
+                if self . _output [ - 1 ] :
+                    self . _output . append ( [ ] )
+        if not self . _output [ - 1 ] :
+            self . _output = self . _output [ : - 1 ]
+        return stringize ( self . _output )
 
 def _copy_paste ( tlines , res ) :
     tlines , body , copy_indent = _copy_paste_read_body ( tlines )
