@@ -6,7 +6,7 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . text = None
         self . tokens = None
     def tearDown ( self ) :
-        self . assertEqual ( shy_codegen . tokenize ( self . text ) , self . tokens )
+        self . assertEqual ( shy_codegen . tokenizer ( self . text ) . run ( ) , self . tokens )
         self . assertEqual ( shy_codegen . stringize ( self . tokens ) , self . text )
     def test_empty ( self ) :
         self . text = [ ]
@@ -40,6 +40,12 @@ class tokenize_test_case ( unittest . TestCase ) :
         self . tokens = \
             [ [ ( 0 , 'test1' ) ]
             , [ ( 5 , 'test2' ) ] ]
+    def test_string ( self ) :
+        self . text = [ "'test1 test2' test3" ]
+        self . tokens = \
+            [ [ ( 0 , "'test1 test2'" )
+              , ( 14 , 'test3' )
+              ] ]
 
 class preprocess_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

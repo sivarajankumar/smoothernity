@@ -2,17 +2,99 @@ from hashlib import md5
 from os . path import dirname
 from copy import deepcopy
 
-def tokenize ( lines ) :
-    res = [ ]
-    for line in lines :
-        indent = 0
-        tline = [ ]
-        for word in line . split ( ' ' ) :
-            if len ( word ) > 0 :
-                tline . append ( ( indent , word ) )
-            indent += len ( word ) + 1
-        res . append ( tline )
-    return res
+class tokenizer :
+    def __init__ ( self , lines ) :
+        self . _input = deepcopy ( lines )
+        self . _output = [ ]
+        self . _char = None
+        self . _token = ''
+        self . _indent = 0
+        self . _state = self . _state_first_char
+        self . _new_line = True
+    def run ( self ) :
+        while self . _input :
+            self . _state ( )
+        return self . _output
+    def _state_first_char ( self ) :
+        if self . _input [ 0 ] :
+            self . _char = self . _input [ 0 ] [ 0 ]
+            self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            self . _state = self . _state_recognize_char
+        else :
+            self . _state = self . _state_new_line
+    def _state_new_line ( self ) :
+        if self . _input [ 0 ] :
+            self . _state = self . _state_first_char
+        else :
+            self . _input = self . _input [ 1 : ]
+            self . _indent = 0
+            self . _token = ''
+            self . _new_line = True
+    def _state_recognize_char ( self ) :
+        if self . _char == ' ' :
+            self . _state = self . _state_whitespace
+        elif self . _char . isalpha ( ) :
+            self . _state = self . _state_word
+        elif self . _char == "'" :
+            self . _state = self . _state_opening_quote
+        else :
+            raise Exception ( 'Unknown char "%s"' % self . _char )
+    def _state_whitespace ( self ) :
+        self . _indent += 1
+        self . _token = ''
+        self . _state = self . _state_first_char
+    def _state_word ( self ) :
+        if self . _char . isalpha ( ) or self . _char . isdigit ( ) :
+            self . _token += self . _char
+            if self . _input [ 0 ] :
+                self . _char = self . _input [ 0 ] [ 0 ]
+                self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            else :
+                self . _write_token ( )
+                self . _state = self . _state_new_line
+        elif self . _char == ' ' :
+            self . _write_token ( )
+            self . _state = self . _state_recognize_char
+        else :
+            raise Exception ( 'Wrong char "%s" in word' % self . _char )
+    def _state_opening_quote ( self ) :
+        self . _token += self . _char
+        if self . _input [ 0 ] :
+            self . _char = self . _input [ 0 ] [ 0 ]
+            self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            self . _state = self . _state_quoted_string
+        else :
+            raise Exception ( 'Opening quote at the end of the line' )
+    def _state_quoted_string ( self ) :
+        if self . _char == "'" :
+            self . _state = self . _state_closing_quote
+        else :
+            self . _token += self . _char
+            if self . _input [ 0 ] :
+                self . _char = self . _input [ 0 ] [ 0 ]
+                self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            else :
+                raise Exception ( 'End of the line encountered in quoted string' )
+    def _state_closing_quote ( self ) :
+        self . _token += self . _char
+        if self . _input [ 0 ] :
+            self . _char = self . _input [ 0 ] [ 0 ]
+            self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
+            if self . _char == ' ' :
+                self . _write_token ( )
+                self . _state = self . _state_recognize_char
+            else :
+                raise Exception ( 'Character after quoted string: "%s"' % self . _char )
+        else :
+            self . _write_token ( )
+            self . _state = self . _state_new_line
+    def _write_token ( self ) :
+        if self . _new_line :
+            self . _output . append ( [ ] )
+            self . _new_line = False
+        self . _output [ - 1 ] . append ( ( self . _indent , self . _token ) )
+        self . _indent += len ( self . _token )
+        self . _token = ''
 
 def stringize ( tlines ) :
     res = [ ]
@@ -117,14 +199,14 @@ class _output_tokens :
     def new_line ( self ) :
         self . _newline = True
     def get_contents ( self ) :
-        return deepcopy ( self . _tlines )
+        return self . _tlines
     def tokens ( self , tokens ) :
         self . _tlines += tokens
 
 class preprocessor :
 
     def __init__ ( self , lines ) :
-        self . _input = _input_tokens ( tokenize ( lines ) )
+        self . _input = _input_tokens ( tokenizer ( lines ) . run ( ) )
         self . _output = _output_tokens ( )
 
     def run ( self ) :
@@ -186,7 +268,7 @@ class preprocessor :
         assert token == 'paste'
         self . _input . next_itoken ( )
         replaces = self . _copy_paste_read_replaces ( )
-        buf = deepcopy ( body . get_contents ( ) )
+        buf = body . get_contents ( )
         for replace_what , replace_with in replaces . items ( ) :
             buf = self . _copy_paste_do_replace ( buf , replace_what , replace_with )
         self . _output . tokens ( buf )
@@ -305,8 +387,7 @@ class preprocessor :
                                 break
                             else :
                                 with_what . next_token ( )
-                    part = parts [ - 1 ]
-                    res_token += part
+                    res_token += parts [ - 1 ]
                     res . itoken ( res_indent , res_token )
                     shift_indent = len ( stringize ( [ res . get_contents ( ) [ - 1 ] ] ) [ 0 ] ) - indent - len ( token )
                 else :
