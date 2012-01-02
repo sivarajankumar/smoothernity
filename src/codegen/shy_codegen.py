@@ -39,8 +39,8 @@ class tokenizer :
             self . _state = self . _state_number
         elif self . _char == "'" :
             self . _state = self . _state_opening_quote
-        elif self . _char == '_' :
-            self . _state = self . _state_underscore
+        elif self . _char in [ "'" , '/' , '_' ] :
+            self . _state = self . _state_single_char
         else :
             raise Exception ( 'Unknown char "%s"' % self . _char )
     def _state_whitespace ( self ) :
@@ -87,7 +87,7 @@ class tokenizer :
             raise Exception ( 'Opening quote at the end of the line' )
     def _state_quoted_string ( self ) :
         if self . _char == "'" :
-            self . _state = self . _state_closing_quote
+            self . _state = self . _state_single_char
         else :
             self . _token += self . _char
             if self . _input [ 0 ] :
@@ -95,7 +95,8 @@ class tokenizer :
                 self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
             else :
                 raise Exception ( 'End of the line encountered in quoted string' )
-    def _state_closing_quote ( self ) :
+    def _state_single_char ( self ) :
+        ch = self . _char
         self . _token += self . _char
         if self . _input [ 0 ] :
             self . _char = self . _input [ 0 ] [ 0 ]
@@ -104,20 +105,7 @@ class tokenizer :
                 self . _write_token ( )
                 self . _state = self . _state_recognize_char
             else :
-                raise Exception ( 'Character after quoted string: "%s"' % self . _char )
-        else :
-            self . _write_token ( )
-            self . _state = self . _state_new_line
-    def _state_underscore ( self ) :
-        self . _token += self . _char
-        if self . _input [ 0 ] :
-            self . _char = self . _input [ 0 ] [ 0 ]
-            self . _input [ 0 ] = self . _input [ 0 ] [ 1 : ]
-            if self . _char == ' ' :
-                self . _write_token ( )
-                self . _state = self . _state_recognize_char
-            else :
-                raise Exception ( 'Character after underscore: "%s"' % self . _char )
+                raise Exception ( 'Unexpected character "%s" after "%s"' % self . _char , ch )
         else :
             self . _write_token ( )
             self . _state = self . _state_new_line
