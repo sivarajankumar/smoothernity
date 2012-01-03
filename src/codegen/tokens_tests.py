@@ -36,9 +36,9 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
-        ar ( lexer . token_exception , p , [ '1/' ] )
-        ar ( lexer . token_exception , p , [ '1//2' ] )
-        ar ( lexer . token_exception , p , [ '1/2/3' ] )
+        ar ( lexer . token_exception , p , [ '1 /' ] )
+        ar ( lexer . token_exception , p , [ '1 / / 2' ] )
+        ar ( lexer . token_exception , p , [ '1 / 2 / 3' ] )
     def test_id ( self ) :
         p = self . l . parse
         self . assertEqual ( p ( [ 'test test1 test_22' ] ) ,
