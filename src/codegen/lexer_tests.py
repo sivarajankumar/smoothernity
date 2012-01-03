@@ -16,15 +16,18 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'indent' , 'delta' : 4 }
             , { 'type' : 'id' , 'value' : 'test3' }
             , { 'type' : 'eol' }
+            , { 'type' : 'id' , 'value' : 'test4' }
+            , { 'type' : 'eol' }
             , { 'type' : 'dedent' , 'delta' : - 4 }
             , { 'type' : 'indent' , 'delta' : 2 }
-            , { 'type' : 'id' , 'value' : 'test4' }
+            , { 'type' : 'id' , 'value' : 'test5' }
             , { 'type' : 'eol' }
             , { 'type' : 'dedent' , 'delta' : - 2 }
             , { 'type' : 'eof' } ] ) ,
             [ 'test1 test2'
             , '    test3'
-            , '  test4' ] )
+            , '    test4'
+            , '  test5' ] )
         self . assertEqual ( g (
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'eol' }
@@ -35,9 +38,13 @@ class lexer_test_case ( unittest . TestCase ) :
             [ { 'type' : 'id' , 'value' : 'test1' } ] ) ,
             [ ] )
         self . assertRaises ( lexer . generate_indent_exception , g ,
-            [ { 'type' : 'indent' , 'delta' : 0 } ] )
+            [ { 'type' : 'indent' , 'delta' : 1 }
+            , { 'type' : 'indent' , 'delta' : 0 } ] )
         self . assertRaises ( lexer . generate_indent_exception , g ,
             [ { 'type' : 'indent' , 'delta' : - 1 } ] )
+        self . assertRaises ( lexer . generate_dedent_exception , g ,
+            [ { 'type' : 'indent' , 'delta' : 4 }
+            , { 'type' : 'dedent' , 'delta' : - 5 } ] )
     def test_sequences ( self ) :
         self . l . set_token_patterns (
             [ ( 'double' , r'test test' )
