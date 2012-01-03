@@ -27,6 +27,18 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . whitespace_exception , p , [ '123test' ] )
         ar ( lexer . token_exception , p , [ '--123' ] )
         ar ( lexer . token_exception , p , [ '- - 123' ] )
+    def test_number_fract ( self ) :
+        p = self . l . parse
+        self . assertEqual ( p ( [ '12/34 -5/6 - 78 / 90' ] ) ,
+            [ { 'type' : 'number_fract' , 'value' : '12/34' }
+            , { 'type' : 'number_fract' , 'value' : '-5/6' }
+            , { 'type' : 'number_fract' , 'value' : '- 78 / 90' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
+        ar = self . assertRaises
+        ar ( lexer . token_exception , p , [ '1/' ] )
+        ar ( lexer . token_exception , p , [ '1//2' ] )
+        ar ( lexer . token_exception , p , [ '1/2/3' ] )
     def test_id ( self ) :
         p = self . l . parse
         self . assertEqual ( p ( [ 'test test1 test_22' ] ) ,

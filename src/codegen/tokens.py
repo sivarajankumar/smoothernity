@@ -4,5 +4,6 @@ def setup ( lexer ) :
     lexer . set_indent_tokens ( 'indent' , 'dedent' )
     lexer . set_token_patterns (
         [ ( 'underscore' , r'_' )
+        , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+' )
         , ( 'number_whole' , r'-? *[0-9]+' )
         , ( 'id' , r'[a-z][a-z0-9_]*' ) ] )

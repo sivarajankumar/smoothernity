@@ -80,14 +80,17 @@ class lexer :
         while line :
             was_match = False
             for token , match in self . _token_patterns :
-                value , line = self . _resplit ( match , line )
-                if value :
-                    if line and line [ 0 ] != ' ' :
-                        raise whitespace_exception ( line )
-                    line = line . strip ( ' ' )
-                    self . _tokens . append (
-                        { 'type' : token , 'value' : value } )
-                    was_match = True
+                while True :
+                    value , line = self . _resplit ( match , line )
+                    if value :
+                        if line and line [ 0 ] != ' ' :
+                            raise whitespace_exception ( line )
+                        line = line . strip ( ' ' )
+                        self . _tokens . append (
+                            { 'type' : token , 'value' : value } )
+                        was_match = True
+                    else :
+                        break
             if not was_match :
                 raise token_exception ( line )
         return line
