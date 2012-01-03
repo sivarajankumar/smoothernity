@@ -51,21 +51,25 @@ class lexer :
         self . _tokens . append ( { 'type' : self . _eof_token } )
     def _append_dedents ( self ) :
         while len ( self . _indents ) > 1 :
+            delta = self . _indents [ - 2 ] - self . _indents [ - 1 ]
             self . _indents . pop ( )
-            self . _tokens . append ( { 'type' : self . _dedent_token } )
+            self . _tokens . append ( 
+                { 'type' : self . _dedent_token , 'delta' : delta } )
     def _parse_indent ( self , line ) :
         spaces , line = self . _resplit ( r' *' , line )
         indent = len ( spaces )
         while self . _indents :
             if self . _indents [ - 1 ] < indent :
+                delta = indent - self . _indents [ - 1 ]
                 self . _tokens . append (
-                    { 'type' : self . _indent_token } )
+                    { 'type' : self . _indent_token , 'delta' : delta } )
                 self . _indents . append ( indent )
             elif self . _indents [ - 1 ] > indent :
                 if len ( self . _indents ) == 1 :
                     raise indent_exception ( line )
+                delta = self . _indents [ - 2 ] - self . _indents [ - 1 ]
                 self . _tokens . append (
-                    { 'type' : self . _dedent_token } )
+                    { 'type' : self . _dedent_token , 'delta' : delta } )
                 self . _indents . pop ( )
             else :
                 break

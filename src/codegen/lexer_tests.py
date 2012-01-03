@@ -24,20 +24,20 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'number' , 'value' : '- 22' }
             , { 'type' : 'number' , 'value' : '33' } 
             , { 'type' : 'eol' }
-            , { 'type' : 'indent' }
+            , { 'type' : 'indent' , 'delta' : 2 }
             , { 'type' : 'id' , 'value' : 'test3' }
             , { 'type' : 'eol' }
-            , { 'type' : 'indent' }
+            , { 'type' : 'indent' , 'delta' : 4 }
             , { 'type' : 'id' , 'value' : 'test4' }
             , { 'type' : 'eol' }
             , { 'type' : 'id' , 'value' : 'test5' }
             , { 'type' : 'eol' }
-            , { 'type' : 'dedent' }
-            , { 'type' : 'indent' }
+            , { 'type' : 'dedent' , 'delta' : - 4 }
+            , { 'type' : 'indent' , 'delta' : 2 }
             , { 'type' : 'id' , 'value' : 'test6' }
             , { 'type' : 'eol' }
-            , { 'type' : 'dedent' }
-            , { 'type' : 'dedent' }
+            , { 'type' : 'dedent' , 'delta' : - 2 }
+            , { 'type' : 'dedent' , 'delta' : - 2 }
             , { 'type' : 'eof' } ] )
         self . assertEqual ( self . l . parse ( [ ] ) , [ { 'type' : 'eof' } ] )
         self . assertEqual ( self . l . parse ( [ '' ] ) , [ { 'type' : 'eof' } ] )
