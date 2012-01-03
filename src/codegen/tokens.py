@@ -18,6 +18,8 @@ def setup ( lexer ) :
         , ( 'underscore' , '_' )
         , ( 'curly_open' , '{' )
         , ( 'curly_close' , '}' )
+        , ( 'paren_open' , '\(' )
+        , ( 'paren_close' , '\)' )
         , ( 'left_arrow' , '<-' )
         , ( 'right_arrow' , '->' )
         , ( 'number_fract' , '-? *[0-9]+ *\/ *[0-9]+' )
