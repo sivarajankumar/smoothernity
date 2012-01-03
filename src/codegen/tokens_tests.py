@@ -37,6 +37,16 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
         ar ( lexer . token_exception , p , [ 'TEST' ] )
-
+    def test_indents ( self ) :
+        p = self . l . parse
+        self . assertEqual ( p ( [ 'test1' , '  test2' ] ) ,
+            [ { 'type' : 'id' , 'value' : 'test1' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'indent' , 'delta' : 2 }
+            , { 'type' : 'id' , 'value' : 'test2' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'dedent' , 'delta' : - 2 }
+            , { 'type' : 'eof' } ] )
+            
 if __name__ == '__main__' :
     unittest . main ( )
