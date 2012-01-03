@@ -120,6 +120,10 @@ class tokens_test_case ( unittest . TestCase ) :
                 [ { 'type' : 'keyword' , 'value' : kw } 
                 , { 'type' : 'eol' }
                 , { 'type' : 'eof' } ] )
+            self . assertEqual ( p ( [ kw + '_test' ] ) ,
+                [ { 'type' : 'id' , 'value' : kw + '_test' } 
+                , { 'type' : 'eol' }
+                , { 'type' : 'eof' } ] )
         kws = \
             [ 'system' , 'machine' , 'state' , 'consts' , 'on' , 'to' , 'is'
             , 'command' , 'if' , 'do' , 'input' , 'entry' , 'exit' , 'initial'
