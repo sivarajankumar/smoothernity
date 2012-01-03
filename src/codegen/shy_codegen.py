@@ -605,6 +605,8 @@ if __name__ == '__main__' :
     from sys import argv
     from sys import stdin
     import os
+    import lexer
+    import tokens
 
     class trace :
         def write_error ( self , name , error ) :
@@ -621,5 +623,8 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     lines = stdin . readlines ( )
-    print '\n' . join ( preprocessor ( [ l . replace ( '\n' , '' ) for l in lines ] ) . run ( ) )
+    #print '\n' . join ( preprocessor ( [ l . replace ( '\n' , '' ) for l in lines ] ) . run ( ) )
+    x = lexer . lexer ( )
+    tokens . setup ( x )
+    print '\n' . join ( [ str ( t ) for t in x . parse ( [ l . replace ( '\n' , '' ) for l in lines ] ) ] )
     reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )
