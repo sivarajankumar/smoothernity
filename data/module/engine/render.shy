@@ -446,7 +446,8 @@ trace engine_render
             ops
                 with platform_trace_trace
                     begin module_name
-                    string 'place2 in use: '
+                    string place2
+                    string ' in use: '
                     num_whole current
                     string ' of '
                     num_whole total
@@ -455,7 +456,8 @@ trace engine_render
         proc place1_overflow_error
             with platform_trace_trace
                 begin module_name
-                string_error 'place2 overflow error.'
+                string_error place2
+                string_error ' overflow error.'
                 end
     paste
         replace place1 with meshes
