@@ -10,20 +10,18 @@ class lexer_test_case ( unittest . TestCase ) :
         self . assertEqual ( self . l . parse ( [ ] ) , [ ] )
     def test_tokens ( self ) :
         self . l . set_token_patterns ( [ 
-            { 'word' : r'[a-z]+'
-            , 'number' : r'[0-9]+'
-            , 'whitespace' : r' +'
+            { 'id' : [ r'[a-z][a-z0-9_]*' ]
+            , 'number' : [ r'[-]? *[0-9]+' ]
             } ] )
         self . assertEqual ( self . l . parse (
-            [ 'test1 test2' ] ) ,
-            [ { 'type' : 'word' , 'value' : 'test' }
-            , { 'type' : 'number' , 'value' : '1' }
-            , { 'type' : 'whitespace' , 'value' : ' ' }
-            , { 'type' : 'word' , 'value' : 'test' }
-            , { 'type' : 'number' , 'value' : '2' }
+            [ 'test1 test_2 - 22 33' ] ) ,
+            [ { 'type' : 'id' , 'value' : 'test1' }
+            , { 'type' : 'id' , 'value' : 'test_2' }
+            , { 'type' : 'number' , 'value' : '- 22' }
+            , { 'type' : 'number' , 'value' : '33' }
             ] )
     def test_unknown_token ( self ) :
-        self . l . set_token_patterns ( [ { 'word' : r'[a-z]+' } ] )
+        self . l . set_token_patterns ( [ { 'word' : [ r'[a-z]+' ] } ] )
         self . assertRaises ( lexer . lexer_exception , self . l . parse , [ 'test1' ] )
 
 if __name__ == '__main__' :

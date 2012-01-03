@@ -2,7 +2,7 @@ import re
 
 class lexer_exception ( Exception ) :
     def __init__ ( self , line ) :
-        Exception . __init__ ( self , 'Lexical error: "%s"' + line )
+        Exception . __init__ ( self , 'Lexical error: "%s"' % line )
 
 class lexer :
     def __init__ ( self ) :
@@ -12,17 +12,21 @@ class lexer :
     def parse ( self , lines ) :
         res = [ ]
         for line in lines :
+            line = line . strip ( ' ' )
             while line :
                 was_match = False
                 for pats in self . _token_patterns :
-                    for token , match in pats . items ( ) :
-                        rem = re . match ( match , line )
-                        if rem :
-                            value = line [ rem . start ( ) : rem . end ( ) ]
-                            line = line [ rem . end ( ) : ]
-                            res . append ( { 'type' : token
-                                           , 'value' : value } )
-                            was_match = True
+                    for token , matches in pats . items ( ) :
+                        for match in matches :
+                            rem = re . match ( match , line )
+                            if rem :
+                                value = line [ rem . start ( )
+                                             : rem . end ( ) ]
+                                line = line [ rem . end ( ) : ]
+                                line = line . strip ( ' ' )
+                                res . append ( { 'type' : token
+                                               , 'value' : value } )
+                                was_match = True
                 if not was_match :
                     raise lexer_exception ( line )
         return res
