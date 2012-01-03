@@ -7,9 +7,13 @@ class lexer_test_case ( unittest . TestCase ) :
         self . l . set_eol_token ( 'eol' )
         self . l . set_eof_token ( 'eof' )
         self . l . set_indent_tokens ( 'indent' , 'dedent' )
+        self . l . set_token_patterns (
+            [ ( 'id' , r'[a-z][a-z0-9_]*' )
+            , ( 'number' , r'[-]? *[0-9]+' ) ] )
     def test_generate ( self ) :
         g = self . l . generate
-        self . assertEqual ( g (
+        ae = self . assertEqual
+        ae ( g (
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'id' , 'value' : 'test2' }
             , { 'type' : 'eol' }
@@ -28,40 +32,36 @@ class lexer_test_case ( unittest . TestCase ) :
             , '    test3'
             , '    test4'
             , '  test5' ] )
-        self . assertEqual ( g (
+    def test_generate_eof ( self ) :
+        g = self . l . generate
+        ae = self . assertEqual
+        ae ( g (
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' }
             , { 'type' : 'id' , 'value' : 'test2' } ] ) , 
             [ 'test1' ] )
-        self . assertEqual ( g (
-            [ { 'type' : 'id' , 'value' : 'test1' } ] ) ,
-            [ ] )
-        self . assertRaises ( lexer . generate_indent_exception , g ,
-            [ { 'type' : 'indent' , 'delta' : 1 }
-            , { 'type' : 'indent' , 'delta' : 0 } ] )
-        self . assertRaises ( lexer . generate_indent_exception , g ,
+    def test_generate_eol ( self ) :
+        g = self . l . generate
+        ae = self . assertEqual
+        ae ( g ( [ { 'type' : 'id' , 'value' : 'test1' } ] ) , [ ] )
+    def test_generate_invalid_indent ( self ) :
+        g = self . l . generate
+        ar = self . assertRaises
+        ar ( lexer . generate_indent_exception , g ,
+            [ { 'type' : 'indent' , 'delta' : 0 } ] )
+        ar ( lexer . generate_indent_exception , g ,
             [ { 'type' : 'indent' , 'delta' : - 1 } ] )
-        self . assertRaises ( lexer . generate_dedent_exception , g ,
+    def test_generate_invalid_dedent ( self ) :
+        g = self . l . generate
+        ar = self . assertRaises
+        ar ( lexer . generate_dedent_exception , g ,
             [ { 'type' : 'indent' , 'delta' : 4 }
             , { 'type' : 'dedent' , 'delta' : - 5 } ] )
-    def test_sequences ( self ) :
-        self . l . set_token_patterns (
-            [ ( 'double' , r'test test' )
-            , ( 'single' , r'test' )
-            ] )
-        self . assertEqual ( self . l . parse ( 
-            [ ' ' . join ( [ 'test' ] * 5 ) ] ) ,
-            [ { 'type' : 'double' , 'value' : 'test test' }
-            , { 'type' : 'double' , 'value' : 'test test' }
-            , { 'type' : 'single' , 'value' : 'test' }
-            , { 'type' : 'eol' }
-            , { 'type' : 'eof' } ] )
-    def test_tokens ( self ) :
-        self . l . set_token_patterns (
-            [ ( 'id' , r'[a-z][a-z0-9_]*' )
-            , ( 'number' , r'[-]? *[0-9]+' ) ] )
-        self . assertEqual ( self . l . parse (
+    def test_parse ( self ) :
+        p = self . l . parse
+        ae = self . assertEqual
+        ae ( p (
             [ 'test1 test_2 - 22 33'
             , ''
             , '  test3'
@@ -89,13 +89,37 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'dedent' , 'delta' : - 2 }
             , { 'type' : 'dedent' , 'delta' : - 2 }
             , { 'type' : 'eof' } ] )
-        self . assertEqual ( self . l . parse ( [ ] ) , [ { 'type' : 'eof' } ] )
-        self . assertEqual ( self . l . parse ( [ '' ] ) , [ { 'type' : 'eof' } ] )
-        self . assertRaises ( lexer . parse_token_exception , self . l . parse , [ 'A' ] )
-        self . assertRaises ( lexer . parse_whitespace_exception , self . l . parse , [ '2test' ] )
-        self . assertRaises ( lexer . parse_indent_exception , self . l . parse ,
-            [ '  test1'
-            , 'test2' ] )
+    def test_parse_sequences ( self ) :
+        self . l . set_token_patterns (
+            [ ( 'double' , r'test test' )
+            , ( 'single' , r'test' )
+            ] )
+        p = self . l . parse
+        ae = self . assertEqual
+        ae ( p ( 
+            [ ' ' . join ( [ 'test' ] * 5 ) ] ) ,
+            [ { 'type' : 'double' , 'value' : 'test test' }
+            , { 'type' : 'double' , 'value' : 'test test' }
+            , { 'type' : 'single' , 'value' : 'test' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
+    def test_parse_eof ( self ) :
+        p = self . l . parse
+        ae = self . assertEqual
+        ae ( p ( [ ] ) , [ { 'type' : 'eof' } ] )
+        ae ( p ( [ '' ] ) , [ { 'type' : 'eof' } ] )
+    def test_parse_invalid_token ( self ) :
+        p = self . l . parse
+        ar = self . assertRaises
+        ar ( lexer . parse_token_exception , p , [ 'A' ] )
+    def test_parse_no_whitespace ( self ) :
+        p = self . l . parse
+        ar = self . assertRaises
+        ar ( lexer . parse_whitespace_exception , p , [ '2test' ] )
+    def test_parse_invalid_indent ( self ) :
+        p = self . l . parse
+        ar = self . assertRaises
+        ar ( lexer . parse_indent_exception , p , [ '  test1' , 'test2' ] )
 
 if __name__ == '__main__' :
     unittest . main ( )
