@@ -16,6 +16,8 @@ def setup ( lexer ) :
         , ( 'keyword' , 'receive|request|reply|send' )
         , ( 'keyword' , 'with' )
         , ( 'underscore' , '_' )
+        , ( 'curly_open' , '{' )
+        , ( 'curly_close' , '}' )
         , ( 'left_arrow' , '<-' )
         , ( 'right_arrow' , '->' )
         , ( 'number_fract' , '-? *[0-9]+ *\/ *[0-9]+' )
