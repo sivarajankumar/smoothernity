@@ -622,9 +622,8 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    lines = stdin . readlines ( )
-    #print '\n' . join ( preprocessor ( [ l . replace ( '\n' , '' ) for l in lines ] ) . run ( ) )
+    lines = [ l . replace ( '\n' , '' ) for l in stdin . readlines ( ) ]
     x = lexer . lexer ( )
     tokens . setup ( x )
-    print '\n' . join ( x . generate ( x . parse ( [ l . replace ( '\n' , '' ) for l in lines ] ) ) )
+    print '\n' . join ( x . generate ( x . parse ( lines ) ) )
     reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )
