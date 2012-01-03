@@ -1,163 +1,5 @@
-import shy_codegen
+import codegen
 import unittest
-
-class tokenize_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . text = None
-        self . tokens = None
-    def tearDown ( self ) :
-        self . assertEqual ( shy_codegen . tokenizer ( self . text ) . run ( ) , self . tokens )
-        self . assertEqual ( shy_codegen . stringize ( self . tokens ) , self . text )
-    def test_empty ( self ) :
-        self . text = [ ]
-        self . tokens = [ ]
-    def test_token ( self ) :
-        self . text = [ 'test' ]
-        self . tokens = [ [ ( 0 , 'test' ) ] ]
-    def test_tokens ( self ) :
-        self . text = \
-            [ '  test1 test2   test3'
-            , '    test4' ]
-        self . tokens = \
-            [ [ ( 2 , 'test1' ) 
-              , ( 8 , 'test2' )
-              , ( 16 , 'test3' ) ]
-            , [ ( 4 , 'test4' ) ] ]
-    def test_same_name ( self ) :
-        self . text = [ 'test test' ]
-        self . tokens = \
-            [ [ ( 0 , 'test' )
-              , ( 5 , 'test' ) ] ]
-    def test_short ( self ) :
-        self . text = [ 'test t' ]
-        self . tokens = \
-            [ [ ( 0 , 'test' )
-              , ( 5 , 't' ) ] ]
-    def test_overlap ( self ) :
-        self . text = \
-            [ 'test1'
-            , '     test2' ]
-        self . tokens = \
-            [ [ ( 0 , 'test1' ) ]
-            , [ ( 5 , 'test2' ) ] ]
-    def test_string ( self ) :
-        self . text = [ "'test1 test2' test3" ]
-        self . tokens = \
-            [ [ ( 0 , "'test1 test2'" )
-              , ( 14 , 'test3' )
-              ] ]
-    def test_expression ( self ) :
-        self . text = [ '[test1 test2] test3' ]
-        self . tokens = \
-            [ [ ( 0 , '[test1 test2]' )
-              , ( 14 , 'test3' )
-              ] ]
-    def test_underscore ( self ) :
-        self . text = [ '_' ]
-        self . tokens = [ [ ( 0 , '_' ) ] ]
-    def test_divide ( self ) :
-        self . text = [ '/' ]
-        self . tokens = [ [ ( 0 , '/' ) ] ]
-    def test_minus ( self ) :
-        self . text = [ '-' ]
-        self . tokens = [ [ ( 0 , '-' ) ] ]
-    def test_curly_open ( self ) :
-        self . text = [ '{' ]
-        self . tokens = [ [ ( 0 , '{' ) ] ]
-    def test_curly_close ( self ) :
-        self . text = [ '}' ]
-        self . tokens = [ [ ( 0 , '}' ) ] ]
-    def test_left_arrow ( self ) :
-        self . text = [ '<-' ]
-        self . tokens = [ [ ( 0 , '<-' ) ] ]
-    def test_right_arrow ( self ) :
-        self . text = [ '->' ]
-        self . tokens = [ [ ( 0 , '->' ) ] ]
-    def test_underscore_in_word ( self ) :
-        self . text = [ 'some_word' ]
-        self . tokens = [ [ ( 0 , 'some_word' ) ] ]
-    def test_number ( self ) :
-        self . text = [ '123' ]
-        self . tokens = [ [ ( 0 , '123' ) ] ]
-
-class preprocess_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . i = None
-        self . o = None
-    def tearDown ( self ) :
-        self . assertEqual ( shy_codegen . preprocessor ( self . i ) . run ( ) , self . o )
-    def test_empty ( self ) :
-        self . i = self . o = [ ]
-    def test_plain_text ( self ) :
-        self . i = self . o = [ 'first line' , 'second line' ]
-    def test_empty_lines ( self ) :
-        self . i = [ '' , '' ]
-        self . o = [ ]
-    def test_copy_paste_same_line ( self ) :
-        self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22' ]
-        self . o = [ 'foo test22 bar' ]
-    def test_copy_paste_multi_token ( self ) :
-        self . i = [ 'copy foo test1 bar' , 'paste replace test1 with test22 test33' ]
-        self . o = [ 'foo test22 test33 bar' ]
-    def test_copy_paste_multi_token_string ( self ) :
-        self . i = [ "copy 'foo test1 bar test1 end'" 
-                   , 'paste replace test1 with test22 test33 test44' ]
-        self . o = [ "'foo test22 test33 test44 bar test22 test33 test44 end'" ]
-    def test_copy_paste_multi_replace ( self ) :
-        self . i = [ 'copy foo bar' 
-                   , 'paste replace foo with test1' 
-                   , '      replace bar with test2' ]
-        self . o = [ 'test1 test2' ]
-    def test_copy_paste_substring ( self ) :
-        self . i = [ 'copy footest1bar' , 'paste replace test1 with test22' ]
-        self . o = [ 'footest22bar' ]
-    def test_copy_paste_multi_substring ( self ) :
-        self . i = [ 'copy footest1bartest1foo' , 'paste replace test1 with test2' ]
-        self . o = [ 'footest2bartest2foo' ]
-    def test_copy_paste_multi_line ( self ) :
-        self . i = [ 'copy foo test1 bar'
-                   , 'paste replace test1 with'
-                   , '          test22'
-                   , '          test33' ]
-        self . o = [ 'foo test22' 
-                   , '    test33 bar' ]
-    def test_copy_paste_multi_line_substring ( self ) :
-        self . i = [ 'copy footest1bar'
-                   , 'paste replace test1 with'
-                   , '          test22'
-                   , '          test33' ]
-        self . o = [ 'footest22' 
-                   , 'test33bar' ]
-    def test_copy_paste_multi_line_multi_substring ( self ) :
-        self . i = [ 'copy bla footest1bartest1foo  bla'
-                   , '     bla footest1bartest1foo  bla'
-                   , 'paste replace test1 with'
-                   , '          test22'
-                   , '          test33' ]
-        self . o = [ 'bla footest22' 
-                   , '    test33bartest22' 
-                   , '    test33foo  bla'
-                   , 'bla footest22' 
-                   , '    test33bartest22' 
-                   , '    test33foo  bla' ]
-    def test_indents ( self ) :
-        self . i = [ '  copy'
-                   , '    foo test1'
-                   , '      bar'
-                   , '      test1'
-                   , '        foobar'
-                   , '  paste'
-                   , '    replace test1 with test222' ]
-        self . o = [ '  foo test222' 
-                   , '    bar'
-                   , '    test222'
-                   , '      foobar' ]
-    def test_plain_text_after_paste ( self ) :
-        self . i = [ '  copy test1'
-                   , '  paste replace test1 with test222'
-                   , '  next line' ]
-        self . o = [ '  test222' 
-                   , '  next line' ]
 
 class reify_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -202,7 +44,7 @@ class reify_test_case ( unittest . TestCase ) :
         self . t = trace_mock ( )
         self . op = options_mock ( )
         self . om = os_mock ( )
-        self . r = lambda x : shy_codegen . reify ( x , open_mock , self . t , self . op , self . om )
+        self . r = lambda x : codegen . reify ( x , open_mock , self . t , self . op , self . om )
     def test_overwrite_file ( self ) :
         self . fs = {
             'file1' : { 'r' : self . fm ( 'contents1' ) } ,
@@ -266,7 +108,7 @@ class reify_test_case ( unittest . TestCase ) :
 
 class essential_files_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
-        self . fs = shy_codegen . generate ( [ ] )
+        self . fs = codegen . generate ( [ ] )
     def test_common_h ( self ) :
         self . assertEqual ( self . fs [ 'autogenerated/common/shy_common.h' ] ,
             'class shy_common\n'
