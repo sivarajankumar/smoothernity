@@ -44,6 +44,7 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
         ar ( lexer . parse_token_exception , p , [ '1 /' ] )
+        ar ( lexer . parse_token_exception , p , [ '1 / 2test' ] )
         ar ( lexer . parse_token_exception , p , [ '1 / / 2' ] )
         ar ( lexer . parse_token_exception , p , [ '1 / 2 / 3' ] )
     def test_id ( self ) :
