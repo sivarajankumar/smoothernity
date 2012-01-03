@@ -95,6 +95,23 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . token_exception , p , [ '[' ] )
         ar ( lexer . token_exception , p , [ '[test' ] )
         ar ( lexer . whitespace_exception , p , [ 'test]' ] )
+    def test_keywords ( self ) :
+        def check ( kw ) :
+            p = self . l . parse
+            self . assertEqual ( p ( [ kw ] ) ,
+                [ { 'type' : 'keyword' , 'value' : kw } 
+                , { 'type' : 'eol' }
+                , { 'type' : 'eof' } ] )
+        kws = \
+            [ 'system' , 'machine' , 'state' , 'consts' , 'on' , 'to' , 'is'
+            , 'command' , 'if' , 'do' , 'input' , 'entry' , 'exit' , 'initial'
+            , 'discard' , 'vars' , 'ops' , 'receive' , 'request' , 'module'
+            , 'trace' , 'with' , 'else' , 'while' , 'args' , 'proc' , 'init'
+            , 'done' , 'copy' , 'paste' , 'replace' , 'module_name' , 'types'
+            , 'reply' , 'messages' , 'stateless' , 'elif' , 'module_queue'
+            , 'any' , 'all' , 'send' ]
+        for kw in kws :
+            check ( kw )
             
 if __name__ == '__main__' :
     unittest . main ( )
