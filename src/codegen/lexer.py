@@ -23,6 +23,8 @@ class lexer :
                                 value = line [ rem . start ( )
                                              : rem . end ( ) ]
                                 line = line [ rem . end ( ) : ]
+                                if line and line [ 0 ] != ' ' :
+                                    raise lexer_exception ( line )
                                 line = line . strip ( ' ' )
                                 res . append ( { 'type' : token
                                                , 'value' : value } )
