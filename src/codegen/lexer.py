@@ -1,15 +1,15 @@
 import re
 
-class token_exception ( Exception ) :
+class parse_token_exception ( Exception ) :
     def __init__ ( self , line ) :
         Exception . __init__ ( self , 'Unknown token: "%s"' % line )
 
-class whitespace_exception ( Exception ) :
+class parse_whitespace_exception ( Exception ) :
     def __init__ ( self , line ) :
         Exception . __init__ ( self ,
             'Missing whitespace before next token: "%s"' % line )
 
-class indent_exception ( Exception ) :
+class parse_indent_exception ( Exception ) :
     def __init__ ( self , line ) :
         Exception . __init__ ( self ,
             'Dedent exceeds first indent: "%s"' % line )
@@ -101,7 +101,7 @@ class lexer :
                 self . _indents . append ( indent )
             elif self . _indents [ - 1 ] > indent :
                 if len ( self . _indents ) == 1 :
-                    raise indent_exception ( line )
+                    raise parse_indent_exception ( line )
                 delta = self . _indents [ - 2 ] - self . _indents [ - 1 ]
                 self . _tokens . append (
                     { 'type' : self . _dedent_token , 'delta' : delta } )
@@ -119,7 +119,7 @@ class lexer :
                     value , line = self . _resplit ( match , line )
                     if value :
                         if line and line [ 0 ] != ' ' :
-                            raise whitespace_exception ( line )
+                            raise parse_whitespace_exception ( line )
                         line = line . strip ( ' ' )
                         self . _tokens . append (
                             { 'type' : token , 'value' : value } )
@@ -127,7 +127,7 @@ class lexer :
                     else :
                         break
             if not was_match :
-                raise token_exception ( line )
+                raise parse_token_exception ( line )
         return line
     def _resplit ( self , match , line ) :
         rem = re . match ( match , line )
