@@ -59,6 +59,18 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eol' }
             , { 'type' : 'dedent' , 'delta' : - 2 }
             , { 'type' : 'eof' } ] )
+    def test_arrows ( self ) :
+        p = self . l . parse
+        self . assertEqual ( p ( [ '<- ->' ] ) ,
+            [ { 'type' : 'left_arrow' , 'value' : '<-' }
+            , { 'type' : 'right_arrow' , 'value' : '->' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
+        ar = self . assertRaises
+        ar ( lexer . token_exception , p , [ '<<--' ] )
+        ar ( lexer . token_exception , p , [ '-->>' ] )
+        ar ( lexer . token_exception , p , [ '< -' ] )
+        ar ( lexer . token_exception , p , [ '- >' ] )
             
 if __name__ == '__main__' :
     unittest . main ( )
