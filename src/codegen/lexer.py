@@ -14,6 +14,11 @@ class indent_exception ( Exception ) :
         Exception . __init__ ( self ,
             'Dedent exceeds first indent: "%s"' % line )
 
+class generate_indent_exception ( Exception ) :
+    def __init__ ( self , delta ) :
+        Exception . __init__ ( self ,
+            'Invalid indent delta: %s' % delta )
+
 class lexer :
     def __init__ ( self ) :
         self . _token_patterns = [ ]
@@ -32,6 +37,29 @@ class lexer :
         self . _eol_token = eol
     def set_eof_token ( self , eof ) :
         self . _eof_token = eof
+    def generate ( self , tokens ) :
+        lines = [ ]
+        line = indent = ''
+        has_token = False
+        for token in tokens :
+            if token [ 'type' ] == 'eol' :
+                lines . append ( line )
+                line = indent
+                has_token = False
+            elif token [ 'type' ] == 'eof' :
+                break
+            elif token [ 'type' ] == 'indent' :
+                if token [ 'delta' ] <= 0 :
+                    raise generate_indent_exception ( token [ 'delta' ] )
+                line += ' ' * token [ 'delta' ]
+            elif token [ 'type' ] == 'dedent' :
+                line = line [ - token [ 'delta' ] : ]
+            else :
+                if has_token :
+                    line += ' '
+                line += token [ 'value' ]
+                has_token = True
+        return lines
     def parse ( self , lines ) :
         self . _tokens = [ ]
         self . _indents = [ ]
