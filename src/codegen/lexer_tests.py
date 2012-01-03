@@ -8,9 +8,9 @@ class lexer_test_case ( unittest . TestCase ) :
         self . l . set_eof_token ( 'eof' )
         self . l . set_indent_tokens ( 'indent' , 'dedent' )
     def test_tokens ( self ) :
-        self . l . set_token_patterns ( [ 
-            { 'id' : [ r'[a-z][a-z0-9_]*' ]
-            , 'number' : [ r'[-]? *[0-9]+' ] } ] )
+        self . l . set_token_patterns (
+            [ ( 'id' , r'[a-z][a-z0-9_]*' )
+            , ( 'number' , r'[-]? *[0-9]+' ) ] )
         self . assertEqual ( self . l . parse (
             [ 'test1 test_2 - 22 33'
             , ''
