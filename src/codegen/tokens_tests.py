@@ -128,7 +128,7 @@ class tokens_test_case ( unittest . TestCase ) :
             p = self . l . parse
             ae = self . assertEqual
             ae ( p ( [ kw ] ) ,
-                [ { 'type' : 'keyword' , 'value' : kw } 
+                [ { 'type' : kw , 'value' : kw } 
                 , { 'type' : 'eol' }
                 , { 'type' : 'eof' } ] )
             ae ( p ( [ kw + '_test' ] ) ,

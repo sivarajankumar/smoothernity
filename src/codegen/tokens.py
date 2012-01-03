@@ -3,17 +3,15 @@ def setup ( lexer ) :
     lexer . set_eof_token ( 'eof' )
     lexer . set_indent_tokens ( 'indent' , 'dedent' )
     lexer . set_token_patterns (
-        [ ( 'keyword' , r'\b(copy|paste|replace)\b' )
-        , ( 'keyword' , r'\b(consts|types|messages|trace|stateless|vars)\b' )
-        , ( 'keyword' , r'\b(module|module_queue|module_name)\b' )
-        , ( 'keyword' , r'\b(system|machine|state|input|entry|exit)\b' )
-        , ( 'keyword' , r'\b(command|discard|on|to|is|do|initial)\b' )
-        , ( 'keyword' , r'\b(init|done)\b' )
-        , ( 'keyword' , r'\b(proc|args|ops)\b' )
-        , ( 'keyword' , r'\b(if|elif|else|any|all|while)\b' )
-        , ( 'keyword' , r'\b(receive|request|reply|send)\b' )
-        , ( 'keyword' , r'\b(with)\b' )
-        , ( 'underscore' , r'_' )
+        [ ( kw , r'\b%s\b' % kw ) for kw in
+            [ 'system' , 'machine' , 'state' , 'consts' , 'on' , 'to' , 'is'
+            , 'command' , 'if' , 'do' , 'input' , 'entry' , 'exit' , 'initial'
+            , 'discard' , 'vars' , 'ops' , 'receive' , 'request' , 'module'
+            , 'trace' , 'with' , 'else' , 'while' , 'args' , 'proc' , 'init'
+            , 'done' , 'copy' , 'paste' , 'replace' , 'module_name' , 'types'
+            , 'reply' , 'messages' , 'stateless' , 'elif' , 'module_queue'
+            , 'any' , 'all' , 'send' ] ] +
+        [ ( 'underscore' , r'_' )
         , ( 'curly_open' , r'{' )
         , ( 'curly_close' , r'}' )
         , ( 'paren_open' , r'\(' )
