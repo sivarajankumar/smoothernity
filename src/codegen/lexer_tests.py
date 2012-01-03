@@ -4,8 +4,6 @@ import lexer
 class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . l = lexer . lexer ( )
-    def tearDown ( self ) :
-        pass
     def test_empty ( self ) :
         self . assertEqual ( self . l . parse ( [ ] ) , [ ] )
     def test_tokens ( self ) :
@@ -28,7 +26,8 @@ class lexer_test_case ( unittest . TestCase ) :
             , '  test2'
             , '      test3'
             , '      test4'
-            , 'test5' ] ) , 
+            , '    test5'
+            , 'test6' ] ) , 
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'indent' }
             , { 'type' : 'id' , 'value' : 'test2' }
@@ -36,8 +35,11 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'id' , 'value' : 'test3' }
             , { 'type' : 'id' , 'value' : 'test4' }
             , { 'type' : 'dedent' }
+            , { 'type' : 'indent' }
+            , { 'type' : 'id' , 'value' : 'test5' }
             , { 'type' : 'dedent' }
-            , { 'type' : 'id' , 'value' : 'test5' } ] )
+            , { 'type' : 'dedent' }
+            , { 'type' : 'id' , 'value' : 'test6' } ] )
         self . assertRaises ( lexer . indent_exception , self . l . parse ,
             [ '  test1'
             , 'test2' ] )
