@@ -20,9 +20,8 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'number' , 'value' : '- 22' }
             , { 'type' : 'number' , 'value' : '33' }
             ] )
-    def test_unknown_token ( self ) :
-        self . l . set_token_patterns ( [ { 'word' : [ r'[a-z]+' ] } ] )
-        self . assertRaises ( lexer . lexer_exception , self . l . parse , [ 'test1' ] )
+        self . assertRaises ( lexer . lexer_exception , self . l . parse , [ 'A' ] )
+        self . assertRaises ( lexer . lexer_exception , self . l . parse , [ '2test' ] )
 
 if __name__ == '__main__' :
     unittest . main ( )
