@@ -8,5 +8,6 @@ def setup ( lexer ) :
         , ( 'right_arrow' , r'->' )
         , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+' )
         , ( 'number_whole' , r'-? *[0-9]+' )
-        , ( 'id' , r'[a-z][a-z0-9_]*' ) 
-        , ( 'string' , r"'[^']*'" ) ] )
+        , ( 'string' , r"'[^']*'" )
+        , ( 'expression' , r"\[[^\]]*\]" )
+        , ( 'id' , r'[a-z][a-z0-9_]*' ) ] )
