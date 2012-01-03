@@ -4,40 +4,45 @@ import lexer
 class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . l = lexer . lexer ( )
-    def test_empty ( self ) :
-        self . assertEqual ( self . l . parse ( [ ] ) , [ ] )
+        self . l . set_eol_token ( 'eol' )
+        self . l . set_eof_token ( 'eof' )
+        self . l . set_indent_tokens ( 'indent' , 'dedent' )
     def test_tokens ( self ) :
         self . l . set_token_patterns ( [ 
             { 'id' : [ r'[a-z][a-z0-9_]*' ]
             , 'number' : [ r'[-]? *[0-9]+' ] } ] )
         self . assertEqual ( self . l . parse (
-            [ 'test1 test_2 - 22 33' ] ) ,
+            [ 'test1 test_2 - 22 33'
+            , ''
+            , '  test3'
+            , '    '
+            , '      test4'
+            , '      test5'
+            , '    test6' ] ) ,
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'id' , 'value' : 'test_2' }
             , { 'type' : 'number' , 'value' : '- 22' }
-            , { 'type' : 'number' , 'value' : '33' } ] )
-        self . assertRaises ( lexer . token_exception , self . l . parse , [ 'A' ] )
-        self . assertRaises ( lexer . whitespace_exception , self . l . parse , [ '2test' ] )
-    def test_indent ( self ) :
-        self . l . set_indent_tokens ( 'indent' , 'dedent' )
-        self . l . set_token_patterns ( [ { 'id' : [ r'[a-z0-9]+' ] } ] )
-        self . assertEqual ( self . l . parse (
-            [ 'test1'
-            , '  test2'
-            , '      test3'
-            , '      test4'
-            , '    test5' ] ) ,
-            [ { 'type' : 'id' , 'value' : 'test1' }
-            , { 'type' : 'indent' }
-            , { 'type' : 'id' , 'value' : 'test2' }
+            , { 'type' : 'number' , 'value' : '33' } 
+            , { 'type' : 'eol' }
             , { 'type' : 'indent' }
             , { 'type' : 'id' , 'value' : 'test3' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'indent' }
             , { 'type' : 'id' , 'value' : 'test4' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'id' , 'value' : 'test5' }
+            , { 'type' : 'eol' }
             , { 'type' : 'dedent' }
             , { 'type' : 'indent' }
-            , { 'type' : 'id' , 'value' : 'test5' }
+            , { 'type' : 'id' , 'value' : 'test6' }
+            , { 'type' : 'eol' }
             , { 'type' : 'dedent' }
-            , { 'type' : 'dedent' } ] )
+            , { 'type' : 'dedent' }
+            , { 'type' : 'eof' } ] )
+        self . assertEqual ( self . l . parse ( [ ] ) , [ { 'type' : 'eof' } ] )
+        self . assertEqual ( self . l . parse ( [ '' ] ) , [ { 'type' : 'eof' } ] )
+        self . assertRaises ( lexer . token_exception , self . l . parse , [ 'A' ] )
+        self . assertRaises ( lexer . whitespace_exception , self . l . parse , [ '2test' ] )
         self . assertRaises ( lexer . indent_exception , self . l . parse ,
             [ '  test1'
             , 'test2' ] )
