@@ -8,7 +8,8 @@ class tokens_test_case ( unittest . TestCase ) :
         tokens . setup ( self . l )
     def test_underscore ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '_' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '_' ] ) ,
             [ { 'type' : 'underscore' , 'value' : '_' }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
@@ -17,7 +18,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_whitespace_exception , p , [ '_test' ] )
     def test_number_whole ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '123 -45 - 56 true false' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '123 -45 - 56 true false' ] ) ,
             [ { 'type' : 'number_whole' , 'value' : '123' }
             , { 'type' : 'number_whole' , 'value' : '-45' }
             , { 'type' : 'number_whole' , 'value' : '- 56' }
@@ -31,7 +33,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_token_exception , p , [ '- - 123' ] )
     def test_number_fract ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '12/34 -5/6 - 78 / 90' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '12/34 -5/6 - 78 / 90' ] ) ,
             [ { 'type' : 'number_fract' , 'value' : '12/34' }
             , { 'type' : 'number_fract' , 'value' : '-5/6' }
             , { 'type' : 'number_fract' , 'value' : '- 78 / 90' }
@@ -43,7 +46,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_token_exception , p , [ '1 / 2 / 3' ] )
     def test_id ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ 'test test1 test_22' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ 'test test1 test_22' ] ) ,
             [ { 'type' : 'id' , 'value' : 'test' }
             , { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'id' , 'value' : 'test_22' }
@@ -53,7 +57,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_token_exception , p , [ 'TEST' ] )
     def test_indents ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ 'test1' , '  test2' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ 'test1' , '  test2' ] ) ,
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'eol' }
             , { 'type' : 'indent' , 'delta' : 2 }
@@ -63,7 +68,8 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eof' } ] )
     def test_arrows ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '<- ->' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '<- ->' ] ) ,
             [ { 'type' : 'left_arrow' , 'value' : '<-' }
             , { 'type' : 'right_arrow' , 'value' : '->' }
             , { 'type' : 'eol' }
@@ -75,7 +81,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_token_exception , p , [ '- >' ] )
     def test_curly_brackets ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '{ }' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '{ }' ] ) ,
             [ { 'type' : 'curly_open' , 'value' : '{' }
             , { 'type' : 'curly_close' , 'value' : '}' }
             , { 'type' : 'eol' }
@@ -84,7 +91,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_whitespace_exception , p , [ '{}' ] )
     def test_parentheses ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '( )' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '( )' ] ) ,
             [ { 'type' : 'paren_open' , 'value' : '(' }
             , { 'type' : 'paren_close' , 'value' : ')' }
             , { 'type' : 'eol' }
@@ -93,7 +101,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_whitespace_exception , p , [ '()' ] )
     def test_string ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ "'some tokens' 'NO CHECKS HERE'" ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ "'some tokens' 'NO CHECKS HERE'" ] ) ,
             [ { 'type' : 'string' , 'value' : "'some tokens'" }
             , { 'type' : 'string' , 'value' : "'NO CHECKS HERE'" }
             , { 'type' : 'eol' }
@@ -104,7 +113,8 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . parse_whitespace_exception , p , [ "test'" ] )
     def test_expression ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '[some tokens] [NO CHECKS HERE]' ] ) ,
+        ae = self . assertEqual
+        ae ( p ( [ '[some tokens] [NO CHECKS HERE]' ] ) ,
             [ { 'type' : 'expression' , 'value' : '[some tokens]' }
             , { 'type' : 'expression' , 'value' : '[NO CHECKS HERE]' }
             , { 'type' : 'eol' }
@@ -116,11 +126,12 @@ class tokens_test_case ( unittest . TestCase ) :
     def test_keywords ( self ) :
         def check ( kw ) :
             p = self . l . parse
-            self . assertEqual ( p ( [ kw ] ) ,
+            ae = self . assertEqual
+            ae ( p ( [ kw ] ) ,
                 [ { 'type' : 'keyword' , 'value' : kw } 
                 , { 'type' : 'eol' }
                 , { 'type' : 'eof' } ] )
-            self . assertEqual ( p ( [ kw + '_test' ] ) ,
+            ae ( p ( [ kw + '_test' ] ) ,
                 [ { 'type' : 'id' , 'value' : kw + '_test' } 
                 , { 'type' : 'eol' }
                 , { 'type' : 'eof' } ] )
