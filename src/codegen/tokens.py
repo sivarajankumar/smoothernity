@@ -18,7 +18,7 @@ def setup ( lexer ) :
         , ( 'paren_close' , r'\)' )
         , ( 'left_arrow' , r'<-' )
         , ( 'right_arrow' , r'->' )
-        , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+' )
+        , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+\b' )
         , ( 'number_whole' , r'-? *[0-9]+\b' )
         , ( 'number_whole' , r'\b(true|false)\b' )
         , ( 'string' , r"'[^']*'" )
