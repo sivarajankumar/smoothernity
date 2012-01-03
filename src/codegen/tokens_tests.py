@@ -71,6 +71,17 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . token_exception , p , [ '-->>' ] )
         ar ( lexer . token_exception , p , [ '< -' ] )
         ar ( lexer . token_exception , p , [ '- >' ] )
+    def test_string ( self ) :
+        p = self . l . parse
+        self . assertEqual ( p ( [ "'some tokens' '!@#$%^'" ] ) ,
+            [ { 'type' : 'string' , 'value' : "'some tokens'" }
+            , { 'type' : 'string' , 'value' : "'!@#$%^'" }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
+        ar = self . assertRaises
+        ar ( lexer . token_exception , p , [ "'" ] )
+        ar ( lexer . token_exception , p , [ "'test" ] )
+        ar ( lexer . whitespace_exception , p , [ "test'" ] )
             
 if __name__ == '__main__' :
     unittest . main ( )
