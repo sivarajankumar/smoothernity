@@ -11,7 +11,7 @@ def setup ( lexer ) :
             , 'done' , 'copy' , 'paste' , 'replace' , 'module_name' , 'types'
             , 'reply' , 'messages' , 'stateless' , 'elif' , 'module_queue'
             , 'any' , 'all' , 'send' ] ] +
-        [ ( 'underscore' , r'_' )
+        [ ( 'underscore' , r'\b_\b' )
         , ( 'curly_open' , r'{' )
         , ( 'curly_close' , r'}' )
         , ( 'paren_open' , r'\(' )
@@ -19,7 +19,7 @@ def setup ( lexer ) :
         , ( 'left_arrow' , r'<-' )
         , ( 'right_arrow' , r'->' )
         , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+' )
-        , ( 'number_whole' , r'-? *[0-9]+' )
+        , ( 'number_whole' , r'-? *[0-9]+\b' )
         , ( 'number_whole' , r'\b(true|false)\b' )
         , ( 'string' , r"'[^']*'" )
         , ( 'expression' , r'\[[^\]]*\]' )
