@@ -32,7 +32,12 @@ class lexer :
         for line in lines :
             line = self . _parse_tokens ( self . _parse_indent ( line ) )
             assert not line
+        self . _insert_dedents ( )
         return self . _tokens
+    def _insert_dedents ( self ) :
+        while len ( self . _indents ) > 1 :
+            self . _indents . pop ( )
+            self . _tokens . append ( { 'type' : self . _dedent_token } )
     def _parse_indent ( self , line ) :
         spaces , line = self . _resplit ( r' *' , line )
         indent = len ( spaces )
