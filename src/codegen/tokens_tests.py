@@ -17,10 +17,12 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . whitespace_exception , p , [ '_test' ] )
     def test_number_whole ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '123 -45 - 56' ] ) ,
+        self . assertEqual ( p ( [ '123 -45 - 56 true false' ] ) ,
             [ { 'type' : 'number_whole' , 'value' : '123' }
             , { 'type' : 'number_whole' , 'value' : '-45' }
             , { 'type' : 'number_whole' , 'value' : '- 56' }
+            , { 'type' : 'number_whole' , 'value' : 'true' }
+            , { 'type' : 'number_whole' , 'value' : 'false' }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
@@ -73,9 +75,9 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . token_exception , p , [ '- >' ] )
     def test_string ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ "'some tokens' '!@#$%^'" ] ) ,
+        self . assertEqual ( p ( [ "'some tokens' 'NO CHECKS HERE'" ] ) ,
             [ { 'type' : 'string' , 'value' : "'some tokens'" }
-            , { 'type' : 'string' , 'value' : "'!@#$%^'" }
+            , { 'type' : 'string' , 'value' : "'NO CHECKS HERE'" }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
@@ -84,9 +86,9 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . whitespace_exception , p , [ "test'" ] )
     def test_expression ( self ) :
         p = self . l . parse
-        self . assertEqual ( p ( [ '[some tokens] [!@#$%^]' ] ) ,
+        self . assertEqual ( p ( [ '[some tokens] [NO CHECKS HERE]' ] ) ,
             [ { 'type' : 'expression' , 'value' : '[some tokens]' }
-            , { 'type' : 'expression' , 'value' : '[!@#$%^]' }
+            , { 'type' : 'expression' , 'value' : '[NO CHECKS HERE]' }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
