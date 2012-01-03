@@ -459,10 +459,10 @@ trace engine_render
                 end
     paste
         replace place1 with meshes
-        replace place2 with Meshes
+        replace place2 with 'Meshes'
     paste
         replace place1 with textures
-        replace place2 with Textures
+        replace place2 with 'Textures'
 
     proc meshes_underflow_error
         with platform_trace_trace
