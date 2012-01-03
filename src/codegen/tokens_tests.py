@@ -73,7 +73,7 @@ class tokens_test_case ( unittest . TestCase ) :
         ar ( lexer . token_exception , p , [ '-->>' ] )
         ar ( lexer . token_exception , p , [ '< -' ] )
         ar ( lexer . token_exception , p , [ '- >' ] )
-    def test_curly_braces ( self ) :
+    def test_curly_brackets ( self ) :
         p = self . l . parse
         self . assertEqual ( p ( [ '{ }' ] ) ,
             [ { 'type' : 'curly_open' , 'value' : '{' }
@@ -82,6 +82,15 @@ class tokens_test_case ( unittest . TestCase ) :
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
         ar ( lexer . whitespace_exception , p , [ '{}' ] )
+    def test_parentheses ( self ) :
+        p = self . l . parse
+        self . assertEqual ( p ( [ '( )' ] ) ,
+            [ { 'type' : 'paren_open' , 'value' : '(' }
+            , { 'type' : 'paren_close' , 'value' : ')' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
+        ar = self . assertRaises
+        ar ( lexer . whitespace_exception , p , [ '()' ] )
     def test_string ( self ) :
         p = self . l . parse
         self . assertEqual ( p ( [ "'some tokens' 'NO CHECKS HERE'" ] ) ,
