@@ -626,5 +626,5 @@ if __name__ == '__main__' :
     #print '\n' . join ( preprocessor ( [ l . replace ( '\n' , '' ) for l in lines ] ) . run ( ) )
     x = lexer . lexer ( )
     tokens . setup ( x )
-    print '\n' . join ( [ str ( t ) for t in x . parse ( [ l . replace ( '\n' , '' ) for l in lines ] ) ] )
+    print '\n' . join ( x . generate ( x . parse ( [ l . replace ( '\n' , '' ) for l in lines ] ) ) )
     reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )
