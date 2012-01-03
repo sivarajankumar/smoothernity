@@ -7,6 +7,18 @@ class lexer_test_case ( unittest . TestCase ) :
         self . l . set_eol_token ( 'eol' )
         self . l . set_eof_token ( 'eof' )
         self . l . set_indent_tokens ( 'indent' , 'dedent' )
+    def test_sequences ( self ) :
+        self . l . set_token_patterns (
+            [ ( 'double' , r'test test' )
+            , ( 'single' , r'test' )
+            ] )
+        self . assertEqual ( self . l . parse ( 
+            [ ' ' . join ( [ 'test' ] * 5 ) ] ) ,
+            [ { 'type' : 'double' , 'value' : 'test test' }
+            , { 'type' : 'double' , 'value' : 'test test' }
+            , { 'type' : 'single' , 'value' : 'test' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' } ] )
     def test_tokens ( self ) :
         self . l . set_token_patterns (
             [ ( 'id' , r'[a-z][a-z0-9_]*' )
