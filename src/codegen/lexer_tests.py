@@ -26,8 +26,7 @@ class lexer_test_case ( unittest . TestCase ) :
             , '  test2'
             , '      test3'
             , '      test4'
-            , '    test5'
-            , 'test6' ] ) , 
+            , '    test5' ] ) ,
             [ { 'type' : 'id' , 'value' : 'test1' }
             , { 'type' : 'indent' }
             , { 'type' : 'id' , 'value' : 'test2' }
@@ -38,8 +37,7 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'indent' }
             , { 'type' : 'id' , 'value' : 'test5' }
             , { 'type' : 'dedent' }
-            , { 'type' : 'dedent' }
-            , { 'type' : 'id' , 'value' : 'test6' } ] )
+            , { 'type' : 'dedent' } ] )
         self . assertRaises ( lexer . indent_exception , self . l . parse ,
             [ '  test1'
             , 'test2' ] )
