@@ -91,9 +91,9 @@ class lexer_test_case ( unittest . TestCase ) :
             , { 'type' : 'eof' } ] )
         self . assertEqual ( self . l . parse ( [ ] ) , [ { 'type' : 'eof' } ] )
         self . assertEqual ( self . l . parse ( [ '' ] ) , [ { 'type' : 'eof' } ] )
-        self . assertRaises ( lexer . token_exception , self . l . parse , [ 'A' ] )
-        self . assertRaises ( lexer . whitespace_exception , self . l . parse , [ '2test' ] )
-        self . assertRaises ( lexer . indent_exception , self . l . parse ,
+        self . assertRaises ( lexer . parse_token_exception , self . l . parse , [ 'A' ] )
+        self . assertRaises ( lexer . parse_whitespace_exception , self . l . parse , [ '2test' ] )
+        self . assertRaises ( lexer . parse_indent_exception , self . l . parse ,
             [ '  test1'
             , 'test2' ] )
 
