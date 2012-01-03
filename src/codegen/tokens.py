@@ -20,7 +20,7 @@ def setup ( lexer ) :
         , ( 'right_arrow' , r'->' )
         , ( 'number_fract' , r'-? *[0-9]+ *\/ *[0-9]+' )
         , ( 'number_whole' , r'-? *[0-9]+' )
-        , ( 'number_whole' , r'true|false' )
+        , ( 'number_whole' , r'\b(true|false)\b' )
         , ( 'string' , r"'[^']*'" )
         , ( 'expression' , r'\[[^\]]*\]' )
         , ( 'id' , r'[a-z][a-z0-9_]*' ) ] )

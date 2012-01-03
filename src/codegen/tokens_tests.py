@@ -19,12 +19,14 @@ class tokens_test_case ( unittest . TestCase ) :
     def test_number_whole ( self ) :
         p = self . l . parse
         ae = self . assertEqual
-        ae ( p ( [ '123 -45 - 56 true false' ] ) ,
+        ae ( p ( [ '123 -45 - 56 true false true_test false_test' ] ) ,
             [ { 'type' : 'number_whole' , 'value' : '123' }
             , { 'type' : 'number_whole' , 'value' : '-45' }
             , { 'type' : 'number_whole' , 'value' : '- 56' }
             , { 'type' : 'number_whole' , 'value' : 'true' }
             , { 'type' : 'number_whole' , 'value' : 'false' }
+            , { 'type' : 'id' , 'value' : 'true_test' }
+            , { 'type' : 'id' , 'value' : 'false_test' }
             , { 'type' : 'eol' }
             , { 'type' : 'eof' } ] )
         ar = self . assertRaises
