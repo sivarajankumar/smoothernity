@@ -7,6 +7,37 @@ class lexer_test_case ( unittest . TestCase ) :
         self . l . set_eol_token ( 'eol' )
         self . l . set_eof_token ( 'eof' )
         self . l . set_indent_tokens ( 'indent' , 'dedent' )
+    def test_generate ( self ) :
+        g = self . l . generate
+        self . assertEqual ( g (
+            [ { 'type' : 'id' , 'value' : 'test1' }
+            , { 'type' : 'id' , 'value' : 'test2' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'indent' , 'delta' : 4 }
+            , { 'type' : 'id' , 'value' : 'test3' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'dedent' , 'delta' : - 4 }
+            , { 'type' : 'indent' , 'delta' : 2 }
+            , { 'type' : 'id' , 'value' : 'test4' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'dedent' , 'delta' : - 2 }
+            , { 'type' : 'eof' } ] ) ,
+            [ 'test1 test2'
+            , '    test3'
+            , '  test4' ] )
+        self . assertEqual ( g (
+            [ { 'type' : 'id' , 'value' : 'test1' }
+            , { 'type' : 'eol' }
+            , { 'type' : 'eof' }
+            , { 'type' : 'id' , 'value' : 'test2' } ] ) , 
+            [ 'test1' ] )
+        self . assertEqual ( g (
+            [ { 'type' : 'id' , 'value' : 'test1' } ] ) ,
+            [ ] )
+        self . assertRaises ( lexer . generate_indent_exception , g ,
+            [ { 'type' : 'indent' , 'delta' : 0 } ] )
+        self . assertRaises ( lexer . generate_indent_exception , g ,
+            [ { 'type' : 'indent' , 'delta' : - 1 } ] )
     def test_sequences ( self ) :
         self . l . set_token_patterns (
             [ ( 'double' , r'test test' )
