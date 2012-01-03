@@ -19,6 +19,8 @@ class lexer :
         self . _token_patterns = [ ]
         self . _indent_token = None
         self . _dedent_token = None
+        self . _eof_token = None
+        self . _eol_token = None
         self . _indents = [ ]
         self . _tokens = [ ]
     def set_token_patterns ( self , pats ) :
@@ -26,15 +28,28 @@ class lexer :
     def set_indent_tokens ( self , indent , dedent ) :
         self . _indent_token = indent
         self . _dedent_token = dedent
+    def set_eol_token ( self , eol ) :
+        self . _eol_token = eol
+    def set_eof_token ( self , eof ) :
+        self . _eof_token = eof
     def parse ( self , lines ) :
         self . _tokens = [ ]
         self . _indents = [ ]
         for line in lines :
-            line = self . _parse_tokens ( self . _parse_indent ( line ) )
-            assert not line
-        self . _insert_dedents ( )
+            if self . _meaning_line ( line ) :
+                line = self . _parse_tokens ( self . _parse_indent ( line ) )
+                self . _append_eol ( )
+                assert not line
+        self . _append_dedents ( )
+        self . _append_eof ( )
         return self . _tokens
-    def _insert_dedents ( self ) :
+    def _meaning_line ( self , line ) :
+        return len ( line . strip ( ' ' ) ) > 0
+    def _append_eol ( self ) :
+        self . _tokens . append ( { 'type' : self . _eol_token } )
+    def _append_eof ( self ) :
+        self . _tokens . append ( { 'type' : self . _eof_token } )
+    def _append_dedents ( self ) :
         while len ( self . _indents ) > 1 :
             self . _indents . pop ( )
             self . _tokens . append ( { 'type' : self . _dedent_token } )
