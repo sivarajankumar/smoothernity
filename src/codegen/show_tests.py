@@ -27,6 +27,17 @@ class show_test_case ( unittest . TestCase ) :
         ar ( show . line_exception , cl , - 1 )
         ar ( show . line_exception , cl , 5 )
         ar ( show . line_exception , cl , 10 )
+    def test_context_line_col ( self ) :
+        clc = self . s . context_line_col
+        self . assertEqual ( clc ( 3 , 2 ) ,
+            [ '22'
+            , '333'
+            , '4444'
+            , '  ^' ] )
+        ar = self . assertRaises
+        ar ( show . line_col_exception , clc , 3 , - 1 )
+        ar ( show . line_col_exception , clc , 3 , 4 )
+        ar ( show . line_col_exception , clc , 3 , 10 )
 
 if __name__ == '__main__' :
     unittest . main ( )
