@@ -1,30 +1,31 @@
-grammar Expr;
+grammar Expr ;
 
-options {
-    language=Python;
-    output=AST;
-    ASTLabelType=object;
+options
+{
+    language = Python ;
+    output = AST ;
+    ASTLabelType = object ;
 }
 
-prog: stat+;
+prog : stat + ;
 
-stat: expr NEWLINE         -> expr
-    | ID '=' expr NEWLINE  -> ^('=' ID expr)
-    | NEWLINE              ->
-    ;
+stat : expr NEWLINE         -> expr
+     | ID '=' expr NEWLINE  -> ^( '=' ID expr )
+     | NEWLINE              ->
+     ;
 
-expr: multExpr (('+'^|'-'^)multExpr)*
-    ;
+expr : multExpr ( ( '+' ^ | '-' ^ ) multExpr ) *
+     ;
 
-multExpr: atom ('*'^ atom)*
-        ;
+multExpr : atom ( '*' ^ atom ) *
+         ;
 
-atom: INT
-    | ID 
-    | '('! expr ')'!
-    ;
+atom : INT
+     | ID 
+     | '(' ! expr ')' !
+     ;
 
-ID: ('a'..'z'|'A'..'Z')+ ;
-INT: '0'..'9'+ ;
-NEWLINE: '\r'? '\n' ;
-WS: (' '|'\t')+ {self.skip()} ;
+ID : ( 'a' .. 'z' | 'A' .. 'Z' ) + ;
+INT : '0' .. '9' + ;
+NEWLINE : '\r' ? '\n' ;
+WS : ( ' ' | '\t' ) + { self . skip ( ) } ;
