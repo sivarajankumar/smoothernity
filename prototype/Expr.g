@@ -1,6 +1,7 @@
 grammar Expr;
 
 options {
+    language=Python;
     output=AST;
     ASTLabelType=object;
 }

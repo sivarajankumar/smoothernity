@@ -1,4 +1,4 @@
-# $ANTLR 3.4 Expr.g 2012-01-05 15:57:42
+# $ANTLR 3.4 Expr.g 2012-01-05 16:38:56
 
 import sys
 from antlr3 import *
@@ -75,7 +75,7 @@ class ExprParser(Parser):
 
 
     # $ANTLR start "prog"
-    # Expr.g:8:1: prog : ( stat )+ ;
+    # Expr.g:9:1: prog : ( stat )+ ;
     def prog(self, ):
         retval = self.prog_return()
         retval.start = self.input.LT(1)
@@ -89,13 +89,13 @@ class ExprParser(Parser):
 
         try:
             try:
-                # Expr.g:8:5: ( ( stat )+ )
-                # Expr.g:8:7: ( stat )+
+                # Expr.g:9:5: ( ( stat )+ )
+                # Expr.g:9:7: ( stat )+
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # Expr.g:8:7: ( stat )+
+                # Expr.g:9:7: ( stat )+
                 cnt1 = 0
                 while True: #loop1
                     alt1 = 2
@@ -106,9 +106,9 @@ class ExprParser(Parser):
 
 
                     if alt1 == 1:
-                        # Expr.g:8:7: stat
+                        # Expr.g:9:7: stat
                         pass 
-                        self._state.following.append(self.FOLLOW_stat_in_prog32)
+                        self._state.following.append(self.FOLLOW_stat_in_prog41)
                         stat1 = self.stat()
 
                         self._state.following.pop()
@@ -159,7 +159,7 @@ class ExprParser(Parser):
 
 
     # $ANTLR start "stat"
-    # Expr.g:10:1: stat : ( expr NEWLINE -> expr | ID '=' expr NEWLINE -> ^( '=' ID expr ) | NEWLINE ->);
+    # Expr.g:11:1: stat : ( expr NEWLINE -> expr | ID '=' expr NEWLINE -> ^( '=' ID expr ) | NEWLINE ->);
     def stat(self, ):
         retval = self.stat_return()
         retval.start = self.input.LT(1)
@@ -188,7 +188,7 @@ class ExprParser(Parser):
         stream_expr = RewriteRuleSubtreeStream(self._adaptor, "rule expr")
         try:
             try:
-                # Expr.g:10:5: ( expr NEWLINE -> expr | ID '=' expr NEWLINE -> ^( '=' ID expr ) | NEWLINE ->)
+                # Expr.g:11:5: ( expr NEWLINE -> expr | ID '=' expr NEWLINE -> ^( '=' ID expr ) | NEWLINE ->)
                 alt2 = 3
                 LA2 = self.input.LA(1)
                 if LA2 == INT or LA2 == 8:
@@ -215,16 +215,16 @@ class ExprParser(Parser):
 
 
                 if alt2 == 1:
-                    # Expr.g:10:7: expr NEWLINE
+                    # Expr.g:11:7: expr NEWLINE
                     pass 
-                    self._state.following.append(self.FOLLOW_expr_in_stat40)
+                    self._state.following.append(self.FOLLOW_expr_in_stat49)
                     expr2 = self.expr()
 
                     self._state.following.pop()
                     stream_expr.add(expr2.tree)
 
 
-                    NEWLINE3 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat42) 
+                    NEWLINE3 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat51) 
                     stream_NEWLINE.add(NEWLINE3)
 
 
@@ -243,7 +243,7 @@ class ExprParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 10:28: -> expr
+                    # 11:28: -> expr
                     self._adaptor.addChild(root_0, stream_expr.nextTree())
 
 
@@ -255,29 +255,29 @@ class ExprParser(Parser):
 
 
                 elif alt2 == 2:
-                    # Expr.g:11:7: ID '=' expr NEWLINE
+                    # Expr.g:12:7: ID '=' expr NEWLINE
                     pass 
-                    ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_stat62) 
+                    ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_stat71) 
                     stream_ID.add(ID4)
 
 
-                    char_literal5 = self.match(self.input, 13, self.FOLLOW_13_in_stat64) 
+                    char_literal5 = self.match(self.input, 13, self.FOLLOW_13_in_stat73) 
                     stream_13.add(char_literal5)
 
 
-                    self._state.following.append(self.FOLLOW_expr_in_stat66)
+                    self._state.following.append(self.FOLLOW_expr_in_stat75)
                     expr6 = self.expr()
 
                     self._state.following.pop()
                     stream_expr.add(expr6.tree)
 
 
-                    NEWLINE7 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat68) 
+                    NEWLINE7 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat77) 
                     stream_NEWLINE.add(NEWLINE7)
 
 
                     # AST Rewrite
-                    # elements: 13, expr, ID
+                    # elements: ID, expr, 13
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -291,8 +291,8 @@ class ExprParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 11:28: -> ^( '=' ID expr )
-                    # Expr.g:11:31: ^( '=' ID expr )
+                    # 12:28: -> ^( '=' ID expr )
+                    # Expr.g:12:31: ^( '=' ID expr )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     stream_13.nextNode()
@@ -315,9 +315,9 @@ class ExprParser(Parser):
 
 
                 elif alt2 == 3:
-                    # Expr.g:12:7: NEWLINE
+                    # Expr.g:13:7: NEWLINE
                     pass 
-                    NEWLINE8 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat87) 
+                    NEWLINE8 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stat96) 
                     stream_NEWLINE.add(NEWLINE8)
 
 
@@ -336,7 +336,7 @@ class ExprParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 12:28: ->
+                    # 13:28: ->
                     root_0 = None
 
 
@@ -377,7 +377,7 @@ class ExprParser(Parser):
 
 
     # $ANTLR start "expr"
-    # Expr.g:15:1: expr : multExpr ( ( '+' ^| '-' ^) multExpr )* ;
+    # Expr.g:16:1: expr : multExpr ( ( '+' ^| '-' ^) multExpr )* ;
     def expr(self, ):
         retval = self.expr_return()
         retval.start = self.input.LT(1)
@@ -397,20 +397,20 @@ class ExprParser(Parser):
 
         try:
             try:
-                # Expr.g:15:5: ( multExpr ( ( '+' ^| '-' ^) multExpr )* )
-                # Expr.g:15:7: multExpr ( ( '+' ^| '-' ^) multExpr )*
+                # Expr.g:16:5: ( multExpr ( ( '+' ^| '-' ^) multExpr )* )
+                # Expr.g:16:7: multExpr ( ( '+' ^| '-' ^) multExpr )*
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                self._state.following.append(self.FOLLOW_multExpr_in_expr114)
+                self._state.following.append(self.FOLLOW_multExpr_in_expr123)
                 multExpr9 = self.multExpr()
 
                 self._state.following.pop()
                 self._adaptor.addChild(root_0, multExpr9.tree)
 
 
-                # Expr.g:15:16: ( ( '+' ^| '-' ^) multExpr )*
+                # Expr.g:16:16: ( ( '+' ^| '-' ^) multExpr )*
                 while True: #loop4
                     alt4 = 2
                     LA4_0 = self.input.LA(1)
@@ -420,9 +420,9 @@ class ExprParser(Parser):
 
 
                     if alt4 == 1:
-                        # Expr.g:15:17: ( '+' ^| '-' ^) multExpr
+                        # Expr.g:16:17: ( '+' ^| '-' ^) multExpr
                         pass 
-                        # Expr.g:15:17: ( '+' ^| '-' ^)
+                        # Expr.g:16:17: ( '+' ^| '-' ^)
                         alt3 = 2
                         LA3_0 = self.input.LA(1)
 
@@ -437,9 +437,9 @@ class ExprParser(Parser):
 
 
                         if alt3 == 1:
-                            # Expr.g:15:18: '+' ^
+                            # Expr.g:16:18: '+' ^
                             pass 
-                            char_literal10 = self.match(self.input, 11, self.FOLLOW_11_in_expr118)
+                            char_literal10 = self.match(self.input, 11, self.FOLLOW_11_in_expr127)
                             char_literal10_tree = self._adaptor.createWithPayload(char_literal10)
                             root_0 = self._adaptor.becomeRoot(char_literal10_tree, root_0)
 
@@ -447,9 +447,9 @@ class ExprParser(Parser):
 
 
                         elif alt3 == 2:
-                            # Expr.g:15:23: '-' ^
+                            # Expr.g:16:23: '-' ^
                             pass 
-                            char_literal11 = self.match(self.input, 12, self.FOLLOW_12_in_expr121)
+                            char_literal11 = self.match(self.input, 12, self.FOLLOW_12_in_expr130)
                             char_literal11_tree = self._adaptor.createWithPayload(char_literal11)
                             root_0 = self._adaptor.becomeRoot(char_literal11_tree, root_0)
 
@@ -458,7 +458,7 @@ class ExprParser(Parser):
 
 
 
-                        self._state.following.append(self.FOLLOW_multExpr_in_expr124)
+                        self._state.following.append(self.FOLLOW_multExpr_in_expr133)
                         multExpr12 = self.multExpr()
 
                         self._state.following.pop()
@@ -503,7 +503,7 @@ class ExprParser(Parser):
 
 
     # $ANTLR start "multExpr"
-    # Expr.g:18:1: multExpr : atom ( '*' ^ atom )* ;
+    # Expr.g:19:1: multExpr : atom ( '*' ^ atom )* ;
     def multExpr(self, ):
         retval = self.multExpr_return()
         retval.start = self.input.LT(1)
@@ -521,20 +521,20 @@ class ExprParser(Parser):
 
         try:
             try:
-                # Expr.g:18:9: ( atom ( '*' ^ atom )* )
-                # Expr.g:18:11: atom ( '*' ^ atom )*
+                # Expr.g:19:9: ( atom ( '*' ^ atom )* )
+                # Expr.g:19:11: atom ( '*' ^ atom )*
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                self._state.following.append(self.FOLLOW_atom_in_multExpr138)
+                self._state.following.append(self.FOLLOW_atom_in_multExpr147)
                 atom13 = self.atom()
 
                 self._state.following.pop()
                 self._adaptor.addChild(root_0, atom13.tree)
 
 
-                # Expr.g:18:16: ( '*' ^ atom )*
+                # Expr.g:19:16: ( '*' ^ atom )*
                 while True: #loop5
                     alt5 = 2
                     LA5_0 = self.input.LA(1)
@@ -544,15 +544,15 @@ class ExprParser(Parser):
 
 
                     if alt5 == 1:
-                        # Expr.g:18:17: '*' ^ atom
+                        # Expr.g:19:17: '*' ^ atom
                         pass 
-                        char_literal14 = self.match(self.input, 10, self.FOLLOW_10_in_multExpr141)
+                        char_literal14 = self.match(self.input, 10, self.FOLLOW_10_in_multExpr150)
                         char_literal14_tree = self._adaptor.createWithPayload(char_literal14)
                         root_0 = self._adaptor.becomeRoot(char_literal14_tree, root_0)
 
 
 
-                        self._state.following.append(self.FOLLOW_atom_in_multExpr144)
+                        self._state.following.append(self.FOLLOW_atom_in_multExpr153)
                         atom15 = self.atom()
 
                         self._state.following.pop()
@@ -597,7 +597,7 @@ class ExprParser(Parser):
 
 
     # $ANTLR start "atom"
-    # Expr.g:21:1: atom : ( INT | ID | '(' ! expr ')' !);
+    # Expr.g:22:1: atom : ( INT | ID | '(' ! expr ')' !);
     def atom(self, ):
         retval = self.atom_return()
         retval.start = self.input.LT(1)
@@ -619,7 +619,7 @@ class ExprParser(Parser):
 
         try:
             try:
-                # Expr.g:21:5: ( INT | ID | '(' ! expr ')' !)
+                # Expr.g:22:5: ( INT | ID | '(' ! expr ')' !)
                 alt6 = 3
                 LA6 = self.input.LA(1)
                 if LA6 == INT:
@@ -635,12 +635,12 @@ class ExprParser(Parser):
 
 
                 if alt6 == 1:
-                    # Expr.g:21:7: INT
+                    # Expr.g:22:7: INT
                     pass 
                     root_0 = self._adaptor.nil()
 
 
-                    INT16 = self.match(self.input, INT, self.FOLLOW_INT_in_atom162)
+                    INT16 = self.match(self.input, INT, self.FOLLOW_INT_in_atom171)
                     INT16_tree = self._adaptor.createWithPayload(INT16)
                     self._adaptor.addChild(root_0, INT16_tree)
 
@@ -648,12 +648,12 @@ class ExprParser(Parser):
 
 
                 elif alt6 == 2:
-                    # Expr.g:22:7: ID
+                    # Expr.g:23:7: ID
                     pass 
                     root_0 = self._adaptor.nil()
 
 
-                    ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_atom170)
+                    ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_atom179)
                     ID17_tree = self._adaptor.createWithPayload(ID17)
                     self._adaptor.addChild(root_0, ID17_tree)
 
@@ -661,21 +661,21 @@ class ExprParser(Parser):
 
 
                 elif alt6 == 3:
-                    # Expr.g:23:7: '(' ! expr ')' !
+                    # Expr.g:24:7: '(' ! expr ')' !
                     pass 
                     root_0 = self._adaptor.nil()
 
 
-                    char_literal18 = self.match(self.input, 8, self.FOLLOW_8_in_atom179)
+                    char_literal18 = self.match(self.input, 8, self.FOLLOW_8_in_atom188)
 
-                    self._state.following.append(self.FOLLOW_expr_in_atom182)
+                    self._state.following.append(self.FOLLOW_expr_in_atom191)
                     expr19 = self.expr()
 
                     self._state.following.pop()
                     self._adaptor.addChild(root_0, expr19.tree)
 
 
-                    char_literal20 = self.match(self.input, 9, self.FOLLOW_9_in_atom184)
+                    char_literal20 = self.match(self.input, 9, self.FOLLOW_9_in_atom193)
 
 
                 retval.stop = self.input.LT(-1)
@@ -701,26 +701,26 @@ class ExprParser(Parser):
 
  
 
-    FOLLOW_stat_in_prog32 = frozenset([1, 4, 5, 6, 8])
-    FOLLOW_expr_in_stat40 = frozenset([6])
-    FOLLOW_NEWLINE_in_stat42 = frozenset([1])
-    FOLLOW_ID_in_stat62 = frozenset([13])
-    FOLLOW_13_in_stat64 = frozenset([4, 5, 8])
-    FOLLOW_expr_in_stat66 = frozenset([6])
-    FOLLOW_NEWLINE_in_stat68 = frozenset([1])
-    FOLLOW_NEWLINE_in_stat87 = frozenset([1])
-    FOLLOW_multExpr_in_expr114 = frozenset([1, 11, 12])
-    FOLLOW_11_in_expr118 = frozenset([4, 5, 8])
-    FOLLOW_12_in_expr121 = frozenset([4, 5, 8])
-    FOLLOW_multExpr_in_expr124 = frozenset([1, 11, 12])
-    FOLLOW_atom_in_multExpr138 = frozenset([1, 10])
-    FOLLOW_10_in_multExpr141 = frozenset([4, 5, 8])
-    FOLLOW_atom_in_multExpr144 = frozenset([1, 10])
-    FOLLOW_INT_in_atom162 = frozenset([1])
-    FOLLOW_ID_in_atom170 = frozenset([1])
-    FOLLOW_8_in_atom179 = frozenset([4, 5, 8])
-    FOLLOW_expr_in_atom182 = frozenset([9])
-    FOLLOW_9_in_atom184 = frozenset([1])
+    FOLLOW_stat_in_prog41 = frozenset([1, 4, 5, 6, 8])
+    FOLLOW_expr_in_stat49 = frozenset([6])
+    FOLLOW_NEWLINE_in_stat51 = frozenset([1])
+    FOLLOW_ID_in_stat71 = frozenset([13])
+    FOLLOW_13_in_stat73 = frozenset([4, 5, 8])
+    FOLLOW_expr_in_stat75 = frozenset([6])
+    FOLLOW_NEWLINE_in_stat77 = frozenset([1])
+    FOLLOW_NEWLINE_in_stat96 = frozenset([1])
+    FOLLOW_multExpr_in_expr123 = frozenset([1, 11, 12])
+    FOLLOW_11_in_expr127 = frozenset([4, 5, 8])
+    FOLLOW_12_in_expr130 = frozenset([4, 5, 8])
+    FOLLOW_multExpr_in_expr133 = frozenset([1, 11, 12])
+    FOLLOW_atom_in_multExpr147 = frozenset([1, 10])
+    FOLLOW_10_in_multExpr150 = frozenset([4, 5, 8])
+    FOLLOW_atom_in_multExpr153 = frozenset([1, 10])
+    FOLLOW_INT_in_atom171 = frozenset([1])
+    FOLLOW_ID_in_atom179 = frozenset([1])
+    FOLLOW_8_in_atom188 = frozenset([4, 5, 8])
+    FOLLOW_expr_in_atom191 = frozenset([9])
+    FOLLOW_9_in_atom193 = frozenset([1])
 
 
 

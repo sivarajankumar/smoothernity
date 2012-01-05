@@ -1,6 +1,7 @@
 tree grammar Eval;
 
 options {
+    language=Python;
     tokenVocab=Expr;
     ASTLabelType=object;
 }

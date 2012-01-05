@@ -1,4 +1,4 @@
-# $ANTLR 3.4 Expr.g 2012-01-05 15:57:43
+# $ANTLR 3.4 Expr.g 2012-01-05 16:38:56
 
 import sys
 from antlr3 import *
@@ -46,8 +46,8 @@ class ExprLexer(Lexer):
             _type = T__8
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:2:6: ( '(' )
-            # Expr.g:2:8: '('
+            # Expr.g:7:6: ( '(' )
+            # Expr.g:7:8: '('
             pass 
             self.match(40)
 
@@ -68,8 +68,8 @@ class ExprLexer(Lexer):
             _type = T__9
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:3:6: ( ')' )
-            # Expr.g:3:8: ')'
+            # Expr.g:8:6: ( ')' )
+            # Expr.g:8:8: ')'
             pass 
             self.match(41)
 
@@ -90,8 +90,8 @@ class ExprLexer(Lexer):
             _type = T__10
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:4:7: ( '*' )
-            # Expr.g:4:9: '*'
+            # Expr.g:9:7: ( '*' )
+            # Expr.g:9:9: '*'
             pass 
             self.match(42)
 
@@ -112,8 +112,8 @@ class ExprLexer(Lexer):
             _type = T__11
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:5:7: ( '+' )
-            # Expr.g:5:9: '+'
+            # Expr.g:10:7: ( '+' )
+            # Expr.g:10:9: '+'
             pass 
             self.match(43)
 
@@ -134,8 +134,8 @@ class ExprLexer(Lexer):
             _type = T__12
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:6:7: ( '-' )
-            # Expr.g:6:9: '-'
+            # Expr.g:11:7: ( '-' )
+            # Expr.g:11:9: '-'
             pass 
             self.match(45)
 
@@ -156,8 +156,8 @@ class ExprLexer(Lexer):
             _type = T__13
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:7:7: ( '=' )
-            # Expr.g:7:9: '='
+            # Expr.g:12:7: ( '=' )
+            # Expr.g:12:9: '='
             pass 
             self.match(61)
 
@@ -178,10 +178,10 @@ class ExprLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:26:3: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
-            # Expr.g:26:5: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            # Expr.g:27:3: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
+            # Expr.g:27:5: ( 'a' .. 'z' | 'A' .. 'Z' )+
             pass 
-            # Expr.g:26:5: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            # Expr.g:27:5: ( 'a' .. 'z' | 'A' .. 'Z' )+
             cnt1 = 0
             while True: #loop1
                 alt1 = 2
@@ -231,10 +231,10 @@ class ExprLexer(Lexer):
             _type = INT
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:27:4: ( ( '0' .. '9' )+ )
-            # Expr.g:27:6: ( '0' .. '9' )+
+            # Expr.g:28:4: ( ( '0' .. '9' )+ )
+            # Expr.g:28:6: ( '0' .. '9' )+
             pass 
-            # Expr.g:27:6: ( '0' .. '9' )+
+            # Expr.g:28:6: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -284,17 +284,17 @@ class ExprLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:28:8: ( ( '\\r' )? '\\n' )
-            # Expr.g:28:10: ( '\\r' )? '\\n'
+            # Expr.g:29:8: ( ( '\\r' )? '\\n' )
+            # Expr.g:29:10: ( '\\r' )? '\\n'
             pass 
-            # Expr.g:28:10: ( '\\r' )?
+            # Expr.g:29:10: ( '\\r' )?
             alt3 = 2
             LA3_0 = self.input.LA(1)
 
             if (LA3_0 == 13) :
                 alt3 = 1
             if alt3 == 1:
-                # Expr.g:28:10: '\\r'
+                # Expr.g:29:10: '\\r'
                 pass 
                 self.match(13)
 
@@ -320,10 +320,10 @@ class ExprLexer(Lexer):
             _type = WS
             _channel = DEFAULT_CHANNEL
 
-            # Expr.g:29:3: ( ( ' ' | '\\t' )+ )
-            # Expr.g:29:5: ( ' ' | '\\t' )+
+            # Expr.g:30:3: ( ( ' ' | '\\t' )+ )
+            # Expr.g:30:5: ( ' ' | '\\t' )+
             pass 
-            # Expr.g:29:5: ( ' ' | '\\t' )+
+            # Expr.g:30:5: ( ' ' | '\\t' )+
             cnt4 = 0
             while True: #loop4
                 alt4 = 2
