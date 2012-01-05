@@ -10,13 +10,19 @@ options {
 memory = dict()
 }
 
-prog: stat+;
+prog returns [value]
+    @init {$value = list()}
+    : (stat {$value.append($stat.value)})+;
 
-stat: expr {print $expr.value}
-    | ^('=' ID expr) {self.memory[$ID.text] = int($expr.value)}
+stat returns [value]: expr {$value = $expr.value}
+    | ^('=' ID expr) 
+        {
+            self.memory[$ID.text] = int($expr.value)
+            $value = None
+        }
     ;
 
-expr returns [int value]
+expr returns [value]
     : ^('+' a=expr b=expr) {$value = a + b}
     | ^('-' a=expr b=expr) {$value = a - b}
     | ^('*' a=expr b=expr) {$value = a * b}
