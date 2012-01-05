@@ -3,5 +3,6 @@ if exists("did_load_filetypes")
 endif
 augroup filetypedetect
     au! BufRead,BufNewFile *.shy setfiletype smoothernity
+    au! BufRead,BufNewFile *.g setfiletype antlr3
 augroup END
 
