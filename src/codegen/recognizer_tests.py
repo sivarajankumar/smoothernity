@@ -13,12 +13,12 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae ( r ( '' ) , { } )
         ae ( r ( ' ' ) , { } )
         ae ( r ( '\n' ) , { } )
-        ae ( r ( '\r' ) , { } )
+        ae ( r ( '\r\n' ) , { } )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'module test1' ) , { 'module' : { 'test1' : { } } } )
-        ae ( r ( 'module test1\nmodule test2' ) ,
+        ae ( r ( 'module test1\n' ) , { 'module' : { 'test1' : { } } } )
+        ae ( r ( 'module test1\nmodule test2\n' ) ,
             { 'module' : { 'test1' : { } , 'test2' : { } } } )
 
 if __name__ == '__main__' :
