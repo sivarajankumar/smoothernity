@@ -1,4 +1,4 @@
-# $ANTLR 3.4 Eval.g 2012-01-05 18:10:23
+# $ANTLR 3.4 Eval.g 2012-01-05 19:48:24
 
 import sys
 from antlr3 import *
@@ -53,12 +53,12 @@ class Eval(TreeParser):
 
 
              
-    memory = dict()
+    memory = dict ( )
 
 
 
     # $ANTLR start "prog"
-    # Eval.g:13:1: prog returns [value] : ( stat )+ ;
+    # Eval.g:14:1: prog returns [ value ] : ( stat )+ ;
     def prog(self, ):
         value = None
 
@@ -66,13 +66,13 @@ class Eval(TreeParser):
         stat1 = None
 
 
-        value = list()
+        value = list ( ) 
         try:
             try:
-                # Eval.g:15:5: ( ( stat )+ )
-                # Eval.g:15:7: ( stat )+
+                # Eval.g:16:5: ( ( stat )+ )
+                # Eval.g:16:7: ( stat )+
                 pass 
-                # Eval.g:15:7: ( stat )+
+                # Eval.g:16:7: ( stat )+
                 cnt1 = 0
                 while True: #loop1
                     alt1 = 2
@@ -83,15 +83,15 @@ class Eval(TreeParser):
 
 
                     if alt1 == 1:
-                        # Eval.g:15:8: stat
+                        # Eval.g:16:9: stat
                         pass 
-                        self._state.following.append(self.FOLLOW_stat_in_prog68)
+                        self._state.following.append(self.FOLLOW_stat_in_prog79)
                         stat1 = self.stat()
 
                         self._state.following.pop()
 
                         #action start
-                        value.append(stat1)
+                        value . append ( stat1 ) 
                         #action end
 
 
@@ -122,7 +122,7 @@ class Eval(TreeParser):
 
 
     # $ANTLR start "stat"
-    # Eval.g:17:1: stat returns [value] : ( expr | ^( '=' ID expr ) );
+    # Eval.g:18:1: stat returns [ value ] : ( expr | ^( '=' ID expr ) );
     def stat(self, ):
         value = None
 
@@ -135,7 +135,7 @@ class Eval(TreeParser):
 
         try:
             try:
-                # Eval.g:17:21: ( expr | ^( '=' ID expr ) )
+                # Eval.g:18:24: ( expr | ^( '=' ID expr ) )
                 alt2 = 2
                 LA2_0 = self.input.LA(1)
 
@@ -150,28 +150,28 @@ class Eval(TreeParser):
 
 
                 if alt2 == 1:
-                    # Eval.g:17:23: expr
+                    # Eval.g:18:26: expr
                     pass 
-                    self._state.following.append(self.FOLLOW_expr_in_stat83)
+                    self._state.following.append(self.FOLLOW_expr_in_stat98)
                     expr2 = self.expr()
 
                     self._state.following.pop()
 
                     #action start
-                    value = expr2
+                    value = expr2 
                     #action end
 
 
 
                 elif alt2 == 2:
-                    # Eval.g:18:7: ^( '=' ID expr )
+                    # Eval.g:19:7: ^( '=' ID expr )
                     pass 
-                    self.match(self.input, 13, self.FOLLOW_13_in_stat94)
+                    self.match(self.input, 13, self.FOLLOW_13_in_stat110)
 
                     self.match(self.input, DOWN, None)
-                    ID3 = self.match(self.input, ID, self.FOLLOW_ID_in_stat96)
+                    ID3 = self.match(self.input, ID, self.FOLLOW_ID_in_stat112)
 
-                    self._state.following.append(self.FOLLOW_expr_in_stat98)
+                    self._state.following.append(self.FOLLOW_expr_in_stat114)
                     expr4 = self.expr()
 
                     self._state.following.pop()
@@ -181,7 +181,7 @@ class Eval(TreeParser):
 
                     #action start
                             
-                    self.memory[ID3.text] = int(expr4)
+                    self . memory [ ID3 . text ] = int ( expr4 )
                     value = None
                             
                     #action end
@@ -202,7 +202,7 @@ class Eval(TreeParser):
 
 
     # $ANTLR start "expr"
-    # Eval.g:25:1: expr returns [value] : ( ^( '+' a= expr b= expr ) | ^( '-' a= expr b= expr ) | ^( '*' a= expr b= expr ) | ID | INT );
+    # Eval.g:26:1: expr returns [ value ] : ( ^( '+' a= expr b= expr ) | ^( '-' a= expr b= expr ) | ^( '*' a= expr b= expr ) | ID | INT );
     def expr(self, ):
         value = None
 
@@ -216,7 +216,7 @@ class Eval(TreeParser):
 
         try:
             try:
-                # Eval.g:26:5: ( ^( '+' a= expr b= expr ) | ^( '-' a= expr b= expr ) | ^( '*' a= expr b= expr ) | ID | INT )
+                # Eval.g:27:5: ( ^( '+' a= expr b= expr ) | ^( '-' a= expr b= expr ) | ^( '*' a= expr b= expr ) | ID | INT )
                 alt3 = 5
                 LA3 = self.input.LA(1)
                 if LA3 == 11:
@@ -236,17 +236,17 @@ class Eval(TreeParser):
 
 
                 if alt3 == 1:
-                    # Eval.g:26:7: ^( '+' a= expr b= expr )
+                    # Eval.g:27:7: ^( '+' a= expr b= expr )
                     pass 
-                    self.match(self.input, 11, self.FOLLOW_11_in_expr132)
+                    self.match(self.input, 11, self.FOLLOW_11_in_expr149)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_expr_in_expr136)
+                    self._state.following.append(self.FOLLOW_expr_in_expr155)
                     a = self.expr()
 
                     self._state.following.pop()
 
-                    self._state.following.append(self.FOLLOW_expr_in_expr140)
+                    self._state.following.append(self.FOLLOW_expr_in_expr161)
                     b = self.expr()
 
                     self._state.following.pop()
@@ -255,23 +255,23 @@ class Eval(TreeParser):
 
 
                     #action start
-                    value = a + b
+                    value = a + b 
                     #action end
 
 
 
                 elif alt3 == 2:
-                    # Eval.g:27:7: ^( '-' a= expr b= expr )
+                    # Eval.g:28:7: ^( '-' a= expr b= expr )
                     pass 
-                    self.match(self.input, 12, self.FOLLOW_12_in_expr152)
+                    self.match(self.input, 12, self.FOLLOW_12_in_expr174)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_expr_in_expr156)
+                    self._state.following.append(self.FOLLOW_expr_in_expr180)
                     a = self.expr()
 
                     self._state.following.pop()
 
-                    self._state.following.append(self.FOLLOW_expr_in_expr160)
+                    self._state.following.append(self.FOLLOW_expr_in_expr186)
                     b = self.expr()
 
                     self._state.following.pop()
@@ -280,23 +280,23 @@ class Eval(TreeParser):
 
 
                     #action start
-                    value = a - b
+                    value = a - b 
                     #action end
 
 
 
                 elif alt3 == 3:
-                    # Eval.g:28:7: ^( '*' a= expr b= expr )
+                    # Eval.g:29:7: ^( '*' a= expr b= expr )
                     pass 
-                    self.match(self.input, 10, self.FOLLOW_10_in_expr172)
+                    self.match(self.input, 10, self.FOLLOW_10_in_expr199)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_expr_in_expr176)
+                    self._state.following.append(self.FOLLOW_expr_in_expr205)
                     a = self.expr()
 
                     self._state.following.pop()
 
-                    self._state.following.append(self.FOLLOW_expr_in_expr180)
+                    self._state.following.append(self.FOLLOW_expr_in_expr211)
                     b = self.expr()
 
                     self._state.following.pop()
@@ -305,22 +305,22 @@ class Eval(TreeParser):
 
 
                     #action start
-                    value = a * b
+                    value = a * b 
                     #action end
 
 
 
                 elif alt3 == 4:
-                    # Eval.g:29:7: ID
+                    # Eval.g:30:7: ID
                     pass 
-                    ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_expr191)
+                    ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_expr222)
 
                     #action start
                           
-                    if ID5.text in self.memory:
-                        value = self.memory[ID5.text]
-                    else:
-                        print 'undefined variable', ID5.text
+                    if ID5.text in self . memory :
+                        value = self . memory [ ID5.text ]
+                    else :
+                        print 'undefined variable' , ID5.text
                         value = 0
                           
                     #action end
@@ -328,12 +328,12 @@ class Eval(TreeParser):
 
 
                 elif alt3 == 5:
-                    # Eval.g:37:7: INT
+                    # Eval.g:38:7: INT
                     pass 
-                    INT6 = self.match(self.input, INT, self.FOLLOW_INT_in_expr207)
+                    INT6 = self.match(self.input, INT, self.FOLLOW_INT_in_expr238)
 
                     #action start
-                    value = int(INT6.text)
+                    value = int ( INT6.text ) 
                     #action end
 
 
@@ -353,22 +353,22 @@ class Eval(TreeParser):
 
  
 
-    FOLLOW_stat_in_prog68 = frozenset([1, 4, 5, 10, 11, 12, 13])
-    FOLLOW_expr_in_stat83 = frozenset([1])
-    FOLLOW_13_in_stat94 = frozenset([2])
-    FOLLOW_ID_in_stat96 = frozenset([4, 5, 10, 11, 12])
-    FOLLOW_expr_in_stat98 = frozenset([3])
-    FOLLOW_11_in_expr132 = frozenset([2])
-    FOLLOW_expr_in_expr136 = frozenset([4, 5, 10, 11, 12])
-    FOLLOW_expr_in_expr140 = frozenset([3])
-    FOLLOW_12_in_expr152 = frozenset([2])
-    FOLLOW_expr_in_expr156 = frozenset([4, 5, 10, 11, 12])
-    FOLLOW_expr_in_expr160 = frozenset([3])
-    FOLLOW_10_in_expr172 = frozenset([2])
-    FOLLOW_expr_in_expr176 = frozenset([4, 5, 10, 11, 12])
-    FOLLOW_expr_in_expr180 = frozenset([3])
-    FOLLOW_ID_in_expr191 = frozenset([1])
-    FOLLOW_INT_in_expr207 = frozenset([1])
+    FOLLOW_stat_in_prog79 = frozenset([1, 4, 5, 10, 11, 12, 13])
+    FOLLOW_expr_in_stat98 = frozenset([1])
+    FOLLOW_13_in_stat110 = frozenset([2])
+    FOLLOW_ID_in_stat112 = frozenset([4, 5, 10, 11, 12])
+    FOLLOW_expr_in_stat114 = frozenset([3])
+    FOLLOW_11_in_expr149 = frozenset([2])
+    FOLLOW_expr_in_expr155 = frozenset([4, 5, 10, 11, 12])
+    FOLLOW_expr_in_expr161 = frozenset([3])
+    FOLLOW_12_in_expr174 = frozenset([2])
+    FOLLOW_expr_in_expr180 = frozenset([4, 5, 10, 11, 12])
+    FOLLOW_expr_in_expr186 = frozenset([3])
+    FOLLOW_10_in_expr199 = frozenset([2])
+    FOLLOW_expr_in_expr205 = frozenset([4, 5, 10, 11, 12])
+    FOLLOW_expr_in_expr211 = frozenset([3])
+    FOLLOW_ID_in_expr222 = frozenset([1])
+    FOLLOW_INT_in_expr238 = frozenset([1])
 
 
 
