@@ -8,5 +8,9 @@ class recognizer :
     def recognize ( self , input ) :
         fel = FrontendLexer ( ANTLRInputStream ( input ) )
         fep = FrontendParser ( CommonTokenStream ( fel ) )
-        be = Backend ( CommonTreeNodeStream ( fep . start ( ) ) )
-        return be . start ( )
+        t = fep . start ( ) . tree
+        if t == None :
+            return { }
+        else :
+            be = Backend ( CommonTreeNodeStream ( t ) )
+            return be . start ( )
