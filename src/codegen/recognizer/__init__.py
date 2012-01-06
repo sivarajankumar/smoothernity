@@ -1,7 +1,7 @@
 from antlr3 import ANTLRInputStream , CommonTokenStream , RecognitionException
 from antlr3 . tree import CommonTreeNodeStream
-from FrontendParser import FrontendParser
-from FrontendLexer import FrontendLexer
+from FrontendParser import FrontendParser , FrontendParserException
+from FrontendLexer import FrontendLexer , FrontendLexerException
 from Backend import Backend
 
 class exception ( Exception ) :
@@ -14,7 +14,9 @@ class recognizer :
         fep = FrontendParser ( CommonTokenStream ( fel ) )
         try :
             t = fep . start ( ) . tree
-        except Exception as e :
+        except FrontendLexerException as e :
+            raise exception ( str ( e ) )
+        except FrontendParserException as e :
             raise exception ( str ( e ) )
         if t == None :
             return { }
