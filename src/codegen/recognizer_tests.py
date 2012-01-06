@@ -39,6 +39,11 @@ class recognizer_test_case ( unittest . TestCase ) :
         r = self . rec
         ae ( r ( 'consts test1\nconsts test2\n' ) ,
             { 'consts' : { 'test1' : { } , 'test2' : { } } } )
+    def test_consts_num_whole ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'consts test1\n const1 11\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 } } } )
 
 if __name__ == '__main__' :
     unittest . main ( )
