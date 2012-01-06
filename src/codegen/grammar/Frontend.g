@@ -33,8 +33,9 @@ options
         raise FrontendLexerException ( msg )
 }
 
-start : module * ;
+start : ( module | consts ) * ;
 module : 'module' ID NEWLINE -> ^( 'module' ID ) ;
+consts : 'consts' ID NEWLINE -> ^( 'consts' ID ) ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NEWLINE : '\r' ? '\n' ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
