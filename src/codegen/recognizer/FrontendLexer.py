@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:10:15
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 13:00:13
 
 import sys
 from antlr3 import *
@@ -72,23 +72,24 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:38:4: ( ( 'a' .. 'z' | '0' .. '9' )+ )
-            # grammar/Frontend.g:38:6: ( 'a' .. 'z' | '0' .. '9' )+
+            # grammar/Frontend.g:38:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:38:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
-            # grammar/Frontend.g:38:6: ( 'a' .. 'z' | '0' .. '9' )+
-            cnt1 = 0
+            self.matchRange(97, 122)
+
+            # grammar/Frontend.g:38:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
 
-                if ((48 <= LA1_0 <= 57) or (97 <= LA1_0 <= 122)) :
+                if ((48 <= LA1_0 <= 57) or LA1_0 == 95 or (97 <= LA1_0 <= 122)) :
                     alt1 = 1
 
 
                 if alt1 == 1:
                     # grammar/Frontend.g:
                     pass 
-                    if (48 <= self.input.LA(1) <= 57) or (97 <= self.input.LA(1) <= 122):
+                    if (48 <= self.input.LA(1) <= 57) or self.input.LA(1) == 95 or (97 <= self.input.LA(1) <= 122):
                         self.input.consume()
                     else:
                         mse = MismatchedSetException(None, self.input)
@@ -99,13 +100,7 @@ class FrontendLexer(Lexer):
 
 
                 else:
-                    if cnt1 >= 1:
-                        break #loop1
-
-                    eee = EarlyExitException(1, self.input)
-                    raise eee
-
-                cnt1 += 1
+                    break #loop1
 
 
 
@@ -228,7 +223,7 @@ class FrontendLexer(Lexer):
                             if (LA4_8 == 101) :
                                 LA4_9 = self.input.LA(7)
 
-                                if ((48 <= LA4_9 <= 57) or (97 <= LA4_9 <= 122)) :
+                                if ((48 <= LA4_9 <= 57) or LA4_9 == 95 or (97 <= LA4_9 <= 122)) :
                                     alt4 = 2
                                 else:
                                     alt4 = 1
@@ -248,7 +243,7 @@ class FrontendLexer(Lexer):
             else:
                 alt4 = 2
 
-        elif LA4 == 48 or LA4 == 49 or LA4 == 50 or LA4 == 51 or LA4 == 52 or LA4 == 53 or LA4 == 54 or LA4 == 55 or LA4 == 56 or LA4 == 57 or LA4 == 97 or LA4 == 98 or LA4 == 99 or LA4 == 100 or LA4 == 101 or LA4 == 102 or LA4 == 103 or LA4 == 104 or LA4 == 105 or LA4 == 106 or LA4 == 107 or LA4 == 108 or LA4 == 110 or LA4 == 111 or LA4 == 112 or LA4 == 113 or LA4 == 114 or LA4 == 115 or LA4 == 116 or LA4 == 117 or LA4 == 118 or LA4 == 119 or LA4 == 120 or LA4 == 121 or LA4 == 122:
+        elif LA4 == 97 or LA4 == 98 or LA4 == 99 or LA4 == 100 or LA4 == 101 or LA4 == 102 or LA4 == 103 or LA4 == 104 or LA4 == 105 or LA4 == 106 or LA4 == 107 or LA4 == 108 or LA4 == 110 or LA4 == 111 or LA4 == 112 or LA4 == 113 or LA4 == 114 or LA4 == 115 or LA4 == 116 or LA4 == 117 or LA4 == 118 or LA4 == 119 or LA4 == 120 or LA4 == 121 or LA4 == 122:
             alt4 = 2
         elif LA4 == 10 or LA4 == 13:
             alt4 = 3
