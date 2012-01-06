@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-05 21:59:01
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:00:09
 
 import sys
 from antlr3 import *
@@ -32,6 +32,10 @@ class FrontendLexer(Lexer):
 
 
 
+             
+    def emitErrorMessage ( msg ) :
+        raise Exception ( msg )
+
 
 
     # $ANTLR start "T__7"
@@ -40,8 +44,8 @@ class FrontendLexer(Lexer):
             _type = T__7
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:7:6: ( 'module' )
-            # grammar/Frontend.g:7:8: 'module'
+            # grammar/Frontend.g:12:6: ( 'module' )
+            # grammar/Frontend.g:12:8: 'module'
             pass 
             self.match("module")
 
@@ -63,10 +67,10 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:12:4: ( ( 'a' .. 'z' | '0' .. '9' )+ )
-            # grammar/Frontend.g:12:6: ( 'a' .. 'z' | '0' .. '9' )+
+            # grammar/Frontend.g:24:4: ( ( 'a' .. 'z' | '0' .. '9' )+ )
+            # grammar/Frontend.g:24:6: ( 'a' .. 'z' | '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:12:6: ( 'a' .. 'z' | '0' .. '9' )+
+            # grammar/Frontend.g:24:6: ( 'a' .. 'z' | '0' .. '9' )+
             cnt1 = 0
             while True: #loop1
                 alt1 = 2
@@ -116,17 +120,17 @@ class FrontendLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:13:9: ( ( '\\r' )? '\\n' )
-            # grammar/Frontend.g:13:11: ( '\\r' )? '\\n'
+            # grammar/Frontend.g:25:9: ( ( '\\r' )? '\\n' )
+            # grammar/Frontend.g:25:11: ( '\\r' )? '\\n'
             pass 
-            # grammar/Frontend.g:13:11: ( '\\r' )?
+            # grammar/Frontend.g:25:11: ( '\\r' )?
             alt2 = 2
             LA2_0 = self.input.LA(1)
 
             if (LA2_0 == 13) :
                 alt2 = 1
             if alt2 == 1:
-                # grammar/Frontend.g:13:11: '\\r'
+                # grammar/Frontend.g:25:11: '\\r'
                 pass 
                 self.match(13)
 
@@ -152,10 +156,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:14:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:14:14: ( ' ' )+
+            # grammar/Frontend.g:26:12: ( ( ' ' )+ )
+            # grammar/Frontend.g:26:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:14:14: ( ' ' )+
+            # grammar/Frontend.g:26:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -166,7 +170,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:14:14: ' '
+                    # grammar/Frontend.g:26:14: ' '
                     pass 
                     self.match(32)
 

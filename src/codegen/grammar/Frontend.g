@@ -7,6 +7,18 @@ options
     ASTLabelType = object ;
 }
 
+@parser::members
+{
+    def emitErrorMessage ( msg ) :
+        raise Exception ( msg )
+}
+
+@lexer::members
+{
+    def emitErrorMessage ( msg ) :
+        raise Exception ( msg )
+}
+
 start : module * ;
 module : 'module' ID NEWLINE -> ^( 'module' ID ) ;
 ID : ( 'a' .. 'z' | '0' .. '9' ) + ;
