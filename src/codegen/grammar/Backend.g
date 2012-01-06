@@ -14,7 +14,13 @@ start
             {
                 if 'module' not in $value :
                     $value [ 'module' ] = dict ( )
-                $value [ 'module' ] [ $module.value ] = { }
+                $value [ 'module' ] [ $module.value ] = dict ( )
+            }
+        | consts
+            {
+                if 'consts' not in $value :
+                    $value [ 'consts' ] = dict ( )
+                $value [ 'consts' ] [ $consts.value ] = dict ( )
             }
         ) *
     ;
@@ -24,3 +30,7 @@ module
     :   ^( 'module' ID ) { $value = $ID.text }
     ;
 
+consts
+    returns [ value ]
+    :   ^( 'consts' ID ) { $value = $ID.text }
+    ;
