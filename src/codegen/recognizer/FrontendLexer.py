@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:00:09
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:05:37
 
 import sys
 from antlr3 import *
@@ -33,7 +33,7 @@ class FrontendLexer(Lexer):
 
 
              
-    def emitErrorMessage ( msg ) :
+    def emitErrorMessage ( self , msg ) :
         raise Exception ( msg )
 
 

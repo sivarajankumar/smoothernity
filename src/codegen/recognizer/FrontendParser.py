@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:00:09
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-06 11:05:37
 
 import sys
 from antlr3 import *
@@ -58,7 +58,7 @@ class FrontendParser(Parser):
     adaptor = property(getTreeAdaptor, setTreeAdaptor)
 
 
-    def emitErrorMessage ( msg ) :
+    def emitErrorMessage ( self , msg ) :
         raise Exception ( msg )
 
 
@@ -187,7 +187,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: 7, ID
+                # elements: ID, 7
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 

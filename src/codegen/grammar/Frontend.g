@@ -9,13 +9,13 @@ options
 
 @parser::members
 {
-    def emitErrorMessage ( msg ) :
+    def emitErrorMessage ( self , msg ) :
         raise Exception ( msg )
 }
 
 @lexer::members
 {
-    def emitErrorMessage ( msg ) :
+    def emitErrorMessage ( self , msg ) :
         raise Exception ( msg )
 }
 
