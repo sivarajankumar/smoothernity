@@ -35,6 +35,6 @@ options
 
 start : module * ;
 module : 'module' ID NEWLINE -> ^( 'module' ID ) ;
-ID : ( 'a' .. 'z' | '0' .. '9' ) + ;
+ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NEWLINE : '\r' ? '\n' ;
 WHITESPACE : ' ' + { self . skip ( ) } ;

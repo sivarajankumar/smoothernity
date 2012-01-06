@@ -21,12 +21,15 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'module test1\n' ) , { 'module' : { 'test1' : { } } } )
+        ae ( r ( 'module a\n' ) , { 'module' : { 'a' : { } } } )
+        ae ( r ( 'module test_1\n' ) , { 'module' : { 'test_1' : { } } } )
         ae ( r ( 'module test1\nmodule test2\n' ) ,
             { 'module' : { 'test1' : { } , 'test2' : { } } } )
     def test_modules_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
+        ar ( recognizer . exception , r , 'module _test1\n' )
+        ar ( recognizer . exception , r , 'module 1_test1\n' )
         ar ( recognizer . exception , r , 'module test1' )
         ar ( recognizer . exception , r , 'module' )
         ar ( recognizer . exception , r , 'module\n' )
