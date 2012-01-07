@@ -37,5 +37,6 @@ start : ( module | consts ) * ;
 module : 'module' ID NEWLINE -> ^( 'module' ID ) ;
 consts : 'consts' ID NEWLINE -> ^( 'consts' ID ) ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
+NUMBER : ( '0' .. '9' ) + ;
 NEWLINE : '\r' ? '\n' ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
