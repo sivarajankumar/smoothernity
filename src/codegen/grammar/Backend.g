@@ -20,7 +20,7 @@ start
             {
                 if 'consts' not in $value :
                     $value [ 'consts' ] = dict ( )
-                $value [ 'consts' ] [ $consts.value ] = dict ( )
+                $value [ 'consts' ] [ $consts.title ] = $consts.content
             }
         ) *
     ;
@@ -31,6 +31,21 @@ module
     ;
 
 consts
+    returns [ title , content ]
+    @init { $content = dict ( ) }
+    :   ^( 'consts' ID )
+            { $title , $content = $ID.text , dict ( ) }
+    |   ^( 'consts' ID consts_values )
+            { $title , $content = $ID.text , $consts_values.value }
+    ;
+
+consts_values
     returns [ value ]
-    :   ^( 'consts' ID ) { $value = $ID.text }
+    @init { $value = dict ( ) }
+    :   ( consts_value { $value [ $consts_value.name ] = $consts_value.value } ) +
+    ;
+
+consts_value
+    returns [ name , value ]
+    :   ^( ID NUMBER ) { $name , $value = $ID.text , int ( $NUMBER.text ) }
     ;
