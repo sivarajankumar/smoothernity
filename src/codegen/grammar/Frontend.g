@@ -35,7 +35,11 @@ options
 
 start : ( module | consts ) * ;
 module : 'module' ID NEWLINE -> ^( 'module' ID ) ;
-consts : 'consts' ID NEWLINE -> ^( 'consts' ID ) ;
+consts : 'consts' ID NEWLINE -> ^( 'consts' ID )
+       | 'consts' ID NEWLINE consts_values -> ^( 'consts' ID consts_values )
+       ;
+consts_values : consts_value + ;
+consts_value : ID NUMBER NEWLINE -> ^( ID NUMBER ) ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 NEWLINE : '\r' ? '\n' ;
