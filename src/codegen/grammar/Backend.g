@@ -9,7 +9,7 @@ options
 
 start
     returns [ value ]
-    @init { $value = dict ( ) }
+    @ init { $value = dict ( ) }
     :   ( module 
             {
                 if 'module' not in $value :
@@ -32,7 +32,7 @@ module
 
 consts
     returns [ title , content ]
-    @init { $content = dict ( ) }
+    @ init { $content = dict ( ) }
     :   ^( 'consts' ID )
             { $title , $content = $ID.text , dict ( ) }
     |   ^( 'consts' ID consts_values )
@@ -41,7 +41,7 @@ consts
 
 consts_values
     returns [ value ]
-    @init { $value = dict ( ) }
+    @ init { $value = dict ( ) }
     :   ( consts_value { $value [ $consts_value.name ] = $consts_value.value } ) +
     ;
 

@@ -42,13 +42,14 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_consts_num_whole ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'consts test1\n const1 11\n' ) ,
-            { 'consts' : { 'test1' : { 'const1' : 11 } } } )
+        ae ( r ( 'consts test1\n const1 11\n const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
     def test_consts_indent_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
         ar ( recognizer . exception , r , 'consts test1\nconst1 11\n' )
         ar ( recognizer . exception , r , 'consts test1\n const1 11\nconst2 11\n' )
+        ar ( recognizer . exception , r , 'consts test1\n const1 11\n  const2 11\n' )
 
 if __name__ == '__main__' :
     unittest . main ( )

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-08 11:56:05
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-09 23:39:21
 
 import sys
 from antlr3 import *
@@ -116,7 +116,7 @@ class FrontendParser(Parser):
                     if alt1 == 1:
                         # grammar/Frontend.g:36:11: module
                         pass 
-                        self._state.following.append(self.FOLLOW_module_in_start90)
+                        self._state.following.append(self.FOLLOW_module_in_start102)
                         module1 = self.module()
 
                         self._state.following.pop()
@@ -127,7 +127,7 @@ class FrontendParser(Parser):
                     elif alt1 == 2:
                         # grammar/Frontend.g:36:20: consts
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_in_start94)
+                        self._state.following.append(self.FOLLOW_consts_in_start106)
                         consts2 = self.consts()
 
                         self._state.following.pop()
@@ -196,15 +196,15 @@ class FrontendParser(Parser):
                 # grammar/Frontend.g:37:8: ( 'module' ID NEWLINE -> ^( 'module' ID ) )
                 # grammar/Frontend.g:37:10: 'module' ID NEWLINE
                 pass 
-                string_literal3 = self.match(self.input, 9, self.FOLLOW_9_in_module106) 
+                string_literal3 = self.match(self.input, 9, self.FOLLOW_9_in_module118) 
                 stream_9.add(string_literal3)
 
 
-                ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module108) 
+                ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module120) 
                 stream_ID.add(ID4)
 
 
-                NEWLINE5 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_module110) 
+                NEWLINE5 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_module122) 
                 stream_NEWLINE.add(NEWLINE5)
 
 
@@ -349,15 +349,15 @@ class FrontendParser(Parser):
                 if alt2 == 1:
                     # grammar/Frontend.g:38:10: 'consts' ID NEWLINE
                     pass 
-                    string_literal6 = self.match(self.input, 8, self.FOLLOW_8_in_consts128) 
+                    string_literal6 = self.match(self.input, 8, self.FOLLOW_8_in_consts140) 
                     stream_8.add(string_literal6)
 
 
-                    ID7 = self.match(self.input, ID, self.FOLLOW_ID_in_consts130) 
+                    ID7 = self.match(self.input, ID, self.FOLLOW_ID_in_consts142) 
                     stream_ID.add(ID7)
 
 
-                    NEWLINE8 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts132) 
+                    NEWLINE8 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts144) 
                     stream_NEWLINE.add(NEWLINE8)
 
 
@@ -400,19 +400,19 @@ class FrontendParser(Parser):
                 elif alt2 == 2:
                     # grammar/Frontend.g:39:10: 'consts' ID NEWLINE consts_values
                     pass 
-                    string_literal9 = self.match(self.input, 8, self.FOLLOW_8_in_consts153) 
+                    string_literal9 = self.match(self.input, 8, self.FOLLOW_8_in_consts165) 
                     stream_8.add(string_literal9)
 
 
-                    ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts155) 
+                    ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts167) 
                     stream_ID.add(ID10)
 
 
-                    NEWLINE11 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts157) 
+                    NEWLINE11 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts169) 
                     stream_NEWLINE.add(NEWLINE11)
 
 
-                    self._state.following.append(self.FOLLOW_consts_values_in_consts159)
+                    self._state.following.append(self.FOLLOW_consts_values_in_consts171)
                     consts_values12 = self.consts_values()
 
                     self._state.following.pop()
@@ -521,7 +521,7 @@ class FrontendParser(Parser):
                     if alt3 == 1:
                         # grammar/Frontend.g:41:17: consts_value
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values186)
+                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values198)
                         consts_value13 = self.consts_value()
 
                         self._state.following.pop()
@@ -596,20 +596,20 @@ class FrontendParser(Parser):
                 # grammar/Frontend.g:42:14: ( ID NUMBER NEWLINE -> ^( ID NUMBER ) )
                 # grammar/Frontend.g:42:16: ID NUMBER NEWLINE
                 pass 
-                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value196) 
+                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value208) 
                 stream_ID.add(ID14)
 
 
-                NUMBER15 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_consts_value198) 
+                NUMBER15 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_consts_value210) 
                 stream_NUMBER.add(NUMBER15)
 
 
-                NEWLINE16 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_value200) 
+                NEWLINE16 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_value212) 
                 stream_NEWLINE.add(NEWLINE16)
 
 
                 # AST Rewrite
-                # elements: ID, NUMBER
+                # elements: NUMBER, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -668,22 +668,22 @@ class FrontendParser(Parser):
 
  
 
-    FOLLOW_module_in_start90 = frozenset([1, 8, 9])
-    FOLLOW_consts_in_start94 = frozenset([1, 8, 9])
-    FOLLOW_9_in_module106 = frozenset([4])
-    FOLLOW_ID_in_module108 = frozenset([5])
-    FOLLOW_NEWLINE_in_module110 = frozenset([1])
-    FOLLOW_8_in_consts128 = frozenset([4])
-    FOLLOW_ID_in_consts130 = frozenset([5])
-    FOLLOW_NEWLINE_in_consts132 = frozenset([1])
-    FOLLOW_8_in_consts153 = frozenset([4])
-    FOLLOW_ID_in_consts155 = frozenset([5])
-    FOLLOW_NEWLINE_in_consts157 = frozenset([4])
-    FOLLOW_consts_values_in_consts159 = frozenset([1])
-    FOLLOW_consts_value_in_consts_values186 = frozenset([1, 4])
-    FOLLOW_ID_in_consts_value196 = frozenset([6])
-    FOLLOW_NUMBER_in_consts_value198 = frozenset([5])
-    FOLLOW_NEWLINE_in_consts_value200 = frozenset([1])
+    FOLLOW_module_in_start102 = frozenset([1, 8, 9])
+    FOLLOW_consts_in_start106 = frozenset([1, 8, 9])
+    FOLLOW_9_in_module118 = frozenset([4])
+    FOLLOW_ID_in_module120 = frozenset([5])
+    FOLLOW_NEWLINE_in_module122 = frozenset([1])
+    FOLLOW_8_in_consts140 = frozenset([4])
+    FOLLOW_ID_in_consts142 = frozenset([5])
+    FOLLOW_NEWLINE_in_consts144 = frozenset([1])
+    FOLLOW_8_in_consts165 = frozenset([4])
+    FOLLOW_ID_in_consts167 = frozenset([5])
+    FOLLOW_NEWLINE_in_consts169 = frozenset([4])
+    FOLLOW_consts_values_in_consts171 = frozenset([1])
+    FOLLOW_consts_value_in_consts_values198 = frozenset([1, 4])
+    FOLLOW_ID_in_consts_value208 = frozenset([6])
+    FOLLOW_NUMBER_in_consts_value210 = frozenset([5])
+    FOLLOW_NEWLINE_in_consts_value212 = frozenset([1])
 
 
 
