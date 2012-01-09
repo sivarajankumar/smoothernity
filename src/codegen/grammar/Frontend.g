@@ -7,27 +7,27 @@ options
     ASTLabelType = object ;
 }
 
-@parser::header
+@ parser :: header
 {
     class FrontendParserException ( Exception ) :
         def __init__ ( self , text ) :
             Exception . __init__ ( self , text )
 }
 
-@lexer::header
+@ lexer :: header
 {
     class FrontendLexerException ( Exception ) :
         def __init__ ( self , text ) :
             Exception . __init__ ( self , text )
 }
 
-@parser::members
+@ parser :: members
 {
     def emitErrorMessage ( self , msg ) :
         raise FrontendParserException ( msg )
 }
 
-@lexer::members
+@ lexer :: members
 {
     def emitErrorMessage ( self , msg ) :
         raise FrontendLexerException ( msg )
