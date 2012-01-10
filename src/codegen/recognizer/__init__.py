@@ -8,9 +8,14 @@ class exception ( Exception ) :
     def __init__ ( self , text ) :
         Exception . __init__ ( self , text )
 
+class lexer ( FrontendLexer ) :
+    def __init__ ( self , * args , ** kw_args ) :
+        FrontendLexer . __init__ ( self , * args , ** kw_args )
+        self . _indents = [ 0 ]
+
 class recognizer :
     def recognize ( self , input ) :
-        fel = FrontendLexer ( ANTLRInputStream ( input ) )
+        fel = lexer ( ANTLRInputStream ( input ) )
         fep = FrontendParser ( CommonTokenStream ( fel ) )
         try :
             t = fep . start ( ) . tree

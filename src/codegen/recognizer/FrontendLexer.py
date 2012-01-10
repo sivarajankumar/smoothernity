@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-09 23:39:22
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-10 21:15:13
 
 import sys
 from antlr3 import *
@@ -16,12 +16,14 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-T__8=8
-T__9=9
+T__10=10
+T__11=11
 ID=4
 NEWLINE=5
-NUMBER=6
-WHITESPACE=7
+NL=6
+NUMBER=7
+SP=8
+WHITESPACE=9
 
 
 class FrontendLexer(Lexer):
@@ -45,14 +47,14 @@ class FrontendLexer(Lexer):
 
 
 
-    # $ANTLR start "T__8"
-    def mT__8(self, ):
+    # $ANTLR start "T__10"
+    def mT__10(self, ):
         try:
-            _type = T__8
+            _type = T__10
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:17:6: ( 'consts' )
-            # grammar/Frontend.g:17:8: 'consts'
+            # grammar/Frontend.g:17:7: ( 'consts' )
+            # grammar/Frontend.g:17:9: 'consts'
             pass 
             self.match("consts")
 
@@ -64,18 +66,18 @@ class FrontendLexer(Lexer):
         finally:
             pass
 
-    # $ANTLR end "T__8"
+    # $ANTLR end "T__10"
 
 
 
-    # $ANTLR start "T__9"
-    def mT__9(self, ):
+    # $ANTLR start "T__11"
+    def mT__11(self, ):
         try:
-            _type = T__9
+            _type = T__11
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:18:6: ( 'module' )
-            # grammar/Frontend.g:18:8: 'module'
+            # grammar/Frontend.g:18:7: ( 'module' )
+            # grammar/Frontend.g:18:9: 'module'
             pass 
             self.match("module")
 
@@ -87,7 +89,7 @@ class FrontendLexer(Lexer):
         finally:
             pass
 
-    # $ANTLR end "T__9"
+    # $ANTLR end "T__11"
 
 
 
@@ -97,12 +99,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:43:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:43:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:44:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:44:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:43:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:44:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -145,10 +147,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:44:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:44:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:45:8: ( ( '0' .. '9' )+ )
+            # grammar/Frontend.g:45:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:44:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:45:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -192,75 +194,16 @@ class FrontendLexer(Lexer):
 
 
 
-    # $ANTLR start "NEWLINE"
-    def mNEWLINE(self, ):
-        try:
-            _type = NEWLINE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/Frontend.g:45:9: ( ( '\\r' )? '\\n' )
-            # grammar/Frontend.g:45:11: ( '\\r' )? '\\n'
-            pass 
-            # grammar/Frontend.g:45:11: ( '\\r' )?
-            alt3 = 2
-            LA3_0 = self.input.LA(1)
-
-            if (LA3_0 == 13) :
-                alt3 = 1
-            if alt3 == 1:
-                # grammar/Frontend.g:45:11: '\\r'
-                pass 
-                self.match(13)
-
-
-
-
-            self.match(10)
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "NEWLINE"
-
-
-
     # $ANTLR start "WHITESPACE"
     def mWHITESPACE(self, ):
         try:
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:46:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:46:14: ( ' ' )+
+            # grammar/Frontend.g:46:12: ( SP )
+            # grammar/Frontend.g:46:14: SP
             pass 
-            # grammar/Frontend.g:46:14: ( ' ' )+
-            cnt4 = 0
-            while True: #loop4
-                alt4 = 2
-                LA4_0 = self.input.LA(1)
-
-                if (LA4_0 == 32) :
-                    alt4 = 1
-
-
-                if alt4 == 1:
-                    # grammar/Frontend.g:46:14: ' '
-                    pass 
-                    self.match(32)
-
-
-                else:
-                    if cnt4 >= 1:
-                        break #loop4
-
-                    eee = EarlyExitException(4, self.input)
-                    raise eee
-
-                cnt4 += 1
+            self.mSP()
 
 
             #action start
@@ -279,139 +222,283 @@ class FrontendLexer(Lexer):
 
 
 
+    # $ANTLR start "NEWLINE"
+    def mNEWLINE(self, ):
+        try:
+            _type = NEWLINE
+            _channel = DEFAULT_CHANNEL
+
+            SP1 = None
+
+            # grammar/Frontend.g:48:5: ( NL ( SP )? )
+            # grammar/Frontend.g:48:7: NL ( SP )?
+            pass 
+            self.mNL()
+
+
+            # grammar/Frontend.g:48:10: ( SP )?
+            alt3 = 2
+            LA3_0 = self.input.LA(1)
+
+            if (LA3_0 == 32) :
+                alt3 = 1
+            if alt3 == 1:
+                # grammar/Frontend.g:48:10: SP
+                pass 
+                SP1Start123 = self.getCharIndex()
+                self.mSP()
+                SP1StartLine123 = self.getLine()
+                SP1StartCharPos123 = self.getCharPositionInLine()
+                SP1 = CommonToken(
+                    input=self.input,
+                    type=INVALID_TOKEN_TYPE,
+                    channel=DEFAULT_CHANNEL,
+                    start=SP1Start123,
+                    stop=self.getCharIndex()-1)
+                SP1.setLine(SP1StartLine123)
+                SP1.setCharPositionInLine(SP1StartCharPos123)
+
+
+
+
+
+            #action start
+                    
+            la = self . input . LA ( 1 )
+            if la == EOF :
+                while len ( self . _indents ) > 1 :
+                    print 'dedent'
+                    self . _indents . pop ( )
+            elif la not in ( ord ( '\r' ) , ord ( '\n' ) ) :
+                indent = len ( SP1 . text ) if SP1 != None else 0
+                while indent < self . _indents [ - 1 ] :
+                    print 'dedent'
+                    self . _indents . pop ( )
+                while indent > self . _indents [ - 1 ] :
+                    print 'indent'
+                    self . _indents . append ( indent )
+                    
+            #action end
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "NEWLINE"
+
+
+
+    # $ANTLR start "NL"
+    def mNL(self, ):
+        try:
+            # grammar/Frontend.g:66:13: ( ( '\\r' )? '\\n' )
+            # grammar/Frontend.g:66:15: ( '\\r' )? '\\n'
+            pass 
+            # grammar/Frontend.g:66:15: ( '\\r' )?
+            alt4 = 2
+            LA4_0 = self.input.LA(1)
+
+            if (LA4_0 == 13) :
+                alt4 = 1
+            if alt4 == 1:
+                # grammar/Frontend.g:66:15: '\\r'
+                pass 
+                self.match(13)
+
+
+
+
+            self.match(10)
+
+
+
+
+        finally:
+            pass
+
+    # $ANTLR end "NL"
+
+
+
+    # $ANTLR start "SP"
+    def mSP(self, ):
+        try:
+            # grammar/Frontend.g:67:13: ( ( ' ' )+ )
+            # grammar/Frontend.g:67:15: ( ' ' )+
+            pass 
+            # grammar/Frontend.g:67:15: ( ' ' )+
+            cnt5 = 0
+            while True: #loop5
+                alt5 = 2
+                LA5_0 = self.input.LA(1)
+
+                if (LA5_0 == 32) :
+                    alt5 = 1
+
+
+                if alt5 == 1:
+                    # grammar/Frontend.g:67:15: ' '
+                    pass 
+                    self.match(32)
+
+
+                else:
+                    if cnt5 >= 1:
+                        break #loop5
+
+                    eee = EarlyExitException(5, self.input)
+                    raise eee
+
+                cnt5 += 1
+
+
+
+
+
+        finally:
+            pass
+
+    # $ANTLR end "SP"
+
+
+
     def mTokens(self):
-        # grammar/Frontend.g:1:8: ( T__8 | T__9 | ID | NUMBER | NEWLINE | WHITESPACE )
-        alt5 = 6
-        LA5 = self.input.LA(1)
-        if LA5 == 99:
-            LA5_1 = self.input.LA(2)
+        # grammar/Frontend.g:1:8: ( T__10 | T__11 | ID | NUMBER | WHITESPACE | NEWLINE )
+        alt6 = 6
+        LA6 = self.input.LA(1)
+        if LA6 == 99:
+            LA6_1 = self.input.LA(2)
 
-            if (LA5_1 == 111) :
-                LA5_7 = self.input.LA(3)
+            if (LA6_1 == 111) :
+                LA6_7 = self.input.LA(3)
 
-                if (LA5_7 == 110) :
-                    LA5_9 = self.input.LA(4)
+                if (LA6_7 == 110) :
+                    LA6_9 = self.input.LA(4)
 
-                    if (LA5_9 == 115) :
-                        LA5_11 = self.input.LA(5)
+                    if (LA6_9 == 115) :
+                        LA6_11 = self.input.LA(5)
 
-                        if (LA5_11 == 116) :
-                            LA5_13 = self.input.LA(6)
+                        if (LA6_11 == 116) :
+                            LA6_13 = self.input.LA(6)
 
-                            if (LA5_13 == 115) :
-                                LA5_15 = self.input.LA(7)
+                            if (LA6_13 == 115) :
+                                LA6_15 = self.input.LA(7)
 
-                                if ((48 <= LA5_15 <= 57) or LA5_15 == 95 or (97 <= LA5_15 <= 122)) :
-                                    alt5 = 3
+                                if ((48 <= LA6_15 <= 57) or LA6_15 == 95 or (97 <= LA6_15 <= 122)) :
+                                    alt6 = 3
                                 else:
-                                    alt5 = 1
+                                    alt6 = 1
 
                             else:
-                                alt5 = 3
+                                alt6 = 3
 
                         else:
-                            alt5 = 3
+                            alt6 = 3
 
                     else:
-                        alt5 = 3
+                        alt6 = 3
 
                 else:
-                    alt5 = 3
+                    alt6 = 3
 
             else:
-                alt5 = 3
+                alt6 = 3
 
-        elif LA5 == 109:
-            LA5_2 = self.input.LA(2)
+        elif LA6 == 109:
+            LA6_2 = self.input.LA(2)
 
-            if (LA5_2 == 111) :
-                LA5_8 = self.input.LA(3)
+            if (LA6_2 == 111) :
+                LA6_8 = self.input.LA(3)
 
-                if (LA5_8 == 100) :
-                    LA5_10 = self.input.LA(4)
+                if (LA6_8 == 100) :
+                    LA6_10 = self.input.LA(4)
 
-                    if (LA5_10 == 117) :
-                        LA5_12 = self.input.LA(5)
+                    if (LA6_10 == 117) :
+                        LA6_12 = self.input.LA(5)
 
-                        if (LA5_12 == 108) :
-                            LA5_14 = self.input.LA(6)
+                        if (LA6_12 == 108) :
+                            LA6_14 = self.input.LA(6)
 
-                            if (LA5_14 == 101) :
-                                LA5_16 = self.input.LA(7)
+                            if (LA6_14 == 101) :
+                                LA6_16 = self.input.LA(7)
 
-                                if ((48 <= LA5_16 <= 57) or LA5_16 == 95 or (97 <= LA5_16 <= 122)) :
-                                    alt5 = 3
+                                if ((48 <= LA6_16 <= 57) or LA6_16 == 95 or (97 <= LA6_16 <= 122)) :
+                                    alt6 = 3
                                 else:
-                                    alt5 = 2
+                                    alt6 = 2
 
                             else:
-                                alt5 = 3
+                                alt6 = 3
 
                         else:
-                            alt5 = 3
+                            alt6 = 3
 
                     else:
-                        alt5 = 3
+                        alt6 = 3
 
                 else:
-                    alt5 = 3
+                    alt6 = 3
 
             else:
-                alt5 = 3
+                alt6 = 3
 
-        elif LA5 == 97 or LA5 == 98 or LA5 == 100 or LA5 == 101 or LA5 == 102 or LA5 == 103 or LA5 == 104 or LA5 == 105 or LA5 == 106 or LA5 == 107 or LA5 == 108 or LA5 == 110 or LA5 == 111 or LA5 == 112 or LA5 == 113 or LA5 == 114 or LA5 == 115 or LA5 == 116 or LA5 == 117 or LA5 == 118 or LA5 == 119 or LA5 == 120 or LA5 == 121 or LA5 == 122:
-            alt5 = 3
-        elif LA5 == 48 or LA5 == 49 or LA5 == 50 or LA5 == 51 or LA5 == 52 or LA5 == 53 or LA5 == 54 or LA5 == 55 or LA5 == 56 or LA5 == 57:
-            alt5 = 4
-        elif LA5 == 10 or LA5 == 13:
-            alt5 = 5
-        elif LA5 == 32:
-            alt5 = 6
+        elif LA6 == 97 or LA6 == 98 or LA6 == 100 or LA6 == 101 or LA6 == 102 or LA6 == 103 or LA6 == 104 or LA6 == 105 or LA6 == 106 or LA6 == 107 or LA6 == 108 or LA6 == 110 or LA6 == 111 or LA6 == 112 or LA6 == 113 or LA6 == 114 or LA6 == 115 or LA6 == 116 or LA6 == 117 or LA6 == 118 or LA6 == 119 or LA6 == 120 or LA6 == 121 or LA6 == 122:
+            alt6 = 3
+        elif LA6 == 48 or LA6 == 49 or LA6 == 50 or LA6 == 51 or LA6 == 52 or LA6 == 53 or LA6 == 54 or LA6 == 55 or LA6 == 56 or LA6 == 57:
+            alt6 = 4
+        elif LA6 == 32:
+            alt6 = 5
+        elif LA6 == 10 or LA6 == 13:
+            alt6 = 6
         else:
-            nvae = NoViableAltException("", 5, 0, self.input)
+            nvae = NoViableAltException("", 6, 0, self.input)
 
             raise nvae
 
 
-        if alt5 == 1:
-            # grammar/Frontend.g:1:10: T__8
+        if alt6 == 1:
+            # grammar/Frontend.g:1:10: T__10
             pass 
-            self.mT__8()
+            self.mT__10()
 
 
 
-        elif alt5 == 2:
-            # grammar/Frontend.g:1:15: T__9
+        elif alt6 == 2:
+            # grammar/Frontend.g:1:16: T__11
             pass 
-            self.mT__9()
+            self.mT__11()
 
 
 
-        elif alt5 == 3:
-            # grammar/Frontend.g:1:20: ID
+        elif alt6 == 3:
+            # grammar/Frontend.g:1:22: ID
             pass 
             self.mID()
 
 
 
-        elif alt5 == 4:
-            # grammar/Frontend.g:1:23: NUMBER
+        elif alt6 == 4:
+            # grammar/Frontend.g:1:25: NUMBER
             pass 
             self.mNUMBER()
 
 
 
-        elif alt5 == 5:
-            # grammar/Frontend.g:1:30: NEWLINE
-            pass 
-            self.mNEWLINE()
-
-
-
-        elif alt5 == 6:
-            # grammar/Frontend.g:1:38: WHITESPACE
+        elif alt6 == 5:
+            # grammar/Frontend.g:1:32: WHITESPACE
             pass 
             self.mWHITESPACE()
+
+
+
+        elif alt6 == 6:
+            # grammar/Frontend.g:1:43: NEWLINE
+            pass 
+            self.mNEWLINE()
 
 
 
