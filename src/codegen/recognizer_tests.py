@@ -20,6 +20,7 @@ class recognizer_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . rec
         ar ( recognizer . exception , r , '!@#$' )
+        ar ( recognizer . exception , r , 'UPPERCASE' )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec
