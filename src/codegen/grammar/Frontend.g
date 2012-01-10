@@ -40,7 +40,28 @@ consts : 'consts' ID NEWLINE -> ^( 'consts' ID )
        ;
 consts_values : consts_value + ;
 consts_value : ID NUMBER NEWLINE -> ^( ID NUMBER ) ;
+
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
-NEWLINE : '\r' ? '\n' ;
-WHITESPACE : ' ' + { self . skip ( ) } ;
+WHITESPACE : SP { self . skip ( ) } ;
+NEWLINE
+    : NL SP ? 
+        {
+            la = self . input . LA ( 1 )
+            if la == EOF :
+                while len ( self . _indents ) > 1 :
+                    print 'dedent'
+                    self . _indents . pop ( )
+            elif la not in ( ord ( '\r' ) , ord ( '\n' ) ) :
+                indent = len ( $SP . text ) if $SP != None else 0
+                while indent < self . _indents [ - 1 ] :
+                    print 'dedent'
+                    self . _indents . pop ( )
+                while indent > self . _indents [ - 1 ] :
+                    print 'indent'
+                    self . _indents . append ( indent )
+        }
+    ;
+
+fragment NL : '\r' ? '\n' ;
+fragment SP : ' ' + ;

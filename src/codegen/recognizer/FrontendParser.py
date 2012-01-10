@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-09 23:39:21
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-10 21:15:12
 
 import sys
 from antlr3 import *
@@ -19,17 +19,19 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-T__8=8
-T__9=9
+T__10=10
+T__11=11
 ID=4
 NEWLINE=5
-NUMBER=6
-WHITESPACE=7
+NL=6
+NUMBER=7
+SP=8
+WHITESPACE=9
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "ID", "NEWLINE", "NUMBER", "WHITESPACE", "'consts'", "'module'"
+    "ID", "NEWLINE", "NL", "NUMBER", "SP", "WHITESPACE", "'consts'", "'module'"
 ]
 
 
@@ -107,9 +109,9 @@ class FrontendParser(Parser):
                     alt1 = 3
                     LA1_0 = self.input.LA(1)
 
-                    if (LA1_0 == 9) :
+                    if (LA1_0 == 11) :
                         alt1 = 1
-                    elif (LA1_0 == 8) :
+                    elif (LA1_0 == 10) :
                         alt1 = 2
 
 
@@ -189,15 +191,15 @@ class FrontendParser(Parser):
         NEWLINE5_tree = None
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
-        stream_9 = RewriteRuleTokenStream(self._adaptor, "token 9")
+        stream_11 = RewriteRuleTokenStream(self._adaptor, "token 11")
 
         try:
             try:
                 # grammar/Frontend.g:37:8: ( 'module' ID NEWLINE -> ^( 'module' ID ) )
                 # grammar/Frontend.g:37:10: 'module' ID NEWLINE
                 pass 
-                string_literal3 = self.match(self.input, 9, self.FOLLOW_9_in_module118) 
-                stream_9.add(string_literal3)
+                string_literal3 = self.match(self.input, 11, self.FOLLOW_11_in_module118) 
+                stream_11.add(string_literal3)
 
 
                 ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module120) 
@@ -209,7 +211,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: 9, ID
+                # elements: 11, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -227,7 +229,7 @@ class FrontendParser(Parser):
                 # grammar/Frontend.g:37:33: ^( 'module' ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                stream_9.nextNode()
+                stream_11.nextNode()
                 , root_1)
 
                 self._adaptor.addChild(root_1, 
@@ -299,9 +301,9 @@ class FrontendParser(Parser):
         string_literal9_tree = None
         ID10_tree = None
         NEWLINE11_tree = None
+        stream_10 = RewriteRuleTokenStream(self._adaptor, "token 10")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
-        stream_8 = RewriteRuleTokenStream(self._adaptor, "token 8")
         stream_consts_values = RewriteRuleSubtreeStream(self._adaptor, "rule consts_values")
         try:
             try:
@@ -309,7 +311,7 @@ class FrontendParser(Parser):
                 alt2 = 2
                 LA2_0 = self.input.LA(1)
 
-                if (LA2_0 == 8) :
+                if (LA2_0 == 10) :
                     LA2_1 = self.input.LA(2)
 
                     if (LA2_1 == ID) :
@@ -318,7 +320,7 @@ class FrontendParser(Parser):
                         if (LA2_2 == NEWLINE) :
                             LA2_3 = self.input.LA(4)
 
-                            if (LA2_3 == EOF or (8 <= LA2_3 <= 9)) :
+                            if (LA2_3 == EOF or (10 <= LA2_3 <= 11)) :
                                 alt2 = 1
                             elif (LA2_3 == ID) :
                                 alt2 = 2
@@ -349,8 +351,8 @@ class FrontendParser(Parser):
                 if alt2 == 1:
                     # grammar/Frontend.g:38:10: 'consts' ID NEWLINE
                     pass 
-                    string_literal6 = self.match(self.input, 8, self.FOLLOW_8_in_consts140) 
-                    stream_8.add(string_literal6)
+                    string_literal6 = self.match(self.input, 10, self.FOLLOW_10_in_consts140) 
+                    stream_10.add(string_literal6)
 
 
                     ID7 = self.match(self.input, ID, self.FOLLOW_ID_in_consts142) 
@@ -362,7 +364,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, 8
+                    # elements: ID, 10
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -380,7 +382,7 @@ class FrontendParser(Parser):
                     # grammar/Frontend.g:38:33: ^( 'consts' ID )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
-                    stream_8.nextNode()
+                    stream_10.nextNode()
                     , root_1)
 
                     self._adaptor.addChild(root_1, 
@@ -400,8 +402,8 @@ class FrontendParser(Parser):
                 elif alt2 == 2:
                     # grammar/Frontend.g:39:10: 'consts' ID NEWLINE consts_values
                     pass 
-                    string_literal9 = self.match(self.input, 8, self.FOLLOW_8_in_consts165) 
-                    stream_8.add(string_literal9)
+                    string_literal9 = self.match(self.input, 10, self.FOLLOW_10_in_consts165) 
+                    stream_10.add(string_literal9)
 
 
                     ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts167) 
@@ -420,7 +422,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: consts_values, ID, 8
+                    # elements: consts_values, ID, 10
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -438,7 +440,7 @@ class FrontendParser(Parser):
                     # grammar/Frontend.g:39:47: ^( 'consts' ID consts_values )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
-                    stream_8.nextNode()
+                    stream_10.nextNode()
                     , root_1)
 
                     self._adaptor.addChild(root_1, 
@@ -609,7 +611,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: NUMBER, ID
+                # elements: ID, NUMBER
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -668,20 +670,20 @@ class FrontendParser(Parser):
 
  
 
-    FOLLOW_module_in_start102 = frozenset([1, 8, 9])
-    FOLLOW_consts_in_start106 = frozenset([1, 8, 9])
-    FOLLOW_9_in_module118 = frozenset([4])
+    FOLLOW_module_in_start102 = frozenset([1, 10, 11])
+    FOLLOW_consts_in_start106 = frozenset([1, 10, 11])
+    FOLLOW_11_in_module118 = frozenset([4])
     FOLLOW_ID_in_module120 = frozenset([5])
     FOLLOW_NEWLINE_in_module122 = frozenset([1])
-    FOLLOW_8_in_consts140 = frozenset([4])
+    FOLLOW_10_in_consts140 = frozenset([4])
     FOLLOW_ID_in_consts142 = frozenset([5])
     FOLLOW_NEWLINE_in_consts144 = frozenset([1])
-    FOLLOW_8_in_consts165 = frozenset([4])
+    FOLLOW_10_in_consts165 = frozenset([4])
     FOLLOW_ID_in_consts167 = frozenset([5])
     FOLLOW_NEWLINE_in_consts169 = frozenset([4])
     FOLLOW_consts_values_in_consts171 = frozenset([1])
     FOLLOW_consts_value_in_consts_values198 = frozenset([1, 4])
-    FOLLOW_ID_in_consts_value208 = frozenset([6])
+    FOLLOW_ID_in_consts_value208 = frozenset([7])
     FOLLOW_NUMBER_in_consts_value210 = frozenset([5])
     FOLLOW_NEWLINE_in_consts_value212 = frozenset([1])
 

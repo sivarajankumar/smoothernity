@@ -6,6 +6,8 @@ class recognizer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . r = recognizer . recognizer ( )
     def rec ( self , s ) :
+        print '-' * 80
+        print s
         return self . r . recognize ( io . StringIO ( s ) )
     def test_empty ( self ) :
         ae = self . assertEqual
@@ -43,6 +45,15 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . rec
         ae ( r ( 'consts test1\n const1 11\n const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+    def test_consts_indent ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'consts test1\n   const1 11\n   const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+        ae ( r ( 'consts test1\n   const1 11\n\n   const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+        ae ( r ( 'consts test1\n   const1 11\n \n   const2 22\n' ) ,
             { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
     def test_consts_indent_raises ( self ) :
         ar = self . assertRaises
