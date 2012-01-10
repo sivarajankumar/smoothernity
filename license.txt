@@ -1,6 +1,6 @@
 The MIT License
 
-Copyright (c) 2011 Oleg Plakhotnyuk
+Smoothernity, Copyright (c) 2012 Oleg Plakhotnyuk
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
