@@ -3,6 +3,8 @@ from antlr3 . tree import CommonTreeNodeStream
 from FrontendParser import FrontendParser , FrontendParserException
 from FrontendLexer import FrontendLexer , FrontendLexerException
 from Backend import Backend
+from indenter import indenter
+from io import StringIO
 
 class exception ( Exception ) :
     def __init__ ( self , text ) :
@@ -14,8 +16,13 @@ class lexer ( FrontendLexer ) :
         self . _indents = [ 0 ]
 
 class recognizer :
+    def __init__ ( self ) :
+        self . _indenter = indenter ( )
+        self . _indenter . set_indent_token ( 'indent' )
+        self . _indenter . set_dedent_token ( 'dedent' )
     def recognize ( self , input ) :
-        fel = lexer ( ANTLRInputStream ( input ) )
+        indented = self . _indenter . run ( input . readlines ( ) )
+        fel = lexer ( ANTLRInputStream ( StringIO ( indented ) ) )
         fep = FrontendParser ( CommonTokenStream ( fel ) )
         try :
             t = fep . start ( ) . tree

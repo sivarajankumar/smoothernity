@@ -27,15 +27,15 @@ start
 
 module
     returns [ value ]
-    :   ^( 'module' ID ) { $value = $ID.text }
+    :   ^( MODULE ID ) { $value = $ID.text }
     ;
 
 consts
     returns [ title , content ]
     @ init { $content = dict ( ) }
-    :   ^( 'consts' ID )
+    :   ^( CONSTS ID )
             { $title , $content = $ID.text , dict ( ) }
-    |   ^( 'consts' ID consts_values )
+    |   ^( CONSTS ID consts_values )
             { $title , $content = $ID.text , $consts_values.value }
     ;
 
