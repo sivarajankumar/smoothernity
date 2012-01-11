@@ -1,5 +1,6 @@
 from antlr3 import ANTLRInputStream , CommonTokenStream , RecognitionException
 from antlr3 . tree import CommonTreeNodeStream
+from antlr3 . constants import EOF
 from FrontendParser import FrontendParser , FrontendParserException
 from FrontendLexer import FrontendLexer , FrontendLexerException
 from Backend import Backend
@@ -10,11 +11,6 @@ class exception ( Exception ) :
     def __init__ ( self , text ) :
         Exception . __init__ ( self , text )
 
-class lexer ( FrontendLexer ) :
-    def __init__ ( self , * args , ** kw_args ) :
-        FrontendLexer . __init__ ( self , * args , ** kw_args )
-        self . _indents = [ 0 ]
-
 class recognizer :
     def __init__ ( self ) :
         self . _indenter = indenter ( )
@@ -22,14 +18,17 @@ class recognizer :
         self . _indenter . set_dedent_token ( 'dedent' )
     def recognize ( self , input ) :
         indented = self . _indenter . run ( input . readlines ( ) )
-        fel = lexer ( ANTLRInputStream ( StringIO ( indented ) ) )
-        fep = FrontendParser ( CommonTokenStream ( fel ) )
+        fel = FrontendLexer ( ANTLRInputStream ( StringIO ( indented ) ) )
+        ts = CommonTokenStream ( fel )
+        fep = FrontendParser ( ts )
         try :
             t = fep . start ( ) . tree
         except FrontendLexerException as e :
             raise exception ( str ( e ) )
         except FrontendParserException as e :
             raise exception ( str ( e ) )
+        if ts . LA ( 1 ) != EOF :
+            raise exception ( 'unparsed tokens left' )
         if t == None :
             return { }
         else :
