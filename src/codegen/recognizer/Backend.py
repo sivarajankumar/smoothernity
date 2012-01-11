@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-10 21:15:14
+# $ANTLR 3.4 grammar/Backend.g 2012-01-11 20:33:59
 
 import sys
 from antlr3 import *
@@ -13,19 +13,18 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-T__10=10
-T__11=11
-ID=4
-NEWLINE=5
-NL=6
-NUMBER=7
-SP=8
-WHITESPACE=9
+CONSTS=4
+DEDENT=5
+ID=6
+INDENT=7
+MODULE=8
+NUMBER=9
+WHITESPACE=10
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "ID", "NEWLINE", "NL", "NUMBER", "SP", "WHITESPACE", "'consts'", "'module'"
+    "CONSTS", "DEDENT", "ID", "INDENT", "MODULE", "NUMBER", "WHITESPACE"
 ]
 
 
@@ -74,9 +73,9 @@ class Backend(TreeParser):
                     alt1 = 3
                     LA1_0 = self.input.LA(1)
 
-                    if (LA1_0 == 11) :
+                    if (LA1_0 == MODULE) :
                         alt1 = 1
-                    elif (LA1_0 == 10) :
+                    elif (LA1_0 == CONSTS) :
                         alt1 = 2
 
 
@@ -136,7 +135,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "module"
-    # grammar/Backend.g:28:1: module returns [ value ] : ^( 'module' ID ) ;
+    # grammar/Backend.g:28:1: module returns [ value ] : ^( MODULE ID ) ;
     def module(self, ):
         value = None
 
@@ -145,10 +144,10 @@ class Backend(TreeParser):
 
         try:
             try:
-                # grammar/Backend.g:30:5: ( ^( 'module' ID ) )
-                # grammar/Backend.g:30:9: ^( 'module' ID )
+                # grammar/Backend.g:30:5: ( ^( MODULE ID ) )
+                # grammar/Backend.g:30:9: ^( MODULE ID )
                 pass 
-                self.match(self.input, 11, self.FOLLOW_11_in_module162)
+                self.match(self.input, MODULE, self.FOLLOW_MODULE_in_module162)
 
                 self.match(self.input, DOWN, None)
                 ID3 = self.match(self.input, ID, self.FOLLOW_ID_in_module164)
@@ -187,7 +186,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts"
-    # grammar/Backend.g:33:1: consts returns [ title , content ] : ( ^( 'consts' ID ) | ^( 'consts' ID consts_values ) );
+    # grammar/Backend.g:33:1: consts returns [ title , content ] : ( ^( CONSTS ID ) | ^( CONSTS ID consts_values ) );
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -201,11 +200,11 @@ class Backend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:36:5: ( ^( 'consts' ID ) | ^( 'consts' ID consts_values ) )
+                # grammar/Backend.g:36:5: ( ^( CONSTS ID ) | ^( CONSTS ID consts_values ) )
                 alt2 = 2
                 LA2_0 = self.input.LA(1)
 
-                if (LA2_0 == 10) :
+                if (LA2_0 == CONSTS) :
                     LA2_1 = self.input.LA(2)
 
                     if (LA2_1 == 2) :
@@ -243,9 +242,9 @@ class Backend(TreeParser):
 
 
                 if alt2 == 1:
-                    # grammar/Backend.g:36:9: ^( 'consts' ID )
+                    # grammar/Backend.g:36:9: ^( CONSTS ID )
                     pass 
-                    self.match(self.input, 10, self.FOLLOW_10_in_consts207)
+                    self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts207)
 
                     self.match(self.input, DOWN, None)
                     ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_consts209)
@@ -260,9 +259,9 @@ class Backend(TreeParser):
 
 
                 elif alt2 == 2:
-                    # grammar/Backend.g:38:9: ^( 'consts' ID consts_values )
+                    # grammar/Backend.g:38:9: ^( CONSTS ID consts_values )
                     pass 
-                    self.match(self.input, 10, self.FOLLOW_10_in_consts237)
+                    self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts237)
 
                     self.match(self.input, DOWN, None)
                     ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_consts239)
@@ -413,16 +412,16 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start80 = frozenset([1, 10, 11])
-    FOLLOW_consts_in_start107 = frozenset([1, 10, 11])
-    FOLLOW_11_in_module162 = frozenset([2])
+    FOLLOW_module_in_start80 = frozenset([1, 4, 8])
+    FOLLOW_consts_in_start107 = frozenset([1, 4, 8])
+    FOLLOW_MODULE_in_module162 = frozenset([2])
     FOLLOW_ID_in_module164 = frozenset([3])
-    FOLLOW_10_in_consts207 = frozenset([2])
+    FOLLOW_CONSTS_in_consts207 = frozenset([2])
     FOLLOW_ID_in_consts209 = frozenset([3])
-    FOLLOW_10_in_consts237 = frozenset([2])
-    FOLLOW_ID_in_consts239 = frozenset([4])
+    FOLLOW_CONSTS_in_consts237 = frozenset([2])
+    FOLLOW_ID_in_consts239 = frozenset([6])
     FOLLOW_consts_values_in_consts241 = frozenset([3])
-    FOLLOW_consts_value_in_consts_values296 = frozenset([1, 4])
+    FOLLOW_consts_value_in_consts_values296 = frozenset([1, 6])
     FOLLOW_ID_in_consts_value331 = frozenset([2])
     FOLLOW_NUMBER_in_consts_value333 = frozenset([3])
 
