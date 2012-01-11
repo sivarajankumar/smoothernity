@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-11 20:33:23
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-11 20:50:10
 
 import sys
 from antlr3 import *
@@ -270,7 +270,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "consts"
-    # grammar/Frontend.g:38:1: consts : ( CONSTS ID -> ^( CONSTS ID ) | CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) );
+    # grammar/Frontend.g:38:1: consts : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -280,19 +280,15 @@ class FrontendParser(Parser):
 
         CONSTS5 = None
         ID6 = None
-        CONSTS7 = None
-        ID8 = None
-        INDENT9 = None
-        DEDENT11 = None
-        consts_values10 = None
+        INDENT7 = None
+        DEDENT9 = None
+        consts_values8 = None
 
 
         CONSTS5_tree = None
         ID6_tree = None
-        CONSTS7_tree = None
-        ID8_tree = None
-        INDENT9_tree = None
-        DEDENT11_tree = None
+        INDENT7_tree = None
+        DEDENT9_tree = None
         stream_CONSTS = RewriteRuleTokenStream(self._adaptor, "token CONSTS")
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
@@ -300,145 +296,67 @@ class FrontendParser(Parser):
         stream_consts_values = RewriteRuleSubtreeStream(self._adaptor, "rule consts_values")
         try:
             try:
-                # grammar/Frontend.g:38:8: ( CONSTS ID -> ^( CONSTS ID ) | CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) )
-                alt2 = 2
-                LA2_0 = self.input.LA(1)
-
-                if (LA2_0 == CONSTS) :
-                    LA2_1 = self.input.LA(2)
-
-                    if (LA2_1 == ID) :
-                        LA2_2 = self.input.LA(3)
-
-                        if (LA2_2 == INDENT) :
-                            alt2 = 2
-                        elif (LA2_2 == EOF or LA2_2 == CONSTS or LA2_2 == MODULE) :
-                            alt2 = 1
-                        else:
-                            nvae = NoViableAltException("", 2, 2, self.input)
-
-                            raise nvae
+                # grammar/Frontend.g:38:8: ( CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) )
+                # grammar/Frontend.g:38:10: CONSTS ID INDENT consts_values DEDENT
+                pass 
+                CONSTS5 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts138) 
+                stream_CONSTS.add(CONSTS5)
 
 
-                    else:
-                        nvae = NoViableAltException("", 2, 1, self.input)
-
-                        raise nvae
+                ID6 = self.match(self.input, ID, self.FOLLOW_ID_in_consts140) 
+                stream_ID.add(ID6)
 
 
+                INDENT7 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts142) 
+                stream_INDENT.add(INDENT7)
+
+
+                self._state.following.append(self.FOLLOW_consts_values_in_consts144)
+                consts_values8 = self.consts_values()
+
+                self._state.following.pop()
+                stream_consts_values.add(consts_values8.tree)
+
+
+                DEDENT9 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts146) 
+                stream_DEDENT.add(DEDENT9)
+
+
+                # AST Rewrite
+                # elements: ID, CONSTS, consts_values
+                # token labels: 
+                # rule labels: retval
+                # token list labels: 
+                # rule list labels: 
+                # wildcard labels: 
+                retval.tree = root_0
+                if retval is not None:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
                 else:
-                    nvae = NoViableAltException("", 2, 0, self.input)
-
-                    raise nvae
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
 
 
-                if alt2 == 1:
-                    # grammar/Frontend.g:38:10: CONSTS ID
-                    pass 
-                    CONSTS5 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts138) 
-                    stream_CONSTS.add(CONSTS5)
+                root_0 = self._adaptor.nil()
+                # 38:48: -> ^( CONSTS ID consts_values )
+                # grammar/Frontend.g:38:51: ^( CONSTS ID consts_values )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                stream_CONSTS.nextNode()
+                , root_1)
 
+                self._adaptor.addChild(root_1, 
+                stream_ID.nextNode()
+                )
 
-                    ID6 = self.match(self.input, ID, self.FOLLOW_ID_in_consts140) 
-                    stream_ID.add(ID6)
+                self._adaptor.addChild(root_1, stream_consts_values.nextTree())
 
-
-                    # AST Rewrite
-                    # elements: CONSTS, ID
-                    # token labels: 
-                    # rule labels: retval
-                    # token list labels: 
-                    # rule list labels: 
-                    # wildcard labels: 
-                    retval.tree = root_0
-                    if retval is not None:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
-                    else:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
-
-
-                    root_0 = self._adaptor.nil()
-                    # 38:20: -> ^( CONSTS ID )
-                    # grammar/Frontend.g:38:23: ^( CONSTS ID )
-                    root_1 = self._adaptor.nil()
-                    root_1 = self._adaptor.becomeRoot(
-                    stream_CONSTS.nextNode()
-                    , root_1)
-
-                    self._adaptor.addChild(root_1, 
-                    stream_ID.nextNode()
-                    )
-
-                    self._adaptor.addChild(root_0, root_1)
+                self._adaptor.addChild(root_0, root_1)
 
 
 
 
-                    retval.tree = root_0
+                retval.tree = root_0
 
-
-
-
-                elif alt2 == 2:
-                    # grammar/Frontend.g:39:10: CONSTS ID INDENT consts_values DEDENT
-                    pass 
-                    CONSTS7 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts161) 
-                    stream_CONSTS.add(CONSTS7)
-
-
-                    ID8 = self.match(self.input, ID, self.FOLLOW_ID_in_consts163) 
-                    stream_ID.add(ID8)
-
-
-                    INDENT9 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts165) 
-                    stream_INDENT.add(INDENT9)
-
-
-                    self._state.following.append(self.FOLLOW_consts_values_in_consts167)
-                    consts_values10 = self.consts_values()
-
-                    self._state.following.pop()
-                    stream_consts_values.add(consts_values10.tree)
-
-
-                    DEDENT11 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts169) 
-                    stream_DEDENT.add(DEDENT11)
-
-
-                    # AST Rewrite
-                    # elements: CONSTS, consts_values, ID
-                    # token labels: 
-                    # rule labels: retval
-                    # token list labels: 
-                    # rule list labels: 
-                    # wildcard labels: 
-                    retval.tree = root_0
-                    if retval is not None:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
-                    else:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
-
-
-                    root_0 = self._adaptor.nil()
-                    # 39:48: -> ^( CONSTS ID consts_values )
-                    # grammar/Frontend.g:39:51: ^( CONSTS ID consts_values )
-                    root_1 = self._adaptor.nil()
-                    root_1 = self._adaptor.becomeRoot(
-                    stream_CONSTS.nextNode()
-                    , root_1)
-
-                    self._adaptor.addChild(root_1, 
-                    stream_ID.nextNode()
-                    )
-
-                    self._adaptor.addChild(root_1, stream_consts_values.nextTree())
-
-                    self._adaptor.addChild(root_0, root_1)
-
-
-
-
-                    retval.tree = root_0
 
 
 
@@ -474,7 +392,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "consts_values"
-    # grammar/Frontend.g:41:1: consts_values : ( consts_value )+ ;
+    # grammar/Frontend.g:40:1: consts_values : ( consts_value )+ ;
     def consts_values(self, ):
         retval = self.consts_values_return()
         retval.start = self.input.LT(1)
@@ -482,47 +400,47 @@ class FrontendParser(Parser):
 
         root_0 = None
 
-        consts_value12 = None
+        consts_value10 = None
 
 
 
         try:
             try:
-                # grammar/Frontend.g:41:15: ( ( consts_value )+ )
-                # grammar/Frontend.g:41:17: ( consts_value )+
+                # grammar/Frontend.g:40:15: ( ( consts_value )+ )
+                # grammar/Frontend.g:40:17: ( consts_value )+
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:41:17: ( consts_value )+
-                cnt3 = 0
-                while True: #loop3
-                    alt3 = 2
-                    LA3_0 = self.input.LA(1)
+                # grammar/Frontend.g:40:17: ( consts_value )+
+                cnt2 = 0
+                while True: #loop2
+                    alt2 = 2
+                    LA2_0 = self.input.LA(1)
 
-                    if (LA3_0 == ID) :
-                        alt3 = 1
+                    if (LA2_0 == ID) :
+                        alt2 = 1
 
 
-                    if alt3 == 1:
-                        # grammar/Frontend.g:41:17: consts_value
+                    if alt2 == 1:
+                        # grammar/Frontend.g:40:17: consts_value
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values196)
-                        consts_value12 = self.consts_value()
+                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values173)
+                        consts_value10 = self.consts_value()
 
                         self._state.following.pop()
-                        self._adaptor.addChild(root_0, consts_value12.tree)
+                        self._adaptor.addChild(root_0, consts_value10.tree)
 
 
 
                     else:
-                        if cnt3 >= 1:
-                            break #loop3
+                        if cnt2 >= 1:
+                            break #loop2
 
-                        eee = EarlyExitException(3, self.input)
+                        eee = EarlyExitException(2, self.input)
                         raise eee
 
-                    cnt3 += 1
+                    cnt2 += 1
 
 
 
@@ -558,7 +476,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "consts_value"
-    # grammar/Frontend.g:42:1: consts_value : ID NUMBER -> ^( ID NUMBER ) ;
+    # grammar/Frontend.g:41:1: consts_value : ID NUMBER -> ^( ID NUMBER ) ;
     def consts_value(self, ):
         retval = self.consts_value_return()
         retval.start = self.input.LT(1)
@@ -566,25 +484,25 @@ class FrontendParser(Parser):
 
         root_0 = None
 
-        ID13 = None
-        NUMBER14 = None
+        ID11 = None
+        NUMBER12 = None
 
-        ID13_tree = None
-        NUMBER14_tree = None
+        ID11_tree = None
+        NUMBER12_tree = None
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_NUMBER = RewriteRuleTokenStream(self._adaptor, "token NUMBER")
 
         try:
             try:
-                # grammar/Frontend.g:42:14: ( ID NUMBER -> ^( ID NUMBER ) )
-                # grammar/Frontend.g:42:16: ID NUMBER
+                # grammar/Frontend.g:41:14: ( ID NUMBER -> ^( ID NUMBER ) )
+                # grammar/Frontend.g:41:16: ID NUMBER
                 pass 
-                ID13 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value206) 
-                stream_ID.add(ID13)
+                ID11 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value183) 
+                stream_ID.add(ID11)
 
 
-                NUMBER14 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_consts_value208) 
-                stream_NUMBER.add(NUMBER14)
+                NUMBER12 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_consts_value185) 
+                stream_NUMBER.add(NUMBER12)
 
 
                 # AST Rewrite
@@ -602,8 +520,8 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 42:26: -> ^( ID NUMBER )
-                # grammar/Frontend.g:42:29: ^( ID NUMBER )
+                # 41:26: -> ^( ID NUMBER )
+                # grammar/Frontend.g:41:29: ^( ID NUMBER )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 stream_ID.nextNode()
@@ -652,15 +570,13 @@ class FrontendParser(Parser):
     FOLLOW_MODULE_in_module118 = frozenset([6])
     FOLLOW_ID_in_module120 = frozenset([1])
     FOLLOW_CONSTS_in_consts138 = frozenset([6])
-    FOLLOW_ID_in_consts140 = frozenset([1])
-    FOLLOW_CONSTS_in_consts161 = frozenset([6])
-    FOLLOW_ID_in_consts163 = frozenset([7])
-    FOLLOW_INDENT_in_consts165 = frozenset([6])
-    FOLLOW_consts_values_in_consts167 = frozenset([5])
-    FOLLOW_DEDENT_in_consts169 = frozenset([1])
-    FOLLOW_consts_value_in_consts_values196 = frozenset([1, 6])
-    FOLLOW_ID_in_consts_value206 = frozenset([9])
-    FOLLOW_NUMBER_in_consts_value208 = frozenset([1])
+    FOLLOW_ID_in_consts140 = frozenset([7])
+    FOLLOW_INDENT_in_consts142 = frozenset([6])
+    FOLLOW_consts_values_in_consts144 = frozenset([5])
+    FOLLOW_DEDENT_in_consts146 = frozenset([1])
+    FOLLOW_consts_value_in_consts_values173 = frozenset([1, 6])
+    FOLLOW_ID_in_consts_value183 = frozenset([9])
+    FOLLOW_NUMBER_in_consts_value185 = frozenset([1])
 
 
 

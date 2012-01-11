@@ -34,11 +34,10 @@ class recognizer_test_case ( unittest . TestCase ) :
         ar ( recognizer . exception , r , 'module' )
         ar ( recognizer . exception , r , 'module\n' )
         ar ( recognizer . exception , r , 'module module\n' )
-    def test_consts ( self ) :
-        ae = self . assertEqual
+    def test_consts_raises ( self ) :
+        ar = self . assertRaises
         r = self . rec
-        ae ( r ( 'consts test1\nconsts test2\n' ) ,
-            { 'consts' : { 'test1' : { } , 'test2' : { } } } )
+        ar ( recognizer . exception , r , 'consts test1\nconsts test2\n' )
     def test_consts_num_whole ( self ) :
         ae = self . assertEqual
         r = self . rec

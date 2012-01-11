@@ -35,8 +35,7 @@ options
 
 start : ( module | consts ) * ;
 module : MODULE ID -> ^( MODULE ID ) ;
-consts : CONSTS ID -> ^( CONSTS ID )
-       | CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values )
+consts : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values )
        ;
 consts_values : consts_value + ;
 consts_value : ID NUMBER -> ^( ID NUMBER ) ;
