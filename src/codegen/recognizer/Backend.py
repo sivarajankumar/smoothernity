@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-12 19:14:26
+# $ANTLR 3.4 grammar/Backend.g 2012-01-12 19:51:54
 
 import sys
 from antlr3 import *
@@ -24,15 +24,16 @@ ID=8
 INDENT=9
 MINUS=10
 MODULE=11
-NUMBER=12
-TYPES=13
-WHITESPACE=14
+NEWLINE=12
+NUMBER=13
+TYPES=14
+WHITESPACE=15
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NUMBER", "TYPES", "WHITESPACE"
+    "MODULE", "NEWLINE", "NUMBER", "TYPES", "WHITESPACE"
 ]
 
 
@@ -943,9 +944,9 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 4, 11, 13])
-    FOLLOW_consts_in_start113 = frozenset([1, 4, 11, 13])
-    FOLLOW_types_in_start139 = frozenset([1, 4, 11, 13])
+    FOLLOW_module_in_start86 = frozenset([1, 4, 11, 14])
+    FOLLOW_consts_in_start113 = frozenset([1, 4, 11, 14])
+    FOLLOW_types_in_start139 = frozenset([1, 4, 11, 14])
     FOLLOW_MODULE_in_module194 = frozenset([2])
     FOLLOW_ID_in_module196 = frozenset([3])
     FOLLOW_CONSTS_in_consts239 = frozenset([2])
@@ -966,15 +967,15 @@ class Backend(TreeParser):
     FOLLOW_types_item_attrs_in_types_item586 = frozenset([3])
     FOLLOW_types_item_attr_in_types_item_attrs641 = frozenset([1, 8])
     FOLLOW_ID_in_types_item_attr694 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole725 = frozenset([12])
+    FOLLOW_MINUS_in_num_whole725 = frozenset([13])
     FOLLOW_NUMBER_in_num_whole727 = frozenset([1])
     FOLLOW_NUMBER_in_num_whole755 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract800 = frozenset([12])
+    FOLLOW_MINUS_in_num_fract800 = frozenset([13])
     FOLLOW_NUMBER_in_num_fract806 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract808 = frozenset([12])
+    FOLLOW_DIVIDE_in_num_fract808 = frozenset([13])
     FOLLOW_NUMBER_in_num_fract814 = frozenset([1])
     FOLLOW_NUMBER_in_num_fract846 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract848 = frozenset([12])
+    FOLLOW_DIVIDE_in_num_fract848 = frozenset([13])
     FOLLOW_NUMBER_in_num_fract854 = frozenset([1])
 
 

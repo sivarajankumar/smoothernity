@@ -35,23 +35,23 @@ options
 
 start : ( module | consts | types ) * ;
 
-module : MODULE ID -> ^( MODULE ID ) ;
+module : MODULE ID NEWLINE -> ^( MODULE ID ) ;
 
 consts
-    : CONSTS ID INDENT consts_items DEDENT -> ^( CONSTS ID consts_items )
+    : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( CONSTS ID consts_items )
     ;
 consts_items : consts_item + ;
 consts_item
-    : ID num_whole -> ^( ID num_whole )
-    | ID num_fract -> ^( ID num_fract )
-    | ID EXPRESSION -> ^( ID EXPRESSION )
+    : ID num_whole NEWLINE -> ^( ID num_whole )
+    | ID num_fract NEWLINE -> ^( ID num_fract )
+    | ID EXPRESSION NEWLINE -> ^( ID EXPRESSION )
     ;
 
-types : TYPES ID INDENT types_items DEDENT -> ^( TYPES ID types_items ) ;
+types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) ;
 types_items : types_item + ;
-types_item : ID INDENT types_item_attrs DEDENT -> ^( ID types_item_attrs ) ;
+types_item : ID NEWLINE INDENT types_item_attrs DEDENT NEWLINE -> ^( ID types_item_attrs ) ;
 types_item_attrs : types_item_attr + ;
-types_item_attr : ID ;
+types_item_attr : ID NEWLINE -> ID ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -63,6 +63,7 @@ MODULE : 'module' ;
 TYPES : 'types' ;
 DIVIDE : '/' ;
 MINUS : '-' ;
+NEWLINE : '\n' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
