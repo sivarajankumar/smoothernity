@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-12 18:21:17
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-12 19:00:29
 
 import sys
 from antlr3 import *
@@ -177,7 +177,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "module"
-    # grammar/Frontend.g:37:1: module : MODULE ID -> ^( MODULE ID ) ;
+    # grammar/Frontend.g:38:1: module : MODULE ID -> ^( MODULE ID ) ;
     def module(self, ):
         retval = self.module_return()
         retval.start = self.input.LT(1)
@@ -195,14 +195,14 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:37:8: ( MODULE ID -> ^( MODULE ID ) )
-                # grammar/Frontend.g:37:10: MODULE ID
+                # grammar/Frontend.g:38:8: ( MODULE ID -> ^( MODULE ID ) )
+                # grammar/Frontend.g:38:10: MODULE ID
                 pass 
-                MODULE3 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_module118) 
+                MODULE3 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_module119) 
                 stream_MODULE.add(MODULE3)
 
 
-                ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module120) 
+                ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module121) 
                 stream_ID.add(ID4)
 
 
@@ -221,8 +221,8 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 37:20: -> ^( MODULE ID )
-                # grammar/Frontend.g:37:23: ^( MODULE ID )
+                # 38:20: -> ^( MODULE ID )
+                # grammar/Frontend.g:38:23: ^( MODULE ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 stream_MODULE.nextNode()
@@ -274,7 +274,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "consts"
-    # grammar/Frontend.g:38:1: consts : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) ;
+    # grammar/Frontend.g:40:1: consts : CONSTS ID INDENT consts_items DEDENT -> ^( CONSTS ID consts_items ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -286,7 +286,7 @@ class FrontendParser(Parser):
         ID6 = None
         INDENT7 = None
         DEDENT9 = None
-        consts_values8 = None
+        consts_items8 = None
 
 
         CONSTS5_tree = None
@@ -297,37 +297,37 @@ class FrontendParser(Parser):
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
-        stream_consts_values = RewriteRuleSubtreeStream(self._adaptor, "rule consts_values")
+        stream_consts_items = RewriteRuleSubtreeStream(self._adaptor, "rule consts_items")
         try:
             try:
-                # grammar/Frontend.g:39:5: ( CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values ) )
-                # grammar/Frontend.g:39:7: CONSTS ID INDENT consts_values DEDENT
+                # grammar/Frontend.g:41:5: ( CONSTS ID INDENT consts_items DEDENT -> ^( CONSTS ID consts_items ) )
+                # grammar/Frontend.g:41:7: CONSTS ID INDENT consts_items DEDENT
                 pass 
-                CONSTS5 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts142) 
+                CONSTS5 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts144) 
                 stream_CONSTS.add(CONSTS5)
 
 
-                ID6 = self.match(self.input, ID, self.FOLLOW_ID_in_consts144) 
+                ID6 = self.match(self.input, ID, self.FOLLOW_ID_in_consts146) 
                 stream_ID.add(ID6)
 
 
-                INDENT7 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts146) 
+                INDENT7 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts148) 
                 stream_INDENT.add(INDENT7)
 
 
-                self._state.following.append(self.FOLLOW_consts_values_in_consts148)
-                consts_values8 = self.consts_values()
+                self._state.following.append(self.FOLLOW_consts_items_in_consts150)
+                consts_items8 = self.consts_items()
 
                 self._state.following.pop()
-                stream_consts_values.add(consts_values8.tree)
+                stream_consts_items.add(consts_items8.tree)
 
 
-                DEDENT9 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts150) 
+                DEDENT9 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts152) 
                 stream_DEDENT.add(DEDENT9)
 
 
                 # AST Rewrite
-                # elements: CONSTS, ID, consts_values
+                # elements: CONSTS, ID, consts_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -341,8 +341,8 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 39:45: -> ^( CONSTS ID consts_values )
-                # grammar/Frontend.g:39:48: ^( CONSTS ID consts_values )
+                # 41:44: -> ^( CONSTS ID consts_items )
+                # grammar/Frontend.g:41:47: ^( CONSTS ID consts_items )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 stream_CONSTS.nextNode()
@@ -352,7 +352,7 @@ class FrontendParser(Parser):
                 stream_ID.nextNode()
                 )
 
-                self._adaptor.addChild(root_1, stream_consts_values.nextTree())
+                self._adaptor.addChild(root_1, stream_consts_items.nextTree())
 
                 self._adaptor.addChild(root_0, root_1)
 
@@ -385,9 +385,9 @@ class FrontendParser(Parser):
     # $ANTLR end "consts"
 
 
-    class consts_values_return(ParserRuleReturnScope):
+    class consts_items_return(ParserRuleReturnScope):
         def __init__(self):
-            super(FrontendParser.consts_values_return, self).__init__()
+            super(FrontendParser.consts_items_return, self).__init__()
 
             self.tree = None
 
@@ -395,28 +395,28 @@ class FrontendParser(Parser):
 
 
 
-    # $ANTLR start "consts_values"
-    # grammar/Frontend.g:41:1: consts_values : ( consts_value )+ ;
-    def consts_values(self, ):
-        retval = self.consts_values_return()
+    # $ANTLR start "consts_items"
+    # grammar/Frontend.g:43:1: consts_items : ( consts_item )+ ;
+    def consts_items(self, ):
+        retval = self.consts_items_return()
         retval.start = self.input.LT(1)
 
 
         root_0 = None
 
-        consts_value10 = None
+        consts_item10 = None
 
 
 
         try:
             try:
-                # grammar/Frontend.g:41:15: ( ( consts_value )+ )
-                # grammar/Frontend.g:41:17: ( consts_value )+
+                # grammar/Frontend.g:43:14: ( ( consts_item )+ )
+                # grammar/Frontend.g:43:16: ( consts_item )+
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:41:17: ( consts_value )+
+                # grammar/Frontend.g:43:16: ( consts_item )+
                 cnt2 = 0
                 while True: #loop2
                     alt2 = 2
@@ -427,13 +427,13 @@ class FrontendParser(Parser):
 
 
                     if alt2 == 1:
-                        # grammar/Frontend.g:41:17: consts_value
+                        # grammar/Frontend.g:43:16: consts_item
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values174)
-                        consts_value10 = self.consts_value()
+                        self._state.following.append(self.FOLLOW_consts_item_in_consts_items176)
+                        consts_item10 = self.consts_item()
 
                         self._state.following.pop()
-                        self._adaptor.addChild(root_0, consts_value10.tree)
+                        self._adaptor.addChild(root_0, consts_item10.tree)
 
 
 
@@ -466,12 +466,12 @@ class FrontendParser(Parser):
             pass
         return retval
 
-    # $ANTLR end "consts_values"
+    # $ANTLR end "consts_items"
 
 
-    class consts_value_return(ParserRuleReturnScope):
+    class consts_item_return(ParserRuleReturnScope):
         def __init__(self):
-            super(FrontendParser.consts_value_return, self).__init__()
+            super(FrontendParser.consts_item_return, self).__init__()
 
             self.tree = None
 
@@ -479,10 +479,10 @@ class FrontendParser(Parser):
 
 
 
-    # $ANTLR start "consts_value"
-    # grammar/Frontend.g:42:1: consts_value : ( ID num_whole -> ^( ID num_whole ) | ID num_fract -> ^( ID num_fract ) | ID EXPRESSION -> ^( ID EXPRESSION ) );
-    def consts_value(self, ):
-        retval = self.consts_value_return()
+    # $ANTLR start "consts_item"
+    # grammar/Frontend.g:44:1: consts_item : ( ID num_whole -> ^( ID num_whole ) | ID num_fract -> ^( ID num_fract ) | ID EXPRESSION -> ^( ID EXPRESSION ) );
+    def consts_item(self, ):
+        retval = self.consts_item_return()
         retval.start = self.input.LT(1)
 
 
@@ -507,7 +507,7 @@ class FrontendParser(Parser):
         stream_num_whole = RewriteRuleSubtreeStream(self._adaptor, "rule num_whole")
         try:
             try:
-                # grammar/Frontend.g:43:5: ( ID num_whole -> ^( ID num_whole ) | ID num_fract -> ^( ID num_fract ) | ID EXPRESSION -> ^( ID EXPRESSION ) )
+                # grammar/Frontend.g:45:5: ( ID num_whole -> ^( ID num_whole ) | ID num_fract -> ^( ID num_fract ) | ID EXPRESSION -> ^( ID EXPRESSION ) )
                 alt3 = 3
                 LA3_0 = self.input.LA(1)
 
@@ -563,13 +563,13 @@ class FrontendParser(Parser):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:43:7: ID num_whole
+                    # grammar/Frontend.g:45:7: ID num_whole
                     pass 
-                    ID11 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value188) 
+                    ID11 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item190) 
                     stream_ID.add(ID11)
 
 
-                    self._state.following.append(self.FOLLOW_num_whole_in_consts_value190)
+                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item192)
                     num_whole12 = self.num_whole()
 
                     self._state.following.pop()
@@ -591,8 +591,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 43:20: -> ^( ID num_whole )
-                    # grammar/Frontend.g:43:23: ^( ID num_whole )
+                    # 45:20: -> ^( ID num_whole )
+                    # grammar/Frontend.g:45:23: ^( ID num_whole )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     stream_ID.nextNode()
@@ -611,13 +611,13 @@ class FrontendParser(Parser):
 
 
                 elif alt3 == 2:
-                    # grammar/Frontend.g:44:7: ID num_fract
+                    # grammar/Frontend.g:46:7: ID num_fract
                     pass 
-                    ID13 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value208) 
+                    ID13 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item210) 
                     stream_ID.add(ID13)
 
 
-                    self._state.following.append(self.FOLLOW_num_fract_in_consts_value210)
+                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item212)
                     num_fract14 = self.num_fract()
 
                     self._state.following.pop()
@@ -639,8 +639,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 44:20: -> ^( ID num_fract )
-                    # grammar/Frontend.g:44:23: ^( ID num_fract )
+                    # 46:20: -> ^( ID num_fract )
+                    # grammar/Frontend.g:46:23: ^( ID num_fract )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     stream_ID.nextNode()
@@ -659,13 +659,13 @@ class FrontendParser(Parser):
 
 
                 elif alt3 == 3:
-                    # grammar/Frontend.g:45:7: ID EXPRESSION
+                    # grammar/Frontend.g:47:7: ID EXPRESSION
                     pass 
-                    ID15 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value228) 
+                    ID15 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item230) 
                     stream_ID.add(ID15)
 
 
-                    EXPRESSION16 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_value230) 
+                    EXPRESSION16 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item232) 
                     stream_EXPRESSION.add(EXPRESSION16)
 
 
@@ -684,8 +684,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 45:21: -> ^( ID EXPRESSION )
-                    # grammar/Frontend.g:45:24: ^( ID EXPRESSION )
+                    # 47:21: -> ^( ID EXPRESSION )
+                    # grammar/Frontend.g:47:24: ^( ID EXPRESSION )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     stream_ID.nextNode()
@@ -722,7 +722,7 @@ class FrontendParser(Parser):
             pass
         return retval
 
-    # $ANTLR end "consts_value"
+    # $ANTLR end "consts_item"
 
 
     class num_whole_return(ParserRuleReturnScope):
@@ -736,7 +736,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "num_whole"
-    # grammar/Frontend.g:47:1: num_whole : ( MINUS )? NUMBER ;
+    # grammar/Frontend.g:50:1: num_whole : ( MINUS )? NUMBER ;
     def num_whole(self, ):
         retval = self.num_whole_return()
         retval.start = self.input.LT(1)
@@ -752,22 +752,22 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:47:11: ( ( MINUS )? NUMBER )
-                # grammar/Frontend.g:47:13: ( MINUS )? NUMBER
+                # grammar/Frontend.g:50:11: ( ( MINUS )? NUMBER )
+                # grammar/Frontend.g:50:13: ( MINUS )? NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:47:13: ( MINUS )?
+                # grammar/Frontend.g:50:13: ( MINUS )?
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
 
                 if (LA4_0 == MINUS) :
                     alt4 = 1
                 if alt4 == 1:
-                    # grammar/Frontend.g:47:13: MINUS
+                    # grammar/Frontend.g:50:13: MINUS
                     pass 
-                    MINUS17 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole252)
+                    MINUS17 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole255)
                     MINUS17_tree = self._adaptor.createWithPayload(MINUS17)
                     self._adaptor.addChild(root_0, MINUS17_tree)
 
@@ -776,7 +776,7 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER18 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole256)
+                NUMBER18 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole259)
                 NUMBER18_tree = self._adaptor.createWithPayload(NUMBER18)
                 self._adaptor.addChild(root_0, NUMBER18_tree)
 
@@ -815,7 +815,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/Frontend.g:48:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
+    # grammar/Frontend.g:51:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
     def num_fract(self, ):
         retval = self.num_fract_return()
         retval.start = self.input.LT(1)
@@ -835,22 +835,22 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:48:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
-                # grammar/Frontend.g:48:13: ( MINUS )? NUMBER DIVIDE NUMBER
+                # grammar/Frontend.g:51:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
+                # grammar/Frontend.g:51:13: ( MINUS )? NUMBER DIVIDE NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:48:13: ( MINUS )?
+                # grammar/Frontend.g:51:13: ( MINUS )?
                 alt5 = 2
                 LA5_0 = self.input.LA(1)
 
                 if (LA5_0 == MINUS) :
                     alt5 = 1
                 if alt5 == 1:
-                    # grammar/Frontend.g:48:13: MINUS
+                    # grammar/Frontend.g:51:13: MINUS
                     pass 
-                    MINUS19 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract264)
+                    MINUS19 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract267)
                     MINUS19_tree = self._adaptor.createWithPayload(MINUS19)
                     self._adaptor.addChild(root_0, MINUS19_tree)
 
@@ -859,19 +859,19 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER20 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract268)
+                NUMBER20 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract271)
                 NUMBER20_tree = self._adaptor.createWithPayload(NUMBER20)
                 self._adaptor.addChild(root_0, NUMBER20_tree)
 
 
 
-                DIVIDE21 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract270)
+                DIVIDE21 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract273)
                 DIVIDE21_tree = self._adaptor.createWithPayload(DIVIDE21)
                 self._adaptor.addChild(root_0, DIVIDE21_tree)
 
 
 
-                NUMBER22 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract272)
+                NUMBER22 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract275)
                 NUMBER22_tree = self._adaptor.createWithPayload(NUMBER22)
                 self._adaptor.addChild(root_0, NUMBER22_tree)
 
@@ -904,26 +904,26 @@ class FrontendParser(Parser):
 
     FOLLOW_module_in_start102 = frozenset([1, 4, 11])
     FOLLOW_consts_in_start106 = frozenset([1, 4, 11])
-    FOLLOW_MODULE_in_module118 = frozenset([8])
-    FOLLOW_ID_in_module120 = frozenset([1])
-    FOLLOW_CONSTS_in_consts142 = frozenset([8])
-    FOLLOW_ID_in_consts144 = frozenset([9])
-    FOLLOW_INDENT_in_consts146 = frozenset([8])
-    FOLLOW_consts_values_in_consts148 = frozenset([5])
-    FOLLOW_DEDENT_in_consts150 = frozenset([1])
-    FOLLOW_consts_value_in_consts_values174 = frozenset([1, 8])
-    FOLLOW_ID_in_consts_value188 = frozenset([10, 12])
-    FOLLOW_num_whole_in_consts_value190 = frozenset([1])
-    FOLLOW_ID_in_consts_value208 = frozenset([10, 12])
-    FOLLOW_num_fract_in_consts_value210 = frozenset([1])
-    FOLLOW_ID_in_consts_value228 = frozenset([7])
-    FOLLOW_EXPRESSION_in_consts_value230 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole252 = frozenset([12])
-    FOLLOW_NUMBER_in_num_whole256 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract264 = frozenset([12])
-    FOLLOW_NUMBER_in_num_fract268 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract270 = frozenset([12])
-    FOLLOW_NUMBER_in_num_fract272 = frozenset([1])
+    FOLLOW_MODULE_in_module119 = frozenset([8])
+    FOLLOW_ID_in_module121 = frozenset([1])
+    FOLLOW_CONSTS_in_consts144 = frozenset([8])
+    FOLLOW_ID_in_consts146 = frozenset([9])
+    FOLLOW_INDENT_in_consts148 = frozenset([8])
+    FOLLOW_consts_items_in_consts150 = frozenset([5])
+    FOLLOW_DEDENT_in_consts152 = frozenset([1])
+    FOLLOW_consts_item_in_consts_items176 = frozenset([1, 8])
+    FOLLOW_ID_in_consts_item190 = frozenset([10, 12])
+    FOLLOW_num_whole_in_consts_item192 = frozenset([1])
+    FOLLOW_ID_in_consts_item210 = frozenset([10, 12])
+    FOLLOW_num_fract_in_consts_item212 = frozenset([1])
+    FOLLOW_ID_in_consts_item230 = frozenset([7])
+    FOLLOW_EXPRESSION_in_consts_item232 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole255 = frozenset([12])
+    FOLLOW_NUMBER_in_num_whole259 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract267 = frozenset([12])
+    FOLLOW_NUMBER_in_num_fract271 = frozenset([6])
+    FOLLOW_DIVIDE_in_num_fract273 = frozenset([12])
+    FOLLOW_NUMBER_in_num_fract275 = frozenset([1])
 
 
 
