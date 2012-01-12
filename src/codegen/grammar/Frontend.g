@@ -49,7 +49,7 @@ consts_item
 
 types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) ;
 types_items : types_item + ;
-types_item : ID NEWLINE INDENT types_item_attrs DEDENT NEWLINE -> ^( ID types_item_attrs ) ;
+types_item : ID NEWLINE INDENT NEWLINE types_item_attrs DEDENT NEWLINE -> ^( ID types_item_attrs ) ;
 types_item_attrs : types_item_attr + ;
 types_item_attr : ID NEWLINE -> ID ;
 
