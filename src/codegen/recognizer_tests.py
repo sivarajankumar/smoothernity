@@ -59,7 +59,17 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . rec
         ae ( r ( 'consts test1\n const1 [ 2 + 2 ]\n const2 []\n' ) ,
-            { 'consts' : { 'test1' : { 'const1' : '[ 2 + 2 ]' , 'const2' : '[]' } } } )
+            { 'consts' : { 'test1' : 
+                { 'const1' : '[ 2 + 2 ]' , 'const2' : '[]' } } } )
+    def test_types ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'types test1\n'
+                    ' type1\n  atr11\n  atr12\n'
+                    ' type2\n  atr21\n  atr22\n' ) ,
+            { 'types' : { 'test1' : 
+                { 'type1' : { 'atr11' : { } , 'atr12' : { } }
+                , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
 
 if __name__ == '__main__' :
     unittest . main ( )

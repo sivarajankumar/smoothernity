@@ -34,16 +34,19 @@ options
 }
 
 start : ( module | consts ) * ;
+
 module : MODULE ID -> ^( MODULE ID ) ;
+
 consts
-    : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values )
+    : CONSTS ID INDENT consts_items DEDENT -> ^( CONSTS ID consts_items )
     ;
-consts_values : consts_value + ;
-consts_value
+consts_items : consts_item + ;
+consts_item
     : ID num_whole -> ^( ID num_whole )
     | ID num_fract -> ^( ID num_fract )
     | ID EXPRESSION -> ^( ID EXPRESSION )
     ;
+
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
 

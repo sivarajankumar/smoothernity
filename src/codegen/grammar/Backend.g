@@ -38,19 +38,19 @@ module
 consts
     returns [ title , content ]
     @ init { $content = dict ( ) }
-    :   ^( CONSTS ID consts_values )
-            { $title , $content = $ID.text , $consts_values.value }
+    :   ^( CONSTS ID consts_items )
+            { $title , $content = $ID.text , $consts_items.value }
     ;
 
-consts_values
+consts_items
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ( consts_value
-            { $value [ $consts_value.name ] = $consts_value.value }
+    :   ( consts_item
+            { $value [ $consts_item.name ] = $consts_item.value }
         ) +
     ;
 
-consts_value
+consts_item
     returns [ name , value ]
     :   ^( ID num_whole )
             { $name , $value = $ID.text , $num_whole.value }
