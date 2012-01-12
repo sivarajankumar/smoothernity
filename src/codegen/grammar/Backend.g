@@ -38,9 +38,7 @@ module
 consts
     returns [ title , content ]
     @ init { $content = dict ( ) }
-    :   ^( CONSTS ID )
-            { $title , $content = $ID.text , dict ( ) }
-    |   ^( CONSTS ID consts_values )
+    :   ^( CONSTS ID consts_values )
             { $title , $content = $ID.text , $consts_values.value }
     ;
 
@@ -58,6 +56,8 @@ consts_value
             { $name , $value = $ID.text , $num_whole.value }
     |   ^( ID num_fract )
             { $name , $value = $ID.text , $num_fract.value }
+    |   ^( ID EXPRESSION )
+            { $name , $value = $ID.text , $EXPRESSION.text }
     ;
 
 num_whole

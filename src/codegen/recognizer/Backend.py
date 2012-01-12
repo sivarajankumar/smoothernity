@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-12 09:16:15
+# $ANTLR 3.4 grammar/Backend.g 2012-01-12 18:23:08
 
 import sys
 from antlr3 import *
@@ -19,18 +19,19 @@ EOF=-1
 CONSTS=4
 DEDENT=5
 DIVIDE=6
-ID=7
-INDENT=8
-MINUS=9
-MODULE=10
-NUMBER=11
-WHITESPACE=12
+EXPRESSION=7
+ID=8
+INDENT=9
+MINUS=10
+MODULE=11
+NUMBER=12
+WHITESPACE=13
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "CONSTS", "DEDENT", "DIVIDE", "ID", "INDENT", "MINUS", "MODULE", "NUMBER", 
-    "WHITESPACE"
+    "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
+    "MODULE", "NUMBER", "WHITESPACE"
 ]
 
 
@@ -192,97 +193,39 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts"
-    # grammar/Backend.g:38:1: consts returns [ title , content ] : ( ^( CONSTS ID ) | ^( CONSTS ID consts_values ) );
+    # grammar/Backend.g:38:1: consts returns [ title , content ] : ^( CONSTS ID consts_values ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
 
 
         ID4 = None
-        ID5 = None
-        consts_values6 = None
+        consts_values5 = None
 
 
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:41:5: ( ^( CONSTS ID ) | ^( CONSTS ID consts_values ) )
-                alt2 = 2
-                LA2_0 = self.input.LA(1)
+                # grammar/Backend.g:41:5: ( ^( CONSTS ID consts_values ) )
+                # grammar/Backend.g:41:9: ^( CONSTS ID consts_values )
+                pass 
+                self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts213)
 
-                if (LA2_0 == CONSTS) :
-                    LA2_1 = self.input.LA(2)
+                self.match(self.input, DOWN, None)
+                ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_consts215)
 
-                    if (LA2_1 == 2) :
-                        LA2_2 = self.input.LA(3)
+                self._state.following.append(self.FOLLOW_consts_values_in_consts217)
+                consts_values5 = self.consts_values()
 
-                        if (LA2_2 == ID) :
-                            LA2_3 = self.input.LA(4)
+                self._state.following.pop()
 
-                            if (LA2_3 == 3) :
-                                alt2 = 1
-                            elif (LA2_3 == ID) :
-                                alt2 = 2
-                            else:
-                                nvae = NoViableAltException("", 2, 3, self.input)
-
-                                raise nvae
+                self.match(self.input, UP, None)
 
 
-                        else:
-                            nvae = NoViableAltException("", 2, 2, self.input)
+                #action start
+                retval.title , retval.content = ID4.text , consts_values5 
+                #action end
 
-                            raise nvae
-
-
-                    else:
-                        nvae = NoViableAltException("", 2, 1, self.input)
-
-                        raise nvae
-
-
-                else:
-                    nvae = NoViableAltException("", 2, 0, self.input)
-
-                    raise nvae
-
-
-                if alt2 == 1:
-                    # grammar/Backend.g:41:9: ^( CONSTS ID )
-                    pass 
-                    self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts213)
-
-                    self.match(self.input, DOWN, None)
-                    ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_consts215)
-
-                    self.match(self.input, UP, None)
-
-
-                    #action start
-                    retval.title , retval.content = ID4.text , dict ( ) 
-                    #action end
-
-
-
-                elif alt2 == 2:
-                    # grammar/Backend.g:43:9: ^( CONSTS ID consts_values )
-                    pass 
-                    self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts243)
-
-                    self.match(self.input, DOWN, None)
-                    ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_consts245)
-
-                    self._state.following.append(self.FOLLOW_consts_values_in_consts247)
-                    consts_values6 = self.consts_values()
-
-                    self._state.following.pop()
-
-                    self.match(self.input, UP, None)
-
-
-                    #action start
-                    retval.title , retval.content = ID5.text , consts_values6 
-                    #action end
 
 
 
@@ -300,52 +243,52 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts_values"
-    # grammar/Backend.g:47:1: consts_values returns [ value ] : ( consts_value )+ ;
+    # grammar/Backend.g:45:1: consts_values returns [ value ] : ( consts_value )+ ;
     def consts_values(self, ):
         value = None
 
 
-        consts_value7 = None
+        consts_value6 = None
 
 
         value = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:50:5: ( ( consts_value )+ )
-                # grammar/Backend.g:50:9: ( consts_value )+
+                # grammar/Backend.g:48:5: ( ( consts_value )+ )
+                # grammar/Backend.g:48:9: ( consts_value )+
                 pass 
-                # grammar/Backend.g:50:9: ( consts_value )+
-                cnt3 = 0
-                while True: #loop3
-                    alt3 = 2
-                    LA3_0 = self.input.LA(1)
+                # grammar/Backend.g:48:9: ( consts_value )+
+                cnt2 = 0
+                while True: #loop2
+                    alt2 = 2
+                    LA2_0 = self.input.LA(1)
 
-                    if (LA3_0 == ID) :
-                        alt3 = 1
+                    if (LA2_0 == ID) :
+                        alt2 = 1
 
 
-                    if alt3 == 1:
-                        # grammar/Backend.g:50:11: consts_value
+                    if alt2 == 1:
+                        # grammar/Backend.g:48:11: consts_value
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values302)
-                        consts_value7 = self.consts_value()
+                        self._state.following.append(self.FOLLOW_consts_value_in_consts_values272)
+                        consts_value6 = self.consts_value()
 
                         self._state.following.pop()
 
                         #action start
-                        value [ ((consts_value7 is not None) and [consts_value7.name] or [None])[0] ] = ((consts_value7 is not None) and [consts_value7.value] or [None])[0] 
+                        value [ ((consts_value6 is not None) and [consts_value6.name] or [None])[0] ] = ((consts_value6 is not None) and [consts_value6.value] or [None])[0] 
                         #action end
 
 
 
                     else:
-                        if cnt3 >= 1:
-                            break #loop3
+                        if cnt2 >= 1:
+                            break #loop2
 
-                        eee = EarlyExitException(3, self.input)
+                        eee = EarlyExitException(2, self.input)
                         raise eee
 
-                    cnt3 += 1
+                    cnt2 += 1
 
 
 
@@ -374,92 +317,95 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts_value"
-    # grammar/Backend.g:55:1: consts_value returns [ name , value ] : ( ^( ID num_whole ) | ^( ID num_fract ) );
+    # grammar/Backend.g:53:1: consts_value returns [ name , value ] : ( ^( ID num_whole ) | ^( ID num_fract ) | ^( ID EXPRESSION ) );
     def consts_value(self, ):
         retval = self.consts_value_return()
         retval.start = self.input.LT(1)
 
 
-        ID8 = None
-        ID10 = None
-        num_whole9 = None
+        ID7 = None
+        ID9 = None
+        ID11 = None
+        EXPRESSION12 = None
+        num_whole8 = None
 
-        num_fract11 = None
+        num_fract10 = None
 
 
         try:
             try:
-                # grammar/Backend.g:57:5: ( ^( ID num_whole ) | ^( ID num_fract ) )
-                alt4 = 2
-                LA4_0 = self.input.LA(1)
+                # grammar/Backend.g:55:5: ( ^( ID num_whole ) | ^( ID num_fract ) | ^( ID EXPRESSION ) )
+                alt3 = 3
+                LA3_0 = self.input.LA(1)
 
-                if (LA4_0 == ID) :
-                    LA4_1 = self.input.LA(2)
+                if (LA3_0 == ID) :
+                    LA3_1 = self.input.LA(2)
 
-                    if (LA4_1 == 2) :
-                        LA4_2 = self.input.LA(3)
+                    if (LA3_1 == 2) :
+                        LA3 = self.input.LA(3)
+                        if LA3 == EXPRESSION:
+                            alt3 = 3
+                        elif LA3 == MINUS:
+                            LA3_4 = self.input.LA(4)
 
-                        if (LA4_2 == MINUS) :
-                            LA4_3 = self.input.LA(4)
+                            if (LA3_4 == NUMBER) :
+                                LA3_6 = self.input.LA(5)
 
-                            if (LA4_3 == NUMBER) :
-                                LA4_5 = self.input.LA(5)
-
-                                if (LA4_5 == DIVIDE) :
-                                    alt4 = 2
-                                elif (LA4_5 == 3) :
-                                    alt4 = 1
+                                if (LA3_6 == DIVIDE) :
+                                    alt3 = 2
+                                elif (LA3_6 == 3) :
+                                    alt3 = 1
                                 else:
-                                    nvae = NoViableAltException("", 4, 5, self.input)
+                                    nvae = NoViableAltException("", 3, 6, self.input)
 
                                     raise nvae
 
 
                             else:
-                                nvae = NoViableAltException("", 4, 3, self.input)
+                                nvae = NoViableAltException("", 3, 4, self.input)
 
                                 raise nvae
 
 
-                        elif (LA4_2 == NUMBER) :
-                            LA4_4 = self.input.LA(4)
+                        elif LA3 == NUMBER:
+                            LA3_5 = self.input.LA(4)
 
-                            if (LA4_4 == DIVIDE) :
-                                alt4 = 2
-                            elif (LA4_4 == 3) :
-                                alt4 = 1
+                            if (LA3_5 == DIVIDE) :
+                                alt3 = 2
+                            elif (LA3_5 == 3) :
+                                alt3 = 1
                             else:
-                                nvae = NoViableAltException("", 4, 4, self.input)
+                                nvae = NoViableAltException("", 3, 5, self.input)
 
                                 raise nvae
 
 
                         else:
-                            nvae = NoViableAltException("", 4, 2, self.input)
+                            nvae = NoViableAltException("", 3, 2, self.input)
 
                             raise nvae
 
 
                     else:
-                        nvae = NoViableAltException("", 4, 1, self.input)
+                        nvae = NoViableAltException("", 3, 1, self.input)
 
                         raise nvae
 
 
                 else:
-                    nvae = NoViableAltException("", 4, 0, self.input)
+                    nvae = NoViableAltException("", 3, 0, self.input)
 
                     raise nvae
 
 
-                if alt4 == 1:
-                    # grammar/Backend.g:57:9: ^( ID num_whole )
+                if alt3 == 1:
+                    # grammar/Backend.g:55:9: ^( ID num_whole )
                     pass 
-                    ID8 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value357)
+                    ID7 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value327)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_num_whole_in_consts_value359)
-                    num_whole9 = self.num_whole()
+                    self._state.following.append(self.FOLLOW_num_whole_in_consts_value329)
+                    num_whole8 = self.num_whole()
 
                     self._state.following.pop()
 
@@ -467,19 +413,19 @@ class Backend(TreeParser):
 
 
                     #action start
-                    retval.name , retval.value = ID8.text , num_whole9 
+                    retval.name , retval.value = ID7.text , num_whole8 
                     #action end
 
 
 
-                elif alt4 == 2:
-                    # grammar/Backend.g:59:9: ^( ID num_fract )
+                elif alt3 == 2:
+                    # grammar/Backend.g:57:9: ^( ID num_fract )
                     pass 
-                    ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value387)
+                    ID9 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value357)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_num_fract_in_consts_value389)
-                    num_fract11 = self.num_fract()
+                    self._state.following.append(self.FOLLOW_num_fract_in_consts_value359)
+                    num_fract10 = self.num_fract()
 
                     self._state.following.pop()
 
@@ -487,7 +433,24 @@ class Backend(TreeParser):
 
 
                     #action start
-                    retval.name , retval.value = ID10.text , num_fract11 
+                    retval.name , retval.value = ID9.text , num_fract10 
+                    #action end
+
+
+
+                elif alt3 == 3:
+                    # grammar/Backend.g:59:9: ^( ID EXPRESSION )
+                    pass 
+                    ID11 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_value387)
+
+                    self.match(self.input, DOWN, None)
+                    EXPRESSION12 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_value389)
+
+                    self.match(self.input, UP, None)
+
+
+                    #action start
+                    retval.name , retval.value = ID11.text , EXPRESSION12.text 
                     #action end
 
 
@@ -511,58 +474,58 @@ class Backend(TreeParser):
         value = None
 
 
-        MINUS12 = None
-        NUMBER13 = None
+        MINUS13 = None
         NUMBER14 = None
+        NUMBER15 = None
 
         try:
             try:
                 # grammar/Backend.g:65:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
-                alt5 = 2
-                LA5_0 = self.input.LA(1)
+                alt4 = 2
+                LA4_0 = self.input.LA(1)
 
-                if (LA5_0 == MINUS) :
-                    alt5 = 1
-                elif (LA5_0 == NUMBER) :
-                    alt5 = 2
+                if (LA4_0 == MINUS) :
+                    alt4 = 1
+                elif (LA4_0 == NUMBER) :
+                    alt4 = 2
                 else:
-                    nvae = NoViableAltException("", 5, 0, self.input)
+                    nvae = NoViableAltException("", 4, 0, self.input)
 
                     raise nvae
 
 
-                if alt5 == 1:
+                if alt4 == 1:
                     # grammar/Backend.g:65:9: ( MINUS NUMBER )
                     pass 
                     # grammar/Backend.g:65:9: ( MINUS NUMBER )
                     # grammar/Backend.g:65:11: MINUS NUMBER
                     pass 
-                    MINUS12 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole434)
+                    MINUS13 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole434)
 
-                    NUMBER13 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole436)
+                    NUMBER14 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole436)
 
 
 
 
                     #action start
-                    value = int ( MINUS12.text + NUMBER13.text ) 
+                    value = int ( MINUS13.text + NUMBER14.text ) 
                     #action end
 
 
 
-                elif alt5 == 2:
+                elif alt4 == 2:
                     # grammar/Backend.g:67:9: ( NUMBER )
                     pass 
                     # grammar/Backend.g:67:9: ( NUMBER )
                     # grammar/Backend.g:67:11: NUMBER
                     pass 
-                    NUMBER14 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole464)
+                    NUMBER15 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole464)
 
 
 
 
                     #action start
-                    value = int ( NUMBER14.text ) 
+                    value = int ( NUMBER15.text ) 
                     #action end
 
 
@@ -588,31 +551,31 @@ class Backend(TreeParser):
 
         n = None
         d = None
-        MINUS15 = None
+        MINUS16 = None
 
         try:
             try:
                 # grammar/Backend.g:73:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
-                alt6 = 2
-                LA6_0 = self.input.LA(1)
+                alt5 = 2
+                LA5_0 = self.input.LA(1)
 
-                if (LA6_0 == MINUS) :
-                    alt6 = 1
-                elif (LA6_0 == NUMBER) :
-                    alt6 = 2
+                if (LA5_0 == MINUS) :
+                    alt5 = 1
+                elif (LA5_0 == NUMBER) :
+                    alt5 = 2
                 else:
-                    nvae = NoViableAltException("", 6, 0, self.input)
+                    nvae = NoViableAltException("", 5, 0, self.input)
 
                     raise nvae
 
 
-                if alt6 == 1:
+                if alt5 == 1:
                     # grammar/Backend.g:73:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     pass 
                     # grammar/Backend.g:73:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     # grammar/Backend.g:73:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    MINUS15 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract509)
+                    MINUS16 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract509)
 
                     n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract515)
 
@@ -625,14 +588,14 @@ class Backend(TreeParser):
 
                     #action start
                                 
-                    value = Fraction ( int ( MINUS15.text + n.text ) ,
+                    value = Fraction ( int ( MINUS16.text + n.text ) ,
                         int ( d.text ) )
                                 
                     #action end
 
 
 
-                elif alt6 == 2:
+                elif alt5 == 2:
                     # grammar/Backend.g:78:9: (n= NUMBER DIVIDE d= NUMBER )
                     pass 
                     # grammar/Backend.g:78:9: (n= NUMBER DIVIDE d= NUMBER )
@@ -668,29 +631,29 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 4, 10])
-    FOLLOW_consts_in_start113 = frozenset([1, 4, 10])
+    FOLLOW_module_in_start86 = frozenset([1, 4, 11])
+    FOLLOW_consts_in_start113 = frozenset([1, 4, 11])
     FOLLOW_MODULE_in_module168 = frozenset([2])
     FOLLOW_ID_in_module170 = frozenset([3])
     FOLLOW_CONSTS_in_consts213 = frozenset([2])
-    FOLLOW_ID_in_consts215 = frozenset([3])
-    FOLLOW_CONSTS_in_consts243 = frozenset([2])
-    FOLLOW_ID_in_consts245 = frozenset([7])
-    FOLLOW_consts_values_in_consts247 = frozenset([3])
-    FOLLOW_consts_value_in_consts_values302 = frozenset([1, 7])
+    FOLLOW_ID_in_consts215 = frozenset([8])
+    FOLLOW_consts_values_in_consts217 = frozenset([3])
+    FOLLOW_consts_value_in_consts_values272 = frozenset([1, 8])
+    FOLLOW_ID_in_consts_value327 = frozenset([2])
+    FOLLOW_num_whole_in_consts_value329 = frozenset([3])
     FOLLOW_ID_in_consts_value357 = frozenset([2])
-    FOLLOW_num_whole_in_consts_value359 = frozenset([3])
+    FOLLOW_num_fract_in_consts_value359 = frozenset([3])
     FOLLOW_ID_in_consts_value387 = frozenset([2])
-    FOLLOW_num_fract_in_consts_value389 = frozenset([3])
-    FOLLOW_MINUS_in_num_whole434 = frozenset([11])
+    FOLLOW_EXPRESSION_in_consts_value389 = frozenset([3])
+    FOLLOW_MINUS_in_num_whole434 = frozenset([12])
     FOLLOW_NUMBER_in_num_whole436 = frozenset([1])
     FOLLOW_NUMBER_in_num_whole464 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract509 = frozenset([11])
+    FOLLOW_MINUS_in_num_fract509 = frozenset([12])
     FOLLOW_NUMBER_in_num_fract515 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract517 = frozenset([11])
+    FOLLOW_DIVIDE_in_num_fract517 = frozenset([12])
     FOLLOW_NUMBER_in_num_fract523 = frozenset([1])
     FOLLOW_NUMBER_in_num_fract555 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract557 = frozenset([11])
+    FOLLOW_DIVIDE_in_num_fract557 = frozenset([12])
     FOLLOW_NUMBER_in_num_fract563 = frozenset([1])
 
 
