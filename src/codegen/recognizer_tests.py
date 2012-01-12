@@ -1,6 +1,7 @@
 import unittest
 import recognizer
 import io
+import fractions
 
 class recognizer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -41,8 +42,16 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_consts_num_whole ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'consts test1\n const1 11\n const2 22\n' ) ,
-            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+        ae ( r ( 'consts test1\n const1 11\n const2 - 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : - 22 } } } )
+    def test_consts_num_fract ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        f = fractions . Fraction
+        ae ( r ( 'consts test1\n const1 11 / 22\n const2 - 22 / 33\n' ) ,
+            { 'consts' : { 'test1' : 
+                { 'const1' : f ( 11 , 22 ) 
+                , 'const2' : f ( - 22 , 33 ) } } } )
     def test_consts_indent_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
