@@ -16,6 +16,7 @@ class recognizer :
         self . _indenter = indenter ( )
         self . _indenter . set_indent_token ( 'indent' )
         self . _indenter . set_dedent_token ( 'dedent' )
+        self . _indenter . set_newline_token ( '\n' )
     def recognize ( self , input ) :
         indented = self . _indenter . run ( input . readlines ( ) )
         fel = FrontendLexer ( ANTLRInputStream ( StringIO ( indented ) ) )

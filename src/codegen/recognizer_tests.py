@@ -70,7 +70,7 @@ class recognizer_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def test_types_unindented ( self ) :
+    def test_types_single_line ( self ) :
         ae = self . assertEqual
         r = self . rec
         ae ( r ( 'types test1\n'
