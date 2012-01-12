@@ -33,7 +33,7 @@ options
         raise FrontendLexerException ( msg )
 }
 
-start : ( module | consts ) * ;
+start : ( module | consts | types ) * ;
 
 module : MODULE ID -> ^( MODULE ID ) ;
 
@@ -47,13 +47,20 @@ consts_item
     | ID EXPRESSION -> ^( ID EXPRESSION )
     ;
 
+types : TYPES ID INDENT types_items DEDENT -> ^( TYPES ID types_items ) ;
+types_items : types_item + ;
+types_item : ID INDENT types_item_attrs DEDENT -> ^( ID types_item_attrs ) ;
+types_item_attrs : types_item_attr + ;
+types_item_attr : ID ;
+
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
 
 CONSTS : 'consts' ;
-MODULE : 'module' ;
-INDENT : 'indent' ;
 DEDENT : 'dedent' ;
+INDENT : 'indent' ;
+MODULE : 'module' ;
+TYPES : 'types' ;
 DIVIDE : '/' ;
 MINUS : '-' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;

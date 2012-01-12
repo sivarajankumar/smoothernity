@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-12 19:00:30
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-12 19:14:25
 
 import sys
 from antlr3 import *
@@ -25,7 +25,8 @@ INDENT=9
 MINUS=10
 MODULE=11
 NUMBER=12
-WHITESPACE=13
+TYPES=13
+WHITESPACE=14
 
 
 class FrontendLexer(Lexer):
@@ -55,8 +56,8 @@ class FrontendLexer(Lexer):
             _type = CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:53:8: ( 'consts' )
-            # grammar/Frontend.g:53:10: 'consts'
+            # grammar/Frontend.g:59:8: ( 'consts' )
+            # grammar/Frontend.g:59:10: 'consts'
             pass 
             self.match("consts")
 
@@ -72,60 +73,14 @@ class FrontendLexer(Lexer):
 
 
 
-    # $ANTLR start "MODULE"
-    def mMODULE(self, ):
-        try:
-            _type = MODULE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/Frontend.g:54:8: ( 'module' )
-            # grammar/Frontend.g:54:10: 'module'
-            pass 
-            self.match("module")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "MODULE"
-
-
-
-    # $ANTLR start "INDENT"
-    def mINDENT(self, ):
-        try:
-            _type = INDENT
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/Frontend.g:55:8: ( 'indent' )
-            # grammar/Frontend.g:55:10: 'indent'
-            pass 
-            self.match("indent")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "INDENT"
-
-
-
     # $ANTLR start "DEDENT"
     def mDEDENT(self, ):
         try:
             _type = DEDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:56:8: ( 'dedent' )
-            # grammar/Frontend.g:56:10: 'dedent'
+            # grammar/Frontend.g:60:8: ( 'dedent' )
+            # grammar/Frontend.g:60:10: 'dedent'
             pass 
             self.match("dedent")
 
@@ -141,14 +96,83 @@ class FrontendLexer(Lexer):
 
 
 
+    # $ANTLR start "INDENT"
+    def mINDENT(self, ):
+        try:
+            _type = INDENT
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:61:8: ( 'indent' )
+            # grammar/Frontend.g:61:10: 'indent'
+            pass 
+            self.match("indent")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "INDENT"
+
+
+
+    # $ANTLR start "MODULE"
+    def mMODULE(self, ):
+        try:
+            _type = MODULE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:62:8: ( 'module' )
+            # grammar/Frontend.g:62:10: 'module'
+            pass 
+            self.match("module")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "MODULE"
+
+
+
+    # $ANTLR start "TYPES"
+    def mTYPES(self, ):
+        try:
+            _type = TYPES
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:63:7: ( 'types' )
+            # grammar/Frontend.g:63:9: 'types'
+            pass 
+            self.match("types")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TYPES"
+
+
+
     # $ANTLR start "DIVIDE"
     def mDIVIDE(self, ):
         try:
             _type = DIVIDE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:57:8: ( '/' )
-            # grammar/Frontend.g:57:10: '/'
+            # grammar/Frontend.g:64:8: ( '/' )
+            # grammar/Frontend.g:64:10: '/'
             pass 
             self.match(47)
 
@@ -169,8 +193,8 @@ class FrontendLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:58:7: ( '-' )
-            # grammar/Frontend.g:58:9: '-'
+            # grammar/Frontend.g:65:7: ( '-' )
+            # grammar/Frontend.g:65:9: '-'
             pass 
             self.match(45)
 
@@ -191,12 +215,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:59:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:59:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:66:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:66:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:59:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:66:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -239,10 +263,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:60:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:60:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:67:8: ( ( '0' .. '9' )+ )
+            # grammar/Frontend.g:67:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:60:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:67:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -292,10 +316,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:61:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:61:14: ( ' ' )+
+            # grammar/Frontend.g:68:12: ( ( ' ' )+ )
+            # grammar/Frontend.g:68:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:61:14: ( ' ' )+
+            # grammar/Frontend.g:68:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -306,7 +330,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:61:14: ' '
+                    # grammar/Frontend.g:68:14: ' '
                     pass 
                     self.match(32)
 
@@ -343,12 +367,12 @@ class FrontendLexer(Lexer):
             _type = EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:62:12: ( '[' ( . )* ']' )
-            # grammar/Frontend.g:62:14: '[' ( . )* ']'
+            # grammar/Frontend.g:69:12: ( '[' ( . )* ']' )
+            # grammar/Frontend.g:69:14: '[' ( . )* ']'
             pass 
             self.match(91)
 
-            # grammar/Frontend.g:62:18: ( . )*
+            # grammar/Frontend.g:69:18: ( . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -360,7 +384,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # grammar/Frontend.g:62:18: .
+                    # grammar/Frontend.g:69:18: .
                     pass 
                     self.matchAny()
 
@@ -383,173 +407,205 @@ class FrontendLexer(Lexer):
 
 
     def mTokens(self):
-        # grammar/Frontend.g:1:8: ( CONSTS | MODULE | INDENT | DEDENT | DIVIDE | MINUS | ID | NUMBER | WHITESPACE | EXPRESSION )
-        alt5 = 10
+        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | DIVIDE | MINUS | ID | NUMBER | WHITESPACE | EXPRESSION )
+        alt5 = 11
         LA5 = self.input.LA(1)
         if LA5 == 99:
             LA5_1 = self.input.LA(2)
 
             if (LA5_1 == 111) :
-                LA5_11 = self.input.LA(3)
+                LA5_12 = self.input.LA(3)
 
-                if (LA5_11 == 110) :
-                    LA5_15 = self.input.LA(4)
+                if (LA5_12 == 110) :
+                    LA5_17 = self.input.LA(4)
 
-                    if (LA5_15 == 115) :
-                        LA5_19 = self.input.LA(5)
+                    if (LA5_17 == 115) :
+                        LA5_22 = self.input.LA(5)
 
-                        if (LA5_19 == 116) :
-                            LA5_23 = self.input.LA(6)
+                        if (LA5_22 == 116) :
+                            LA5_27 = self.input.LA(6)
 
-                            if (LA5_23 == 115) :
-                                LA5_27 = self.input.LA(7)
+                            if (LA5_27 == 115) :
+                                LA5_32 = self.input.LA(7)
 
-                                if ((48 <= LA5_27 <= 57) or LA5_27 == 95 or (97 <= LA5_27 <= 122)) :
-                                    alt5 = 7
+                                if ((48 <= LA5_32 <= 57) or LA5_32 == 95 or (97 <= LA5_32 <= 122)) :
+                                    alt5 = 8
                                 else:
                                     alt5 = 1
 
                             else:
-                                alt5 = 7
+                                alt5 = 8
 
                         else:
-                            alt5 = 7
+                            alt5 = 8
 
                     else:
-                        alt5 = 7
+                        alt5 = 8
 
                 else:
-                    alt5 = 7
+                    alt5 = 8
 
             else:
-                alt5 = 7
+                alt5 = 8
 
-        elif LA5 == 109:
+        elif LA5 == 100:
             LA5_2 = self.input.LA(2)
 
-            if (LA5_2 == 111) :
-                LA5_12 = self.input.LA(3)
+            if (LA5_2 == 101) :
+                LA5_13 = self.input.LA(3)
 
-                if (LA5_12 == 100) :
-                    LA5_16 = self.input.LA(4)
+                if (LA5_13 == 100) :
+                    LA5_18 = self.input.LA(4)
 
-                    if (LA5_16 == 117) :
-                        LA5_20 = self.input.LA(5)
+                    if (LA5_18 == 101) :
+                        LA5_23 = self.input.LA(5)
 
-                        if (LA5_20 == 108) :
-                            LA5_24 = self.input.LA(6)
+                        if (LA5_23 == 110) :
+                            LA5_28 = self.input.LA(6)
 
-                            if (LA5_24 == 101) :
-                                LA5_28 = self.input.LA(7)
+                            if (LA5_28 == 116) :
+                                LA5_33 = self.input.LA(7)
 
-                                if ((48 <= LA5_28 <= 57) or LA5_28 == 95 or (97 <= LA5_28 <= 122)) :
-                                    alt5 = 7
+                                if ((48 <= LA5_33 <= 57) or LA5_33 == 95 or (97 <= LA5_33 <= 122)) :
+                                    alt5 = 8
                                 else:
                                     alt5 = 2
 
                             else:
-                                alt5 = 7
+                                alt5 = 8
 
                         else:
-                            alt5 = 7
+                            alt5 = 8
 
                     else:
-                        alt5 = 7
+                        alt5 = 8
 
                 else:
-                    alt5 = 7
+                    alt5 = 8
 
             else:
-                alt5 = 7
+                alt5 = 8
 
         elif LA5 == 105:
             LA5_3 = self.input.LA(2)
 
             if (LA5_3 == 110) :
-                LA5_13 = self.input.LA(3)
+                LA5_14 = self.input.LA(3)
 
-                if (LA5_13 == 100) :
-                    LA5_17 = self.input.LA(4)
+                if (LA5_14 == 100) :
+                    LA5_19 = self.input.LA(4)
 
-                    if (LA5_17 == 101) :
-                        LA5_21 = self.input.LA(5)
+                    if (LA5_19 == 101) :
+                        LA5_24 = self.input.LA(5)
 
-                        if (LA5_21 == 110) :
-                            LA5_25 = self.input.LA(6)
+                        if (LA5_24 == 110) :
+                            LA5_29 = self.input.LA(6)
 
-                            if (LA5_25 == 116) :
-                                LA5_29 = self.input.LA(7)
+                            if (LA5_29 == 116) :
+                                LA5_34 = self.input.LA(7)
 
-                                if ((48 <= LA5_29 <= 57) or LA5_29 == 95 or (97 <= LA5_29 <= 122)) :
-                                    alt5 = 7
+                                if ((48 <= LA5_34 <= 57) or LA5_34 == 95 or (97 <= LA5_34 <= 122)) :
+                                    alt5 = 8
                                 else:
                                     alt5 = 3
 
                             else:
-                                alt5 = 7
+                                alt5 = 8
 
                         else:
-                            alt5 = 7
+                            alt5 = 8
 
                     else:
-                        alt5 = 7
+                        alt5 = 8
 
                 else:
-                    alt5 = 7
+                    alt5 = 8
 
             else:
-                alt5 = 7
+                alt5 = 8
 
-        elif LA5 == 100:
+        elif LA5 == 109:
             LA5_4 = self.input.LA(2)
 
-            if (LA5_4 == 101) :
-                LA5_14 = self.input.LA(3)
+            if (LA5_4 == 111) :
+                LA5_15 = self.input.LA(3)
 
-                if (LA5_14 == 100) :
-                    LA5_18 = self.input.LA(4)
+                if (LA5_15 == 100) :
+                    LA5_20 = self.input.LA(4)
 
-                    if (LA5_18 == 101) :
-                        LA5_22 = self.input.LA(5)
+                    if (LA5_20 == 117) :
+                        LA5_25 = self.input.LA(5)
 
-                        if (LA5_22 == 110) :
-                            LA5_26 = self.input.LA(6)
+                        if (LA5_25 == 108) :
+                            LA5_30 = self.input.LA(6)
 
-                            if (LA5_26 == 116) :
-                                LA5_30 = self.input.LA(7)
+                            if (LA5_30 == 101) :
+                                LA5_35 = self.input.LA(7)
 
-                                if ((48 <= LA5_30 <= 57) or LA5_30 == 95 or (97 <= LA5_30 <= 122)) :
-                                    alt5 = 7
+                                if ((48 <= LA5_35 <= 57) or LA5_35 == 95 or (97 <= LA5_35 <= 122)) :
+                                    alt5 = 8
                                 else:
                                     alt5 = 4
 
                             else:
-                                alt5 = 7
+                                alt5 = 8
 
                         else:
-                            alt5 = 7
+                            alt5 = 8
 
                     else:
-                        alt5 = 7
+                        alt5 = 8
 
                 else:
-                    alt5 = 7
+                    alt5 = 8
 
             else:
-                alt5 = 7
+                alt5 = 8
+
+        elif LA5 == 116:
+            LA5_5 = self.input.LA(2)
+
+            if (LA5_5 == 121) :
+                LA5_16 = self.input.LA(3)
+
+                if (LA5_16 == 112) :
+                    LA5_21 = self.input.LA(4)
+
+                    if (LA5_21 == 101) :
+                        LA5_26 = self.input.LA(5)
+
+                        if (LA5_26 == 115) :
+                            LA5_31 = self.input.LA(6)
+
+                            if ((48 <= LA5_31 <= 57) or LA5_31 == 95 or (97 <= LA5_31 <= 122)) :
+                                alt5 = 8
+                            else:
+                                alt5 = 5
+
+                        else:
+                            alt5 = 8
+
+                    else:
+                        alt5 = 8
+
+                else:
+                    alt5 = 8
+
+            else:
+                alt5 = 8
 
         elif LA5 == 47:
-            alt5 = 5
-        elif LA5 == 45:
             alt5 = 6
-        elif LA5 == 97 or LA5 == 98 or LA5 == 101 or LA5 == 102 or LA5 == 103 or LA5 == 104 or LA5 == 106 or LA5 == 107 or LA5 == 108 or LA5 == 110 or LA5 == 111 or LA5 == 112 or LA5 == 113 or LA5 == 114 or LA5 == 115 or LA5 == 116 or LA5 == 117 or LA5 == 118 or LA5 == 119 or LA5 == 120 or LA5 == 121 or LA5 == 122:
+        elif LA5 == 45:
             alt5 = 7
-        elif LA5 == 48 or LA5 == 49 or LA5 == 50 or LA5 == 51 or LA5 == 52 or LA5 == 53 or LA5 == 54 or LA5 == 55 or LA5 == 56 or LA5 == 57:
+        elif LA5 == 97 or LA5 == 98 or LA5 == 101 or LA5 == 102 or LA5 == 103 or LA5 == 104 or LA5 == 106 or LA5 == 107 or LA5 == 108 or LA5 == 110 or LA5 == 111 or LA5 == 112 or LA5 == 113 or LA5 == 114 or LA5 == 115 or LA5 == 117 or LA5 == 118 or LA5 == 119 or LA5 == 120 or LA5 == 121 or LA5 == 122:
             alt5 = 8
-        elif LA5 == 32:
+        elif LA5 == 48 or LA5 == 49 or LA5 == 50 or LA5 == 51 or LA5 == 52 or LA5 == 53 or LA5 == 54 or LA5 == 55 or LA5 == 56 or LA5 == 57:
             alt5 = 9
-        elif LA5 == 91:
+        elif LA5 == 32:
             alt5 = 10
+        elif LA5 == 91:
+            alt5 = 11
         else:
             nvae = NoViableAltException("", 5, 0, self.input)
 
@@ -564,9 +620,9 @@ class FrontendLexer(Lexer):
 
 
         elif alt5 == 2:
-            # grammar/Frontend.g:1:17: MODULE
+            # grammar/Frontend.g:1:17: DEDENT
             pass 
-            self.mMODULE()
+            self.mDEDENT()
 
 
 
@@ -578,49 +634,56 @@ class FrontendLexer(Lexer):
 
 
         elif alt5 == 4:
-            # grammar/Frontend.g:1:31: DEDENT
+            # grammar/Frontend.g:1:31: MODULE
             pass 
-            self.mDEDENT()
+            self.mMODULE()
 
 
 
         elif alt5 == 5:
-            # grammar/Frontend.g:1:38: DIVIDE
+            # grammar/Frontend.g:1:38: TYPES
+            pass 
+            self.mTYPES()
+
+
+
+        elif alt5 == 6:
+            # grammar/Frontend.g:1:44: DIVIDE
             pass 
             self.mDIVIDE()
 
 
 
-        elif alt5 == 6:
-            # grammar/Frontend.g:1:45: MINUS
+        elif alt5 == 7:
+            # grammar/Frontend.g:1:51: MINUS
             pass 
             self.mMINUS()
 
 
 
-        elif alt5 == 7:
-            # grammar/Frontend.g:1:51: ID
+        elif alt5 == 8:
+            # grammar/Frontend.g:1:57: ID
             pass 
             self.mID()
 
 
 
-        elif alt5 == 8:
-            # grammar/Frontend.g:1:54: NUMBER
+        elif alt5 == 9:
+            # grammar/Frontend.g:1:60: NUMBER
             pass 
             self.mNUMBER()
 
 
 
-        elif alt5 == 9:
-            # grammar/Frontend.g:1:61: WHITESPACE
+        elif alt5 == 10:
+            # grammar/Frontend.g:1:67: WHITESPACE
             pass 
             self.mWHITESPACE()
 
 
 
-        elif alt5 == 10:
-            # grammar/Frontend.g:1:72: EXPRESSION
+        elif alt5 == 11:
+            # grammar/Frontend.g:1:78: EXPRESSION
             pass 
             self.mEXPRESSION()
 

@@ -27,6 +27,12 @@ start
                     $value [ 'consts' ] = dict ( )
                 $value [ 'consts' ] [ $consts.title ] = $consts.content
             }
+        | types
+            {
+                if 'types' not in $value :
+                    $value [ 'types' ] = dict ( )
+                $value [ 'types' ] [ $types.title ] = $types.content
+            }
         ) *
     ;
 
@@ -58,6 +64,40 @@ consts_item
             { $name , $value = $ID.text , $num_fract.value }
     |   ^( ID EXPRESSION )
             { $name , $value = $ID.text , $EXPRESSION.text }
+    ;
+
+types
+    returns [ title , content ]
+    @ init { $content = dict ( ) }
+    :   ^( TYPES ID types_items )
+            { $title , $content = $ID.text , $types_items.value }
+    ;
+
+types_items
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( types_item
+            { $value [ $types_item.name ] = $types_item.value }
+        ) +
+    ;
+
+types_item
+    returns [ name , value ]
+    :   ^( ID types_item_attrs )
+            { $name , $value = $ID.text , $types_item_attrs.value }
+    ;
+
+types_item_attrs
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( types_item_attr
+            { $value [ $types_item_attr.name ] = $types_item_attr.value }
+        ) +
+    ;
+
+types_item_attr
+    returns [ name , value ]
+    :   ID { $name , $value = $ID.text , dict ( ) }
     ;
 
 num_whole
