@@ -58,8 +58,8 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_consts_expression ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'consts test1\n const1 [2+2]\n const2 []\n' ) ,
-            { 'consts' : { 'test1' : { 'const1' : '[2+2]' , 'const2' : '[]' } } } )
+        ae ( r ( 'consts test1\n const1 [ 2 + 2 ]\n const2 []\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : '[ 2 + 2 ]' , 'const2' : '[]' } } } )
 
 if __name__ == '__main__' :
     unittest . main ( )
