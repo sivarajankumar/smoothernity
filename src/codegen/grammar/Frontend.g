@@ -35,15 +35,23 @@ options
 
 start : ( module | consts ) * ;
 module : MODULE ID -> ^( MODULE ID ) ;
-consts : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values )
-       ;
+consts
+    : CONSTS ID INDENT consts_values DEDENT -> ^( CONSTS ID consts_values )
+    ;
 consts_values : consts_value + ;
-consts_value : ID NUMBER -> ^( ID NUMBER ) ;
+consts_value
+    : ID num_whole -> ^( ID num_whole )
+    | ID num_fract -> ^( ID num_fract )
+    ;
+num_whole : MINUS ? NUMBER ;
+num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
 
 CONSTS : 'consts' ;
 MODULE : 'module' ;
 INDENT : 'indent' ;
 DEDENT : 'dedent' ;
+DIVIDE : '/' ;
+MINUS : '-' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 WHITESPACE : ' ' + { self . skip ( ) } ;

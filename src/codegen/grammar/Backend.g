@@ -7,6 +7,11 @@ options
     ASTLabelType = object ;
 }
 
+@header
+{
+    from fractions import Fraction
+}
+
 start
     returns [ value ]
     @ init { $value = dict ( ) }
@@ -42,10 +47,35 @@ consts
 consts_values
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ( consts_value { $value [ $consts_value.name ] = $consts_value.value } ) +
+    :   ( consts_value
+            { $value [ $consts_value.name ] = $consts_value.value }
+        ) +
     ;
 
 consts_value
     returns [ name , value ]
-    :   ^( ID NUMBER ) { $name , $value = $ID.text , int ( $NUMBER.text ) }
+    :   ^( ID num_whole )
+            { $name , $value = $ID.text , $num_whole.value }
+    |   ^( ID num_fract )
+            { $name , $value = $ID.text , $num_fract.value }
     ;
+
+num_whole
+    returns [ value ]
+    :   ( MINUS NUMBER )
+            { $value = int ( $MINUS.text + $NUMBER.text ) }
+    |   ( NUMBER )
+            { $value = int ( $NUMBER.text ) }
+    ;
+
+num_fract
+    returns [ value ]
+    :   ( MINUS n = NUMBER DIVIDE d = NUMBER )
+            {
+                $value = Fraction ( int ( $MINUS.text + $n.text ) ,
+                    int ( $d.text ) )
+            }
+    |   ( n = NUMBER DIVIDE d = NUMBER )
+            { $value = Fraction ( int ( $n.text ) , int ( $d.text ) ) }
+    ;
+
