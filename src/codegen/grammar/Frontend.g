@@ -42,6 +42,7 @@ consts_values : consts_value + ;
 consts_value
     : ID num_whole -> ^( ID num_whole )
     | ID num_fract -> ^( ID num_fract )
+    | ID EXPRESSION -> ^( ID EXPRESSION )
     ;
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -55,3 +56,4 @@ MINUS : '-' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
+EXPRESSION : '[' .* ']' ;
