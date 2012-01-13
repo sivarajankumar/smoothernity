@@ -79,6 +79,15 @@ class recognizer_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
+    def test_types_single_line_and_indented ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'types test1\n'
+                    ' type1 atr11\n  atr12\n'
+                    ' type2 atr21\n  atr22\n' ) ,
+            { 'types' : { 'test1' : 
+                { 'type1' : { 'atr11' : { } , 'atr12' : { } }
+                , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
 
 if __name__ == '__main__' :
     unittest . main ( )
