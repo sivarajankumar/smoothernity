@@ -97,7 +97,7 @@ types_item_attrs
 
 types_item_attr
     returns [ name , value ]
-    :   ID { $name , $value = $ID.text , dict ( ) }
+    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $name , $value = $ID.text , dict ( ) }
     ;
 
 num_whole
