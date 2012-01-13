@@ -56,21 +56,18 @@ types
     ;
 types_items : types_item + ;
 types_item
-    : ID types_item_attrs_oneline NEWLINE
+    : ID types_item_attr + NEWLINE
       -> ^( TREE_TYPES_ITEM ID 
-            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs_oneline ) )
-    | ID NEWLINE INDENT NEWLINE types_item_attrs_multiline DEDENT NEWLINE
+            ^( TREE_TYPES_ITEM_ATTRS types_item_attr + ) )
+    | ID NEWLINE INDENT NEWLINE ( types_item_attr NEWLINE ) + DEDENT NEWLINE
       -> ^( TREE_TYPES_ITEM ID 
-            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs_multiline ) )
-    | ID types_item_attrs_oneline NEWLINE
-      INDENT NEWLINE types_item_attrs_multiline DEDENT NEWLINE
+            ^( TREE_TYPES_ITEM_ATTRS types_item_attr + ) )
+    | ID types_item_attr + NEWLINE
+      INDENT NEWLINE ( types_item_attr NEWLINE ) + DEDENT NEWLINE
       -> ^( TREE_TYPES_ITEM ID 
             ^( TREE_TYPES_ITEM_ATTRS
-                types_item_attrs_oneline
-                types_item_attrs_multiline ) )
+                types_item_attr + ) )
     ;
-types_item_attrs_oneline : types_item_attr + ;
-types_item_attrs_multiline : ( types_item_attr NEWLINE ! ) + ;
 types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 
 num_whole : MINUS ? NUMBER ;
