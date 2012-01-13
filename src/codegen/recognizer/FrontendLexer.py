@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-12 19:53:40
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:11:24
 
 import sys
 from antlr3 import *
@@ -57,8 +57,8 @@ class FrontendLexer(Lexer):
             _type = CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:59:8: ( 'consts' )
-            # grammar/Frontend.g:59:10: 'consts'
+            # grammar/Frontend.g:66:8: ( 'consts' )
+            # grammar/Frontend.g:66:10: 'consts'
             pass 
             self.match("consts")
 
@@ -80,8 +80,8 @@ class FrontendLexer(Lexer):
             _type = DEDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:60:8: ( 'dedent' )
-            # grammar/Frontend.g:60:10: 'dedent'
+            # grammar/Frontend.g:67:8: ( 'dedent' )
+            # grammar/Frontend.g:67:10: 'dedent'
             pass 
             self.match("dedent")
 
@@ -103,8 +103,8 @@ class FrontendLexer(Lexer):
             _type = INDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:61:8: ( 'indent' )
-            # grammar/Frontend.g:61:10: 'indent'
+            # grammar/Frontend.g:68:8: ( 'indent' )
+            # grammar/Frontend.g:68:10: 'indent'
             pass 
             self.match("indent")
 
@@ -126,8 +126,8 @@ class FrontendLexer(Lexer):
             _type = MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:62:8: ( 'module' )
-            # grammar/Frontend.g:62:10: 'module'
+            # grammar/Frontend.g:69:8: ( 'module' )
+            # grammar/Frontend.g:69:10: 'module'
             pass 
             self.match("module")
 
@@ -149,8 +149,8 @@ class FrontendLexer(Lexer):
             _type = TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:63:7: ( 'types' )
-            # grammar/Frontend.g:63:9: 'types'
+            # grammar/Frontend.g:70:7: ( 'types' )
+            # grammar/Frontend.g:70:9: 'types'
             pass 
             self.match("types")
 
@@ -172,8 +172,8 @@ class FrontendLexer(Lexer):
             _type = DIVIDE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:64:8: ( '/' )
-            # grammar/Frontend.g:64:10: '/'
+            # grammar/Frontend.g:71:8: ( '/' )
+            # grammar/Frontend.g:71:10: '/'
             pass 
             self.match(47)
 
@@ -194,8 +194,8 @@ class FrontendLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:65:7: ( '-' )
-            # grammar/Frontend.g:65:9: '-'
+            # grammar/Frontend.g:72:7: ( '-' )
+            # grammar/Frontend.g:72:9: '-'
             pass 
             self.match(45)
 
@@ -216,8 +216,8 @@ class FrontendLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:66:9: ( '\\n' )
-            # grammar/Frontend.g:66:11: '\\n'
+            # grammar/Frontend.g:73:9: ( '\\n' )
+            # grammar/Frontend.g:73:11: '\\n'
             pass 
             self.match(10)
 
@@ -238,12 +238,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:67:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:67:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:74:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:74:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:67:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:74:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -286,10 +286,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:68:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:68:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:75:8: ( ( '0' .. '9' )+ )
+            # grammar/Frontend.g:75:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:68:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:75:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -339,10 +339,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:69:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:69:14: ( ' ' )+
+            # grammar/Frontend.g:76:12: ( ( ' ' )+ )
+            # grammar/Frontend.g:76:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:69:14: ( ' ' )+
+            # grammar/Frontend.g:76:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -353,7 +353,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:69:14: ' '
+                    # grammar/Frontend.g:76:14: ' '
                     pass 
                     self.match(32)
 
@@ -390,12 +390,12 @@ class FrontendLexer(Lexer):
             _type = EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:70:12: ( '[' ( . )* ']' )
-            # grammar/Frontend.g:70:14: '[' ( . )* ']'
+            # grammar/Frontend.g:77:12: ( '[' ( . )* ']' )
+            # grammar/Frontend.g:77:14: '[' ( . )* ']'
             pass 
             self.match(91)
 
-            # grammar/Frontend.g:70:18: ( . )*
+            # grammar/Frontend.g:77:18: ( . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -407,7 +407,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # grammar/Frontend.g:70:18: .
+                    # grammar/Frontend.g:77:18: .
                     pass 
                     self.matchAny()
 
