@@ -57,9 +57,11 @@ types
 types_items : types_item + ;
 types_item
     : ID types_item_attrs_oneline NEWLINE
-      -> ^( ID types_item_attrs_oneline )
+      -> ^( TREE_TYPES_ITEM ID 
+            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs_oneline ) )
     | ID NEWLINE INDENT NEWLINE types_item_attrs_multiline DEDENT NEWLINE
-      -> ^( ID types_item_attrs_multiline )
+      -> ^( TREE_TYPES_ITEM ID 
+            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs_multiline ) )
     ;
 types_item_attrs_oneline : types_item_attr_oneline + ;
 types_item_attr_oneline : ID -> ID ;
@@ -81,6 +83,8 @@ TREE_MODULE : 'TREE_MODULE' ;
 TREE_NUM_FRACT : 'TREE_NUM_FRACT' ;
 TREE_NUM_WHOLE : 'TREE_NUM_WHOLE' ;
 TREE_TYPES : 'TREE_TYPES' ;
+TREE_TYPES_ITEM : 'TREE_TYPES_ITEM' ;
+TREE_TYPES_ITEM_ATTRS : 'TREE_TYPES_ITEM_ATTRS' ;
 
 DIVIDE : '/' ;
 MINUS : '-' ;

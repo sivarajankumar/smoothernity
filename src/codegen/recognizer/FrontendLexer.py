@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:23:36
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:29:51
 
 import sys
 from antlr3 import *
@@ -32,8 +32,10 @@ TREE_MODULE=16
 TREE_NUM_FRACT=17
 TREE_NUM_WHOLE=18
 TREE_TYPES=19
-TYPES=20
-WHITESPACE=21
+TREE_TYPES_ITEM=20
+TREE_TYPES_ITEM_ATTRS=21
+TYPES=22
+WHITESPACE=23
 
 
 class FrontendLexer(Lexer):
@@ -47,6 +49,17 @@ class FrontendLexer(Lexer):
         super(FrontendLexer, self).__init__(input, state)
 
         self.delegates = []
+
+        self.dfa5 = self.DFA5(
+            self, 5,
+            eot = self.DFA5_eot,
+            eof = self.DFA5_eof,
+            min = self.DFA5_min,
+            max = self.DFA5_max,
+            accept = self.DFA5_accept,
+            special = self.DFA5_special,
+            transition = self.DFA5_transition
+            )
 
 
 
@@ -63,8 +76,8 @@ class FrontendLexer(Lexer):
             _type = CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:72:8: ( 'consts' )
-            # grammar/Frontend.g:72:10: 'consts'
+            # grammar/Frontend.g:74:8: ( 'consts' )
+            # grammar/Frontend.g:74:10: 'consts'
             pass 
             self.match("consts")
 
@@ -86,8 +99,8 @@ class FrontendLexer(Lexer):
             _type = DEDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:73:8: ( 'dedent' )
-            # grammar/Frontend.g:73:10: 'dedent'
+            # grammar/Frontend.g:75:8: ( 'dedent' )
+            # grammar/Frontend.g:75:10: 'dedent'
             pass 
             self.match("dedent")
 
@@ -109,8 +122,8 @@ class FrontendLexer(Lexer):
             _type = INDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:74:8: ( 'indent' )
-            # grammar/Frontend.g:74:10: 'indent'
+            # grammar/Frontend.g:76:8: ( 'indent' )
+            # grammar/Frontend.g:76:10: 'indent'
             pass 
             self.match("indent")
 
@@ -132,8 +145,8 @@ class FrontendLexer(Lexer):
             _type = MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:75:8: ( 'module' )
-            # grammar/Frontend.g:75:10: 'module'
+            # grammar/Frontend.g:77:8: ( 'module' )
+            # grammar/Frontend.g:77:10: 'module'
             pass 
             self.match("module")
 
@@ -155,8 +168,8 @@ class FrontendLexer(Lexer):
             _type = TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:76:7: ( 'types' )
-            # grammar/Frontend.g:76:9: 'types'
+            # grammar/Frontend.g:78:7: ( 'types' )
+            # grammar/Frontend.g:78:9: 'types'
             pass 
             self.match("types")
 
@@ -178,8 +191,8 @@ class FrontendLexer(Lexer):
             _type = TREE_CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:78:13: ( 'TREE_CONSTS' )
-            # grammar/Frontend.g:78:15: 'TREE_CONSTS'
+            # grammar/Frontend.g:80:13: ( 'TREE_CONSTS' )
+            # grammar/Frontend.g:80:15: 'TREE_CONSTS'
             pass 
             self.match("TREE_CONSTS")
 
@@ -201,8 +214,8 @@ class FrontendLexer(Lexer):
             _type = TREE_EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:79:17: ( 'TREE_EXPRESSION' )
-            # grammar/Frontend.g:79:19: 'TREE_EXPRESSION'
+            # grammar/Frontend.g:81:17: ( 'TREE_EXPRESSION' )
+            # grammar/Frontend.g:81:19: 'TREE_EXPRESSION'
             pass 
             self.match("TREE_EXPRESSION")
 
@@ -224,8 +237,8 @@ class FrontendLexer(Lexer):
             _type = TREE_MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:80:13: ( 'TREE_MODULE' )
-            # grammar/Frontend.g:80:15: 'TREE_MODULE'
+            # grammar/Frontend.g:82:13: ( 'TREE_MODULE' )
+            # grammar/Frontend.g:82:15: 'TREE_MODULE'
             pass 
             self.match("TREE_MODULE")
 
@@ -247,8 +260,8 @@ class FrontendLexer(Lexer):
             _type = TREE_NUM_FRACT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:81:16: ( 'TREE_NUM_FRACT' )
-            # grammar/Frontend.g:81:18: 'TREE_NUM_FRACT'
+            # grammar/Frontend.g:83:16: ( 'TREE_NUM_FRACT' )
+            # grammar/Frontend.g:83:18: 'TREE_NUM_FRACT'
             pass 
             self.match("TREE_NUM_FRACT")
 
@@ -270,8 +283,8 @@ class FrontendLexer(Lexer):
             _type = TREE_NUM_WHOLE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:82:16: ( 'TREE_NUM_WHOLE' )
-            # grammar/Frontend.g:82:18: 'TREE_NUM_WHOLE'
+            # grammar/Frontend.g:84:16: ( 'TREE_NUM_WHOLE' )
+            # grammar/Frontend.g:84:18: 'TREE_NUM_WHOLE'
             pass 
             self.match("TREE_NUM_WHOLE")
 
@@ -293,8 +306,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:83:12: ( 'TREE_TYPES' )
-            # grammar/Frontend.g:83:14: 'TREE_TYPES'
+            # grammar/Frontend.g:85:12: ( 'TREE_TYPES' )
+            # grammar/Frontend.g:85:14: 'TREE_TYPES'
             pass 
             self.match("TREE_TYPES")
 
@@ -310,14 +323,60 @@ class FrontendLexer(Lexer):
 
 
 
+    # $ANTLR start "TREE_TYPES_ITEM"
+    def mTREE_TYPES_ITEM(self, ):
+        try:
+            _type = TREE_TYPES_ITEM
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:86:17: ( 'TREE_TYPES_ITEM' )
+            # grammar/Frontend.g:86:19: 'TREE_TYPES_ITEM'
+            pass 
+            self.match("TREE_TYPES_ITEM")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_TYPES_ITEM"
+
+
+
+    # $ANTLR start "TREE_TYPES_ITEM_ATTRS"
+    def mTREE_TYPES_ITEM_ATTRS(self, ):
+        try:
+            _type = TREE_TYPES_ITEM_ATTRS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:87:23: ( 'TREE_TYPES_ITEM_ATTRS' )
+            # grammar/Frontend.g:87:25: 'TREE_TYPES_ITEM_ATTRS'
+            pass 
+            self.match("TREE_TYPES_ITEM_ATTRS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_TYPES_ITEM_ATTRS"
+
+
+
     # $ANTLR start "DIVIDE"
     def mDIVIDE(self, ):
         try:
             _type = DIVIDE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:85:8: ( '/' )
-            # grammar/Frontend.g:85:10: '/'
+            # grammar/Frontend.g:89:8: ( '/' )
+            # grammar/Frontend.g:89:10: '/'
             pass 
             self.match(47)
 
@@ -338,8 +397,8 @@ class FrontendLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:86:7: ( '-' )
-            # grammar/Frontend.g:86:9: '-'
+            # grammar/Frontend.g:90:7: ( '-' )
+            # grammar/Frontend.g:90:9: '-'
             pass 
             self.match(45)
 
@@ -360,8 +419,8 @@ class FrontendLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:87:9: ( '\\n' )
-            # grammar/Frontend.g:87:11: '\\n'
+            # grammar/Frontend.g:91:9: ( '\\n' )
+            # grammar/Frontend.g:91:11: '\\n'
             pass 
             self.match(10)
 
@@ -382,12 +441,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:88:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:88:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:92:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:92:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:88:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:92:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -430,10 +489,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:89:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:89:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:93:8: ( ( '0' .. '9' )+ )
+            # grammar/Frontend.g:93:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:89:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:93:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -483,10 +542,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:90:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:90:14: ( ' ' )+
+            # grammar/Frontend.g:94:12: ( ( ' ' )+ )
+            # grammar/Frontend.g:94:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:90:14: ( ' ' )+
+            # grammar/Frontend.g:94:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -497,7 +556,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:90:14: ' '
+                    # grammar/Frontend.g:94:14: ' '
                     pass 
                     self.match(32)
 
@@ -534,12 +593,12 @@ class FrontendLexer(Lexer):
             _type = EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:91:12: ( '[' ( . )* ']' )
-            # grammar/Frontend.g:91:14: '[' ( . )* ']'
+            # grammar/Frontend.g:95:12: ( '[' ( . )* ']' )
+            # grammar/Frontend.g:95:14: '[' ( . )* ']'
             pass 
             self.match(91)
 
-            # grammar/Frontend.g:91:18: ( . )*
+            # grammar/Frontend.g:95:18: ( . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -551,7 +610,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # grammar/Frontend.g:91:18: .
+                    # grammar/Frontend.g:95:18: .
                     pass 
                     self.matchAny()
 
@@ -574,305 +633,9 @@ class FrontendLexer(Lexer):
 
 
     def mTokens(self):
-        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | TREE_CONSTS | TREE_EXPRESSION | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | DIVIDE | MINUS | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION )
-        alt5 = 18
-        LA5 = self.input.LA(1)
-        if LA5 == 99:
-            LA5_1 = self.input.LA(2)
-
-            if (LA5_1 == 111) :
-                LA5_14 = self.input.LA(3)
-
-                if (LA5_14 == 110) :
-                    LA5_20 = self.input.LA(4)
-
-                    if (LA5_20 == 115) :
-                        LA5_26 = self.input.LA(5)
-
-                        if (LA5_26 == 116) :
-                            LA5_32 = self.input.LA(6)
-
-                            if (LA5_32 == 115) :
-                                LA5_38 = self.input.LA(7)
-
-                                if ((48 <= LA5_38 <= 57) or LA5_38 == 95 or (97 <= LA5_38 <= 122)) :
-                                    alt5 = 15
-                                else:
-                                    alt5 = 1
-
-                            else:
-                                alt5 = 15
-
-                        else:
-                            alt5 = 15
-
-                    else:
-                        alt5 = 15
-
-                else:
-                    alt5 = 15
-
-            else:
-                alt5 = 15
-
-        elif LA5 == 100:
-            LA5_2 = self.input.LA(2)
-
-            if (LA5_2 == 101) :
-                LA5_15 = self.input.LA(3)
-
-                if (LA5_15 == 100) :
-                    LA5_21 = self.input.LA(4)
-
-                    if (LA5_21 == 101) :
-                        LA5_27 = self.input.LA(5)
-
-                        if (LA5_27 == 110) :
-                            LA5_33 = self.input.LA(6)
-
-                            if (LA5_33 == 116) :
-                                LA5_39 = self.input.LA(7)
-
-                                if ((48 <= LA5_39 <= 57) or LA5_39 == 95 or (97 <= LA5_39 <= 122)) :
-                                    alt5 = 15
-                                else:
-                                    alt5 = 2
-
-                            else:
-                                alt5 = 15
-
-                        else:
-                            alt5 = 15
-
-                    else:
-                        alt5 = 15
-
-                else:
-                    alt5 = 15
-
-            else:
-                alt5 = 15
-
-        elif LA5 == 105:
-            LA5_3 = self.input.LA(2)
-
-            if (LA5_3 == 110) :
-                LA5_16 = self.input.LA(3)
-
-                if (LA5_16 == 100) :
-                    LA5_22 = self.input.LA(4)
-
-                    if (LA5_22 == 101) :
-                        LA5_28 = self.input.LA(5)
-
-                        if (LA5_28 == 110) :
-                            LA5_34 = self.input.LA(6)
-
-                            if (LA5_34 == 116) :
-                                LA5_40 = self.input.LA(7)
-
-                                if ((48 <= LA5_40 <= 57) or LA5_40 == 95 or (97 <= LA5_40 <= 122)) :
-                                    alt5 = 15
-                                else:
-                                    alt5 = 3
-
-                            else:
-                                alt5 = 15
-
-                        else:
-                            alt5 = 15
-
-                    else:
-                        alt5 = 15
-
-                else:
-                    alt5 = 15
-
-            else:
-                alt5 = 15
-
-        elif LA5 == 109:
-            LA5_4 = self.input.LA(2)
-
-            if (LA5_4 == 111) :
-                LA5_17 = self.input.LA(3)
-
-                if (LA5_17 == 100) :
-                    LA5_23 = self.input.LA(4)
-
-                    if (LA5_23 == 117) :
-                        LA5_29 = self.input.LA(5)
-
-                        if (LA5_29 == 108) :
-                            LA5_35 = self.input.LA(6)
-
-                            if (LA5_35 == 101) :
-                                LA5_41 = self.input.LA(7)
-
-                                if ((48 <= LA5_41 <= 57) or LA5_41 == 95 or (97 <= LA5_41 <= 122)) :
-                                    alt5 = 15
-                                else:
-                                    alt5 = 4
-
-                            else:
-                                alt5 = 15
-
-                        else:
-                            alt5 = 15
-
-                    else:
-                        alt5 = 15
-
-                else:
-                    alt5 = 15
-
-            else:
-                alt5 = 15
-
-        elif LA5 == 116:
-            LA5_5 = self.input.LA(2)
-
-            if (LA5_5 == 121) :
-                LA5_18 = self.input.LA(3)
-
-                if (LA5_18 == 112) :
-                    LA5_24 = self.input.LA(4)
-
-                    if (LA5_24 == 101) :
-                        LA5_30 = self.input.LA(5)
-
-                        if (LA5_30 == 115) :
-                            LA5_36 = self.input.LA(6)
-
-                            if ((48 <= LA5_36 <= 57) or LA5_36 == 95 or (97 <= LA5_36 <= 122)) :
-                                alt5 = 15
-                            else:
-                                alt5 = 5
-
-                        else:
-                            alt5 = 15
-
-                    else:
-                        alt5 = 15
-
-                else:
-                    alt5 = 15
-
-            else:
-                alt5 = 15
-
-        elif LA5 == 84:
-            LA5_6 = self.input.LA(2)
-
-            if (LA5_6 == 82) :
-                LA5_19 = self.input.LA(3)
-
-                if (LA5_19 == 69) :
-                    LA5_25 = self.input.LA(4)
-
-                    if (LA5_25 == 69) :
-                        LA5_31 = self.input.LA(5)
-
-                        if (LA5_31 == 95) :
-                            LA5 = self.input.LA(6)
-                            if LA5 == 67:
-                                alt5 = 6
-                            elif LA5 == 69:
-                                alt5 = 7
-                            elif LA5 == 77:
-                                alt5 = 8
-                            elif LA5 == 78:
-                                LA5_46 = self.input.LA(7)
-
-                                if (LA5_46 == 85) :
-                                    LA5_52 = self.input.LA(8)
-
-                                    if (LA5_52 == 77) :
-                                        LA5_53 = self.input.LA(9)
-
-                                        if (LA5_53 == 95) :
-                                            LA5_54 = self.input.LA(10)
-
-                                            if (LA5_54 == 70) :
-                                                alt5 = 9
-                                            elif (LA5_54 == 87) :
-                                                alt5 = 10
-                                            else:
-                                                nvae = NoViableAltException("", 5, 54, self.input)
-
-                                                raise nvae
-
-
-                                        else:
-                                            nvae = NoViableAltException("", 5, 53, self.input)
-
-                                            raise nvae
-
-
-                                    else:
-                                        nvae = NoViableAltException("", 5, 52, self.input)
-
-                                        raise nvae
-
-
-                                else:
-                                    nvae = NoViableAltException("", 5, 46, self.input)
-
-                                    raise nvae
-
-
-                            elif LA5 == 84:
-                                alt5 = 11
-                            else:
-                                nvae = NoViableAltException("", 5, 37, self.input)
-
-                                raise nvae
-
-
-                        else:
-                            nvae = NoViableAltException("", 5, 31, self.input)
-
-                            raise nvae
-
-
-                    else:
-                        nvae = NoViableAltException("", 5, 25, self.input)
-
-                        raise nvae
-
-
-                else:
-                    nvae = NoViableAltException("", 5, 19, self.input)
-
-                    raise nvae
-
-
-            else:
-                nvae = NoViableAltException("", 5, 6, self.input)
-
-                raise nvae
-
-
-        elif LA5 == 47:
-            alt5 = 12
-        elif LA5 == 45:
-            alt5 = 13
-        elif LA5 == 10:
-            alt5 = 14
-        elif LA5 == 97 or LA5 == 98 or LA5 == 101 or LA5 == 102 or LA5 == 103 or LA5 == 104 or LA5 == 106 or LA5 == 107 or LA5 == 108 or LA5 == 110 or LA5 == 111 or LA5 == 112 or LA5 == 113 or LA5 == 114 or LA5 == 115 or LA5 == 117 or LA5 == 118 or LA5 == 119 or LA5 == 120 or LA5 == 121 or LA5 == 122:
-            alt5 = 15
-        elif LA5 == 48 or LA5 == 49 or LA5 == 50 or LA5 == 51 or LA5 == 52 or LA5 == 53 or LA5 == 54 or LA5 == 55 or LA5 == 56 or LA5 == 57:
-            alt5 = 16
-        elif LA5 == 32:
-            alt5 = 17
-        elif LA5 == 91:
-            alt5 = 18
-        else:
-            nvae = NoViableAltException("", 5, 0, self.input)
-
-            raise nvae
-
-
+        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | TREE_CONSTS | TREE_EXPRESSION | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | TREE_TYPES_ITEM | TREE_TYPES_ITEM_ATTRS | DIVIDE | MINUS | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION )
+        alt5 = 20
+        alt5 = self.dfa5.predict(self.input)
         if alt5 == 1:
             # grammar/Frontend.g:1:10: CONSTS
             pass 
@@ -951,49 +714,63 @@ class FrontendLexer(Lexer):
 
 
         elif alt5 == 12:
-            # grammar/Frontend.g:1:125: DIVIDE
+            # grammar/Frontend.g:1:125: TREE_TYPES_ITEM
+            pass 
+            self.mTREE_TYPES_ITEM()
+
+
+
+        elif alt5 == 13:
+            # grammar/Frontend.g:1:141: TREE_TYPES_ITEM_ATTRS
+            pass 
+            self.mTREE_TYPES_ITEM_ATTRS()
+
+
+
+        elif alt5 == 14:
+            # grammar/Frontend.g:1:163: DIVIDE
             pass 
             self.mDIVIDE()
 
 
 
-        elif alt5 == 13:
-            # grammar/Frontend.g:1:132: MINUS
+        elif alt5 == 15:
+            # grammar/Frontend.g:1:170: MINUS
             pass 
             self.mMINUS()
 
 
 
-        elif alt5 == 14:
-            # grammar/Frontend.g:1:138: NEWLINE
+        elif alt5 == 16:
+            # grammar/Frontend.g:1:176: NEWLINE
             pass 
             self.mNEWLINE()
 
 
 
-        elif alt5 == 15:
-            # grammar/Frontend.g:1:146: ID
+        elif alt5 == 17:
+            # grammar/Frontend.g:1:184: ID
             pass 
             self.mID()
 
 
 
-        elif alt5 == 16:
-            # grammar/Frontend.g:1:149: NUMBER
+        elif alt5 == 18:
+            # grammar/Frontend.g:1:187: NUMBER
             pass 
             self.mNUMBER()
 
 
 
-        elif alt5 == 17:
-            # grammar/Frontend.g:1:156: WHITESPACE
+        elif alt5 == 19:
+            # grammar/Frontend.g:1:194: WHITESPACE
             pass 
             self.mWHITESPACE()
 
 
 
-        elif alt5 == 18:
-            # grammar/Frontend.g:1:167: EXPRESSION
+        elif alt5 == 20:
+            # grammar/Frontend.g:1:205: EXPRESSION
             pass 
             self.mEXPRESSION()
 
@@ -1002,6 +779,125 @@ class FrontendLexer(Lexer):
 
 
 
+
+
+    # lookup tables for DFA #5
+
+    DFA5_eot = DFA.unpack(
+        u"\1\uffff\5\12\10\uffff\5\12\1\uffff\5\12\1\uffff\5\12\1\uffff\4"
+        u"\12\1\52\1\uffff\1\60\1\61\1\62\1\63\22\uffff\1\76\5\uffff\1\104"
+        u"\2\uffff"
+        )
+
+    DFA5_eof = DFA.unpack(
+        u"\105\uffff"
+        )
+
+    DFA5_min = DFA.unpack(
+        u"\1\12\1\157\1\145\1\156\1\157\1\171\1\122\7\uffff\1\156\3\144\1"
+        u"\160\1\105\1\163\2\145\1\165\1\145\1\105\1\164\2\156\1\154\1\163"
+        u"\1\137\1\163\2\164\1\145\1\60\1\103\4\60\4\uffff\1\125\1\131\4"
+        u"\uffff\1\115\1\120\1\137\1\105\1\106\1\123\2\uffff\1\137\1\111"
+        u"\1\uffff\1\124\1\105\1\115\1\137\2\uffff"
+        )
+
+    DFA5_max = DFA.unpack(
+        u"\1\172\1\157\1\145\1\156\1\157\1\171\1\122\7\uffff\1\156\3\144"
+        u"\1\160\1\105\1\163\2\145\1\165\1\145\1\105\1\164\2\156\1\154\1"
+        u"\163\1\137\1\163\2\164\1\145\1\172\1\124\4\172\4\uffff\1\125\1"
+        u"\131\4\uffff\1\115\1\120\1\137\1\105\1\127\1\123\2\uffff\1\137"
+        u"\1\111\1\uffff\1\124\1\105\1\115\1\137\2\uffff"
+        )
+
+    DFA5_accept = DFA.unpack(
+        u"\7\uffff\1\16\1\17\1\20\1\21\1\22\1\23\1\24\34\uffff\1\5\1\6\1"
+        u"\7\1\10\2\uffff\1\1\1\2\1\3\1\4\6\uffff\1\11\1\12\2\uffff\1\13"
+        u"\4\uffff\1\15\1\14"
+        )
+
+    DFA5_special = DFA.unpack(
+        u"\105\uffff"
+        )
+
+
+    DFA5_transition = [
+        DFA.unpack(u"\1\11\25\uffff\1\14\14\uffff\1\10\1\uffff\1\7\12\13"
+        u"\32\uffff\1\6\6\uffff\1\15\5\uffff\2\12\1\1\1\2\4\12\1\3\3\12\1"
+        u"\4\6\12\1\5\6\12"),
+        DFA.unpack(u"\1\16"),
+        DFA.unpack(u"\1\17"),
+        DFA.unpack(u"\1\20"),
+        DFA.unpack(u"\1\21"),
+        DFA.unpack(u"\1\22"),
+        DFA.unpack(u"\1\23"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\24"),
+        DFA.unpack(u"\1\25"),
+        DFA.unpack(u"\1\26"),
+        DFA.unpack(u"\1\27"),
+        DFA.unpack(u"\1\30"),
+        DFA.unpack(u"\1\31"),
+        DFA.unpack(u"\1\32"),
+        DFA.unpack(u"\1\33"),
+        DFA.unpack(u"\1\34"),
+        DFA.unpack(u"\1\35"),
+        DFA.unpack(u"\1\36"),
+        DFA.unpack(u"\1\37"),
+        DFA.unpack(u"\1\40"),
+        DFA.unpack(u"\1\41"),
+        DFA.unpack(u"\1\42"),
+        DFA.unpack(u"\1\43"),
+        DFA.unpack(u"\1\44"),
+        DFA.unpack(u"\1\45"),
+        DFA.unpack(u"\1\46"),
+        DFA.unpack(u"\1\47"),
+        DFA.unpack(u"\1\50"),
+        DFA.unpack(u"\1\51"),
+        DFA.unpack(u"\12\12\45\uffff\1\12\1\uffff\32\12"),
+        DFA.unpack(u"\1\53\1\uffff\1\54\7\uffff\1\55\1\56\5\uffff\1\57"),
+        DFA.unpack(u"\12\12\45\uffff\1\12\1\uffff\32\12"),
+        DFA.unpack(u"\12\12\45\uffff\1\12\1\uffff\32\12"),
+        DFA.unpack(u"\12\12\45\uffff\1\12\1\uffff\32\12"),
+        DFA.unpack(u"\12\12\45\uffff\1\12\1\uffff\32\12"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\64"),
+        DFA.unpack(u"\1\65"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\66"),
+        DFA.unpack(u"\1\67"),
+        DFA.unpack(u"\1\70"),
+        DFA.unpack(u"\1\71"),
+        DFA.unpack(u"\1\72\20\uffff\1\73"),
+        DFA.unpack(u"\1\74"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\75"),
+        DFA.unpack(u"\1\77"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\100"),
+        DFA.unpack(u"\1\101"),
+        DFA.unpack(u"\1\102"),
+        DFA.unpack(u"\1\103"),
+        DFA.unpack(u""),
+        DFA.unpack(u"")
+    ]
+
+    # class definition for DFA #5
+
+    class DFA5(DFA):
+        pass
 
 
  
