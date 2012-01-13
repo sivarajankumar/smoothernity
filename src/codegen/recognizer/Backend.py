@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-13 18:49:25
+# $ANTLR 3.4 grammar/Backend.g 2012-01-13 19:16:23
 
 import sys
 from antlr3 import *
@@ -17,34 +17,37 @@ HIDDEN = BaseRecognizer.HIDDEN
 # token types
 EOF=-1
 CONSTS=4
-DEDENT=5
-DIVIDE=6
-EXPRESSION=7
-ID=8
-INDENT=9
-MINUS=10
-MODULE=11
-NEWLINE=12
-NUMBER=13
-TREE_CONSTS=14
-TREE_EXPRESSION=15
-TREE_MODULE=16
-TREE_NUM_FRACT=17
-TREE_NUM_WHOLE=18
-TREE_TYPES=19
-TREE_TYPES_ITEM=20
-TREE_TYPES_ITEM_ATTR=21
-TREE_TYPES_ITEM_ATTRS=22
-TYPES=23
-WHITESPACE=24
+CURLY_CLOSE=5
+CURLY_OPEN=6
+DEDENT=7
+DIVIDE=8
+EXPRESSION=9
+ID=10
+INDENT=11
+MINUS=12
+MODULE=13
+NEWLINE=14
+NUMBER=15
+TREE_CONSTS=16
+TREE_EXPRESSION=17
+TREE_MODULE=18
+TREE_NUM_FRACT=19
+TREE_NUM_WHOLE=20
+TREE_TYPES=21
+TREE_TYPES_ITEM=22
+TREE_TYPES_ITEM_ATTR=23
+TREE_TYPES_ITEM_ATTRS=24
+TYPES=25
+WHITESPACE=26
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", "TREE_EXPRESSION", "TREE_MODULE", 
-    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", 
-    "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_ATTRS", "TYPES", "WHITESPACE"
+    "CONSTS", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
+    "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
+    "TREE_EXPRESSION", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
+    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_ATTRS", 
+    "TYPES", "WHITESPACE"
 ]
 
 
@@ -926,44 +929,44 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 14, 16, 19])
-    FOLLOW_consts_in_start113 = frozenset([1, 14, 16, 19])
-    FOLLOW_types_in_start139 = frozenset([1, 14, 16, 19])
+    FOLLOW_module_in_start86 = frozenset([1, 16, 18, 21])
+    FOLLOW_consts_in_start113 = frozenset([1, 16, 18, 21])
+    FOLLOW_types_in_start139 = frozenset([1, 16, 18, 21])
     FOLLOW_TREE_MODULE_in_module194 = frozenset([2])
     FOLLOW_ID_in_module196 = frozenset([3])
     FOLLOW_TREE_CONSTS_in_consts239 = frozenset([2])
-    FOLLOW_ID_in_consts241 = frozenset([15, 17, 18])
+    FOLLOW_ID_in_consts241 = frozenset([17, 19, 20])
     FOLLOW_consts_items_in_consts243 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 15, 17, 18])
+    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 17, 19, 20])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item353 = frozenset([2])
-    FOLLOW_ID_in_consts_item355 = frozenset([10, 13])
+    FOLLOW_ID_in_consts_item355 = frozenset([12, 15])
     FOLLOW_num_whole_in_consts_item357 = frozenset([3])
     FOLLOW_TREE_NUM_FRACT_in_consts_item385 = frozenset([2])
-    FOLLOW_ID_in_consts_item387 = frozenset([10, 13])
+    FOLLOW_ID_in_consts_item387 = frozenset([12, 15])
     FOLLOW_num_fract_in_consts_item389 = frozenset([3])
     FOLLOW_TREE_EXPRESSION_in_consts_item417 = frozenset([2])
-    FOLLOW_ID_in_consts_item419 = frozenset([7])
+    FOLLOW_ID_in_consts_item419 = frozenset([9])
     FOLLOW_EXPRESSION_in_consts_item421 = frozenset([3])
     FOLLOW_TREE_TYPES_in_types476 = frozenset([2])
-    FOLLOW_ID_in_types478 = frozenset([20])
+    FOLLOW_ID_in_types478 = frozenset([22])
     FOLLOW_types_items_in_types480 = frozenset([3])
-    FOLLOW_types_item_in_types_items535 = frozenset([1, 20])
+    FOLLOW_types_item_in_types_items535 = frozenset([1, 22])
     FOLLOW_TREE_TYPES_ITEM_in_types_item590 = frozenset([2])
-    FOLLOW_ID_in_types_item592 = frozenset([22])
+    FOLLOW_ID_in_types_item592 = frozenset([24])
     FOLLOW_TREE_TYPES_ITEM_ATTRS_in_types_item596 = frozenset([2])
     FOLLOW_types_item_attrs_in_types_item598 = frozenset([3])
-    FOLLOW_types_item_attr_in_types_item_attrs655 = frozenset([1, 21])
+    FOLLOW_types_item_attr_in_types_item_attrs655 = frozenset([1, 23])
     FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr710 = frozenset([2])
     FOLLOW_ID_in_types_item_attr712 = frozenset([3])
-    FOLLOW_MINUS_in_num_whole745 = frozenset([13])
+    FOLLOW_MINUS_in_num_whole745 = frozenset([15])
     FOLLOW_NUMBER_in_num_whole747 = frozenset([1])
     FOLLOW_NUMBER_in_num_whole775 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract820 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract826 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract828 = frozenset([13])
+    FOLLOW_MINUS_in_num_fract820 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract826 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract828 = frozenset([15])
     FOLLOW_NUMBER_in_num_fract834 = frozenset([1])
-    FOLLOW_NUMBER_in_num_fract866 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract868 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract866 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract868 = frozenset([15])
     FOLLOW_NUMBER_in_num_fract874 = frozenset([1])
 
 
