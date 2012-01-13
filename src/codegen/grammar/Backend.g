@@ -58,11 +58,11 @@ consts_items
 
 consts_item
     returns [ name , value ]
-    :   ^( ID num_whole )
+    :   ^( TREE_NUM_WHOLE ID num_whole )
             { $name , $value = $ID.text , $num_whole.value }
-    |   ^( ID num_fract )
+    |   ^( TREE_NUM_FRACT ID num_fract )
             { $name , $value = $ID.text , $num_fract.value }
-    |   ^( ID EXPRESSION )
+    |   ^( TREE_EXPRESSION ID EXPRESSION )
             { $name , $value = $ID.text , $EXPRESSION.text }
     ;
 

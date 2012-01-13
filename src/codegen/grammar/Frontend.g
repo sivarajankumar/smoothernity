@@ -38,16 +38,22 @@ start : ( module | consts | types ) * ;
 module : MODULE ID NEWLINE -> ^( MODULE ID ) ;
 
 consts
-    : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( CONSTS ID consts_items )
+    : CONSTS ID NEWLINE
+      INDENT NEWLINE consts_items DEDENT NEWLINE
+      -> ^( CONSTS ID consts_items )
     ;
 consts_items : consts_item + ;
 consts_item
-    : ID num_whole NEWLINE -> ^( ID num_whole )
-    | ID num_fract NEWLINE -> ^( ID num_fract )
-    | ID EXPRESSION NEWLINE -> ^( ID EXPRESSION )
+    : ID num_whole NEWLINE -> ^( TREE_NUM_WHOLE ID num_whole )
+    | ID num_fract NEWLINE -> ^( TREE_NUM_FRACT ID num_fract )
+    | ID EXPRESSION NEWLINE -> ^( TREE_EXPRESSION ID EXPRESSION )
     ;
 
-types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) ;
+types
+    : TYPES ID NEWLINE
+      INDENT NEWLINE types_items DEDENT NEWLINE
+      -> ^( TYPES ID types_items )
+    ;
 types_items : types_item + ;
 types_item
     : ID types_item_attrs_oneline NEWLINE
@@ -68,6 +74,11 @@ DEDENT : 'dedent' ;
 INDENT : 'indent' ;
 MODULE : 'module' ;
 TYPES : 'types' ;
+
+TREE_NUM_WHOLE : 'TREE_NUM_WHOLE' ;
+TREE_NUM_FRACT : 'TREE_NUM_FRACT' ;
+TREE_EXPRESSION : 'TREE_EXPRESSION' ;
+
 DIVIDE : '/' ;
 MINUS : '-' ;
 NEWLINE : '\n' ;

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-13 18:12:08
+# $ANTLR 3.4 grammar/Backend.g 2012-01-13 18:20:12
 
 import sys
 from antlr3 import *
@@ -26,14 +26,18 @@ MINUS=10
 MODULE=11
 NEWLINE=12
 NUMBER=13
-TYPES=14
-WHITESPACE=15
+TREE_EXPRESSION=14
+TREE_NUM_FRACT=15
+TREE_NUM_WHOLE=16
+TYPES=17
+WHITESPACE=18
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "TYPES", "WHITESPACE"
+    "MODULE", "NEWLINE", "NUMBER", "TREE_EXPRESSION", "TREE_NUM_FRACT", 
+    "TREE_NUM_WHOLE", "TYPES", "WHITESPACE"
 ]
 
 
@@ -285,7 +289,7 @@ class Backend(TreeParser):
                     alt2 = 2
                     LA2_0 = self.input.LA(1)
 
-                    if (LA2_0 == ID) :
+                    if ((TREE_EXPRESSION <= LA2_0 <= TREE_NUM_WHOLE)) :
                         alt2 = 1
 
 
@@ -339,7 +343,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts_item"
-    # grammar/Backend.g:59:1: consts_item returns [ name , value ] : ( ^( ID num_whole ) | ^( ID num_fract ) | ^( ID EXPRESSION ) );
+    # grammar/Backend.g:59:1: consts_item returns [ name , value ] : ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) );
     def consts_item(self, ):
         retval = self.consts_item_return()
         retval.start = self.input.LT(1)
@@ -356,64 +360,15 @@ class Backend(TreeParser):
 
         try:
             try:
-                # grammar/Backend.g:61:5: ( ^( ID num_whole ) | ^( ID num_fract ) | ^( ID EXPRESSION ) )
+                # grammar/Backend.g:61:5: ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) )
                 alt3 = 3
-                LA3_0 = self.input.LA(1)
-
-                if (LA3_0 == ID) :
-                    LA3_1 = self.input.LA(2)
-
-                    if (LA3_1 == 2) :
-                        LA3 = self.input.LA(3)
-                        if LA3 == EXPRESSION:
-                            alt3 = 3
-                        elif LA3 == MINUS:
-                            LA3_4 = self.input.LA(4)
-
-                            if (LA3_4 == NUMBER) :
-                                LA3_6 = self.input.LA(5)
-
-                                if (LA3_6 == DIVIDE) :
-                                    alt3 = 2
-                                elif (LA3_6 == 3) :
-                                    alt3 = 1
-                                else:
-                                    nvae = NoViableAltException("", 3, 6, self.input)
-
-                                    raise nvae
-
-
-                            else:
-                                nvae = NoViableAltException("", 3, 4, self.input)
-
-                                raise nvae
-
-
-                        elif LA3 == NUMBER:
-                            LA3_5 = self.input.LA(4)
-
-                            if (LA3_5 == DIVIDE) :
-                                alt3 = 2
-                            elif (LA3_5 == 3) :
-                                alt3 = 1
-                            else:
-                                nvae = NoViableAltException("", 3, 5, self.input)
-
-                                raise nvae
-
-
-                        else:
-                            nvae = NoViableAltException("", 3, 2, self.input)
-
-                            raise nvae
-
-
-                    else:
-                        nvae = NoViableAltException("", 3, 1, self.input)
-
-                        raise nvae
-
-
+                LA3 = self.input.LA(1)
+                if LA3 == TREE_NUM_WHOLE:
+                    alt3 = 1
+                elif LA3 == TREE_NUM_FRACT:
+                    alt3 = 2
+                elif LA3 == TREE_EXPRESSION:
+                    alt3 = 3
                 else:
                     nvae = NoViableAltException("", 3, 0, self.input)
 
@@ -421,12 +376,14 @@ class Backend(TreeParser):
 
 
                 if alt3 == 1:
-                    # grammar/Backend.g:61:9: ^( ID num_whole )
+                    # grammar/Backend.g:61:9: ^( TREE_NUM_WHOLE ID num_whole )
                     pass 
-                    ID8 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item353)
+                    self.match(self.input, TREE_NUM_WHOLE, self.FOLLOW_TREE_NUM_WHOLE_in_consts_item353)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item355)
+                    ID8 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item355)
+
+                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item357)
                     num_whole9 = self.num_whole()
 
                     self._state.following.pop()
@@ -441,12 +398,14 @@ class Backend(TreeParser):
 
 
                 elif alt3 == 2:
-                    # grammar/Backend.g:63:9: ^( ID num_fract )
+                    # grammar/Backend.g:63:9: ^( TREE_NUM_FRACT ID num_fract )
                     pass 
-                    ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item383)
+                    self.match(self.input, TREE_NUM_FRACT, self.FOLLOW_TREE_NUM_FRACT_in_consts_item385)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item385)
+                    ID10 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item387)
+
+                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item389)
                     num_fract11 = self.num_fract()
 
                     self._state.following.pop()
@@ -461,12 +420,14 @@ class Backend(TreeParser):
 
 
                 elif alt3 == 3:
-                    # grammar/Backend.g:65:9: ^( ID EXPRESSION )
+                    # grammar/Backend.g:65:9: ^( TREE_EXPRESSION ID EXPRESSION )
                     pass 
-                    ID12 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item413)
+                    self.match(self.input, TREE_EXPRESSION, self.FOLLOW_TREE_EXPRESSION_in_consts_item417)
 
                     self.match(self.input, DOWN, None)
-                    EXPRESSION13 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item415)
+                    ID12 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item419)
+
+                    EXPRESSION13 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item421)
 
                     self.match(self.input, UP, None)
 
@@ -517,12 +478,12 @@ class Backend(TreeParser):
                 # grammar/Backend.g:72:5: ( ^( TYPES ID types_items ) )
                 # grammar/Backend.g:72:9: ^( TYPES ID types_items )
                 pass 
-                self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types470)
+                self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types476)
 
                 self.match(self.input, DOWN, None)
-                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_types472)
+                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_types478)
 
-                self._state.following.append(self.FOLLOW_types_items_in_types474)
+                self._state.following.append(self.FOLLOW_types_items_in_types480)
                 types_items15 = self.types_items()
 
                 self._state.following.pop()
@@ -578,7 +539,7 @@ class Backend(TreeParser):
                     if alt4 == 1:
                         # grammar/Backend.g:79:11: types_item
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_in_types_items529)
+                        self._state.following.append(self.FOLLOW_types_item_in_types_items535)
                         types_item16 = self.types_item()
 
                         self._state.following.pop()
@@ -640,10 +601,10 @@ class Backend(TreeParser):
                 # grammar/Backend.g:86:5: ( ^( ID types_item_attrs ) )
                 # grammar/Backend.g:86:9: ^( ID types_item_attrs )
                 pass 
-                ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item584)
+                ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item590)
 
                 self.match(self.input, DOWN, None)
-                self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item586)
+                self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item592)
                 types_item_attrs18 = self.types_item_attrs()
 
                 self._state.following.pop()
@@ -699,7 +660,7 @@ class Backend(TreeParser):
                     if alt5 == 1:
                         # grammar/Backend.g:93:11: types_item_attr
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_attrs641)
+                        self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_attrs647)
                         types_item_attr19 = self.types_item_attr()
 
                         self._state.following.pop()
@@ -759,7 +720,7 @@ class Backend(TreeParser):
                 # grammar/Backend.g:100:5: ( ID )
                 # grammar/Backend.g:100:9: ID
                 pass 
-                ID20 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr694)
+                ID20 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr700)
 
                 #action start
                 retval.name , retval.value = ID20.text , dict ( ) 
@@ -813,9 +774,9 @@ class Backend(TreeParser):
                     # grammar/Backend.g:105:9: ( MINUS NUMBER )
                     # grammar/Backend.g:105:11: MINUS NUMBER
                     pass 
-                    MINUS21 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole725)
+                    MINUS21 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole731)
 
-                    NUMBER22 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole727)
+                    NUMBER22 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole733)
 
 
 
@@ -832,7 +793,7 @@ class Backend(TreeParser):
                     # grammar/Backend.g:107:9: ( NUMBER )
                     # grammar/Backend.g:107:11: NUMBER
                     pass 
-                    NUMBER23 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole755)
+                    NUMBER23 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole761)
 
 
 
@@ -888,13 +849,13 @@ class Backend(TreeParser):
                     # grammar/Backend.g:113:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     # grammar/Backend.g:113:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    MINUS24 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract800)
+                    MINUS24 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract806)
 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract806)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract812)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract808)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract814)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract814)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract820)
 
 
 
@@ -914,11 +875,11 @@ class Backend(TreeParser):
                     # grammar/Backend.g:118:9: (n= NUMBER DIVIDE d= NUMBER )
                     # grammar/Backend.g:118:11: n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract846)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract852)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract848)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract854)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract854)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract860)
 
 
 
@@ -944,39 +905,42 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 4, 11, 14])
-    FOLLOW_consts_in_start113 = frozenset([1, 4, 11, 14])
-    FOLLOW_types_in_start139 = frozenset([1, 4, 11, 14])
+    FOLLOW_module_in_start86 = frozenset([1, 4, 11, 17])
+    FOLLOW_consts_in_start113 = frozenset([1, 4, 11, 17])
+    FOLLOW_types_in_start139 = frozenset([1, 4, 11, 17])
     FOLLOW_MODULE_in_module194 = frozenset([2])
     FOLLOW_ID_in_module196 = frozenset([3])
     FOLLOW_CONSTS_in_consts239 = frozenset([2])
-    FOLLOW_ID_in_consts241 = frozenset([8])
+    FOLLOW_ID_in_consts241 = frozenset([14, 15, 16])
     FOLLOW_consts_items_in_consts243 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 8])
-    FOLLOW_ID_in_consts_item353 = frozenset([2])
-    FOLLOW_num_whole_in_consts_item355 = frozenset([3])
-    FOLLOW_ID_in_consts_item383 = frozenset([2])
-    FOLLOW_num_fract_in_consts_item385 = frozenset([3])
-    FOLLOW_ID_in_consts_item413 = frozenset([2])
-    FOLLOW_EXPRESSION_in_consts_item415 = frozenset([3])
-    FOLLOW_TYPES_in_types470 = frozenset([2])
-    FOLLOW_ID_in_types472 = frozenset([8])
-    FOLLOW_types_items_in_types474 = frozenset([3])
-    FOLLOW_types_item_in_types_items529 = frozenset([1, 8])
-    FOLLOW_ID_in_types_item584 = frozenset([2])
-    FOLLOW_types_item_attrs_in_types_item586 = frozenset([3])
-    FOLLOW_types_item_attr_in_types_item_attrs641 = frozenset([1, 8])
-    FOLLOW_ID_in_types_item_attr694 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole725 = frozenset([13])
-    FOLLOW_NUMBER_in_num_whole727 = frozenset([1])
-    FOLLOW_NUMBER_in_num_whole755 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract800 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract806 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract808 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract814 = frozenset([1])
-    FOLLOW_NUMBER_in_num_fract846 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract848 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract854 = frozenset([1])
+    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 14, 15, 16])
+    FOLLOW_TREE_NUM_WHOLE_in_consts_item353 = frozenset([2])
+    FOLLOW_ID_in_consts_item355 = frozenset([10, 13])
+    FOLLOW_num_whole_in_consts_item357 = frozenset([3])
+    FOLLOW_TREE_NUM_FRACT_in_consts_item385 = frozenset([2])
+    FOLLOW_ID_in_consts_item387 = frozenset([10, 13])
+    FOLLOW_num_fract_in_consts_item389 = frozenset([3])
+    FOLLOW_TREE_EXPRESSION_in_consts_item417 = frozenset([2])
+    FOLLOW_ID_in_consts_item419 = frozenset([7])
+    FOLLOW_EXPRESSION_in_consts_item421 = frozenset([3])
+    FOLLOW_TYPES_in_types476 = frozenset([2])
+    FOLLOW_ID_in_types478 = frozenset([8])
+    FOLLOW_types_items_in_types480 = frozenset([3])
+    FOLLOW_types_item_in_types_items535 = frozenset([1, 8])
+    FOLLOW_ID_in_types_item590 = frozenset([2])
+    FOLLOW_types_item_attrs_in_types_item592 = frozenset([3])
+    FOLLOW_types_item_attr_in_types_item_attrs647 = frozenset([1, 8])
+    FOLLOW_ID_in_types_item_attr700 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole731 = frozenset([13])
+    FOLLOW_NUMBER_in_num_whole733 = frozenset([1])
+    FOLLOW_NUMBER_in_num_whole761 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract806 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract812 = frozenset([6])
+    FOLLOW_DIVIDE_in_num_fract814 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract820 = frozenset([1])
+    FOLLOW_NUMBER_in_num_fract852 = frozenset([6])
+    FOLLOW_DIVIDE_in_num_fract854 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract860 = frozenset([1])
 
 
 
