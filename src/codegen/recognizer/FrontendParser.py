@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:29:50
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:45:41
 
 import sys
 from antlr3 import *
@@ -36,9 +36,10 @@ TREE_NUM_FRACT=17
 TREE_NUM_WHOLE=18
 TREE_TYPES=19
 TREE_TYPES_ITEM=20
-TREE_TYPES_ITEM_ATTRS=21
-TYPES=22
-WHITESPACE=23
+TREE_TYPES_ITEM_ATTR=21
+TREE_TYPES_ITEM_ATTRS=22
+TYPES=23
+WHITESPACE=24
 
 # token names
 tokenNames = [
@@ -46,7 +47,7 @@ tokenNames = [
     "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
     "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", "TREE_EXPRESSION", "TREE_MODULE", 
     "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", 
-    "TREE_TYPES_ITEM_ATTRS", "TYPES", "WHITESPACE"
+    "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_ATTRS", "TYPES", "WHITESPACE"
 ]
 
 
@@ -639,7 +640,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_whole, ID
+                    # elements: ID, num_whole
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -695,7 +696,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_fract, ID
+                    # elements: ID, num_fract
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -748,7 +749,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: EXPRESSION, ID
+                    # elements: ID, EXPRESSION
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1202,7 +1203,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: types_item_attrs_multiline, ID
+                    # elements: ID, types_item_attrs_multiline
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1362,7 +1363,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "types_item_attr_oneline"
-    # grammar/Frontend.g:67:1: types_item_attr_oneline : ID -> ID ;
+    # grammar/Frontend.g:67:1: types_item_attr_oneline : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr_oneline(self, ):
         retval = self.types_item_attr_oneline_return()
         retval.start = self.input.LT(1)
@@ -1377,7 +1378,7 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:67:25: ( ID -> ID )
+                # grammar/Frontend.g:67:25: ( ID -> ^( TREE_TYPES_ITEM_ATTR ID ) )
                 # grammar/Frontend.g:67:27: ID
                 pass 
                 ID45 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr_oneline479) 
@@ -1399,10 +1400,18 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 67:30: -> ID
-                self._adaptor.addChild(root_0, 
+                # 67:30: -> ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/Frontend.g:67:33: ^( TREE_TYPES_ITEM_ATTR ID )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(TREE_TYPES_ITEM_ATTR, "TREE_TYPES_ITEM_ATTR")
+                , root_1)
+
+                self._adaptor.addChild(root_1, 
                 stream_ID.nextNode()
                 )
+
+                self._adaptor.addChild(root_0, root_1)
 
 
 
@@ -1477,7 +1486,7 @@ class FrontendParser(Parser):
                     if alt7 == 1:
                         # grammar/Frontend.g:68:30: types_item_attr_multiline
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_attr_multiline_in_types_item_attrs_multiline491)
+                        self._state.following.append(self.FOLLOW_types_item_attr_multiline_in_types_item_attrs_multiline497)
                         types_item_attr_multiline46 = self.types_item_attr_multiline()
 
                         self._state.following.pop()
@@ -1528,7 +1537,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "types_item_attr_multiline"
-    # grammar/Frontend.g:69:1: types_item_attr_multiline : ID NEWLINE -> ID ;
+    # grammar/Frontend.g:69:1: types_item_attr_multiline : ID NEWLINE -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr_multiline(self, ):
         retval = self.types_item_attr_multiline_return()
         retval.start = self.input.LT(1)
@@ -1546,14 +1555,14 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:69:27: ( ID NEWLINE -> ID )
+                # grammar/Frontend.g:69:27: ( ID NEWLINE -> ^( TREE_TYPES_ITEM_ATTR ID ) )
                 # grammar/Frontend.g:69:29: ID NEWLINE
                 pass 
-                ID47 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr_multiline501) 
+                ID47 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr_multiline507) 
                 stream_ID.add(ID47)
 
 
-                NEWLINE48 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_attr_multiline503) 
+                NEWLINE48 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_attr_multiline509) 
                 stream_NEWLINE.add(NEWLINE48)
 
 
@@ -1572,10 +1581,18 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 69:40: -> ID
-                self._adaptor.addChild(root_0, 
+                # 69:40: -> ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/Frontend.g:69:43: ^( TREE_TYPES_ITEM_ATTR ID )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(TREE_TYPES_ITEM_ATTR, "TREE_TYPES_ITEM_ATTR")
+                , root_1)
+
+                self._adaptor.addChild(root_1, 
                 stream_ID.nextNode()
                 )
+
+                self._adaptor.addChild(root_0, root_1)
 
 
 
@@ -1648,7 +1665,7 @@ class FrontendParser(Parser):
                 if alt8 == 1:
                     # grammar/Frontend.g:71:13: MINUS
                     pass 
-                    MINUS49 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole516)
+                    MINUS49 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole528)
                     MINUS49_tree = self._adaptor.createWithPayload(MINUS49)
                     self._adaptor.addChild(root_0, MINUS49_tree)
 
@@ -1657,7 +1674,7 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER50 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole520)
+                NUMBER50 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole532)
                 NUMBER50_tree = self._adaptor.createWithPayload(NUMBER50)
                 self._adaptor.addChild(root_0, NUMBER50_tree)
 
@@ -1731,7 +1748,7 @@ class FrontendParser(Parser):
                 if alt9 == 1:
                     # grammar/Frontend.g:72:13: MINUS
                     pass 
-                    MINUS51 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract528)
+                    MINUS51 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract540)
                     MINUS51_tree = self._adaptor.createWithPayload(MINUS51)
                     self._adaptor.addChild(root_0, MINUS51_tree)
 
@@ -1740,19 +1757,19 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER52 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract532)
+                NUMBER52 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract544)
                 NUMBER52_tree = self._adaptor.createWithPayload(NUMBER52)
                 self._adaptor.addChild(root_0, NUMBER52_tree)
 
 
 
-                DIVIDE53 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract534)
+                DIVIDE53 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract546)
                 DIVIDE53_tree = self._adaptor.createWithPayload(DIVIDE53)
                 self._adaptor.addChild(root_0, DIVIDE53_tree)
 
 
 
-                NUMBER54 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract536)
+                NUMBER54 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract548)
                 NUMBER54_tree = self._adaptor.createWithPayload(NUMBER54)
                 self._adaptor.addChild(root_0, NUMBER54_tree)
 
@@ -1783,9 +1800,9 @@ class FrontendParser(Parser):
 
  
 
-    FOLLOW_module_in_start102 = frozenset([1, 4, 11, 22])
-    FOLLOW_consts_in_start106 = frozenset([1, 4, 11, 22])
-    FOLLOW_types_in_start110 = frozenset([1, 4, 11, 22])
+    FOLLOW_module_in_start102 = frozenset([1, 4, 11, 23])
+    FOLLOW_consts_in_start106 = frozenset([1, 4, 11, 23])
+    FOLLOW_types_in_start110 = frozenset([1, 4, 11, 23])
     FOLLOW_MODULE_in_module123 = frozenset([8])
     FOLLOW_ID_in_module125 = frozenset([12])
     FOLLOW_NEWLINE_in_module127 = frozenset([1])
@@ -1828,15 +1845,15 @@ class FrontendParser(Parser):
     FOLLOW_NEWLINE_in_types_item420 = frozenset([1])
     FOLLOW_types_item_attr_oneline_in_types_item_attrs_oneline469 = frozenset([1, 8])
     FOLLOW_ID_in_types_item_attr_oneline479 = frozenset([1])
-    FOLLOW_types_item_attr_multiline_in_types_item_attrs_multiline491 = frozenset([1, 8])
-    FOLLOW_ID_in_types_item_attr_multiline501 = frozenset([12])
-    FOLLOW_NEWLINE_in_types_item_attr_multiline503 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole516 = frozenset([13])
-    FOLLOW_NUMBER_in_num_whole520 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract528 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract532 = frozenset([6])
-    FOLLOW_DIVIDE_in_num_fract534 = frozenset([13])
-    FOLLOW_NUMBER_in_num_fract536 = frozenset([1])
+    FOLLOW_types_item_attr_multiline_in_types_item_attrs_multiline497 = frozenset([1, 8])
+    FOLLOW_ID_in_types_item_attr_multiline507 = frozenset([12])
+    FOLLOW_NEWLINE_in_types_item_attr_multiline509 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole528 = frozenset([13])
+    FOLLOW_NUMBER_in_num_whole532 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract540 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract544 = frozenset([6])
+    FOLLOW_DIVIDE_in_num_fract546 = frozenset([13])
+    FOLLOW_NUMBER_in_num_fract548 = frozenset([1])
 
 
 

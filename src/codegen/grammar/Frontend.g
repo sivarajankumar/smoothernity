@@ -64,9 +64,9 @@ types_item
             ^( TREE_TYPES_ITEM_ATTRS types_item_attrs_multiline ) )
     ;
 types_item_attrs_oneline : types_item_attr_oneline + ;
-types_item_attr_oneline : ID -> ID ;
+types_item_attr_oneline : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 types_item_attrs_multiline : types_item_attr_multiline + ;
-types_item_attr_multiline : ID NEWLINE -> ID ;
+types_item_attr_multiline : ID NEWLINE -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -84,6 +84,7 @@ TREE_NUM_FRACT : 'TREE_NUM_FRACT' ;
 TREE_NUM_WHOLE : 'TREE_NUM_WHOLE' ;
 TREE_TYPES : 'TREE_TYPES' ;
 TREE_TYPES_ITEM : 'TREE_TYPES_ITEM' ;
+TREE_TYPES_ITEM_ATTR : 'TREE_TYPES_ITEM_ATTR' ;
 TREE_TYPES_ITEM_ATTRS : 'TREE_TYPES_ITEM_ATTRS' ;
 
 DIVIDE : '/' ;

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:29:51
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:45:41
 
 import sys
 from antlr3 import *
@@ -33,9 +33,10 @@ TREE_NUM_FRACT=17
 TREE_NUM_WHOLE=18
 TREE_TYPES=19
 TREE_TYPES_ITEM=20
-TREE_TYPES_ITEM_ATTRS=21
-TYPES=22
-WHITESPACE=23
+TREE_TYPES_ITEM_ATTR=21
+TREE_TYPES_ITEM_ATTRS=22
+TYPES=23
+WHITESPACE=24
 
 
 class FrontendLexer(Lexer):
@@ -346,14 +347,37 @@ class FrontendLexer(Lexer):
 
 
 
+    # $ANTLR start "TREE_TYPES_ITEM_ATTR"
+    def mTREE_TYPES_ITEM_ATTR(self, ):
+        try:
+            _type = TREE_TYPES_ITEM_ATTR
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/Frontend.g:87:22: ( 'TREE_TYPES_ITEM_ATTR' )
+            # grammar/Frontend.g:87:24: 'TREE_TYPES_ITEM_ATTR'
+            pass 
+            self.match("TREE_TYPES_ITEM_ATTR")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_TYPES_ITEM_ATTR"
+
+
+
     # $ANTLR start "TREE_TYPES_ITEM_ATTRS"
     def mTREE_TYPES_ITEM_ATTRS(self, ):
         try:
             _type = TREE_TYPES_ITEM_ATTRS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:87:23: ( 'TREE_TYPES_ITEM_ATTRS' )
-            # grammar/Frontend.g:87:25: 'TREE_TYPES_ITEM_ATTRS'
+            # grammar/Frontend.g:88:23: ( 'TREE_TYPES_ITEM_ATTRS' )
+            # grammar/Frontend.g:88:25: 'TREE_TYPES_ITEM_ATTRS'
             pass 
             self.match("TREE_TYPES_ITEM_ATTRS")
 
@@ -375,8 +399,8 @@ class FrontendLexer(Lexer):
             _type = DIVIDE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:89:8: ( '/' )
-            # grammar/Frontend.g:89:10: '/'
+            # grammar/Frontend.g:90:8: ( '/' )
+            # grammar/Frontend.g:90:10: '/'
             pass 
             self.match(47)
 
@@ -397,8 +421,8 @@ class FrontendLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:90:7: ( '-' )
-            # grammar/Frontend.g:90:9: '-'
+            # grammar/Frontend.g:91:7: ( '-' )
+            # grammar/Frontend.g:91:9: '-'
             pass 
             self.match(45)
 
@@ -419,8 +443,8 @@ class FrontendLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:91:9: ( '\\n' )
-            # grammar/Frontend.g:91:11: '\\n'
+            # grammar/Frontend.g:92:9: ( '\\n' )
+            # grammar/Frontend.g:92:11: '\\n'
             pass 
             self.match(10)
 
@@ -441,12 +465,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:92:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:92:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:93:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # grammar/Frontend.g:93:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:92:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # grammar/Frontend.g:93:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -489,10 +513,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:93:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:93:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:94:8: ( ( '0' .. '9' )+ )
+            # grammar/Frontend.g:94:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:93:10: ( '0' .. '9' )+
+            # grammar/Frontend.g:94:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -542,10 +566,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:94:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:94:14: ( ' ' )+
+            # grammar/Frontend.g:95:12: ( ( ' ' )+ )
+            # grammar/Frontend.g:95:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:94:14: ( ' ' )+
+            # grammar/Frontend.g:95:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -556,7 +580,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:94:14: ' '
+                    # grammar/Frontend.g:95:14: ' '
                     pass 
                     self.match(32)
 
@@ -593,12 +617,12 @@ class FrontendLexer(Lexer):
             _type = EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:95:12: ( '[' ( . )* ']' )
-            # grammar/Frontend.g:95:14: '[' ( . )* ']'
+            # grammar/Frontend.g:96:12: ( '[' ( . )* ']' )
+            # grammar/Frontend.g:96:14: '[' ( . )* ']'
             pass 
             self.match(91)
 
-            # grammar/Frontend.g:95:18: ( . )*
+            # grammar/Frontend.g:96:18: ( . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -610,7 +634,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # grammar/Frontend.g:95:18: .
+                    # grammar/Frontend.g:96:18: .
                     pass 
                     self.matchAny()
 
@@ -633,8 +657,8 @@ class FrontendLexer(Lexer):
 
 
     def mTokens(self):
-        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | TREE_CONSTS | TREE_EXPRESSION | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | TREE_TYPES_ITEM | TREE_TYPES_ITEM_ATTRS | DIVIDE | MINUS | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION )
-        alt5 = 20
+        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | TREE_CONSTS | TREE_EXPRESSION | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | TREE_TYPES_ITEM | TREE_TYPES_ITEM_ATTR | TREE_TYPES_ITEM_ATTRS | DIVIDE | MINUS | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION )
+        alt5 = 21
         alt5 = self.dfa5.predict(self.input)
         if alt5 == 1:
             # grammar/Frontend.g:1:10: CONSTS
@@ -721,56 +745,63 @@ class FrontendLexer(Lexer):
 
 
         elif alt5 == 13:
-            # grammar/Frontend.g:1:141: TREE_TYPES_ITEM_ATTRS
+            # grammar/Frontend.g:1:141: TREE_TYPES_ITEM_ATTR
+            pass 
+            self.mTREE_TYPES_ITEM_ATTR()
+
+
+
+        elif alt5 == 14:
+            # grammar/Frontend.g:1:162: TREE_TYPES_ITEM_ATTRS
             pass 
             self.mTREE_TYPES_ITEM_ATTRS()
 
 
 
-        elif alt5 == 14:
-            # grammar/Frontend.g:1:163: DIVIDE
+        elif alt5 == 15:
+            # grammar/Frontend.g:1:184: DIVIDE
             pass 
             self.mDIVIDE()
 
 
 
-        elif alt5 == 15:
-            # grammar/Frontend.g:1:170: MINUS
+        elif alt5 == 16:
+            # grammar/Frontend.g:1:191: MINUS
             pass 
             self.mMINUS()
 
 
 
-        elif alt5 == 16:
-            # grammar/Frontend.g:1:176: NEWLINE
+        elif alt5 == 17:
+            # grammar/Frontend.g:1:197: NEWLINE
             pass 
             self.mNEWLINE()
 
 
 
-        elif alt5 == 17:
-            # grammar/Frontend.g:1:184: ID
+        elif alt5 == 18:
+            # grammar/Frontend.g:1:205: ID
             pass 
             self.mID()
 
 
 
-        elif alt5 == 18:
-            # grammar/Frontend.g:1:187: NUMBER
+        elif alt5 == 19:
+            # grammar/Frontend.g:1:208: NUMBER
             pass 
             self.mNUMBER()
 
 
 
-        elif alt5 == 19:
-            # grammar/Frontend.g:1:194: WHITESPACE
+        elif alt5 == 20:
+            # grammar/Frontend.g:1:215: WHITESPACE
             pass 
             self.mWHITESPACE()
 
 
 
-        elif alt5 == 20:
-            # grammar/Frontend.g:1:205: EXPRESSION
+        elif alt5 == 21:
+            # grammar/Frontend.g:1:226: EXPRESSION
             pass 
             self.mEXPRESSION()
 
@@ -786,11 +817,11 @@ class FrontendLexer(Lexer):
     DFA5_eot = DFA.unpack(
         u"\1\uffff\5\12\10\uffff\5\12\1\uffff\5\12\1\uffff\5\12\1\uffff\4"
         u"\12\1\52\1\uffff\1\60\1\61\1\62\1\63\22\uffff\1\76\5\uffff\1\104"
-        u"\2\uffff"
+        u"\5\uffff\1\112\2\uffff"
         )
 
     DFA5_eof = DFA.unpack(
-        u"\105\uffff"
+        u"\113\uffff"
         )
 
     DFA5_min = DFA.unpack(
@@ -798,7 +829,8 @@ class FrontendLexer(Lexer):
         u"\160\1\105\1\163\2\145\1\165\1\145\1\105\1\164\2\156\1\154\1\163"
         u"\1\137\1\163\2\164\1\145\1\60\1\103\4\60\4\uffff\1\125\1\131\4"
         u"\uffff\1\115\1\120\1\137\1\105\1\106\1\123\2\uffff\1\137\1\111"
-        u"\1\uffff\1\124\1\105\1\115\1\137\2\uffff"
+        u"\1\uffff\1\124\1\105\1\115\1\137\1\101\1\uffff\2\124\1\122\1\123"
+        u"\2\uffff"
         )
 
     DFA5_max = DFA.unpack(
@@ -806,17 +838,18 @@ class FrontendLexer(Lexer):
         u"\1\160\1\105\1\163\2\145\1\165\1\145\1\105\1\164\2\156\1\154\1"
         u"\163\1\137\1\163\2\164\1\145\1\172\1\124\4\172\4\uffff\1\125\1"
         u"\131\4\uffff\1\115\1\120\1\137\1\105\1\127\1\123\2\uffff\1\137"
-        u"\1\111\1\uffff\1\124\1\105\1\115\1\137\2\uffff"
+        u"\1\111\1\uffff\1\124\1\105\1\115\1\137\1\101\1\uffff\2\124\1\122"
+        u"\1\123\2\uffff"
         )
 
     DFA5_accept = DFA.unpack(
-        u"\7\uffff\1\16\1\17\1\20\1\21\1\22\1\23\1\24\34\uffff\1\5\1\6\1"
+        u"\7\uffff\1\17\1\20\1\21\1\22\1\23\1\24\1\25\34\uffff\1\5\1\6\1"
         u"\7\1\10\2\uffff\1\1\1\2\1\3\1\4\6\uffff\1\11\1\12\2\uffff\1\13"
-        u"\4\uffff\1\15\1\14"
+        u"\5\uffff\1\14\4\uffff\1\16\1\15"
         )
 
     DFA5_special = DFA.unpack(
-        u"\105\uffff"
+        u"\113\uffff"
         )
 
 
@@ -890,6 +923,12 @@ class FrontendLexer(Lexer):
         DFA.unpack(u"\1\101"),
         DFA.unpack(u"\1\102"),
         DFA.unpack(u"\1\103"),
+        DFA.unpack(u"\1\105"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\106"),
+        DFA.unpack(u"\1\107"),
+        DFA.unpack(u"\1\110"),
+        DFA.unpack(u"\1\111"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]
