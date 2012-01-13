@@ -38,13 +38,13 @@ start
 
 module
     returns [ value ]
-    :   ^( MODULE ID ) { $value = $ID.text }
+    :   ^( TREE_MODULE ID ) { $value = $ID.text }
     ;
 
 consts
     returns [ title , content ]
     @ init { $content = dict ( ) }
-    :   ^( CONSTS ID consts_items )
+    :   ^( TREE_CONSTS ID consts_items )
             { $title , $content = $ID.text , $consts_items.value }
     ;
 
@@ -69,7 +69,7 @@ consts_item
 types
     returns [ title , content ]
     @ init { $content = dict ( ) }
-    :   ^( TYPES ID types_items )
+    :   ^( TREE_TYPES ID types_items )
             { $title , $content = $ID.text , $types_items.value }
     ;
 

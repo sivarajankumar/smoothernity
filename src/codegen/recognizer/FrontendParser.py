@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:20:10
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 18:23:36
 
 import sys
 from antlr3 import *
@@ -29,18 +29,21 @@ MINUS=10
 MODULE=11
 NEWLINE=12
 NUMBER=13
-TREE_EXPRESSION=14
-TREE_NUM_FRACT=15
-TREE_NUM_WHOLE=16
-TYPES=17
-WHITESPACE=18
+TREE_CONSTS=14
+TREE_EXPRESSION=15
+TREE_MODULE=16
+TREE_NUM_FRACT=17
+TREE_NUM_WHOLE=18
+TREE_TYPES=19
+TYPES=20
+WHITESPACE=21
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "TREE_EXPRESSION", "TREE_NUM_FRACT", 
-    "TREE_NUM_WHOLE", "TYPES", "WHITESPACE"
+    "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", "TREE_EXPRESSION", "TREE_MODULE", 
+    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_TYPES", "TYPES", "WHITESPACE"
 ]
 
 
@@ -196,7 +199,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "module"
-    # grammar/Frontend.g:38:1: module : MODULE ID NEWLINE -> ^( MODULE ID ) ;
+    # grammar/Frontend.g:38:1: module : MODULE ID NEWLINE -> ^( TREE_MODULE ID ) ;
     def module(self, ):
         retval = self.module_return()
         retval.start = self.input.LT(1)
@@ -217,7 +220,7 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:38:8: ( MODULE ID NEWLINE -> ^( MODULE ID ) )
+                # grammar/Frontend.g:38:8: ( MODULE ID NEWLINE -> ^( TREE_MODULE ID ) )
                 # grammar/Frontend.g:38:10: MODULE ID NEWLINE
                 pass 
                 MODULE4 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_module123) 
@@ -233,7 +236,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, MODULE
+                # elements: ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -247,11 +250,11 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 38:28: -> ^( MODULE ID )
-                # grammar/Frontend.g:38:31: ^( MODULE ID )
+                # 38:28: -> ^( TREE_MODULE ID )
+                # grammar/Frontend.g:38:31: ^( TREE_MODULE ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                stream_MODULE.nextNode()
+                self._adaptor.createFromType(TREE_MODULE, "TREE_MODULE")
                 , root_1)
 
                 self._adaptor.addChild(root_1, 
@@ -300,7 +303,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "consts"
-    # grammar/Frontend.g:40:1: consts : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( CONSTS ID consts_items ) ;
+    # grammar/Frontend.g:40:1: consts : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -333,7 +336,7 @@ class FrontendParser(Parser):
         stream_consts_items = RewriteRuleSubtreeStream(self._adaptor, "rule consts_items")
         try:
             try:
-                # grammar/Frontend.g:41:5: ( CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( CONSTS ID consts_items ) )
+                # grammar/Frontend.g:41:5: ( CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) )
                 # grammar/Frontend.g:41:7: CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE
                 pass 
                 CONSTS7 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts150) 
@@ -372,7 +375,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: CONSTS, ID, consts_items
+                # elements: ID, consts_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -386,11 +389,11 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 43:7: -> ^( CONSTS ID consts_items )
-                # grammar/Frontend.g:43:10: ^( CONSTS ID consts_items )
+                # 43:7: -> ^( TREE_CONSTS ID consts_items )
+                # grammar/Frontend.g:43:10: ^( TREE_CONSTS ID consts_items )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                stream_CONSTS.nextNode()
+                self._adaptor.createFromType(TREE_CONSTS, "TREE_CONSTS")
                 , root_1)
 
                 self._adaptor.addChild(root_1, 
@@ -689,7 +692,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -742,7 +745,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, EXPRESSION
+                    # elements: EXPRESSION, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -812,7 +815,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "types"
-    # grammar/Frontend.g:52:1: types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) ;
+    # grammar/Frontend.g:52:1: types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) ;
     def types(self, ):
         retval = self.types_return()
         retval.start = self.input.LT(1)
@@ -845,7 +848,7 @@ class FrontendParser(Parser):
         stream_types_items = RewriteRuleSubtreeStream(self._adaptor, "rule types_items")
         try:
             try:
-                # grammar/Frontend.g:53:5: ( TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) )
+                # grammar/Frontend.g:53:5: ( TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) )
                 # grammar/Frontend.g:53:7: TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE
                 pass 
                 TYPES25 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types295) 
@@ -884,7 +887,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: types_items, ID, TYPES
+                # elements: ID, types_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -898,11 +901,11 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 55:7: -> ^( TYPES ID types_items )
-                # grammar/Frontend.g:55:10: ^( TYPES ID types_items )
+                # 55:7: -> ^( TREE_TYPES ID types_items )
+                # grammar/Frontend.g:55:10: ^( TREE_TYPES ID types_items )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                stream_TYPES.nextNode()
+                self._adaptor.createFromType(TREE_TYPES, "TREE_TYPES")
                 , root_1)
 
                 self._adaptor.addChild(root_1, 
@@ -1184,7 +1187,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, types_item_attrs_multiline
+                    # elements: types_item_attrs_multiline, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1753,9 +1756,9 @@ class FrontendParser(Parser):
 
  
 
-    FOLLOW_module_in_start102 = frozenset([1, 4, 11, 17])
-    FOLLOW_consts_in_start106 = frozenset([1, 4, 11, 17])
-    FOLLOW_types_in_start110 = frozenset([1, 4, 11, 17])
+    FOLLOW_module_in_start102 = frozenset([1, 4, 11, 20])
+    FOLLOW_consts_in_start106 = frozenset([1, 4, 11, 20])
+    FOLLOW_types_in_start110 = frozenset([1, 4, 11, 20])
     FOLLOW_MODULE_in_module123 = frozenset([8])
     FOLLOW_ID_in_module125 = frozenset([12])
     FOLLOW_NEWLINE_in_module127 = frozenset([1])

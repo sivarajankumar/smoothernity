@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-13 18:20:12
+# $ANTLR 3.4 grammar/Backend.g 2012-01-13 18:23:38
 
 import sys
 from antlr3 import *
@@ -26,18 +26,21 @@ MINUS=10
 MODULE=11
 NEWLINE=12
 NUMBER=13
-TREE_EXPRESSION=14
-TREE_NUM_FRACT=15
-TREE_NUM_WHOLE=16
-TYPES=17
-WHITESPACE=18
+TREE_CONSTS=14
+TREE_EXPRESSION=15
+TREE_MODULE=16
+TREE_NUM_FRACT=17
+TREE_NUM_WHOLE=18
+TREE_TYPES=19
+TYPES=20
+WHITESPACE=21
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "TREE_EXPRESSION", "TREE_NUM_FRACT", 
-    "TREE_NUM_WHOLE", "TYPES", "WHITESPACE"
+    "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", "TREE_EXPRESSION", "TREE_MODULE", 
+    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_TYPES", "TYPES", "WHITESPACE"
 ]
 
 
@@ -87,11 +90,11 @@ class Backend(TreeParser):
                 while True: #loop1
                     alt1 = 4
                     LA1 = self.input.LA(1)
-                    if LA1 == MODULE:
+                    if LA1 == TREE_MODULE:
                         alt1 = 1
-                    elif LA1 == CONSTS:
+                    elif LA1 == TREE_CONSTS:
                         alt1 = 2
-                    elif LA1 == TYPES:
+                    elif LA1 == TREE_TYPES:
                         alt1 = 3
 
                     if alt1 == 1:
@@ -168,7 +171,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "module"
-    # grammar/Backend.g:39:1: module returns [ value ] : ^( MODULE ID ) ;
+    # grammar/Backend.g:39:1: module returns [ value ] : ^( TREE_MODULE ID ) ;
     def module(self, ):
         value = None
 
@@ -177,10 +180,10 @@ class Backend(TreeParser):
 
         try:
             try:
-                # grammar/Backend.g:41:5: ( ^( MODULE ID ) )
-                # grammar/Backend.g:41:9: ^( MODULE ID )
+                # grammar/Backend.g:41:5: ( ^( TREE_MODULE ID ) )
+                # grammar/Backend.g:41:9: ^( TREE_MODULE ID )
                 pass 
-                self.match(self.input, MODULE, self.FOLLOW_MODULE_in_module194)
+                self.match(self.input, TREE_MODULE, self.FOLLOW_TREE_MODULE_in_module194)
 
                 self.match(self.input, DOWN, None)
                 ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_module196)
@@ -219,7 +222,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "consts"
-    # grammar/Backend.g:44:1: consts returns [ title , content ] : ^( CONSTS ID consts_items ) ;
+    # grammar/Backend.g:44:1: consts returns [ title , content ] : ^( TREE_CONSTS ID consts_items ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -232,10 +235,10 @@ class Backend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:47:5: ( ^( CONSTS ID consts_items ) )
-                # grammar/Backend.g:47:9: ^( CONSTS ID consts_items )
+                # grammar/Backend.g:47:5: ( ^( TREE_CONSTS ID consts_items ) )
+                # grammar/Backend.g:47:9: ^( TREE_CONSTS ID consts_items )
                 pass 
-                self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts239)
+                self.match(self.input, TREE_CONSTS, self.FOLLOW_TREE_CONSTS_in_consts239)
 
                 self.match(self.input, DOWN, None)
                 ID5 = self.match(self.input, ID, self.FOLLOW_ID_in_consts241)
@@ -289,7 +292,7 @@ class Backend(TreeParser):
                     alt2 = 2
                     LA2_0 = self.input.LA(1)
 
-                    if ((TREE_EXPRESSION <= LA2_0 <= TREE_NUM_WHOLE)) :
+                    if (LA2_0 == TREE_EXPRESSION or (TREE_NUM_FRACT <= LA2_0 <= TREE_NUM_WHOLE)) :
                         alt2 = 1
 
 
@@ -462,7 +465,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "types"
-    # grammar/Backend.g:69:1: types returns [ title , content ] : ^( TYPES ID types_items ) ;
+    # grammar/Backend.g:69:1: types returns [ title , content ] : ^( TREE_TYPES ID types_items ) ;
     def types(self, ):
         retval = self.types_return()
         retval.start = self.input.LT(1)
@@ -475,10 +478,10 @@ class Backend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:72:5: ( ^( TYPES ID types_items ) )
-                # grammar/Backend.g:72:9: ^( TYPES ID types_items )
+                # grammar/Backend.g:72:5: ( ^( TREE_TYPES ID types_items ) )
+                # grammar/Backend.g:72:9: ^( TREE_TYPES ID types_items )
                 pass 
-                self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types476)
+                self.match(self.input, TREE_TYPES, self.FOLLOW_TREE_TYPES_in_types476)
 
                 self.match(self.input, DOWN, None)
                 ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_types478)
@@ -905,15 +908,15 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 4, 11, 17])
-    FOLLOW_consts_in_start113 = frozenset([1, 4, 11, 17])
-    FOLLOW_types_in_start139 = frozenset([1, 4, 11, 17])
-    FOLLOW_MODULE_in_module194 = frozenset([2])
+    FOLLOW_module_in_start86 = frozenset([1, 14, 16, 19])
+    FOLLOW_consts_in_start113 = frozenset([1, 14, 16, 19])
+    FOLLOW_types_in_start139 = frozenset([1, 14, 16, 19])
+    FOLLOW_TREE_MODULE_in_module194 = frozenset([2])
     FOLLOW_ID_in_module196 = frozenset([3])
-    FOLLOW_CONSTS_in_consts239 = frozenset([2])
-    FOLLOW_ID_in_consts241 = frozenset([14, 15, 16])
+    FOLLOW_TREE_CONSTS_in_consts239 = frozenset([2])
+    FOLLOW_ID_in_consts241 = frozenset([15, 17, 18])
     FOLLOW_consts_items_in_consts243 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 14, 15, 16])
+    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 15, 17, 18])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item353 = frozenset([2])
     FOLLOW_ID_in_consts_item355 = frozenset([10, 13])
     FOLLOW_num_whole_in_consts_item357 = frozenset([3])
@@ -923,7 +926,7 @@ class Backend(TreeParser):
     FOLLOW_TREE_EXPRESSION_in_consts_item417 = frozenset([2])
     FOLLOW_ID_in_consts_item419 = frozenset([7])
     FOLLOW_EXPRESSION_in_consts_item421 = frozenset([3])
-    FOLLOW_TYPES_in_types476 = frozenset([2])
+    FOLLOW_TREE_TYPES_in_types476 = frozenset([2])
     FOLLOW_ID_in_types478 = frozenset([8])
     FOLLOW_types_items_in_types480 = frozenset([3])
     FOLLOW_types_item_in_types_items535 = frozenset([1, 8])
