@@ -69,10 +69,9 @@ types_item
                 types_item_attrs_oneline
                 types_item_attrs_multiline ) )
     ;
-types_item_attrs_oneline : types_item_attr_oneline + ;
-types_item_attr_oneline : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
-types_item_attrs_multiline : types_item_attr_multiline + ;
-types_item_attr_multiline : ID NEWLINE -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
+types_item_attrs_oneline : types_item_attr + ;
+types_item_attrs_multiline : ( types_item_attr NEWLINE ! ) + ;
+types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -83,6 +82,16 @@ INDENT : 'indent' ;
 MODULE : 'module' ;
 TYPES : 'types' ;
 
+CURLY_OPEN : '{' ;
+CURLY_CLOSE : '}' ;
+DIVIDE : '/' ;
+MINUS : '-' ;
+NEWLINE : '\n' ;
+ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
+NUMBER : ( '0' .. '9' ) + ;
+WHITESPACE : ' ' + { self . skip ( ) } ;
+EXPRESSION : '[' .* ']' ;
+
 TREE_CONSTS : 'TREE_CONSTS' ;
 TREE_EXPRESSION : 'TREE_EXPRESSION' ;
 TREE_MODULE : 'TREE_MODULE' ;
@@ -92,11 +101,3 @@ TREE_TYPES : 'TREE_TYPES' ;
 TREE_TYPES_ITEM : 'TREE_TYPES_ITEM' ;
 TREE_TYPES_ITEM_ATTR : 'TREE_TYPES_ITEM_ATTR' ;
 TREE_TYPES_ITEM_ATTRS : 'TREE_TYPES_ITEM_ATTRS' ;
-
-DIVIDE : '/' ;
-MINUS : '-' ;
-NEWLINE : '\n' ;
-ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
-NUMBER : ( '0' .. '9' ) + ;
-WHITESPACE : ' ' + { self . skip ( ) } ;
-EXPRESSION : '[' .* ']' ;
