@@ -56,19 +56,18 @@ types
     ;
 types_items : types_item + ;
 types_item
-    : ID types_item_attrs NEWLINE
-      -> ^( TREE_TYPES_ITEM ID 
-            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) )
-    | ID NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE ) + DEDENT NEWLINE
-      -> ^( TREE_TYPES_ITEM ID 
-            ^( TREE_TYPES_ITEM_ATTRS types_item_attrs + ) )
-    | ID types_item_attrs NEWLINE
-      INDENT NEWLINE ( types_item_attrs NEWLINE ) + DEDENT NEWLINE
-      -> ^( TREE_TYPES_ITEM ID 
-            ^( TREE_TYPES_ITEM_ATTRS
-                types_item_attrs + ) )
+    : ID types_item_hint NEWLINE
+      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) )
+    | ID NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE
+      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint + ) )
+    | ID types_item_hint NEWLINE
+      INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE
+      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint + ) )
     ;
-types_item_attrs : types_item_attr + ;
+types_item_hint 
+    : types_item_attr + 
+      -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE types_item_attr + )
+    ;
 types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 
 num_whole : MINUS ? NUMBER ;
@@ -92,10 +91,12 @@ EXPRESSION : '[' .* ']' ;
 
 TREE_CONSTS : 'TREE_CONSTS' ;
 TREE_EXPRESSION : 'TREE_EXPRESSION' ;
+TREE_HINT_NONE : 'TREE_HINT_NONE' ;
 TREE_MODULE : 'TREE_MODULE' ;
 TREE_NUM_FRACT : 'TREE_NUM_FRACT' ;
 TREE_NUM_WHOLE : 'TREE_NUM_WHOLE' ;
 TREE_TYPES : 'TREE_TYPES' ;
 TREE_TYPES_ITEM : 'TREE_TYPES_ITEM' ;
 TREE_TYPES_ITEM_ATTR : 'TREE_TYPES_ITEM_ATTR' ;
-TREE_TYPES_ITEM_ATTRS : 'TREE_TYPES_ITEM_ATTRS' ;
+TREE_TYPES_ITEM_HINT : 'TREE_TYPES_ITEM_HINT' ;
+TREE_TYPES_ITEM_HINTS : 'TREE_TYPES_ITEM_HINTS' ;

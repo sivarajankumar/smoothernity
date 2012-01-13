@@ -83,21 +83,27 @@ types_items
 
 types_item
     returns [ name , value ]
-    :   ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) )
-            { $name , $value = $ID.text , $types_item_attrs.value }
+    :   ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hints ) )
+            { $name , $value = $ID.text , $types_item_hints.value }
     ;
 
-types_item_attrs
+types_item_hints
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ( types_item_attr
-            { $value [ $types_item_attr.name ] = $types_item_attr.value }
-        ) +
+    :   ( types_item_hint { $value . update ( $types_item_hint.value ) } ) +
+    ;
+
+types_item_hint
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr
+            { $value [ $types_item_attr.name ] = dict ( ) }
+        ) + )
     ;
 
 types_item_attr
-    returns [ name , value ]
-    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $name , $value = $ID.text , dict ( ) }
+    returns [ name ]
+    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $name = $ID.text }
     ;
 
 num_whole

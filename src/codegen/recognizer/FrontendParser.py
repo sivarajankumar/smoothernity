@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 19:39:38
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-13 21:18:47
 
 import sys
 from antlr3 import *
@@ -33,24 +33,26 @@ NEWLINE=14
 NUMBER=15
 TREE_CONSTS=16
 TREE_EXPRESSION=17
-TREE_MODULE=18
-TREE_NUM_FRACT=19
-TREE_NUM_WHOLE=20
-TREE_TYPES=21
-TREE_TYPES_ITEM=22
-TREE_TYPES_ITEM_ATTR=23
-TREE_TYPES_ITEM_ATTRS=24
-TYPES=25
-WHITESPACE=26
+TREE_HINT_NONE=18
+TREE_MODULE=19
+TREE_NUM_FRACT=20
+TREE_NUM_WHOLE=21
+TREE_TYPES=22
+TREE_TYPES_ITEM=23
+TREE_TYPES_ITEM_ATTR=24
+TREE_TYPES_ITEM_HINT=25
+TREE_TYPES_ITEM_HINTS=26
+TYPES=27
+WHITESPACE=28
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
     "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
-    "TREE_EXPRESSION", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
-    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_ATTRS", 
-    "TYPES", "WHITESPACE"
+    "TREE_EXPRESSION", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
+    "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "WHITESPACE"
 ]
 
 
@@ -710,7 +712,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -905,7 +907,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: types_items, ID
+                # elements: ID, types_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1058,7 +1060,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "types_item"
-    # grammar/Frontend.g:58:1: types_item : ( ID types_item_attrs NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) ) | ID NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) ) | ID types_item_attrs NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) ) );
+    # grammar/Frontend.g:58:1: types_item : ( ID types_item_hint NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) ) | ID NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) ) | ID types_item_hint NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) ) );
     def types_item(self, ):
         retval = self.types_item_return()
         retval.start = self.input.LT(1)
@@ -1082,13 +1084,13 @@ class FrontendParser(Parser):
         NEWLINE51 = None
         DEDENT52 = None
         NEWLINE53 = None
-        types_item_attrs35 = None
+        types_item_hint35 = None
 
-        types_item_attrs41 = None
+        types_item_hint41 = None
 
-        types_item_attrs46 = None
+        types_item_hint46 = None
 
-        types_item_attrs50 = None
+        types_item_hint50 = None
 
 
         ID34_tree = None
@@ -1111,24 +1113,24 @@ class FrontendParser(Parser):
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
-        stream_types_item_attrs = RewriteRuleSubtreeStream(self._adaptor, "rule types_item_attrs")
+        stream_types_item_hint = RewriteRuleSubtreeStream(self._adaptor, "rule types_item_hint")
         try:
             try:
-                # grammar/Frontend.g:59:5: ( ID types_item_attrs NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) ) | ID NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) ) | ID types_item_attrs NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) ) )
+                # grammar/Frontend.g:59:5: ( ID types_item_hint NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) ) | ID NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) ) | ID types_item_hint NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) ) )
                 alt7 = 3
                 alt7 = self.dfa7.predict(self.input)
                 if alt7 == 1:
-                    # grammar/Frontend.g:59:7: ID types_item_attrs NEWLINE
+                    # grammar/Frontend.g:59:7: ID types_item_hint NEWLINE
                     pass 
                     ID34 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item359) 
                     stream_ID.add(ID34)
 
 
-                    self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item361)
-                    types_item_attrs35 = self.types_item_attrs()
+                    self._state.following.append(self.FOLLOW_types_item_hint_in_types_item361)
+                    types_item_hint35 = self.types_item_hint()
 
                     self._state.following.pop()
-                    stream_types_item_attrs.add(types_item_attrs35.tree)
+                    stream_types_item_hint.add(types_item_hint35.tree)
 
 
                     NEWLINE36 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item363) 
@@ -1136,7 +1138,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, types_item_attrs
+                    # elements: ID, types_item_hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1150,8 +1152,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 60:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) )
-                    # grammar/Frontend.g:60:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) )
+                    # 60:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) )
+                    # grammar/Frontend.g:60:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_TYPES_ITEM, "TREE_TYPES_ITEM")
@@ -1161,13 +1163,13 @@ class FrontendParser(Parser):
                     stream_ID.nextNode()
                     )
 
-                    # grammar/Frontend.g:61:13: ^( TREE_TYPES_ITEM_ATTRS types_item_attrs )
+                    # grammar/Frontend.g:60:32: ^( TREE_TYPES_ITEM_HINTS types_item_hint )
                     root_2 = self._adaptor.nil()
                     root_2 = self._adaptor.becomeRoot(
-                    self._adaptor.createFromType(TREE_TYPES_ITEM_ATTRS, "TREE_TYPES_ITEM_ATTRS")
+                    self._adaptor.createFromType(TREE_TYPES_ITEM_HINTS, "TREE_TYPES_ITEM_HINTS")
                     , root_2)
 
-                    self._adaptor.addChild(root_2, stream_types_item_attrs.nextTree())
+                    self._adaptor.addChild(root_2, stream_types_item_hint.nextTree())
 
                     self._adaptor.addChild(root_1, root_2)
 
@@ -1182,25 +1184,25 @@ class FrontendParser(Parser):
 
 
                 elif alt7 == 2:
-                    # grammar/Frontend.g:62:7: ID NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE
+                    # grammar/Frontend.g:61:7: ID NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE
                     pass 
-                    ID37 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item408) 
+                    ID37 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item395) 
                     stream_ID.add(ID37)
 
 
-                    NEWLINE38 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item410) 
+                    NEWLINE38 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item397) 
                     stream_NEWLINE.add(NEWLINE38)
 
 
-                    INDENT39 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item412) 
+                    INDENT39 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item399) 
                     stream_INDENT.add(INDENT39)
 
 
-                    NEWLINE40 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item414) 
+                    NEWLINE40 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item401) 
                     stream_NEWLINE.add(NEWLINE40)
 
 
-                    # grammar/Frontend.g:62:33: ( types_item_attrs NEWLINE )+
+                    # grammar/Frontend.g:61:33: ( types_item_hint NEWLINE )+
                     cnt5 = 0
                     while True: #loop5
                         alt5 = 2
@@ -1211,16 +1213,16 @@ class FrontendParser(Parser):
 
 
                         if alt5 == 1:
-                            # grammar/Frontend.g:62:35: types_item_attrs NEWLINE
+                            # grammar/Frontend.g:61:35: types_item_hint NEWLINE
                             pass 
-                            self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item418)
-                            types_item_attrs41 = self.types_item_attrs()
+                            self._state.following.append(self.FOLLOW_types_item_hint_in_types_item405)
+                            types_item_hint41 = self.types_item_hint()
 
                             self._state.following.pop()
-                            stream_types_item_attrs.add(types_item_attrs41.tree)
+                            stream_types_item_hint.add(types_item_hint41.tree)
 
 
-                            NEWLINE42 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item420) 
+                            NEWLINE42 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item407) 
                             stream_NEWLINE.add(NEWLINE42)
 
 
@@ -1235,16 +1237,16 @@ class FrontendParser(Parser):
                         cnt5 += 1
 
 
-                    DEDENT43 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item426) 
+                    DEDENT43 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item413) 
                     stream_DEDENT.add(DEDENT43)
 
 
-                    NEWLINE44 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item428) 
+                    NEWLINE44 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item415) 
                     stream_NEWLINE.add(NEWLINE44)
 
 
                     # AST Rewrite
-                    # elements: types_item_attrs, ID
+                    # elements: ID, types_item_hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1258,8 +1260,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 63:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) )
-                    # grammar/Frontend.g:63:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) )
+                    # 62:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) )
+                    # grammar/Frontend.g:62:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_TYPES_ITEM, "TREE_TYPES_ITEM")
@@ -1269,21 +1271,21 @@ class FrontendParser(Parser):
                     stream_ID.nextNode()
                     )
 
-                    # grammar/Frontend.g:64:13: ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ )
+                    # grammar/Frontend.g:62:32: ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ )
                     root_2 = self._adaptor.nil()
                     root_2 = self._adaptor.becomeRoot(
-                    self._adaptor.createFromType(TREE_TYPES_ITEM_ATTRS, "TREE_TYPES_ITEM_ATTRS")
+                    self._adaptor.createFromType(TREE_TYPES_ITEM_HINTS, "TREE_TYPES_ITEM_HINTS")
                     , root_2)
 
-                    # grammar/Frontend.g:64:38: ( types_item_attrs )+
-                    if not (stream_types_item_attrs.hasNext()):
+                    # grammar/Frontend.g:62:57: ( types_item_hint )+
+                    if not (stream_types_item_hint.hasNext()):
                         raise RewriteEarlyExitException()
 
-                    while stream_types_item_attrs.hasNext():
-                        self._adaptor.addChild(root_2, stream_types_item_attrs.nextTree())
+                    while stream_types_item_hint.hasNext():
+                        self._adaptor.addChild(root_2, stream_types_item_hint.nextTree())
 
 
-                    stream_types_item_attrs.reset()
+                    stream_types_item_hint.reset()
 
                     self._adaptor.addChild(root_1, root_2)
 
@@ -1298,32 +1300,32 @@ class FrontendParser(Parser):
 
 
                 elif alt7 == 3:
-                    # grammar/Frontend.g:65:7: ID types_item_attrs NEWLINE INDENT NEWLINE ( types_item_attrs NEWLINE )+ DEDENT NEWLINE
+                    # grammar/Frontend.g:63:7: ID types_item_hint NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE
                     pass 
-                    ID45 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item475) 
+                    ID45 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item449) 
                     stream_ID.add(ID45)
 
 
-                    self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item477)
-                    types_item_attrs46 = self.types_item_attrs()
+                    self._state.following.append(self.FOLLOW_types_item_hint_in_types_item451)
+                    types_item_hint46 = self.types_item_hint()
 
                     self._state.following.pop()
-                    stream_types_item_attrs.add(types_item_attrs46.tree)
+                    stream_types_item_hint.add(types_item_hint46.tree)
 
 
-                    NEWLINE47 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item479) 
+                    NEWLINE47 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item453) 
                     stream_NEWLINE.add(NEWLINE47)
 
 
-                    INDENT48 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item487) 
+                    INDENT48 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item461) 
                     stream_INDENT.add(INDENT48)
 
 
-                    NEWLINE49 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item489) 
+                    NEWLINE49 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item463) 
                     stream_NEWLINE.add(NEWLINE49)
 
 
-                    # grammar/Frontend.g:66:22: ( types_item_attrs NEWLINE )+
+                    # grammar/Frontend.g:64:22: ( types_item_hint NEWLINE )+
                     cnt6 = 0
                     while True: #loop6
                         alt6 = 2
@@ -1334,16 +1336,16 @@ class FrontendParser(Parser):
 
 
                         if alt6 == 1:
-                            # grammar/Frontend.g:66:24: types_item_attrs NEWLINE
+                            # grammar/Frontend.g:64:24: types_item_hint NEWLINE
                             pass 
-                            self._state.following.append(self.FOLLOW_types_item_attrs_in_types_item493)
-                            types_item_attrs50 = self.types_item_attrs()
+                            self._state.following.append(self.FOLLOW_types_item_hint_in_types_item467)
+                            types_item_hint50 = self.types_item_hint()
 
                             self._state.following.pop()
-                            stream_types_item_attrs.add(types_item_attrs50.tree)
+                            stream_types_item_hint.add(types_item_hint50.tree)
 
 
-                            NEWLINE51 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item495) 
+                            NEWLINE51 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item469) 
                             stream_NEWLINE.add(NEWLINE51)
 
 
@@ -1358,16 +1360,16 @@ class FrontendParser(Parser):
                         cnt6 += 1
 
 
-                    DEDENT52 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item501) 
+                    DEDENT52 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item475) 
                     stream_DEDENT.add(DEDENT52)
 
 
-                    NEWLINE53 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item503) 
+                    NEWLINE53 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item477) 
                     stream_NEWLINE.add(NEWLINE53)
 
 
                     # AST Rewrite
-                    # elements: ID, types_item_attrs
+                    # elements: ID, types_item_hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1381,8 +1383,8 @@ class FrontendParser(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 67:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) )
-                    # grammar/Frontend.g:67:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ ) )
+                    # 65:7: -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) )
+                    # grammar/Frontend.g:65:10: ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ ) )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_TYPES_ITEM, "TREE_TYPES_ITEM")
@@ -1392,21 +1394,21 @@ class FrontendParser(Parser):
                     stream_ID.nextNode()
                     )
 
-                    # grammar/Frontend.g:68:13: ^( TREE_TYPES_ITEM_ATTRS ( types_item_attrs )+ )
+                    # grammar/Frontend.g:65:32: ^( TREE_TYPES_ITEM_HINTS ( types_item_hint )+ )
                     root_2 = self._adaptor.nil()
                     root_2 = self._adaptor.becomeRoot(
-                    self._adaptor.createFromType(TREE_TYPES_ITEM_ATTRS, "TREE_TYPES_ITEM_ATTRS")
+                    self._adaptor.createFromType(TREE_TYPES_ITEM_HINTS, "TREE_TYPES_ITEM_HINTS")
                     , root_2)
 
-                    # grammar/Frontend.g:69:17: ( types_item_attrs )+
-                    if not (stream_types_item_attrs.hasNext()):
+                    # grammar/Frontend.g:65:57: ( types_item_hint )+
+                    if not (stream_types_item_hint.hasNext()):
                         raise RewriteEarlyExitException()
 
-                    while stream_types_item_attrs.hasNext():
-                        self._adaptor.addChild(root_2, stream_types_item_attrs.nextTree())
+                    while stream_types_item_hint.hasNext():
+                        self._adaptor.addChild(root_2, stream_types_item_hint.nextTree())
 
 
-                    stream_types_item_attrs.reset()
+                    stream_types_item_hint.reset()
 
                     self._adaptor.addChild(root_1, root_2)
 
@@ -1440,9 +1442,9 @@ class FrontendParser(Parser):
     # $ANTLR end "types_item"
 
 
-    class types_item_attrs_return(ParserRuleReturnScope):
+    class types_item_hint_return(ParserRuleReturnScope):
         def __init__(self):
-            super(FrontendParser.types_item_attrs_return, self).__init__()
+            super(FrontendParser.types_item_hint_return, self).__init__()
 
             self.tree = None
 
@@ -1450,10 +1452,10 @@ class FrontendParser(Parser):
 
 
 
-    # $ANTLR start "types_item_attrs"
-    # grammar/Frontend.g:71:1: types_item_attrs : ( types_item_attr )+ ;
-    def types_item_attrs(self, ):
-        retval = self.types_item_attrs_return()
+    # $ANTLR start "types_item_hint"
+    # grammar/Frontend.g:67:1: types_item_hint : ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) ;
+    def types_item_hint(self, ):
+        retval = self.types_item_hint_return()
         retval.start = self.input.LT(1)
 
 
@@ -1462,16 +1464,13 @@ class FrontendParser(Parser):
         types_item_attr54 = None
 
 
-
+        stream_types_item_attr = RewriteRuleSubtreeStream(self._adaptor, "rule types_item_attr")
         try:
             try:
-                # grammar/Frontend.g:71:18: ( ( types_item_attr )+ )
-                # grammar/Frontend.g:71:20: ( types_item_attr )+
+                # grammar/Frontend.g:68:5: ( ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) )
+                # grammar/Frontend.g:68:7: ( types_item_attr )+
                 pass 
-                root_0 = self._adaptor.nil()
-
-
-                # grammar/Frontend.g:71:20: ( types_item_attr )+
+                # grammar/Frontend.g:68:7: ( types_item_attr )+
                 cnt8 = 0
                 while True: #loop8
                     alt8 = 2
@@ -1482,13 +1481,13 @@ class FrontendParser(Parser):
 
 
                     if alt8 == 1:
-                        # grammar/Frontend.g:71:20: types_item_attr
+                        # grammar/Frontend.g:68:7: types_item_attr
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_attrs570)
+                        self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint520)
                         types_item_attr54 = self.types_item_attr()
 
                         self._state.following.pop()
-                        self._adaptor.addChild(root_0, types_item_attr54.tree)
+                        stream_types_item_attr.add(types_item_attr54.tree)
 
 
 
@@ -1500,6 +1499,51 @@ class FrontendParser(Parser):
                         raise eee
 
                     cnt8 += 1
+
+
+                # AST Rewrite
+                # elements: types_item_attr
+                # token labels: 
+                # rule labels: retval
+                # token list labels: 
+                # rule list labels: 
+                # wildcard labels: 
+                retval.tree = root_0
+                if retval is not None:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                else:
+                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                root_0 = self._adaptor.nil()
+                # 69:7: -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                # grammar/Frontend.g:69:10: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                root_1 = self._adaptor.nil()
+                root_1 = self._adaptor.becomeRoot(
+                self._adaptor.createFromType(TREE_TYPES_ITEM_HINT, "TREE_TYPES_ITEM_HINT")
+                , root_1)
+
+                self._adaptor.addChild(root_1, 
+                self._adaptor.createFromType(TREE_HINT_NONE, "TREE_HINT_NONE")
+                )
+
+                # grammar/Frontend.g:69:49: ( types_item_attr )+
+                if not (stream_types_item_attr.hasNext()):
+                    raise RewriteEarlyExitException()
+
+                while stream_types_item_attr.hasNext():
+                    self._adaptor.addChild(root_1, stream_types_item_attr.nextTree())
+
+
+                stream_types_item_attr.reset()
+
+                self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                retval.tree = root_0
+
 
 
 
@@ -1521,7 +1565,7 @@ class FrontendParser(Parser):
             pass
         return retval
 
-    # $ANTLR end "types_item_attrs"
+    # $ANTLR end "types_item_hint"
 
 
     class types_item_attr_return(ParserRuleReturnScope):
@@ -1535,7 +1579,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "types_item_attr"
-    # grammar/Frontend.g:72:1: types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
+    # grammar/Frontend.g:71:1: types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr(self, ):
         retval = self.types_item_attr_return()
         retval.start = self.input.LT(1)
@@ -1550,10 +1594,10 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:72:17: ( ID -> ^( TREE_TYPES_ITEM_ATTR ID ) )
-                # grammar/Frontend.g:72:19: ID
+                # grammar/Frontend.g:71:17: ( ID -> ^( TREE_TYPES_ITEM_ATTR ID ) )
+                # grammar/Frontend.g:71:19: ID
                 pass 
-                ID55 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr580) 
+                ID55 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr555) 
                 stream_ID.add(ID55)
 
 
@@ -1572,8 +1616,8 @@ class FrontendParser(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 72:22: -> ^( TREE_TYPES_ITEM_ATTR ID )
-                # grammar/Frontend.g:72:25: ^( TREE_TYPES_ITEM_ATTR ID )
+                # 71:22: -> ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/Frontend.g:71:25: ^( TREE_TYPES_ITEM_ATTR ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(TREE_TYPES_ITEM_ATTR, "TREE_TYPES_ITEM_ATTR")
@@ -1625,7 +1669,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "num_whole"
-    # grammar/Frontend.g:74:1: num_whole : ( MINUS )? NUMBER ;
+    # grammar/Frontend.g:73:1: num_whole : ( MINUS )? NUMBER ;
     def num_whole(self, ):
         retval = self.num_whole_return()
         retval.start = self.input.LT(1)
@@ -1641,22 +1685,22 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:74:11: ( ( MINUS )? NUMBER )
-                # grammar/Frontend.g:74:13: ( MINUS )? NUMBER
+                # grammar/Frontend.g:73:11: ( ( MINUS )? NUMBER )
+                # grammar/Frontend.g:73:13: ( MINUS )? NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:74:13: ( MINUS )?
+                # grammar/Frontend.g:73:13: ( MINUS )?
                 alt9 = 2
                 LA9_0 = self.input.LA(1)
 
                 if (LA9_0 == MINUS) :
                     alt9 = 1
                 if alt9 == 1:
-                    # grammar/Frontend.g:74:13: MINUS
+                    # grammar/Frontend.g:73:13: MINUS
                     pass 
-                    MINUS56 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole599)
+                    MINUS56 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole574)
                     MINUS56_tree = self._adaptor.createWithPayload(MINUS56)
                     self._adaptor.addChild(root_0, MINUS56_tree)
 
@@ -1665,7 +1709,7 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER57 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole603)
+                NUMBER57 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole578)
                 NUMBER57_tree = self._adaptor.createWithPayload(NUMBER57)
                 self._adaptor.addChild(root_0, NUMBER57_tree)
 
@@ -1704,7 +1748,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/Frontend.g:75:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
+    # grammar/Frontend.g:74:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
     def num_fract(self, ):
         retval = self.num_fract_return()
         retval.start = self.input.LT(1)
@@ -1724,22 +1768,22 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # grammar/Frontend.g:75:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
-                # grammar/Frontend.g:75:13: ( MINUS )? NUMBER DIVIDE NUMBER
+                # grammar/Frontend.g:74:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
+                # grammar/Frontend.g:74:13: ( MINUS )? NUMBER DIVIDE NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/Frontend.g:75:13: ( MINUS )?
+                # grammar/Frontend.g:74:13: ( MINUS )?
                 alt10 = 2
                 LA10_0 = self.input.LA(1)
 
                 if (LA10_0 == MINUS) :
                     alt10 = 1
                 if alt10 == 1:
-                    # grammar/Frontend.g:75:13: MINUS
+                    # grammar/Frontend.g:74:13: MINUS
                     pass 
-                    MINUS58 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract611)
+                    MINUS58 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract586)
                     MINUS58_tree = self._adaptor.createWithPayload(MINUS58)
                     self._adaptor.addChild(root_0, MINUS58_tree)
 
@@ -1748,19 +1792,19 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER59 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract615)
+                NUMBER59 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract590)
                 NUMBER59_tree = self._adaptor.createWithPayload(NUMBER59)
                 self._adaptor.addChild(root_0, NUMBER59_tree)
 
 
 
-                DIVIDE60 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract617)
+                DIVIDE60 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract592)
                 DIVIDE60_tree = self._adaptor.createWithPayload(DIVIDE60)
                 self._adaptor.addChild(root_0, DIVIDE60_tree)
 
 
 
-                NUMBER61 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract619)
+                NUMBER61 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract594)
                 NUMBER61_tree = self._adaptor.createWithPayload(NUMBER61)
                 self._adaptor.addChild(root_0, NUMBER61_tree)
 
@@ -1834,9 +1878,9 @@ class FrontendParser(Parser):
 
  
 
-    FOLLOW_module_in_start102 = frozenset([1, 4, 13, 25])
-    FOLLOW_consts_in_start106 = frozenset([1, 4, 13, 25])
-    FOLLOW_types_in_start110 = frozenset([1, 4, 13, 25])
+    FOLLOW_module_in_start102 = frozenset([1, 4, 13, 27])
+    FOLLOW_consts_in_start106 = frozenset([1, 4, 13, 27])
+    FOLLOW_types_in_start110 = frozenset([1, 4, 13, 27])
     FOLLOW_MODULE_in_module123 = frozenset([10])
     FOLLOW_ID_in_module125 = frozenset([14])
     FOLLOW_NEWLINE_in_module127 = frozenset([1])
@@ -1868,33 +1912,33 @@ class FrontendParser(Parser):
     FOLLOW_NEWLINE_in_types315 = frozenset([1])
     FOLLOW_types_item_in_types_items345 = frozenset([1, 10])
     FOLLOW_ID_in_types_item359 = frozenset([10])
-    FOLLOW_types_item_attrs_in_types_item361 = frozenset([14])
+    FOLLOW_types_item_hint_in_types_item361 = frozenset([14])
     FOLLOW_NEWLINE_in_types_item363 = frozenset([1])
-    FOLLOW_ID_in_types_item408 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item410 = frozenset([11])
-    FOLLOW_INDENT_in_types_item412 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item414 = frozenset([10])
-    FOLLOW_types_item_attrs_in_types_item418 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item420 = frozenset([7, 10])
-    FOLLOW_DEDENT_in_types_item426 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item428 = frozenset([1])
-    FOLLOW_ID_in_types_item475 = frozenset([10])
-    FOLLOW_types_item_attrs_in_types_item477 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item479 = frozenset([11])
-    FOLLOW_INDENT_in_types_item487 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item489 = frozenset([10])
-    FOLLOW_types_item_attrs_in_types_item493 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item495 = frozenset([7, 10])
-    FOLLOW_DEDENT_in_types_item501 = frozenset([14])
-    FOLLOW_NEWLINE_in_types_item503 = frozenset([1])
-    FOLLOW_types_item_attr_in_types_item_attrs570 = frozenset([1, 10])
-    FOLLOW_ID_in_types_item_attr580 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole599 = frozenset([15])
-    FOLLOW_NUMBER_in_num_whole603 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract611 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract615 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract617 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract619 = frozenset([1])
+    FOLLOW_ID_in_types_item395 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item397 = frozenset([11])
+    FOLLOW_INDENT_in_types_item399 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item401 = frozenset([10])
+    FOLLOW_types_item_hint_in_types_item405 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item407 = frozenset([7, 10])
+    FOLLOW_DEDENT_in_types_item413 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item415 = frozenset([1])
+    FOLLOW_ID_in_types_item449 = frozenset([10])
+    FOLLOW_types_item_hint_in_types_item451 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item453 = frozenset([11])
+    FOLLOW_INDENT_in_types_item461 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item463 = frozenset([10])
+    FOLLOW_types_item_hint_in_types_item467 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item469 = frozenset([7, 10])
+    FOLLOW_DEDENT_in_types_item475 = frozenset([14])
+    FOLLOW_NEWLINE_in_types_item477 = frozenset([1])
+    FOLLOW_types_item_attr_in_types_item_hint520 = frozenset([1, 10])
+    FOLLOW_ID_in_types_item_attr555 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole574 = frozenset([15])
+    FOLLOW_NUMBER_in_num_whole578 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract586 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract590 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract592 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract594 = frozenset([1])
 
 
 
