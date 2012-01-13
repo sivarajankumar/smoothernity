@@ -18,8 +18,9 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_lexer_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
-        ar ( recognizer . exception , r , '!@#$' )
-        ar ( recognizer . exception , r , 'UPPERCASE' )
+        re = recognizer . exception
+        ar ( re , r , '!@#$' )
+        ar ( re , r , 'UPPERCASE' )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec
@@ -30,18 +31,20 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_modules_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
-        ar ( recognizer . exception , r , 'module _test1\n' )
-        ar ( recognizer . exception , r , 'module 1_test1\n' )
-        ar ( recognizer . exception , r , 'module' )
-        ar ( recognizer . exception , r , 'module\n' )
-        ar ( recognizer . exception , r , 'module module\n' )
+        re = recognizer . exception
+        ar ( re , r , 'module _test1\n' )
+        ar ( re , r , 'module 1_test1\n' )
+        ar ( re , r , 'module' )
+        ar ( re , r , 'module\n' )
+        ar ( re , r , 'module module\n' )
     def test_consts_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
-        ar ( recognizer . exception , r , 'consts test1\nconsts test2\n' )
-        ar ( recognizer . exception , r , 'consts test1\nconst1 11\n' )
-        ar ( recognizer . exception , r , 'consts test1\n const1 11\nconst2 11\n' )
-        ar ( recognizer . exception , r , 'consts test1\n const1 11\n  const2 11\n' )
+        re = recognizer . exception
+        ar ( re , r , 'consts test1\nconsts test2\n' )
+        ar ( re , r , 'consts test1\nconst1 11\n' )
+        ar ( re , r , 'consts test1\n const1 11\nconst2 11\n' )
+        ar ( re , r , 'consts test1\n const1 11\n  const2 11\n' )
     def test_consts_num_whole ( self ) :
         ae = self . assertEqual
         r = self . rec
