@@ -99,36 +99,35 @@ class recognizer_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def _test_types_indented_hint ( self ) :
+    def test_types_hint ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'types test1\n type1\n  { hint1 } atr1\n' ) ,
+        ae ( r ( 'types test1\n type1 { hint1 } atr1\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } } } } } )
-    def _test_types_indented_hint_indented_multi_atrs ( self ) :
+    def _test_types_hint_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'types test1\n type1\n'
-            '  { hint1 } atr1\n   atr2\n' ) ,
+        ae ( r ( 'types test1\n type1 { hint1 } atr1 atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint1' : [ ] } } } } } )
-    def _test_types_indented_hint_multi_atrs ( self ) :
+    def test_types_hint_indented_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'types test1\n type1\n  { hint1 } atr1 atr2\n' ) ,
+        ae ( r ( 'types test1\n type1 { hint1 } atr1\n   atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint1' : [ ] } } } } } )
-    def _test_types_indented_multi_hint ( self ) :
+    def test_types_multi_hint ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'types test1\n type1\n'
-            '  { hint1 } atr1\n  { hint2 } atr2\n' ) ,
+        ae ( r ( 'types test1\n type1 { hint1 } atr1\n'
+            '  { hint2 } atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint2' : [ ] } } } } } )
-    def _test_types_indented_hint_no_hint ( self ) :
+    def test_types_hint_no_hint ( self ) :
         ae = self . assertEqual
         r = self . rec
         ae ( r ( 'types test1\n type1\n'
