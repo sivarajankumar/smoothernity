@@ -49,9 +49,16 @@ consts_item
 
 types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TYPES ID types_items ) ;
 types_items : types_item + ;
-types_item : ID NEWLINE INDENT NEWLINE types_item_attrs DEDENT NEWLINE -> ^( ID types_item_attrs ) ;
-types_item_attrs : types_item_attr + ;
-types_item_attr : ID NEWLINE -> ID ;
+types_item
+    : ID types_item_attrs_oneline NEWLINE
+      -> ^( ID types_item_attrs_oneline )
+    | ID NEWLINE INDENT NEWLINE types_item_attrs_multiline DEDENT NEWLINE
+      -> ^( ID types_item_attrs_multiline )
+    ;
+types_item_attrs_oneline : types_item_attr_oneline + ;
+types_item_attr_oneline : ID -> ID ;
+types_item_attrs_multiline : types_item_attr_multiline + ;
+types_item_attr_multiline : ID NEWLINE -> ID ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
