@@ -83,7 +83,7 @@ types_items
 
 types_item
     returns [ name , value ]
-    :   ^( ID types_item_attrs )
+    :   ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_ATTRS types_item_attrs ) )
             { $name , $value = $ID.text , $types_item_attrs.value }
     ;
 
