@@ -83,8 +83,10 @@ types_items
 
 types_item
     returns [ name , value ]
-    :   ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hints ) )
+    :   ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints )
             { $name , $value = $ID.text , $types_item_hints.value }
+    |   ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS )
+            { $name , $value = $ID.text , dict ( ) }
     ;
 
 types_item_hints
