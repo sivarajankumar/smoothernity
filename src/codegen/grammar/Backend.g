@@ -114,6 +114,19 @@ hint
     @ init { $value = dict ( ) }
     :   ^( TREE_HINT ID )
             { $value [ $ID.text ] = list ( ) }
+    |   ^( TREE_HINT ID hint_args )
+            { $value [ $ID.text ] = $hint_args.value }
+    ;
+
+hint_args
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ( hint_arg { $value . append ( $hint_arg.value ) } ) +
+    ;
+
+hint_arg
+    returns [ value ]
+    :   ID { $value = $ID.text }
     ;
 
 num_whole

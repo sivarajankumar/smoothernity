@@ -75,7 +75,11 @@ types_item_hint
     ;
 types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
 
-hint : CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) ;
+hint
+    : CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID )
+    | CURLY_OPEN ID hint_arg + CURLY_CLOSE -> ^( TREE_HINT ID hint_arg + )
+    ;
+hint_arg : ID ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
