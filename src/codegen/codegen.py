@@ -1,5 +1,6 @@
 from hashlib import md5
 from os . path import dirname
+from recognizer import recognizer
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -25,7 +26,8 @@ def reify ( data , open_func , trace , options , os_mod ) :
             except Exception as e :
                 trace . write_error ( name , str ( e ) )
 
-def generate ( lines ) :
+def generate ( input ) :
+    print recognizer ( ) . recognize ( input )
     res = { }
     res . update ( _generate_common_h ( ) )
     res . update ( _generate_common_hpp ( ) )
@@ -109,8 +111,6 @@ if __name__ == '__main__' :
     from sys import argv
     from sys import stdin
     import os
-    import lexer
-    import tokens
 
     class trace :
         def write_error ( self , name , error ) :
@@ -126,8 +126,4 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    lines = [ l . replace ( '\n' , '' ) for l in stdin . readlines ( ) ]
-    x = lexer . lexer ( )
-    tokens . setup ( x )
-    print '\n' . join ( x . generate ( x . parse ( lines ) ) )
-    reify ( generate ( lines ) , open , trace ( ) , options ( ) , os )
+    reify ( generate ( stdin ) , open , trace ( ) , options ( ) , os )
