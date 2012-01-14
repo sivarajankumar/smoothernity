@@ -27,7 +27,6 @@ def reify ( data , open_func , trace , options , os_mod ) :
                 trace . write_error ( name , str ( e ) )
 
 def generate ( input ) :
-    print recognizer ( ) . recognize ( input )
     res = { }
     res . update ( _generate_common_h ( ) )
     res . update ( _generate_common_hpp ( ) )
@@ -126,4 +125,5 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    reify ( generate ( stdin ) , open , trace ( ) , options ( ) , os )
+    print recognizer ( ) . recognize ( stdin )
+    reify ( generate ( [ ] ) , open , trace ( ) , options ( ) , os )

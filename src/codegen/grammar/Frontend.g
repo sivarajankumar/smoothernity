@@ -56,13 +56,16 @@ types
     ;
 types_items : types_item + ;
 types_item
-    : ID types_item_hint NEWLINE
+    : ID types_item_hint ? NEWLINE
+      ( INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE ) ?
+      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint * ) )
+    /*: ID types_item_hint NEWLINE
       -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint ) )
     | ID NEWLINE INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE
       -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint + ) )
     | ID types_item_hint NEWLINE
       INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE
-      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint + ) )
+      -> ^( TREE_TYPES_ITEM ID ^( TREE_TYPES_ITEM_HINTS types_item_hint + ) )*/
     ;
 types_item_hint 
     : types_item_attr + 
