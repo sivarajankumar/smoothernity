@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-13 21:22:46
+# $ANTLR 3.4 grammar/Backend.g 2012-01-14 20:21:44
 
 import sys
 from antlr3 import *
@@ -30,24 +30,25 @@ NEWLINE=14
 NUMBER=15
 TREE_CONSTS=16
 TREE_EXPRESSION=17
-TREE_HINT_NONE=18
-TREE_MODULE=19
-TREE_NUM_FRACT=20
-TREE_NUM_WHOLE=21
-TREE_TYPES=22
-TREE_TYPES_ITEM=23
-TREE_TYPES_ITEM_ATTR=24
-TREE_TYPES_ITEM_HINT=25
-TREE_TYPES_ITEM_HINTS=26
-TYPES=27
-WHITESPACE=28
+TREE_HINT=18
+TREE_HINT_NONE=19
+TREE_MODULE=20
+TREE_NUM_FRACT=21
+TREE_NUM_WHOLE=22
+TREE_TYPES=23
+TREE_TYPES_ITEM=24
+TREE_TYPES_ITEM_ATTR=25
+TREE_TYPES_ITEM_HINT=26
+TREE_TYPES_ITEM_HINTS=27
+TYPES=28
+WHITESPACE=29
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "CONSTS", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
     "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
-    "TREE_EXPRESSION", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
+    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
     "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "WHITESPACE"
 ]
@@ -717,61 +718,145 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "types_item_hint"
-    # grammar/Backend.g:96:1: types_item_hint returns [ value ] : ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) ;
+    # grammar/Backend.g:96:1: types_item_hint returns [ value ] : ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) );
     def types_item_hint(self, ):
         value = None
 
 
         types_item_attr20 = None
 
+        types_item_attr21 = None
+
+        hint22 = None
+
 
         value = dict ( ) 
         try:
             try:
-                # grammar/Backend.g:99:5: ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) )
-                # grammar/Backend.g:99:9: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
-                pass 
-                self.match(self.input, TREE_TYPES_ITEM_HINT, self.FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint700)
+                # grammar/Backend.g:99:5: ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) )
+                alt8 = 2
+                LA8_0 = self.input.LA(1)
 
-                self.match(self.input, DOWN, None)
-                self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_types_item_hint702)
+                if (LA8_0 == TREE_TYPES_ITEM_HINT) :
+                    LA8_1 = self.input.LA(2)
 
-                # grammar/Backend.g:99:48: ( types_item_attr )+
-                cnt6 = 0
-                while True: #loop6
-                    alt6 = 2
-                    LA6_0 = self.input.LA(1)
+                    if (LA8_1 == 2) :
+                        LA8_2 = self.input.LA(3)
 
-                    if (LA6_0 == TREE_TYPES_ITEM_ATTR) :
-                        alt6 = 1
+                        if (LA8_2 == TREE_HINT_NONE) :
+                            alt8 = 1
+                        elif (LA8_2 == TREE_HINT) :
+                            alt8 = 2
+                        else:
+                            nvae = NoViableAltException("", 8, 2, self.input)
 
-
-                    if alt6 == 1:
-                        # grammar/Backend.g:99:50: types_item_attr
-                        pass 
-                        self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint706)
-                        types_item_attr20 = self.types_item_attr()
-
-                        self._state.following.pop()
-
-                        #action start
-                        value [ types_item_attr20 ] = dict ( ) 
-                        #action end
-
+                            raise nvae
 
 
                     else:
-                        if cnt6 >= 1:
-                            break #loop6
+                        nvae = NoViableAltException("", 8, 1, self.input)
 
-                        eee = EarlyExitException(6, self.input)
-                        raise eee
-
-                    cnt6 += 1
+                        raise nvae
 
 
-                self.match(self.input, UP, None)
+                else:
+                    nvae = NoViableAltException("", 8, 0, self.input)
 
+                    raise nvae
+
+
+                if alt8 == 1:
+                    # grammar/Backend.g:99:9: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                    pass 
+                    self.match(self.input, TREE_TYPES_ITEM_HINT, self.FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint700)
+
+                    self.match(self.input, DOWN, None)
+                    self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_types_item_hint702)
+
+                    # grammar/Backend.g:99:48: ( types_item_attr )+
+                    cnt6 = 0
+                    while True: #loop6
+                        alt6 = 2
+                        LA6_0 = self.input.LA(1)
+
+                        if (LA6_0 == TREE_TYPES_ITEM_ATTR) :
+                            alt6 = 1
+
+
+                        if alt6 == 1:
+                            # grammar/Backend.g:99:50: types_item_attr
+                            pass 
+                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint706)
+                            types_item_attr20 = self.types_item_attr()
+
+                            self._state.following.pop()
+
+                            #action start
+                            value [ types_item_attr20 ] = dict ( ) 
+                            #action end
+
+
+
+                        else:
+                            if cnt6 >= 1:
+                                break #loop6
+
+                            eee = EarlyExitException(6, self.input)
+                            raise eee
+
+                        cnt6 += 1
+
+
+                    self.match(self.input, UP, None)
+
+
+
+                elif alt8 == 2:
+                    # grammar/Backend.g:102:9: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    pass 
+                    self.match(self.input, TREE_TYPES_ITEM_HINT, self.FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint746)
+
+                    self.match(self.input, DOWN, None)
+                    self._state.following.append(self.FOLLOW_hint_in_types_item_hint748)
+                    hint22 = self.hint()
+
+                    self._state.following.pop()
+
+                    # grammar/Backend.g:102:38: ( types_item_attr )+
+                    cnt7 = 0
+                    while True: #loop7
+                        alt7 = 2
+                        LA7_0 = self.input.LA(1)
+
+                        if (LA7_0 == TREE_TYPES_ITEM_ATTR) :
+                            alt7 = 1
+
+
+                        if alt7 == 1:
+                            # grammar/Backend.g:102:40: types_item_attr
+                            pass 
+                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint752)
+                            types_item_attr21 = self.types_item_attr()
+
+                            self._state.following.pop()
+
+                            #action start
+                            value [ types_item_attr21 ] = hint22 
+                            #action end
+
+
+
+                        else:
+                            if cnt7 >= 1:
+                                break #loop7
+
+                            eee = EarlyExitException(7, self.input)
+                            raise eee
+
+                        cnt7 += 1
+
+
+                    self.match(self.input, UP, None)
 
 
 
@@ -789,28 +874,28 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "types_item_attr"
-    # grammar/Backend.g:104:1: types_item_attr returns [ name ] : ^( TREE_TYPES_ITEM_ATTR ID ) ;
+    # grammar/Backend.g:107:1: types_item_attr returns [ value ] : ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr(self, ):
-        name = None
+        value = None
 
 
-        ID21 = None
+        ID23 = None
 
         try:
             try:
-                # grammar/Backend.g:106:5: ( ^( TREE_TYPES_ITEM_ATTR ID ) )
-                # grammar/Backend.g:106:9: ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/Backend.g:109:5: ( ^( TREE_TYPES_ITEM_ATTR ID ) )
+                # grammar/Backend.g:109:9: ^( TREE_TYPES_ITEM_ATTR ID )
                 pass 
-                self.match(self.input, TREE_TYPES_ITEM_ATTR, self.FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr763)
+                self.match(self.input, TREE_TYPES_ITEM_ATTR, self.FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr809)
 
                 self.match(self.input, DOWN, None)
-                ID21 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr765)
+                ID23 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr811)
 
                 self.match(self.input, UP, None)
 
 
                 #action start
-                name = ID21.text 
+                value = ID23.text 
                 #action end
 
 
@@ -823,70 +908,112 @@ class Backend(TreeParser):
 
         finally:
             pass
-        return name
+        return value
 
     # $ANTLR end "types_item_attr"
 
 
 
+    # $ANTLR start "hint"
+    # grammar/Backend.g:112:1: hint returns [ value ] : ^( TREE_HINT ID ) ;
+    def hint(self, ):
+        value = None
+
+
+        ID24 = None
+
+        value = dict ( ) 
+        try:
+            try:
+                # grammar/Backend.g:115:5: ( ^( TREE_HINT ID ) )
+                # grammar/Backend.g:115:9: ^( TREE_HINT ID )
+                pass 
+                self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint854)
+
+                self.match(self.input, DOWN, None)
+                ID24 = self.match(self.input, ID, self.FOLLOW_ID_in_hint856)
+
+                self.match(self.input, UP, None)
+
+
+                #action start
+                value [ ID24.text ] = list ( ) 
+                #action end
+
+
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+
+        finally:
+            pass
+        return value
+
+    # $ANTLR end "hint"
+
+
+
     # $ANTLR start "num_whole"
-    # grammar/Backend.g:109:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
+    # grammar/Backend.g:119:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
     def num_whole(self, ):
         value = None
 
 
-        MINUS22 = None
-        NUMBER23 = None
-        NUMBER24 = None
+        MINUS25 = None
+        NUMBER26 = None
+        NUMBER27 = None
 
         try:
             try:
-                # grammar/Backend.g:111:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
-                alt7 = 2
-                LA7_0 = self.input.LA(1)
+                # grammar/Backend.g:121:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
+                alt9 = 2
+                LA9_0 = self.input.LA(1)
 
-                if (LA7_0 == MINUS) :
-                    alt7 = 1
-                elif (LA7_0 == NUMBER) :
-                    alt7 = 2
+                if (LA9_0 == MINUS) :
+                    alt9 = 1
+                elif (LA9_0 == NUMBER) :
+                    alt9 = 2
                 else:
-                    nvae = NoViableAltException("", 7, 0, self.input)
+                    nvae = NoViableAltException("", 9, 0, self.input)
 
                     raise nvae
 
 
-                if alt7 == 1:
-                    # grammar/Backend.g:111:9: ( MINUS NUMBER )
+                if alt9 == 1:
+                    # grammar/Backend.g:121:9: ( MINUS NUMBER )
                     pass 
-                    # grammar/Backend.g:111:9: ( MINUS NUMBER )
-                    # grammar/Backend.g:111:11: MINUS NUMBER
+                    # grammar/Backend.g:121:9: ( MINUS NUMBER )
+                    # grammar/Backend.g:121:11: MINUS NUMBER
                     pass 
-                    MINUS22 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole798)
+                    MINUS25 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole901)
 
-                    NUMBER23 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole800)
+                    NUMBER26 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole903)
 
 
 
 
                     #action start
-                    value = int ( MINUS22.text + NUMBER23.text ) 
+                    value = int ( MINUS25.text + NUMBER26.text ) 
                     #action end
 
 
 
-                elif alt7 == 2:
-                    # grammar/Backend.g:113:9: ( NUMBER )
+                elif alt9 == 2:
+                    # grammar/Backend.g:123:9: ( NUMBER )
                     pass 
-                    # grammar/Backend.g:113:9: ( NUMBER )
-                    # grammar/Backend.g:113:11: NUMBER
+                    # grammar/Backend.g:123:9: ( NUMBER )
+                    # grammar/Backend.g:123:11: NUMBER
                     pass 
-                    NUMBER24 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole828)
+                    NUMBER27 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole931)
 
 
 
 
                     #action start
-                    value = int ( NUMBER24.text ) 
+                    value = int ( NUMBER27.text ) 
                     #action end
 
 
@@ -905,68 +1032,68 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/Backend.g:117:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
+    # grammar/Backend.g:127:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
     def num_fract(self, ):
         value = None
 
 
         n = None
         d = None
-        MINUS25 = None
+        MINUS28 = None
 
         try:
             try:
-                # grammar/Backend.g:119:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
-                alt8 = 2
-                LA8_0 = self.input.LA(1)
+                # grammar/Backend.g:129:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
+                alt10 = 2
+                LA10_0 = self.input.LA(1)
 
-                if (LA8_0 == MINUS) :
-                    alt8 = 1
-                elif (LA8_0 == NUMBER) :
-                    alt8 = 2
+                if (LA10_0 == MINUS) :
+                    alt10 = 1
+                elif (LA10_0 == NUMBER) :
+                    alt10 = 2
                 else:
-                    nvae = NoViableAltException("", 8, 0, self.input)
+                    nvae = NoViableAltException("", 10, 0, self.input)
 
                     raise nvae
 
 
-                if alt8 == 1:
-                    # grammar/Backend.g:119:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                if alt10 == 1:
+                    # grammar/Backend.g:129:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/Backend.g:119:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/Backend.g:119:11: MINUS n= NUMBER DIVIDE d= NUMBER
+                    # grammar/Backend.g:129:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/Backend.g:129:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    MINUS25 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract873)
+                    MINUS28 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract976)
 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract879)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract982)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract881)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract984)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract887)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract990)
 
 
 
 
                     #action start
                                 
-                    value = Fraction ( int ( MINUS25.text + n.text ) ,
+                    value = Fraction ( int ( MINUS28.text + n.text ) ,
                         int ( d.text ) )
                                 
                     #action end
 
 
 
-                elif alt8 == 2:
-                    # grammar/Backend.g:124:9: (n= NUMBER DIVIDE d= NUMBER )
+                elif alt10 == 2:
+                    # grammar/Backend.g:134:9: (n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/Backend.g:124:9: (n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/Backend.g:124:11: n= NUMBER DIVIDE d= NUMBER
+                    # grammar/Backend.g:134:9: (n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/Backend.g:134:11: n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract919)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1022)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract921)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1024)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract927)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1030)
 
 
 
@@ -992,15 +1119,15 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_module_in_start86 = frozenset([1, 16, 19, 22])
-    FOLLOW_consts_in_start113 = frozenset([1, 16, 19, 22])
-    FOLLOW_types_in_start139 = frozenset([1, 16, 19, 22])
+    FOLLOW_module_in_start86 = frozenset([1, 16, 20, 23])
+    FOLLOW_consts_in_start113 = frozenset([1, 16, 20, 23])
+    FOLLOW_types_in_start139 = frozenset([1, 16, 20, 23])
     FOLLOW_TREE_MODULE_in_module194 = frozenset([2])
     FOLLOW_ID_in_module196 = frozenset([3])
     FOLLOW_TREE_CONSTS_in_consts239 = frozenset([2])
-    FOLLOW_ID_in_consts241 = frozenset([17, 20, 21])
+    FOLLOW_ID_in_consts241 = frozenset([17, 21, 22])
     FOLLOW_consts_items_in_consts243 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 17, 20, 21])
+    FOLLOW_consts_item_in_consts_items298 = frozenset([1, 17, 21, 22])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item353 = frozenset([2])
     FOLLOW_ID_in_consts_item355 = frozenset([12, 15])
     FOLLOW_num_whole_in_consts_item357 = frozenset([3])
@@ -1011,29 +1138,34 @@ class Backend(TreeParser):
     FOLLOW_ID_in_consts_item419 = frozenset([9])
     FOLLOW_EXPRESSION_in_consts_item421 = frozenset([3])
     FOLLOW_TREE_TYPES_in_types476 = frozenset([2])
-    FOLLOW_ID_in_types478 = frozenset([23])
+    FOLLOW_ID_in_types478 = frozenset([24])
     FOLLOW_types_items_in_types480 = frozenset([3])
-    FOLLOW_types_item_in_types_items535 = frozenset([1, 23])
+    FOLLOW_types_item_in_types_items535 = frozenset([1, 24])
     FOLLOW_TREE_TYPES_ITEM_in_types_item590 = frozenset([2])
-    FOLLOW_ID_in_types_item592 = frozenset([26])
+    FOLLOW_ID_in_types_item592 = frozenset([27])
     FOLLOW_TREE_TYPES_ITEM_HINTS_in_types_item596 = frozenset([2])
     FOLLOW_types_item_hints_in_types_item598 = frozenset([3])
-    FOLLOW_types_item_hint_in_types_item_hints655 = frozenset([1, 25])
+    FOLLOW_types_item_hint_in_types_item_hints655 = frozenset([1, 26])
     FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint700 = frozenset([2])
-    FOLLOW_TREE_HINT_NONE_in_types_item_hint702 = frozenset([24])
-    FOLLOW_types_item_attr_in_types_item_hint706 = frozenset([3, 24])
-    FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr763 = frozenset([2])
-    FOLLOW_ID_in_types_item_attr765 = frozenset([3])
-    FOLLOW_MINUS_in_num_whole798 = frozenset([15])
-    FOLLOW_NUMBER_in_num_whole800 = frozenset([1])
-    FOLLOW_NUMBER_in_num_whole828 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract873 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract879 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract881 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract887 = frozenset([1])
-    FOLLOW_NUMBER_in_num_fract919 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract921 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract927 = frozenset([1])
+    FOLLOW_TREE_HINT_NONE_in_types_item_hint702 = frozenset([25])
+    FOLLOW_types_item_attr_in_types_item_hint706 = frozenset([3, 25])
+    FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint746 = frozenset([2])
+    FOLLOW_hint_in_types_item_hint748 = frozenset([25])
+    FOLLOW_types_item_attr_in_types_item_hint752 = frozenset([3, 25])
+    FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr809 = frozenset([2])
+    FOLLOW_ID_in_types_item_attr811 = frozenset([3])
+    FOLLOW_TREE_HINT_in_hint854 = frozenset([2])
+    FOLLOW_ID_in_hint856 = frozenset([3])
+    FOLLOW_MINUS_in_num_whole901 = frozenset([15])
+    FOLLOW_NUMBER_in_num_whole903 = frozenset([1])
+    FOLLOW_NUMBER_in_num_whole931 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract976 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract982 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract984 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract990 = frozenset([1])
+    FOLLOW_NUMBER_in_num_fract1022 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract1024 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract1030 = frozenset([1])
 
 
 

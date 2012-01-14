@@ -115,7 +115,7 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_types_hint_indented_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . rec
-        ae ( r ( 'types test1\n type1 { hint1 } atr1\n   atr2\n' ) ,
+        ae ( r ( 'types test1\n type1 { hint1 }\n  atr1\n  atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint1' : [ ] } } } } } )

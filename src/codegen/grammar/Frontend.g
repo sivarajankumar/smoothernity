@@ -67,8 +67,15 @@ types_item
 types_item_hint 
     : types_item_attr + 
       -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE types_item_attr + )
+    | hint types_item_attr +
+      -> ^( TREE_TYPES_ITEM_HINT hint types_item_attr + )
+    | hint NEWLINE INDENT NEWLINE 
+        ( types_item_attr + NEWLINE ) + DEDENT
+      -> ^( TREE_TYPES_ITEM_HINT hint types_item_attr + )
     ;
 types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
+
+hint : CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -91,6 +98,7 @@ EXPRESSION : '[' .* ']' ;
 
 TREE_CONSTS : 'TREE_CONSTS' ;
 TREE_EXPRESSION : 'TREE_EXPRESSION' ;
+TREE_HINT : 'TREE_HINT' ;
 TREE_HINT_NONE : 'TREE_HINT_NONE' ;
 TREE_MODULE : 'TREE_MODULE' ;
 TREE_NUM_FRACT : 'TREE_NUM_FRACT' ;
