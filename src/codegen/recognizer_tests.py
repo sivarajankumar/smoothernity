@@ -2,12 +2,18 @@ import unittest
 import recognizer
 import io
 import fractions
+import indenter
 
 class recognizer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . r = recognizer . recognizer ( )
+        self . i = indenter . indenter ( )
+        self . i . set_indent_token ( 'indent' )
+        self . i . set_dedent_token ( 'dedent' )
+        self . i . set_newline_token ( '\n' )
     def rec ( self , s ) :
-        return self . r . recognize ( io . StringIO ( s ) )
+        indented = self . i . run ( io . StringIO ( s ) . readlines ( ) )
+        return self . r . recognize ( io . StringIO ( indented ) )
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . rec

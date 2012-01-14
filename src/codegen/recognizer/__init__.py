@@ -4,22 +4,14 @@ from antlr3 . constants import EOF
 from FrontendParser import FrontendParser , FrontendParserException
 from FrontendLexer import FrontendLexer , FrontendLexerException
 from Backend import Backend
-from indenter import indenter
-from io import StringIO
 
 class exception ( Exception ) :
     def __init__ ( self , text ) :
         Exception . __init__ ( self , text )
 
 class recognizer :
-    def __init__ ( self ) :
-        self . _indenter = indenter ( )
-        self . _indenter . set_indent_token ( 'indent' )
-        self . _indenter . set_dedent_token ( 'dedent' )
-        self . _indenter . set_newline_token ( '\n' )
     def recognize ( self , input ) :
-        indented = self . _indenter . run ( input . readlines ( ) )
-        fel = FrontendLexer ( ANTLRInputStream ( StringIO ( indented ) ) )
+        fel = FrontendLexer ( ANTLRInputStream ( input ) )
         ts = CommonTokenStream ( fel )
         fep = FrontendParser ( ts )
         try :
