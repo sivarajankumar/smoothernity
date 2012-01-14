@@ -127,6 +127,7 @@ hint_args
 hint_arg
     returns [ value ]
     :   ID { $value = $ID.text }
+    |   UNDERSCORE { $value = $UNDERSCORE.text }
     ;
 
 num_whole

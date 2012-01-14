@@ -79,7 +79,7 @@ hint
     : CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID )
     | CURLY_OPEN ID hint_arg + CURLY_CLOSE -> ^( TREE_HINT ID hint_arg + )
     ;
-hint_arg : ID ;
+hint_arg : ID | UNDERSCORE ;
 
 num_whole : MINUS ? NUMBER ;
 num_fract : MINUS ? NUMBER DIVIDE NUMBER ;
@@ -94,6 +94,7 @@ CURLY_OPEN : '{' ;
 CURLY_CLOSE : '}' ;
 DIVIDE : '/' ;
 MINUS : '-' ;
+UNDERSCORE : '_' ;
 NEWLINE : '\n' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-14 20:29:58
+# $ANTLR 3.4 grammar/Frontend.g 2012-01-14 20:31:53
 
 import sys
 from antlr3 import *
@@ -44,7 +44,8 @@ TREE_TYPES_ITEM_ATTR=25
 TREE_TYPES_ITEM_HINT=26
 TREE_TYPES_ITEM_HINTS=27
 TYPES=28
-WHITESPACE=29
+UNDERSCORE=29
+WHITESPACE=30
 
 # token names
 tokenNames = [
@@ -53,7 +54,8 @@ tokenNames = [
     "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
-    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "WHITESPACE"
+    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
+    "WHITESPACE"
 ]
 
 
@@ -724,7 +726,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_fract, ID
+                    # elements: ID, num_fract
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1258,7 +1260,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: types_item_hint, ID
+                    # elements: ID, types_item_hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1626,7 +1628,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: types_item_attr, hint
+                    # elements: hint, types_item_attr
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1960,7 +1962,7 @@ class FrontendParser(Parser):
 
                         if (LA14_2 == CURLY_CLOSE) :
                             alt14 = 1
-                        elif (LA14_2 == ID) :
+                        elif (LA14_2 == ID or LA14_2 == UNDERSCORE) :
                             alt14 = 2
                         else:
                             nvae = NoViableAltException("", 14, 2, self.input)
@@ -2048,7 +2050,7 @@ class FrontendParser(Parser):
                         alt13 = 2
                         LA13_0 = self.input.LA(1)
 
-                        if (LA13_0 == ID) :
+                        if (LA13_0 == ID or LA13_0 == UNDERSCORE) :
                             alt13 = 1
 
 
@@ -2154,7 +2156,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "hint_arg"
-    # grammar/Frontend.g:82:1: hint_arg : ID ;
+    # grammar/Frontend.g:82:1: hint_arg : ( ID | UNDERSCORE );
     def hint_arg(self, ):
         retval = self.hint_arg_return()
         retval.start = self.input.LT(1)
@@ -2162,21 +2164,30 @@ class FrontendParser(Parser):
 
         root_0 = None
 
-        ID72 = None
+        set72 = None
 
-        ID72_tree = None
+        set72_tree = None
 
         try:
             try:
-                # grammar/Frontend.g:82:10: ( ID )
-                # grammar/Frontend.g:82:12: ID
+                # grammar/Frontend.g:82:10: ( ID | UNDERSCORE )
+                # grammar/Frontend.g:
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                ID72 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg723)
-                ID72_tree = self._adaptor.createWithPayload(ID72)
-                self._adaptor.addChild(root_0, ID72_tree)
+                set72 = self.input.LT(1)
+
+                if self.input.LA(1) == ID or self.input.LA(1) == UNDERSCORE:
+                    self.input.consume()
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set72))
+
+                    self._state.errorRecovery = False
+
+
+                else:
+                    mse = MismatchedSetException(None, self.input)
+                    raise mse
 
 
 
@@ -2244,7 +2255,7 @@ class FrontendParser(Parser):
                 if alt15 == 1:
                     # grammar/Frontend.g:84:13: MINUS
                     pass 
-                    MINUS73 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole732)
+                    MINUS73 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole736)
                     MINUS73_tree = self._adaptor.createWithPayload(MINUS73)
                     self._adaptor.addChild(root_0, MINUS73_tree)
 
@@ -2253,7 +2264,7 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER74 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole736)
+                NUMBER74 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole740)
                 NUMBER74_tree = self._adaptor.createWithPayload(NUMBER74)
                 self._adaptor.addChild(root_0, NUMBER74_tree)
 
@@ -2327,7 +2338,7 @@ class FrontendParser(Parser):
                 if alt16 == 1:
                     # grammar/Frontend.g:85:13: MINUS
                     pass 
-                    MINUS75 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract744)
+                    MINUS75 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract748)
                     MINUS75_tree = self._adaptor.createWithPayload(MINUS75)
                     self._adaptor.addChild(root_0, MINUS75_tree)
 
@@ -2336,19 +2347,19 @@ class FrontendParser(Parser):
 
 
 
-                NUMBER76 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract748)
+                NUMBER76 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract752)
                 NUMBER76_tree = self._adaptor.createWithPayload(NUMBER76)
                 self._adaptor.addChild(root_0, NUMBER76_tree)
 
 
 
-                DIVIDE77 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract750)
+                DIVIDE77 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract754)
                 DIVIDE77_tree = self._adaptor.createWithPayload(DIVIDE77)
                 self._adaptor.addChild(root_0, DIVIDE77_tree)
 
 
 
-                NUMBER78 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract752)
+                NUMBER78 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract756)
                 NUMBER78_tree = self._adaptor.createWithPayload(NUMBER78)
                 self._adaptor.addChild(root_0, NUMBER78_tree)
 
@@ -2393,7 +2404,7 @@ class FrontendParser(Parser):
         )
 
     DFA7_max = DFA.unpack(
-        u"\1\12\1\16\1\uffff\1\16\1\12\1\13\1\12\2\uffff\1\16\1\12\1\16\1"
+        u"\1\12\1\16\1\uffff\1\16\1\12\1\13\1\35\2\uffff\1\16\1\35\1\16\1"
         u"\13\2\16\1\12\1\16\1\12\1\16"
         )
 
@@ -2413,11 +2424,11 @@ class FrontendParser(Parser):
         DFA.unpack(u"\1\3\3\uffff\1\5"),
         DFA.unpack(u"\1\6"),
         DFA.unpack(u"\1\10\2\uffff\1\10\1\7"),
-        DFA.unpack(u"\1\11\4\uffff\1\12"),
+        DFA.unpack(u"\1\11\4\uffff\1\12\22\uffff\1\12"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\13\3\uffff\1\14"),
-        DFA.unpack(u"\1\15\4\uffff\1\12"),
+        DFA.unpack(u"\1\15\4\uffff\1\12\22\uffff\1\12"),
         DFA.unpack(u"\1\13\3\uffff\1\5"),
         DFA.unpack(u"\1\16"),
         DFA.unpack(u"\1\13\3\uffff\1\14"),
@@ -2449,7 +2460,7 @@ class FrontendParser(Parser):
         )
 
     DFA12_max = DFA.unpack(
-        u"\1\12\1\uffff\2\12\1\16\1\12\2\uffff\1\16"
+        u"\1\12\1\uffff\1\12\1\35\1\16\1\35\2\uffff\1\16"
         )
 
     DFA12_accept = DFA.unpack(
@@ -2465,9 +2476,9 @@ class FrontendParser(Parser):
         DFA.unpack(u"\1\2\3\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\4\uffff\1\5"),
+        DFA.unpack(u"\1\4\4\uffff\1\5\22\uffff\1\5"),
         DFA.unpack(u"\1\6\3\uffff\1\7"),
-        DFA.unpack(u"\1\10\4\uffff\1\5"),
+        DFA.unpack(u"\1\10\4\uffff\1\5\22\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\3\uffff\1\7")
@@ -2549,16 +2560,15 @@ class FrontendParser(Parser):
     FOLLOW_ID_in_hint669 = frozenset([5])
     FOLLOW_CURLY_CLOSE_in_hint671 = frozenset([1])
     FOLLOW_CURLY_OPEN_in_hint689 = frozenset([10])
-    FOLLOW_ID_in_hint691 = frozenset([10])
-    FOLLOW_hint_arg_in_hint693 = frozenset([5, 10])
+    FOLLOW_ID_in_hint691 = frozenset([10, 29])
+    FOLLOW_hint_arg_in_hint693 = frozenset([5, 10, 29])
     FOLLOW_CURLY_CLOSE_in_hint697 = frozenset([1])
-    FOLLOW_ID_in_hint_arg723 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole732 = frozenset([15])
-    FOLLOW_NUMBER_in_num_whole736 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract744 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract748 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract750 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract752 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole736 = frozenset([15])
+    FOLLOW_NUMBER_in_num_whole740 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract748 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract752 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract754 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract756 = frozenset([1])
 
 
 
