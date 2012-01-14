@@ -111,6 +111,12 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae ( r ( 'types test1\n type1 { hint1 arg1 arg2 } atr1\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ 'arg1' , 'arg2' ] } } } } } )
+    def test_types_hint_args_wildcard ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'types test1\n type1 { hint1 _ arg2 } atr1\n' ) ,
+            { 'types' : { 'test1' : { 'type1' :
+                { 'atr1' : { 'hint1' : [ '_' , 'arg2' ] } } } } } )
     def _test_types_hint_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . rec

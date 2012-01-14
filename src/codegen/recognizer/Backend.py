@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Backend.g 2012-01-14 20:30:01
+# $ANTLR 3.4 grammar/Backend.g 2012-01-14 20:31:56
 
 import sys
 from antlr3 import *
@@ -41,7 +41,8 @@ TREE_TYPES_ITEM_ATTR=25
 TREE_TYPES_ITEM_HINT=26
 TREE_TYPES_ITEM_HINTS=27
 TYPES=28
-WHITESPACE=29
+UNDERSCORE=29
+WHITESPACE=30
 
 # token names
 tokenNames = [
@@ -50,7 +51,8 @@ tokenNames = [
     "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
-    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "WHITESPACE"
+    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
+    "WHITESPACE"
 ]
 
 
@@ -943,7 +945,7 @@ class Backend(TreeParser):
 
                             if (LA9_3 == 3) :
                                 alt9 = 1
-                            elif (LA9_3 == ID) :
+                            elif (LA9_3 == ID or LA9_3 == UNDERSCORE) :
                                 alt9 = 2
                             else:
                                 nvae = NoViableAltException("", 9, 3, self.input)
@@ -1042,7 +1044,7 @@ class Backend(TreeParser):
                     alt10 = 2
                     LA10_0 = self.input.LA(1)
 
-                    if (LA10_0 == ID) :
+                    if (LA10_0 == ID or LA10_0 == UNDERSCORE) :
                         alt10 = 1
 
 
@@ -1086,24 +1088,49 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "hint_arg"
-    # grammar/Backend.g:127:1: hint_arg returns [ value ] : ID ;
+    # grammar/Backend.g:127:1: hint_arg returns [ value ] : ( ID | UNDERSCORE );
     def hint_arg(self, ):
         value = None
 
 
         ID28 = None
+        UNDERSCORE29 = None
 
         try:
             try:
-                # grammar/Backend.g:129:5: ( ID )
-                # grammar/Backend.g:129:9: ID
-                pass 
-                ID28 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg976)
+                # grammar/Backend.g:129:5: ( ID | UNDERSCORE )
+                alt11 = 2
+                LA11_0 = self.input.LA(1)
 
-                #action start
-                value = ID28.text 
-                #action end
+                if (LA11_0 == ID) :
+                    alt11 = 1
+                elif (LA11_0 == UNDERSCORE) :
+                    alt11 = 2
+                else:
+                    nvae = NoViableAltException("", 11, 0, self.input)
 
+                    raise nvae
+
+
+                if alt11 == 1:
+                    # grammar/Backend.g:129:9: ID
+                    pass 
+                    ID28 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg976)
+
+                    #action start
+                    value = ID28.text 
+                    #action end
+
+
+
+                elif alt11 == 2:
+                    # grammar/Backend.g:130:9: UNDERSCORE
+                    pass 
+                    UNDERSCORE29 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_hint_arg988)
+
+                    #action start
+                    value = UNDERSCORE29.text 
+                    #action end
 
 
 
@@ -1121,63 +1148,63 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "num_whole"
-    # grammar/Backend.g:132:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
+    # grammar/Backend.g:133:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
     def num_whole(self, ):
         value = None
 
 
-        MINUS29 = None
-        NUMBER30 = None
+        MINUS30 = None
         NUMBER31 = None
+        NUMBER32 = None
 
         try:
             try:
-                # grammar/Backend.g:134:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
-                alt11 = 2
-                LA11_0 = self.input.LA(1)
+                # grammar/Backend.g:135:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
+                alt12 = 2
+                LA12_0 = self.input.LA(1)
 
-                if (LA11_0 == MINUS) :
-                    alt11 = 1
-                elif (LA11_0 == NUMBER) :
-                    alt11 = 2
+                if (LA12_0 == MINUS) :
+                    alt12 = 1
+                elif (LA12_0 == NUMBER) :
+                    alt12 = 2
                 else:
-                    nvae = NoViableAltException("", 11, 0, self.input)
+                    nvae = NoViableAltException("", 12, 0, self.input)
 
                     raise nvae
 
 
-                if alt11 == 1:
-                    # grammar/Backend.g:134:9: ( MINUS NUMBER )
+                if alt12 == 1:
+                    # grammar/Backend.g:135:9: ( MINUS NUMBER )
                     pass 
-                    # grammar/Backend.g:134:9: ( MINUS NUMBER )
-                    # grammar/Backend.g:134:11: MINUS NUMBER
+                    # grammar/Backend.g:135:9: ( MINUS NUMBER )
+                    # grammar/Backend.g:135:11: MINUS NUMBER
                     pass 
-                    MINUS29 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole1007)
+                    MINUS30 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole1019)
 
-                    NUMBER30 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1009)
+                    NUMBER31 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1021)
 
 
 
 
                     #action start
-                    value = int ( MINUS29.text + NUMBER30.text ) 
+                    value = int ( MINUS30.text + NUMBER31.text ) 
                     #action end
 
 
 
-                elif alt11 == 2:
-                    # grammar/Backend.g:136:9: ( NUMBER )
+                elif alt12 == 2:
+                    # grammar/Backend.g:137:9: ( NUMBER )
                     pass 
-                    # grammar/Backend.g:136:9: ( NUMBER )
-                    # grammar/Backend.g:136:11: NUMBER
+                    # grammar/Backend.g:137:9: ( NUMBER )
+                    # grammar/Backend.g:137:11: NUMBER
                     pass 
-                    NUMBER31 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1037)
+                    NUMBER32 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1049)
 
 
 
 
                     #action start
-                    value = int ( NUMBER31.text ) 
+                    value = int ( NUMBER32.text ) 
                     #action end
 
 
@@ -1196,68 +1223,68 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/Backend.g:140:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
+    # grammar/Backend.g:141:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
     def num_fract(self, ):
         value = None
 
 
         n = None
         d = None
-        MINUS32 = None
+        MINUS33 = None
 
         try:
             try:
-                # grammar/Backend.g:142:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
-                alt12 = 2
-                LA12_0 = self.input.LA(1)
+                # grammar/Backend.g:143:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
+                alt13 = 2
+                LA13_0 = self.input.LA(1)
 
-                if (LA12_0 == MINUS) :
-                    alt12 = 1
-                elif (LA12_0 == NUMBER) :
-                    alt12 = 2
+                if (LA13_0 == MINUS) :
+                    alt13 = 1
+                elif (LA13_0 == NUMBER) :
+                    alt13 = 2
                 else:
-                    nvae = NoViableAltException("", 12, 0, self.input)
+                    nvae = NoViableAltException("", 13, 0, self.input)
 
                     raise nvae
 
 
-                if alt12 == 1:
-                    # grammar/Backend.g:142:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                if alt13 == 1:
+                    # grammar/Backend.g:143:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/Backend.g:142:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/Backend.g:142:11: MINUS n= NUMBER DIVIDE d= NUMBER
+                    # grammar/Backend.g:143:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/Backend.g:143:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    MINUS32 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract1082)
+                    MINUS33 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract1094)
 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1088)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1100)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1090)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1102)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1096)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1108)
 
 
 
 
                     #action start
                                 
-                    value = Fraction ( int ( MINUS32.text + n.text ) ,
+                    value = Fraction ( int ( MINUS33.text + n.text ) ,
                         int ( d.text ) )
                                 
                     #action end
 
 
 
-                elif alt12 == 2:
-                    # grammar/Backend.g:147:9: (n= NUMBER DIVIDE d= NUMBER )
+                elif alt13 == 2:
+                    # grammar/Backend.g:148:9: (n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/Backend.g:147:9: (n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/Backend.g:147:11: n= NUMBER DIVIDE d= NUMBER
+                    # grammar/Backend.g:148:9: (n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/Backend.g:148:11: n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1128)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1140)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1130)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1142)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1136)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1148)
 
 
 
@@ -1321,20 +1348,21 @@ class Backend(TreeParser):
     FOLLOW_TREE_HINT_in_hint854 = frozenset([2])
     FOLLOW_ID_in_hint856 = frozenset([3])
     FOLLOW_TREE_HINT_in_hint884 = frozenset([2])
-    FOLLOW_ID_in_hint886 = frozenset([10])
+    FOLLOW_ID_in_hint886 = frozenset([10, 29])
     FOLLOW_hint_args_in_hint888 = frozenset([3])
-    FOLLOW_hint_arg_in_hint_args943 = frozenset([1, 10])
+    FOLLOW_hint_arg_in_hint_args943 = frozenset([1, 10, 29])
     FOLLOW_ID_in_hint_arg976 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole1007 = frozenset([15])
-    FOLLOW_NUMBER_in_num_whole1009 = frozenset([1])
-    FOLLOW_NUMBER_in_num_whole1037 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract1082 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract1088 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract1090 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract1096 = frozenset([1])
-    FOLLOW_NUMBER_in_num_fract1128 = frozenset([8])
-    FOLLOW_DIVIDE_in_num_fract1130 = frozenset([15])
-    FOLLOW_NUMBER_in_num_fract1136 = frozenset([1])
+    FOLLOW_UNDERSCORE_in_hint_arg988 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole1019 = frozenset([15])
+    FOLLOW_NUMBER_in_num_whole1021 = frozenset([1])
+    FOLLOW_NUMBER_in_num_whole1049 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract1094 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract1100 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract1102 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract1108 = frozenset([1])
+    FOLLOW_NUMBER_in_num_fract1140 = frozenset([8])
+    FOLLOW_DIVIDE_in_num_fract1142 = frozenset([15])
+    FOLLOW_NUMBER_in_num_fract1148 = frozenset([1])
 
 
 
