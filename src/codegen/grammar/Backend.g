@@ -97,13 +97,23 @@ types_item_hint
     returns [ value ]
     @ init { $value = dict ( ) }
     :   ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr
-            { $value [ $types_item_attr.name ] = dict ( ) }
+            { $value [ $types_item_attr.value ] = dict ( ) }
+        ) + )
+    |   ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr
+            { $value [ $types_item_attr.value ] = $hint.value }
         ) + )
     ;
 
 types_item_attr
-    returns [ name ]
-    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $name = $ID.text }
+    returns [ value ]
+    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $value = $ID.text }
+    ;
+
+hint
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ^( TREE_HINT ID )
+            { $value [ $ID.text ] = list ( ) }
     ;
 
 num_whole
