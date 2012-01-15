@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/Frontend.g 2012-01-14 21:04:27
+# $ANTLR 3.4 recognizer/Frontend.g 2012-01-15 08:17:45
 
 import sys
 from antlr3 import *
@@ -47,7 +47,7 @@ WHITESPACE=30
 
 class FrontendLexer(Lexer):
 
-    grammarFileName = "grammar/Frontend.g"
+    grammarFileName = "recognizer/Frontend.g"
     api_version = 1
 
     def __init__(self, input=None, state=None):
@@ -83,8 +83,8 @@ class FrontendLexer(Lexer):
             _type = CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:83:8: ( 'consts' )
-            # grammar/Frontend.g:83:10: 'consts'
+            # recognizer/Frontend.g:83:8: ( 'consts' )
+            # recognizer/Frontend.g:83:10: 'consts'
             pass 
             self.match("consts")
 
@@ -106,8 +106,8 @@ class FrontendLexer(Lexer):
             _type = DEDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:84:8: ( 'dedent' )
-            # grammar/Frontend.g:84:10: 'dedent'
+            # recognizer/Frontend.g:84:8: ( 'dedent' )
+            # recognizer/Frontend.g:84:10: 'dedent'
             pass 
             self.match("dedent")
 
@@ -129,8 +129,8 @@ class FrontendLexer(Lexer):
             _type = INDENT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:85:8: ( 'indent' )
-            # grammar/Frontend.g:85:10: 'indent'
+            # recognizer/Frontend.g:85:8: ( 'indent' )
+            # recognizer/Frontend.g:85:10: 'indent'
             pass 
             self.match("indent")
 
@@ -152,8 +152,8 @@ class FrontendLexer(Lexer):
             _type = MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:86:8: ( 'module' )
-            # grammar/Frontend.g:86:10: 'module'
+            # recognizer/Frontend.g:86:8: ( 'module' )
+            # recognizer/Frontend.g:86:10: 'module'
             pass 
             self.match("module")
 
@@ -175,8 +175,8 @@ class FrontendLexer(Lexer):
             _type = TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:87:7: ( 'types' )
-            # grammar/Frontend.g:87:9: 'types'
+            # recognizer/Frontend.g:87:7: ( 'types' )
+            # recognizer/Frontend.g:87:9: 'types'
             pass 
             self.match("types")
 
@@ -198,8 +198,8 @@ class FrontendLexer(Lexer):
             _type = CURLY_OPEN
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:89:12: ( '{' )
-            # grammar/Frontend.g:89:14: '{'
+            # recognizer/Frontend.g:89:12: ( '{' )
+            # recognizer/Frontend.g:89:14: '{'
             pass 
             self.match(123)
 
@@ -220,8 +220,8 @@ class FrontendLexer(Lexer):
             _type = CURLY_CLOSE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:90:13: ( '}' )
-            # grammar/Frontend.g:90:15: '}'
+            # recognizer/Frontend.g:90:13: ( '}' )
+            # recognizer/Frontend.g:90:15: '}'
             pass 
             self.match(125)
 
@@ -242,8 +242,8 @@ class FrontendLexer(Lexer):
             _type = DIVIDE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:91:8: ( '/' )
-            # grammar/Frontend.g:91:10: '/'
+            # recognizer/Frontend.g:91:8: ( '/' )
+            # recognizer/Frontend.g:91:10: '/'
             pass 
             self.match(47)
 
@@ -264,8 +264,8 @@ class FrontendLexer(Lexer):
             _type = MINUS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:92:7: ( '-' )
-            # grammar/Frontend.g:92:9: '-'
+            # recognizer/Frontend.g:92:7: ( '-' )
+            # recognizer/Frontend.g:92:9: '-'
             pass 
             self.match(45)
 
@@ -286,8 +286,8 @@ class FrontendLexer(Lexer):
             _type = UNDERSCORE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:93:12: ( '_' )
-            # grammar/Frontend.g:93:14: '_'
+            # recognizer/Frontend.g:93:12: ( '_' )
+            # recognizer/Frontend.g:93:14: '_'
             pass 
             self.match(95)
 
@@ -308,8 +308,8 @@ class FrontendLexer(Lexer):
             _type = NEWLINE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:94:9: ( '\\n' )
-            # grammar/Frontend.g:94:11: '\\n'
+            # recognizer/Frontend.g:94:9: ( '\\n' )
+            # recognizer/Frontend.g:94:11: '\\n'
             pass 
             self.match(10)
 
@@ -330,12 +330,12 @@ class FrontendLexer(Lexer):
             _type = ID
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:95:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-            # grammar/Frontend.g:95:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # recognizer/Frontend.g:95:4: ( 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )* )
+            # recognizer/Frontend.g:95:6: 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' )*
             pass 
             self.matchRange(97, 122)
 
-            # grammar/Frontend.g:95:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+            # recognizer/Frontend.g:95:17: ( 'a' .. 'z' | '0' .. '9' | '_' )*
             while True: #loop1
                 alt1 = 2
                 LA1_0 = self.input.LA(1)
@@ -345,7 +345,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt1 == 1:
-                    # grammar/Frontend.g:
+                    # recognizer/Frontend.g:
                     pass 
                     if (48 <= self.input.LA(1) <= 57) or self.input.LA(1) == 95 or (97 <= self.input.LA(1) <= 122):
                         self.input.consume()
@@ -378,10 +378,10 @@ class FrontendLexer(Lexer):
             _type = NUMBER
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:96:8: ( ( '0' .. '9' )+ )
-            # grammar/Frontend.g:96:10: ( '0' .. '9' )+
+            # recognizer/Frontend.g:96:8: ( ( '0' .. '9' )+ )
+            # recognizer/Frontend.g:96:10: ( '0' .. '9' )+
             pass 
-            # grammar/Frontend.g:96:10: ( '0' .. '9' )+
+            # recognizer/Frontend.g:96:10: ( '0' .. '9' )+
             cnt2 = 0
             while True: #loop2
                 alt2 = 2
@@ -392,7 +392,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt2 == 1:
-                    # grammar/Frontend.g:
+                    # recognizer/Frontend.g:
                     pass 
                     if (48 <= self.input.LA(1) <= 57):
                         self.input.consume()
@@ -431,10 +431,10 @@ class FrontendLexer(Lexer):
             _type = WHITESPACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:97:12: ( ( ' ' )+ )
-            # grammar/Frontend.g:97:14: ( ' ' )+
+            # recognizer/Frontend.g:97:12: ( ( ' ' )+ )
+            # recognizer/Frontend.g:97:14: ( ' ' )+
             pass 
-            # grammar/Frontend.g:97:14: ( ' ' )+
+            # recognizer/Frontend.g:97:14: ( ' ' )+
             cnt3 = 0
             while True: #loop3
                 alt3 = 2
@@ -445,7 +445,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt3 == 1:
-                    # grammar/Frontend.g:97:14: ' '
+                    # recognizer/Frontend.g:97:14: ' '
                     pass 
                     self.match(32)
 
@@ -482,12 +482,12 @@ class FrontendLexer(Lexer):
             _type = EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:98:12: ( '[' ( . )* ']' )
-            # grammar/Frontend.g:98:14: '[' ( . )* ']'
+            # recognizer/Frontend.g:98:12: ( '[' ( . )* ']' )
+            # recognizer/Frontend.g:98:14: '[' ( . )* ']'
             pass 
             self.match(91)
 
-            # grammar/Frontend.g:98:18: ( . )*
+            # recognizer/Frontend.g:98:18: ( . )*
             while True: #loop4
                 alt4 = 2
                 LA4_0 = self.input.LA(1)
@@ -499,7 +499,7 @@ class FrontendLexer(Lexer):
 
 
                 if alt4 == 1:
-                    # grammar/Frontend.g:98:18: .
+                    # recognizer/Frontend.g:98:18: .
                     pass 
                     self.matchAny()
 
@@ -527,8 +527,8 @@ class FrontendLexer(Lexer):
             _type = TREE_CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:100:13: ( 'TREE_CONSTS' )
-            # grammar/Frontend.g:100:15: 'TREE_CONSTS'
+            # recognizer/Frontend.g:100:13: ( 'TREE_CONSTS' )
+            # recognizer/Frontend.g:100:15: 'TREE_CONSTS'
             pass 
             self.match("TREE_CONSTS")
 
@@ -550,8 +550,8 @@ class FrontendLexer(Lexer):
             _type = TREE_EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:101:17: ( 'TREE_EXPRESSION' )
-            # grammar/Frontend.g:101:19: 'TREE_EXPRESSION'
+            # recognizer/Frontend.g:101:17: ( 'TREE_EXPRESSION' )
+            # recognizer/Frontend.g:101:19: 'TREE_EXPRESSION'
             pass 
             self.match("TREE_EXPRESSION")
 
@@ -573,8 +573,8 @@ class FrontendLexer(Lexer):
             _type = TREE_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:102:11: ( 'TREE_HINT' )
-            # grammar/Frontend.g:102:13: 'TREE_HINT'
+            # recognizer/Frontend.g:102:11: ( 'TREE_HINT' )
+            # recognizer/Frontend.g:102:13: 'TREE_HINT'
             pass 
             self.match("TREE_HINT")
 
@@ -596,8 +596,8 @@ class FrontendLexer(Lexer):
             _type = TREE_HINT_NONE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:103:16: ( 'TREE_HINT_NONE' )
-            # grammar/Frontend.g:103:18: 'TREE_HINT_NONE'
+            # recognizer/Frontend.g:103:16: ( 'TREE_HINT_NONE' )
+            # recognizer/Frontend.g:103:18: 'TREE_HINT_NONE'
             pass 
             self.match("TREE_HINT_NONE")
 
@@ -619,8 +619,8 @@ class FrontendLexer(Lexer):
             _type = TREE_MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:104:13: ( 'TREE_MODULE' )
-            # grammar/Frontend.g:104:15: 'TREE_MODULE'
+            # recognizer/Frontend.g:104:13: ( 'TREE_MODULE' )
+            # recognizer/Frontend.g:104:15: 'TREE_MODULE'
             pass 
             self.match("TREE_MODULE")
 
@@ -642,8 +642,8 @@ class FrontendLexer(Lexer):
             _type = TREE_NUM_FRACT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:105:16: ( 'TREE_NUM_FRACT' )
-            # grammar/Frontend.g:105:18: 'TREE_NUM_FRACT'
+            # recognizer/Frontend.g:105:16: ( 'TREE_NUM_FRACT' )
+            # recognizer/Frontend.g:105:18: 'TREE_NUM_FRACT'
             pass 
             self.match("TREE_NUM_FRACT")
 
@@ -665,8 +665,8 @@ class FrontendLexer(Lexer):
             _type = TREE_NUM_WHOLE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:106:16: ( 'TREE_NUM_WHOLE' )
-            # grammar/Frontend.g:106:18: 'TREE_NUM_WHOLE'
+            # recognizer/Frontend.g:106:16: ( 'TREE_NUM_WHOLE' )
+            # recognizer/Frontend.g:106:18: 'TREE_NUM_WHOLE'
             pass 
             self.match("TREE_NUM_WHOLE")
 
@@ -688,8 +688,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:107:12: ( 'TREE_TYPES' )
-            # grammar/Frontend.g:107:14: 'TREE_TYPES'
+            # recognizer/Frontend.g:107:12: ( 'TREE_TYPES' )
+            # recognizer/Frontend.g:107:14: 'TREE_TYPES'
             pass 
             self.match("TREE_TYPES")
 
@@ -711,8 +711,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES_ITEM
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:108:17: ( 'TREE_TYPES_ITEM' )
-            # grammar/Frontend.g:108:19: 'TREE_TYPES_ITEM'
+            # recognizer/Frontend.g:108:17: ( 'TREE_TYPES_ITEM' )
+            # recognizer/Frontend.g:108:19: 'TREE_TYPES_ITEM'
             pass 
             self.match("TREE_TYPES_ITEM")
 
@@ -734,8 +734,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES_ITEM_ATTR
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:109:22: ( 'TREE_TYPES_ITEM_ATTR' )
-            # grammar/Frontend.g:109:24: 'TREE_TYPES_ITEM_ATTR'
+            # recognizer/Frontend.g:109:22: ( 'TREE_TYPES_ITEM_ATTR' )
+            # recognizer/Frontend.g:109:24: 'TREE_TYPES_ITEM_ATTR'
             pass 
             self.match("TREE_TYPES_ITEM_ATTR")
 
@@ -757,8 +757,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES_ITEM_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:110:22: ( 'TREE_TYPES_ITEM_HINT' )
-            # grammar/Frontend.g:110:24: 'TREE_TYPES_ITEM_HINT'
+            # recognizer/Frontend.g:110:22: ( 'TREE_TYPES_ITEM_HINT' )
+            # recognizer/Frontend.g:110:24: 'TREE_TYPES_ITEM_HINT'
             pass 
             self.match("TREE_TYPES_ITEM_HINT")
 
@@ -780,8 +780,8 @@ class FrontendLexer(Lexer):
             _type = TREE_TYPES_ITEM_HINTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/Frontend.g:111:23: ( 'TREE_TYPES_ITEM_HINTS' )
-            # grammar/Frontend.g:111:25: 'TREE_TYPES_ITEM_HINTS'
+            # recognizer/Frontend.g:111:23: ( 'TREE_TYPES_ITEM_HINTS' )
+            # recognizer/Frontend.g:111:25: 'TREE_TYPES_ITEM_HINTS'
             pass 
             self.match("TREE_TYPES_ITEM_HINTS")
 
@@ -798,193 +798,193 @@ class FrontendLexer(Lexer):
 
 
     def mTokens(self):
-        # grammar/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | TREE_CONSTS | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | TREE_TYPES_ITEM | TREE_TYPES_ITEM_ATTR | TREE_TYPES_ITEM_HINT | TREE_TYPES_ITEM_HINTS )
+        # recognizer/Frontend.g:1:8: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | TREE_CONSTS | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_TYPES | TREE_TYPES_ITEM | TREE_TYPES_ITEM_ATTR | TREE_TYPES_ITEM_HINT | TREE_TYPES_ITEM_HINTS )
         alt5 = 27
         alt5 = self.dfa5.predict(self.input)
         if alt5 == 1:
-            # grammar/Frontend.g:1:10: CONSTS
+            # recognizer/Frontend.g:1:10: CONSTS
             pass 
             self.mCONSTS()
 
 
 
         elif alt5 == 2:
-            # grammar/Frontend.g:1:17: DEDENT
+            # recognizer/Frontend.g:1:17: DEDENT
             pass 
             self.mDEDENT()
 
 
 
         elif alt5 == 3:
-            # grammar/Frontend.g:1:24: INDENT
+            # recognizer/Frontend.g:1:24: INDENT
             pass 
             self.mINDENT()
 
 
 
         elif alt5 == 4:
-            # grammar/Frontend.g:1:31: MODULE
+            # recognizer/Frontend.g:1:31: MODULE
             pass 
             self.mMODULE()
 
 
 
         elif alt5 == 5:
-            # grammar/Frontend.g:1:38: TYPES
+            # recognizer/Frontend.g:1:38: TYPES
             pass 
             self.mTYPES()
 
 
 
         elif alt5 == 6:
-            # grammar/Frontend.g:1:44: CURLY_OPEN
+            # recognizer/Frontend.g:1:44: CURLY_OPEN
             pass 
             self.mCURLY_OPEN()
 
 
 
         elif alt5 == 7:
-            # grammar/Frontend.g:1:55: CURLY_CLOSE
+            # recognizer/Frontend.g:1:55: CURLY_CLOSE
             pass 
             self.mCURLY_CLOSE()
 
 
 
         elif alt5 == 8:
-            # grammar/Frontend.g:1:67: DIVIDE
+            # recognizer/Frontend.g:1:67: DIVIDE
             pass 
             self.mDIVIDE()
 
 
 
         elif alt5 == 9:
-            # grammar/Frontend.g:1:74: MINUS
+            # recognizer/Frontend.g:1:74: MINUS
             pass 
             self.mMINUS()
 
 
 
         elif alt5 == 10:
-            # grammar/Frontend.g:1:80: UNDERSCORE
+            # recognizer/Frontend.g:1:80: UNDERSCORE
             pass 
             self.mUNDERSCORE()
 
 
 
         elif alt5 == 11:
-            # grammar/Frontend.g:1:91: NEWLINE
+            # recognizer/Frontend.g:1:91: NEWLINE
             pass 
             self.mNEWLINE()
 
 
 
         elif alt5 == 12:
-            # grammar/Frontend.g:1:99: ID
+            # recognizer/Frontend.g:1:99: ID
             pass 
             self.mID()
 
 
 
         elif alt5 == 13:
-            # grammar/Frontend.g:1:102: NUMBER
+            # recognizer/Frontend.g:1:102: NUMBER
             pass 
             self.mNUMBER()
 
 
 
         elif alt5 == 14:
-            # grammar/Frontend.g:1:109: WHITESPACE
+            # recognizer/Frontend.g:1:109: WHITESPACE
             pass 
             self.mWHITESPACE()
 
 
 
         elif alt5 == 15:
-            # grammar/Frontend.g:1:120: EXPRESSION
+            # recognizer/Frontend.g:1:120: EXPRESSION
             pass 
             self.mEXPRESSION()
 
 
 
         elif alt5 == 16:
-            # grammar/Frontend.g:1:131: TREE_CONSTS
+            # recognizer/Frontend.g:1:131: TREE_CONSTS
             pass 
             self.mTREE_CONSTS()
 
 
 
         elif alt5 == 17:
-            # grammar/Frontend.g:1:143: TREE_EXPRESSION
+            # recognizer/Frontend.g:1:143: TREE_EXPRESSION
             pass 
             self.mTREE_EXPRESSION()
 
 
 
         elif alt5 == 18:
-            # grammar/Frontend.g:1:159: TREE_HINT
+            # recognizer/Frontend.g:1:159: TREE_HINT
             pass 
             self.mTREE_HINT()
 
 
 
         elif alt5 == 19:
-            # grammar/Frontend.g:1:169: TREE_HINT_NONE
+            # recognizer/Frontend.g:1:169: TREE_HINT_NONE
             pass 
             self.mTREE_HINT_NONE()
 
 
 
         elif alt5 == 20:
-            # grammar/Frontend.g:1:184: TREE_MODULE
+            # recognizer/Frontend.g:1:184: TREE_MODULE
             pass 
             self.mTREE_MODULE()
 
 
 
         elif alt5 == 21:
-            # grammar/Frontend.g:1:196: TREE_NUM_FRACT
+            # recognizer/Frontend.g:1:196: TREE_NUM_FRACT
             pass 
             self.mTREE_NUM_FRACT()
 
 
 
         elif alt5 == 22:
-            # grammar/Frontend.g:1:211: TREE_NUM_WHOLE
+            # recognizer/Frontend.g:1:211: TREE_NUM_WHOLE
             pass 
             self.mTREE_NUM_WHOLE()
 
 
 
         elif alt5 == 23:
-            # grammar/Frontend.g:1:226: TREE_TYPES
+            # recognizer/Frontend.g:1:226: TREE_TYPES
             pass 
             self.mTREE_TYPES()
 
 
 
         elif alt5 == 24:
-            # grammar/Frontend.g:1:237: TREE_TYPES_ITEM
+            # recognizer/Frontend.g:1:237: TREE_TYPES_ITEM
             pass 
             self.mTREE_TYPES_ITEM()
 
 
 
         elif alt5 == 25:
-            # grammar/Frontend.g:1:253: TREE_TYPES_ITEM_ATTR
+            # recognizer/Frontend.g:1:253: TREE_TYPES_ITEM_ATTR
             pass 
             self.mTREE_TYPES_ITEM_ATTR()
 
 
 
         elif alt5 == 26:
-            # grammar/Frontend.g:1:274: TREE_TYPES_ITEM_HINT
+            # recognizer/Frontend.g:1:274: TREE_TYPES_ITEM_HINT
             pass 
             self.mTREE_TYPES_ITEM_HINT()
 
 
 
         elif alt5 == 27:
-            # grammar/Frontend.g:1:295: TREE_TYPES_ITEM_HINTS
+            # recognizer/Frontend.g:1:295: TREE_TYPES_ITEM_HINTS
             pass 
             self.mTREE_TYPES_ITEM_HINTS()
 
