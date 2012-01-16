@@ -11,6 +11,9 @@ class formatter_tests ( unittest . TestCase ) :
         ae = self . assertEqual
         u = self . f . run
         ae ( u ( [ ] ) , '' )
+        ae ( u ( [ '\n' ] ) , '' )
+        ae ( u ( [ 'indent' ] ) , '' )
+        ae ( u ( [ 'indent' , '\n' ] ) , '' )
     def test_one_line ( self ) :
         ae = self . assertEqual
         u = self . f . run
@@ -19,7 +22,15 @@ class formatter_tests ( unittest . TestCase ) :
         ae = self . assertEqual
         u = self . f . run
         ae ( u ( [ 'test1' , '\n' , 'test2' ] ) , 'test1\ntest2' )
-        ae ( u ( [ 'test1' , '\n' , '\n' , 'test2' , '\n' , '\n' ] ) , 'test1\ntest2\n' )
+        ae ( u ( [ 'test1' , '\n' , '\n' , 'test2' , '\n' , '\n' ] ) ,
+            'test1\ntest2\n' )
+    def test_indent ( self ) :
+        ae = self . assertEqual
+        u = self . f . run
+        ae ( u ( [ 'test1' , '\n' , 'indent' , '\n' , 'test2' , '\n' ,
+            'indent' , '\n' , 'test3' , '\n' , 'dedent' , 'test4' , '\n' ,
+            'dedent' , '\n' , 'test5' , '\n' ] ) ,
+            'test1\n test2\n  test3\n test4\ntest5\n' )
 
 if __name__ == '__main__' :
     unittest . main ( )

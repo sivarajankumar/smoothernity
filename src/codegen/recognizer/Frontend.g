@@ -95,7 +95,7 @@ NEWLINE : '\n' ;
 ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
-EXPRESSION : '[' .* ']' ;
+EXPRESSION : '[' . * ']' ;
 
 TREE_CONSTS : 'TREE_CONSTS' ;
 TREE_EXPRESSION : 'TREE_EXPRESSION' ;

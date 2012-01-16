@@ -1,4 +1,4 @@
-# $ANTLR 3.4 recognizer/Frontend.g 2012-01-15 08:17:44
+# $ANTLR 3.4 recognizer/Frontend.g 2012-01-16 18:03:49
 
 import sys
 from antlr3 import *
@@ -659,7 +659,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_whole, ID
+                    # elements: ID, num_whole
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -910,7 +910,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, types_items
+                # elements: types_items, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1882,7 +1882,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, hint_arg
+                    # elements: hint_arg, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
