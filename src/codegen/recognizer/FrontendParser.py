@@ -1,4 +1,4 @@
-# $ANTLR 3.4 recognizer/Frontend.g 2012-01-16 18:03:49
+# $ANTLR 3.4 recognizer/Frontend.g 2012-01-16 21:18:52
 
 import sys
 from antlr3 import *
@@ -398,7 +398,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: consts_items, ID
+                # elements: ID, consts_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -659,7 +659,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_whole
+                    # elements: num_whole, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -715,7 +715,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1191,7 +1191,7 @@ class FrontendParser(Parser):
 
 
                 # AST Rewrite
-                # elements: types_item_hint, ID
+                # elements: ID, types_item_hint
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1430,7 +1430,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: hint, types_item_attr
+                    # elements: types_item_attr, hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1559,7 +1559,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: types_item_attr, hint
+                    # elements: hint, types_item_attr
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1882,7 +1882,7 @@ class FrontendParser(Parser):
 
 
                     # AST Rewrite
-                    # elements: hint_arg, ID
+                    # elements: ID, hint_arg
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
