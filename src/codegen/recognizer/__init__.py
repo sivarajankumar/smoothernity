@@ -10,7 +10,7 @@ class exception ( Exception ) :
         Exception . __init__ ( self , text )
 
 class recognizer :
-    def recognize ( self , input ) :
+    def run ( self , input ) :
         fel = FrontendLexer ( ANTLRInputStream ( input ) )
         ts = CommonTokenStream ( fel )
         fep = FrontendParser ( ts )

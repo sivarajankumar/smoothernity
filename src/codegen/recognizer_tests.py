@@ -13,7 +13,7 @@ class recognizer_test_case ( unittest . TestCase ) :
         self . i . set_newline_token ( '\n' )
     def rec ( self , s ) :
         indented = self . i . run ( io . StringIO ( s ) . readlines ( ) )
-        return self . r . recognize ( io . StringIO ( indented ) )
+        return self . r . run ( io . StringIO ( indented ) )
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . rec

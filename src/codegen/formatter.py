@@ -12,15 +12,21 @@ class formatter :
     def run ( self , tokens ) :
         res = str ( )
         line = str ( )
+        indent = 0
         for t in tokens :
             if t == self . _newline_token :
                 if line :
                     line += self . _newline_token
-                    res += line
+                    res += ' ' * indent + line
                 line = str ( )
+            elif t == self . _indent_token :
+                indent += 1
+            elif t == self . _dedent_token :
+                indent -= 1
             else :
                 if line :
                     line += ' '
                 line += t
-        res += line
+        if line :
+            res += ' ' * indent + line
         return res
