@@ -20,6 +20,11 @@ class copypaster_test_case ( unittest . TestCase ) :
         ae ( c ( ' ' ) , [ ] )
         ae ( c ( '\n' ) , [ ] )
         ae ( c ( '\r\n' ) , [ ] )
+    def test_no_copy ( self ) :
+        ae = self . assertEqual
+        c = self . cp
+        ae ( c ( 'test1 test2\n test3\ntest4\n' ) ,
+            'test1 test2\n test3\ntest4\n' )
 
 if __name__ == '__main__' :
     unittest . main ( )
