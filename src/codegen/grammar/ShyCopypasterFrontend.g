@@ -8,41 +8,15 @@ options
     ASTLabelType = object ;
 }
 
-start : chunk * ;
+start : block * ;
 
-chunk
-    : arbitrary_token -> ^( TREE_ARBITRARY_TOKEN arbitrary_token )
-    //| copy_paste
+block
+    : arbitrary_token + NEWLINE
+    | INDENT NEWLINE block + DEDENT NEWLINE
     ;
-/*
-copy_paste
-    : COPY NEWLINE INDENT NEWLINE copy DEDENT NEWLINE paste + 
-        -> ^( TREE_COPY_PASTE copy paste + )
-    ;
-
-copy
-    : arbitrary_tokens -> ^( TREE_COPY arbitrary_tokens )
-    ;
-
-paste
-    : REPLACE paste_replace WITH paste_with NEWLINE
-        -> ^( TREE_PASTE paste_replace paste_with )
-    ;
-
-paste_replace
-    : ID -> ^( TREE_PASTE_REPLACE ID )
-    ;
-
-paste_with
-    : arbitrary_tokens -> ^( TREE_PASTE_WITH arbitrary_tokens )
-    ;
-*/
-arbitrary_tokens : arbitrary_token + ;
 
 arbitrary_token
     : CONSTS
-    | DEDENT
-    | INDENT
     | MODULE
     | TYPES
 
@@ -51,7 +25,6 @@ arbitrary_token
     | DIVIDE
     | MINUS
     | UNDERSCORE
-    | NEWLINE
     | ID
     | NUMBER
     | EXPRESSION
