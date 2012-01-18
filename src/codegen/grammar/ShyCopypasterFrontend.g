@@ -8,4 +8,21 @@ options
     ASTLabelType = object ;
 }
 
-start : ( INDENT | DEDENT | NEWLINE | ID ) * ;
+start
+    : ( CONSTS
+      | DEDENT
+      | INDENT
+      | MODULE
+      | TYPES
+
+      | CURLY_OPEN
+      | CURLY_CLOSE
+      | DIVIDE
+      | MINUS
+      | UNDERSCORE
+      | NEWLINE
+      | ID
+      | NUMBER
+      | EXPRESSION
+      ) *
+    ;

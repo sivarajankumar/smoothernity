@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-18 15:03:36
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-18 15:18:23
 
 import sys
 from antlr3 import *
@@ -77,51 +77,80 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "start"
-    # grammar/ShyCopypasterBackend.g:10:1: start returns [ value ] : ( INDENT | DEDENT | NEWLINE | ID )+ ;
+    # grammar/ShyCopypasterBackend.g:10:1: start returns [ value ] : ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )* ;
     def start(self, ):
         value = None
 
 
-        INDENT1 = None
+        CONSTS1 = None
         DEDENT2 = None
-        NEWLINE3 = None
-        ID4 = None
+        INDENT3 = None
+        MODULE4 = None
+        TYPES5 = None
+        CURLY_OPEN6 = None
+        CURLY_CLOSE7 = None
+        DIVIDE8 = None
+        MINUS9 = None
+        UNDERSCORE10 = None
+        NEWLINE11 = None
+        ID12 = None
+        NUMBER13 = None
+        EXPRESSION14 = None
 
         value = list ( ) 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:13:5: ( ( INDENT | DEDENT | NEWLINE | ID )+ )
-                # grammar/ShyCopypasterBackend.g:13:9: ( INDENT | DEDENT | NEWLINE | ID )+
+                # grammar/ShyCopypasterBackend.g:13:5: ( ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )* )
+                # grammar/ShyCopypasterBackend.g:13:7: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )*
                 pass 
-                # grammar/ShyCopypasterBackend.g:13:9: ( INDENT | DEDENT | NEWLINE | ID )+
-                cnt1 = 0
+                # grammar/ShyCopypasterBackend.g:13:7: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )*
                 while True: #loop1
-                    alt1 = 5
+                    alt1 = 15
                     LA1 = self.input.LA(1)
-                    if LA1 == INDENT:
+                    if LA1 == CONSTS:
                         alt1 = 1
                     elif LA1 == DEDENT:
                         alt1 = 2
-                    elif LA1 == NEWLINE:
+                    elif LA1 == INDENT:
                         alt1 = 3
-                    elif LA1 == ID:
+                    elif LA1 == MODULE:
                         alt1 = 4
+                    elif LA1 == TYPES:
+                        alt1 = 5
+                    elif LA1 == CURLY_OPEN:
+                        alt1 = 6
+                    elif LA1 == CURLY_CLOSE:
+                        alt1 = 7
+                    elif LA1 == DIVIDE:
+                        alt1 = 8
+                    elif LA1 == MINUS:
+                        alt1 = 9
+                    elif LA1 == UNDERSCORE:
+                        alt1 = 10
+                    elif LA1 == NEWLINE:
+                        alt1 = 11
+                    elif LA1 == ID:
+                        alt1 = 12
+                    elif LA1 == NUMBER:
+                        alt1 = 13
+                    elif LA1 == EXPRESSION:
+                        alt1 = 14
 
                     if alt1 == 1:
-                        # grammar/ShyCopypasterBackend.g:13:11: INDENT
+                        # grammar/ShyCopypasterBackend.g:13:9: CONSTS
                         pass 
-                        INDENT1 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_start80)
+                        CONSTS1 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_start78)
 
                         #action start
-                        value . append ( INDENT1.text ) 
+                        value . append ( CONSTS1.text ) 
                         #action end
 
 
 
                     elif alt1 == 2:
-                        # grammar/ShyCopypasterBackend.g:14:11: DEDENT
+                        # grammar/ShyCopypasterBackend.g:14:9: DEDENT
                         pass 
-                        DEDENT2 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_start94)
+                        DEDENT2 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_start90)
 
                         #action start
                         value . append ( DEDENT2.text ) 
@@ -130,35 +159,139 @@ class ShyCopypasterBackend(TreeParser):
 
 
                     elif alt1 == 3:
-                        # grammar/ShyCopypasterBackend.g:15:11: NEWLINE
+                        # grammar/ShyCopypasterBackend.g:15:9: INDENT
                         pass 
-                        NEWLINE3 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_start108)
+                        INDENT3 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_start102)
 
                         #action start
-                        value . append ( NEWLINE3.text ) 
+                        value . append ( INDENT3.text ) 
                         #action end
 
 
 
                     elif alt1 == 4:
-                        # grammar/ShyCopypasterBackend.g:16:11: ID
+                        # grammar/ShyCopypasterBackend.g:16:9: MODULE
                         pass 
-                        ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_start122)
+                        MODULE4 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_start114)
 
                         #action start
-                        value . append ( ID4.text ) 
+                        value . append ( MODULE4.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 5:
+                        # grammar/ShyCopypasterBackend.g:17:9: TYPES
+                        pass 
+                        TYPES5 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_start126)
+
+                        #action start
+                        value . append ( TYPES5.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 6:
+                        # grammar/ShyCopypasterBackend.g:19:9: CURLY_OPEN
+                        pass 
+                        CURLY_OPEN6 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_start139)
+
+                        #action start
+                        value . append ( CURLY_OPEN6.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 7:
+                        # grammar/ShyCopypasterBackend.g:20:9: CURLY_CLOSE
+                        pass 
+                        CURLY_CLOSE7 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_start151)
+
+                        #action start
+                        value . append ( CURLY_CLOSE7.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 8:
+                        # grammar/ShyCopypasterBackend.g:21:9: DIVIDE
+                        pass 
+                        DIVIDE8 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_start163)
+
+                        #action start
+                        value . append ( DIVIDE8.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 9:
+                        # grammar/ShyCopypasterBackend.g:22:9: MINUS
+                        pass 
+                        MINUS9 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_start175)
+
+                        #action start
+                        value . append ( MINUS9.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 10:
+                        # grammar/ShyCopypasterBackend.g:23:9: UNDERSCORE
+                        pass 
+                        UNDERSCORE10 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_start187)
+
+                        #action start
+                        value . append ( UNDERSCORE10.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 11:
+                        # grammar/ShyCopypasterBackend.g:24:9: NEWLINE
+                        pass 
+                        NEWLINE11 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_start199)
+
+                        #action start
+                        value . append ( NEWLINE11.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 12:
+                        # grammar/ShyCopypasterBackend.g:25:9: ID
+                        pass 
+                        ID12 = self.match(self.input, ID, self.FOLLOW_ID_in_start211)
+
+                        #action start
+                        value . append ( ID12.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 13:
+                        # grammar/ShyCopypasterBackend.g:26:9: NUMBER
+                        pass 
+                        NUMBER13 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_start223)
+
+                        #action start
+                        value . append ( NUMBER13.text ) 
+                        #action end
+
+
+
+                    elif alt1 == 14:
+                        # grammar/ShyCopypasterBackend.g:27:9: EXPRESSION
+                        pass 
+                        EXPRESSION14 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_start235)
+
+                        #action start
+                        value . append ( EXPRESSION14.text ) 
                         #action end
 
 
 
                     else:
-                        if cnt1 >= 1:
-                            break #loop1
-
-                        eee = EarlyExitException(1, self.input)
-                        raise eee
-
-                    cnt1 += 1
+                        break #loop1
 
 
 
@@ -178,10 +311,20 @@ class ShyCopypasterBackend(TreeParser):
 
  
 
-    FOLLOW_INDENT_in_start80 = frozenset([1, 7, 10, 11, 14])
-    FOLLOW_DEDENT_in_start94 = frozenset([1, 7, 10, 11, 14])
-    FOLLOW_NEWLINE_in_start108 = frozenset([1, 7, 10, 11, 14])
-    FOLLOW_ID_in_start122 = frozenset([1, 7, 10, 11, 14])
+    FOLLOW_CONSTS_in_start78 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_DEDENT_in_start90 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_INDENT_in_start102 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_MODULE_in_start114 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_TYPES_in_start126 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_CURLY_OPEN_in_start139 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_CURLY_CLOSE_in_start151 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_DIVIDE_in_start163 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_MINUS_in_start175 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_UNDERSCORE_in_start187 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_NEWLINE_in_start199 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_ID_in_start211 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_NUMBER_in_start223 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
+    FOLLOW_EXPRESSION_in_start235 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 28, 29])
 
 
 
