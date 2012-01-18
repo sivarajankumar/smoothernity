@@ -8,21 +8,51 @@ options
     ASTLabelType = object ;
 }
 
-start
-    : ( CONSTS
-      | DEDENT
-      | INDENT
-      | MODULE
-      | TYPES
+start : chunk * ;
 
-      | CURLY_OPEN
-      | CURLY_CLOSE
-      | DIVIDE
-      | MINUS
-      | UNDERSCORE
-      | NEWLINE
-      | ID
-      | NUMBER
-      | EXPRESSION
-      ) *
+chunk
+    : arbitrary_tokens -> ^( TREE_ARBITRARY_TOKEN arbitrary_tokens )
+    | copy_paste
+    ;
+
+copy_paste
+    : COPY NEWLINE INDENT NEWLINE copy DEDENT NEWLINE paste + 
+        -> ^( TREE_COPY_PASTE copy paste + )
+    ;
+
+copy
+    : arbitrary_tokens -> ^( TREE_COPY arbitrary_tokens )
+    ;
+
+paste
+    : REPLACE paste_replace WITH paste_with NEWLINE
+        -> ^( TREE_PASTE paste_replace paste_with )
+    ;
+
+paste_replace
+    : ID -> ^( TREE_PASTE_REPLACE ID )
+    ;
+
+paste_with
+    : arbitrary_tokens -> ^( TREE_PASTE_WITH arbitrary_tokens )
+    ;
+
+arbitrary_tokens : arbitrary_token + ;
+
+arbitrary_token
+    : CONSTS
+    | DEDENT
+    | INDENT
+    | MODULE
+    | TYPES
+
+    | CURLY_OPEN
+    | CURLY_CLOSE
+    | DIVIDE
+    | MINUS
+    | UNDERSCORE
+    | NEWLINE
+    | ID
+    | NUMBER
+    | EXPRESSION
     ;
