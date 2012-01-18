@@ -11,10 +11,10 @@ options
 start : chunk * ;
 
 chunk
-    : arbitrary_tokens -> ^( TREE_ARBITRARY_TOKEN arbitrary_tokens )
-    | copy_paste
+    : arbitrary_token -> ^( TREE_ARBITRARY_TOKEN arbitrary_token )
+    //| copy_paste
     ;
-
+/*
 copy_paste
     : COPY NEWLINE INDENT NEWLINE copy DEDENT NEWLINE paste + 
         -> ^( TREE_COPY_PASTE copy paste + )
@@ -36,7 +36,7 @@ paste_replace
 paste_with
     : arbitrary_tokens -> ^( TREE_PASTE_WITH arbitrary_tokens )
     ;
-
+*/
 arbitrary_tokens : arbitrary_token + ;
 
 arbitrary_token
