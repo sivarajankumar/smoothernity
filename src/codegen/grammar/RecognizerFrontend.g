@@ -1,4 +1,4 @@
-grammar Frontend ;
+grammar RecognizerFrontend ;
 
 options 
 {
@@ -9,14 +9,14 @@ options
 
 @ parser :: header
 {
-    class FrontendParserException ( Exception ) :
+    class RecognizerFrontendParserException ( Exception ) :
         def __init__ ( self , text ) :
             Exception . __init__ ( self , text )
 }
 
 @ lexer :: header
 {
-    class FrontendLexerException ( Exception ) :
+    class RecognizerFrontendLexerException ( Exception ) :
         def __init__ ( self , text ) :
             Exception . __init__ ( self , text )
 }
@@ -24,13 +24,13 @@ options
 @ parser :: members
 {
     def emitErrorMessage ( self , msg ) :
-        raise FrontendParserException ( msg )
+        raise RecognizerFrontendParserException ( msg )
 }
 
 @ lexer :: members
 {
     def emitErrorMessage ( self , msg ) :
-        raise FrontendLexerException ( msg )
+        raise RecognizerFrontendLexerException ( msg )
 }
 
 start : ( module | consts | types ) * ;

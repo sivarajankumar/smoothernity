@@ -1,9 +1,9 @@
-tree grammar Backend ;
+tree grammar RecognizerBackend ;
 
 options
 {
     language = Python ;
-    tokenVocab = Frontend ;
+    tokenVocab = RecognizerFrontend ;
     ASTLabelType = object ;
 }
 
