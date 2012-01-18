@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-18 15:02:11
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-18 15:18:23
 
 import sys
 from antlr3 import *
@@ -97,7 +97,7 @@ class ShyCopypasterFrontend(Parser):
 
 
     # $ANTLR start "start"
-    # grammar/ShyCopypasterFrontend.g:11:1: start : ( INDENT | DEDENT | NEWLINE | ID )* ;
+    # grammar/ShyCopypasterFrontend.g:11:1: start : ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )* ;
     def start(self, ):
         retval = self.start_return()
         retval.start = self.input.LT(1)
@@ -111,18 +111,18 @@ class ShyCopypasterFrontend(Parser):
 
         try:
             try:
-                # grammar/ShyCopypasterFrontend.g:11:7: ( ( INDENT | DEDENT | NEWLINE | ID )* )
-                # grammar/ShyCopypasterFrontend.g:11:9: ( INDENT | DEDENT | NEWLINE | ID )*
+                # grammar/ShyCopypasterFrontend.g:12:5: ( ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )* )
+                # grammar/ShyCopypasterFrontend.g:12:7: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )*
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/ShyCopypasterFrontend.g:11:9: ( INDENT | DEDENT | NEWLINE | ID )*
+                # grammar/ShyCopypasterFrontend.g:12:7: ( CONSTS | DEDENT | INDENT | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | EXPRESSION )*
                 while True: #loop1
                     alt1 = 2
                     LA1_0 = self.input.LA(1)
 
-                    if (LA1_0 == DEDENT or (ID <= LA1_0 <= INDENT) or LA1_0 == NEWLINE) :
+                    if ((CONSTS <= LA1_0 <= NUMBER) or (TYPES <= LA1_0 <= UNDERSCORE)) :
                         alt1 = 1
 
 
@@ -131,7 +131,7 @@ class ShyCopypasterFrontend(Parser):
                         pass 
                         set1 = self.input.LT(1)
 
-                        if self.input.LA(1) == DEDENT or (ID <= self.input.LA(1) <= INDENT) or self.input.LA(1) == NEWLINE:
+                        if (CONSTS <= self.input.LA(1) <= NUMBER) or (TYPES <= self.input.LA(1) <= UNDERSCORE):
                             self.input.consume()
                             self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set1))
 

@@ -3,17 +3,25 @@ import recognizer
 import io
 import fractions
 import indenter
+import formatter
+import copypaster
 
 class recognizer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
+        self . c = copypaster . copypaster ( )
         self . r = recognizer . recognizer ( )
         self . i = indenter . indenter ( )
-        self . i . set_indent_token ( 'indent' )
-        self . i . set_dedent_token ( 'dedent' )
-        self . i . set_newline_token ( '\n' )
+        self . f = formatter . formatter ( )
+        for o in ( self . i , self . f ) :
+            o . set_indent_token ( 'indent' )
+            o . set_dedent_token ( 'dedent' )
+            o . set_newline_token ( '\n' )
     def rec ( self , s ) :
-        indented = self . i . run ( io . StringIO ( s ) . readlines ( ) )
-        return self . r . run ( io . StringIO ( indented ) )
+        indented1 = self . i . run ( io . StringIO ( s ) . readlines ( ) )
+        copypasted = self . c . run ( io . StringIO ( indented1 ) )
+        formatted = self . f . run ( copypasted )
+        indented2 = self . i . run ( io . StringIO ( formatted ) . readlines ( ) )
+        return self . r . run ( io . StringIO ( indented2 ) )
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . rec
@@ -24,9 +32,9 @@ class recognizer_test_case ( unittest . TestCase ) :
     def test_lexer_raises ( self ) :
         ar = self . assertRaises
         r = self . rec
-        re = recognizer . exception
-        ar ( re , r , '!@#$' )
-        ar ( re , r , 'UPPERCASE' )
+        ce = copypaster . exception
+        ar ( ce , r , '!@#$' )
+        ar ( ce , r , 'UPPERCASE' )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec
