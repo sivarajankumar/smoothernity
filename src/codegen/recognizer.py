@@ -26,5 +26,5 @@ class recognizer :
         if t == None :
             return { }
         else :
-            be = ShyRecognizerBackend ( CommonTreeNodeStream ( t ) )
-            return be . start ( )
+            srb = ShyRecognizerBackend ( CommonTreeNodeStream ( t ) )
+            return srb . start ( )

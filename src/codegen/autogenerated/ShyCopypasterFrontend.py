@@ -1,4 +1,4 @@
-# $ANTLR 3.4 copypaster/Frontend.g 2012-01-16 18:05:34
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-18 15:02:11
 
 import sys
 from antlr3 import *
@@ -14,23 +14,50 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-CHARS=4
-DEDENT=5
-INDENT=6
-NEWLINE=7
-WHITESPACE=8
+CONSTS=4
+CURLY_CLOSE=5
+CURLY_OPEN=6
+DEDENT=7
+DIVIDE=8
+EXPRESSION=9
+ID=10
+INDENT=11
+MINUS=12
+MODULE=13
+NEWLINE=14
+NUMBER=15
+TREE_CONSTS=16
+TREE_EXPRESSION=17
+TREE_HINT=18
+TREE_HINT_NONE=19
+TREE_MODULE=20
+TREE_NUM_FRACT=21
+TREE_NUM_WHOLE=22
+TREE_TYPES=23
+TREE_TYPES_ITEM=24
+TREE_TYPES_ITEM_ATTR=25
+TREE_TYPES_ITEM_HINT=26
+TREE_TYPES_ITEM_HINTS=27
+TYPES=28
+UNDERSCORE=29
+WHITESPACE=30
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "CHARS", "DEDENT", "INDENT", "NEWLINE", "WHITESPACE"
+    "CONSTS", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
+    "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
+    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
+    "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
+    "WHITESPACE"
 ]
 
 
 
 
-class FrontendParser(Parser):
-    grammarFileName = "copypaster/Frontend.g"
+class ShyCopypasterFrontend(Parser):
+    grammarFileName = "grammar/ShyCopypasterFrontend.g"
     api_version = 1
     tokenNames = tokenNames
 
@@ -38,7 +65,7 @@ class FrontendParser(Parser):
         if state is None:
             state = RecognizerSharedState()
 
-        super(FrontendParser, self).__init__(input, state, *args, **kwargs)
+        super(ShyCopypasterFrontend, self).__init__(input, state, *args, **kwargs)
 
 
 
@@ -61,7 +88,7 @@ class FrontendParser(Parser):
 
     class start_return(ParserRuleReturnScope):
         def __init__(self):
-            super(FrontendParser.start_return, self).__init__()
+            super(ShyCopypasterFrontend.start_return, self).__init__()
 
             self.tree = None
 
@@ -70,7 +97,7 @@ class FrontendParser(Parser):
 
 
     # $ANTLR start "start"
-    # copypaster/Frontend.g:10:1: start : ( INDENT | DEDENT | NEWLINE | CHARS )* ;
+    # grammar/ShyCopypasterFrontend.g:11:1: start : ( INDENT | DEDENT | NEWLINE | ID )* ;
     def start(self, ):
         retval = self.start_return()
         retval.start = self.input.LT(1)
@@ -84,27 +111,27 @@ class FrontendParser(Parser):
 
         try:
             try:
-                # copypaster/Frontend.g:10:7: ( ( INDENT | DEDENT | NEWLINE | CHARS )* )
-                # copypaster/Frontend.g:10:9: ( INDENT | DEDENT | NEWLINE | CHARS )*
+                # grammar/ShyCopypasterFrontend.g:11:7: ( ( INDENT | DEDENT | NEWLINE | ID )* )
+                # grammar/ShyCopypasterFrontend.g:11:9: ( INDENT | DEDENT | NEWLINE | ID )*
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # copypaster/Frontend.g:10:9: ( INDENT | DEDENT | NEWLINE | CHARS )*
+                # grammar/ShyCopypasterFrontend.g:11:9: ( INDENT | DEDENT | NEWLINE | ID )*
                 while True: #loop1
                     alt1 = 2
                     LA1_0 = self.input.LA(1)
 
-                    if ((CHARS <= LA1_0 <= NEWLINE)) :
+                    if (LA1_0 == DEDENT or (ID <= LA1_0 <= INDENT) or LA1_0 == NEWLINE) :
                         alt1 = 1
 
 
                     if alt1 == 1:
-                        # copypaster/Frontend.g:
+                        # grammar/ShyCopypasterFrontend.g:
                         pass 
                         set1 = self.input.LT(1)
 
-                        if (CHARS <= self.input.LA(1) <= NEWLINE):
+                        if self.input.LA(1) == DEDENT or (ID <= self.input.LA(1) <= INDENT) or self.input.LA(1) == NEWLINE:
                             self.input.consume()
                             self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set1))
 
@@ -151,7 +178,7 @@ class FrontendParser(Parser):
 
 def main(argv, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr):
     from antlr3.main import ParserMain
-    main = ParserMain("FrontendLexer", FrontendParser)
+    main = ParserMain("ShyCopypasterFrontendLexer", ShyCopypasterFrontend)
 
     main.stdin = stdin
     main.stdout = stdout

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 copypaster/Backend.g 2012-01-16 18:05:36
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-18 15:03:36
 
 import sys
 from antlr3 import *
@@ -13,23 +13,50 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-CHARS=4
-DEDENT=5
-INDENT=6
-NEWLINE=7
-WHITESPACE=8
+CONSTS=4
+CURLY_CLOSE=5
+CURLY_OPEN=6
+DEDENT=7
+DIVIDE=8
+EXPRESSION=9
+ID=10
+INDENT=11
+MINUS=12
+MODULE=13
+NEWLINE=14
+NUMBER=15
+TREE_CONSTS=16
+TREE_EXPRESSION=17
+TREE_HINT=18
+TREE_HINT_NONE=19
+TREE_MODULE=20
+TREE_NUM_FRACT=21
+TREE_NUM_WHOLE=22
+TREE_TYPES=23
+TREE_TYPES_ITEM=24
+TREE_TYPES_ITEM_ATTR=25
+TREE_TYPES_ITEM_HINT=26
+TREE_TYPES_ITEM_HINTS=27
+TYPES=28
+UNDERSCORE=29
+WHITESPACE=30
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "CHARS", "DEDENT", "INDENT", "NEWLINE", "WHITESPACE"
+    "CONSTS", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
+    "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "TREE_CONSTS", 
+    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
+    "TREE_NUM_WHOLE", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
+    "WHITESPACE"
 ]
 
 
 
 
-class Backend(TreeParser):
-    grammarFileName = "copypaster/Backend.g"
+class ShyCopypasterBackend(TreeParser):
+    grammarFileName = "grammar/ShyCopypasterBackend.g"
     api_version = 1
     tokenNames = tokenNames
 
@@ -37,7 +64,7 @@ class Backend(TreeParser):
         if state is None:
             state = RecognizerSharedState()
 
-        super(Backend, self).__init__(input, state, *args, **kwargs)
+        super(ShyCopypasterBackend, self).__init__(input, state, *args, **kwargs)
 
 
 
@@ -50,7 +77,7 @@ class Backend(TreeParser):
 
 
     # $ANTLR start "start"
-    # copypaster/Backend.g:10:1: start returns [ value ] : ( INDENT | DEDENT | NEWLINE | CHARS )+ ;
+    # grammar/ShyCopypasterBackend.g:10:1: start returns [ value ] : ( INDENT | DEDENT | NEWLINE | ID )+ ;
     def start(self, ):
         value = None
 
@@ -58,15 +85,15 @@ class Backend(TreeParser):
         INDENT1 = None
         DEDENT2 = None
         NEWLINE3 = None
-        CHARS4 = None
+        ID4 = None
 
         value = list ( ) 
         try:
             try:
-                # copypaster/Backend.g:13:5: ( ( INDENT | DEDENT | NEWLINE | CHARS )+ )
-                # copypaster/Backend.g:13:9: ( INDENT | DEDENT | NEWLINE | CHARS )+
+                # grammar/ShyCopypasterBackend.g:13:5: ( ( INDENT | DEDENT | NEWLINE | ID )+ )
+                # grammar/ShyCopypasterBackend.g:13:9: ( INDENT | DEDENT | NEWLINE | ID )+
                 pass 
-                # copypaster/Backend.g:13:9: ( INDENT | DEDENT | NEWLINE | CHARS )+
+                # grammar/ShyCopypasterBackend.g:13:9: ( INDENT | DEDENT | NEWLINE | ID )+
                 cnt1 = 0
                 while True: #loop1
                     alt1 = 5
@@ -77,11 +104,11 @@ class Backend(TreeParser):
                         alt1 = 2
                     elif LA1 == NEWLINE:
                         alt1 = 3
-                    elif LA1 == CHARS:
+                    elif LA1 == ID:
                         alt1 = 4
 
                     if alt1 == 1:
-                        # copypaster/Backend.g:13:11: INDENT
+                        # grammar/ShyCopypasterBackend.g:13:11: INDENT
                         pass 
                         INDENT1 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_start80)
 
@@ -92,7 +119,7 @@ class Backend(TreeParser):
 
 
                     elif alt1 == 2:
-                        # copypaster/Backend.g:14:11: DEDENT
+                        # grammar/ShyCopypasterBackend.g:14:11: DEDENT
                         pass 
                         DEDENT2 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_start94)
 
@@ -103,7 +130,7 @@ class Backend(TreeParser):
 
 
                     elif alt1 == 3:
-                        # copypaster/Backend.g:15:11: NEWLINE
+                        # grammar/ShyCopypasterBackend.g:15:11: NEWLINE
                         pass 
                         NEWLINE3 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_start108)
 
@@ -114,12 +141,12 @@ class Backend(TreeParser):
 
 
                     elif alt1 == 4:
-                        # copypaster/Backend.g:16:11: CHARS
+                        # grammar/ShyCopypasterBackend.g:16:11: ID
                         pass 
-                        CHARS4 = self.match(self.input, CHARS, self.FOLLOW_CHARS_in_start122)
+                        ID4 = self.match(self.input, ID, self.FOLLOW_ID_in_start122)
 
                         #action start
-                        value . append ( CHARS4.text ) 
+                        value . append ( ID4.text ) 
                         #action end
 
 
@@ -151,16 +178,16 @@ class Backend(TreeParser):
 
  
 
-    FOLLOW_INDENT_in_start80 = frozenset([1, 4, 5, 6, 7])
-    FOLLOW_DEDENT_in_start94 = frozenset([1, 4, 5, 6, 7])
-    FOLLOW_NEWLINE_in_start108 = frozenset([1, 4, 5, 6, 7])
-    FOLLOW_CHARS_in_start122 = frozenset([1, 4, 5, 6, 7])
+    FOLLOW_INDENT_in_start80 = frozenset([1, 7, 10, 11, 14])
+    FOLLOW_DEDENT_in_start94 = frozenset([1, 7, 10, 11, 14])
+    FOLLOW_NEWLINE_in_start108 = frozenset([1, 7, 10, 11, 14])
+    FOLLOW_ID_in_start122 = frozenset([1, 7, 10, 11, 14])
 
 
 
 def main(argv, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr):
     from antlr3.main import WalkerMain
-    main = WalkerMain(Backend)
+    main = WalkerMain(ShyCopypasterBackend)
 
     main.stdin = stdin
     main.stdout = stdout
