@@ -1,0 +1,8 @@
+#ifndef _shy_win_platform_sound_insider_injections_included
+#define _shy_win_platform_sound_insider_injections_included
+
+#include "src/platform/sound/directx/insider/shy_insider_injections.h"
+typedef so_called_platform_sound_directx_insider so_called_platform_sound_insider ;
+
+#endif
+

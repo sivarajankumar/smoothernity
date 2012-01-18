@@ -1,0 +1,287 @@
+consts engine_rasterizer
+    max_messages 1000
+
+messages engine_rasterizer
+    draw_ellipse_in_rect x1 y1 x2 y2
+    draw_rect x1 y1 x2 y2
+    draw_triangle x1 y1 x2 y2 x3 y3
+    use_texel texel
+    use_texture texture origin_x origin_y
+
+vars engine_rasterizer
+    guts_texture_id
+    guts_texel
+    guts_origin_x
+    guts_origin_y
+
+module engine_rasterizer
+    module_queue consts_max_messages
+
+    proc guts_to_global_space
+        args x y
+        vars x_new y_new
+        ops
+            platform_math_add_wholes
+                x x guts_origin_x
+                y y guts_origin_y
+            x_new y_new <- x y
+            engine_render_stateless_clamp_texture_coords x_new y_new
+            if any platform_conditions_wholes_are_not_equal x x_new y y_new
+                trace_coords_out_of_range_error x y
+            x y <- x_new y_new
+
+    proc guts_rasterize_horizontal_line 
+        args x1 x2 y
+        vars left right
+        ops
+            with engine_math_stateless
+                min_whole left x1 x2
+                max_whole right x1 x2
+            send engine_render_texture_set_texels_rect
+                guts_texture_id xleft y xright y guts_texel
+
+    proc guts_rasterize_top_triangle_part
+        args x_top y_top x_mid y_mid x_bottom y_bottom
+        vars y x_top_mid y_top_minus_y y_top_minus_y_mid x_mid_minus_x_top
+             x_top_bottom y_top_minus_y_bottom x_bottom_minus_x_top
+        ops
+            y <- y_top
+            while platform_conditions_whole_greater_or_equal_to_whole y y_mid
+                if platform_conditions_wholes_are_equal y_top y_mid
+                    x_top_mid <- x_mid
+                else
+                    with platform_math
+                        sub_wholes y_top_minus_y y_top y
+                        sub_wholes y_top_minus_y_mid y_top y_mid
+                        sub_wholes x_mid_minus_x_top x_mid x_top
+                        mul_wholes x_top_mid y_top_minus_y x_mid_minus_x_top
+                        div_whole_by x_top_mid y_top_minus_y_mid
+                        add_to_whole x_top_mid x_top
+                if platform_conditions_wholes_are_equal y_top y_bottom
+                    x_top_bottom <- x_top
+                else
+                    with platform_math
+                        sub_wholes y_top_minus_y y_top y
+                        sub_wholes y_top_minus_y_bottom y_top y_bottom
+                        sub_wholes x_bottom_minus_x_top x_bottom x_top
+                        mul_wholes
+                            x_top_bottom y_top_minus_y x_bottom_minus_x_top
+                        div_whole_by x_top_bottom y_top_minus_y_bottom
+                        add_to_whole x_top_bottom x_top
+                guts_rasterize_horizontal_line x_top_mid x_top_bottom y
+                platform_math_dec_whole y
+
+    proc guts_rasterize_bottom_triangle_part
+        args x_top y_top x_mid y_mid x_bottom y_bottom
+        vars y x_mid_bottom y_mid_minus_y y_mid_minus_y_bottom
+             x_bottom_minus_x_mid x_top_bottom y_top_minus_y
+             y_top_minus_y_bottom x_bottom_minus_x_top
+        ops
+            y <- y_mid 
+            while platform_conditions_whole_greater_or_equal_to_whole
+                                                            y y_bottom
+                if platform_conditions_wholes_are_equal y_mid y_bottom
+                    x_mid_bottom <- x_mid
+                else
+                    with platform_math
+                        sub_wholes y_mid_minus_y y_mid y
+                        sub_wholes y_mid_minus_y_bottom y_mid y_bottom
+                        sub_wholes x_bottom_minus_x_mid x_bottom x_mid
+                        mul_wholes x_mid_bottom
+                                   y_mid_minus_y x_bottom_minus_x_mid
+                        div_whole_by x_mid_bottom y_mid_minus_y_bottom
+                        add_to_whole x_mid_bottom x_mid
+                if platform_conditions_wholes_are_equal y_top y_bottom
+                    x_top_bottom <- x_bottom
+                else
+                    with platform_math
+                        sub_wholes y_top_minus_y y_top y
+                        sub_wholes y_top_minus_y_bottom y_top y_bottom
+                        sub_wholes x_bottom_minus_x_top x_bottom x_top
+                        mul_wholes x_top_bottom
+                                   y_top_minus_y x_bottom_minus_x_top
+                        div_whole_by x_top_bottom y_top_minus_y_bottom
+                        add_to_whole x_top_bottom x_top
+                guts_rasterize_horizontal_line x_mid_bottom x_top_bottom y
+                platform_math_dec_whole y
+
+    proc guts_rasterize_bresenham_ellipse
+        args cx cy x_radius y_radius
+        vars x y x_change y_change ellipse_error two_a_square two_b_square
+             stopping_x stopping_y x_radius_sq y_radius_sq x_radius_mul_2
+             y_radius_mul_2 cx_minus_x cx_plus_x cy_minus_y cy_plus_y
+             ellipse_error_mul_2_plus_x_change
+             ellipse_error_mul_2_plus_y_change
+        ops
+            with platform_math
+                mul_wholes x_radius_sq x_radius x_radius
+                mul_wholes y_radius_sq y_radius y_radius
+                mul_wholes x_radius_mul_2 x_radius 2
+                mul_wholes y_radius_mul_2 y_radius 2
+                mul_wholes two_a_square x_radius_sq 2
+                mul_wholes two_b_square y_radius_sq 2
+                sub_wholes x_change 1 x_radius_mul_2
+                mul_whole_by x_change y_radius_sq
+                mul_wholes stopping_x two_b_square x_radius
+            x y <- x_radius 0
+            y_change <- x_radius_sq
+            0 ->
+                ellipse_error
+                stopping_y
+            while platform_conditions_whole_greater_or_equal_to_whole
+                                                stopping_x stopping_y
+                with platform_math
+                    sub_wholes cx_minus_x cx x
+                    add_wholes cx_plus_x cx x
+                    sub_wholes cy_minus_y cy y
+                    add_wholes cy_plus_y cy y
+                    inc_whole y
+                    add_to_whole stopping_y two_a_square
+                    add_to_whole ellipse_error y_change
+                    add_to_whole y_change two_a_square
+                    mul_wholes
+                        ellipse_error_mul_2_plus_x_change
+                        ellipse_error
+                        2
+                    add_to_whole ellipse_error_mul_2_plus_x_change x_change
+                guts_rasterize_horizontal_line
+                    cx_minus_x cx_plus_x cy_minus_y
+                    cx_minus_x cx_plus_x cy_plus_y
+                if platform_conditions_whole_greater_than_zero 
+                                            ellipse_error_mul_2_plus_x_change
+                    with platform_math
+                        dec_whole x
+                        sub_from_whole stopping_x two_b_square
+                        add_to_whole ellipse_error x_change
+                        add_to_whole x_change two_b_square
+            
+            x y <- 0 y_radius
+            x_change <- y_radius_sq
+            0 ->
+                ellipse_error
+                stopping_x
+            with platform_math
+                sub_wholes y_change 1 y_radius_mul_2
+                mul_whole_by y_change x_radius_sq
+                mul_wholes stopping_y two_a_square y_radius
+            while platform_conditions_whole_less_or_equal_to_whole
+                                                        stopping_x stopping_y
+                with platform_math
+                    sub_wholes cx_minus_x cx x
+                    add_wholes cx_plus_x cx x
+                    sub_wholes cy_minus_y cy y
+                    add_wholes cy_plus_y cy y
+                    dec_whole x
+                    add_to_whole stopping_x two_b_square
+                    add_to_whole ellipse_error x_change
+                    add_to_whole x_change two_b_square
+                    mul_wholes
+                        ellipse_error_mul_2_plus_y_change
+                        ellipse_error
+                        2
+                    add_to_whole ellipse_error_mul_2_plus_y_change y_change
+                guts_rasterize_horizontal_line
+                    cx_minus_x cx_plus_x cy_minus_y
+                    cx_minus_x cx_plus_x cy_plus_y
+                if platform_conditions_whole_greater_than_zero
+                                            ellipse_error_mul_2_plus_y_change
+                    with platform_math
+                        dec_whole y
+                        sub_from_whole stopping_y two_a_square
+                        add_to_whole ellipse_error y_change
+                        add_to_whole y_change two_a_square
+
+    receive draw_ellipse_in_rect
+        vars x1 x2 y1 y2 width height y_center x_center x_diff y_diff
+             half_width half_height
+        ops
+            x1 x2 y1 y2 <- msg_x1 msg_x2 msg_y1 msg_y2
+            guts_to_global_space x1 y1 x2 y2
+            with platform_math
+                add_wholes y_center y1 y2
+                div_whole_by y_center 2
+                add_wholes x_center x1 x2
+                div_whole_by x_center 2
+                sub_wholes x_diff x1 x2
+                sub_wholes y_diff y1 y2
+            engine_math_stateless_abs_whole
+                width x_diff
+                height y_diff
+            with platform_math
+                div_wholes half_width width 2
+                div_wholes half_height height 2
+            guts_rasterize_bresenham_ellipse
+                x_center y_center half_width half_height
+
+    receive draw_rect
+        vars left right bottom top
+        ops
+            with msg
+                with engine_math_stateless
+                    min_whole left x1 x2 bottom y1 y2
+                    max_whole right x1 x2 top y1 y2
+            guts_to_global_space left bottom right top
+            send engine_render_texture_set_texels_rect
+                guts_texture_id left bottom right top guts_texel
+
+    receive draw_triangle_message
+        vars x1 y1 x2 y2 x3 y3
+        ops
+            x1 y1 x2 y2 x3 y3 <- msg_x1 msg_y1 msg_x2 msg_y2 msg_x3 msg_y3
+            guts_to_global_space x1 y1 x2 y2 x3 y3
+            if all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y1 y2 y2 y3
+                guts_rasterize_top_triangle_part x1 y1 x2 y2 x3 y3
+                guts_rasterize_bottom_triangle_part x1 y1 x2 y2 x3 y3
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y1 y3 y3 y2
+                guts_rasterize_top_triangle_part x1 y1 x3 y3 x2 y2
+                guts_rasterize_bottom_triangle_part x1 y1 x3 y3 x2 y2
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y3 y1 y1 y2
+                guts_rasterize_top_triangle_part x3 y3 x1 y1 x2 y2
+                guts_rasterize_bottom_triangle_part x3 y3 x1 y1 x2 y2
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y3 y2 y2 y1
+                guts_rasterize_top_triangle_part x3 y3 x2 y2 x1 y1
+                guts_rasterize_bottom_triangle_part x3 y3 x2 y2 x1 y1
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y2 y1 y1 y3
+                guts_rasterize_top_triangle_part x2 y2 x1 y1 x3 y3
+                guts_rasterize_bottom_triangle_part x2 y2 x1 y1 x3 y3
+            elif all platform_conditions_whole_greater_or_equal_to_whole
+                                                                y2 y3 y3 y1
+                guts_rasterize_top_triangle_part x2 y2 x3 y3 x1 y1
+                guts_rasterize_bottom_triangle_part x2 y2 x3 y3 x1 y1
+
+    request finalize
+    
+    receive init
+        0 ->
+            guts_origin_x
+            guts_origin_y
+
+    receive use_texel
+        guts_texel <- msg_texel
+
+    receive use_texture
+        with msg
+            guts_texture_id <- texture
+            guts_origin_x <- origin_x
+            guts_origin_y <- origin_y
+
+trace engine_rasterizer
+    proc coords_out_of_range_error
+        args x y
+        ops with platform_trace
+                begin module_name
+                string_error 'Error. Texture coordinates X = '
+                num_whole_error x
+                string_error ', Y = '
+                num_whole_error y
+                string_error ' are out of range 0 <= X < '
+                num_whole_error engine_render_consts_texture_width
+                string_error ', 0 <= Y < '
+                num_whole_error engine_render_consts_texture_height
+                string_error '.'
+                end

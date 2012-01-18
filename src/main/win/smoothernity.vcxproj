@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>smoothernity</ProjectName>
+    <ProjectGuid>{D3D11108-96D0-4629-88B8-122C0256058C}</ProjectGuid>
+    <RootNamespace>smoothernity</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../build/windows/debug/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../temp/windows/int/smoothernity/debug/</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EmbedManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../build/windows/release/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../temp/windows/int/smoothernity/release/</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <EmbedManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</EmbedManifest>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Program Files %28x86%29\Microsoft DirectX SDK %28February 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../..;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shy_pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ForcedIncludeFiles>shy_pch.h</ForcedIncludeFiles>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>d3dx9d.lib;d3d9.lib;d3dx11.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <LargeAddressAware>true</LargeAddressAware>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>../../..;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shy_pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)/main/win/%(RelativeDir)/</ObjectFileName>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <ForcedIncludeFiles>shy_pch.h</ForcedIncludeFiles>
+      <ProgramDataBaseFileName>$(IntDir)/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>d3dx9.lib;d3d9.lib;d3dx11.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <LargeAddressAware>true</LargeAddressAware>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="DXUT\Optional\directx.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="DXUT\Core\dpiaware.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="smoothernity.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\facade\shy_facade_injections.cpp" />
+    <ClCompile Include="..\..\profile\init\shy_init_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\conditions\shy_conditions_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\math\shy_math_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\matrix\shy_matrix_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\mouse\shy_mouse_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\pointer\shy_pointer_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\render\shy_render_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\scheduler\shy_scheduler_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\sound\shy_sound_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\static\array\shy_array_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\touch\shy_touch_injections.cpp" />
+    <ClCompile Include="..\..\profile\platform\vector\shy_vector_injections.cpp" />
+    <ClCompile Include="DXUT\Core\DXUT.cpp" />
+    <ClCompile Include="DXUT\Core\DXUTDevice11.cpp" />
+    <ClCompile Include="DXUT\Core\DXUTDevice9.cpp" />
+    <ClCompile Include="DXUT\Core\DXUTmisc.cpp" />
+    <ClCompile Include="shy_win_application.cpp" />
+    <ClCompile Include="shy_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="shy_common.vcxproj">
+      <Project>{9533a99f-7bad-41ba-98f7-b7f8dbc3fa76}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_engine.vcxproj">
+      <Project>{ca33fdde-d80d-442b-a74e-6f4e35eb1f6f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic.vcxproj">
+      <Project>{b0ff2462-86bd-4414-b92f-3fa1f72a90bf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_amusement.vcxproj">
+      <Project>{aedba387-44b7-4823-a9c0-5789efcb6a0c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_application.vcxproj">
+      <Project>{2b8a104d-9b51-4785-8f1e-c38add570f62}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_blanket.vcxproj">
+      <Project>{a8eb774f-4992-41a6-bbf6-4bb304e0b5e6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_door.vcxproj">
+      <Project>{2c44afd9-565f-45e9-bba9-d5fb47b25f65}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_main_menu.vcxproj">
+      <Project>{c8fa56c4-a49a-4c12-8deb-683f38e16a01}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_observer.vcxproj">
+      <Project>{e25c1217-ab01-4997-acb9-3e5fb9ed45ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_room.vcxproj">
+      <Project>{63dba964-41c6-4183-9362-47d0e6c5e227}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_salutation.vcxproj">
+      <Project>{07a7d1b3-44da-4f54-be49-e446c6b0cc0d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_common_logic_text.vcxproj">
+      <Project>{8629a13f-7efb-4b24-bcd9-db6f0b1497ce}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_loadable.vcxproj">
+      <Project>{575d2227-0633-48aa-9a3f-72dbb5811927}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_platform.vcxproj">
+      <Project>{1a7bdce8-9f72-4549-bda7-e5b4de9d66f0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="shy_trace.vcxproj">
+      <Project>{5e082267-50ec-4c07-8f6e-b0087132bacf}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
