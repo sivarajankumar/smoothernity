@@ -1,9 +1,9 @@
-tree grammar Backend ;
+tree grammar ShyCopypasterBackend ;
 
 options
 {
     language = Python ;
-    tokenVocab = Frontend ;
+    tokenVocab = ShyLexer ;
     ASTLabelType = object ;
 }
 
@@ -13,6 +13,7 @@ start
     :   ( INDENT { $value . append ( $INDENT.text ) }
         | DEDENT { $value . append ( $DEDENT.text ) }
         | NEWLINE { $value . append ( $NEWLINE.text ) }
-        | CHARS { $value . append ( $CHARS.text ) }
+        | ID { $value . append ( $ID.text ) }
         ) +
     ;
+
