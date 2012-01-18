@@ -15,7 +15,7 @@ start
 
 chunk
     returns [ value ]
-    : ^( TREE_ARBITRARY_TOKEN arbitrary_tokens ) { $value = $arbitrary_tokens.value }
+    : ^( TREE_ARBITRARY_TOKEN arbitrary_token ) { $value = [ $arbitrary_token.value ] }
     | copy_paste { $value = $copy_paste.value }
     ;
 

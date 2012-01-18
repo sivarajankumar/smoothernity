@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-18 18:43:01
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-18 19:00:31
 
 import sys
 from antlr3 import *
@@ -145,19 +145,19 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "chunk"
-    # grammar/ShyCopypasterBackend.g:16:1: chunk returns [ value ] : ( ^( TREE_ARBITRARY_TOKEN arbitrary_tokens ) | copy_paste );
+    # grammar/ShyCopypasterBackend.g:16:1: chunk returns [ value ] : ( ^( TREE_ARBITRARY_TOKEN arbitrary_token ) | copy_paste );
     def chunk(self, ):
         value = None
 
 
-        arbitrary_tokens2 = None
+        arbitrary_token2 = None
 
         copy_paste3 = None
 
 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:18:5: ( ^( TREE_ARBITRARY_TOKEN arbitrary_tokens ) | copy_paste )
+                # grammar/ShyCopypasterBackend.g:18:5: ( ^( TREE_ARBITRARY_TOKEN arbitrary_token ) | copy_paste )
                 alt2 = 2
                 LA2_0 = self.input.LA(1)
 
@@ -172,13 +172,13 @@ class ShyCopypasterBackend(TreeParser):
 
 
                 if alt2 == 1:
-                    # grammar/ShyCopypasterBackend.g:18:7: ^( TREE_ARBITRARY_TOKEN arbitrary_tokens )
+                    # grammar/ShyCopypasterBackend.g:18:7: ^( TREE_ARBITRARY_TOKEN arbitrary_token )
                     pass 
                     self.match(self.input, TREE_ARBITRARY_TOKEN, self.FOLLOW_TREE_ARBITRARY_TOKEN_in_chunk111)
 
                     self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_arbitrary_tokens_in_chunk113)
-                    arbitrary_tokens2 = self.arbitrary_tokens()
+                    self._state.following.append(self.FOLLOW_arbitrary_token_in_chunk113)
+                    arbitrary_token2 = self.arbitrary_token()
 
                     self._state.following.pop()
 
@@ -186,7 +186,7 @@ class ShyCopypasterBackend(TreeParser):
 
 
                     #action start
-                    value = arbitrary_tokens2 
+                    value = [ arbitrary_token2 ] 
                     #action end
 
 
@@ -812,7 +812,7 @@ class ShyCopypasterBackend(TreeParser):
 
     FOLLOW_chunk_in_start78 = frozenset([1, 19, 22])
     FOLLOW_TREE_ARBITRARY_TOKEN_in_chunk111 = frozenset([2])
-    FOLLOW_arbitrary_tokens_in_chunk113 = frozenset([3])
+    FOLLOW_arbitrary_token_in_chunk113 = frozenset([3])
     FOLLOW_copy_paste_in_chunk125 = frozenset([1])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste154 = frozenset([2])
     FOLLOW_copy_in_copy_paste156 = frozenset([29])
