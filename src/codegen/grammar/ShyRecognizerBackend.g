@@ -1,13 +1,13 @@
-tree grammar RecognizerBackend ;
+tree grammar ShyRecognizerBackend ;
 
 options
 {
     language = Python ;
-    tokenVocab = RecognizerFrontend ;
+    tokenVocab = ShyLexer ;
     ASTLabelType = object ;
 }
 
-@header
+@ header
 {
     from fractions import Fraction
 }
