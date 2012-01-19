@@ -23,7 +23,7 @@ class helper :
         indented2 = self . i . run ( io . StringIO ( formatted ) . readlines ( ) )
         return self . r . run ( io . StringIO ( indented2 ) )
 
-class recognizer_test_case ( unittest . TestCase ) :
+class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
     def test_empty ( self ) :
@@ -33,47 +33,17 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae ( r ( ' ' ) , { } )
         ae ( r ( '\n' ) , { } )
         ae ( r ( '\r\n' ) , { } )
-    def test_lexer_raises ( self ) :
+    def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
         ce = copypaster . exception
         ar ( ce , r , '!@#$' )
         ar ( ce , r , 'UPPERCASE' )
-    def test_copy_paste ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'copy\n consts test1\n  const1 11\n'
-            'paste replace const1 with const2\n'
-            'paste replace const1 with const3\n' ) ,
-            { 'consts' : { 'test1' : { 'const2' : 11 , 'const3' : 11 } } } )
-    def test_copy_paste_substring ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        f = fractions . Fraction
-        ae ( r ( 'copy\n consts test1\n  myvalue 2\npaste\n'
-            ' replace my with their\n'
-            ' replace value with test 1 /\n' ) ,
-            { 'consts' : { 'test1' : { 'theirtest' : f ( 1 , 2 ) } } } )
-    def test_copy_paste_multi_replace ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'copy\n consts test1\n  const1 11\npaste\n'
-            ' replace test1 with test2\n'
-            ' replace const1 with const2\n' ) ,
-            { 'consts' : { 'test2' : { 'const2' : 11 } } } )
-    def test_copy_paste_same_line ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'consts test1\n copy const1 11\n'
-            ' paste replace const1 with const2\n' ) ,
-            { 'consts' : { 'test1' : { 'const2' : 11 } } } )
-    def test_copy_paste_multi_line ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'copy\n consts test1\n  test2\n'
-            'paste replace test2 with\n const1 11\n const2 22\n' ) ,
-            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
-    def test_copy_paste_raises ( self ) :
+
+class copy_paste_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
         ce = copypaster . exception
@@ -82,6 +52,44 @@ class recognizer_test_case ( unittest . TestCase ) :
         ar ( ce , r , 'copy\n copy\n  test1\n'
             ' paste replace test1 with test2\n'
             'paste replace test2 with test3\n' )
+    def test_copy_paste ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'copy\n consts test1\n  const1 11\n'
+            'paste replace const1 with const2\n'
+            'paste replace const1 with const3\n' ) ,
+            { 'consts' : { 'test1' : { 'const2' : 11 , 'const3' : 11 } } } )
+    def test_substring ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        f = fractions . Fraction
+        ae ( r ( 'copy\n consts test1\n  myvalue 2\npaste\n'
+            ' replace my with their\n'
+            ' replace value with test 1 /\n' ) ,
+            { 'consts' : { 'test1' : { 'theirtest' : f ( 1 , 2 ) } } } )
+    def test_multi_replace ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'copy\n consts test1\n  const1 11\npaste\n'
+            ' replace test1 with test2\n'
+            ' replace const1 with const2\n' ) ,
+            { 'consts' : { 'test2' : { 'const2' : 11 } } } )
+    def test_same_line ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'consts test1\n copy const1 11\n'
+            ' paste replace const1 with const2\n' ) ,
+            { 'consts' : { 'test1' : { 'const2' : 11 } } } )
+    def test_multi_line ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'copy\n consts test1\n  test2\n'
+            'paste replace test2 with\n const1 11\n const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+
+class modules_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . h . rec
@@ -98,6 +106,10 @@ class recognizer_test_case ( unittest . TestCase ) :
         ar ( re , r , 'module' )
         ar ( re , r , 'module\n' )
         ar ( re , r , 'module module\n' )
+
+class consts_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
     def test_consts_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
@@ -130,6 +142,10 @@ class recognizer_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'consts test1\n const1 11\nconsts test1\n  const2 22\n' ) ,
             { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
+
+class types_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
     def test_types_empty ( self ) :
         ae = self . assertEqual
         r = self . h . rec
