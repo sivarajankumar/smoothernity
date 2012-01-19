@@ -21,6 +21,7 @@ block
     | INDENT a = NEWLINE { $value += [ $INDENT.text , $a.text ] }
       ( b = block { $value += $b.value } ) + 
       DEDENT c = NEWLINE { $value += [ $DEDENT.text , $c.text ] }
+    | COPY block + PASTE REPLACE ID WITH block
     ;
 
 arbitrary_token
