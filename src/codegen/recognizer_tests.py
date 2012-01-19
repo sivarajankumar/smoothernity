@@ -52,7 +52,7 @@ class copy_paste_test_case ( unittest . TestCase ) :
         ar ( ce , r , 'copy\n copy\n  test1\n'
             ' paste replace test1 with test2\n'
             'paste replace test2 with test3\n' )
-    def test_copy_paste ( self ) :
+    def test_multi_paste ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'copy\n consts test1\n  const1 11\n'
@@ -90,14 +90,14 @@ class copy_paste_test_case ( unittest . TestCase ) :
 class modules_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
-    def test_modules ( self ) :
+    def test_empty ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'module a\n' ) , { 'module' : { 'a' : { } } } )
         ae ( r ( 'module test_1\n' ) , { 'module' : { 'test_1' : { } } } )
         ae ( r ( 'module test1\nmodule test2\n' ) ,
             { 'module' : { 'test1' : { } , 'test2' : { } } } )
-    def test_modules_raises ( self ) :
+    def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
         re = recognizer . exception
@@ -110,7 +110,7 @@ class modules_test_case ( unittest . TestCase ) :
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
-    def test_consts_raises ( self ) :
+    def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
         re = recognizer . exception
@@ -118,12 +118,12 @@ class consts_test_case ( unittest . TestCase ) :
         ar ( re , r , 'consts test1\nconst1 11\n' )
         ar ( re , r , 'consts test1\n const1 11\nconst2 11\n' )
         ar ( re , r , 'consts test1\n const1 11\n  const2 11\n' )
-    def test_consts_num_whole ( self ) :
+    def test_num_whole ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'consts test1\n const1 11\n const2 - 22\n' ) ,
             { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : - 22 } } } )
-    def test_consts_num_fract ( self ) :
+    def test_num_fract ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         f = fractions . Fraction
@@ -131,13 +131,13 @@ class consts_test_case ( unittest . TestCase ) :
             { 'consts' : { 'test1' : 
                 { 'const1' : f ( 11 , 22 ) 
                 , 'const2' : f ( - 22 , 33 ) } } } )
-    def test_consts_expression ( self ) :
+    def test_expression ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'consts test1\n const1 [ 2 + 2 ]\n const2 []\n' ) ,
             { 'consts' : { 'test1' : 
                 { 'const1' : '[ 2 + 2 ]' , 'const2' : '[]' } } } )
-    def test_consts_combine ( self ) :
+    def test_combine ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'consts test1\n const1 11\nconsts test1\n  const2 22\n' ) ,
@@ -146,12 +146,12 @@ class consts_test_case ( unittest . TestCase ) :
 class types_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
-    def test_types_empty ( self ) :
+    def test_empty ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1\n type2\n' ) ,
             { 'types' : { 'test1' : { 'type1' : { } , 'type2' : { } } } } )
-    def test_types_combine ( self ) :
+    def test_combine ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 atr1\n'
@@ -159,7 +159,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr1' : { } }
                 , 'type2' : { 'atr2' : { } } } } } )
-    def test_types_indented ( self ) :
+    def test_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n'
@@ -168,7 +168,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def test_types_indented_multi_atrs ( self ) :
+    def test_indented_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n'
@@ -176,7 +176,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { } , 'atr2' : { }
                 , 'atr3' : { } , 'atr4' : { } } } } } )
-    def test_types_single_line ( self ) :
+    def test_single_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n'
@@ -185,7 +185,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def test_types_single_line_and_indented ( self ) :
+    def test_single_line_and_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n'
@@ -194,39 +194,39 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def test_types_hint ( self ) :
+    def test_hint ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 } atr1\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } } } } } )
-    def test_types_hint_args ( self ) :
+    def test_hint_args ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 arg1 arg2 } atr1\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ 'arg1' , 'arg2' ] } } } } } )
-    def test_types_hint_args_wildcard ( self ) :
+    def test_hint_args_wildcard ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 _ arg2 } atr1\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ '_' , 'arg2' ] } } } } } )
-    def _test_types_hint_multi_atrs ( self ) :
+    def _test_hint_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 } atr1 atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint1' : [ ] } } } } } )
-    def test_types_hint_indented_multi_atrs ( self ) :
+    def test_hint_indented_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 }\n  atr1\n  atr2\n' ) ,
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint1' : [ ] } } } } } )
-    def test_types_multi_hint ( self ) :
+    def test_multi_hint ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 } atr1\n'
@@ -234,7 +234,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { 'hint2' : [ ] } } } } } )
-    def test_types_hint_no_hint ( self ) :
+    def test_hint_no_hint ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1\n'
