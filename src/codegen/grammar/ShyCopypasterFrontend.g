@@ -40,7 +40,10 @@ copy_body
     ;
 
 copy_paste
-    :   PASTE paste -> ^( TREE_COPY_PASTE paste )
+    :   PASTE paste
+        -> ^( TREE_COPY_PASTE paste )
+    |   PASTE NEWLINE INDENT NEWLINE paste + DEDENT NEWLINE
+        -> ^( TREE_COPY_PASTE paste + )
     ;
 
 paste
