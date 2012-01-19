@@ -56,8 +56,11 @@ pure_blocks
 
 copy
     returns [ value ]
-    :   ^( TREE_COPY copy_body pastes )
-        { $value = [ { 'copy' : $copy_body.value , 'paste' : $pastes.value } ] }
+    :   ^( TREE_COPY copy_body copy_pastes )
+        {
+            $value = [ { 'copy' : $copy_body.value
+                       , 'paste' : $copy_pastes.value } ]
+        }
     ;
 
 copy_body
@@ -66,16 +69,27 @@ copy_body
     :   ( pure_block { $value += $pure_block.value } ) +
     ;
 
-pastes
+copy_pastes
     returns [ value ]
     @ init { $value = list ( ) }
-    :   ( paste { $value . append ( $paste.value ) } ) +
+    :   ( copy_paste { $value . append ( $copy_paste.value ) } ) +
+    ;
+
+copy_paste
+    returns [ value ]
+    :   ^( TREE_COPY_PASTE pastes ) { $value = $pastes.value }
+    ;
+
+pastes
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( paste { $value . update ( $paste.value ) } ) +
     ;
 
 paste
     returns [ value ]
     :   ^( TREE_PASTE paste_replace paste_with )
-        { $value = [ $paste_replace.value , $paste_with.value ] }
+        { $value = { $paste_replace.value : $paste_with.value } }
     ;
 
 paste_replace
