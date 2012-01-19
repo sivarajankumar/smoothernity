@@ -36,6 +36,7 @@ pure_block
 
 copy_body
     :   NEWLINE INDENT NEWLINE pure_block + DEDENT NEWLINE -> pure_block +
+    |   arbitrary_token + NEWLINE
     ;
 
 paste
