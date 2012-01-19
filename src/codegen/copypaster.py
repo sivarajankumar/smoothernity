@@ -12,10 +12,24 @@ class exception ( Exception ) :
 
 class copypaster :
     def run ( self , input ) :
+        return self . _process ( self . _read ( input ) )
+    def _process ( self , tokens ) :
         res = [ ]
-        for t in self . _read ( input ) :
+        for t in tokens :
             if isinstance ( t , unicode ) :
                 res . append ( t )
+            elif isinstance ( t , dict ) :
+                res += self . _copypaste ( t )
+        return res
+    def _copypaste ( self , info ) :
+        res = [ ]
+        for paste in info [ 'paste' ] :
+            what , with_what = paste
+            for t in self . _process ( info [ 'copy' ] ) :
+                if t == what :
+                    res += with_what
+                else :
+                    res . append ( t )
         return res
     def _read ( self , input ) :
         sl = ShyLexer ( ANTLRInputStream ( input ) )
