@@ -18,6 +18,8 @@ class copypaster :
             t = scf . start ( ) . tree
         except ShyLexerException as e :
             raise exception ( str ( e ) )
+        if ts . LA ( 1 ) != EOF :
+            raise exception ( 'unparsed tokens left' )
         if t == None :
             return { }
         else :
