@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-19 20:13:33
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-19 20:53:40
 
 import sys
 from antlr3 import *
@@ -145,56 +145,128 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "block"
-    # grammar/ShyCopypasterBackend.g:16:1: block returns [ value ] : ( pure_block | copy );
+    # grammar/ShyCopypasterBackend.g:16:1: block returns [ value ] : ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (b1= block )+ DEDENT nl2= NEWLINE | copy );
     def block(self, ):
         value = None
 
 
-        pure_block2 = None
+        nl1 = None
+        nl2 = None
+        NEWLINE3 = None
+        INDENT4 = None
+        DEDENT5 = None
+        b1 = None
 
-        copy3 = None
+        arbitrary_tokens2 = None
+
+        copy6 = None
 
 
+        value = list ( ) 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:18:5: ( pure_block | copy )
-                alt2 = 2
-                LA2_0 = self.input.LA(1)
-
-                if (LA2_0 == CONSTS or (CURLY_CLOSE <= LA2_0 <= CURLY_OPEN) or (DIVIDE <= LA2_0 <= MODULE) or LA2_0 == NUMBER or (TYPES <= LA2_0 <= UNDERSCORE)) :
-                    alt2 = 1
-                elif (LA2_0 == TREE_COPY) :
-                    alt2 = 2
+                # grammar/ShyCopypasterBackend.g:19:5: ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (b1= block )+ DEDENT nl2= NEWLINE | copy )
+                alt3 = 3
+                LA3 = self.input.LA(1)
+                if LA3 == CONSTS or LA3 == CURLY_CLOSE or LA3 == CURLY_OPEN or LA3 == DIVIDE or LA3 == EXPRESSION or LA3 == ID or LA3 == MINUS or LA3 == MODULE or LA3 == NUMBER or LA3 == TYPES or LA3 == UNDERSCORE:
+                    alt3 = 1
+                elif LA3 == INDENT:
+                    alt3 = 2
+                elif LA3 == TREE_COPY:
+                    alt3 = 3
                 else:
-                    nvae = NoViableAltException("", 2, 0, self.input)
+                    nvae = NoViableAltException("", 3, 0, self.input)
 
                     raise nvae
 
 
-                if alt2 == 1:
-                    # grammar/ShyCopypasterBackend.g:18:9: pure_block
+                if alt3 == 1:
+                    # grammar/ShyCopypasterBackend.g:19:9: arbitrary_tokens NEWLINE
                     pass 
-                    self._state.following.append(self.FOLLOW_pure_block_in_block113)
-                    pure_block2 = self.pure_block()
+                    self._state.following.append(self.FOLLOW_arbitrary_tokens_in_block123)
+                    arbitrary_tokens2 = self.arbitrary_tokens()
 
                     self._state.following.pop()
 
                     #action start
-                    value = pure_block2 
+                    value += arbitrary_tokens2 
+                    #action end
+
+
+                    NEWLINE3 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_block147)
+
+                    #action start
+                    value += [ NEWLINE3.text ] 
                     #action end
 
 
 
-                elif alt2 == 2:
-                    # grammar/ShyCopypasterBackend.g:19:9: copy
+                elif alt3 == 2:
+                    # grammar/ShyCopypasterBackend.g:23:9: INDENT nl1= NEWLINE (b1= block )+ DEDENT nl2= NEWLINE
                     pass 
-                    self._state.following.append(self.FOLLOW_copy_in_block125)
-                    copy3 = self.copy()
+                    INDENT4 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_block171)
+
+                    nl1 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_block177)
+
+                    #action start
+                    value += [ INDENT4.text , nl1.text ] 
+                    #action end
+
+
+                    # grammar/ShyCopypasterBackend.g:25:9: (b1= block )+
+                    cnt2 = 0
+                    while True: #loop2
+                        alt2 = 2
+                        LA2_0 = self.input.LA(1)
+
+                        if (LA2_0 == CONSTS or (CURLY_CLOSE <= LA2_0 <= CURLY_OPEN) or (DIVIDE <= LA2_0 <= MODULE) or LA2_0 == NUMBER or LA2_0 == TREE_COPY or (TYPES <= LA2_0 <= UNDERSCORE)) :
+                            alt2 = 1
+
+
+                        if alt2 == 1:
+                            # grammar/ShyCopypasterBackend.g:25:11: b1= block
+                            pass 
+                            self._state.following.append(self.FOLLOW_block_in_block207)
+                            b1 = self.block()
+
+                            self._state.following.pop()
+
+                            #action start
+                            value += b1 
+                            #action end
+
+
+
+                        else:
+                            if cnt2 >= 1:
+                                break #loop2
+
+                            eee = EarlyExitException(2, self.input)
+                            raise eee
+
+                        cnt2 += 1
+
+
+                    DEDENT5 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_block244)
+
+                    nl2 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_block250)
+
+                    #action start
+                    value += [ DEDENT5.text , nl2.text ] 
+                    #action end
+
+
+
+                elif alt3 == 3:
+                    # grammar/ShyCopypasterBackend.g:30:9: copy
+                    pass 
+                    self._state.following.append(self.FOLLOW_copy_in_block274)
+                    copy6 = self.copy()
 
                     self._state.following.pop()
 
                     #action start
-                    value = copy3 
+                    value += copy6 
                     #action end
 
 
@@ -213,85 +285,85 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "pure_block"
-    # grammar/ShyCopypasterBackend.g:22:1: pure_block returns [ value ] : ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE );
+    # grammar/ShyCopypasterBackend.g:33:1: pure_block returns [ value ] : ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE );
     def pure_block(self, ):
         value = None
 
 
         nl1 = None
         nl2 = None
-        NEWLINE5 = None
-        INDENT6 = None
-        DEDENT7 = None
+        NEWLINE8 = None
+        INDENT9 = None
+        DEDENT10 = None
         pb1 = None
 
-        arbitrary_tokens4 = None
+        arbitrary_tokens7 = None
 
 
         value = list ( ) 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:25:5: ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE )
-                alt4 = 2
-                LA4_0 = self.input.LA(1)
+                # grammar/ShyCopypasterBackend.g:36:5: ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE )
+                alt5 = 2
+                LA5_0 = self.input.LA(1)
 
-                if (LA4_0 == CONSTS or (CURLY_CLOSE <= LA4_0 <= CURLY_OPEN) or (DIVIDE <= LA4_0 <= ID) or (MINUS <= LA4_0 <= MODULE) or LA4_0 == NUMBER or (TYPES <= LA4_0 <= UNDERSCORE)) :
-                    alt4 = 1
-                elif (LA4_0 == INDENT) :
-                    alt4 = 2
+                if (LA5_0 == CONSTS or (CURLY_CLOSE <= LA5_0 <= CURLY_OPEN) or (DIVIDE <= LA5_0 <= ID) or (MINUS <= LA5_0 <= MODULE) or LA5_0 == NUMBER or (TYPES <= LA5_0 <= UNDERSCORE)) :
+                    alt5 = 1
+                elif (LA5_0 == INDENT) :
+                    alt5 = 2
                 else:
-                    nvae = NoViableAltException("", 4, 0, self.input)
+                    nvae = NoViableAltException("", 5, 0, self.input)
 
                     raise nvae
 
 
-                if alt4 == 1:
-                    # grammar/ShyCopypasterBackend.g:25:9: arbitrary_tokens NEWLINE
+                if alt5 == 1:
+                    # grammar/ShyCopypasterBackend.g:36:9: arbitrary_tokens NEWLINE
                     pass 
-                    self._state.following.append(self.FOLLOW_arbitrary_tokens_in_pure_block164)
-                    arbitrary_tokens4 = self.arbitrary_tokens()
+                    self._state.following.append(self.FOLLOW_arbitrary_tokens_in_pure_block313)
+                    arbitrary_tokens7 = self.arbitrary_tokens()
 
                     self._state.following.pop()
 
                     #action start
-                    value += arbitrary_tokens4 
+                    value += arbitrary_tokens7 
                     #action end
 
 
-                    NEWLINE5 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block188)
+                    NEWLINE8 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block337)
 
                     #action start
-                    value += [ NEWLINE5.text ] 
+                    value += [ NEWLINE8.text ] 
                     #action end
 
 
 
-                elif alt4 == 2:
-                    # grammar/ShyCopypasterBackend.g:29:9: INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE
+                elif alt5 == 2:
+                    # grammar/ShyCopypasterBackend.g:40:9: INDENT nl1= NEWLINE (pb1= pure_block )+ DEDENT nl2= NEWLINE
                     pass 
-                    INDENT6 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_pure_block212)
+                    INDENT9 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_pure_block361)
 
-                    nl1 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block218)
+                    nl1 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block367)
 
                     #action start
-                    value += [ INDENT6.text , nl1.text ] 
+                    value += [ INDENT9.text , nl1.text ] 
                     #action end
 
 
-                    # grammar/ShyCopypasterBackend.g:31:9: (pb1= pure_block )+
-                    cnt3 = 0
-                    while True: #loop3
-                        alt3 = 2
-                        LA3_0 = self.input.LA(1)
+                    # grammar/ShyCopypasterBackend.g:42:9: (pb1= pure_block )+
+                    cnt4 = 0
+                    while True: #loop4
+                        alt4 = 2
+                        LA4_0 = self.input.LA(1)
 
-                        if (LA3_0 == CONSTS or (CURLY_CLOSE <= LA3_0 <= CURLY_OPEN) or (DIVIDE <= LA3_0 <= MODULE) or LA3_0 == NUMBER or (TYPES <= LA3_0 <= UNDERSCORE)) :
-                            alt3 = 1
+                        if (LA4_0 == CONSTS or (CURLY_CLOSE <= LA4_0 <= CURLY_OPEN) or (DIVIDE <= LA4_0 <= MODULE) or LA4_0 == NUMBER or (TYPES <= LA4_0 <= UNDERSCORE)) :
+                            alt4 = 1
 
 
-                        if alt3 == 1:
-                            # grammar/ShyCopypasterBackend.g:31:11: pb1= pure_block
+                        if alt4 == 1:
+                            # grammar/ShyCopypasterBackend.g:42:11: pb1= pure_block
                             pass 
-                            self._state.following.append(self.FOLLOW_pure_block_in_pure_block248)
+                            self._state.following.append(self.FOLLOW_pure_block_in_pure_block397)
                             pb1 = self.pure_block()
 
                             self._state.following.pop()
@@ -303,21 +375,21 @@ class ShyCopypasterBackend(TreeParser):
 
 
                         else:
-                            if cnt3 >= 1:
-                                break #loop3
+                            if cnt4 >= 1:
+                                break #loop4
 
-                            eee = EarlyExitException(3, self.input)
+                            eee = EarlyExitException(4, self.input)
                             raise eee
 
-                        cnt3 += 1
+                        cnt4 += 1
 
 
-                    DEDENT7 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_pure_block285)
+                    DEDENT10 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_pure_block434)
 
-                    nl2 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block291)
+                    nl2 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_pure_block440)
 
                     #action start
-                    value += [ DEDENT7.text , nl2.text ] 
+                    value += [ DEDENT10.text , nl2.text ] 
                     #action end
 
 
@@ -336,31 +408,31 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "copy"
-    # grammar/ShyCopypasterBackend.g:38:1: copy returns [ value ] : ^( TREE_COPY copy_body pastes ) ;
+    # grammar/ShyCopypasterBackend.g:49:1: copy returns [ value ] : ^( TREE_COPY copy_body pastes ) ;
     def copy(self, ):
         value = None
 
 
-        copy_body8 = None
+        copy_body11 = None
 
-        pastes9 = None
+        pastes12 = None
 
 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:40:5: ( ^( TREE_COPY copy_body pastes ) )
-                # grammar/ShyCopypasterBackend.g:40:9: ^( TREE_COPY copy_body pastes )
+                # grammar/ShyCopypasterBackend.g:51:5: ( ^( TREE_COPY copy_body pastes ) )
+                # grammar/ShyCopypasterBackend.g:51:9: ^( TREE_COPY copy_body pastes )
                 pass 
-                self.match(self.input, TREE_COPY, self.FOLLOW_TREE_COPY_in_copy334)
+                self.match(self.input, TREE_COPY, self.FOLLOW_TREE_COPY_in_copy483)
 
                 self.match(self.input, DOWN, None)
-                self._state.following.append(self.FOLLOW_copy_body_in_copy336)
-                copy_body8 = self.copy_body()
+                self._state.following.append(self.FOLLOW_copy_body_in_copy485)
+                copy_body11 = self.copy_body()
 
                 self._state.following.pop()
 
-                self._state.following.append(self.FOLLOW_pastes_in_copy338)
-                pastes9 = self.pastes()
+                self._state.following.append(self.FOLLOW_pastes_in_copy487)
+                pastes12 = self.pastes()
 
                 self._state.following.pop()
 
@@ -368,7 +440,7 @@ class ShyCopypasterBackend(TreeParser):
 
 
                 #action start
-                value = [ { 'copy' : copy_body8 , 'paste' : pastes9 } ] 
+                value = [ { 'copy' : copy_body11 , 'paste' : pastes12 } ] 
                 #action end
 
 
@@ -388,104 +460,40 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "copy_body"
-    # grammar/ShyCopypasterBackend.g:44:1: copy_body returns [ value ] : ( pure_block )+ ;
+    # grammar/ShyCopypasterBackend.g:55:1: copy_body returns [ value ] : ( pure_block )+ ;
     def copy_body(self, ):
         value = None
 
 
-        pure_block10 = None
+        pure_block13 = None
 
 
         value = list ( ) 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:47:5: ( ( pure_block )+ )
-                # grammar/ShyCopypasterBackend.g:47:9: ( pure_block )+
+                # grammar/ShyCopypasterBackend.g:58:5: ( ( pure_block )+ )
+                # grammar/ShyCopypasterBackend.g:58:9: ( pure_block )+
                 pass 
-                # grammar/ShyCopypasterBackend.g:47:9: ( pure_block )+
-                cnt5 = 0
-                while True: #loop5
-                    alt5 = 2
-                    LA5_0 = self.input.LA(1)
-
-                    if (LA5_0 == CONSTS or (CURLY_CLOSE <= LA5_0 <= CURLY_OPEN) or (DIVIDE <= LA5_0 <= MODULE) or LA5_0 == NUMBER or (TYPES <= LA5_0 <= UNDERSCORE)) :
-                        alt5 = 1
-
-
-                    if alt5 == 1:
-                        # grammar/ShyCopypasterBackend.g:47:11: pure_block
-                        pass 
-                        self._state.following.append(self.FOLLOW_pure_block_in_copy_body389)
-                        pure_block10 = self.pure_block()
-
-                        self._state.following.pop()
-
-                        #action start
-                        value += pure_block10 
-                        #action end
-
-
-
-                    else:
-                        if cnt5 >= 1:
-                            break #loop5
-
-                        eee = EarlyExitException(5, self.input)
-                        raise eee
-
-                    cnt5 += 1
-
-
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-
-        finally:
-            pass
-        return value
-
-    # $ANTLR end "copy_body"
-
-
-
-    # $ANTLR start "pastes"
-    # grammar/ShyCopypasterBackend.g:50:1: pastes returns [ value ] : ( paste )+ ;
-    def pastes(self, ):
-        value = None
-
-
-        paste11 = None
-
-
-        value = list ( ) 
-        try:
-            try:
-                # grammar/ShyCopypasterBackend.g:53:5: ( ( paste )+ )
-                # grammar/ShyCopypasterBackend.g:53:9: ( paste )+
-                pass 
-                # grammar/ShyCopypasterBackend.g:53:9: ( paste )+
+                # grammar/ShyCopypasterBackend.g:58:9: ( pure_block )+
                 cnt6 = 0
                 while True: #loop6
                     alt6 = 2
                     LA6_0 = self.input.LA(1)
 
-                    if (LA6_0 == TREE_PASTE) :
+                    if (LA6_0 == CONSTS or (CURLY_CLOSE <= LA6_0 <= CURLY_OPEN) or (DIVIDE <= LA6_0 <= MODULE) or LA6_0 == NUMBER or (TYPES <= LA6_0 <= UNDERSCORE)) :
                         alt6 = 1
 
 
                     if alt6 == 1:
-                        # grammar/ShyCopypasterBackend.g:53:11: paste
+                        # grammar/ShyCopypasterBackend.g:58:11: pure_block
                         pass 
-                        self._state.following.append(self.FOLLOW_paste_in_pastes434)
-                        paste11 = self.paste()
+                        self._state.following.append(self.FOLLOW_pure_block_in_copy_body538)
+                        pure_block13 = self.pure_block()
 
                         self._state.following.pop()
 
                         #action start
-                        value . append ( paste11 ) 
+                        value += pure_block13 
                         #action end
 
 
@@ -511,183 +519,45 @@ class ShyCopypasterBackend(TreeParser):
             pass
         return value
 
-    # $ANTLR end "pastes"
+    # $ANTLR end "copy_body"
 
 
 
-    # $ANTLR start "paste"
-    # grammar/ShyCopypasterBackend.g:56:1: paste returns [ value ] : ^( TREE_PASTE paste_replace paste_with ) ;
-    def paste(self, ):
+    # $ANTLR start "pastes"
+    # grammar/ShyCopypasterBackend.g:61:1: pastes returns [ value ] : ( paste )+ ;
+    def pastes(self, ):
         value = None
 
 
-        paste_replace12 = None
-
-        paste_with13 = None
-
-
-        try:
-            try:
-                # grammar/ShyCopypasterBackend.g:58:5: ( ^( TREE_PASTE paste_replace paste_with ) )
-                # grammar/ShyCopypasterBackend.g:58:9: ^( TREE_PASTE paste_replace paste_with )
-                pass 
-                self.match(self.input, TREE_PASTE, self.FOLLOW_TREE_PASTE_in_paste469)
-
-                self.match(self.input, DOWN, None)
-                self._state.following.append(self.FOLLOW_paste_replace_in_paste471)
-                paste_replace12 = self.paste_replace()
-
-                self._state.following.pop()
-
-                self._state.following.append(self.FOLLOW_paste_with_in_paste473)
-                paste_with13 = self.paste_with()
-
-                self._state.following.pop()
-
-                self.match(self.input, UP, None)
-
-
-                #action start
-                value = [ paste_replace12 , paste_with13 ] 
-                #action end
-
-
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-
-        finally:
-            pass
-        return value
-
-    # $ANTLR end "paste"
-
-
-
-    # $ANTLR start "paste_replace"
-    # grammar/ShyCopypasterBackend.g:62:1: paste_replace returns [ value ] : ^( TREE_PASTE_REPLACE ID ) ;
-    def paste_replace(self, ):
-        value = None
-
-
-        ID14 = None
-
-        try:
-            try:
-                # grammar/ShyCopypasterBackend.g:64:5: ( ^( TREE_PASTE_REPLACE ID ) )
-                # grammar/ShyCopypasterBackend.g:64:9: ^( TREE_PASTE_REPLACE ID )
-                pass 
-                self.match(self.input, TREE_PASTE_REPLACE, self.FOLLOW_TREE_PASTE_REPLACE_in_paste_replace514)
-
-                self.match(self.input, DOWN, None)
-                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_paste_replace516)
-
-                self.match(self.input, UP, None)
-
-
-                #action start
-                value = ID14.text 
-                #action end
-
-
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-
-        finally:
-            pass
-        return value
-
-    # $ANTLR end "paste_replace"
-
-
-
-    # $ANTLR start "paste_with"
-    # grammar/ShyCopypasterBackend.g:67:1: paste_with returns [ value ] : ^( TREE_PASTE_WITH arbitrary_tokens ) ;
-    def paste_with(self, ):
-        value = None
-
-
-        arbitrary_tokens15 = None
-
-
-        try:
-            try:
-                # grammar/ShyCopypasterBackend.g:69:5: ( ^( TREE_PASTE_WITH arbitrary_tokens ) )
-                # grammar/ShyCopypasterBackend.g:69:9: ^( TREE_PASTE_WITH arbitrary_tokens )
-                pass 
-                self.match(self.input, TREE_PASTE_WITH, self.FOLLOW_TREE_PASTE_WITH_in_paste_with549)
-
-                self.match(self.input, DOWN, None)
-                self._state.following.append(self.FOLLOW_arbitrary_tokens_in_paste_with551)
-                arbitrary_tokens15 = self.arbitrary_tokens()
-
-                self._state.following.pop()
-
-                self.match(self.input, UP, None)
-
-
-                #action start
-                value = arbitrary_tokens15 
-                #action end
-
-
-
-
-
-            except RecognitionException, re:
-                self.reportError(re)
-                self.recover(self.input, re)
-
-        finally:
-            pass
-        return value
-
-    # $ANTLR end "paste_with"
-
-
-
-    # $ANTLR start "arbitrary_tokens"
-    # grammar/ShyCopypasterBackend.g:73:1: arbitrary_tokens returns [ value ] : ( arbitrary_token )+ ;
-    def arbitrary_tokens(self, ):
-        value = None
-
-
-        arbitrary_token16 = None
+        paste14 = None
 
 
         value = list ( ) 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:76:5: ( ( arbitrary_token )+ )
-                # grammar/ShyCopypasterBackend.g:76:9: ( arbitrary_token )+
+                # grammar/ShyCopypasterBackend.g:64:5: ( ( paste )+ )
+                # grammar/ShyCopypasterBackend.g:64:9: ( paste )+
                 pass 
-                # grammar/ShyCopypasterBackend.g:76:9: ( arbitrary_token )+
+                # grammar/ShyCopypasterBackend.g:64:9: ( paste )+
                 cnt7 = 0
                 while True: #loop7
                     alt7 = 2
                     LA7_0 = self.input.LA(1)
 
-                    if (LA7_0 == CONSTS or (CURLY_CLOSE <= LA7_0 <= CURLY_OPEN) or (DIVIDE <= LA7_0 <= ID) or (MINUS <= LA7_0 <= MODULE) or LA7_0 == NUMBER or (TYPES <= LA7_0 <= UNDERSCORE)) :
+                    if (LA7_0 == TREE_PASTE) :
                         alt7 = 1
 
 
                     if alt7 == 1:
-                        # grammar/ShyCopypasterBackend.g:76:11: arbitrary_token
+                        # grammar/ShyCopypasterBackend.g:64:11: paste
                         pass 
-                        self._state.following.append(self.FOLLOW_arbitrary_token_in_arbitrary_tokens602)
-                        arbitrary_token16 = self.arbitrary_token()
+                        self._state.following.append(self.FOLLOW_paste_in_pastes583)
+                        paste14 = self.paste()
 
                         self._state.following.pop()
 
                         #action start
-                        value . append ( arbitrary_token16 ) 
+                        value . append ( paste14 ) 
                         #action end
 
 
@@ -713,178 +583,380 @@ class ShyCopypasterBackend(TreeParser):
             pass
         return value
 
+    # $ANTLR end "pastes"
+
+
+
+    # $ANTLR start "paste"
+    # grammar/ShyCopypasterBackend.g:67:1: paste returns [ value ] : ^( TREE_PASTE paste_replace paste_with ) ;
+    def paste(self, ):
+        value = None
+
+
+        paste_replace15 = None
+
+        paste_with16 = None
+
+
+        try:
+            try:
+                # grammar/ShyCopypasterBackend.g:69:5: ( ^( TREE_PASTE paste_replace paste_with ) )
+                # grammar/ShyCopypasterBackend.g:69:9: ^( TREE_PASTE paste_replace paste_with )
+                pass 
+                self.match(self.input, TREE_PASTE, self.FOLLOW_TREE_PASTE_in_paste618)
+
+                self.match(self.input, DOWN, None)
+                self._state.following.append(self.FOLLOW_paste_replace_in_paste620)
+                paste_replace15 = self.paste_replace()
+
+                self._state.following.pop()
+
+                self._state.following.append(self.FOLLOW_paste_with_in_paste622)
+                paste_with16 = self.paste_with()
+
+                self._state.following.pop()
+
+                self.match(self.input, UP, None)
+
+
+                #action start
+                value = [ paste_replace15 , paste_with16 ] 
+                #action end
+
+
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+
+        finally:
+            pass
+        return value
+
+    # $ANTLR end "paste"
+
+
+
+    # $ANTLR start "paste_replace"
+    # grammar/ShyCopypasterBackend.g:73:1: paste_replace returns [ value ] : ^( TREE_PASTE_REPLACE ID ) ;
+    def paste_replace(self, ):
+        value = None
+
+
+        ID17 = None
+
+        try:
+            try:
+                # grammar/ShyCopypasterBackend.g:75:5: ( ^( TREE_PASTE_REPLACE ID ) )
+                # grammar/ShyCopypasterBackend.g:75:9: ^( TREE_PASTE_REPLACE ID )
+                pass 
+                self.match(self.input, TREE_PASTE_REPLACE, self.FOLLOW_TREE_PASTE_REPLACE_in_paste_replace663)
+
+                self.match(self.input, DOWN, None)
+                ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_paste_replace665)
+
+                self.match(self.input, UP, None)
+
+
+                #action start
+                value = ID17.text 
+                #action end
+
+
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+
+        finally:
+            pass
+        return value
+
+    # $ANTLR end "paste_replace"
+
+
+
+    # $ANTLR start "paste_with"
+    # grammar/ShyCopypasterBackend.g:78:1: paste_with returns [ value ] : ^( TREE_PASTE_WITH arbitrary_tokens ) ;
+    def paste_with(self, ):
+        value = None
+
+
+        arbitrary_tokens18 = None
+
+
+        try:
+            try:
+                # grammar/ShyCopypasterBackend.g:80:5: ( ^( TREE_PASTE_WITH arbitrary_tokens ) )
+                # grammar/ShyCopypasterBackend.g:80:9: ^( TREE_PASTE_WITH arbitrary_tokens )
+                pass 
+                self.match(self.input, TREE_PASTE_WITH, self.FOLLOW_TREE_PASTE_WITH_in_paste_with698)
+
+                self.match(self.input, DOWN, None)
+                self._state.following.append(self.FOLLOW_arbitrary_tokens_in_paste_with700)
+                arbitrary_tokens18 = self.arbitrary_tokens()
+
+                self._state.following.pop()
+
+                self.match(self.input, UP, None)
+
+
+                #action start
+                value = arbitrary_tokens18 
+                #action end
+
+
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+
+        finally:
+            pass
+        return value
+
+    # $ANTLR end "paste_with"
+
+
+
+    # $ANTLR start "arbitrary_tokens"
+    # grammar/ShyCopypasterBackend.g:84:1: arbitrary_tokens returns [ value ] : ( arbitrary_token )+ ;
+    def arbitrary_tokens(self, ):
+        value = None
+
+
+        arbitrary_token19 = None
+
+
+        value = list ( ) 
+        try:
+            try:
+                # grammar/ShyCopypasterBackend.g:87:5: ( ( arbitrary_token )+ )
+                # grammar/ShyCopypasterBackend.g:87:9: ( arbitrary_token )+
+                pass 
+                # grammar/ShyCopypasterBackend.g:87:9: ( arbitrary_token )+
+                cnt8 = 0
+                while True: #loop8
+                    alt8 = 2
+                    LA8_0 = self.input.LA(1)
+
+                    if (LA8_0 == CONSTS or (CURLY_CLOSE <= LA8_0 <= CURLY_OPEN) or (DIVIDE <= LA8_0 <= ID) or (MINUS <= LA8_0 <= MODULE) or LA8_0 == NUMBER or (TYPES <= LA8_0 <= UNDERSCORE)) :
+                        alt8 = 1
+
+
+                    if alt8 == 1:
+                        # grammar/ShyCopypasterBackend.g:87:11: arbitrary_token
+                        pass 
+                        self._state.following.append(self.FOLLOW_arbitrary_token_in_arbitrary_tokens751)
+                        arbitrary_token19 = self.arbitrary_token()
+
+                        self._state.following.pop()
+
+                        #action start
+                        value . append ( arbitrary_token19 ) 
+                        #action end
+
+
+
+                    else:
+                        if cnt8 >= 1:
+                            break #loop8
+
+                        eee = EarlyExitException(8, self.input)
+                        raise eee
+
+                    cnt8 += 1
+
+
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+
+        finally:
+            pass
+        return value
+
     # $ANTLR end "arbitrary_tokens"
 
 
 
     # $ANTLR start "arbitrary_token"
-    # grammar/ShyCopypasterBackend.g:81:1: arbitrary_token returns [ value ] : ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION );
+    # grammar/ShyCopypasterBackend.g:92:1: arbitrary_token returns [ value ] : ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION );
     def arbitrary_token(self, ):
         value = None
 
 
-        CONSTS17 = None
-        MODULE18 = None
-        TYPES19 = None
-        CURLY_OPEN20 = None
-        CURLY_CLOSE21 = None
-        DIVIDE22 = None
-        MINUS23 = None
-        UNDERSCORE24 = None
-        ID25 = None
-        NUMBER26 = None
-        EXPRESSION27 = None
+        CONSTS20 = None
+        MODULE21 = None
+        TYPES22 = None
+        CURLY_OPEN23 = None
+        CURLY_CLOSE24 = None
+        DIVIDE25 = None
+        MINUS26 = None
+        UNDERSCORE27 = None
+        ID28 = None
+        NUMBER29 = None
+        EXPRESSION30 = None
 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:83:5: ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION )
-                alt8 = 11
-                LA8 = self.input.LA(1)
-                if LA8 == CONSTS:
-                    alt8 = 1
-                elif LA8 == MODULE:
-                    alt8 = 2
-                elif LA8 == TYPES:
-                    alt8 = 3
-                elif LA8 == CURLY_OPEN:
-                    alt8 = 4
-                elif LA8 == CURLY_CLOSE:
-                    alt8 = 5
-                elif LA8 == DIVIDE:
-                    alt8 = 6
-                elif LA8 == MINUS:
-                    alt8 = 7
-                elif LA8 == UNDERSCORE:
-                    alt8 = 8
-                elif LA8 == ID:
-                    alt8 = 9
-                elif LA8 == NUMBER:
-                    alt8 = 10
-                elif LA8 == EXPRESSION:
-                    alt8 = 11
+                # grammar/ShyCopypasterBackend.g:94:5: ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION )
+                alt9 = 11
+                LA9 = self.input.LA(1)
+                if LA9 == CONSTS:
+                    alt9 = 1
+                elif LA9 == MODULE:
+                    alt9 = 2
+                elif LA9 == TYPES:
+                    alt9 = 3
+                elif LA9 == CURLY_OPEN:
+                    alt9 = 4
+                elif LA9 == CURLY_CLOSE:
+                    alt9 = 5
+                elif LA9 == DIVIDE:
+                    alt9 = 6
+                elif LA9 == MINUS:
+                    alt9 = 7
+                elif LA9 == UNDERSCORE:
+                    alt9 = 8
+                elif LA9 == ID:
+                    alt9 = 9
+                elif LA9 == NUMBER:
+                    alt9 = 10
+                elif LA9 == EXPRESSION:
+                    alt9 = 11
                 else:
-                    nvae = NoViableAltException("", 8, 0, self.input)
+                    nvae = NoViableAltException("", 9, 0, self.input)
 
                     raise nvae
 
 
-                if alt8 == 1:
-                    # grammar/ShyCopypasterBackend.g:83:9: CONSTS
+                if alt9 == 1:
+                    # grammar/ShyCopypasterBackend.g:94:9: CONSTS
                     pass 
-                    CONSTS17 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_arbitrary_token655)
+                    CONSTS20 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_arbitrary_token804)
 
                     #action start
-                    value = CONSTS17.text 
+                    value = CONSTS20.text 
                     #action end
 
 
 
-                elif alt8 == 2:
-                    # grammar/ShyCopypasterBackend.g:84:9: MODULE
+                elif alt9 == 2:
+                    # grammar/ShyCopypasterBackend.g:95:9: MODULE
                     pass 
-                    MODULE18 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_arbitrary_token667)
+                    MODULE21 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_arbitrary_token816)
 
                     #action start
-                    value = MODULE18.text 
+                    value = MODULE21.text 
                     #action end
 
 
 
-                elif alt8 == 3:
-                    # grammar/ShyCopypasterBackend.g:85:9: TYPES
+                elif alt9 == 3:
+                    # grammar/ShyCopypasterBackend.g:96:9: TYPES
                     pass 
-                    TYPES19 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_arbitrary_token679)
+                    TYPES22 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_arbitrary_token828)
 
                     #action start
-                    value = TYPES19.text 
+                    value = TYPES22.text 
                     #action end
 
 
 
-                elif alt8 == 4:
-                    # grammar/ShyCopypasterBackend.g:87:9: CURLY_OPEN
+                elif alt9 == 4:
+                    # grammar/ShyCopypasterBackend.g:98:9: CURLY_OPEN
                     pass 
-                    CURLY_OPEN20 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_arbitrary_token692)
+                    CURLY_OPEN23 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_arbitrary_token841)
 
                     #action start
-                    value = CURLY_OPEN20.text 
+                    value = CURLY_OPEN23.text 
                     #action end
 
 
 
-                elif alt8 == 5:
-                    # grammar/ShyCopypasterBackend.g:88:9: CURLY_CLOSE
+                elif alt9 == 5:
+                    # grammar/ShyCopypasterBackend.g:99:9: CURLY_CLOSE
                     pass 
-                    CURLY_CLOSE21 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_arbitrary_token704)
+                    CURLY_CLOSE24 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_arbitrary_token853)
 
                     #action start
-                    value = CURLY_CLOSE21.text 
+                    value = CURLY_CLOSE24.text 
                     #action end
 
 
 
-                elif alt8 == 6:
-                    # grammar/ShyCopypasterBackend.g:89:9: DIVIDE
+                elif alt9 == 6:
+                    # grammar/ShyCopypasterBackend.g:100:9: DIVIDE
                     pass 
-                    DIVIDE22 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_arbitrary_token716)
+                    DIVIDE25 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_arbitrary_token865)
 
                     #action start
-                    value = DIVIDE22.text 
+                    value = DIVIDE25.text 
                     #action end
 
 
 
-                elif alt8 == 7:
-                    # grammar/ShyCopypasterBackend.g:90:9: MINUS
+                elif alt9 == 7:
+                    # grammar/ShyCopypasterBackend.g:101:9: MINUS
                     pass 
-                    MINUS23 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_arbitrary_token728)
+                    MINUS26 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_arbitrary_token877)
 
                     #action start
-                    value = MINUS23.text 
+                    value = MINUS26.text 
                     #action end
 
 
 
-                elif alt8 == 8:
-                    # grammar/ShyCopypasterBackend.g:91:9: UNDERSCORE
+                elif alt9 == 8:
+                    # grammar/ShyCopypasterBackend.g:102:9: UNDERSCORE
                     pass 
-                    UNDERSCORE24 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_arbitrary_token740)
+                    UNDERSCORE27 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_arbitrary_token889)
 
                     #action start
-                    value = UNDERSCORE24.text 
+                    value = UNDERSCORE27.text 
                     #action end
 
 
 
-                elif alt8 == 9:
-                    # grammar/ShyCopypasterBackend.g:92:9: ID
+                elif alt9 == 9:
+                    # grammar/ShyCopypasterBackend.g:103:9: ID
                     pass 
-                    ID25 = self.match(self.input, ID, self.FOLLOW_ID_in_arbitrary_token752)
+                    ID28 = self.match(self.input, ID, self.FOLLOW_ID_in_arbitrary_token901)
 
                     #action start
-                    value = ID25.text 
+                    value = ID28.text 
                     #action end
 
 
 
-                elif alt8 == 10:
-                    # grammar/ShyCopypasterBackend.g:93:9: NUMBER
+                elif alt9 == 10:
+                    # grammar/ShyCopypasterBackend.g:104:9: NUMBER
                     pass 
-                    NUMBER26 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_arbitrary_token764)
+                    NUMBER29 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_arbitrary_token913)
 
                     #action start
-                    value = NUMBER26.text 
+                    value = NUMBER29.text 
                     #action end
 
 
 
-                elif alt8 == 11:
-                    # grammar/ShyCopypasterBackend.g:94:9: EXPRESSION
+                elif alt9 == 11:
+                    # grammar/ShyCopypasterBackend.g:105:9: EXPRESSION
                     pass 
-                    EXPRESSION27 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_arbitrary_token776)
+                    EXPRESSION30 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_arbitrary_token925)
 
                     #action start
-                    value = EXPRESSION27.text 
+                    value = EXPRESSION30.text 
                     #action end
 
 
@@ -905,39 +977,45 @@ class ShyCopypasterBackend(TreeParser):
  
 
     FOLLOW_block_in_start80 = frozenset([1, 4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 21, 37, 38])
-    FOLLOW_pure_block_in_block113 = frozenset([1])
-    FOLLOW_copy_in_block125 = frozenset([1])
-    FOLLOW_arbitrary_tokens_in_pure_block164 = frozenset([15])
-    FOLLOW_NEWLINE_in_pure_block188 = frozenset([1])
-    FOLLOW_INDENT_in_pure_block212 = frozenset([15])
-    FOLLOW_NEWLINE_in_pure_block218 = frozenset([4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 37, 38])
-    FOLLOW_pure_block_in_pure_block248 = frozenset([4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 37, 38])
-    FOLLOW_DEDENT_in_pure_block285 = frozenset([15])
-    FOLLOW_NEWLINE_in_pure_block291 = frozenset([1])
-    FOLLOW_TREE_COPY_in_copy334 = frozenset([2])
-    FOLLOW_copy_body_in_copy336 = frozenset([29])
-    FOLLOW_pastes_in_copy338 = frozenset([3])
-    FOLLOW_pure_block_in_copy_body389 = frozenset([1, 4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 37, 38])
-    FOLLOW_paste_in_pastes434 = frozenset([1, 29])
-    FOLLOW_TREE_PASTE_in_paste469 = frozenset([2])
-    FOLLOW_paste_replace_in_paste471 = frozenset([31])
-    FOLLOW_paste_with_in_paste473 = frozenset([3])
-    FOLLOW_TREE_PASTE_REPLACE_in_paste_replace514 = frozenset([2])
-    FOLLOW_ID_in_paste_replace516 = frozenset([3])
-    FOLLOW_TREE_PASTE_WITH_in_paste_with549 = frozenset([2])
-    FOLLOW_arbitrary_tokens_in_paste_with551 = frozenset([3])
-    FOLLOW_arbitrary_token_in_arbitrary_tokens602 = frozenset([1, 4, 6, 7, 9, 10, 11, 13, 14, 16, 37, 38])
-    FOLLOW_CONSTS_in_arbitrary_token655 = frozenset([1])
-    FOLLOW_MODULE_in_arbitrary_token667 = frozenset([1])
-    FOLLOW_TYPES_in_arbitrary_token679 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_arbitrary_token692 = frozenset([1])
-    FOLLOW_CURLY_CLOSE_in_arbitrary_token704 = frozenset([1])
-    FOLLOW_DIVIDE_in_arbitrary_token716 = frozenset([1])
-    FOLLOW_MINUS_in_arbitrary_token728 = frozenset([1])
-    FOLLOW_UNDERSCORE_in_arbitrary_token740 = frozenset([1])
-    FOLLOW_ID_in_arbitrary_token752 = frozenset([1])
-    FOLLOW_NUMBER_in_arbitrary_token764 = frozenset([1])
-    FOLLOW_EXPRESSION_in_arbitrary_token776 = frozenset([1])
+    FOLLOW_arbitrary_tokens_in_block123 = frozenset([15])
+    FOLLOW_NEWLINE_in_block147 = frozenset([1])
+    FOLLOW_INDENT_in_block171 = frozenset([15])
+    FOLLOW_NEWLINE_in_block177 = frozenset([4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 21, 37, 38])
+    FOLLOW_block_in_block207 = frozenset([4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 21, 37, 38])
+    FOLLOW_DEDENT_in_block244 = frozenset([15])
+    FOLLOW_NEWLINE_in_block250 = frozenset([1])
+    FOLLOW_copy_in_block274 = frozenset([1])
+    FOLLOW_arbitrary_tokens_in_pure_block313 = frozenset([15])
+    FOLLOW_NEWLINE_in_pure_block337 = frozenset([1])
+    FOLLOW_INDENT_in_pure_block361 = frozenset([15])
+    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 37, 38])
+    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 37, 38])
+    FOLLOW_DEDENT_in_pure_block434 = frozenset([15])
+    FOLLOW_NEWLINE_in_pure_block440 = frozenset([1])
+    FOLLOW_TREE_COPY_in_copy483 = frozenset([2])
+    FOLLOW_copy_body_in_copy485 = frozenset([29])
+    FOLLOW_pastes_in_copy487 = frozenset([3])
+    FOLLOW_pure_block_in_copy_body538 = frozenset([1, 4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 37, 38])
+    FOLLOW_paste_in_pastes583 = frozenset([1, 29])
+    FOLLOW_TREE_PASTE_in_paste618 = frozenset([2])
+    FOLLOW_paste_replace_in_paste620 = frozenset([31])
+    FOLLOW_paste_with_in_paste622 = frozenset([3])
+    FOLLOW_TREE_PASTE_REPLACE_in_paste_replace663 = frozenset([2])
+    FOLLOW_ID_in_paste_replace665 = frozenset([3])
+    FOLLOW_TREE_PASTE_WITH_in_paste_with698 = frozenset([2])
+    FOLLOW_arbitrary_tokens_in_paste_with700 = frozenset([3])
+    FOLLOW_arbitrary_token_in_arbitrary_tokens751 = frozenset([1, 4, 6, 7, 9, 10, 11, 13, 14, 16, 37, 38])
+    FOLLOW_CONSTS_in_arbitrary_token804 = frozenset([1])
+    FOLLOW_MODULE_in_arbitrary_token816 = frozenset([1])
+    FOLLOW_TYPES_in_arbitrary_token828 = frozenset([1])
+    FOLLOW_CURLY_OPEN_in_arbitrary_token841 = frozenset([1])
+    FOLLOW_CURLY_CLOSE_in_arbitrary_token853 = frozenset([1])
+    FOLLOW_DIVIDE_in_arbitrary_token865 = frozenset([1])
+    FOLLOW_MINUS_in_arbitrary_token877 = frozenset([1])
+    FOLLOW_UNDERSCORE_in_arbitrary_token889 = frozenset([1])
+    FOLLOW_ID_in_arbitrary_token901 = frozenset([1])
+    FOLLOW_NUMBER_in_arbitrary_token913 = frozenset([1])
+    FOLLOW_EXPRESSION_in_arbitrary_token925 = frozenset([1])
 
 
 

@@ -42,6 +42,12 @@ class recognizer_test_case ( unittest . TestCase ) :
             'paste replace const1 with const2\n'
             'paste replace const1 with const3\n' ) ,
             { 'consts' : { 'test1' : { 'const2' : 11 , 'const3' : 11 } } } )
+    def test_copy_paste_inside ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'consts test1\n copy\n  const1 11\n'
+            ' paste replace const1 with const2\n' ) ,
+            { 'consts' : { 'test1' : { 'const2' : 11 } } } )
     def test_copy_paste_multiline ( self ) :
         ae = self . assertEqual
         r = self . rec
