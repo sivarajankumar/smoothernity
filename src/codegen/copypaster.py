@@ -12,6 +12,12 @@ class exception ( Exception ) :
 
 class copypaster :
     def run ( self , input ) :
+        res = [ ]
+        for t in self . _read ( input ) :
+            if isinstance ( t , unicode ) :
+                res . append ( t )
+        return res
+    def _read ( self , input ) :
         sl = ShyLexer ( ANTLRInputStream ( input ) )
         ts = CommonTokenStream ( sl )
         scf = ShyCopypasterFrontend ( ts )
