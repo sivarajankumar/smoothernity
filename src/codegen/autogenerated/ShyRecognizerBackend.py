@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-18 18:43:02
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-19 19:07:13
 
 import sys
 from antlr3 import *
@@ -8,6 +8,13 @@ from antlr3.compat import set, frozenset
 
 
 from fractions import Fraction
+
+def update_start_dict ( res , part , name , value ) :
+    if part not in res :
+        res [ part ] = dict ( )
+    if name not in res [ part ] :
+        res [ part ] [ name ] = dict ( )
+    res [ part ] [ name ] . update ( value )
 
 
 
@@ -91,7 +98,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "start"
-    # grammar/ShyRecognizerBackend.g:15:1: start returns [ value ] : ( module | consts | types )* ;
+    # grammar/ShyRecognizerBackend.g:22:1: start returns [ value ] : ( module | consts | types )* ;
     def start(self, ):
         value = None
 
@@ -106,10 +113,10 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:18:5: ( ( module | consts | types )* )
-                # grammar/ShyRecognizerBackend.g:18:9: ( module | consts | types )*
+                # grammar/ShyRecognizerBackend.g:25:5: ( ( module | consts | types )* )
+                # grammar/ShyRecognizerBackend.g:25:9: ( module | consts | types )*
                 pass 
-                # grammar/ShyRecognizerBackend.g:18:9: ( module | consts | types )*
+                # grammar/ShyRecognizerBackend.g:25:9: ( module | consts | types )*
                 while True: #loop1
                     alt1 = 4
                     LA1 = self.input.LA(1)
@@ -121,7 +128,7 @@ class ShyRecognizerBackend(TreeParser):
                         alt1 = 3
 
                     if alt1 == 1:
-                        # grammar/ShyRecognizerBackend.g:18:11: module
+                        # grammar/ShyRecognizerBackend.g:25:11: module
                         pass 
                         self._state.following.append(self.FOLLOW_module_in_start87)
                         module1 = self.module()
@@ -130,16 +137,15 @@ class ShyRecognizerBackend(TreeParser):
 
                         #action start
                                     
-                        if 'module' not in value :
-                            value [ 'module' ] = dict ( )
-                        value [ 'module' ] [ module1 ] = dict ( )
+                        update_start_dict ( value , 'module' ,
+                            module1 , dict ( ) )
                                     
                         #action end
 
 
 
                     elif alt1 == 2:
-                        # grammar/ShyRecognizerBackend.g:24:11: consts
+                        # grammar/ShyRecognizerBackend.g:30:11: consts
                         pass 
                         self._state.following.append(self.FOLLOW_consts_in_start114)
                         consts2 = self.consts()
@@ -148,16 +154,15 @@ class ShyRecognizerBackend(TreeParser):
 
                         #action start
                                     
-                        if 'consts' not in value :
-                            value [ 'consts' ] = dict ( )
-                        value [ 'consts' ] [ ((consts2 is not None) and [consts2.title] or [None])[0] ] = ((consts2 is not None) and [consts2.content] or [None])[0]
+                        update_start_dict ( value , 'consts' ,
+                            ((consts2 is not None) and [consts2.title] or [None])[0] , ((consts2 is not None) and [consts2.content] or [None])[0] )
                                     
                         #action end
 
 
 
                     elif alt1 == 3:
-                        # grammar/ShyRecognizerBackend.g:30:11: types
+                        # grammar/ShyRecognizerBackend.g:35:11: types
                         pass 
                         self._state.following.append(self.FOLLOW_types_in_start140)
                         types3 = self.types()
@@ -166,9 +171,8 @@ class ShyRecognizerBackend(TreeParser):
 
                         #action start
                                     
-                        if 'types' not in value :
-                            value [ 'types' ] = dict ( )
-                        value [ 'types' ] [ ((types3 is not None) and [types3.title] or [None])[0] ] = ((types3 is not None) and [types3.content] or [None])[0]
+                        update_start_dict ( value , 'types' ,
+                            ((types3 is not None) and [types3.title] or [None])[0] , ((types3 is not None) and [types3.content] or [None])[0] )
                                     
                         #action end
 
@@ -194,7 +198,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "module"
-    # grammar/ShyRecognizerBackend.g:39:1: module returns [ value ] : ^( TREE_MODULE ID ) ;
+    # grammar/ShyRecognizerBackend.g:43:1: module returns [ value ] : ^( TREE_MODULE ID ) ;
     def module(self, ):
         value = None
 
@@ -203,8 +207,8 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:41:5: ( ^( TREE_MODULE ID ) )
-                # grammar/ShyRecognizerBackend.g:41:9: ^( TREE_MODULE ID )
+                # grammar/ShyRecognizerBackend.g:45:5: ( ^( TREE_MODULE ID ) )
+                # grammar/ShyRecognizerBackend.g:45:9: ^( TREE_MODULE ID )
                 pass 
                 self.match(self.input, TREE_MODULE, self.FOLLOW_TREE_MODULE_in_module195)
 
@@ -245,7 +249,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "consts"
-    # grammar/ShyRecognizerBackend.g:44:1: consts returns [ title , content ] : ^( TREE_CONSTS ID consts_items ) ;
+    # grammar/ShyRecognizerBackend.g:48:1: consts returns [ title , content ] : ^( TREE_CONSTS ID consts_items ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -258,8 +262,8 @@ class ShyRecognizerBackend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:47:5: ( ^( TREE_CONSTS ID consts_items ) )
-                # grammar/ShyRecognizerBackend.g:47:9: ^( TREE_CONSTS ID consts_items )
+                # grammar/ShyRecognizerBackend.g:51:5: ( ^( TREE_CONSTS ID consts_items ) )
+                # grammar/ShyRecognizerBackend.g:51:9: ^( TREE_CONSTS ID consts_items )
                 pass 
                 self.match(self.input, TREE_CONSTS, self.FOLLOW_TREE_CONSTS_in_consts240)
 
@@ -295,7 +299,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "consts_items"
-    # grammar/ShyRecognizerBackend.g:51:1: consts_items returns [ value ] : ( consts_item )+ ;
+    # grammar/ShyRecognizerBackend.g:55:1: consts_items returns [ value ] : ( consts_item )+ ;
     def consts_items(self, ):
         value = None
 
@@ -306,10 +310,10 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:54:5: ( ( consts_item )+ )
-                # grammar/ShyRecognizerBackend.g:54:9: ( consts_item )+
+                # grammar/ShyRecognizerBackend.g:58:5: ( ( consts_item )+ )
+                # grammar/ShyRecognizerBackend.g:58:9: ( consts_item )+
                 pass 
-                # grammar/ShyRecognizerBackend.g:54:9: ( consts_item )+
+                # grammar/ShyRecognizerBackend.g:58:9: ( consts_item )+
                 cnt2 = 0
                 while True: #loop2
                     alt2 = 2
@@ -320,7 +324,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     if alt2 == 1:
-                        # grammar/ShyRecognizerBackend.g:54:11: consts_item
+                        # grammar/ShyRecognizerBackend.g:58:11: consts_item
                         pass 
                         self._state.following.append(self.FOLLOW_consts_item_in_consts_items299)
                         consts_item7 = self.consts_item()
@@ -369,7 +373,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "consts_item"
-    # grammar/ShyRecognizerBackend.g:59:1: consts_item returns [ name , value ] : ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) );
+    # grammar/ShyRecognizerBackend.g:63:1: consts_item returns [ name , value ] : ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) );
     def consts_item(self, ):
         retval = self.consts_item_return()
         retval.start = self.input.LT(1)
@@ -386,7 +390,7 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:61:5: ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) )
+                # grammar/ShyRecognizerBackend.g:65:5: ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) )
                 alt3 = 3
                 LA3 = self.input.LA(1)
                 if LA3 == TREE_NUM_WHOLE:
@@ -402,7 +406,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt3 == 1:
-                    # grammar/ShyRecognizerBackend.g:61:9: ^( TREE_NUM_WHOLE ID num_whole )
+                    # grammar/ShyRecognizerBackend.g:65:9: ^( TREE_NUM_WHOLE ID num_whole )
                     pass 
                     self.match(self.input, TREE_NUM_WHOLE, self.FOLLOW_TREE_NUM_WHOLE_in_consts_item354)
 
@@ -424,7 +428,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt3 == 2:
-                    # grammar/ShyRecognizerBackend.g:63:9: ^( TREE_NUM_FRACT ID num_fract )
+                    # grammar/ShyRecognizerBackend.g:67:9: ^( TREE_NUM_FRACT ID num_fract )
                     pass 
                     self.match(self.input, TREE_NUM_FRACT, self.FOLLOW_TREE_NUM_FRACT_in_consts_item386)
 
@@ -446,7 +450,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt3 == 3:
-                    # grammar/ShyRecognizerBackend.g:65:9: ^( TREE_EXPRESSION ID EXPRESSION )
+                    # grammar/ShyRecognizerBackend.g:69:9: ^( TREE_EXPRESSION ID EXPRESSION )
                     pass 
                     self.match(self.input, TREE_EXPRESSION, self.FOLLOW_TREE_EXPRESSION_in_consts_item418)
 
@@ -488,7 +492,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types"
-    # grammar/ShyRecognizerBackend.g:69:1: types returns [ title , content ] : ^( TREE_TYPES ID types_items ) ;
+    # grammar/ShyRecognizerBackend.g:73:1: types returns [ title , content ] : ^( TREE_TYPES ID types_items ) ;
     def types(self, ):
         retval = self.types_return()
         retval.start = self.input.LT(1)
@@ -501,8 +505,8 @@ class ShyRecognizerBackend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:72:5: ( ^( TREE_TYPES ID types_items ) )
-                # grammar/ShyRecognizerBackend.g:72:9: ^( TREE_TYPES ID types_items )
+                # grammar/ShyRecognizerBackend.g:76:5: ( ^( TREE_TYPES ID types_items ) )
+                # grammar/ShyRecognizerBackend.g:76:9: ^( TREE_TYPES ID types_items )
                 pass 
                 self.match(self.input, TREE_TYPES, self.FOLLOW_TREE_TYPES_in_types477)
 
@@ -538,7 +542,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types_items"
-    # grammar/ShyRecognizerBackend.g:76:1: types_items returns [ value ] : ( types_item )+ ;
+    # grammar/ShyRecognizerBackend.g:80:1: types_items returns [ value ] : ( types_item )+ ;
     def types_items(self, ):
         value = None
 
@@ -549,10 +553,10 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:79:5: ( ( types_item )+ )
-                # grammar/ShyRecognizerBackend.g:79:9: ( types_item )+
+                # grammar/ShyRecognizerBackend.g:83:5: ( ( types_item )+ )
+                # grammar/ShyRecognizerBackend.g:83:9: ( types_item )+
                 pass 
-                # grammar/ShyRecognizerBackend.g:79:9: ( types_item )+
+                # grammar/ShyRecognizerBackend.g:83:9: ( types_item )+
                 cnt4 = 0
                 while True: #loop4
                     alt4 = 2
@@ -563,7 +567,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     if alt4 == 1:
-                        # grammar/ShyRecognizerBackend.g:79:11: types_item
+                        # grammar/ShyRecognizerBackend.g:83:11: types_item
                         pass 
                         self._state.following.append(self.FOLLOW_types_item_in_types_items536)
                         types_item16 = self.types_item()
@@ -612,7 +616,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types_item"
-    # grammar/ShyRecognizerBackend.g:84:1: types_item returns [ name , value ] : ( ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints ) | ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ) );
+    # grammar/ShyRecognizerBackend.g:88:1: types_item returns [ name , value ] : ( ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints ) | ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ) );
     def types_item(self, ):
         retval = self.types_item_return()
         retval.start = self.input.LT(1)
@@ -625,7 +629,7 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:86:5: ( ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints ) | ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ) )
+                # grammar/ShyRecognizerBackend.g:90:5: ( ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints ) | ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ) )
                 alt5 = 2
                 LA5_0 = self.input.LA(1)
 
@@ -676,7 +680,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt5 == 1:
-                    # grammar/ShyRecognizerBackend.g:86:9: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints )
+                    # grammar/ShyRecognizerBackend.g:90:9: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints )
                     pass 
                     self.match(self.input, TREE_TYPES_ITEM, self.FOLLOW_TREE_TYPES_ITEM_in_types_item591)
 
@@ -700,7 +704,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt5 == 2:
-                    # grammar/ShyRecognizerBackend.g:88:9: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS )
+                    # grammar/ShyRecognizerBackend.g:92:9: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS )
                     pass 
                     self.match(self.input, TREE_TYPES_ITEM, self.FOLLOW_TREE_TYPES_ITEM_in_types_item625)
 
@@ -732,7 +736,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types_item_hints"
-    # grammar/ShyRecognizerBackend.g:92:1: types_item_hints returns [ value ] : ( types_item_hint )+ ;
+    # grammar/ShyRecognizerBackend.g:96:1: types_item_hints returns [ value ] : ( types_item_hint )+ ;
     def types_item_hints(self, ):
         value = None
 
@@ -743,10 +747,10 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:95:5: ( ( types_item_hint )+ )
-                # grammar/ShyRecognizerBackend.g:95:9: ( types_item_hint )+
+                # grammar/ShyRecognizerBackend.g:99:5: ( ( types_item_hint )+ )
+                # grammar/ShyRecognizerBackend.g:99:9: ( types_item_hint )+
                 pass 
-                # grammar/ShyRecognizerBackend.g:95:9: ( types_item_hint )+
+                # grammar/ShyRecognizerBackend.g:99:9: ( types_item_hint )+
                 cnt6 = 0
                 while True: #loop6
                     alt6 = 2
@@ -757,7 +761,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     if alt6 == 1:
-                        # grammar/ShyRecognizerBackend.g:95:11: types_item_hint
+                        # grammar/ShyRecognizerBackend.g:99:11: types_item_hint
                         pass 
                         self._state.following.append(self.FOLLOW_types_item_hint_in_types_item_hints684)
                         types_item_hint20 = self.types_item_hint()
@@ -796,7 +800,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types_item_hint"
-    # grammar/ShyRecognizerBackend.g:98:1: types_item_hint returns [ value ] : ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) );
+    # grammar/ShyRecognizerBackend.g:102:1: types_item_hint returns [ value ] : ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) );
     def types_item_hint(self, ):
         value = None
 
@@ -811,7 +815,7 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:101:5: ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) )
+                # grammar/ShyRecognizerBackend.g:105:5: ( ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) )
                 alt9 = 2
                 LA9_0 = self.input.LA(1)
 
@@ -844,14 +848,14 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt9 == 1:
-                    # grammar/ShyRecognizerBackend.g:101:9: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                    # grammar/ShyRecognizerBackend.g:105:9: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
                     pass 
                     self.match(self.input, TREE_TYPES_ITEM_HINT, self.FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint729)
 
                     self.match(self.input, DOWN, None)
                     self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_types_item_hint731)
 
-                    # grammar/ShyRecognizerBackend.g:101:48: ( types_item_attr )+
+                    # grammar/ShyRecognizerBackend.g:105:48: ( types_item_attr )+
                     cnt7 = 0
                     while True: #loop7
                         alt7 = 2
@@ -862,7 +866,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                         if alt7 == 1:
-                            # grammar/ShyRecognizerBackend.g:101:50: types_item_attr
+                            # grammar/ShyRecognizerBackend.g:105:50: types_item_attr
                             pass 
                             self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint735)
                             types_item_attr21 = self.types_item_attr()
@@ -890,7 +894,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt9 == 2:
-                    # grammar/ShyRecognizerBackend.g:104:9: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    # grammar/ShyRecognizerBackend.g:108:9: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
                     pass 
                     self.match(self.input, TREE_TYPES_ITEM_HINT, self.FOLLOW_TREE_TYPES_ITEM_HINT_in_types_item_hint775)
 
@@ -900,7 +904,7 @@ class ShyRecognizerBackend(TreeParser):
 
                     self._state.following.pop()
 
-                    # grammar/ShyRecognizerBackend.g:104:38: ( types_item_attr )+
+                    # grammar/ShyRecognizerBackend.g:108:38: ( types_item_attr )+
                     cnt8 = 0
                     while True: #loop8
                         alt8 = 2
@@ -911,7 +915,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                         if alt8 == 1:
-                            # grammar/ShyRecognizerBackend.g:104:40: types_item_attr
+                            # grammar/ShyRecognizerBackend.g:108:40: types_item_attr
                             pass 
                             self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint781)
                             types_item_attr22 = self.types_item_attr()
@@ -952,7 +956,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "types_item_attr"
-    # grammar/ShyRecognizerBackend.g:109:1: types_item_attr returns [ value ] : ^( TREE_TYPES_ITEM_ATTR ID ) ;
+    # grammar/ShyRecognizerBackend.g:113:1: types_item_attr returns [ value ] : ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr(self, ):
         value = None
 
@@ -961,8 +965,8 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:111:5: ( ^( TREE_TYPES_ITEM_ATTR ID ) )
-                # grammar/ShyRecognizerBackend.g:111:9: ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/ShyRecognizerBackend.g:115:5: ( ^( TREE_TYPES_ITEM_ATTR ID ) )
+                # grammar/ShyRecognizerBackend.g:115:9: ^( TREE_TYPES_ITEM_ATTR ID )
                 pass 
                 self.match(self.input, TREE_TYPES_ITEM_ATTR, self.FOLLOW_TREE_TYPES_ITEM_ATTR_in_types_item_attr838)
 
@@ -993,7 +997,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "hint"
-    # grammar/ShyRecognizerBackend.g:114:1: hint returns [ value ] : ( ^( TREE_HINT ID ) | ^( TREE_HINT ID hint_args ) );
+    # grammar/ShyRecognizerBackend.g:118:1: hint returns [ value ] : ( ^( TREE_HINT ID ) | ^( TREE_HINT ID hint_args ) );
     def hint(self, ):
         value = None
 
@@ -1006,7 +1010,7 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:117:5: ( ^( TREE_HINT ID ) | ^( TREE_HINT ID hint_args ) )
+                # grammar/ShyRecognizerBackend.g:121:5: ( ^( TREE_HINT ID ) | ^( TREE_HINT ID hint_args ) )
                 alt10 = 2
                 LA10_0 = self.input.LA(1)
 
@@ -1048,7 +1052,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt10 == 1:
-                    # grammar/ShyRecognizerBackend.g:117:9: ^( TREE_HINT ID )
+                    # grammar/ShyRecognizerBackend.g:121:9: ^( TREE_HINT ID )
                     pass 
                     self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint883)
 
@@ -1065,7 +1069,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt10 == 2:
-                    # grammar/ShyRecognizerBackend.g:119:9: ^( TREE_HINT ID hint_args )
+                    # grammar/ShyRecognizerBackend.g:123:9: ^( TREE_HINT ID hint_args )
                     pass 
                     self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint913)
 
@@ -1100,7 +1104,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "hint_args"
-    # grammar/ShyRecognizerBackend.g:123:1: hint_args returns [ value ] : ( hint_arg )+ ;
+    # grammar/ShyRecognizerBackend.g:127:1: hint_args returns [ value ] : ( hint_arg )+ ;
     def hint_args(self, ):
         value = None
 
@@ -1111,10 +1115,10 @@ class ShyRecognizerBackend(TreeParser):
         value = list ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:126:5: ( ( hint_arg )+ )
-                # grammar/ShyRecognizerBackend.g:126:9: ( hint_arg )+
+                # grammar/ShyRecognizerBackend.g:130:5: ( ( hint_arg )+ )
+                # grammar/ShyRecognizerBackend.g:130:9: ( hint_arg )+
                 pass 
-                # grammar/ShyRecognizerBackend.g:126:9: ( hint_arg )+
+                # grammar/ShyRecognizerBackend.g:130:9: ( hint_arg )+
                 cnt11 = 0
                 while True: #loop11
                     alt11 = 2
@@ -1125,7 +1129,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     if alt11 == 1:
-                        # grammar/ShyRecognizerBackend.g:126:11: hint_arg
+                        # grammar/ShyRecognizerBackend.g:130:11: hint_arg
                         pass 
                         self._state.following.append(self.FOLLOW_hint_arg_in_hint_args972)
                         hint_arg28 = self.hint_arg()
@@ -1164,7 +1168,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "hint_arg"
-    # grammar/ShyRecognizerBackend.g:129:1: hint_arg returns [ value ] : ( ID | UNDERSCORE );
+    # grammar/ShyRecognizerBackend.g:133:1: hint_arg returns [ value ] : ( ID | UNDERSCORE );
     def hint_arg(self, ):
         value = None
 
@@ -1174,7 +1178,7 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:131:5: ( ID | UNDERSCORE )
+                # grammar/ShyRecognizerBackend.g:135:5: ( ID | UNDERSCORE )
                 alt12 = 2
                 LA12_0 = self.input.LA(1)
 
@@ -1189,7 +1193,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt12 == 1:
-                    # grammar/ShyRecognizerBackend.g:131:9: ID
+                    # grammar/ShyRecognizerBackend.g:135:9: ID
                     pass 
                     ID29 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg1005)
 
@@ -1200,7 +1204,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt12 == 2:
-                    # grammar/ShyRecognizerBackend.g:132:9: UNDERSCORE
+                    # grammar/ShyRecognizerBackend.g:136:9: UNDERSCORE
                     pass 
                     UNDERSCORE30 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_hint_arg1017)
 
@@ -1224,7 +1228,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "num_whole"
-    # grammar/ShyRecognizerBackend.g:135:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
+    # grammar/ShyRecognizerBackend.g:139:1: num_whole returns [ value ] : ( ( MINUS NUMBER ) | ( NUMBER ) );
     def num_whole(self, ):
         value = None
 
@@ -1235,7 +1239,7 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:137:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
+                # grammar/ShyRecognizerBackend.g:141:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
                 alt13 = 2
                 LA13_0 = self.input.LA(1)
 
@@ -1250,10 +1254,10 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt13 == 1:
-                    # grammar/ShyRecognizerBackend.g:137:9: ( MINUS NUMBER )
+                    # grammar/ShyRecognizerBackend.g:141:9: ( MINUS NUMBER )
                     pass 
-                    # grammar/ShyRecognizerBackend.g:137:9: ( MINUS NUMBER )
-                    # grammar/ShyRecognizerBackend.g:137:11: MINUS NUMBER
+                    # grammar/ShyRecognizerBackend.g:141:9: ( MINUS NUMBER )
+                    # grammar/ShyRecognizerBackend.g:141:11: MINUS NUMBER
                     pass 
                     MINUS31 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole1048)
 
@@ -1269,10 +1273,10 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt13 == 2:
-                    # grammar/ShyRecognizerBackend.g:139:9: ( NUMBER )
+                    # grammar/ShyRecognizerBackend.g:143:9: ( NUMBER )
                     pass 
-                    # grammar/ShyRecognizerBackend.g:139:9: ( NUMBER )
-                    # grammar/ShyRecognizerBackend.g:139:11: NUMBER
+                    # grammar/ShyRecognizerBackend.g:143:9: ( NUMBER )
+                    # grammar/ShyRecognizerBackend.g:143:11: NUMBER
                     pass 
                     NUMBER33 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1078)
 
@@ -1299,7 +1303,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/ShyRecognizerBackend.g:143:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
+    # grammar/ShyRecognizerBackend.g:147:1: num_fract returns [ value ] : ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) );
     def num_fract(self, ):
         value = None
 
@@ -1310,7 +1314,7 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:145:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
+                # grammar/ShyRecognizerBackend.g:149:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
                 alt14 = 2
                 LA14_0 = self.input.LA(1)
 
@@ -1325,10 +1329,10 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt14 == 1:
-                    # grammar/ShyRecognizerBackend.g:145:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/ShyRecognizerBackend.g:149:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/ShyRecognizerBackend.g:145:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/ShyRecognizerBackend.g:145:11: MINUS n= NUMBER DIVIDE d= NUMBER
+                    # grammar/ShyRecognizerBackend.g:149:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/ShyRecognizerBackend.g:149:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
                     MINUS34 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract1123)
 
@@ -1351,10 +1355,10 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt14 == 2:
-                    # grammar/ShyRecognizerBackend.g:150:9: (n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/ShyRecognizerBackend.g:154:9: (n= NUMBER DIVIDE d= NUMBER )
                     pass 
-                    # grammar/ShyRecognizerBackend.g:150:9: (n= NUMBER DIVIDE d= NUMBER )
-                    # grammar/ShyRecognizerBackend.g:150:11: n= NUMBER DIVIDE d= NUMBER
+                    # grammar/ShyRecognizerBackend.g:154:9: (n= NUMBER DIVIDE d= NUMBER )
+                    # grammar/ShyRecognizerBackend.g:154:11: n= NUMBER DIVIDE d= NUMBER
                     pass 
                     n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1169)
 

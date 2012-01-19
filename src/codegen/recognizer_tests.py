@@ -91,11 +91,24 @@ class recognizer_test_case ( unittest . TestCase ) :
         ae ( r ( 'consts test1\n const1 [ 2 + 2 ]\n const2 []\n' ) ,
             { 'consts' : { 'test1' : 
                 { 'const1' : '[ 2 + 2 ]' , 'const2' : '[]' } } } )
+    def test_consts_combine ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'consts test1\n const1 11\nconsts test1\n  const2 22\n' ) ,
+            { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
     def test_types_empty ( self ) :
         ae = self . assertEqual
         r = self . rec
         ae ( r ( 'types test1\n type1\n type2\n' ) ,
             { 'types' : { 'test1' : { 'type1' : { } , 'type2' : { } } } } )
+    def test_types_combine ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        ae ( r ( 'types test1\n type1 atr1\n'
+                 'types test1\n type2 atr2\n' ) ,
+            { 'types' : { 'test1' : 
+                { 'type1' : { 'atr1' : { } }
+                , 'type2' : { 'atr2' : { } } } } } )
     def test_types_indented ( self ) :
         ae = self . assertEqual
         r = self . rec

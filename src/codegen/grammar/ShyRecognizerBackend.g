@@ -10,6 +10,13 @@ options
 @ header
 {
     from fractions import Fraction
+
+    def update_start_dict ( res , part , name , value ) :
+        if part not in res :
+            res [ part ] = dict ( )
+        if name not in res [ part ] :
+            res [ part ] [ name ] = dict ( )
+        res [ part ] [ name ] . update ( value )
 }
 
 start
@@ -17,21 +24,18 @@ start
     @ init { $value = dict ( ) }
     :   ( module 
             {
-                if 'module' not in $value :
-                    $value [ 'module' ] = dict ( )
-                $value [ 'module' ] [ $module.value ] = dict ( )
+                update_start_dict ( $value , 'module' ,
+                    $module.value , dict ( ) )
             }
         | consts
             {
-                if 'consts' not in $value :
-                    $value [ 'consts' ] = dict ( )
-                $value [ 'consts' ] [ $consts.title ] = $consts.content
+                update_start_dict ( $value , 'consts' ,
+                    $consts.title , $consts.content )
             }
         | types
             {
-                if 'types' not in $value :
-                    $value [ 'types' ] = dict ( )
-                $value [ 'types' ] [ $types.title ] = $types.content
+                update_start_dict ( $value , 'types' ,
+                    $types.title , $types.content )
             }
         ) *
     ;
