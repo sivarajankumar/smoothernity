@@ -23,11 +23,10 @@ class copypaster :
         return res
     def _copypaste ( self , info ) :
         res = [ ]
-        for paste in info [ 'paste' ] :
-            what , with_what = paste
+        for replace in info [ 'paste' ] :
             for t in self . _process ( info [ 'copy' ] ) :
-                if t == what :
-                    res += with_what
+                if t in replace :
+                    res += replace [ t ]
                 else :
                     res . append ( t )
         return res

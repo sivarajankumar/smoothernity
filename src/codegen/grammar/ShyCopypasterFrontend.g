@@ -26,7 +26,7 @@ start : block * ;
 block
     :   arbitrary_token + NEWLINE
     |   INDENT NEWLINE block + DEDENT NEWLINE
-    |   COPY copy_body paste + -> ^( TREE_COPY copy_body paste + ) 
+    |   COPY copy_body copy_paste + -> ^( TREE_COPY copy_body copy_paste + ) 
     ;
 
 pure_block
@@ -39,8 +39,12 @@ copy_body
     |   arbitrary_token + NEWLINE
     ;
 
+copy_paste
+    :   PASTE paste -> ^( TREE_COPY_PASTE paste )
+    ;
+
 paste
-    :   PASTE REPLACE paste_replace WITH paste_with
+    :   REPLACE paste_replace WITH paste_with
         -> ^( TREE_PASTE paste_replace paste_with )
     ;
 
