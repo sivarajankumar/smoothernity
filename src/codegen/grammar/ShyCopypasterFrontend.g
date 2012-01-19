@@ -24,24 +24,33 @@ options
 start : block * ;
 
 block
-    : arbitrary_token + NEWLINE
-    | INDENT NEWLINE block + DEDENT NEWLINE
-    | COPY NEWLINE INDENT NEWLINE block + DEDENT NEWLINE
-      PASTE REPLACE ID WITH block
-      -> COPY block + PASTE REPLACE ID WITH block
+    :   arbitrary_token + NEWLINE
+    |   INDENT NEWLINE block + DEDENT NEWLINE
+    |   COPY NEWLINE INDENT NEWLINE block + DEDENT NEWLINE
+        ( PASTE REPLACE paste_replace WITH paste_with ) +
+        ->
+            ^( TREE_COPY block + 
+                ^( TREE_PASTE
+                    ^( TREE_PASTE_REPLACE paste_replace )
+                    ^( TREE_PASTE_WITH paste_with )
+                ) +
+            )
     ;
 
-arbitrary_token
-    : CONSTS
-    | MODULE
-    | TYPES
+paste_replace : ID ;
+paste_with : arbitrary_token + NEWLINE -> arbitrary_token + ;
 
-    | CURLY_OPEN
-    | CURLY_CLOSE
-    | DIVIDE
-    | MINUS
-    | UNDERSCORE
-    | ID
-    | NUMBER
-    | EXPRESSION
+arbitrary_token
+    :   CONSTS
+    |   MODULE
+    |   TYPES
+
+    |   CURLY_OPEN
+    |   CURLY_CLOSE
+    |   DIVIDE
+    |   MINUS
+    |   UNDERSCORE
+    |   ID
+    |   NUMBER
+    |   EXPRESSION
     ;
