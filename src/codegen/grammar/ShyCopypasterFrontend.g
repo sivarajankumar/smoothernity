@@ -25,15 +25,16 @@ start : block * ;
 
 block
     :   pure_block
-    |   COPY NEWLINE INDENT NEWLINE pure_block + DEDENT NEWLINE
-        ( PASTE REPLACE paste_replace WITH paste_with ) +
-        ->
-            ^( TREE_COPY pure_block + 
-                ^( TREE_PASTE
-                    ^( TREE_PASTE_REPLACE paste_replace )
-                    ^( TREE_PASTE_WITH paste_with )
-                ) +
-            )
+    |   COPY copy_body paste + -> ^( TREE_COPY copy_body paste + ) 
+    ;
+
+copy_body
+    :   NEWLINE INDENT NEWLINE pure_block + DEDENT NEWLINE -> pure_block +
+    ;
+
+paste
+    :   PASTE REPLACE paste_replace WITH paste_with
+        -> ^( TREE_PASTE paste_replace paste_with )
     ;
 
 pure_block
@@ -41,8 +42,13 @@ pure_block
     |   INDENT NEWLINE pure_block + DEDENT NEWLINE
     ;
 
-paste_replace : ID ;
-paste_with : arbitrary_token + NEWLINE -> arbitrary_token + ;
+paste_replace
+    :   ID -> ^( TREE_PASTE_REPLACE ID )
+    ;
+
+paste_with
+    :   arbitrary_token + NEWLINE -> ^( TREE_PASTE_WITH arbitrary_token + )
+    ;
 
 arbitrary_token
     :   CONSTS
