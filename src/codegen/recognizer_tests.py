@@ -54,6 +54,9 @@ class recognizer_test_case ( unittest . TestCase ) :
         ce = copypaster . exception
         ar ( ce , r , 'copy\n' )
         ar ( ce , r , 'paste\n' )
+        ar ( ce , r , 'copy\n copy\n  test1\n'
+            ' paste replace test1 with test2\n'
+            'paste replace test2 with test3\n' )
     def test_modules ( self ) :
         ae = self . assertEqual
         r = self . rec

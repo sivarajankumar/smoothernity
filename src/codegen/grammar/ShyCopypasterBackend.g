@@ -16,6 +16,23 @@ start
 block
     returns [ value ]
     @ init { $value = list ( ) }
+    :   pb1 = pure_block { $value = $pb1.value }
+    |   { _copy , _paste = list ( ) , list ( ) }
+        ^( TREE_COPY
+            ( pb2 = pure_block 
+                { _copy += $pb2.value }
+            ) +
+        ( ^( TREE_PASTE
+            ^( TREE_PASTE_REPLACE pr = paste_replace )
+            ^( TREE_PASTE_WITH pw = paste_with )
+                { _paste += [ [ $pr.value , $pw.value ] ] }
+        ) ) + )
+            { $value = [ { 'copy' : _copy , 'paste' : _paste } ] }
+    ;
+
+pure_block
+    returns [ value ]
+    @ init { $value = list ( ) }
     :   ( arbitrary_token
             { $value . append ( $arbitrary_token.value ) }
         ) +
@@ -28,17 +45,6 @@ block
         ) + 
         DEDENT nl2 = NEWLINE
             { $value += [ $DEDENT.text , $nl2.text ] }
-    |   { _copy , _paste = list ( ) , list ( ) }
-        ^( TREE_COPY
-            ( b2 = block 
-                { _copy += $b2.value }
-            ) +
-        ( ^( TREE_PASTE
-            ^( TREE_PASTE_REPLACE pr = paste_replace )
-            ^( TREE_PASTE_WITH pw = paste_with )
-                { _paste += [ [ $pr.value , $pw.value ] ] }
-        ) ) + )
-            { $value . append ( { 'copy' : _copy , 'paste' : _paste } ) }
     ;
 
 paste_replace
