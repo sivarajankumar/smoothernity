@@ -46,6 +46,14 @@ pure_block
             { $value += [ $DEDENT.text , $nl2.text ] }
     ;
 
+pure_blocks
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ( pure_block
+            { $value += $pure_block.value }
+        ) +
+    ;
+
 copy
     returns [ value ]
     :   ^( TREE_COPY copy_body pastes )
@@ -79,6 +87,8 @@ paste_with
     returns [ value ]
     :   ^( TREE_PASTE_WITH arbitrary_tokens )
         { $value = $arbitrary_tokens.value }
+    |   ^( TREE_PASTE_WITH pure_blocks )
+        { $value = $pure_blocks.value }
     ;
 
 arbitrary_tokens

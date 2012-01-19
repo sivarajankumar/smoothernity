@@ -48,7 +48,10 @@ paste_replace
     ;
 
 paste_with
-    :   arbitrary_token + NEWLINE -> ^( TREE_PASTE_WITH arbitrary_token + )
+    :   arbitrary_token + NEWLINE 
+        -> ^( TREE_PASTE_WITH arbitrary_token + )
+    |   NEWLINE INDENT NEWLINE pure_block + DEDENT NEWLINE
+        -> ^( TREE_PASTE_WITH pure_block + )
     ;
 
 arbitrary_token

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-19 20:53:01
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-19 21:01:49
 
 import sys
 from antlr3 import *
@@ -395,7 +395,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: copy_body, paste
+                    # elements: paste, copy_body
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -849,7 +849,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: paste_replace, paste_with
+                # elements: paste_with, paste_replace
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1006,7 +1006,7 @@ class ShyCopypasterFrontend(Parser):
 
 
     # $ANTLR start "paste_with"
-    # grammar/ShyCopypasterFrontend.g:50:1: paste_with : ( arbitrary_token )+ NEWLINE -> ^( TREE_PASTE_WITH ( arbitrary_token )+ ) ;
+    # grammar/ShyCopypasterFrontend.g:50:1: paste_with : ( ( arbitrary_token )+ NEWLINE -> ^( TREE_PASTE_WITH ( arbitrary_token )+ ) | NEWLINE INDENT NEWLINE ( pure_block )+ DEDENT NEWLINE -> ^( TREE_PASTE_WITH ( pure_block )+ ) );
     def paste_with(self, ):
         retval = self.paste_with_return()
         retval.start = self.input.LT(1)
@@ -1015,91 +1015,215 @@ class ShyCopypasterFrontend(Parser):
         root_0 = None
 
         NEWLINE32 = None
+        NEWLINE33 = None
+        INDENT34 = None
+        NEWLINE35 = None
+        DEDENT37 = None
+        NEWLINE38 = None
         arbitrary_token31 = None
+
+        pure_block36 = None
 
 
         NEWLINE32_tree = None
+        NEWLINE33_tree = None
+        INDENT34_tree = None
+        NEWLINE35_tree = None
+        DEDENT37_tree = None
+        NEWLINE38_tree = None
+        stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
+        stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
         stream_arbitrary_token = RewriteRuleSubtreeStream(self._adaptor, "rule arbitrary_token")
+        stream_pure_block = RewriteRuleSubtreeStream(self._adaptor, "rule pure_block")
         try:
             try:
-                # grammar/ShyCopypasterFrontend.g:51:5: ( ( arbitrary_token )+ NEWLINE -> ^( TREE_PASTE_WITH ( arbitrary_token )+ ) )
-                # grammar/ShyCopypasterFrontend.g:51:9: ( arbitrary_token )+ NEWLINE
-                pass 
-                # grammar/ShyCopypasterFrontend.g:51:9: ( arbitrary_token )+
-                cnt10 = 0
-                while True: #loop10
-                    alt10 = 2
-                    LA10_0 = self.input.LA(1)
+                # grammar/ShyCopypasterFrontend.g:51:5: ( ( arbitrary_token )+ NEWLINE -> ^( TREE_PASTE_WITH ( arbitrary_token )+ ) | NEWLINE INDENT NEWLINE ( pure_block )+ DEDENT NEWLINE -> ^( TREE_PASTE_WITH ( pure_block )+ ) )
+                alt12 = 2
+                LA12_0 = self.input.LA(1)
 
-                    if (LA10_0 == CONSTS or (CURLY_CLOSE <= LA10_0 <= CURLY_OPEN) or (DIVIDE <= LA10_0 <= ID) or (MINUS <= LA10_0 <= MODULE) or LA10_0 == NUMBER or (TYPES <= LA10_0 <= UNDERSCORE)) :
-                        alt10 = 1
-
-
-                    if alt10 == 1:
-                        # grammar/ShyCopypasterFrontend.g:51:9: arbitrary_token
-                        pass 
-                        self._state.following.append(self.FOLLOW_arbitrary_token_in_paste_with327)
-                        arbitrary_token31 = self.arbitrary_token()
-
-                        self._state.following.pop()
-                        stream_arbitrary_token.add(arbitrary_token31.tree)
-
-
-
-                    else:
-                        if cnt10 >= 1:
-                            break #loop10
-
-                        eee = EarlyExitException(10, self.input)
-                        raise eee
-
-                    cnt10 += 1
-
-
-                NEWLINE32 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_paste_with331) 
-                stream_NEWLINE.add(NEWLINE32)
-
-
-                # AST Rewrite
-                # elements: arbitrary_token
-                # token labels: 
-                # rule labels: retval
-                # token list labels: 
-                # rule list labels: 
-                # wildcard labels: 
-                retval.tree = root_0
-                if retval is not None:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                if (LA12_0 == CONSTS or (CURLY_CLOSE <= LA12_0 <= CURLY_OPEN) or (DIVIDE <= LA12_0 <= ID) or (MINUS <= LA12_0 <= MODULE) or LA12_0 == NUMBER or (TYPES <= LA12_0 <= UNDERSCORE)) :
+                    alt12 = 1
+                elif (LA12_0 == NEWLINE) :
+                    alt12 = 2
                 else:
-                    stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+                    nvae = NoViableAltException("", 12, 0, self.input)
+
+                    raise nvae
 
 
-                root_0 = self._adaptor.nil()
-                # 51:35: -> ^( TREE_PASTE_WITH ( arbitrary_token )+ )
-                # grammar/ShyCopypasterFrontend.g:51:38: ^( TREE_PASTE_WITH ( arbitrary_token )+ )
-                root_1 = self._adaptor.nil()
-                root_1 = self._adaptor.becomeRoot(
-                self._adaptor.createFromType(TREE_PASTE_WITH, "TREE_PASTE_WITH")
-                , root_1)
+                if alt12 == 1:
+                    # grammar/ShyCopypasterFrontend.g:51:9: ( arbitrary_token )+ NEWLINE
+                    pass 
+                    # grammar/ShyCopypasterFrontend.g:51:9: ( arbitrary_token )+
+                    cnt10 = 0
+                    while True: #loop10
+                        alt10 = 2
+                        LA10_0 = self.input.LA(1)
 
-                # grammar/ShyCopypasterFrontend.g:51:57: ( arbitrary_token )+
-                if not (stream_arbitrary_token.hasNext()):
-                    raise RewriteEarlyExitException()
-
-                while stream_arbitrary_token.hasNext():
-                    self._adaptor.addChild(root_1, stream_arbitrary_token.nextTree())
+                        if (LA10_0 == CONSTS or (CURLY_CLOSE <= LA10_0 <= CURLY_OPEN) or (DIVIDE <= LA10_0 <= ID) or (MINUS <= LA10_0 <= MODULE) or LA10_0 == NUMBER or (TYPES <= LA10_0 <= UNDERSCORE)) :
+                            alt10 = 1
 
 
-                stream_arbitrary_token.reset()
+                        if alt10 == 1:
+                            # grammar/ShyCopypasterFrontend.g:51:9: arbitrary_token
+                            pass 
+                            self._state.following.append(self.FOLLOW_arbitrary_token_in_paste_with327)
+                            arbitrary_token31 = self.arbitrary_token()
 
-                self._adaptor.addChild(root_0, root_1)
+                            self._state.following.pop()
+                            stream_arbitrary_token.add(arbitrary_token31.tree)
+
+
+
+                        else:
+                            if cnt10 >= 1:
+                                break #loop10
+
+                            eee = EarlyExitException(10, self.input)
+                            raise eee
+
+                        cnt10 += 1
+
+
+                    NEWLINE32 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_paste_with331) 
+                    stream_NEWLINE.add(NEWLINE32)
+
+
+                    # AST Rewrite
+                    # elements: arbitrary_token
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 52:9: -> ^( TREE_PASTE_WITH ( arbitrary_token )+ )
+                    # grammar/ShyCopypasterFrontend.g:52:12: ^( TREE_PASTE_WITH ( arbitrary_token )+ )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(TREE_PASTE_WITH, "TREE_PASTE_WITH")
+                    , root_1)
+
+                    # grammar/ShyCopypasterFrontend.g:52:31: ( arbitrary_token )+
+                    if not (stream_arbitrary_token.hasNext()):
+                        raise RewriteEarlyExitException()
+
+                    while stream_arbitrary_token.hasNext():
+                        self._adaptor.addChild(root_1, stream_arbitrary_token.nextTree())
+
+
+                    stream_arbitrary_token.reset()
+
+                    self._adaptor.addChild(root_0, root_1)
 
 
 
 
-                retval.tree = root_0
+                    retval.tree = root_0
 
+
+
+
+                elif alt12 == 2:
+                    # grammar/ShyCopypasterFrontend.g:53:9: NEWLINE INDENT NEWLINE ( pure_block )+ DEDENT NEWLINE
+                    pass 
+                    NEWLINE33 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_paste_with362) 
+                    stream_NEWLINE.add(NEWLINE33)
+
+
+                    INDENT34 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_paste_with364) 
+                    stream_INDENT.add(INDENT34)
+
+
+                    NEWLINE35 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_paste_with366) 
+                    stream_NEWLINE.add(NEWLINE35)
+
+
+                    # grammar/ShyCopypasterFrontend.g:53:32: ( pure_block )+
+                    cnt11 = 0
+                    while True: #loop11
+                        alt11 = 2
+                        LA11_0 = self.input.LA(1)
+
+                        if (LA11_0 == CONSTS or (CURLY_CLOSE <= LA11_0 <= CURLY_OPEN) or (DIVIDE <= LA11_0 <= MODULE) or LA11_0 == NUMBER or (TYPES <= LA11_0 <= UNDERSCORE)) :
+                            alt11 = 1
+
+
+                        if alt11 == 1:
+                            # grammar/ShyCopypasterFrontend.g:53:32: pure_block
+                            pass 
+                            self._state.following.append(self.FOLLOW_pure_block_in_paste_with368)
+                            pure_block36 = self.pure_block()
+
+                            self._state.following.pop()
+                            stream_pure_block.add(pure_block36.tree)
+
+
+
+                        else:
+                            if cnt11 >= 1:
+                                break #loop11
+
+                            eee = EarlyExitException(11, self.input)
+                            raise eee
+
+                        cnt11 += 1
+
+
+                    DEDENT37 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_paste_with372) 
+                    stream_DEDENT.add(DEDENT37)
+
+
+                    NEWLINE38 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_paste_with374) 
+                    stream_NEWLINE.add(NEWLINE38)
+
+
+                    # AST Rewrite
+                    # elements: pure_block
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 54:9: -> ^( TREE_PASTE_WITH ( pure_block )+ )
+                    # grammar/ShyCopypasterFrontend.g:54:12: ^( TREE_PASTE_WITH ( pure_block )+ )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(TREE_PASTE_WITH, "TREE_PASTE_WITH")
+                    , root_1)
+
+                    # grammar/ShyCopypasterFrontend.g:54:31: ( pure_block )+
+                    if not (stream_pure_block.hasNext()):
+                        raise RewriteEarlyExitException()
+
+                    while stream_pure_block.hasNext():
+                        self._adaptor.addChild(root_1, stream_pure_block.nextTree())
+
+
+                    stream_pure_block.reset()
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
 
 
 
@@ -1135,7 +1259,7 @@ class ShyCopypasterFrontend(Parser):
 
 
     # $ANTLR start "arbitrary_token"
-    # grammar/ShyCopypasterFrontend.g:54:1: arbitrary_token : ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION );
+    # grammar/ShyCopypasterFrontend.g:57:1: arbitrary_token : ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION );
     def arbitrary_token(self, ):
         retval = self.arbitrary_token_return()
         retval.start = self.input.LT(1)
@@ -1143,23 +1267,23 @@ class ShyCopypasterFrontend(Parser):
 
         root_0 = None
 
-        set33 = None
+        set39 = None
 
-        set33_tree = None
+        set39_tree = None
 
         try:
             try:
-                # grammar/ShyCopypasterFrontend.g:55:5: ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION )
+                # grammar/ShyCopypasterFrontend.g:58:5: ( CONSTS | MODULE | TYPES | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION )
                 # grammar/ShyCopypasterFrontend.g:
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                set33 = self.input.LT(1)
+                set39 = self.input.LT(1)
 
                 if self.input.LA(1) == CONSTS or (CURLY_CLOSE <= self.input.LA(1) <= CURLY_OPEN) or (DIVIDE <= self.input.LA(1) <= ID) or (MINUS <= self.input.LA(1) <= MODULE) or self.input.LA(1) == NUMBER or (TYPES <= self.input.LA(1) <= UNDERSCORE):
                     self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set33))
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set39))
 
                     self._state.errorRecovery = False
 
@@ -1222,11 +1346,17 @@ class ShyCopypasterFrontend(Parser):
     FOLLOW_PASTE_in_paste251 = frozenset([18])
     FOLLOW_REPLACE_in_paste253 = frozenset([11])
     FOLLOW_paste_replace_in_paste255 = frozenset([40])
-    FOLLOW_WITH_in_paste257 = frozenset([4, 6, 7, 9, 10, 11, 13, 14, 16, 37, 38])
+    FOLLOW_WITH_in_paste257 = frozenset([4, 6, 7, 9, 10, 11, 13, 14, 15, 16, 37, 38])
     FOLLOW_paste_with_in_paste259 = frozenset([1])
     FOLLOW_ID_in_paste_replace298 = frozenset([1])
     FOLLOW_arbitrary_token_in_paste_with327 = frozenset([4, 6, 7, 9, 10, 11, 13, 14, 15, 16, 37, 38])
     FOLLOW_NEWLINE_in_paste_with331 = frozenset([1])
+    FOLLOW_NEWLINE_in_paste_with362 = frozenset([12])
+    FOLLOW_INDENT_in_paste_with364 = frozenset([15])
+    FOLLOW_NEWLINE_in_paste_with366 = frozenset([4, 6, 7, 9, 10, 11, 12, 13, 14, 16, 37, 38])
+    FOLLOW_pure_block_in_paste_with368 = frozenset([4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 37, 38])
+    FOLLOW_DEDENT_in_paste_with372 = frozenset([15])
+    FOLLOW_NEWLINE_in_paste_with374 = frozenset([1])
 
 
 
