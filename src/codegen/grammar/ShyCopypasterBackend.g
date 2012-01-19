@@ -15,44 +15,62 @@ start
 
 block
     returns [ value ]
-    @ init { $value = list ( ) }
-    :   pb1 = pure_block { $value = $pb1.value }
-    |   { _copy , _paste = list ( ) , list ( ) }
-        ^( TREE_COPY
-            ( pb2 = pure_block 
-                { _copy += $pb2.value }
-            ) +
-        ( ^( TREE_PASTE
-            ^( TREE_PASTE_REPLACE pr = paste_replace )
-            ^( TREE_PASTE_WITH pw = paste_with )
-                { _paste += [ [ $pr.value , $pw.value ] ] }
-        ) ) + )
-            { $value = [ { 'copy' : _copy , 'paste' : _paste } ] }
+    :   pure_block { $value = $pure_block.value }
+    |   copy { $value = $copy.value }
     ;
 
 pure_block
     returns [ value ]
     @ init { $value = list ( ) }
-    :   ( arbitrary_token
-            { $value . append ( $arbitrary_token.value ) }
-        ) +
+    :   arbitrary_tokens
+            { $value += $arbitrary_tokens.value }
         NEWLINE
             { $value += [ $NEWLINE.text ] }
     |   INDENT nl1 = NEWLINE
             { $value += [ $INDENT.text , $nl1.text ] }
-        ( b1 = block
-            { $value += $b1.value }
+        ( pb1 = pure_block
+            { $value += $pb1.value }
         ) + 
         DEDENT nl2 = NEWLINE
             { $value += [ $DEDENT.text , $nl2.text ] }
     ;
 
+copy
+    returns [ value ]
+    :   ^( TREE_COPY copy_body pastes )
+        { $value = [ { 'copy' : $copy_body.value , 'paste' : $pastes.value } ] }
+    ;
+
+copy_body
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ( pure_block { $value += $pure_block.value } ) +
+    ;
+
+pastes
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ( paste { $value . append ( $paste.value ) } ) +
+    ;
+
+paste
+    returns [ value ]
+    :   ^( TREE_PASTE paste_replace paste_with )
+        { $value = [ $paste_replace.value , $paste_with.value ] }
+    ;
+
 paste_replace
     returns [ value ]
-    :   ID { $value = $ID.text }
+    :   ^( TREE_PASTE_REPLACE ID ) { $value = $ID.text }
     ;
 
 paste_with
+    returns [ value ]
+    :   ^( TREE_PASTE_WITH arbitrary_tokens )
+        { $value = $arbitrary_tokens.value }
+    ;
+
+arbitrary_tokens
     returns [ value ]
     @ init { $value = list ( ) }
     :   ( arbitrary_token
