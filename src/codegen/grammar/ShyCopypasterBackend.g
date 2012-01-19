@@ -15,8 +15,19 @@ start
 
 block
     returns [ value ]
-    :   pure_block { $value = $pure_block.value }
-    |   copy { $value = $copy.value }
+    @ init { $value = list ( ) }
+    :   arbitrary_tokens
+            { $value += $arbitrary_tokens.value }
+        NEWLINE
+            { $value += [ $NEWLINE.text ] }
+    |   INDENT nl1 = NEWLINE
+            { $value += [ $INDENT.text , $nl1.text ] }
+        ( b1 = block
+            { $value += $b1.value }
+        ) + 
+        DEDENT nl2 = NEWLINE
+            { $value += [ $DEDENT.text , $nl2.text ] }
+    |   copy { $value += $copy.value }
     ;
 
 pure_block

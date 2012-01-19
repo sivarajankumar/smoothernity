@@ -24,7 +24,8 @@ options
 start : block * ;
 
 block
-    :   pure_block
+    :   arbitrary_token + NEWLINE
+    |   INDENT NEWLINE block + DEDENT NEWLINE
     |   COPY copy_body paste + -> ^( TREE_COPY copy_body paste + ) 
     ;
 
