@@ -28,6 +28,8 @@ class copypaster :
                 if t in replace :
                     res += replace [ t ]
                 else :
+                    for what , with_what in replace . items ( ) :
+                        t = t . replace ( what , ' ' . join ( with_what ) )
                     res . append ( t )
         return res
     def _read ( self , input ) :

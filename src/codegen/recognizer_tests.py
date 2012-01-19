@@ -42,6 +42,14 @@ class recognizer_test_case ( unittest . TestCase ) :
             'paste replace const1 with const2\n'
             'paste replace const1 with const3\n' ) ,
             { 'consts' : { 'test1' : { 'const2' : 11 , 'const3' : 11 } } } )
+    def test_copy_paste_substring ( self ) :
+        ae = self . assertEqual
+        r = self . rec
+        f = fractions . Fraction
+        ae ( r ( 'copy\n consts test1\n  myvalue 2\npaste\n'
+            ' replace my with their\n'
+            ' replace value with test 1 /\n' ) ,
+            { 'consts' : { 'test1' : { 'theirtest' : f ( 1 , 2 ) } } } )
     def test_copy_paste_multi_replace ( self ) :
         ae = self . assertEqual
         r = self . rec
