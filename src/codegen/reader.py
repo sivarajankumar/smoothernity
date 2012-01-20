@@ -5,8 +5,11 @@ import formatter
 import copypaster
 
 class exception ( Exception ) :
-    def __init__ ( self , text ) :
+    def __init__ ( self , text , src ) :
         Exception . __init__ ( self , text )
+        self . _src = src
+    def get_src ( self ) :
+        return self . _src
 
 class reader :
     def __init__ ( self ) :
@@ -26,6 +29,6 @@ class reader :
             d4 = self . _i . run ( io . StringIO ( d3 ) . readlines ( ) )
             return self . _r . run ( io . StringIO ( d4 ) )
         except copypaster . exception as e :
-            raise exception ( str ( e ) )
+            raise exception ( str ( e ) , d1 )
         except recognizer . exception as e :
-            raise exception ( str ( e ) )
+            raise exception ( str ( e ) , d4 )

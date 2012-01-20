@@ -1,6 +1,7 @@
 from hashlib import md5
 from os . path import dirname
 from reader import reader
+from reader import exception as reader_exception
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -125,5 +126,9 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    print reader ( ) . run ( stdin )
+    try :
+        print reader ( ) . run ( stdin )
+    except reader_exception as e :
+        print e . get_src ( )
+        print 'exception: ' , str ( e )
     reify ( generate ( [ ] ) , open , trace ( ) , options ( ) , os )
