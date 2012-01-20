@@ -1,27 +1,15 @@
 import unittest
-import recognizer
 import io
 import fractions
-import indenter
-import formatter
+import reader
+import recognizer
 import copypaster
 
 class helper :
     def __init__ ( self ) :
-        self . c = copypaster . copypaster ( )
-        self . r = recognizer . recognizer ( )
-        self . i = indenter . indenter ( )
-        self . f = formatter . formatter ( )
-        for o in ( self . i , self . f ) :
-            o . set_indent_token ( 'indent' )
-            o . set_dedent_token ( 'dedent' )
-            o . set_newline_token ( '\n' )
+        self . _r = reader . reader ( )
     def rec ( self , s ) :
-        indented1 = self . i . run ( io . StringIO ( s ) . readlines ( ) )
-        copypasted = self . c . run ( io . StringIO ( indented1 ) )
-        formatted = self . f . run ( copypasted )
-        indented2 = self . i . run ( io . StringIO ( formatted ) . readlines ( ) )
-        return self . r . run ( io . StringIO ( indented2 ) )
+        return self . _r . run ( io . StringIO ( s ) ) 
 
 class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
