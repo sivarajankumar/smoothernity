@@ -27,6 +27,11 @@ start
                 update_start_dict ( $value , 'module' ,
                     $module.value , dict ( ) )
             }
+        | stateless 
+            {
+                update_start_dict ( $value , 'stateless' ,
+                    $stateless.value , dict ( ) )
+            }
         | consts
             {
                 update_start_dict ( $value , 'consts' ,
@@ -43,6 +48,11 @@ start
 module
     returns [ value ]
     :   ^( TREE_MODULE ID ) { $value = $ID.text }
+    ;
+
+stateless
+    returns [ value ]
+    :   ^( TREE_STATELESS ID ) { $value = $ID.text }
     ;
 
 consts
