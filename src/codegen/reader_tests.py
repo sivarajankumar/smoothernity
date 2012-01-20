@@ -2,8 +2,6 @@ import unittest
 import io
 import fractions
 import reader
-import recognizer
-import copypaster
 
 class helper :
     def __init__ ( self ) :
@@ -24,9 +22,9 @@ class lexer_test_case ( unittest . TestCase ) :
     def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
-        ce = copypaster . exception
-        ar ( ce , r , '!@#$' )
-        ar ( ce , r , 'UPPERCASE' )
+        re = reader . exception
+        ar ( re , r , '!@#$' )
+        ar ( re , r , 'UPPERCASE' )
 
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -34,10 +32,10 @@ class copy_paste_test_case ( unittest . TestCase ) :
     def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
-        ce = copypaster . exception
-        ar ( ce , r , 'copy\n' )
-        ar ( ce , r , 'paste\n' )
-        ar ( ce , r , 'copy\n copy\n  test1\n'
+        re = reader . exception
+        ar ( re , r , 'copy\n' )
+        ar ( re , r , 'paste\n' )
+        ar ( re , r , 'copy\n copy\n  test1\n'
             ' paste replace test1 with test2\n'
             'paste replace test2 with test3\n' )
     def test_multi_paste ( self ) :
@@ -88,7 +86,7 @@ class modules_test_case ( unittest . TestCase ) :
     def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
-        re = recognizer . exception
+        re = reader . exception
         ar ( re , r , 'module _test1\n' )
         ar ( re , r , 'module 1_test1\n' )
         ar ( re , r , 'module' )
@@ -101,7 +99,7 @@ class consts_test_case ( unittest . TestCase ) :
     def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
-        re = recognizer . exception
+        re = reader . exception
         ar ( re , r , 'consts test1\nconsts test2\n' )
         ar ( re , r , 'consts test1\nconst1 11\n' )
         ar ( re , r , 'consts test1\n const1 11\nconst2 11\n' )
