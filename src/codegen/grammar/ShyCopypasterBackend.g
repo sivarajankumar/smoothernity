@@ -118,7 +118,10 @@ arbitrary_token
     :   CONSTS { $value = $CONSTS.text }
     |   MODULE { $value = $MODULE.text }
     |   TYPES { $value = $TYPES.text }
+    |   WITH { $value = $WITH.text }
 
+    |   ARROW_LEFT { $value = $ARROW_LEFT.text }
+    |   ARROW_RIGHT { $value = $ARROW_RIGHT.text }
     |   CURLY_OPEN { $value = $CURLY_OPEN.text }
     |   CURLY_CLOSE { $value = $CURLY_CLOSE.text }
     |   DIVIDE { $value = $DIVIDE.text }
@@ -127,4 +130,5 @@ arbitrary_token
     |   ID { $value = $ID.text }
     |   NUMBER { $value = $NUMBER.text }
     |   EXPRESSION { $value = $EXPRESSION.text }
+    |   STRING { $value = $STRING.text }
     ;

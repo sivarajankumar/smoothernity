@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-18 18:43:00
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-20 16:49:11
 
 import sys
 from antlr3 import *
@@ -19,54 +19,58 @@ HIDDEN = BaseRecognizer.HIDDEN
 
 # token types
 EOF=-1
-CONSTS=4
-COPY=5
-CURLY_CLOSE=6
-CURLY_OPEN=7
-DEDENT=8
-DIVIDE=9
-EXPRESSION=10
-ID=11
-INDENT=12
-MINUS=13
-MODULE=14
-NEWLINE=15
-NUMBER=16
-PASTE=17
-REPLACE=18
-TREE_ARBITRARY_TOKEN=19
-TREE_CONSTS=20
-TREE_COPY=21
-TREE_COPY_PASTE=22
-TREE_EXPRESSION=23
-TREE_HINT=24
-TREE_HINT_NONE=25
-TREE_MODULE=26
-TREE_NUM_FRACT=27
-TREE_NUM_WHOLE=28
-TREE_PASTE=29
-TREE_PASTE_REPLACE=30
-TREE_PASTE_WITH=31
-TREE_TYPES=32
-TREE_TYPES_ITEM=33
-TREE_TYPES_ITEM_ATTR=34
-TREE_TYPES_ITEM_HINT=35
-TREE_TYPES_ITEM_HINTS=36
-TYPES=37
-UNDERSCORE=38
-WHITESPACE=39
-WITH=40
+ARROW_LEFT=4
+ARROW_RIGHT=5
+CONSTS=6
+COPY=7
+CURLY_CLOSE=8
+CURLY_OPEN=9
+DEDENT=10
+DIVIDE=11
+EXPRESSION=12
+ID=13
+INDENT=14
+MINUS=15
+MODULE=16
+NEWLINE=17
+NUMBER=18
+PASTE=19
+REPLACE=20
+STRING=21
+TREE_ARBITRARY_TOKEN=22
+TREE_CONSTS=23
+TREE_COPY=24
+TREE_COPY_PASTE=25
+TREE_EXPRESSION=26
+TREE_HINT=27
+TREE_HINT_NONE=28
+TREE_MODULE=29
+TREE_NUM_FRACT=30
+TREE_NUM_WHOLE=31
+TREE_PASTE=32
+TREE_PASTE_REPLACE=33
+TREE_PASTE_WITH=34
+TREE_TYPES=35
+TREE_TYPES_ITEM=36
+TREE_TYPES_ITEM_ATTR=37
+TREE_TYPES_ITEM_HINT=38
+TREE_TYPES_ITEM_HINTS=39
+TYPES=40
+UNDERSCORE=41
+WHITESPACE=42
+WITH=43
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
-    "CONSTS", "COPY", "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", 
-    "ID", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "PASTE", "REPLACE", 
-    "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
-    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
-    "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_HINT", 
-    "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", "WHITESPACE", "WITH"
+    "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", "CURLY_OPEN", 
+    "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", "MODULE", 
+    "NEWLINE", "NUMBER", "PASTE", "REPLACE", "STRING", "TREE_ARBITRARY_TOKEN", 
+    "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", 
+    "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
+    "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_TYPES", 
+    "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", 
+    "TYPES", "UNDERSCORE", "WHITESPACE", "WITH"
 ]
 
 
@@ -409,7 +413,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, consts_items
+                # elements: consts_items, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1202,7 +1206,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, types_item_hint
+                # elements: types_item_hint, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1441,7 +1445,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: types_item_attr, hint
+                    # elements: hint, types_item_attr
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1893,7 +1897,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, hint_arg
+                    # elements: hint_arg, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2212,11 +2216,11 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA12_min = DFA.unpack(
-        u"\1\7\1\uffff\1\13\1\6\1\13\1\6\2\uffff\1\13"
+        u"\1\11\1\uffff\1\15\1\10\1\15\1\10\2\uffff\1\15"
         )
 
     DFA12_max = DFA.unpack(
-        u"\1\13\1\uffff\1\13\1\46\1\17\1\46\2\uffff\1\17"
+        u"\1\15\1\uffff\1\15\1\51\1\21\1\51\2\uffff\1\21"
         )
 
     DFA12_accept = DFA.unpack(
@@ -2232,9 +2236,9 @@ class ShyRecognizerFrontend(Parser):
         DFA.unpack(u"\1\2\3\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\4\uffff\1\5\32\uffff\1\5"),
+        DFA.unpack(u"\1\4\4\uffff\1\5\33\uffff\1\5"),
         DFA.unpack(u"\1\6\3\uffff\1\7"),
-        DFA.unpack(u"\1\10\4\uffff\1\5\32\uffff\1\5"),
+        DFA.unpack(u"\1\10\4\uffff\1\5\33\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\3\uffff\1\7")
@@ -2248,71 +2252,71 @@ class ShyRecognizerFrontend(Parser):
 
  
 
-    FOLLOW_module_in_start82 = frozenset([1, 4, 14, 37])
-    FOLLOW_consts_in_start86 = frozenset([1, 4, 14, 37])
-    FOLLOW_types_in_start90 = frozenset([1, 4, 14, 37])
-    FOLLOW_MODULE_in_module103 = frozenset([11])
-    FOLLOW_ID_in_module105 = frozenset([15])
+    FOLLOW_module_in_start82 = frozenset([1, 6, 16, 40])
+    FOLLOW_consts_in_start86 = frozenset([1, 6, 16, 40])
+    FOLLOW_types_in_start90 = frozenset([1, 6, 16, 40])
+    FOLLOW_MODULE_in_module103 = frozenset([13])
+    FOLLOW_ID_in_module105 = frozenset([17])
     FOLLOW_NEWLINE_in_module107 = frozenset([1])
-    FOLLOW_CONSTS_in_consts130 = frozenset([11])
-    FOLLOW_ID_in_consts132 = frozenset([15])
-    FOLLOW_NEWLINE_in_consts134 = frozenset([12])
-    FOLLOW_INDENT_in_consts142 = frozenset([15])
-    FOLLOW_NEWLINE_in_consts144 = frozenset([11])
-    FOLLOW_consts_items_in_consts146 = frozenset([8])
-    FOLLOW_DEDENT_in_consts148 = frozenset([15])
+    FOLLOW_CONSTS_in_consts130 = frozenset([13])
+    FOLLOW_ID_in_consts132 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts134 = frozenset([14])
+    FOLLOW_INDENT_in_consts142 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts144 = frozenset([13])
+    FOLLOW_consts_items_in_consts146 = frozenset([10])
+    FOLLOW_DEDENT_in_consts148 = frozenset([17])
     FOLLOW_NEWLINE_in_consts150 = frozenset([1])
-    FOLLOW_consts_item_in_consts_items180 = frozenset([1, 11])
-    FOLLOW_ID_in_consts_item194 = frozenset([13, 16])
-    FOLLOW_num_whole_in_consts_item196 = frozenset([15])
+    FOLLOW_consts_item_in_consts_items180 = frozenset([1, 13])
+    FOLLOW_ID_in_consts_item194 = frozenset([15, 18])
+    FOLLOW_num_whole_in_consts_item196 = frozenset([17])
     FOLLOW_NEWLINE_in_consts_item198 = frozenset([1])
-    FOLLOW_ID_in_consts_item218 = frozenset([13, 16])
-    FOLLOW_num_fract_in_consts_item220 = frozenset([15])
+    FOLLOW_ID_in_consts_item218 = frozenset([15, 18])
+    FOLLOW_num_fract_in_consts_item220 = frozenset([17])
     FOLLOW_NEWLINE_in_consts_item222 = frozenset([1])
-    FOLLOW_ID_in_consts_item242 = frozenset([10])
-    FOLLOW_EXPRESSION_in_consts_item244 = frozenset([15])
+    FOLLOW_ID_in_consts_item242 = frozenset([12])
+    FOLLOW_EXPRESSION_in_consts_item244 = frozenset([17])
     FOLLOW_NEWLINE_in_consts_item246 = frozenset([1])
-    FOLLOW_TYPES_in_types275 = frozenset([11])
-    FOLLOW_ID_in_types277 = frozenset([15])
-    FOLLOW_NEWLINE_in_types279 = frozenset([12])
-    FOLLOW_INDENT_in_types287 = frozenset([15])
-    FOLLOW_NEWLINE_in_types289 = frozenset([11])
-    FOLLOW_types_items_in_types291 = frozenset([8])
-    FOLLOW_DEDENT_in_types293 = frozenset([15])
+    FOLLOW_TYPES_in_types275 = frozenset([13])
+    FOLLOW_ID_in_types277 = frozenset([17])
+    FOLLOW_NEWLINE_in_types279 = frozenset([14])
+    FOLLOW_INDENT_in_types287 = frozenset([17])
+    FOLLOW_NEWLINE_in_types289 = frozenset([13])
+    FOLLOW_types_items_in_types291 = frozenset([10])
+    FOLLOW_DEDENT_in_types293 = frozenset([17])
     FOLLOW_NEWLINE_in_types295 = frozenset([1])
-    FOLLOW_types_item_in_types_items325 = frozenset([1, 11])
-    FOLLOW_ID_in_types_item339 = frozenset([7, 11, 15])
-    FOLLOW_types_item_hint_in_types_item341 = frozenset([15])
-    FOLLOW_NEWLINE_in_types_item345 = frozenset([1, 12])
-    FOLLOW_INDENT_in_types_item355 = frozenset([15])
-    FOLLOW_NEWLINE_in_types_item357 = frozenset([7, 11])
-    FOLLOW_types_item_hint_in_types_item361 = frozenset([15])
-    FOLLOW_NEWLINE_in_types_item363 = frozenset([7, 8, 11])
-    FOLLOW_DEDENT_in_types_item369 = frozenset([15])
+    FOLLOW_types_item_in_types_items325 = frozenset([1, 13])
+    FOLLOW_ID_in_types_item339 = frozenset([9, 13, 17])
+    FOLLOW_types_item_hint_in_types_item341 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item345 = frozenset([1, 14])
+    FOLLOW_INDENT_in_types_item355 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item357 = frozenset([9, 13])
+    FOLLOW_types_item_hint_in_types_item361 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item363 = frozenset([9, 10, 13])
+    FOLLOW_DEDENT_in_types_item369 = frozenset([17])
     FOLLOW_NEWLINE_in_types_item371 = frozenset([1])
-    FOLLOW_types_item_attr_in_types_item_hint414 = frozenset([1, 11])
-    FOLLOW_hint_in_types_item_hint445 = frozenset([11])
-    FOLLOW_types_item_attr_in_types_item_hint447 = frozenset([1, 11])
-    FOLLOW_hint_in_types_item_hint477 = frozenset([15])
-    FOLLOW_NEWLINE_in_types_item_hint479 = frozenset([12])
-    FOLLOW_INDENT_in_types_item_hint481 = frozenset([15])
-    FOLLOW_NEWLINE_in_types_item_hint483 = frozenset([11])
-    FOLLOW_types_item_attr_in_types_item_hint496 = frozenset([11, 15])
-    FOLLOW_NEWLINE_in_types_item_hint500 = frozenset([8, 11])
+    FOLLOW_types_item_attr_in_types_item_hint414 = frozenset([1, 13])
+    FOLLOW_hint_in_types_item_hint445 = frozenset([13])
+    FOLLOW_types_item_attr_in_types_item_hint447 = frozenset([1, 13])
+    FOLLOW_hint_in_types_item_hint477 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item_hint479 = frozenset([14])
+    FOLLOW_INDENT_in_types_item_hint481 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item_hint483 = frozenset([13])
+    FOLLOW_types_item_attr_in_types_item_hint496 = frozenset([13, 17])
+    FOLLOW_NEWLINE_in_types_item_hint500 = frozenset([10, 13])
     FOLLOW_DEDENT_in_types_item_hint506 = frozenset([1])
     FOLLOW_ID_in_types_item_attr538 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint561 = frozenset([11])
-    FOLLOW_ID_in_hint563 = frozenset([6])
+    FOLLOW_CURLY_OPEN_in_hint561 = frozenset([13])
+    FOLLOW_ID_in_hint563 = frozenset([8])
     FOLLOW_CURLY_CLOSE_in_hint565 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint583 = frozenset([11])
-    FOLLOW_ID_in_hint585 = frozenset([11, 38])
-    FOLLOW_hint_arg_in_hint587 = frozenset([6, 11, 38])
+    FOLLOW_CURLY_OPEN_in_hint583 = frozenset([13])
+    FOLLOW_ID_in_hint585 = frozenset([13, 41])
+    FOLLOW_hint_arg_in_hint587 = frozenset([8, 13, 41])
     FOLLOW_CURLY_CLOSE_in_hint591 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole630 = frozenset([16])
+    FOLLOW_MINUS_in_num_whole630 = frozenset([18])
     FOLLOW_NUMBER_in_num_whole634 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract642 = frozenset([16])
-    FOLLOW_NUMBER_in_num_fract646 = frozenset([9])
-    FOLLOW_DIVIDE_in_num_fract648 = frozenset([16])
+    FOLLOW_MINUS_in_num_fract642 = frozenset([18])
+    FOLLOW_NUMBER_in_num_fract646 = frozenset([11])
+    FOLLOW_DIVIDE_in_num_fract648 = frozenset([18])
     FOLLOW_NUMBER_in_num_fract650 = frozenset([1])
 
 

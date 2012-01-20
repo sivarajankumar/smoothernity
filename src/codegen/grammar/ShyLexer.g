@@ -28,6 +28,8 @@ REPLACE : 'replace' ;
 TYPES : 'types' ;
 WITH : 'with' ;
 
+ARROW_LEFT : '<-' ;
+ARROW_RIGHT : '->' ;
 CURLY_OPEN : '{' ;
 CURLY_CLOSE : '}' ;
 DIVIDE : '/' ;
@@ -38,6 +40,7 @@ ID : 'a' .. 'z' ( 'a' .. 'z' | '0' .. '9' | '_' ) * ;
 NUMBER : ( '0' .. '9' ) + ;
 WHITESPACE : ' ' + { self . skip ( ) } ;
 EXPRESSION : '[' . * ']' ;
+STRING : '\'' . * '\'' ;
 
 TREE_ARBITRARY_TOKEN : 'TREE_ARBITRARY_TOKEN' ;
 TREE_CONSTS : 'TREE_CONSTS' ;

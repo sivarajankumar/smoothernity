@@ -66,7 +66,10 @@ arbitrary_token
     :   CONSTS
     |   MODULE
     |   TYPES
+    |   WITH
 
+    |   ARROW_LEFT
+    |   ARROW_RIGHT
     |   CURLY_OPEN
     |   CURLY_CLOSE
     |   DIVIDE
@@ -75,4 +78,5 @@ arbitrary_token
     |   ID
     |   NUMBER
     |   EXPRESSION
+    |   STRING
     ;
