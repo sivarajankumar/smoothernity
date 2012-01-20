@@ -194,7 +194,7 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def _test_hint_multi_atrs ( self ) :
+    def test_hint_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'types test1\n type1 { hint1 } atr1 atr2\n' ) ,
