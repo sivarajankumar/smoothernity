@@ -23,7 +23,7 @@ class recognizer :
             raise exception ( str ( e ) )
         last = ts . LT ( 1 )
         if last . getType ( ) != EOF :
-            raise exception ( "Unparsed token '%s' at line %s col %s" %
+            raise exception ( 'Unparsed token "%s" at line %s col %s' %
                 ( last . getText ( )
                 , last . getLine ( )
                 , last . getCharPositionInLine ( ) ) )
