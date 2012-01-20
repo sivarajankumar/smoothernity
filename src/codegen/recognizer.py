@@ -21,8 +21,10 @@ class recognizer :
             raise exception ( str ( e ) )
         except ShyRecognizerFrontendException as e :
             raise exception ( str ( e ) )
-        if ts . LA ( 1 ) != EOF :
-            raise exception ( 'unparsed tokens left' )
+        last = ts . LT ( 1 )
+        if last . getType ( ) != EOF :
+            raise exception ( 'line %s pos %s: unparsed tokens left' %
+                ( last . getLine ( ) , last . getCharPositionInLine ( ) ) )
         if t == None :
             return { }
         else :

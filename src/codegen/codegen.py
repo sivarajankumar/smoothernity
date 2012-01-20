@@ -130,5 +130,5 @@ if __name__ == '__main__' :
         print reader ( ) . run ( stdin )
     except reader_exception as e :
         print e . get_src ( )
-        print 'exception: ' , str ( e )
+        print 'exception:' , str ( e )
     reify ( generate ( [ ] ) , open , trace ( ) , options ( ) , os )
