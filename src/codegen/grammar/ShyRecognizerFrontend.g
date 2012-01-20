@@ -21,9 +21,11 @@ options
         raise ShyRecognizerFrontendException ( msg )
 }
 
-start : ( module | consts | types ) * ;
+start : ( module | stateless | consts | types ) * ;
 
 module : MODULE ID NEWLINE -> ^( TREE_MODULE ID ) ;
+
+stateless : STATELESS ID NEWLINE -> ^( TREE_STATELESS ID ) ;
 
 consts
     : CONSTS ID NEWLINE

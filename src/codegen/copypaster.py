@@ -42,8 +42,12 @@ class copypaster :
             raise exception ( str ( e ) )
         except ShyCopypasterFrontendException as e :
             raise exception ( str ( e ) )
-        if ts . LA ( 1 ) != EOF :
-            raise exception ( 'unparsed tokens left' )
+        last = ts . LT ( 1 )
+        if last . getType ( ) != EOF :
+            raise exception ( 'Unparsed token "%s" at line %s col %s' %
+                ( last . getText ( )
+                , last . getLine ( )
+                , last . getCharPositionInLine ( ) ) )
         if t == None :
             return { }
         else :

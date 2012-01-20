@@ -25,6 +25,8 @@ class lexer_test_case ( unittest . TestCase ) :
         re = reader . exception
         ar ( re , r , '!@#$' )
         ar ( re , r , 'UPPERCASE' )
+        ar ( re , r , '_test1' )
+        ar ( re , r , '1_test1' )
 
 class copy_paste_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -73,25 +75,48 @@ class copy_paste_test_case ( unittest . TestCase ) :
             'paste replace test2 with\n const1 11\n const2 22\n' ) ,
             { 'consts' : { 'test1' : { 'const1' : 11 , 'const2' : 22 } } } )
 
+class ids_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_empty ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'module t\n' ) , { 'module' : { 't' : { } } } )
+        ae ( r ( 'module test\n' ) , { 'module' : { 'test' : { } } } )
+        ae ( r ( 'module test1\n' ) , { 'module' : { 'test1' : { } } } )
+        ae ( r ( 'module test_1\n' ) , { 'module' : { 'test_1' : { } } } )
+
 class modules_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . h . rec
-        ae ( r ( 'module a\n' ) , { 'module' : { 'a' : { } } } )
-        ae ( r ( 'module test_1\n' ) , { 'module' : { 'test_1' : { } } } )
         ae ( r ( 'module test1\nmodule test2\n' ) ,
             { 'module' : { 'test1' : { } , 'test2' : { } } } )
     def test_raises ( self ) :
         ar = self . assertRaises
         r = self . h . rec
         re = reader . exception
-        ar ( re , r , 'module _test1\n' )
-        ar ( re , r , 'module 1_test1\n' )
         ar ( re , r , 'module' )
         ar ( re , r , 'module\n' )
         ar ( re , r , 'module module\n' )
+
+class stateless_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_empty ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\nstateless test2\n' ) ,
+            { 'stateless' : { 'test1' : { } , 'test2' : { } } } )
+    def test_raises ( self ) :
+        ar = self . assertRaises
+        r = self . h . rec
+        re = reader . exception
+        ar ( re , r , 'stateless' )
+        ar ( re , r , 'stateless\n' )
+        ar ( re , r , 'stateless stateless\n' )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
