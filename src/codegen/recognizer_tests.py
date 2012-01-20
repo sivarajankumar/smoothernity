@@ -194,24 +194,6 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr11' : { } , 'atr12' : { } }
                 , 'type2' : { 'atr21' : { } , 'atr22' : { } } } } } )
-    def test_hint ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'types test1\n type1 { hint1 } atr1\n' ) ,
-            { 'types' : { 'test1' : { 'type1' :
-                { 'atr1' : { 'hint1' : [ ] } } } } } )
-    def test_hint_args ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'types test1\n type1 { hint1 arg1 arg2 } atr1\n' ) ,
-            { 'types' : { 'test1' : { 'type1' :
-                { 'atr1' : { 'hint1' : [ 'arg1' , 'arg2' ] } } } } } )
-    def test_hint_args_wildcard ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'types test1\n type1 { hint1 _ arg2 } atr1\n' ) ,
-            { 'types' : { 'test1' : { 'type1' :
-                { 'atr1' : { 'hint1' : [ '_' , 'arg2' ] } } } } } )
     def _test_hint_multi_atrs ( self ) :
         ae = self . assertEqual
         r = self . h . rec
@@ -242,6 +224,28 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : { 'type1' :
                 { 'atr1' : { 'hint1' : [ ] } 
                 , 'atr2' : { } } } } } )
+
+class hints_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_empty ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'types test1\n type1 { hint1 } atr1\n' ) ,
+            { 'types' : { 'test1' : { 'type1' :
+                { 'atr1' : { 'hint1' : [ ] } } } } } )
+    def test_args ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'types test1\n type1 { hint1 arg1 arg2 } atr1\n' ) ,
+            { 'types' : { 'test1' : { 'type1' :
+                { 'atr1' : { 'hint1' : [ 'arg1' , 'arg2' ] } } } } } )
+    def test_args_wildcard ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'types test1\n type1 { hint1 _ arg2 } atr1\n' ) ,
+            { 'types' : { 'test1' : { 'type1' :
+                { 'atr1' : { 'hint1' : [ '_' , 'arg2' ] } } } } } )
 
 if __name__ == '__main__' :
     unittest . main ( )
