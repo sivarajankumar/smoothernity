@@ -1,6 +1,6 @@
 from hashlib import md5
 from os . path import dirname
-from recognizer import recognizer
+from reader import reader
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -125,5 +125,5 @@ if __name__ == '__main__' :
         def file_prefix ( self ) :
             return argv [ 1 ]
         
-    print recognizer ( ) . recognize ( stdin )
+    print reader ( ) . run ( stdin )
     reify ( generate ( [ ] ) , open , trace ( ) , options ( ) , os )
