@@ -76,6 +76,9 @@ proc
             ( proc_vars
                 { $content [ 'vars' ] = $proc_vars.value }
             ) ?
+            ( proc_ops
+                { $content [ 'ops' ] = $proc_ops.value }
+            ) ?
         )
     ;
 
@@ -89,6 +92,18 @@ proc_vars
     returns [ value ]
     :   ^( TREE_PROC_VARS vars_hint )
             { $value = $vars_hint.value }
+    ;
+
+proc_ops
+    returns [ value ]
+    :   ^( TREE_PROC_OPS statement )
+            { $value = $statement.value }
+    ;
+
+statement
+    returns [ value ]
+    :   ^( TREE_STATEMENT ID )
+            { $value = [ { $ID.text : [ ] } ] }
     ;
 
 consts
