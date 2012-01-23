@@ -125,6 +125,17 @@ class stateless_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'test1' :
                 { 'proc1' : { } , 'proc2' : { } } } } )
 
+class proc_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_empty ( self ) :
+        ae = self . assertEqual
+        ar = self . assertRaises
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n' ) ,
+            { 'stateless' : { 'test1' :
+                { 'proc1' : { } } } } )
+
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
