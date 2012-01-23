@@ -96,8 +96,10 @@ proc_vars
 
 proc_ops
     returns [ value ]
-    :   ^( TREE_PROC_OPS statement )
-            { $value = [ $statement.value ] }
+    @ init { $value = list ( ) }
+    :   ^( TREE_PROC_OPS ( statement 
+            { $value . append ( $statement.value ) }
+        ) + )
     ;
 
 statement
