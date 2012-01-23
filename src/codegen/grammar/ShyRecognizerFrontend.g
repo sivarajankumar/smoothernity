@@ -37,12 +37,18 @@ stateless
 proc
     :   PROC ID NEWLINE
         -> ^( TREE_PROC ID )
-    |   PROC ID NEWLINE INDENT NEWLINE proc_args DEDENT NEWLINE
-        -> ^( TREE_PROC ID proc_args )
+    |   PROC ID NEWLINE INDENT NEWLINE
+            proc_args ? proc_vars ?
+        DEDENT NEWLINE
+        -> ^( TREE_PROC ID proc_args ? proc_vars ? )
     ;
 
 proc_args
     :   ARGS vars_hint -> ^( TREE_PROC_ARGS vars_hint )
+    ;
+
+proc_vars
+    :   VARS vars_hint -> ^( TREE_PROC_VARS vars_hint )
     ;
 
 consts

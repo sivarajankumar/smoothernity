@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-23 18:48:29
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-23 19:00:47
 
 import sys
 from antlr3 import *
@@ -55,16 +55,18 @@ TREE_PASTE_REPLACE=36
 TREE_PASTE_WITH=37
 TREE_PROC=38
 TREE_PROC_ARGS=39
-TREE_STATELESS=40
-TREE_TYPES=41
-TREE_TYPES_ITEM=42
-TREE_VAR=43
-TREE_VARS_HINT=44
-TREE_VAR_HINT=45
-TYPES=46
-UNDERSCORE=47
-WHITESPACE=48
-WITH=49
+TREE_PROC_VARS=40
+TREE_STATELESS=41
+TREE_TYPES=42
+TREE_TYPES_ITEM=43
+TREE_VAR=44
+TREE_VARS_HINT=45
+TREE_VAR_HINT=46
+TYPES=47
+UNDERSCORE=48
+VARS=49
+WHITESPACE=50
+WITH=51
 
 # token names
 tokenNames = [
@@ -75,9 +77,9 @@ tokenNames = [
     "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_PROC", "TREE_PROC_ARGS", "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", 
-    "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", "UNDERSCORE", 
-    "WHITESPACE", "WITH"
+    "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", "TREE_STATELESS", "TREE_TYPES", 
+    "TREE_TYPES_ITEM", "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", 
+    "UNDERSCORE", "VARS", "WHITESPACE", "WITH"
 ]
 
 
@@ -153,7 +155,7 @@ class ShyCopypasterFrontend(Parser):
                     alt1 = 2
                     LA1_0 = self.input.LA(1)
 
-                    if ((ARGS <= LA1_0 <= CURLY_OPEN) or (DIVIDE <= LA1_0 <= MODULE) or LA1_0 == NUMBER or LA1_0 == PROC or (STATELESS <= LA1_0 <= STRING) or (TYPES <= LA1_0 <= UNDERSCORE) or LA1_0 == WITH) :
+                    if ((ARGS <= LA1_0 <= CURLY_OPEN) or (DIVIDE <= LA1_0 <= MODULE) or LA1_0 == NUMBER or LA1_0 == PROC or (STATELESS <= LA1_0 <= STRING) or (TYPES <= LA1_0 <= VARS) or LA1_0 == WITH) :
                         alt1 = 1
 
 
@@ -242,7 +244,7 @@ class ShyCopypasterFrontend(Parser):
                 # grammar/ShyCopypasterFrontend.g:27:5: ( ( arbitrary_token )+ NEWLINE | INDENT NEWLINE ( block )+ DEDENT NEWLINE | COPY copy_body ( copy_paste )+ -> ^( TREE_COPY copy_body ( copy_paste )+ ) )
                 alt5 = 3
                 LA5 = self.input.LA(1)
-                if LA5 == ARGS or LA5 == ARROW_LEFT or LA5 == ARROW_RIGHT or LA5 == CONSTS or LA5 == CURLY_CLOSE or LA5 == CURLY_OPEN or LA5 == DIVIDE or LA5 == EXPRESSION or LA5 == ID or LA5 == MINUS or LA5 == MODULE or LA5 == NUMBER or LA5 == PROC or LA5 == STATELESS or LA5 == STRING or LA5 == TYPES or LA5 == UNDERSCORE or LA5 == WITH:
+                if LA5 == ARGS or LA5 == ARROW_LEFT or LA5 == ARROW_RIGHT or LA5 == CONSTS or LA5 == CURLY_CLOSE or LA5 == CURLY_OPEN or LA5 == DIVIDE or LA5 == EXPRESSION or LA5 == ID or LA5 == MINUS or LA5 == MODULE or LA5 == NUMBER or LA5 == PROC or LA5 == STATELESS or LA5 == STRING or LA5 == TYPES or LA5 == UNDERSCORE or LA5 == VARS or LA5 == WITH:
                     alt5 = 1
                 elif LA5 == INDENT:
                     alt5 = 2
@@ -266,7 +268,7 @@ class ShyCopypasterFrontend(Parser):
                         alt2 = 2
                         LA2_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA2_0 <= CONSTS) or (CURLY_CLOSE <= LA2_0 <= CURLY_OPEN) or (DIVIDE <= LA2_0 <= ID) or (MINUS <= LA2_0 <= MODULE) or LA2_0 == NUMBER or LA2_0 == PROC or (STATELESS <= LA2_0 <= STRING) or (TYPES <= LA2_0 <= UNDERSCORE) or LA2_0 == WITH) :
+                        if ((ARGS <= LA2_0 <= CONSTS) or (CURLY_CLOSE <= LA2_0 <= CURLY_OPEN) or (DIVIDE <= LA2_0 <= ID) or (MINUS <= LA2_0 <= MODULE) or LA2_0 == NUMBER or LA2_0 == PROC or (STATELESS <= LA2_0 <= STRING) or (TYPES <= LA2_0 <= VARS) or LA2_0 == WITH) :
                             alt2 = 1
 
 
@@ -322,7 +324,7 @@ class ShyCopypasterFrontend(Parser):
                         alt3 = 2
                         LA3_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA3_0 <= CURLY_OPEN) or (DIVIDE <= LA3_0 <= MODULE) or LA3_0 == NUMBER or LA3_0 == PROC or (STATELESS <= LA3_0 <= STRING) or (TYPES <= LA3_0 <= UNDERSCORE) or LA3_0 == WITH) :
+                        if ((ARGS <= LA3_0 <= CURLY_OPEN) or (DIVIDE <= LA3_0 <= MODULE) or LA3_0 == NUMBER or LA3_0 == PROC or (STATELESS <= LA3_0 <= STRING) or (TYPES <= LA3_0 <= VARS) or LA3_0 == WITH) :
                             alt3 = 1
 
 
@@ -406,7 +408,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: copy_body, copy_paste
+                    # elements: copy_paste, copy_body
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -510,7 +512,7 @@ class ShyCopypasterFrontend(Parser):
                 alt8 = 2
                 LA8_0 = self.input.LA(1)
 
-                if ((ARGS <= LA8_0 <= CONSTS) or (CURLY_CLOSE <= LA8_0 <= CURLY_OPEN) or (DIVIDE <= LA8_0 <= ID) or (MINUS <= LA8_0 <= MODULE) or LA8_0 == NUMBER or LA8_0 == PROC or (STATELESS <= LA8_0 <= STRING) or (TYPES <= LA8_0 <= UNDERSCORE) or LA8_0 == WITH) :
+                if ((ARGS <= LA8_0 <= CONSTS) or (CURLY_CLOSE <= LA8_0 <= CURLY_OPEN) or (DIVIDE <= LA8_0 <= ID) or (MINUS <= LA8_0 <= MODULE) or LA8_0 == NUMBER or LA8_0 == PROC or (STATELESS <= LA8_0 <= STRING) or (TYPES <= LA8_0 <= VARS) or LA8_0 == WITH) :
                     alt8 = 1
                 elif (LA8_0 == INDENT) :
                     alt8 = 2
@@ -532,7 +534,7 @@ class ShyCopypasterFrontend(Parser):
                         alt6 = 2
                         LA6_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA6_0 <= CONSTS) or (CURLY_CLOSE <= LA6_0 <= CURLY_OPEN) or (DIVIDE <= LA6_0 <= ID) or (MINUS <= LA6_0 <= MODULE) or LA6_0 == NUMBER or LA6_0 == PROC or (STATELESS <= LA6_0 <= STRING) or (TYPES <= LA6_0 <= UNDERSCORE) or LA6_0 == WITH) :
+                        if ((ARGS <= LA6_0 <= CONSTS) or (CURLY_CLOSE <= LA6_0 <= CURLY_OPEN) or (DIVIDE <= LA6_0 <= ID) or (MINUS <= LA6_0 <= MODULE) or LA6_0 == NUMBER or LA6_0 == PROC or (STATELESS <= LA6_0 <= STRING) or (TYPES <= LA6_0 <= VARS) or LA6_0 == WITH) :
                             alt6 = 1
 
 
@@ -588,7 +590,7 @@ class ShyCopypasterFrontend(Parser):
                         alt7 = 2
                         LA7_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA7_0 <= CONSTS) or (CURLY_CLOSE <= LA7_0 <= CURLY_OPEN) or (DIVIDE <= LA7_0 <= MODULE) or LA7_0 == NUMBER or LA7_0 == PROC or (STATELESS <= LA7_0 <= STRING) or (TYPES <= LA7_0 <= UNDERSCORE) or LA7_0 == WITH) :
+                        if ((ARGS <= LA7_0 <= CONSTS) or (CURLY_CLOSE <= LA7_0 <= CURLY_OPEN) or (DIVIDE <= LA7_0 <= MODULE) or LA7_0 == NUMBER or LA7_0 == PROC or (STATELESS <= LA7_0 <= STRING) or (TYPES <= LA7_0 <= VARS) or LA7_0 == WITH) :
                             alt7 = 1
 
 
@@ -694,7 +696,7 @@ class ShyCopypasterFrontend(Parser):
 
                 if (LA11_0 == NEWLINE) :
                     alt11 = 1
-                elif ((ARGS <= LA11_0 <= CONSTS) or (CURLY_CLOSE <= LA11_0 <= CURLY_OPEN) or (DIVIDE <= LA11_0 <= ID) or (MINUS <= LA11_0 <= MODULE) or LA11_0 == NUMBER or LA11_0 == PROC or (STATELESS <= LA11_0 <= STRING) or (TYPES <= LA11_0 <= UNDERSCORE) or LA11_0 == WITH) :
+                elif ((ARGS <= LA11_0 <= CONSTS) or (CURLY_CLOSE <= LA11_0 <= CURLY_OPEN) or (DIVIDE <= LA11_0 <= ID) or (MINUS <= LA11_0 <= MODULE) or LA11_0 == NUMBER or LA11_0 == PROC or (STATELESS <= LA11_0 <= STRING) or (TYPES <= LA11_0 <= VARS) or LA11_0 == WITH) :
                     alt11 = 2
                 else:
                     nvae = NoViableAltException("", 11, 0, self.input)
@@ -723,7 +725,7 @@ class ShyCopypasterFrontend(Parser):
                         alt9 = 2
                         LA9_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA9_0 <= CONSTS) or (CURLY_CLOSE <= LA9_0 <= CURLY_OPEN) or (DIVIDE <= LA9_0 <= MODULE) or LA9_0 == NUMBER or LA9_0 == PROC or (STATELESS <= LA9_0 <= STRING) or (TYPES <= LA9_0 <= UNDERSCORE) or LA9_0 == WITH) :
+                        if ((ARGS <= LA9_0 <= CONSTS) or (CURLY_CLOSE <= LA9_0 <= CURLY_OPEN) or (DIVIDE <= LA9_0 <= MODULE) or LA9_0 == NUMBER or LA9_0 == PROC or (STATELESS <= LA9_0 <= STRING) or (TYPES <= LA9_0 <= VARS) or LA9_0 == WITH) :
                             alt9 = 1
 
 
@@ -802,7 +804,7 @@ class ShyCopypasterFrontend(Parser):
                         alt10 = 2
                         LA10_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA10_0 <= CONSTS) or (CURLY_CLOSE <= LA10_0 <= CURLY_OPEN) or (DIVIDE <= LA10_0 <= ID) or (MINUS <= LA10_0 <= MODULE) or LA10_0 == NUMBER or LA10_0 == PROC or (STATELESS <= LA10_0 <= STRING) or (TYPES <= LA10_0 <= UNDERSCORE) or LA10_0 == WITH) :
+                        if ((ARGS <= LA10_0 <= CONSTS) or (CURLY_CLOSE <= LA10_0 <= CURLY_OPEN) or (DIVIDE <= LA10_0 <= ID) or (MINUS <= LA10_0 <= MODULE) or LA10_0 == NUMBER or LA10_0 == PROC or (STATELESS <= LA10_0 <= STRING) or (TYPES <= LA10_0 <= VARS) or LA10_0 == WITH) :
                             alt10 = 1
 
 
@@ -1150,7 +1152,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: paste_with, paste_replace
+                # elements: paste_replace, paste_with
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1343,7 +1345,7 @@ class ShyCopypasterFrontend(Parser):
                 alt16 = 2
                 LA16_0 = self.input.LA(1)
 
-                if ((ARGS <= LA16_0 <= CONSTS) or (CURLY_CLOSE <= LA16_0 <= CURLY_OPEN) or (DIVIDE <= LA16_0 <= ID) or (MINUS <= LA16_0 <= MODULE) or LA16_0 == NUMBER or LA16_0 == PROC or (STATELESS <= LA16_0 <= STRING) or (TYPES <= LA16_0 <= UNDERSCORE) or LA16_0 == WITH) :
+                if ((ARGS <= LA16_0 <= CONSTS) or (CURLY_CLOSE <= LA16_0 <= CURLY_OPEN) or (DIVIDE <= LA16_0 <= ID) or (MINUS <= LA16_0 <= MODULE) or LA16_0 == NUMBER or LA16_0 == PROC or (STATELESS <= LA16_0 <= STRING) or (TYPES <= LA16_0 <= VARS) or LA16_0 == WITH) :
                     alt16 = 1
                 elif (LA16_0 == NEWLINE) :
                     alt16 = 2
@@ -1362,7 +1364,7 @@ class ShyCopypasterFrontend(Parser):
                         alt14 = 2
                         LA14_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA14_0 <= CONSTS) or (CURLY_CLOSE <= LA14_0 <= CURLY_OPEN) or (DIVIDE <= LA14_0 <= ID) or (MINUS <= LA14_0 <= MODULE) or LA14_0 == NUMBER or LA14_0 == PROC or (STATELESS <= LA14_0 <= STRING) or (TYPES <= LA14_0 <= UNDERSCORE) or LA14_0 == WITH) :
+                        if ((ARGS <= LA14_0 <= CONSTS) or (CURLY_CLOSE <= LA14_0 <= CURLY_OPEN) or (DIVIDE <= LA14_0 <= ID) or (MINUS <= LA14_0 <= MODULE) or LA14_0 == NUMBER or LA14_0 == PROC or (STATELESS <= LA14_0 <= STRING) or (TYPES <= LA14_0 <= VARS) or LA14_0 == WITH) :
                             alt14 = 1
 
 
@@ -1454,7 +1456,7 @@ class ShyCopypasterFrontend(Parser):
                         alt15 = 2
                         LA15_0 = self.input.LA(1)
 
-                        if ((ARGS <= LA15_0 <= CONSTS) or (CURLY_CLOSE <= LA15_0 <= CURLY_OPEN) or (DIVIDE <= LA15_0 <= MODULE) or LA15_0 == NUMBER or LA15_0 == PROC or (STATELESS <= LA15_0 <= STRING) or (TYPES <= LA15_0 <= UNDERSCORE) or LA15_0 == WITH) :
+                        if ((ARGS <= LA15_0 <= CONSTS) or (CURLY_CLOSE <= LA15_0 <= CURLY_OPEN) or (DIVIDE <= LA15_0 <= MODULE) or LA15_0 == NUMBER or LA15_0 == PROC or (STATELESS <= LA15_0 <= STRING) or (TYPES <= LA15_0 <= VARS) or LA15_0 == WITH) :
                             alt15 = 1
 
 
@@ -1560,7 +1562,7 @@ class ShyCopypasterFrontend(Parser):
 
 
     # $ANTLR start "arbitrary_token"
-    # grammar/ShyCopypasterFrontend.g:65:1: arbitrary_token : ( ARGS | CONSTS | MODULE | PROC | STATELESS | TYPES | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
+    # grammar/ShyCopypasterFrontend.g:65:1: arbitrary_token : ( ARGS | CONSTS | MODULE | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
     def arbitrary_token(self, ):
         retval = self.arbitrary_token_return()
         retval.start = self.input.LT(1)
@@ -1574,7 +1576,7 @@ class ShyCopypasterFrontend(Parser):
 
         try:
             try:
-                # grammar/ShyCopypasterFrontend.g:66:5: ( ARGS | CONSTS | MODULE | PROC | STATELESS | TYPES | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
+                # grammar/ShyCopypasterFrontend.g:66:5: ( ARGS | CONSTS | MODULE | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
                 # grammar/ShyCopypasterFrontend.g:
                 pass 
                 root_0 = self._adaptor.nil()
@@ -1582,7 +1584,7 @@ class ShyCopypasterFrontend(Parser):
 
                 set49 = self.input.LT(1)
 
-                if (ARGS <= self.input.LA(1) <= CONSTS) or (CURLY_CLOSE <= self.input.LA(1) <= CURLY_OPEN) or (DIVIDE <= self.input.LA(1) <= ID) or (MINUS <= self.input.LA(1) <= MODULE) or self.input.LA(1) == NUMBER or self.input.LA(1) == PROC or (STATELESS <= self.input.LA(1) <= STRING) or (TYPES <= self.input.LA(1) <= UNDERSCORE) or self.input.LA(1) == WITH:
+                if (ARGS <= self.input.LA(1) <= CONSTS) or (CURLY_CLOSE <= self.input.LA(1) <= CURLY_OPEN) or (DIVIDE <= self.input.LA(1) <= ID) or (MINUS <= self.input.LA(1) <= MODULE) or self.input.LA(1) == NUMBER or self.input.LA(1) == PROC or (STATELESS <= self.input.LA(1) <= STRING) or (TYPES <= self.input.LA(1) <= VARS) or self.input.LA(1) == WITH:
                     self.input.consume()
                     self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set49))
 
@@ -1620,31 +1622,31 @@ class ShyCopypasterFrontend(Parser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
-    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
+    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_NEWLINE_in_block101 = frozenset([1])
     FOLLOW_INDENT_in_block111 = frozenset([18])
-    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
-    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
+    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_DEDENT_in_block119 = frozenset([18])
     FOLLOW_NEWLINE_in_block121 = frozenset([1])
-    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_copy_body_in_block133 = frozenset([20])
     FOLLOW_copy_paste_in_block135 = frozenset([1, 20])
-    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_NEWLINE_in_pure_block175 = frozenset([1])
     FOLLOW_INDENT_in_pure_block185 = frozenset([18])
-    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
-    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
+    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_DEDENT_in_pure_block193 = frozenset([18])
     FOLLOW_NEWLINE_in_pure_block195 = frozenset([1])
     FOLLOW_NEWLINE_in_copy_body214 = frozenset([15])
     FOLLOW_INDENT_in_copy_body216 = frozenset([18])
-    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
-    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
+    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_DEDENT_in_copy_body224 = frozenset([18])
     FOLLOW_NEWLINE_in_copy_body226 = frozenset([1])
-    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_NEWLINE_in_copy_body246 = frozenset([1])
     FOLLOW_PASTE_in_copy_paste265 = frozenset([22])
     FOLLOW_paste_in_copy_paste267 = frozenset([1])
@@ -1656,16 +1658,16 @@ class ShyCopypasterFrontend(Parser):
     FOLLOW_DEDENT_in_copy_paste307 = frozenset([18])
     FOLLOW_NEWLINE_in_copy_paste309 = frozenset([1])
     FOLLOW_REPLACE_in_paste348 = frozenset([14])
-    FOLLOW_paste_replace_in_paste350 = frozenset([49])
-    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_paste_replace_in_paste350 = frozenset([51])
+    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_paste_with_in_paste354 = frozenset([1])
     FOLLOW_ID_in_paste_replace393 = frozenset([1])
-    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 16, 17, 18, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_NEWLINE_in_paste_with426 = frozenset([1])
     FOLLOW_NEWLINE_in_paste_with457 = frozenset([15])
     FOLLOW_INDENT_in_paste_with459 = frozenset([18])
-    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
-    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 46, 47, 49])
+    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
+    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 21, 23, 24, 47, 48, 49, 51])
     FOLLOW_DEDENT_in_paste_with467 = frozenset([18])
     FOLLOW_NEWLINE_in_paste_with469 = frozenset([1])
 

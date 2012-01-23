@@ -66,15 +66,28 @@ procs
 
 proc
     returns [ title , content ]
-    :   ^( TREE_PROC ID )
-            { $title , $content = $ID.text , dict ( ) }
-    |   ^( TREE_PROC ID proc_args )
-            { $title , $content = $ID.text , { 'args' : $proc_args.value } }
+    @ init { $content = dict ( ) }
+    :   ^( TREE_PROC
+            ID
+                { $title = $ID.text }
+            ( proc_args
+                { $content [ 'args' ] = $proc_args.value }
+            ) ?
+            ( proc_vars
+                { $content [ 'vars' ] = $proc_vars.value }
+            ) ?
+        )
     ;
 
 proc_args
     returns [ value ]
     :   ^( TREE_PROC_ARGS vars_hint )
+            { $value = $vars_hint.value }
+    ;
+
+proc_vars
+    returns [ value ]
+    :   ^( TREE_PROC_VARS vars_hint )
             { $value = $vars_hint.value }
     ;
 

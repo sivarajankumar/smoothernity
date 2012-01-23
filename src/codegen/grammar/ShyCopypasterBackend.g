@@ -121,6 +121,7 @@ arbitrary_token
     |   PROC { $value = $PROC.text }
     |   STATELESS { $value = $STATELESS.text }
     |   TYPES { $value = $TYPES.text }
+    |   VARS { $value = $VARS.text }
     |   WITH { $value = $WITH.text }
 
     |   ARROW_LEFT { $value = $ARROW_LEFT.text }

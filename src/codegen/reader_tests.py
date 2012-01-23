@@ -136,9 +136,15 @@ class proc_test_case ( unittest . TestCase ) :
     def test_args ( self ) :
         ae = self . assertEqual
         r = self . h . rec
-        ae ( r ( 'stateless test1\n proc proc1\n  args arg1 arg2\n' ) ,
+        ae ( r ( 'stateless test1\n proc proc1\n  args arg1\n' ) ,
             { 'stateless' : { 'test1' :
-                { 'proc1' : { 'args' : { 'arg1' : { } , 'arg2' : { } } } } } } )
+                { 'proc1' : { 'args' : { 'arg1' : { } } } } } } )
+    def test_vars ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  vars arg1\n' ) ,
+            { 'stateless' : { 'test1' :
+                { 'proc1' : { 'vars' : { 'arg1' : { } } } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
