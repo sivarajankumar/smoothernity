@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-23 14:21:24
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-23 14:34:19
 
 import sys
 from antlr3 import *
@@ -52,16 +52,17 @@ TREE_NUM_WHOLE=33
 TREE_PASTE=34
 TREE_PASTE_REPLACE=35
 TREE_PASTE_WITH=36
-TREE_STATELESS=37
-TREE_TYPES=38
-TREE_TYPES_ITEM=39
-TREE_TYPES_ITEM_ATTR=40
-TREE_TYPES_ITEM_HINT=41
-TREE_TYPES_ITEM_HINTS=42
-TYPES=43
-UNDERSCORE=44
-WHITESPACE=45
-WITH=46
+TREE_PROC=37
+TREE_STATELESS=38
+TREE_TYPES=39
+TREE_TYPES_ITEM=40
+TREE_TYPES_ITEM_ATTR=41
+TREE_TYPES_ITEM_HINT=42
+TREE_TYPES_ITEM_HINTS=43
+TYPES=44
+UNDERSCORE=45
+WHITESPACE=46
+WITH=47
 
 # token names
 tokenNames = [
@@ -72,7 +73,7 @@ tokenNames = [
     "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_PROC", "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
     "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
     "WHITESPACE", "WITH"
 ]
@@ -1617,31 +1618,31 @@ class ShyCopypasterFrontend(Parser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_NEWLINE_in_block101 = frozenset([1])
     FOLLOW_INDENT_in_block111 = frozenset([17])
-    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_DEDENT_in_block119 = frozenset([17])
     FOLLOW_NEWLINE_in_block121 = frozenset([1])
-    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_copy_body_in_block133 = frozenset([19])
     FOLLOW_copy_paste_in_block135 = frozenset([1, 19])
-    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_NEWLINE_in_pure_block175 = frozenset([1])
     FOLLOW_INDENT_in_pure_block185 = frozenset([17])
-    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_DEDENT_in_pure_block193 = frozenset([17])
     FOLLOW_NEWLINE_in_pure_block195 = frozenset([1])
     FOLLOW_NEWLINE_in_copy_body214 = frozenset([14])
     FOLLOW_INDENT_in_copy_body216 = frozenset([17])
-    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_DEDENT_in_copy_body224 = frozenset([17])
     FOLLOW_NEWLINE_in_copy_body226 = frozenset([1])
-    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_NEWLINE_in_copy_body246 = frozenset([1])
     FOLLOW_PASTE_in_copy_paste265 = frozenset([21])
     FOLLOW_paste_in_copy_paste267 = frozenset([1])
@@ -1653,16 +1654,16 @@ class ShyCopypasterFrontend(Parser):
     FOLLOW_DEDENT_in_copy_paste307 = frozenset([17])
     FOLLOW_NEWLINE_in_copy_paste309 = frozenset([1])
     FOLLOW_REPLACE_in_paste348 = frozenset([13])
-    FOLLOW_paste_replace_in_paste350 = frozenset([46])
-    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_paste_replace_in_paste350 = frozenset([47])
+    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_paste_with_in_paste354 = frozenset([1])
     FOLLOW_ID_in_paste_replace393 = frozenset([1])
-    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 17, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_NEWLINE_in_paste_with426 = frozenset([1])
     FOLLOW_NEWLINE_in_paste_with457 = frozenset([14])
     FOLLOW_INDENT_in_paste_with459 = frozenset([17])
-    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_DEDENT_in_paste_with467 = frozenset([17])
     FOLLOW_NEWLINE_in_paste_with469 = frozenset([1])
 

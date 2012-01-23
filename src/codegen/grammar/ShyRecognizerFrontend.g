@@ -28,7 +28,15 @@ module
     ;
 
 stateless
-    :   STATELESS ID NEWLINE -> ^( TREE_STATELESS ID )
+    :   STATELESS ID NEWLINE
+        -> ^( TREE_STATELESS ID )
+    |   STATELESS ID NEWLINE INDENT NEWLINE proc + DEDENT NEWLINE
+        -> ^( TREE_STATELESS ID proc + )
+    ;
+
+proc
+    :   PROC ID NEWLINE
+        -> ^( TREE_PROC ID )
     ;
 
 consts

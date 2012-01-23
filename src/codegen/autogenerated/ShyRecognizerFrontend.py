@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-23 14:26:11
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-23 14:34:18
 
 import sys
 from antlr3 import *
@@ -52,16 +52,17 @@ TREE_NUM_WHOLE=33
 TREE_PASTE=34
 TREE_PASTE_REPLACE=35
 TREE_PASTE_WITH=36
-TREE_STATELESS=37
-TREE_TYPES=38
-TREE_TYPES_ITEM=39
-TREE_TYPES_ITEM_ATTR=40
-TREE_TYPES_ITEM_HINT=41
-TREE_TYPES_ITEM_HINTS=42
-TYPES=43
-UNDERSCORE=44
-WHITESPACE=45
-WITH=46
+TREE_PROC=37
+TREE_STATELESS=38
+TREE_TYPES=39
+TREE_TYPES_ITEM=40
+TREE_TYPES_ITEM_ATTR=41
+TREE_TYPES_ITEM_HINT=42
+TREE_TYPES_ITEM_HINTS=43
+TYPES=44
+UNDERSCORE=45
+WHITESPACE=46
+WITH=47
 
 # token names
 tokenNames = [
@@ -72,7 +73,7 @@ tokenNames = [
     "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_PROC", "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
     "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
     "WHITESPACE", "WITH"
 ]
@@ -91,15 +92,15 @@ class ShyRecognizerFrontend(Parser):
 
         super(ShyRecognizerFrontend, self).__init__(input, state, *args, **kwargs)
 
-        self.dfa12 = self.DFA12(
-            self, 12,
-            eot = self.DFA12_eot,
-            eof = self.DFA12_eof,
-            min = self.DFA12_min,
-            max = self.DFA12_max,
-            accept = self.DFA12_accept,
-            special = self.DFA12_special,
-            transition = self.DFA12_transition
+        self.dfa14 = self.DFA14(
+            self, 14,
+            eot = self.DFA14_eot,
+            eof = self.DFA14_eof,
+            min = self.DFA14_min,
+            max = self.DFA14_max,
+            accept = self.DFA14_accept,
+            special = self.DFA14_special,
+            transition = self.DFA14_transition
             )
 
 
@@ -360,7 +361,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "stateless"
-    # grammar/ShyRecognizerFrontend.g:30:1: stateless : STATELESS ID NEWLINE -> ^( TREE_STATELESS ID ) ;
+    # grammar/ShyRecognizerFrontend.g:30:1: stateless : ( STATELESS ID NEWLINE -> ^( TREE_STATELESS ID ) | STATELESS ID NEWLINE INDENT NEWLINE ( proc )+ DEDENT NEWLINE -> ^( TREE_STATELESS ID ( proc )+ ) );
     def stateless(self, ):
         retval = self.stateless_return()
         retval.start = self.input.LT(1)
@@ -371,29 +372,299 @@ class ShyRecognizerFrontend(Parser):
         STATELESS8 = None
         ID9 = None
         NEWLINE10 = None
+        STATELESS11 = None
+        ID12 = None
+        NEWLINE13 = None
+        INDENT14 = None
+        NEWLINE15 = None
+        DEDENT17 = None
+        NEWLINE18 = None
+        proc16 = None
+
 
         STATELESS8_tree = None
         ID9_tree = None
         NEWLINE10_tree = None
+        STATELESS11_tree = None
+        ID12_tree = None
+        NEWLINE13_tree = None
+        INDENT14_tree = None
+        NEWLINE15_tree = None
+        DEDENT17_tree = None
+        NEWLINE18_tree = None
         stream_STATELESS = RewriteRuleTokenStream(self._adaptor, "token STATELESS")
+        stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
+        stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
+        stream_proc = RewriteRuleSubtreeStream(self._adaptor, "rule proc")
+        try:
+            try:
+                # grammar/ShyRecognizerFrontend.g:31:5: ( STATELESS ID NEWLINE -> ^( TREE_STATELESS ID ) | STATELESS ID NEWLINE INDENT NEWLINE ( proc )+ DEDENT NEWLINE -> ^( TREE_STATELESS ID ( proc )+ ) )
+                alt3 = 2
+                LA3_0 = self.input.LA(1)
+
+                if (LA3_0 == STATELESS) :
+                    LA3_1 = self.input.LA(2)
+
+                    if (LA3_1 == ID) :
+                        LA3_2 = self.input.LA(3)
+
+                        if (LA3_2 == NEWLINE) :
+                            LA3_3 = self.input.LA(4)
+
+                            if (LA3_3 == INDENT) :
+                                alt3 = 2
+                            elif (LA3_3 == EOF or LA3_3 == CONSTS or LA3_3 == MODULE or LA3_3 == STATELESS or LA3_3 == TYPES) :
+                                alt3 = 1
+                            else:
+                                nvae = NoViableAltException("", 3, 3, self.input)
+
+                                raise nvae
+
+
+                        else:
+                            nvae = NoViableAltException("", 3, 2, self.input)
+
+                            raise nvae
+
+
+                    else:
+                        nvae = NoViableAltException("", 3, 1, self.input)
+
+                        raise nvae
+
+
+                else:
+                    nvae = NoViableAltException("", 3, 0, self.input)
+
+                    raise nvae
+
+
+                if alt3 == 1:
+                    # grammar/ShyRecognizerFrontend.g:31:9: STATELESS ID NEWLINE
+                    pass 
+                    STATELESS8 = self.match(self.input, STATELESS, self.FOLLOW_STATELESS_in_stateless146) 
+                    stream_STATELESS.add(STATELESS8)
+
+
+                    ID9 = self.match(self.input, ID, self.FOLLOW_ID_in_stateless148) 
+                    stream_ID.add(ID9)
+
+
+                    NEWLINE10 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stateless150) 
+                    stream_NEWLINE.add(NEWLINE10)
+
+
+                    # AST Rewrite
+                    # elements: ID
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 32:9: -> ^( TREE_STATELESS ID )
+                    # grammar/ShyRecognizerFrontend.g:32:12: ^( TREE_STATELESS ID )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(TREE_STATELESS, "TREE_STATELESS")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, 
+                    stream_ID.nextNode()
+                    )
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                elif alt3 == 2:
+                    # grammar/ShyRecognizerFrontend.g:33:9: STATELESS ID NEWLINE INDENT NEWLINE ( proc )+ DEDENT NEWLINE
+                    pass 
+                    STATELESS11 = self.match(self.input, STATELESS, self.FOLLOW_STATELESS_in_stateless178) 
+                    stream_STATELESS.add(STATELESS11)
+
+
+                    ID12 = self.match(self.input, ID, self.FOLLOW_ID_in_stateless180) 
+                    stream_ID.add(ID12)
+
+
+                    NEWLINE13 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stateless182) 
+                    stream_NEWLINE.add(NEWLINE13)
+
+
+                    INDENT14 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_stateless184) 
+                    stream_INDENT.add(INDENT14)
+
+
+                    NEWLINE15 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stateless186) 
+                    stream_NEWLINE.add(NEWLINE15)
+
+
+                    # grammar/ShyRecognizerFrontend.g:33:45: ( proc )+
+                    cnt2 = 0
+                    while True: #loop2
+                        alt2 = 2
+                        LA2_0 = self.input.LA(1)
+
+                        if (LA2_0 == PROC) :
+                            alt2 = 1
+
+
+                        if alt2 == 1:
+                            # grammar/ShyRecognizerFrontend.g:33:45: proc
+                            pass 
+                            self._state.following.append(self.FOLLOW_proc_in_stateless188)
+                            proc16 = self.proc()
+
+                            self._state.following.pop()
+                            stream_proc.add(proc16.tree)
+
+
+
+                        else:
+                            if cnt2 >= 1:
+                                break #loop2
+
+                            eee = EarlyExitException(2, self.input)
+                            raise eee
+
+                        cnt2 += 1
+
+
+                    DEDENT17 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_stateless192) 
+                    stream_DEDENT.add(DEDENT17)
+
+
+                    NEWLINE18 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stateless194) 
+                    stream_NEWLINE.add(NEWLINE18)
+
+
+                    # AST Rewrite
+                    # elements: proc, ID
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 34:9: -> ^( TREE_STATELESS ID ( proc )+ )
+                    # grammar/ShyRecognizerFrontend.g:34:12: ^( TREE_STATELESS ID ( proc )+ )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(TREE_STATELESS, "TREE_STATELESS")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, 
+                    stream_ID.nextNode()
+                    )
+
+                    # grammar/ShyRecognizerFrontend.g:34:33: ( proc )+
+                    if not (stream_proc.hasNext()):
+                        raise RewriteEarlyExitException()
+
+                    while stream_proc.hasNext():
+                        self._adaptor.addChild(root_1, stream_proc.nextTree())
+
+
+                    stream_proc.reset()
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                retval.stop = self.input.LT(-1)
+
+
+                retval.tree = self._adaptor.rulePostProcessing(root_0)
+                self._adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop)
+
+
+
+            except RecognitionException, re:
+                self.reportError(re)
+                self.recover(self.input, re)
+                retval.tree = self._adaptor.errorNode(self.input, retval.start, self.input.LT(-1), re)
+
+        finally:
+            pass
+        return retval
+
+    # $ANTLR end "stateless"
+
+
+    class proc_return(ParserRuleReturnScope):
+        def __init__(self):
+            super(ShyRecognizerFrontend.proc_return, self).__init__()
+
+            self.tree = None
+
+
+
+
+
+    # $ANTLR start "proc"
+    # grammar/ShyRecognizerFrontend.g:37:1: proc : PROC ID NEWLINE -> ^( TREE_PROC ID ) ;
+    def proc(self, ):
+        retval = self.proc_return()
+        retval.start = self.input.LT(1)
+
+
+        root_0 = None
+
+        PROC19 = None
+        ID20 = None
+        NEWLINE21 = None
+
+        PROC19_tree = None
+        ID20_tree = None
+        NEWLINE21_tree = None
+        stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
+        stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
+        stream_PROC = RewriteRuleTokenStream(self._adaptor, "token PROC")
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:31:5: ( STATELESS ID NEWLINE -> ^( TREE_STATELESS ID ) )
-                # grammar/ShyRecognizerFrontend.g:31:9: STATELESS ID NEWLINE
+                # grammar/ShyRecognizerFrontend.g:38:5: ( PROC ID NEWLINE -> ^( TREE_PROC ID ) )
+                # grammar/ShyRecognizerFrontend.g:38:9: PROC ID NEWLINE
                 pass 
-                STATELESS8 = self.match(self.input, STATELESS, self.FOLLOW_STATELESS_in_stateless146) 
-                stream_STATELESS.add(STATELESS8)
+                PROC19 = self.match(self.input, PROC, self.FOLLOW_PROC_in_proc235) 
+                stream_PROC.add(PROC19)
 
 
-                ID9 = self.match(self.input, ID, self.FOLLOW_ID_in_stateless148) 
-                stream_ID.add(ID9)
+                ID20 = self.match(self.input, ID, self.FOLLOW_ID_in_proc237) 
+                stream_ID.add(ID20)
 
 
-                NEWLINE10 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_stateless150) 
-                stream_NEWLINE.add(NEWLINE10)
+                NEWLINE21 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_proc239) 
+                stream_NEWLINE.add(NEWLINE21)
 
 
                 # AST Rewrite
@@ -411,11 +682,11 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 31:30: -> ^( TREE_STATELESS ID )
-                # grammar/ShyRecognizerFrontend.g:31:33: ^( TREE_STATELESS ID )
+                # 39:9: -> ^( TREE_PROC ID )
+                # grammar/ShyRecognizerFrontend.g:39:12: ^( TREE_PROC ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                self._adaptor.createFromType(TREE_STATELESS, "TREE_STATELESS")
+                self._adaptor.createFromType(TREE_PROC, "TREE_PROC")
                 , root_1)
 
                 self._adaptor.addChild(root_1, 
@@ -450,7 +721,7 @@ class ShyRecognizerFrontend(Parser):
             pass
         return retval
 
-    # $ANTLR end "stateless"
+    # $ANTLR end "proc"
 
 
     class consts_return(ParserRuleReturnScope):
@@ -464,7 +735,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "consts"
-    # grammar/ShyRecognizerFrontend.g:34:1: consts : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) ;
+    # grammar/ShyRecognizerFrontend.g:42:1: consts : CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) ;
     def consts(self, ):
         retval = self.consts_return()
         retval.start = self.input.LT(1)
@@ -472,23 +743,23 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        CONSTS11 = None
-        ID12 = None
-        NEWLINE13 = None
-        INDENT14 = None
-        NEWLINE15 = None
-        DEDENT17 = None
-        NEWLINE18 = None
-        consts_items16 = None
+        CONSTS22 = None
+        ID23 = None
+        NEWLINE24 = None
+        INDENT25 = None
+        NEWLINE26 = None
+        DEDENT28 = None
+        NEWLINE29 = None
+        consts_items27 = None
 
 
-        CONSTS11_tree = None
-        ID12_tree = None
-        NEWLINE13_tree = None
-        INDENT14_tree = None
-        NEWLINE15_tree = None
-        DEDENT17_tree = None
-        NEWLINE18_tree = None
+        CONSTS22_tree = None
+        ID23_tree = None
+        NEWLINE24_tree = None
+        INDENT25_tree = None
+        NEWLINE26_tree = None
+        DEDENT28_tree = None
+        NEWLINE29_tree = None
         stream_CONSTS = RewriteRuleTokenStream(self._adaptor, "token CONSTS")
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
@@ -497,42 +768,42 @@ class ShyRecognizerFrontend(Parser):
         stream_consts_items = RewriteRuleSubtreeStream(self._adaptor, "rule consts_items")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:35:5: ( CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) )
-                # grammar/ShyRecognizerFrontend.g:35:9: CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE
+                # grammar/ShyRecognizerFrontend.g:43:5: ( CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE -> ^( TREE_CONSTS ID consts_items ) )
+                # grammar/ShyRecognizerFrontend.g:43:9: CONSTS ID NEWLINE INDENT NEWLINE consts_items DEDENT NEWLINE
                 pass 
-                CONSTS11 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts179) 
-                stream_CONSTS.add(CONSTS11)
+                CONSTS22 = self.match(self.input, CONSTS, self.FOLLOW_CONSTS_in_consts276) 
+                stream_CONSTS.add(CONSTS22)
 
 
-                ID12 = self.match(self.input, ID, self.FOLLOW_ID_in_consts181) 
-                stream_ID.add(ID12)
+                ID23 = self.match(self.input, ID, self.FOLLOW_ID_in_consts278) 
+                stream_ID.add(ID23)
 
 
-                NEWLINE13 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts183) 
-                stream_NEWLINE.add(NEWLINE13)
+                NEWLINE24 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts280) 
+                stream_NEWLINE.add(NEWLINE24)
 
 
-                INDENT14 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts193) 
-                stream_INDENT.add(INDENT14)
+                INDENT25 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_consts290) 
+                stream_INDENT.add(INDENT25)
 
 
-                NEWLINE15 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts195) 
-                stream_NEWLINE.add(NEWLINE15)
+                NEWLINE26 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts292) 
+                stream_NEWLINE.add(NEWLINE26)
 
 
-                self._state.following.append(self.FOLLOW_consts_items_in_consts197)
-                consts_items16 = self.consts_items()
+                self._state.following.append(self.FOLLOW_consts_items_in_consts294)
+                consts_items27 = self.consts_items()
 
                 self._state.following.pop()
-                stream_consts_items.add(consts_items16.tree)
+                stream_consts_items.add(consts_items27.tree)
 
 
-                DEDENT17 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts199) 
-                stream_DEDENT.add(DEDENT17)
+                DEDENT28 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_consts296) 
+                stream_DEDENT.add(DEDENT28)
 
 
-                NEWLINE18 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts201) 
-                stream_NEWLINE.add(NEWLINE18)
+                NEWLINE29 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts298) 
+                stream_NEWLINE.add(NEWLINE29)
 
 
                 # AST Rewrite
@@ -550,8 +821,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 37:9: -> ^( TREE_CONSTS ID consts_items )
-                # grammar/ShyRecognizerFrontend.g:37:12: ^( TREE_CONSTS ID consts_items )
+                # 45:9: -> ^( TREE_CONSTS ID consts_items )
+                # grammar/ShyRecognizerFrontend.g:45:12: ^( TREE_CONSTS ID consts_items )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(TREE_CONSTS, "TREE_CONSTS")
@@ -605,7 +876,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "consts_items"
-    # grammar/ShyRecognizerFrontend.g:39:1: consts_items : ( consts_item )+ ;
+    # grammar/ShyRecognizerFrontend.g:47:1: consts_items : ( consts_item )+ ;
     def consts_items(self, ):
         retval = self.consts_items_return()
         retval.start = self.input.LT(1)
@@ -613,47 +884,47 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        consts_item19 = None
+        consts_item30 = None
 
 
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:39:14: ( ( consts_item )+ )
-                # grammar/ShyRecognizerFrontend.g:39:16: ( consts_item )+
+                # grammar/ShyRecognizerFrontend.g:47:14: ( ( consts_item )+ )
+                # grammar/ShyRecognizerFrontend.g:47:16: ( consts_item )+
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/ShyRecognizerFrontend.g:39:16: ( consts_item )+
-                cnt2 = 0
-                while True: #loop2
-                    alt2 = 2
-                    LA2_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:47:16: ( consts_item )+
+                cnt4 = 0
+                while True: #loop4
+                    alt4 = 2
+                    LA4_0 = self.input.LA(1)
 
-                    if (LA2_0 == ID) :
-                        alt2 = 1
+                    if (LA4_0 == ID) :
+                        alt4 = 1
 
 
-                    if alt2 == 1:
-                        # grammar/ShyRecognizerFrontend.g:39:16: consts_item
+                    if alt4 == 1:
+                        # grammar/ShyRecognizerFrontend.g:47:16: consts_item
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_item_in_consts_items233)
-                        consts_item19 = self.consts_item()
+                        self._state.following.append(self.FOLLOW_consts_item_in_consts_items330)
+                        consts_item30 = self.consts_item()
 
                         self._state.following.pop()
-                        self._adaptor.addChild(root_0, consts_item19.tree)
+                        self._adaptor.addChild(root_0, consts_item30.tree)
 
 
 
                     else:
-                        if cnt2 >= 1:
-                            break #loop2
+                        if cnt4 >= 1:
+                            break #loop4
 
-                        eee = EarlyExitException(2, self.input)
+                        eee = EarlyExitException(4, self.input)
                         raise eee
 
-                    cnt2 += 1
+                    cnt4 += 1
 
 
 
@@ -689,7 +960,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "consts_item"
-    # grammar/ShyRecognizerFrontend.g:40:1: consts_item : ( ID num_whole NEWLINE -> ^( TREE_NUM_WHOLE ID num_whole ) | ID num_fract NEWLINE -> ^( TREE_NUM_FRACT ID num_fract ) | ID EXPRESSION NEWLINE -> ^( TREE_EXPRESSION ID EXPRESSION ) );
+    # grammar/ShyRecognizerFrontend.g:48:1: consts_item : ( ID num_whole NEWLINE -> ^( TREE_NUM_WHOLE ID num_whole ) | ID num_fract NEWLINE -> ^( TREE_NUM_FRACT ID num_fract ) | ID EXPRESSION NEWLINE -> ^( TREE_EXPRESSION ID EXPRESSION ) );
     def consts_item(self, ):
         retval = self.consts_item_return()
         retval.start = self.input.LT(1)
@@ -697,25 +968,25 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        ID20 = None
-        NEWLINE22 = None
-        ID23 = None
-        NEWLINE25 = None
-        ID26 = None
-        EXPRESSION27 = None
-        NEWLINE28 = None
-        num_whole21 = None
+        ID31 = None
+        NEWLINE33 = None
+        ID34 = None
+        NEWLINE36 = None
+        ID37 = None
+        EXPRESSION38 = None
+        NEWLINE39 = None
+        num_whole32 = None
 
-        num_fract24 = None
+        num_fract35 = None
 
 
-        ID20_tree = None
-        NEWLINE22_tree = None
-        ID23_tree = None
-        NEWLINE25_tree = None
-        ID26_tree = None
-        EXPRESSION27_tree = None
-        NEWLINE28_tree = None
+        ID31_tree = None
+        NEWLINE33_tree = None
+        ID34_tree = None
+        NEWLINE36_tree = None
+        ID37_tree = None
+        EXPRESSION38_tree = None
+        NEWLINE39_tree = None
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_EXPRESSION = RewriteRuleTokenStream(self._adaptor, "token EXPRESSION")
@@ -723,77 +994,77 @@ class ShyRecognizerFrontend(Parser):
         stream_num_whole = RewriteRuleSubtreeStream(self._adaptor, "rule num_whole")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:41:5: ( ID num_whole NEWLINE -> ^( TREE_NUM_WHOLE ID num_whole ) | ID num_fract NEWLINE -> ^( TREE_NUM_FRACT ID num_fract ) | ID EXPRESSION NEWLINE -> ^( TREE_EXPRESSION ID EXPRESSION ) )
-                alt3 = 3
-                LA3_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:49:5: ( ID num_whole NEWLINE -> ^( TREE_NUM_WHOLE ID num_whole ) | ID num_fract NEWLINE -> ^( TREE_NUM_FRACT ID num_fract ) | ID EXPRESSION NEWLINE -> ^( TREE_EXPRESSION ID EXPRESSION ) )
+                alt5 = 3
+                LA5_0 = self.input.LA(1)
 
-                if (LA3_0 == ID) :
-                    LA3 = self.input.LA(2)
-                    if LA3 == EXPRESSION:
-                        alt3 = 3
-                    elif LA3 == MINUS:
-                        LA3_3 = self.input.LA(3)
+                if (LA5_0 == ID) :
+                    LA5 = self.input.LA(2)
+                    if LA5 == EXPRESSION:
+                        alt5 = 3
+                    elif LA5 == MINUS:
+                        LA5_3 = self.input.LA(3)
 
-                        if (LA3_3 == NUMBER) :
-                            LA3_4 = self.input.LA(4)
+                        if (LA5_3 == NUMBER) :
+                            LA5_4 = self.input.LA(4)
 
-                            if (LA3_4 == DIVIDE) :
-                                alt3 = 2
-                            elif (LA3_4 == NEWLINE) :
-                                alt3 = 1
+                            if (LA5_4 == DIVIDE) :
+                                alt5 = 2
+                            elif (LA5_4 == NEWLINE) :
+                                alt5 = 1
                             else:
-                                nvae = NoViableAltException("", 3, 4, self.input)
+                                nvae = NoViableAltException("", 5, 4, self.input)
 
                                 raise nvae
 
 
                         else:
-                            nvae = NoViableAltException("", 3, 3, self.input)
+                            nvae = NoViableAltException("", 5, 3, self.input)
 
                             raise nvae
 
 
-                    elif LA3 == NUMBER:
-                        LA3_4 = self.input.LA(3)
+                    elif LA5 == NUMBER:
+                        LA5_4 = self.input.LA(3)
 
-                        if (LA3_4 == DIVIDE) :
-                            alt3 = 2
-                        elif (LA3_4 == NEWLINE) :
-                            alt3 = 1
+                        if (LA5_4 == DIVIDE) :
+                            alt5 = 2
+                        elif (LA5_4 == NEWLINE) :
+                            alt5 = 1
                         else:
-                            nvae = NoViableAltException("", 3, 4, self.input)
+                            nvae = NoViableAltException("", 5, 4, self.input)
 
                             raise nvae
 
 
                     else:
-                        nvae = NoViableAltException("", 3, 1, self.input)
+                        nvae = NoViableAltException("", 5, 1, self.input)
 
                         raise nvae
 
 
                 else:
-                    nvae = NoViableAltException("", 3, 0, self.input)
+                    nvae = NoViableAltException("", 5, 0, self.input)
 
                     raise nvae
 
 
-                if alt3 == 1:
-                    # grammar/ShyRecognizerFrontend.g:41:9: ID num_whole NEWLINE
+                if alt5 == 1:
+                    # grammar/ShyRecognizerFrontend.g:49:9: ID num_whole NEWLINE
                     pass 
-                    ID20 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item249) 
-                    stream_ID.add(ID20)
+                    ID31 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item346) 
+                    stream_ID.add(ID31)
 
 
-                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item251)
-                    num_whole21 = self.num_whole()
+                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item348)
+                    num_whole32 = self.num_whole()
 
                     self._state.following.pop()
-                    stream_num_whole.add(num_whole21.tree)
+                    stream_num_whole.add(num_whole32.tree)
 
 
-                    NEWLINE22 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item253) 
-                    stream_NEWLINE.add(NEWLINE22)
+                    NEWLINE33 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item350) 
+                    stream_NEWLINE.add(NEWLINE33)
 
 
                     # AST Rewrite
@@ -811,8 +1082,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 41:30: -> ^( TREE_NUM_WHOLE ID num_whole )
-                    # grammar/ShyRecognizerFrontend.g:41:33: ^( TREE_NUM_WHOLE ID num_whole )
+                    # 49:30: -> ^( TREE_NUM_WHOLE ID num_whole )
+                    # grammar/ShyRecognizerFrontend.g:49:33: ^( TREE_NUM_WHOLE ID num_whole )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_NUM_WHOLE, "TREE_NUM_WHOLE")
@@ -834,26 +1105,26 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-                elif alt3 == 2:
-                    # grammar/ShyRecognizerFrontend.g:42:9: ID num_fract NEWLINE
+                elif alt5 == 2:
+                    # grammar/ShyRecognizerFrontend.g:50:9: ID num_fract NEWLINE
                     pass 
-                    ID23 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item275) 
-                    stream_ID.add(ID23)
+                    ID34 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item372) 
+                    stream_ID.add(ID34)
 
 
-                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item277)
-                    num_fract24 = self.num_fract()
+                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item374)
+                    num_fract35 = self.num_fract()
 
                     self._state.following.pop()
-                    stream_num_fract.add(num_fract24.tree)
+                    stream_num_fract.add(num_fract35.tree)
 
 
-                    NEWLINE25 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item279) 
-                    stream_NEWLINE.add(NEWLINE25)
+                    NEWLINE36 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item376) 
+                    stream_NEWLINE.add(NEWLINE36)
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -867,8 +1138,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 42:30: -> ^( TREE_NUM_FRACT ID num_fract )
-                    # grammar/ShyRecognizerFrontend.g:42:33: ^( TREE_NUM_FRACT ID num_fract )
+                    # 50:30: -> ^( TREE_NUM_FRACT ID num_fract )
+                    # grammar/ShyRecognizerFrontend.g:50:33: ^( TREE_NUM_FRACT ID num_fract )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_NUM_FRACT, "TREE_NUM_FRACT")
@@ -890,19 +1161,19 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-                elif alt3 == 3:
-                    # grammar/ShyRecognizerFrontend.g:43:9: ID EXPRESSION NEWLINE
+                elif alt5 == 3:
+                    # grammar/ShyRecognizerFrontend.g:51:9: ID EXPRESSION NEWLINE
                     pass 
-                    ID26 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item301) 
-                    stream_ID.add(ID26)
+                    ID37 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item398) 
+                    stream_ID.add(ID37)
 
 
-                    EXPRESSION27 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item303) 
-                    stream_EXPRESSION.add(EXPRESSION27)
+                    EXPRESSION38 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item400) 
+                    stream_EXPRESSION.add(EXPRESSION38)
 
 
-                    NEWLINE28 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item305) 
-                    stream_NEWLINE.add(NEWLINE28)
+                    NEWLINE39 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_consts_item402) 
+                    stream_NEWLINE.add(NEWLINE39)
 
 
                     # AST Rewrite
@@ -920,8 +1191,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 43:31: -> ^( TREE_EXPRESSION ID EXPRESSION )
-                    # grammar/ShyRecognizerFrontend.g:43:34: ^( TREE_EXPRESSION ID EXPRESSION )
+                    # 51:31: -> ^( TREE_EXPRESSION ID EXPRESSION )
+                    # grammar/ShyRecognizerFrontend.g:51:34: ^( TREE_EXPRESSION ID EXPRESSION )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_EXPRESSION, "TREE_EXPRESSION")
@@ -976,7 +1247,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "types"
-    # grammar/ShyRecognizerFrontend.g:46:1: types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) ;
+    # grammar/ShyRecognizerFrontend.g:54:1: types : TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) ;
     def types(self, ):
         retval = self.types_return()
         retval.start = self.input.LT(1)
@@ -984,23 +1255,23 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        TYPES29 = None
-        ID30 = None
-        NEWLINE31 = None
-        INDENT32 = None
-        NEWLINE33 = None
-        DEDENT35 = None
-        NEWLINE36 = None
-        types_items34 = None
+        TYPES40 = None
+        ID41 = None
+        NEWLINE42 = None
+        INDENT43 = None
+        NEWLINE44 = None
+        DEDENT46 = None
+        NEWLINE47 = None
+        types_items45 = None
 
 
-        TYPES29_tree = None
-        ID30_tree = None
-        NEWLINE31_tree = None
-        INDENT32_tree = None
-        NEWLINE33_tree = None
-        DEDENT35_tree = None
-        NEWLINE36_tree = None
+        TYPES40_tree = None
+        ID41_tree = None
+        NEWLINE42_tree = None
+        INDENT43_tree = None
+        NEWLINE44_tree = None
+        DEDENT46_tree = None
+        NEWLINE47_tree = None
         stream_TYPES = RewriteRuleTokenStream(self._adaptor, "token TYPES")
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
@@ -1009,46 +1280,46 @@ class ShyRecognizerFrontend(Parser):
         stream_types_items = RewriteRuleSubtreeStream(self._adaptor, "rule types_items")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:47:5: ( TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) )
-                # grammar/ShyRecognizerFrontend.g:47:9: TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE
+                # grammar/ShyRecognizerFrontend.g:55:5: ( TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE -> ^( TREE_TYPES ID types_items ) )
+                # grammar/ShyRecognizerFrontend.g:55:9: TYPES ID NEWLINE INDENT NEWLINE types_items DEDENT NEWLINE
                 pass 
-                TYPES29 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types336) 
-                stream_TYPES.add(TYPES29)
+                TYPES40 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_types433) 
+                stream_TYPES.add(TYPES40)
 
 
-                ID30 = self.match(self.input, ID, self.FOLLOW_ID_in_types338) 
-                stream_ID.add(ID30)
+                ID41 = self.match(self.input, ID, self.FOLLOW_ID_in_types435) 
+                stream_ID.add(ID41)
 
 
-                NEWLINE31 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types340) 
-                stream_NEWLINE.add(NEWLINE31)
+                NEWLINE42 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types437) 
+                stream_NEWLINE.add(NEWLINE42)
 
 
-                INDENT32 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types350) 
-                stream_INDENT.add(INDENT32)
+                INDENT43 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types447) 
+                stream_INDENT.add(INDENT43)
 
 
-                NEWLINE33 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types352) 
-                stream_NEWLINE.add(NEWLINE33)
+                NEWLINE44 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types449) 
+                stream_NEWLINE.add(NEWLINE44)
 
 
-                self._state.following.append(self.FOLLOW_types_items_in_types354)
-                types_items34 = self.types_items()
+                self._state.following.append(self.FOLLOW_types_items_in_types451)
+                types_items45 = self.types_items()
 
                 self._state.following.pop()
-                stream_types_items.add(types_items34.tree)
+                stream_types_items.add(types_items45.tree)
 
 
-                DEDENT35 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types356) 
-                stream_DEDENT.add(DEDENT35)
+                DEDENT46 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types453) 
+                stream_DEDENT.add(DEDENT46)
 
 
-                NEWLINE36 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types358) 
-                stream_NEWLINE.add(NEWLINE36)
+                NEWLINE47 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types455) 
+                stream_NEWLINE.add(NEWLINE47)
 
 
                 # AST Rewrite
-                # elements: ID, types_items
+                # elements: types_items, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1062,8 +1333,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 49:9: -> ^( TREE_TYPES ID types_items )
-                # grammar/ShyRecognizerFrontend.g:49:12: ^( TREE_TYPES ID types_items )
+                # 57:9: -> ^( TREE_TYPES ID types_items )
+                # grammar/ShyRecognizerFrontend.g:57:12: ^( TREE_TYPES ID types_items )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(TREE_TYPES, "TREE_TYPES")
@@ -1117,7 +1388,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "types_items"
-    # grammar/ShyRecognizerFrontend.g:51:1: types_items : ( types_item )+ ;
+    # grammar/ShyRecognizerFrontend.g:59:1: types_items : ( types_item )+ ;
     def types_items(self, ):
         retval = self.types_items_return()
         retval.start = self.input.LT(1)
@@ -1125,47 +1396,47 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        types_item37 = None
+        types_item48 = None
 
 
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:51:13: ( ( types_item )+ )
-                # grammar/ShyRecognizerFrontend.g:51:15: ( types_item )+
+                # grammar/ShyRecognizerFrontend.g:59:13: ( ( types_item )+ )
+                # grammar/ShyRecognizerFrontend.g:59:15: ( types_item )+
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/ShyRecognizerFrontend.g:51:15: ( types_item )+
-                cnt4 = 0
-                while True: #loop4
-                    alt4 = 2
-                    LA4_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:59:15: ( types_item )+
+                cnt6 = 0
+                while True: #loop6
+                    alt6 = 2
+                    LA6_0 = self.input.LA(1)
 
-                    if (LA4_0 == ID) :
-                        alt4 = 1
+                    if (LA6_0 == ID) :
+                        alt6 = 1
 
 
-                    if alt4 == 1:
-                        # grammar/ShyRecognizerFrontend.g:51:15: types_item
+                    if alt6 == 1:
+                        # grammar/ShyRecognizerFrontend.g:59:15: types_item
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_in_types_items390)
-                        types_item37 = self.types_item()
+                        self._state.following.append(self.FOLLOW_types_item_in_types_items487)
+                        types_item48 = self.types_item()
 
                         self._state.following.pop()
-                        self._adaptor.addChild(root_0, types_item37.tree)
+                        self._adaptor.addChild(root_0, types_item48.tree)
 
 
 
                     else:
-                        if cnt4 >= 1:
-                            break #loop4
+                        if cnt6 >= 1:
+                            break #loop6
 
-                        eee = EarlyExitException(4, self.input)
+                        eee = EarlyExitException(6, self.input)
                         raise eee
 
-                    cnt4 += 1
+                    cnt6 += 1
 
 
 
@@ -1201,7 +1472,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "types_item"
-    # grammar/ShyRecognizerFrontend.g:52:1: types_item : ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )? -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* ) ;
+    # grammar/ShyRecognizerFrontend.g:60:1: types_item : ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )? -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* ) ;
     def types_item(self, ):
         retval = self.types_item_return()
         retval.start = self.input.LT(1)
@@ -1209,25 +1480,25 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        ID38 = None
-        NEWLINE40 = None
-        INDENT41 = None
-        NEWLINE42 = None
-        NEWLINE44 = None
-        DEDENT45 = None
-        NEWLINE46 = None
-        types_item_hint39 = None
+        ID49 = None
+        NEWLINE51 = None
+        INDENT52 = None
+        NEWLINE53 = None
+        NEWLINE55 = None
+        DEDENT56 = None
+        NEWLINE57 = None
+        types_item_hint50 = None
 
-        types_item_hint43 = None
+        types_item_hint54 = None
 
 
-        ID38_tree = None
-        NEWLINE40_tree = None
-        INDENT41_tree = None
-        NEWLINE42_tree = None
-        NEWLINE44_tree = None
-        DEDENT45_tree = None
-        NEWLINE46_tree = None
+        ID49_tree = None
+        NEWLINE51_tree = None
+        INDENT52_tree = None
+        NEWLINE53_tree = None
+        NEWLINE55_tree = None
+        DEDENT56_tree = None
+        NEWLINE57_tree = None
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
@@ -1235,101 +1506,101 @@ class ShyRecognizerFrontend(Parser):
         stream_types_item_hint = RewriteRuleSubtreeStream(self._adaptor, "rule types_item_hint")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:53:5: ( ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )? -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* ) )
-                # grammar/ShyRecognizerFrontend.g:53:9: ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )?
+                # grammar/ShyRecognizerFrontend.g:61:5: ( ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )? -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* ) )
+                # grammar/ShyRecognizerFrontend.g:61:9: ID ( types_item_hint )? NEWLINE ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )?
                 pass 
-                ID38 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item406) 
-                stream_ID.add(ID38)
+                ID49 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item503) 
+                stream_ID.add(ID49)
 
 
-                # grammar/ShyRecognizerFrontend.g:53:12: ( types_item_hint )?
-                alt5 = 2
-                LA5_0 = self.input.LA(1)
-
-                if (LA5_0 == CURLY_OPEN or LA5_0 == ID) :
-                    alt5 = 1
-                if alt5 == 1:
-                    # grammar/ShyRecognizerFrontend.g:53:12: types_item_hint
-                    pass 
-                    self._state.following.append(self.FOLLOW_types_item_hint_in_types_item408)
-                    types_item_hint39 = self.types_item_hint()
-
-                    self._state.following.pop()
-                    stream_types_item_hint.add(types_item_hint39.tree)
-
-
-
-
-
-                NEWLINE40 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item412) 
-                stream_NEWLINE.add(NEWLINE40)
-
-
-                # grammar/ShyRecognizerFrontend.g:54:9: ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )?
+                # grammar/ShyRecognizerFrontend.g:61:12: ( types_item_hint )?
                 alt7 = 2
                 LA7_0 = self.input.LA(1)
 
-                if (LA7_0 == INDENT) :
+                if (LA7_0 == CURLY_OPEN or LA7_0 == ID) :
                     alt7 = 1
                 if alt7 == 1:
-                    # grammar/ShyRecognizerFrontend.g:54:11: INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE
+                    # grammar/ShyRecognizerFrontend.g:61:12: types_item_hint
                     pass 
-                    INDENT41 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item424) 
-                    stream_INDENT.add(INDENT41)
+                    self._state.following.append(self.FOLLOW_types_item_hint_in_types_item505)
+                    types_item_hint50 = self.types_item_hint()
+
+                    self._state.following.pop()
+                    stream_types_item_hint.add(types_item_hint50.tree)
 
 
-                    NEWLINE42 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item426) 
-                    stream_NEWLINE.add(NEWLINE42)
 
 
-                    # grammar/ShyRecognizerFrontend.g:54:26: ( types_item_hint NEWLINE )+
-                    cnt6 = 0
-                    while True: #loop6
-                        alt6 = 2
-                        LA6_0 = self.input.LA(1)
 
-                        if (LA6_0 == CURLY_OPEN or LA6_0 == ID) :
-                            alt6 = 1
+                NEWLINE51 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item509) 
+                stream_NEWLINE.add(NEWLINE51)
 
 
-                        if alt6 == 1:
-                            # grammar/ShyRecognizerFrontend.g:54:28: types_item_hint NEWLINE
+                # grammar/ShyRecognizerFrontend.g:62:9: ( INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE )?
+                alt9 = 2
+                LA9_0 = self.input.LA(1)
+
+                if (LA9_0 == INDENT) :
+                    alt9 = 1
+                if alt9 == 1:
+                    # grammar/ShyRecognizerFrontend.g:62:11: INDENT NEWLINE ( types_item_hint NEWLINE )+ DEDENT NEWLINE
+                    pass 
+                    INDENT52 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item521) 
+                    stream_INDENT.add(INDENT52)
+
+
+                    NEWLINE53 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item523) 
+                    stream_NEWLINE.add(NEWLINE53)
+
+
+                    # grammar/ShyRecognizerFrontend.g:62:26: ( types_item_hint NEWLINE )+
+                    cnt8 = 0
+                    while True: #loop8
+                        alt8 = 2
+                        LA8_0 = self.input.LA(1)
+
+                        if (LA8_0 == CURLY_OPEN or LA8_0 == ID) :
+                            alt8 = 1
+
+
+                        if alt8 == 1:
+                            # grammar/ShyRecognizerFrontend.g:62:28: types_item_hint NEWLINE
                             pass 
-                            self._state.following.append(self.FOLLOW_types_item_hint_in_types_item430)
-                            types_item_hint43 = self.types_item_hint()
+                            self._state.following.append(self.FOLLOW_types_item_hint_in_types_item527)
+                            types_item_hint54 = self.types_item_hint()
 
                             self._state.following.pop()
-                            stream_types_item_hint.add(types_item_hint43.tree)
+                            stream_types_item_hint.add(types_item_hint54.tree)
 
 
-                            NEWLINE44 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item432) 
-                            stream_NEWLINE.add(NEWLINE44)
+                            NEWLINE55 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item529) 
+                            stream_NEWLINE.add(NEWLINE55)
 
 
 
                         else:
-                            if cnt6 >= 1:
-                                break #loop6
+                            if cnt8 >= 1:
+                                break #loop8
 
-                            eee = EarlyExitException(6, self.input)
+                            eee = EarlyExitException(8, self.input)
                             raise eee
 
-                        cnt6 += 1
+                        cnt8 += 1
 
 
-                    DEDENT45 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item438) 
-                    stream_DEDENT.add(DEDENT45)
+                    DEDENT56 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item535) 
+                    stream_DEDENT.add(DEDENT56)
 
 
-                    NEWLINE46 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item440) 
-                    stream_NEWLINE.add(NEWLINE46)
+                    NEWLINE57 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item537) 
+                    stream_NEWLINE.add(NEWLINE57)
 
 
 
 
 
                 # AST Rewrite
-                # elements: types_item_hint, ID
+                # elements: ID, types_item_hint
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1343,8 +1614,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 55:9: -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* )
-                # grammar/ShyRecognizerFrontend.g:55:12: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* )
+                # 63:9: -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* )
+                # grammar/ShyRecognizerFrontend.g:63:12: ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS ( types_item_hint )* )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(TREE_TYPES_ITEM, "TREE_TYPES_ITEM")
@@ -1358,7 +1629,7 @@ class ShyRecognizerFrontend(Parser):
                 self._adaptor.createFromType(TREE_TYPES_ITEM_HINTS, "TREE_TYPES_ITEM_HINTS")
                 )
 
-                # grammar/ShyRecognizerFrontend.g:55:56: ( types_item_hint )*
+                # grammar/ShyRecognizerFrontend.g:63:56: ( types_item_hint )*
                 while stream_types_item_hint.hasNext():
                     self._adaptor.addChild(root_1, stream_types_item_hint.nextTree())
 
@@ -1407,7 +1678,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "types_item_hint"
-    # grammar/ShyRecognizerFrontend.g:57:1: types_item_hint : ( ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | hint ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) | hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) );
+    # grammar/ShyRecognizerFrontend.g:65:1: types_item_hint : ( ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | hint ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) | hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) );
     def types_item_hint(self, ):
         retval = self.types_item_hint_return()
         retval.start = self.input.LT(1)
@@ -1415,27 +1686,27 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        NEWLINE51 = None
-        INDENT52 = None
-        NEWLINE53 = None
-        NEWLINE55 = None
-        DEDENT56 = None
-        types_item_attr47 = None
+        NEWLINE62 = None
+        INDENT63 = None
+        NEWLINE64 = None
+        NEWLINE66 = None
+        DEDENT67 = None
+        types_item_attr58 = None
 
-        hint48 = None
+        hint59 = None
 
-        types_item_attr49 = None
+        types_item_attr60 = None
 
-        hint50 = None
+        hint61 = None
 
-        types_item_attr54 = None
+        types_item_attr65 = None
 
 
-        NEWLINE51_tree = None
-        INDENT52_tree = None
-        NEWLINE53_tree = None
-        NEWLINE55_tree = None
-        DEDENT56_tree = None
+        NEWLINE62_tree = None
+        INDENT63_tree = None
+        NEWLINE64_tree = None
+        NEWLINE66_tree = None
+        DEDENT67_tree = None
         stream_DEDENT = RewriteRuleTokenStream(self._adaptor, "token DEDENT")
         stream_NEWLINE = RewriteRuleTokenStream(self._adaptor, "token NEWLINE")
         stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
@@ -1443,41 +1714,41 @@ class ShyRecognizerFrontend(Parser):
         stream_types_item_attr = RewriteRuleSubtreeStream(self._adaptor, "rule types_item_attr")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:58:5: ( ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | hint ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) | hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) )
-                alt12 = 3
-                alt12 = self.dfa12.predict(self.input)
-                if alt12 == 1:
-                    # grammar/ShyRecognizerFrontend.g:58:9: ( types_item_attr )+
+                # grammar/ShyRecognizerFrontend.g:66:5: ( ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ ) | hint ( types_item_attr )+ -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) | hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ ) )
+                alt14 = 3
+                alt14 = self.dfa14.predict(self.input)
+                if alt14 == 1:
+                    # grammar/ShyRecognizerFrontend.g:66:9: ( types_item_attr )+
                     pass 
-                    # grammar/ShyRecognizerFrontend.g:58:9: ( types_item_attr )+
-                    cnt8 = 0
-                    while True: #loop8
-                        alt8 = 2
-                        LA8_0 = self.input.LA(1)
+                    # grammar/ShyRecognizerFrontend.g:66:9: ( types_item_attr )+
+                    cnt10 = 0
+                    while True: #loop10
+                        alt10 = 2
+                        LA10_0 = self.input.LA(1)
 
-                        if (LA8_0 == ID) :
-                            alt8 = 1
+                        if (LA10_0 == ID) :
+                            alt10 = 1
 
 
-                        if alt8 == 1:
-                            # grammar/ShyRecognizerFrontend.g:58:9: types_item_attr
+                        if alt10 == 1:
+                            # grammar/ShyRecognizerFrontend.g:66:9: types_item_attr
                             pass 
-                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint487)
-                            types_item_attr47 = self.types_item_attr()
+                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint584)
+                            types_item_attr58 = self.types_item_attr()
 
                             self._state.following.pop()
-                            stream_types_item_attr.add(types_item_attr47.tree)
+                            stream_types_item_attr.add(types_item_attr58.tree)
 
 
 
                         else:
-                            if cnt8 >= 1:
-                                break #loop8
+                            if cnt10 >= 1:
+                                break #loop10
 
-                            eee = EarlyExitException(8, self.input)
+                            eee = EarlyExitException(10, self.input)
                             raise eee
 
-                        cnt8 += 1
+                        cnt10 += 1
 
 
                     # AST Rewrite
@@ -1495,8 +1766,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 59:9: -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
-                    # grammar/ShyRecognizerFrontend.g:59:12: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                    # 67:9: -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
+                    # grammar/ShyRecognizerFrontend.g:67:12: ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr )+ )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_TYPES_ITEM_HINT, "TREE_TYPES_ITEM_HINT")
@@ -1506,7 +1777,7 @@ class ShyRecognizerFrontend(Parser):
                     self._adaptor.createFromType(TREE_HINT_NONE, "TREE_HINT_NONE")
                     )
 
-                    # grammar/ShyRecognizerFrontend.g:59:51: ( types_item_attr )+
+                    # grammar/ShyRecognizerFrontend.g:67:51: ( types_item_attr )+
                     if not (stream_types_item_attr.hasNext()):
                         raise RewriteEarlyExitException()
 
@@ -1526,114 +1797,17 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-                elif alt12 == 2:
-                    # grammar/ShyRecognizerFrontend.g:60:9: hint ( types_item_attr )+
+                elif alt14 == 2:
+                    # grammar/ShyRecognizerFrontend.g:68:9: hint ( types_item_attr )+
                     pass 
-                    self._state.following.append(self.FOLLOW_hint_in_types_item_hint522)
-                    hint48 = self.hint()
+                    self._state.following.append(self.FOLLOW_hint_in_types_item_hint619)
+                    hint59 = self.hint()
 
                     self._state.following.pop()
-                    stream_hint.add(hint48.tree)
+                    stream_hint.add(hint59.tree)
 
 
-                    # grammar/ShyRecognizerFrontend.g:60:14: ( types_item_attr )+
-                    cnt9 = 0
-                    while True: #loop9
-                        alt9 = 2
-                        LA9_0 = self.input.LA(1)
-
-                        if (LA9_0 == ID) :
-                            alt9 = 1
-
-
-                        if alt9 == 1:
-                            # grammar/ShyRecognizerFrontend.g:60:14: types_item_attr
-                            pass 
-                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint524)
-                            types_item_attr49 = self.types_item_attr()
-
-                            self._state.following.pop()
-                            stream_types_item_attr.add(types_item_attr49.tree)
-
-
-
-                        else:
-                            if cnt9 >= 1:
-                                break #loop9
-
-                            eee = EarlyExitException(9, self.input)
-                            raise eee
-
-                        cnt9 += 1
-
-
-                    # AST Rewrite
-                    # elements: hint, types_item_attr
-                    # token labels: 
-                    # rule labels: retval
-                    # token list labels: 
-                    # rule list labels: 
-                    # wildcard labels: 
-                    retval.tree = root_0
-                    if retval is not None:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
-                    else:
-                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
-
-
-                    root_0 = self._adaptor.nil()
-                    # 61:9: -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
-                    # grammar/ShyRecognizerFrontend.g:61:12: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
-                    root_1 = self._adaptor.nil()
-                    root_1 = self._adaptor.becomeRoot(
-                    self._adaptor.createFromType(TREE_TYPES_ITEM_HINT, "TREE_TYPES_ITEM_HINT")
-                    , root_1)
-
-                    self._adaptor.addChild(root_1, stream_hint.nextTree())
-
-                    # grammar/ShyRecognizerFrontend.g:61:41: ( types_item_attr )+
-                    if not (stream_types_item_attr.hasNext()):
-                        raise RewriteEarlyExitException()
-
-                    while stream_types_item_attr.hasNext():
-                        self._adaptor.addChild(root_1, stream_types_item_attr.nextTree())
-
-
-                    stream_types_item_attr.reset()
-
-                    self._adaptor.addChild(root_0, root_1)
-
-
-
-
-                    retval.tree = root_0
-
-
-
-
-                elif alt12 == 3:
-                    # grammar/ShyRecognizerFrontend.g:62:9: hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT
-                    pass 
-                    self._state.following.append(self.FOLLOW_hint_in_types_item_hint558)
-                    hint50 = self.hint()
-
-                    self._state.following.pop()
-                    stream_hint.add(hint50.tree)
-
-
-                    NEWLINE51 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint560) 
-                    stream_NEWLINE.add(NEWLINE51)
-
-
-                    INDENT52 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item_hint562) 
-                    stream_INDENT.add(INDENT52)
-
-
-                    NEWLINE53 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint564) 
-                    stream_NEWLINE.add(NEWLINE53)
-
-
-                    # grammar/ShyRecognizerFrontend.g:63:13: ( ( types_item_attr )+ NEWLINE )+
+                    # grammar/ShyRecognizerFrontend.g:68:14: ( types_item_attr )+
                     cnt11 = 0
                     while True: #loop11
                         alt11 = 2
@@ -1644,41 +1818,13 @@ class ShyRecognizerFrontend(Parser):
 
 
                         if alt11 == 1:
-                            # grammar/ShyRecognizerFrontend.g:63:15: ( types_item_attr )+ NEWLINE
+                            # grammar/ShyRecognizerFrontend.g:68:14: types_item_attr
                             pass 
-                            # grammar/ShyRecognizerFrontend.g:63:15: ( types_item_attr )+
-                            cnt10 = 0
-                            while True: #loop10
-                                alt10 = 2
-                                LA10_0 = self.input.LA(1)
+                            self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint621)
+                            types_item_attr60 = self.types_item_attr()
 
-                                if (LA10_0 == ID) :
-                                    alt10 = 1
-
-
-                                if alt10 == 1:
-                                    # grammar/ShyRecognizerFrontend.g:63:15: types_item_attr
-                                    pass 
-                                    self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint581)
-                                    types_item_attr54 = self.types_item_attr()
-
-                                    self._state.following.pop()
-                                    stream_types_item_attr.add(types_item_attr54.tree)
-
-
-
-                                else:
-                                    if cnt10 >= 1:
-                                        break #loop10
-
-                                    eee = EarlyExitException(10, self.input)
-                                    raise eee
-
-                                cnt10 += 1
-
-
-                            NEWLINE55 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint585) 
-                            stream_NEWLINE.add(NEWLINE55)
+                            self._state.following.pop()
+                            stream_types_item_attr.add(types_item_attr60.tree)
 
 
 
@@ -1692,12 +1838,8 @@ class ShyRecognizerFrontend(Parser):
                         cnt11 += 1
 
 
-                    DEDENT56 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item_hint591) 
-                    stream_DEDENT.add(DEDENT56)
-
-
                     # AST Rewrite
-                    # elements: hint, types_item_attr
+                    # elements: types_item_attr, hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1711,8 +1853,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 64:9: -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
-                    # grammar/ShyRecognizerFrontend.g:64:12: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    # 69:9: -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    # grammar/ShyRecognizerFrontend.g:69:12: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_TYPES_ITEM_HINT, "TREE_TYPES_ITEM_HINT")
@@ -1720,7 +1862,136 @@ class ShyRecognizerFrontend(Parser):
 
                     self._adaptor.addChild(root_1, stream_hint.nextTree())
 
-                    # grammar/ShyRecognizerFrontend.g:64:41: ( types_item_attr )+
+                    # grammar/ShyRecognizerFrontend.g:69:41: ( types_item_attr )+
+                    if not (stream_types_item_attr.hasNext()):
+                        raise RewriteEarlyExitException()
+
+                    while stream_types_item_attr.hasNext():
+                        self._adaptor.addChild(root_1, stream_types_item_attr.nextTree())
+
+
+                    stream_types_item_attr.reset()
+
+                    self._adaptor.addChild(root_0, root_1)
+
+
+
+
+                    retval.tree = root_0
+
+
+
+
+                elif alt14 == 3:
+                    # grammar/ShyRecognizerFrontend.g:70:9: hint NEWLINE INDENT NEWLINE ( ( types_item_attr )+ NEWLINE )+ DEDENT
+                    pass 
+                    self._state.following.append(self.FOLLOW_hint_in_types_item_hint655)
+                    hint61 = self.hint()
+
+                    self._state.following.pop()
+                    stream_hint.add(hint61.tree)
+
+
+                    NEWLINE62 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint657) 
+                    stream_NEWLINE.add(NEWLINE62)
+
+
+                    INDENT63 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_types_item_hint659) 
+                    stream_INDENT.add(INDENT63)
+
+
+                    NEWLINE64 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint661) 
+                    stream_NEWLINE.add(NEWLINE64)
+
+
+                    # grammar/ShyRecognizerFrontend.g:71:13: ( ( types_item_attr )+ NEWLINE )+
+                    cnt13 = 0
+                    while True: #loop13
+                        alt13 = 2
+                        LA13_0 = self.input.LA(1)
+
+                        if (LA13_0 == ID) :
+                            alt13 = 1
+
+
+                        if alt13 == 1:
+                            # grammar/ShyRecognizerFrontend.g:71:15: ( types_item_attr )+ NEWLINE
+                            pass 
+                            # grammar/ShyRecognizerFrontend.g:71:15: ( types_item_attr )+
+                            cnt12 = 0
+                            while True: #loop12
+                                alt12 = 2
+                                LA12_0 = self.input.LA(1)
+
+                                if (LA12_0 == ID) :
+                                    alt12 = 1
+
+
+                                if alt12 == 1:
+                                    # grammar/ShyRecognizerFrontend.g:71:15: types_item_attr
+                                    pass 
+                                    self._state.following.append(self.FOLLOW_types_item_attr_in_types_item_hint678)
+                                    types_item_attr65 = self.types_item_attr()
+
+                                    self._state.following.pop()
+                                    stream_types_item_attr.add(types_item_attr65.tree)
+
+
+
+                                else:
+                                    if cnt12 >= 1:
+                                        break #loop12
+
+                                    eee = EarlyExitException(12, self.input)
+                                    raise eee
+
+                                cnt12 += 1
+
+
+                            NEWLINE66 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_types_item_hint682) 
+                            stream_NEWLINE.add(NEWLINE66)
+
+
+
+                        else:
+                            if cnt13 >= 1:
+                                break #loop13
+
+                            eee = EarlyExitException(13, self.input)
+                            raise eee
+
+                        cnt13 += 1
+
+
+                    DEDENT67 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_types_item_hint688) 
+                    stream_DEDENT.add(DEDENT67)
+
+
+                    # AST Rewrite
+                    # elements: types_item_attr, hint
+                    # token labels: 
+                    # rule labels: retval
+                    # token list labels: 
+                    # rule list labels: 
+                    # wildcard labels: 
+                    retval.tree = root_0
+                    if retval is not None:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "rule retval", retval.tree)
+                    else:
+                        stream_retval = RewriteRuleSubtreeStream(self._adaptor, "token retval", None)
+
+
+                    root_0 = self._adaptor.nil()
+                    # 72:9: -> ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    # grammar/ShyRecognizerFrontend.g:72:12: ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr )+ )
+                    root_1 = self._adaptor.nil()
+                    root_1 = self._adaptor.becomeRoot(
+                    self._adaptor.createFromType(TREE_TYPES_ITEM_HINT, "TREE_TYPES_ITEM_HINT")
+                    , root_1)
+
+                    self._adaptor.addChild(root_1, stream_hint.nextTree())
+
+                    # grammar/ShyRecognizerFrontend.g:72:41: ( types_item_attr )+
                     if not (stream_types_item_attr.hasNext()):
                         raise RewriteEarlyExitException()
 
@@ -1771,7 +2042,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "types_item_attr"
-    # grammar/ShyRecognizerFrontend.g:66:1: types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
+    # grammar/ShyRecognizerFrontend.g:74:1: types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
     def types_item_attr(self, ):
         retval = self.types_item_attr_return()
         retval.start = self.input.LT(1)
@@ -1779,18 +2050,18 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        ID57 = None
+        ID68 = None
 
-        ID57_tree = None
+        ID68_tree = None
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:66:17: ( ID -> ^( TREE_TYPES_ITEM_ATTR ID ) )
-                # grammar/ShyRecognizerFrontend.g:66:19: ID
+                # grammar/ShyRecognizerFrontend.g:74:17: ( ID -> ^( TREE_TYPES_ITEM_ATTR ID ) )
+                # grammar/ShyRecognizerFrontend.g:74:19: ID
                 pass 
-                ID57 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr625) 
-                stream_ID.add(ID57)
+                ID68 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item_attr722) 
+                stream_ID.add(ID68)
 
 
                 # AST Rewrite
@@ -1808,8 +2079,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 66:22: -> ^( TREE_TYPES_ITEM_ATTR ID )
-                # grammar/ShyRecognizerFrontend.g:66:25: ^( TREE_TYPES_ITEM_ATTR ID )
+                # 74:22: -> ^( TREE_TYPES_ITEM_ATTR ID )
+                # grammar/ShyRecognizerFrontend.g:74:25: ^( TREE_TYPES_ITEM_ATTR ID )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
                 self._adaptor.createFromType(TREE_TYPES_ITEM_ATTR, "TREE_TYPES_ITEM_ATTR")
@@ -1861,7 +2132,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "hint"
-    # grammar/ShyRecognizerFrontend.g:68:1: hint : ( CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) | CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE -> ^( TREE_HINT ID ( hint_arg )+ ) );
+    # grammar/ShyRecognizerFrontend.g:76:1: hint : ( CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) | CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE -> ^( TREE_HINT ID ( hint_arg )+ ) );
     def hint(self, ):
         retval = self.hint_return()
         retval.start = self.input.LT(1)
@@ -1869,72 +2140,72 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        CURLY_OPEN58 = None
-        ID59 = None
-        CURLY_CLOSE60 = None
-        CURLY_OPEN61 = None
-        ID62 = None
-        CURLY_CLOSE64 = None
-        hint_arg63 = None
+        CURLY_OPEN69 = None
+        ID70 = None
+        CURLY_CLOSE71 = None
+        CURLY_OPEN72 = None
+        ID73 = None
+        CURLY_CLOSE75 = None
+        hint_arg74 = None
 
 
-        CURLY_OPEN58_tree = None
-        ID59_tree = None
-        CURLY_CLOSE60_tree = None
-        CURLY_OPEN61_tree = None
-        ID62_tree = None
-        CURLY_CLOSE64_tree = None
+        CURLY_OPEN69_tree = None
+        ID70_tree = None
+        CURLY_CLOSE71_tree = None
+        CURLY_OPEN72_tree = None
+        ID73_tree = None
+        CURLY_CLOSE75_tree = None
         stream_CURLY_OPEN = RewriteRuleTokenStream(self._adaptor, "token CURLY_OPEN")
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_CURLY_CLOSE = RewriteRuleTokenStream(self._adaptor, "token CURLY_CLOSE")
         stream_hint_arg = RewriteRuleSubtreeStream(self._adaptor, "rule hint_arg")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:69:5: ( CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) | CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE -> ^( TREE_HINT ID ( hint_arg )+ ) )
-                alt14 = 2
-                LA14_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:77:5: ( CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID ) | CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE -> ^( TREE_HINT ID ( hint_arg )+ ) )
+                alt16 = 2
+                LA16_0 = self.input.LA(1)
 
-                if (LA14_0 == CURLY_OPEN) :
-                    LA14_1 = self.input.LA(2)
+                if (LA16_0 == CURLY_OPEN) :
+                    LA16_1 = self.input.LA(2)
 
-                    if (LA14_1 == ID) :
-                        LA14_2 = self.input.LA(3)
+                    if (LA16_1 == ID) :
+                        LA16_2 = self.input.LA(3)
 
-                        if (LA14_2 == CURLY_CLOSE) :
-                            alt14 = 1
-                        elif (LA14_2 == ID or LA14_2 == UNDERSCORE) :
-                            alt14 = 2
+                        if (LA16_2 == CURLY_CLOSE) :
+                            alt16 = 1
+                        elif (LA16_2 == ID or LA16_2 == UNDERSCORE) :
+                            alt16 = 2
                         else:
-                            nvae = NoViableAltException("", 14, 2, self.input)
+                            nvae = NoViableAltException("", 16, 2, self.input)
 
                             raise nvae
 
 
                     else:
-                        nvae = NoViableAltException("", 14, 1, self.input)
+                        nvae = NoViableAltException("", 16, 1, self.input)
 
                         raise nvae
 
 
                 else:
-                    nvae = NoViableAltException("", 14, 0, self.input)
+                    nvae = NoViableAltException("", 16, 0, self.input)
 
                     raise nvae
 
 
-                if alt14 == 1:
-                    # grammar/ShyRecognizerFrontend.g:69:9: CURLY_OPEN ID CURLY_CLOSE
+                if alt16 == 1:
+                    # grammar/ShyRecognizerFrontend.g:77:9: CURLY_OPEN ID CURLY_CLOSE
                     pass 
-                    CURLY_OPEN58 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_hint650) 
-                    stream_CURLY_OPEN.add(CURLY_OPEN58)
+                    CURLY_OPEN69 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_hint747) 
+                    stream_CURLY_OPEN.add(CURLY_OPEN69)
 
 
-                    ID59 = self.match(self.input, ID, self.FOLLOW_ID_in_hint652) 
-                    stream_ID.add(ID59)
+                    ID70 = self.match(self.input, ID, self.FOLLOW_ID_in_hint749) 
+                    stream_ID.add(ID70)
 
 
-                    CURLY_CLOSE60 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_hint654) 
-                    stream_CURLY_CLOSE.add(CURLY_CLOSE60)
+                    CURLY_CLOSE71 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_hint751) 
+                    stream_CURLY_CLOSE.add(CURLY_CLOSE71)
 
 
                     # AST Rewrite
@@ -1952,8 +2223,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 69:35: -> ^( TREE_HINT ID )
-                    # grammar/ShyRecognizerFrontend.g:69:38: ^( TREE_HINT ID )
+                    # 77:35: -> ^( TREE_HINT ID )
+                    # grammar/ShyRecognizerFrontend.g:77:38: ^( TREE_HINT ID )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_HINT, "TREE_HINT")
@@ -1973,54 +2244,54 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-                elif alt14 == 2:
-                    # grammar/ShyRecognizerFrontend.g:70:9: CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE
+                elif alt16 == 2:
+                    # grammar/ShyRecognizerFrontend.g:78:9: CURLY_OPEN ID ( hint_arg )+ CURLY_CLOSE
                     pass 
-                    CURLY_OPEN61 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_hint674) 
-                    stream_CURLY_OPEN.add(CURLY_OPEN61)
+                    CURLY_OPEN72 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_hint771) 
+                    stream_CURLY_OPEN.add(CURLY_OPEN72)
 
 
-                    ID62 = self.match(self.input, ID, self.FOLLOW_ID_in_hint676) 
-                    stream_ID.add(ID62)
+                    ID73 = self.match(self.input, ID, self.FOLLOW_ID_in_hint773) 
+                    stream_ID.add(ID73)
 
 
-                    # grammar/ShyRecognizerFrontend.g:70:23: ( hint_arg )+
-                    cnt13 = 0
-                    while True: #loop13
-                        alt13 = 2
-                        LA13_0 = self.input.LA(1)
+                    # grammar/ShyRecognizerFrontend.g:78:23: ( hint_arg )+
+                    cnt15 = 0
+                    while True: #loop15
+                        alt15 = 2
+                        LA15_0 = self.input.LA(1)
 
-                        if (LA13_0 == ID or LA13_0 == UNDERSCORE) :
-                            alt13 = 1
+                        if (LA15_0 == ID or LA15_0 == UNDERSCORE) :
+                            alt15 = 1
 
 
-                        if alt13 == 1:
-                            # grammar/ShyRecognizerFrontend.g:70:23: hint_arg
+                        if alt15 == 1:
+                            # grammar/ShyRecognizerFrontend.g:78:23: hint_arg
                             pass 
-                            self._state.following.append(self.FOLLOW_hint_arg_in_hint678)
-                            hint_arg63 = self.hint_arg()
+                            self._state.following.append(self.FOLLOW_hint_arg_in_hint775)
+                            hint_arg74 = self.hint_arg()
 
                             self._state.following.pop()
-                            stream_hint_arg.add(hint_arg63.tree)
+                            stream_hint_arg.add(hint_arg74.tree)
 
 
 
                         else:
-                            if cnt13 >= 1:
-                                break #loop13
+                            if cnt15 >= 1:
+                                break #loop15
 
-                            eee = EarlyExitException(13, self.input)
+                            eee = EarlyExitException(15, self.input)
                             raise eee
 
-                        cnt13 += 1
+                        cnt15 += 1
 
 
-                    CURLY_CLOSE64 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_hint682) 
-                    stream_CURLY_CLOSE.add(CURLY_CLOSE64)
+                    CURLY_CLOSE75 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_hint779) 
+                    stream_CURLY_CLOSE.add(CURLY_CLOSE75)
 
 
                     # AST Rewrite
-                    # elements: hint_arg, ID
+                    # elements: ID, hint_arg
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2034,8 +2305,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 70:46: -> ^( TREE_HINT ID ( hint_arg )+ )
-                    # grammar/ShyRecognizerFrontend.g:70:49: ^( TREE_HINT ID ( hint_arg )+ )
+                    # 78:46: -> ^( TREE_HINT ID ( hint_arg )+ )
+                    # grammar/ShyRecognizerFrontend.g:78:49: ^( TREE_HINT ID ( hint_arg )+ )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_HINT, "TREE_HINT")
@@ -2045,7 +2316,7 @@ class ShyRecognizerFrontend(Parser):
                     stream_ID.nextNode()
                     )
 
-                    # grammar/ShyRecognizerFrontend.g:70:65: ( hint_arg )+
+                    # grammar/ShyRecognizerFrontend.g:78:65: ( hint_arg )+
                     if not (stream_hint_arg.hasNext()):
                         raise RewriteEarlyExitException()
 
@@ -2096,7 +2367,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "hint_arg"
-    # grammar/ShyRecognizerFrontend.g:72:1: hint_arg : ( ID | UNDERSCORE );
+    # grammar/ShyRecognizerFrontend.g:80:1: hint_arg : ( ID | UNDERSCORE );
     def hint_arg(self, ):
         retval = self.hint_arg_return()
         retval.start = self.input.LT(1)
@@ -2104,23 +2375,23 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        set65 = None
+        set76 = None
 
-        set65_tree = None
+        set76_tree = None
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:72:10: ( ID | UNDERSCORE )
+                # grammar/ShyRecognizerFrontend.g:80:10: ( ID | UNDERSCORE )
                 # grammar/ShyRecognizerFrontend.g:
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                set65 = self.input.LT(1)
+                set76 = self.input.LT(1)
 
                 if self.input.LA(1) == ID or self.input.LA(1) == UNDERSCORE:
                     self.input.consume()
-                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set65))
+                    self._adaptor.addChild(root_0, self._adaptor.createWithPayload(set76))
 
                     self._state.errorRecovery = False
 
@@ -2164,7 +2435,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "num_whole"
-    # grammar/ShyRecognizerFrontend.g:74:1: num_whole : ( MINUS )? NUMBER ;
+    # grammar/ShyRecognizerFrontend.g:82:1: num_whole : ( MINUS )? NUMBER ;
     def num_whole(self, ):
         retval = self.num_whole_return()
         retval.start = self.input.LT(1)
@@ -2172,41 +2443,41 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        MINUS66 = None
-        NUMBER67 = None
+        MINUS77 = None
+        NUMBER78 = None
 
-        MINUS66_tree = None
-        NUMBER67_tree = None
+        MINUS77_tree = None
+        NUMBER78_tree = None
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:74:11: ( ( MINUS )? NUMBER )
-                # grammar/ShyRecognizerFrontend.g:74:13: ( MINUS )? NUMBER
+                # grammar/ShyRecognizerFrontend.g:82:11: ( ( MINUS )? NUMBER )
+                # grammar/ShyRecognizerFrontend.g:82:13: ( MINUS )? NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/ShyRecognizerFrontend.g:74:13: ( MINUS )?
-                alt15 = 2
-                LA15_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:82:13: ( MINUS )?
+                alt17 = 2
+                LA17_0 = self.input.LA(1)
 
-                if (LA15_0 == MINUS) :
-                    alt15 = 1
-                if alt15 == 1:
-                    # grammar/ShyRecognizerFrontend.g:74:13: MINUS
+                if (LA17_0 == MINUS) :
+                    alt17 = 1
+                if alt17 == 1:
+                    # grammar/ShyRecognizerFrontend.g:82:13: MINUS
                     pass 
-                    MINUS66 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole721)
-                    MINUS66_tree = self._adaptor.createWithPayload(MINUS66)
-                    self._adaptor.addChild(root_0, MINUS66_tree)
+                    MINUS77 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole818)
+                    MINUS77_tree = self._adaptor.createWithPayload(MINUS77)
+                    self._adaptor.addChild(root_0, MINUS77_tree)
 
 
 
 
 
 
-                NUMBER67 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole725)
-                NUMBER67_tree = self._adaptor.createWithPayload(NUMBER67)
-                self._adaptor.addChild(root_0, NUMBER67_tree)
+                NUMBER78 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole822)
+                NUMBER78_tree = self._adaptor.createWithPayload(NUMBER78)
+                self._adaptor.addChild(root_0, NUMBER78_tree)
 
 
 
@@ -2243,7 +2514,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "num_fract"
-    # grammar/ShyRecognizerFrontend.g:75:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
+    # grammar/ShyRecognizerFrontend.g:83:1: num_fract : ( MINUS )? NUMBER DIVIDE NUMBER ;
     def num_fract(self, ):
         retval = self.num_fract_return()
         retval.start = self.input.LT(1)
@@ -2251,57 +2522,57 @@ class ShyRecognizerFrontend(Parser):
 
         root_0 = None
 
-        MINUS68 = None
-        NUMBER69 = None
-        DIVIDE70 = None
-        NUMBER71 = None
+        MINUS79 = None
+        NUMBER80 = None
+        DIVIDE81 = None
+        NUMBER82 = None
 
-        MINUS68_tree = None
-        NUMBER69_tree = None
-        DIVIDE70_tree = None
-        NUMBER71_tree = None
+        MINUS79_tree = None
+        NUMBER80_tree = None
+        DIVIDE81_tree = None
+        NUMBER82_tree = None
 
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:75:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
-                # grammar/ShyRecognizerFrontend.g:75:13: ( MINUS )? NUMBER DIVIDE NUMBER
+                # grammar/ShyRecognizerFrontend.g:83:11: ( ( MINUS )? NUMBER DIVIDE NUMBER )
+                # grammar/ShyRecognizerFrontend.g:83:13: ( MINUS )? NUMBER DIVIDE NUMBER
                 pass 
                 root_0 = self._adaptor.nil()
 
 
-                # grammar/ShyRecognizerFrontend.g:75:13: ( MINUS )?
-                alt16 = 2
-                LA16_0 = self.input.LA(1)
+                # grammar/ShyRecognizerFrontend.g:83:13: ( MINUS )?
+                alt18 = 2
+                LA18_0 = self.input.LA(1)
 
-                if (LA16_0 == MINUS) :
-                    alt16 = 1
-                if alt16 == 1:
-                    # grammar/ShyRecognizerFrontend.g:75:13: MINUS
+                if (LA18_0 == MINUS) :
+                    alt18 = 1
+                if alt18 == 1:
+                    # grammar/ShyRecognizerFrontend.g:83:13: MINUS
                     pass 
-                    MINUS68 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract733)
-                    MINUS68_tree = self._adaptor.createWithPayload(MINUS68)
-                    self._adaptor.addChild(root_0, MINUS68_tree)
+                    MINUS79 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract830)
+                    MINUS79_tree = self._adaptor.createWithPayload(MINUS79)
+                    self._adaptor.addChild(root_0, MINUS79_tree)
 
 
 
 
 
 
-                NUMBER69 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract737)
-                NUMBER69_tree = self._adaptor.createWithPayload(NUMBER69)
-                self._adaptor.addChild(root_0, NUMBER69_tree)
+                NUMBER80 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract834)
+                NUMBER80_tree = self._adaptor.createWithPayload(NUMBER80)
+                self._adaptor.addChild(root_0, NUMBER80_tree)
 
 
 
-                DIVIDE70 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract739)
-                DIVIDE70_tree = self._adaptor.createWithPayload(DIVIDE70)
-                self._adaptor.addChild(root_0, DIVIDE70_tree)
+                DIVIDE81 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract836)
+                DIVIDE81_tree = self._adaptor.createWithPayload(DIVIDE81)
+                self._adaptor.addChild(root_0, DIVIDE81_tree)
 
 
 
-                NUMBER71 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract741)
-                NUMBER71_tree = self._adaptor.createWithPayload(NUMBER71)
-                self._adaptor.addChild(root_0, NUMBER71_tree)
+                NUMBER82 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract838)
+                NUMBER82_tree = self._adaptor.createWithPayload(NUMBER82)
+                self._adaptor.addChild(root_0, NUMBER82_tree)
 
 
 
@@ -2328,123 +2599,134 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-    # lookup tables for DFA #12
+    # lookup tables for DFA #14
 
-    DFA12_eot = DFA.unpack(
+    DFA14_eot = DFA.unpack(
         u"\11\uffff"
         )
 
-    DFA12_eof = DFA.unpack(
+    DFA14_eof = DFA.unpack(
         u"\11\uffff"
         )
 
-    DFA12_min = DFA.unpack(
+    DFA14_min = DFA.unpack(
         u"\1\11\1\uffff\1\15\1\10\1\15\1\10\2\uffff\1\15"
         )
 
-    DFA12_max = DFA.unpack(
-        u"\1\15\1\uffff\1\15\1\54\1\21\1\54\2\uffff\1\21"
+    DFA14_max = DFA.unpack(
+        u"\1\15\1\uffff\1\15\1\55\1\21\1\55\2\uffff\1\21"
         )
 
-    DFA12_accept = DFA.unpack(
+    DFA14_accept = DFA.unpack(
         u"\1\uffff\1\1\4\uffff\1\2\1\3\1\uffff"
         )
 
-    DFA12_special = DFA.unpack(
+    DFA14_special = DFA.unpack(
         u"\11\uffff"
         )
 
 
-    DFA12_transition = [
+    DFA14_transition = [
         DFA.unpack(u"\1\2\3\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\4\uffff\1\5\36\uffff\1\5"),
+        DFA.unpack(u"\1\4\4\uffff\1\5\37\uffff\1\5"),
         DFA.unpack(u"\1\6\3\uffff\1\7"),
-        DFA.unpack(u"\1\10\4\uffff\1\5\36\uffff\1\5"),
+        DFA.unpack(u"\1\10\4\uffff\1\5\37\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\3\uffff\1\7")
     ]
 
-    # class definition for DFA #12
+    # class definition for DFA #14
 
-    class DFA12(DFA):
+    class DFA14(DFA):
         pass
 
 
  
 
-    FOLLOW_module_in_start82 = frozenset([1, 6, 16, 22, 43])
-    FOLLOW_stateless_in_start86 = frozenset([1, 6, 16, 22, 43])
-    FOLLOW_consts_in_start90 = frozenset([1, 6, 16, 22, 43])
-    FOLLOW_types_in_start94 = frozenset([1, 6, 16, 22, 43])
+    FOLLOW_module_in_start82 = frozenset([1, 6, 16, 22, 44])
+    FOLLOW_stateless_in_start86 = frozenset([1, 6, 16, 22, 44])
+    FOLLOW_consts_in_start90 = frozenset([1, 6, 16, 22, 44])
+    FOLLOW_types_in_start94 = frozenset([1, 6, 16, 22, 44])
     FOLLOW_MODULE_in_module113 = frozenset([13])
     FOLLOW_ID_in_module115 = frozenset([17])
     FOLLOW_NEWLINE_in_module117 = frozenset([1])
     FOLLOW_STATELESS_in_stateless146 = frozenset([13])
     FOLLOW_ID_in_stateless148 = frozenset([17])
     FOLLOW_NEWLINE_in_stateless150 = frozenset([1])
-    FOLLOW_CONSTS_in_consts179 = frozenset([13])
-    FOLLOW_ID_in_consts181 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts183 = frozenset([14])
-    FOLLOW_INDENT_in_consts193 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts195 = frozenset([13])
-    FOLLOW_consts_items_in_consts197 = frozenset([10])
-    FOLLOW_DEDENT_in_consts199 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts201 = frozenset([1])
-    FOLLOW_consts_item_in_consts_items233 = frozenset([1, 13])
-    FOLLOW_ID_in_consts_item249 = frozenset([15, 18])
-    FOLLOW_num_whole_in_consts_item251 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts_item253 = frozenset([1])
-    FOLLOW_ID_in_consts_item275 = frozenset([15, 18])
-    FOLLOW_num_fract_in_consts_item277 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts_item279 = frozenset([1])
-    FOLLOW_ID_in_consts_item301 = frozenset([12])
-    FOLLOW_EXPRESSION_in_consts_item303 = frozenset([17])
-    FOLLOW_NEWLINE_in_consts_item305 = frozenset([1])
-    FOLLOW_TYPES_in_types336 = frozenset([13])
-    FOLLOW_ID_in_types338 = frozenset([17])
-    FOLLOW_NEWLINE_in_types340 = frozenset([14])
-    FOLLOW_INDENT_in_types350 = frozenset([17])
-    FOLLOW_NEWLINE_in_types352 = frozenset([13])
-    FOLLOW_types_items_in_types354 = frozenset([10])
-    FOLLOW_DEDENT_in_types356 = frozenset([17])
-    FOLLOW_NEWLINE_in_types358 = frozenset([1])
-    FOLLOW_types_item_in_types_items390 = frozenset([1, 13])
-    FOLLOW_ID_in_types_item406 = frozenset([9, 13, 17])
-    FOLLOW_types_item_hint_in_types_item408 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item412 = frozenset([1, 14])
-    FOLLOW_INDENT_in_types_item424 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item426 = frozenset([9, 13])
-    FOLLOW_types_item_hint_in_types_item430 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item432 = frozenset([9, 10, 13])
-    FOLLOW_DEDENT_in_types_item438 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item440 = frozenset([1])
-    FOLLOW_types_item_attr_in_types_item_hint487 = frozenset([1, 13])
-    FOLLOW_hint_in_types_item_hint522 = frozenset([13])
-    FOLLOW_types_item_attr_in_types_item_hint524 = frozenset([1, 13])
-    FOLLOW_hint_in_types_item_hint558 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item_hint560 = frozenset([14])
-    FOLLOW_INDENT_in_types_item_hint562 = frozenset([17])
-    FOLLOW_NEWLINE_in_types_item_hint564 = frozenset([13])
-    FOLLOW_types_item_attr_in_types_item_hint581 = frozenset([13, 17])
-    FOLLOW_NEWLINE_in_types_item_hint585 = frozenset([10, 13])
-    FOLLOW_DEDENT_in_types_item_hint591 = frozenset([1])
-    FOLLOW_ID_in_types_item_attr625 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint650 = frozenset([13])
-    FOLLOW_ID_in_hint652 = frozenset([8])
-    FOLLOW_CURLY_CLOSE_in_hint654 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint674 = frozenset([13])
-    FOLLOW_ID_in_hint676 = frozenset([13, 44])
-    FOLLOW_hint_arg_in_hint678 = frozenset([8, 13, 44])
-    FOLLOW_CURLY_CLOSE_in_hint682 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole721 = frozenset([18])
-    FOLLOW_NUMBER_in_num_whole725 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract733 = frozenset([18])
-    FOLLOW_NUMBER_in_num_fract737 = frozenset([11])
-    FOLLOW_DIVIDE_in_num_fract739 = frozenset([18])
-    FOLLOW_NUMBER_in_num_fract741 = frozenset([1])
+    FOLLOW_STATELESS_in_stateless178 = frozenset([13])
+    FOLLOW_ID_in_stateless180 = frozenset([17])
+    FOLLOW_NEWLINE_in_stateless182 = frozenset([14])
+    FOLLOW_INDENT_in_stateless184 = frozenset([17])
+    FOLLOW_NEWLINE_in_stateless186 = frozenset([20])
+    FOLLOW_proc_in_stateless188 = frozenset([10, 20])
+    FOLLOW_DEDENT_in_stateless192 = frozenset([17])
+    FOLLOW_NEWLINE_in_stateless194 = frozenset([1])
+    FOLLOW_PROC_in_proc235 = frozenset([13])
+    FOLLOW_ID_in_proc237 = frozenset([17])
+    FOLLOW_NEWLINE_in_proc239 = frozenset([1])
+    FOLLOW_CONSTS_in_consts276 = frozenset([13])
+    FOLLOW_ID_in_consts278 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts280 = frozenset([14])
+    FOLLOW_INDENT_in_consts290 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts292 = frozenset([13])
+    FOLLOW_consts_items_in_consts294 = frozenset([10])
+    FOLLOW_DEDENT_in_consts296 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts298 = frozenset([1])
+    FOLLOW_consts_item_in_consts_items330 = frozenset([1, 13])
+    FOLLOW_ID_in_consts_item346 = frozenset([15, 18])
+    FOLLOW_num_whole_in_consts_item348 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts_item350 = frozenset([1])
+    FOLLOW_ID_in_consts_item372 = frozenset([15, 18])
+    FOLLOW_num_fract_in_consts_item374 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts_item376 = frozenset([1])
+    FOLLOW_ID_in_consts_item398 = frozenset([12])
+    FOLLOW_EXPRESSION_in_consts_item400 = frozenset([17])
+    FOLLOW_NEWLINE_in_consts_item402 = frozenset([1])
+    FOLLOW_TYPES_in_types433 = frozenset([13])
+    FOLLOW_ID_in_types435 = frozenset([17])
+    FOLLOW_NEWLINE_in_types437 = frozenset([14])
+    FOLLOW_INDENT_in_types447 = frozenset([17])
+    FOLLOW_NEWLINE_in_types449 = frozenset([13])
+    FOLLOW_types_items_in_types451 = frozenset([10])
+    FOLLOW_DEDENT_in_types453 = frozenset([17])
+    FOLLOW_NEWLINE_in_types455 = frozenset([1])
+    FOLLOW_types_item_in_types_items487 = frozenset([1, 13])
+    FOLLOW_ID_in_types_item503 = frozenset([9, 13, 17])
+    FOLLOW_types_item_hint_in_types_item505 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item509 = frozenset([1, 14])
+    FOLLOW_INDENT_in_types_item521 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item523 = frozenset([9, 13])
+    FOLLOW_types_item_hint_in_types_item527 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item529 = frozenset([9, 10, 13])
+    FOLLOW_DEDENT_in_types_item535 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item537 = frozenset([1])
+    FOLLOW_types_item_attr_in_types_item_hint584 = frozenset([1, 13])
+    FOLLOW_hint_in_types_item_hint619 = frozenset([13])
+    FOLLOW_types_item_attr_in_types_item_hint621 = frozenset([1, 13])
+    FOLLOW_hint_in_types_item_hint655 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item_hint657 = frozenset([14])
+    FOLLOW_INDENT_in_types_item_hint659 = frozenset([17])
+    FOLLOW_NEWLINE_in_types_item_hint661 = frozenset([13])
+    FOLLOW_types_item_attr_in_types_item_hint678 = frozenset([13, 17])
+    FOLLOW_NEWLINE_in_types_item_hint682 = frozenset([10, 13])
+    FOLLOW_DEDENT_in_types_item_hint688 = frozenset([1])
+    FOLLOW_ID_in_types_item_attr722 = frozenset([1])
+    FOLLOW_CURLY_OPEN_in_hint747 = frozenset([13])
+    FOLLOW_ID_in_hint749 = frozenset([8])
+    FOLLOW_CURLY_CLOSE_in_hint751 = frozenset([1])
+    FOLLOW_CURLY_OPEN_in_hint771 = frozenset([13])
+    FOLLOW_ID_in_hint773 = frozenset([13, 45])
+    FOLLOW_hint_arg_in_hint775 = frozenset([8, 13, 45])
+    FOLLOW_CURLY_CLOSE_in_hint779 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole818 = frozenset([18])
+    FOLLOW_NUMBER_in_num_whole822 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract830 = frozenset([18])
+    FOLLOW_NUMBER_in_num_fract834 = frozenset([11])
+    FOLLOW_DIVIDE_in_num_fract836 = frozenset([18])
+    FOLLOW_NUMBER_in_num_fract838 = frozenset([1])
 
 
 
