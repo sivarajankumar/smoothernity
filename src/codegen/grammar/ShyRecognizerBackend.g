@@ -120,32 +120,30 @@ types_items
 
 types_item
     returns [ name , value ]
-    :   ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hints )
-            { $name , $value = $ID.text , $types_item_hints.value }
-    |   ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS )
-            { $name , $value = $ID.text , dict ( ) }
+    :   ^( TREE_TYPES_ITEM ID vars_hint )
+            { $name , $value = $ID.text , $vars_hint.value }
     ;
 
-types_item_hints
+vars_hint
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ( types_item_hint { $value . update ( $types_item_hint.value ) } ) +
+    :   TREE_VARS_HINT ( var_hint { $value . update ( $var_hint.value ) } ) *
     ;
 
-types_item_hint
+var_hint
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE ( types_item_attr
-            { $value [ $types_item_attr.value ] = dict ( ) }
+    :   ^( TREE_VAR_HINT TREE_HINT_NONE ( var
+            { $value [ $var.value ] = dict ( ) }
         ) + )
-    |   ^( TREE_TYPES_ITEM_HINT hint ( types_item_attr
-            { $value [ $types_item_attr.value ] = $hint.value }
+    |   ^( TREE_VAR_HINT hint ( var
+            { $value [ $var.value ] = $hint.value }
         ) + )
     ;
 
-types_item_attr
+var
     returns [ value ]
-    :   ^( TREE_TYPES_ITEM_ATTR ID ) { $value = $ID.text }
+    :   ^( TREE_VAR ID ) { $value = $ID.text }
     ;
 
 hint
