@@ -52,8 +52,8 @@ proc_vars
     ;
 
 proc_ops
-    :   OPS NEWLINE INDENT NEWLINE statement DEDENT NEWLINE
-        -> ^( TREE_PROC_OPS statement )
+    :   OPS NEWLINE INDENT NEWLINE statement + DEDENT NEWLINE
+        -> ^( TREE_PROC_OPS statement + )
     ;
 
 statement
