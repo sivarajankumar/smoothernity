@@ -118,6 +118,7 @@ arbitrary_token
     :   ARGS { $value = $ARGS.text }
     |   CONSTS { $value = $CONSTS.text }
     |   MODULE { $value = $MODULE.text }
+    |   OPS { $value = $OPS.text }
     |   PROC { $value = $PROC.text }
     |   STATELESS { $value = $STATELESS.text }
     |   TYPES { $value = $TYPES.text }
