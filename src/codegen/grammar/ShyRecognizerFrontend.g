@@ -63,21 +63,22 @@ types
         -> ^( TREE_TYPES ID types_items )
     ;
 types_items : types_item + ;
-types_item
-    :   ID types_item_hint ? NEWLINE
-        ( INDENT NEWLINE ( types_item_hint NEWLINE ) + DEDENT NEWLINE ) ?
-        -> ^( TREE_TYPES_ITEM ID TREE_TYPES_ITEM_HINTS types_item_hint * )
+types_item : ID vars_hint -> ^( TREE_TYPES_ITEM ID vars_hint ) ;
+
+vars_hint
+    :   var_hint ? NEWLINE
+        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE ) ?
+        -> TREE_VARS_HINT var_hint *
     ;
-types_item_hint 
-    :   types_item_attr + 
-        -> ^( TREE_TYPES_ITEM_HINT TREE_HINT_NONE types_item_attr + )
-    |   hint types_item_attr +
-        -> ^( TREE_TYPES_ITEM_HINT hint types_item_attr + )
-    |   hint NEWLINE INDENT NEWLINE 
-            ( types_item_attr + NEWLINE ) + DEDENT
-        -> ^( TREE_TYPES_ITEM_HINT hint types_item_attr + )
+var_hint 
+    :   var + 
+        -> ^( TREE_VAR_HINT TREE_HINT_NONE var + )
+    |   hint var +
+        -> ^( TREE_VAR_HINT hint var + )
+    |   hint NEWLINE INDENT NEWLINE ( var + NEWLINE ) + DEDENT
+        -> ^( TREE_VAR_HINT hint var + )
     ;
-types_item_attr : ID -> ^( TREE_TYPES_ITEM_ATTR ID ) ;
+var : ID -> ^( TREE_VAR ID ) ;
 
 hint
     :   CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID )
