@@ -160,8 +160,8 @@ class statement_call_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n' ) ,
-            { 'stateless' : { 'test1' :
-                { 'proc1' : { 'ops' : [ { 'call1' : [ ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' :
+                [ { 'call1' : [ ] } ] } } } } )
     def test_multi_calls ( self ) :
         ae = self . assertEqual
         r = self . h . rec
