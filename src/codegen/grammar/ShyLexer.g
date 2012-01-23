@@ -24,6 +24,7 @@ DEDENT : 'dedent' ;
 INDENT : 'indent' ;
 MODULE : 'module' ;
 PASTE : 'paste' ;
+PROC : 'proc' ;
 REPLACE : 'replace' ;
 STATELESS : 'stateless' ;
 TYPES : 'types' ;

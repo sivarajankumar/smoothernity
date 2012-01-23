@@ -65,6 +65,7 @@ paste_with
 arbitrary_token
     :   CONSTS
     |   MODULE
+    |   PROC
     |   STATELESS
     |   TYPES
     |   WITH
