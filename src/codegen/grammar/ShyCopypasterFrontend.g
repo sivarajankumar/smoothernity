@@ -63,7 +63,8 @@ paste_with
     ;
 
 arbitrary_token
-    :   CONSTS
+    :   ARGS
+    |   CONSTS
     |   MODULE
     |   PROC
     |   STATELESS

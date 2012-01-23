@@ -37,6 +37,12 @@ stateless
 proc
     :   PROC ID NEWLINE
         -> ^( TREE_PROC ID )
+    |   PROC ID NEWLINE INDENT NEWLINE proc_args DEDENT NEWLINE
+        -> ^( TREE_PROC ID proc_args )
+    ;
+
+proc_args
+    :   ARGS ID + NEWLINE -> ^( TREE_PROC_ARGS ID + )
     ;
 
 consts
