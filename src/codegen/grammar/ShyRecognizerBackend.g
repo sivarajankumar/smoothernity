@@ -74,8 +74,8 @@ proc
 
 proc_args
     returns [ value ]
-    @ init { $value = dict ( ) }
-    :   ^( TREE_PROC_ARGS ( ID { $value [ $ID.text ] = dict ( ) } ) + )
+    :   ^( TREE_PROC_ARGS vars_hint )
+            { $value = $vars_hint.value }
     ;
 
 consts
