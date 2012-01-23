@@ -38,9 +38,9 @@ proc
     :   PROC ID NEWLINE
         -> ^( TREE_PROC ID )
     |   PROC ID NEWLINE INDENT NEWLINE
-            proc_args ? proc_vars ?
+            proc_args ? proc_vars ? proc_ops ?
         DEDENT NEWLINE
-        -> ^( TREE_PROC ID proc_args ? proc_vars ? )
+        -> ^( TREE_PROC ID proc_args ? proc_vars ? proc_ops ? )
     ;
 
 proc_args
@@ -50,6 +50,13 @@ proc_args
 proc_vars
     :   VARS vars_hint -> ^( TREE_PROC_VARS vars_hint )
     ;
+
+proc_ops
+    :   OPS NEWLINE INDENT NEWLINE statement DEDENT NEWLINE
+        -> ^( TREE_PROC_OPS statement )
+    ;
+
+statement : ID NEWLINE -> ^( TREE_STATEMENT ID ) ;
 
 consts
     :   CONSTS ID NEWLINE
