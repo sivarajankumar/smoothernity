@@ -69,6 +69,7 @@ arbitrary_token
     |   PROC
     |   STATELESS
     |   TYPES
+    |   VARS
     |   WITH
 
     |   ARROW_LEFT
