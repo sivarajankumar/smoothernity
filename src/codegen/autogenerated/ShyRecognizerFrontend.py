@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-23 19:01:47
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-23 19:08:10
 
 import sys
 from antlr3 import *
@@ -35,45 +35,46 @@ MINUS=16
 MODULE=17
 NEWLINE=18
 NUMBER=19
-PASTE=20
-PROC=21
-REPLACE=22
-STATELESS=23
-STRING=24
-TREE_ARBITRARY_TOKEN=25
-TREE_CONSTS=26
-TREE_COPY=27
-TREE_COPY_PASTE=28
-TREE_EXPRESSION=29
-TREE_HINT=30
-TREE_HINT_NONE=31
-TREE_MODULE=32
-TREE_NUM_FRACT=33
-TREE_NUM_WHOLE=34
-TREE_PASTE=35
-TREE_PASTE_REPLACE=36
-TREE_PASTE_WITH=37
-TREE_PROC=38
-TREE_PROC_ARGS=39
-TREE_PROC_VARS=40
-TREE_STATELESS=41
-TREE_TYPES=42
-TREE_TYPES_ITEM=43
-TREE_VAR=44
-TREE_VARS_HINT=45
-TREE_VAR_HINT=46
-TYPES=47
-UNDERSCORE=48
-VARS=49
-WHITESPACE=50
-WITH=51
+OPS=20
+PASTE=21
+PROC=22
+REPLACE=23
+STATELESS=24
+STRING=25
+TREE_ARBITRARY_TOKEN=26
+TREE_CONSTS=27
+TREE_COPY=28
+TREE_COPY_PASTE=29
+TREE_EXPRESSION=30
+TREE_HINT=31
+TREE_HINT_NONE=32
+TREE_MODULE=33
+TREE_NUM_FRACT=34
+TREE_NUM_WHOLE=35
+TREE_PASTE=36
+TREE_PASTE_REPLACE=37
+TREE_PASTE_WITH=38
+TREE_PROC=39
+TREE_PROC_ARGS=40
+TREE_PROC_VARS=41
+TREE_STATELESS=42
+TREE_TYPES=43
+TREE_TYPES_ITEM=44
+TREE_VAR=45
+TREE_VARS_HINT=46
+TREE_VAR_HINT=47
+TYPES=48
+UNDERSCORE=49
+VARS=50
+WHITESPACE=51
+WITH=52
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", 
     "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "PASTE", "PROC", "REPLACE", "STATELESS", 
+    "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", "STATELESS", 
     "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
@@ -1185,7 +1186,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, consts_items
+                # elements: consts_items, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1446,7 +1447,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_whole
+                    # elements: num_whole, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1697,7 +1698,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: types_items, ID
+                # elements: ID, types_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -2428,7 +2429,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: hint, var
+                    # elements: var, hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -3074,7 +3075,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA17_max = DFA.unpack(
-        u"\1\16\1\uffff\1\16\1\60\1\22\1\60\2\uffff\1\22"
+        u"\1\16\1\uffff\1\16\1\61\1\22\1\61\2\uffff\1\22"
         )
 
     DFA17_accept = DFA.unpack(
@@ -3090,9 +3091,9 @@ class ShyRecognizerFrontend(Parser):
         DFA.unpack(u"\1\2\3\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\4\uffff\1\5\41\uffff\1\5"),
+        DFA.unpack(u"\1\4\4\uffff\1\5\42\uffff\1\5"),
         DFA.unpack(u"\1\6\3\uffff\1\7"),
-        DFA.unpack(u"\1\10\4\uffff\1\5\41\uffff\1\5"),
+        DFA.unpack(u"\1\10\4\uffff\1\5\42\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\3\uffff\1\7")
@@ -3106,10 +3107,10 @@ class ShyRecognizerFrontend(Parser):
 
  
 
-    FOLLOW_module_in_start82 = frozenset([1, 7, 17, 23, 47])
-    FOLLOW_stateless_in_start86 = frozenset([1, 7, 17, 23, 47])
-    FOLLOW_consts_in_start90 = frozenset([1, 7, 17, 23, 47])
-    FOLLOW_types_in_start94 = frozenset([1, 7, 17, 23, 47])
+    FOLLOW_module_in_start82 = frozenset([1, 7, 17, 24, 48])
+    FOLLOW_stateless_in_start86 = frozenset([1, 7, 17, 24, 48])
+    FOLLOW_consts_in_start90 = frozenset([1, 7, 17, 24, 48])
+    FOLLOW_types_in_start94 = frozenset([1, 7, 17, 24, 48])
     FOLLOW_MODULE_in_module113 = frozenset([14])
     FOLLOW_ID_in_module115 = frozenset([18])
     FOLLOW_NEWLINE_in_module117 = frozenset([1])
@@ -3120,8 +3121,8 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_stateless180 = frozenset([18])
     FOLLOW_NEWLINE_in_stateless182 = frozenset([15])
     FOLLOW_INDENT_in_stateless184 = frozenset([18])
-    FOLLOW_NEWLINE_in_stateless186 = frozenset([21])
-    FOLLOW_proc_in_stateless188 = frozenset([11, 21])
+    FOLLOW_NEWLINE_in_stateless186 = frozenset([22])
+    FOLLOW_proc_in_stateless188 = frozenset([11, 22])
     FOLLOW_DEDENT_in_stateless192 = frozenset([18])
     FOLLOW_NEWLINE_in_stateless194 = frozenset([1])
     FOLLOW_PROC_in_proc235 = frozenset([14])
@@ -3131,8 +3132,8 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_proc269 = frozenset([18])
     FOLLOW_NEWLINE_in_proc271 = frozenset([15])
     FOLLOW_INDENT_in_proc273 = frozenset([18])
-    FOLLOW_NEWLINE_in_proc275 = frozenset([4, 11, 49])
-    FOLLOW_proc_args_in_proc289 = frozenset([11, 49])
+    FOLLOW_NEWLINE_in_proc275 = frozenset([4, 11, 50])
+    FOLLOW_proc_args_in_proc289 = frozenset([11, 50])
     FOLLOW_proc_vars_in_proc293 = frozenset([11])
     FOLLOW_DEDENT_in_proc305 = frozenset([18])
     FOLLOW_NEWLINE_in_proc307 = frozenset([1])
@@ -3192,8 +3193,8 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_hint887 = frozenset([9])
     FOLLOW_CURLY_CLOSE_in_hint889 = frozenset([1])
     FOLLOW_CURLY_OPEN_in_hint909 = frozenset([14])
-    FOLLOW_ID_in_hint911 = frozenset([14, 48])
-    FOLLOW_hint_arg_in_hint913 = frozenset([9, 14, 48])
+    FOLLOW_ID_in_hint911 = frozenset([14, 49])
+    FOLLOW_hint_arg_in_hint913 = frozenset([9, 14, 49])
     FOLLOW_CURLY_CLOSE_in_hint917 = frozenset([1])
     FOLLOW_MINUS_in_num_whole956 = frozenset([19])
     FOLLOW_NUMBER_in_num_whole960 = frozenset([1])

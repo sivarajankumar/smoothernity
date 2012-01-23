@@ -66,6 +66,7 @@ arbitrary_token
     :   ARGS
     |   CONSTS
     |   MODULE
+    |   OPS
     |   PROC
     |   STATELESS
     |   TYPES

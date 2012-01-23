@@ -24,6 +24,7 @@ COPY : 'copy' ;
 DEDENT : 'dedent' ;
 INDENT : 'indent' ;
 MODULE : 'module' ;
+OPS : 'ops' ;
 PASTE : 'paste' ;
 PROC : 'proc' ;
 REPLACE : 'replace' ;
