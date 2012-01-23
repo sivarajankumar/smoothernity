@@ -18,6 +18,7 @@ options
         raise ShyLexerException ( msg )
 }
 
+ARGS : 'args' ;
 CONSTS : 'consts' ;
 COPY : 'copy' ;
 DEDENT : 'dedent' ;
@@ -58,6 +59,7 @@ TREE_PASTE : 'TREE_PASTE' ;
 TREE_PASTE_REPLACE : 'TREE_PASTE_REPLACE' ;
 TREE_PASTE_WITH : 'TREE_PASTE_WITH' ;
 TREE_PROC : 'TREE_PROC' ;
+TREE_PROC_ARGS : 'TREE_PROC_ARGS' ;
 TREE_STATELESS : 'TREE_STATELESS' ;
 TREE_TYPES : 'TREE_TYPES' ;
 TREE_TYPES_ITEM : 'TREE_TYPES_ITEM' ;

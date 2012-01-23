@@ -115,7 +115,8 @@ arbitrary_tokens
 
 arbitrary_token
     returns [ value ]
-    :   CONSTS { $value = $CONSTS.text }
+    :   ARGS { $value = $ARGS.text }
+    |   CONSTS { $value = $CONSTS.text }
     |   MODULE { $value = $MODULE.text }
     |   PROC { $value = $PROC.text }
     |   STATELESS { $value = $STATELESS.text }
