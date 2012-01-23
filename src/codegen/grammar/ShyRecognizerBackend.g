@@ -97,13 +97,26 @@ proc_vars
 proc_ops
     returns [ value ]
     :   ^( TREE_PROC_OPS statement )
-            { $value = $statement.value }
+            { $value = [ $statement.value ] }
     ;
 
 statement
     returns [ value ]
-    :   ^( TREE_STATEMENT ID )
-            { $value = [ { $ID.text : [ ] } ] }
+    :   statement_call
+            { $value = $statement_call.value }
+    ;
+
+statement_call
+    returns [ value ]
+    :   ^( TREE_STATEMENT_CALL ID statement_call_args )
+            { $value = { $ID.text : $statement_call_args.value } }
+    ;
+
+statement_call_args
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   TREE_STATEMENT_CALL_ARGS 
+            ( ID { $value . append ( { $ID.text : { } } ) } ) *
     ;
 
 consts
