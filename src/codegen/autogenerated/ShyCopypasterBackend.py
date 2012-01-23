@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-23 14:21:25
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-23 14:34:21
 
 import sys
 from antlr3 import *
@@ -46,16 +46,17 @@ TREE_NUM_WHOLE=33
 TREE_PASTE=34
 TREE_PASTE_REPLACE=35
 TREE_PASTE_WITH=36
-TREE_STATELESS=37
-TREE_TYPES=38
-TREE_TYPES_ITEM=39
-TREE_TYPES_ITEM_ATTR=40
-TREE_TYPES_ITEM_HINT=41
-TREE_TYPES_ITEM_HINTS=42
-TYPES=43
-UNDERSCORE=44
-WHITESPACE=45
-WITH=46
+TREE_PROC=37
+TREE_STATELESS=38
+TREE_TYPES=39
+TREE_TYPES_ITEM=40
+TREE_TYPES_ITEM_ATTR=41
+TREE_TYPES_ITEM_HINT=42
+TREE_TYPES_ITEM_HINTS=43
+TYPES=44
+UNDERSCORE=45
+WHITESPACE=46
+WITH=47
 
 # token names
 tokenNames = [
@@ -66,7 +67,7 @@ tokenNames = [
     "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
     "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
     "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
+    "TREE_PROC", "TREE_STATELESS", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_TYPES_ITEM_ATTR", 
     "TREE_TYPES_ITEM_HINT", "TREE_TYPES_ITEM_HINTS", "TYPES", "UNDERSCORE", 
     "WHITESPACE", "WITH"
 ]
@@ -1292,7 +1293,7 @@ class ShyCopypasterBackend(TreeParser):
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\44\1\2\22\56\2\uffff"
+        u"\1\44\1\2\22\57\2\uffff"
         )
 
     DFA10_accept = DFA.unpack(
@@ -1308,59 +1309,59 @@ class ShyCopypasterBackend(TreeParser):
         DFA.unpack(u"\1\1"),
         DFA.unpack(u"\1\2"),
         DFA.unpack(u"\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15\1\22"
-        u"\1\20\1\24\1\16\1\4\1\uffff\1\21\1\uffff\1\5\1\uffff\1\6\1\23\23"
+        u"\1\20\1\24\1\16\1\4\1\uffff\1\21\1\uffff\1\5\1\uffff\1\6\1\23\24"
         u"\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u"\1\25\1\11\1\12\1\3\1\uffff\1\14\1\13\1\uffff\1\15"
         u"\1\22\1\20\1\uffff\1\16\1\4\1\24\1\21\1\uffff\1\5\1\uffff\1\6\1"
-        u"\23\23\uffff\1\7\1\17\1\uffff\1\10"),
+        u"\23\24\uffff\1\7\1\17\1\uffff\1\10"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]
@@ -1373,27 +1374,27 @@ class ShyCopypasterBackend(TreeParser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 43, 44, 46])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 44, 45, 47])
     FOLLOW_arbitrary_tokens_in_block123 = frozenset([17])
     FOLLOW_NEWLINE_in_block147 = frozenset([1])
     FOLLOW_INDENT_in_block171 = frozenset([17])
-    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 43, 44, 46])
-    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 43, 44, 46])
+    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 44, 45, 47])
+    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 26, 44, 45, 47])
     FOLLOW_DEDENT_in_block244 = frozenset([17])
     FOLLOW_NEWLINE_in_block250 = frozenset([1])
     FOLLOW_copy_in_block274 = frozenset([1])
     FOLLOW_arbitrary_tokens_in_pure_block313 = frozenset([17])
     FOLLOW_NEWLINE_in_pure_block337 = frozenset([1])
     FOLLOW_INDENT_in_pure_block361 = frozenset([17])
-    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
-    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
+    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_DEDENT_in_pure_block434 = frozenset([17])
     FOLLOW_NEWLINE_in_pure_block440 = frozenset([1])
-    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_TREE_COPY_in_copy548 = frozenset([2])
     FOLLOW_copy_body_in_copy550 = frozenset([27])
     FOLLOW_copy_pastes_in_copy552 = frozenset([3])
-    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 27])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste683 = frozenset([2])
     FOLLOW_pastes_in_copy_paste685 = frozenset([3])
@@ -1407,7 +1408,7 @@ class ShyCopypasterBackend(TreeParser):
     FOLLOW_arbitrary_tokens_in_paste_with845 = frozenset([3])
     FOLLOW_TREE_PASTE_WITH_in_paste_with869 = frozenset([2])
     FOLLOW_pure_blocks_in_paste_with871 = frozenset([3])
-    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 18, 20, 22, 23, 43, 44, 46])
+    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 8, 9, 11, 12, 13, 15, 16, 18, 20, 22, 23, 44, 45, 47])
     FOLLOW_CONSTS_in_arbitrary_token975 = frozenset([1])
     FOLLOW_MODULE_in_arbitrary_token987 = frozenset([1])
     FOLLOW_PROC_in_arbitrary_token999 = frozenset([1])

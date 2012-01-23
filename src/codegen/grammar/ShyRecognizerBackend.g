@@ -30,7 +30,7 @@ start
         | stateless 
             {
                 update_start_dict ( $value , 'stateless' ,
-                    $stateless.value , dict ( ) )
+                    $stateless.title , $stateless.content )
             }
         | consts
             {
@@ -51,8 +51,23 @@ module
     ;
 
 stateless
+    returns [ title , content ]
+    :   ^( TREE_STATELESS ID )
+            { $title , $content = $ID.text , dict ( ) }
+    |   ^( TREE_STATELESS ID procs )
+            { $title , $content = $ID.text , $procs.value }
+    ;
+
+procs
     returns [ value ]
-    :   ^( TREE_STATELESS ID ) { $value = $ID.text }
+    @ init { $value = dict ( ) }
+    :   ( proc { $value [ $proc.title ] = $proc.content } ) +
+    ;
+
+proc
+    returns [ title , content ]
+    :   ^( TREE_PROC ID )
+            { $title , $content = $ID.text , dict ( ) }
     ;
 
 consts
