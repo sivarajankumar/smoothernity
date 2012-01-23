@@ -117,6 +117,13 @@ class stateless_test_case ( unittest . TestCase ) :
         ar ( re , r , 'stateless' )
         ar ( re , r , 'stateless\n' )
         ar ( re , r , 'stateless stateless\n' )
+    def test_procs ( self ) :
+        ae = self . assertEqual
+        ar = self . assertRaises
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n proc proc2\n' ) ,
+            { 'stateless' : { 'test1' :
+                { 'proc1' : { } , 'proc2' : { } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
