@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-23 18:48:32
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-23 18:51:39
 
 import sys
 from antlr3 import *
@@ -569,54 +569,33 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "proc_args"
-    # grammar/ShyRecognizerBackend.g:75:1: proc_args returns [ value ] : ^( TREE_PROC_ARGS ( ID )+ ) ;
+    # grammar/ShyRecognizerBackend.g:75:1: proc_args returns [ value ] : ^( TREE_PROC_ARGS vars_hint ) ;
     def proc_args(self, ):
         value = None
 
 
-        ID13 = None
+        vars_hint13 = None
 
-        value = dict ( ) 
+
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:78:5: ( ^( TREE_PROC_ARGS ( ID )+ ) )
-                # grammar/ShyRecognizerBackend.g:78:9: ^( TREE_PROC_ARGS ( ID )+ )
+                # grammar/ShyRecognizerBackend.g:77:5: ( ^( TREE_PROC_ARGS vars_hint ) )
+                # grammar/ShyRecognizerBackend.g:77:9: ^( TREE_PROC_ARGS vars_hint )
                 pass 
-                self.match(self.input, TREE_PROC_ARGS, self.FOLLOW_TREE_PROC_ARGS_in_proc_args470)
+                self.match(self.input, TREE_PROC_ARGS, self.FOLLOW_TREE_PROC_ARGS_in_proc_args460)
 
                 self.match(self.input, DOWN, None)
-                # grammar/ShyRecognizerBackend.g:78:27: ( ID )+
-                cnt5 = 0
-                while True: #loop5
-                    alt5 = 2
-                    LA5_0 = self.input.LA(1)
+                self._state.following.append(self.FOLLOW_vars_hint_in_proc_args462)
+                vars_hint13 = self.vars_hint()
 
-                    if (LA5_0 == ID) :
-                        alt5 = 1
-
-
-                    if alt5 == 1:
-                        # grammar/ShyRecognizerBackend.g:78:29: ID
-                        pass 
-                        ID13 = self.match(self.input, ID, self.FOLLOW_ID_in_proc_args474)
-
-                        #action start
-                        value [ ID13.text ] = dict ( ) 
-                        #action end
-
-
-
-                    else:
-                        if cnt5 >= 1:
-                            break #loop5
-
-                        eee = EarlyExitException(5, self.input)
-                        raise eee
-
-                    cnt5 += 1
-
+                self._state.following.pop()
 
                 self.match(self.input, UP, None)
+
+
+                #action start
+                value = vars_hint13 
+                #action end
 
 
 
@@ -661,12 +640,12 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:84:5: ( ^( TREE_CONSTS ID consts_items ) )
                 # grammar/ShyRecognizerBackend.g:84:9: ^( TREE_CONSTS ID consts_items )
                 pass 
-                self.match(self.input, TREE_CONSTS, self.FOLLOW_TREE_CONSTS_in_consts521)
+                self.match(self.input, TREE_CONSTS, self.FOLLOW_TREE_CONSTS_in_consts517)
 
                 self.match(self.input, DOWN, None)
-                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_consts523)
+                ID14 = self.match(self.input, ID, self.FOLLOW_ID_in_consts519)
 
-                self._state.following.append(self.FOLLOW_consts_items_in_consts525)
+                self._state.following.append(self.FOLLOW_consts_items_in_consts521)
                 consts_items15 = self.consts_items()
 
                 self._state.following.pop()
@@ -710,19 +689,19 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:91:9: ( consts_item )+
                 pass 
                 # grammar/ShyRecognizerBackend.g:91:9: ( consts_item )+
-                cnt6 = 0
-                while True: #loop6
-                    alt6 = 2
-                    LA6_0 = self.input.LA(1)
+                cnt5 = 0
+                while True: #loop5
+                    alt5 = 2
+                    LA5_0 = self.input.LA(1)
 
-                    if (LA6_0 == TREE_EXPRESSION or (TREE_NUM_FRACT <= LA6_0 <= TREE_NUM_WHOLE)) :
-                        alt6 = 1
+                    if (LA5_0 == TREE_EXPRESSION or (TREE_NUM_FRACT <= LA5_0 <= TREE_NUM_WHOLE)) :
+                        alt5 = 1
 
 
-                    if alt6 == 1:
+                    if alt5 == 1:
                         # grammar/ShyRecognizerBackend.g:91:11: consts_item
                         pass 
-                        self._state.following.append(self.FOLLOW_consts_item_in_consts_items580)
+                        self._state.following.append(self.FOLLOW_consts_item_in_consts_items576)
                         consts_item16 = self.consts_item()
 
                         self._state.following.pop()
@@ -734,13 +713,13 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     else:
-                        if cnt6 >= 1:
-                            break #loop6
+                        if cnt5 >= 1:
+                            break #loop5
 
-                        eee = EarlyExitException(6, self.input)
+                        eee = EarlyExitException(5, self.input)
                         raise eee
 
-                    cnt6 += 1
+                    cnt5 += 1
 
 
 
@@ -787,29 +766,29 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:98:5: ( ^( TREE_NUM_WHOLE ID num_whole ) | ^( TREE_NUM_FRACT ID num_fract ) | ^( TREE_EXPRESSION ID EXPRESSION ) )
-                alt7 = 3
-                LA7 = self.input.LA(1)
-                if LA7 == TREE_NUM_WHOLE:
-                    alt7 = 1
-                elif LA7 == TREE_NUM_FRACT:
-                    alt7 = 2
-                elif LA7 == TREE_EXPRESSION:
-                    alt7 = 3
+                alt6 = 3
+                LA6 = self.input.LA(1)
+                if LA6 == TREE_NUM_WHOLE:
+                    alt6 = 1
+                elif LA6 == TREE_NUM_FRACT:
+                    alt6 = 2
+                elif LA6 == TREE_EXPRESSION:
+                    alt6 = 3
                 else:
-                    nvae = NoViableAltException("", 7, 0, self.input)
+                    nvae = NoViableAltException("", 6, 0, self.input)
 
                     raise nvae
 
 
-                if alt7 == 1:
+                if alt6 == 1:
                     # grammar/ShyRecognizerBackend.g:98:9: ^( TREE_NUM_WHOLE ID num_whole )
                     pass 
-                    self.match(self.input, TREE_NUM_WHOLE, self.FOLLOW_TREE_NUM_WHOLE_in_consts_item635)
+                    self.match(self.input, TREE_NUM_WHOLE, self.FOLLOW_TREE_NUM_WHOLE_in_consts_item631)
 
                     self.match(self.input, DOWN, None)
-                    ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item637)
+                    ID17 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item633)
 
-                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item639)
+                    self._state.following.append(self.FOLLOW_num_whole_in_consts_item635)
                     num_whole18 = self.num_whole()
 
                     self._state.following.pop()
@@ -823,15 +802,15 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt7 == 2:
+                elif alt6 == 2:
                     # grammar/ShyRecognizerBackend.g:100:9: ^( TREE_NUM_FRACT ID num_fract )
                     pass 
-                    self.match(self.input, TREE_NUM_FRACT, self.FOLLOW_TREE_NUM_FRACT_in_consts_item667)
+                    self.match(self.input, TREE_NUM_FRACT, self.FOLLOW_TREE_NUM_FRACT_in_consts_item663)
 
                     self.match(self.input, DOWN, None)
-                    ID19 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item669)
+                    ID19 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item665)
 
-                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item671)
+                    self._state.following.append(self.FOLLOW_num_fract_in_consts_item667)
                     num_fract20 = self.num_fract()
 
                     self._state.following.pop()
@@ -845,15 +824,15 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt7 == 3:
+                elif alt6 == 3:
                     # grammar/ShyRecognizerBackend.g:102:9: ^( TREE_EXPRESSION ID EXPRESSION )
                     pass 
-                    self.match(self.input, TREE_EXPRESSION, self.FOLLOW_TREE_EXPRESSION_in_consts_item699)
+                    self.match(self.input, TREE_EXPRESSION, self.FOLLOW_TREE_EXPRESSION_in_consts_item695)
 
                     self.match(self.input, DOWN, None)
-                    ID21 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item701)
+                    ID21 = self.match(self.input, ID, self.FOLLOW_ID_in_consts_item697)
 
-                    EXPRESSION22 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item703)
+                    EXPRESSION22 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_consts_item699)
 
                     self.match(self.input, UP, None)
 
@@ -904,12 +883,12 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:109:5: ( ^( TREE_TYPES ID types_items ) )
                 # grammar/ShyRecognizerBackend.g:109:9: ^( TREE_TYPES ID types_items )
                 pass 
-                self.match(self.input, TREE_TYPES, self.FOLLOW_TREE_TYPES_in_types758)
+                self.match(self.input, TREE_TYPES, self.FOLLOW_TREE_TYPES_in_types754)
 
                 self.match(self.input, DOWN, None)
-                ID23 = self.match(self.input, ID, self.FOLLOW_ID_in_types760)
+                ID23 = self.match(self.input, ID, self.FOLLOW_ID_in_types756)
 
-                self._state.following.append(self.FOLLOW_types_items_in_types762)
+                self._state.following.append(self.FOLLOW_types_items_in_types758)
                 types_items24 = self.types_items()
 
                 self._state.following.pop()
@@ -953,19 +932,19 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:116:9: ( types_item )+
                 pass 
                 # grammar/ShyRecognizerBackend.g:116:9: ( types_item )+
-                cnt8 = 0
-                while True: #loop8
-                    alt8 = 2
-                    LA8_0 = self.input.LA(1)
+                cnt7 = 0
+                while True: #loop7
+                    alt7 = 2
+                    LA7_0 = self.input.LA(1)
 
-                    if (LA8_0 == TREE_TYPES_ITEM) :
-                        alt8 = 1
+                    if (LA7_0 == TREE_TYPES_ITEM) :
+                        alt7 = 1
 
 
-                    if alt8 == 1:
+                    if alt7 == 1:
                         # grammar/ShyRecognizerBackend.g:116:11: types_item
                         pass 
-                        self._state.following.append(self.FOLLOW_types_item_in_types_items817)
+                        self._state.following.append(self.FOLLOW_types_item_in_types_items813)
                         types_item25 = self.types_item()
 
                         self._state.following.pop()
@@ -977,13 +956,13 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     else:
-                        if cnt8 >= 1:
-                            break #loop8
+                        if cnt7 >= 1:
+                            break #loop7
 
-                        eee = EarlyExitException(8, self.input)
+                        eee = EarlyExitException(7, self.input)
                         raise eee
 
-                    cnt8 += 1
+                    cnt7 += 1
 
 
 
@@ -1027,12 +1006,12 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:123:5: ( ^( TREE_TYPES_ITEM ID vars_hint ) )
                 # grammar/ShyRecognizerBackend.g:123:9: ^( TREE_TYPES_ITEM ID vars_hint )
                 pass 
-                self.match(self.input, TREE_TYPES_ITEM, self.FOLLOW_TREE_TYPES_ITEM_in_types_item872)
+                self.match(self.input, TREE_TYPES_ITEM, self.FOLLOW_TREE_TYPES_ITEM_in_types_item868)
 
                 self.match(self.input, DOWN, None)
-                ID26 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item874)
+                ID26 = self.match(self.input, ID, self.FOLLOW_ID_in_types_item870)
 
-                self._state.following.append(self.FOLLOW_vars_hint_in_types_item876)
+                self._state.following.append(self.FOLLOW_vars_hint_in_types_item872)
                 vars_hint27 = self.vars_hint()
 
                 self._state.following.pop()
@@ -1075,21 +1054,21 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:130:5: ( TREE_VARS_HINT ( var_hint )* )
                 # grammar/ShyRecognizerBackend.g:130:9: TREE_VARS_HINT ( var_hint )*
                 pass 
-                self.match(self.input, TREE_VARS_HINT, self.FOLLOW_TREE_VARS_HINT_in_vars_hint929)
+                self.match(self.input, TREE_VARS_HINT, self.FOLLOW_TREE_VARS_HINT_in_vars_hint925)
 
                 # grammar/ShyRecognizerBackend.g:130:24: ( var_hint )*
-                while True: #loop9
-                    alt9 = 2
-                    LA9_0 = self.input.LA(1)
+                while True: #loop8
+                    alt8 = 2
+                    LA8_0 = self.input.LA(1)
 
-                    if (LA9_0 == TREE_VAR_HINT) :
-                        alt9 = 1
+                    if (LA8_0 == TREE_VAR_HINT) :
+                        alt8 = 1
 
 
-                    if alt9 == 1:
+                    if alt8 == 1:
                         # grammar/ShyRecognizerBackend.g:130:26: var_hint
                         pass 
-                        self._state.following.append(self.FOLLOW_var_hint_in_vars_hint933)
+                        self._state.following.append(self.FOLLOW_var_hint_in_vars_hint929)
                         var_hint28 = self.var_hint()
 
                         self._state.following.pop()
@@ -1101,7 +1080,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     else:
-                        break #loop9
+                        break #loop8
 
 
 
@@ -1136,46 +1115,95 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:136:5: ( ^( TREE_VAR_HINT TREE_HINT_NONE ( var )+ ) | ^( TREE_VAR_HINT hint ( var )+ ) )
-                alt12 = 2
-                LA12_0 = self.input.LA(1)
+                alt11 = 2
+                LA11_0 = self.input.LA(1)
 
-                if (LA12_0 == TREE_VAR_HINT) :
-                    LA12_1 = self.input.LA(2)
+                if (LA11_0 == TREE_VAR_HINT) :
+                    LA11_1 = self.input.LA(2)
 
-                    if (LA12_1 == 2) :
-                        LA12_2 = self.input.LA(3)
+                    if (LA11_1 == 2) :
+                        LA11_2 = self.input.LA(3)
 
-                        if (LA12_2 == TREE_HINT_NONE) :
-                            alt12 = 1
-                        elif (LA12_2 == TREE_HINT) :
-                            alt12 = 2
+                        if (LA11_2 == TREE_HINT_NONE) :
+                            alt11 = 1
+                        elif (LA11_2 == TREE_HINT) :
+                            alt11 = 2
                         else:
-                            nvae = NoViableAltException("", 12, 2, self.input)
+                            nvae = NoViableAltException("", 11, 2, self.input)
 
                             raise nvae
 
 
                     else:
-                        nvae = NoViableAltException("", 12, 1, self.input)
+                        nvae = NoViableAltException("", 11, 1, self.input)
 
                         raise nvae
 
 
                 else:
-                    nvae = NoViableAltException("", 12, 0, self.input)
+                    nvae = NoViableAltException("", 11, 0, self.input)
 
                     raise nvae
 
 
-                if alt12 == 1:
+                if alt11 == 1:
                     # grammar/ShyRecognizerBackend.g:136:9: ^( TREE_VAR_HINT TREE_HINT_NONE ( var )+ )
                     pass 
-                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_var_hint978)
+                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_var_hint974)
 
                     self.match(self.input, DOWN, None)
-                    self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_var_hint980)
+                    self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_var_hint976)
 
                     # grammar/ShyRecognizerBackend.g:136:41: ( var )+
+                    cnt9 = 0
+                    while True: #loop9
+                        alt9 = 2
+                        LA9_0 = self.input.LA(1)
+
+                        if (LA9_0 == TREE_VAR) :
+                            alt9 = 1
+
+
+                        if alt9 == 1:
+                            # grammar/ShyRecognizerBackend.g:136:43: var
+                            pass 
+                            self._state.following.append(self.FOLLOW_var_in_var_hint980)
+                            var29 = self.var()
+
+                            self._state.following.pop()
+
+                            #action start
+                            value [ var29 ] = dict ( ) 
+                            #action end
+
+
+
+                        else:
+                            if cnt9 >= 1:
+                                break #loop9
+
+                            eee = EarlyExitException(9, self.input)
+                            raise eee
+
+                        cnt9 += 1
+
+
+                    self.match(self.input, UP, None)
+
+
+
+                elif alt11 == 2:
+                    # grammar/ShyRecognizerBackend.g:139:9: ^( TREE_VAR_HINT hint ( var )+ )
+                    pass 
+                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_var_hint1020)
+
+                    self.match(self.input, DOWN, None)
+                    self._state.following.append(self.FOLLOW_hint_in_var_hint1022)
+                    hint31 = self.hint()
+
+                    self._state.following.pop()
+
+                    # grammar/ShyRecognizerBackend.g:139:31: ( var )+
                     cnt10 = 0
                     while True: #loop10
                         alt10 = 2
@@ -1186,15 +1214,15 @@ class ShyRecognizerBackend(TreeParser):
 
 
                         if alt10 == 1:
-                            # grammar/ShyRecognizerBackend.g:136:43: var
+                            # grammar/ShyRecognizerBackend.g:139:33: var
                             pass 
-                            self._state.following.append(self.FOLLOW_var_in_var_hint984)
-                            var29 = self.var()
+                            self._state.following.append(self.FOLLOW_var_in_var_hint1026)
+                            var30 = self.var()
 
                             self._state.following.pop()
 
                             #action start
-                            value [ var29 ] = dict ( ) 
+                            value [ var30 ] = hint31 
                             #action end
 
 
@@ -1207,55 +1235,6 @@ class ShyRecognizerBackend(TreeParser):
                             raise eee
 
                         cnt10 += 1
-
-
-                    self.match(self.input, UP, None)
-
-
-
-                elif alt12 == 2:
-                    # grammar/ShyRecognizerBackend.g:139:9: ^( TREE_VAR_HINT hint ( var )+ )
-                    pass 
-                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_var_hint1024)
-
-                    self.match(self.input, DOWN, None)
-                    self._state.following.append(self.FOLLOW_hint_in_var_hint1026)
-                    hint31 = self.hint()
-
-                    self._state.following.pop()
-
-                    # grammar/ShyRecognizerBackend.g:139:31: ( var )+
-                    cnt11 = 0
-                    while True: #loop11
-                        alt11 = 2
-                        LA11_0 = self.input.LA(1)
-
-                        if (LA11_0 == TREE_VAR) :
-                            alt11 = 1
-
-
-                        if alt11 == 1:
-                            # grammar/ShyRecognizerBackend.g:139:33: var
-                            pass 
-                            self._state.following.append(self.FOLLOW_var_in_var_hint1030)
-                            var30 = self.var()
-
-                            self._state.following.pop()
-
-                            #action start
-                            value [ var30 ] = hint31 
-                            #action end
-
-
-
-                        else:
-                            if cnt11 >= 1:
-                                break #loop11
-
-                            eee = EarlyExitException(11, self.input)
-                            raise eee
-
-                        cnt11 += 1
 
 
                     self.match(self.input, UP, None)
@@ -1288,10 +1267,10 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:146:5: ( ^( TREE_VAR ID ) )
                 # grammar/ShyRecognizerBackend.g:146:9: ^( TREE_VAR ID )
                 pass 
-                self.match(self.input, TREE_VAR, self.FOLLOW_TREE_VAR_in_var1087)
+                self.match(self.input, TREE_VAR, self.FOLLOW_TREE_VAR_in_var1083)
 
                 self.match(self.input, DOWN, None)
-                ID32 = self.match(self.input, ID, self.FOLLOW_ID_in_var1089)
+                ID32 = self.match(self.input, ID, self.FOLLOW_ID_in_var1085)
 
                 self.match(self.input, UP, None)
 
@@ -1331,53 +1310,53 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:152:5: ( ^( TREE_HINT ID ) | ^( TREE_HINT ID hint_args ) )
-                alt13 = 2
-                LA13_0 = self.input.LA(1)
+                alt12 = 2
+                LA12_0 = self.input.LA(1)
 
-                if (LA13_0 == TREE_HINT) :
-                    LA13_1 = self.input.LA(2)
+                if (LA12_0 == TREE_HINT) :
+                    LA12_1 = self.input.LA(2)
 
-                    if (LA13_1 == 2) :
-                        LA13_2 = self.input.LA(3)
+                    if (LA12_1 == 2) :
+                        LA12_2 = self.input.LA(3)
 
-                        if (LA13_2 == ID) :
-                            LA13_3 = self.input.LA(4)
+                        if (LA12_2 == ID) :
+                            LA12_3 = self.input.LA(4)
 
-                            if (LA13_3 == 3) :
-                                alt13 = 1
-                            elif (LA13_3 == ID or LA13_3 == UNDERSCORE) :
-                                alt13 = 2
+                            if (LA12_3 == 3) :
+                                alt12 = 1
+                            elif (LA12_3 == ID or LA12_3 == UNDERSCORE) :
+                                alt12 = 2
                             else:
-                                nvae = NoViableAltException("", 13, 3, self.input)
+                                nvae = NoViableAltException("", 12, 3, self.input)
 
                                 raise nvae
 
 
                         else:
-                            nvae = NoViableAltException("", 13, 2, self.input)
+                            nvae = NoViableAltException("", 12, 2, self.input)
 
                             raise nvae
 
 
                     else:
-                        nvae = NoViableAltException("", 13, 1, self.input)
+                        nvae = NoViableAltException("", 12, 1, self.input)
 
                         raise nvae
 
 
                 else:
-                    nvae = NoViableAltException("", 13, 0, self.input)
+                    nvae = NoViableAltException("", 12, 0, self.input)
 
                     raise nvae
 
 
-                if alt13 == 1:
+                if alt12 == 1:
                     # grammar/ShyRecognizerBackend.g:152:9: ^( TREE_HINT ID )
                     pass 
-                    self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint1132)
+                    self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint1128)
 
                     self.match(self.input, DOWN, None)
-                    ID33 = self.match(self.input, ID, self.FOLLOW_ID_in_hint1134)
+                    ID33 = self.match(self.input, ID, self.FOLLOW_ID_in_hint1130)
 
                     self.match(self.input, UP, None)
 
@@ -1388,15 +1367,15 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt13 == 2:
+                elif alt12 == 2:
                     # grammar/ShyRecognizerBackend.g:154:9: ^( TREE_HINT ID hint_args )
                     pass 
-                    self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint1162)
+                    self.match(self.input, TREE_HINT, self.FOLLOW_TREE_HINT_in_hint1158)
 
                     self.match(self.input, DOWN, None)
-                    ID34 = self.match(self.input, ID, self.FOLLOW_ID_in_hint1164)
+                    ID34 = self.match(self.input, ID, self.FOLLOW_ID_in_hint1160)
 
-                    self._state.following.append(self.FOLLOW_hint_args_in_hint1166)
+                    self._state.following.append(self.FOLLOW_hint_args_in_hint1162)
                     hint_args35 = self.hint_args()
 
                     self._state.following.pop()
@@ -1439,19 +1418,19 @@ class ShyRecognizerBackend(TreeParser):
                 # grammar/ShyRecognizerBackend.g:161:9: ( hint_arg )+
                 pass 
                 # grammar/ShyRecognizerBackend.g:161:9: ( hint_arg )+
-                cnt14 = 0
-                while True: #loop14
-                    alt14 = 2
-                    LA14_0 = self.input.LA(1)
+                cnt13 = 0
+                while True: #loop13
+                    alt13 = 2
+                    LA13_0 = self.input.LA(1)
 
-                    if (LA14_0 == ID or LA14_0 == UNDERSCORE) :
-                        alt14 = 1
+                    if (LA13_0 == ID or LA13_0 == UNDERSCORE) :
+                        alt13 = 1
 
 
-                    if alt14 == 1:
+                    if alt13 == 1:
                         # grammar/ShyRecognizerBackend.g:161:11: hint_arg
                         pass 
-                        self._state.following.append(self.FOLLOW_hint_arg_in_hint_args1221)
+                        self._state.following.append(self.FOLLOW_hint_arg_in_hint_args1217)
                         hint_arg36 = self.hint_arg()
 
                         self._state.following.pop()
@@ -1463,13 +1442,13 @@ class ShyRecognizerBackend(TreeParser):
 
 
                     else:
-                        if cnt14 >= 1:
-                            break #loop14
+                        if cnt13 >= 1:
+                            break #loop13
 
-                        eee = EarlyExitException(14, self.input)
+                        eee = EarlyExitException(13, self.input)
                         raise eee
 
-                    cnt14 += 1
+                    cnt13 += 1
 
 
 
@@ -1499,23 +1478,23 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:166:5: ( ID | UNDERSCORE )
-                alt15 = 2
-                LA15_0 = self.input.LA(1)
+                alt14 = 2
+                LA14_0 = self.input.LA(1)
 
-                if (LA15_0 == ID) :
-                    alt15 = 1
-                elif (LA15_0 == UNDERSCORE) :
-                    alt15 = 2
+                if (LA14_0 == ID) :
+                    alt14 = 1
+                elif (LA14_0 == UNDERSCORE) :
+                    alt14 = 2
                 else:
-                    nvae = NoViableAltException("", 15, 0, self.input)
+                    nvae = NoViableAltException("", 14, 0, self.input)
 
                     raise nvae
 
 
-                if alt15 == 1:
+                if alt14 == 1:
                     # grammar/ShyRecognizerBackend.g:166:9: ID
                     pass 
-                    ID37 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg1254)
+                    ID37 = self.match(self.input, ID, self.FOLLOW_ID_in_hint_arg1250)
 
                     #action start
                     value = ID37.text 
@@ -1523,10 +1502,10 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt15 == 2:
+                elif alt14 == 2:
                     # grammar/ShyRecognizerBackend.g:167:9: UNDERSCORE
                     pass 
-                    UNDERSCORE38 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_hint_arg1266)
+                    UNDERSCORE38 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_hint_arg1262)
 
                     #action start
                     value = UNDERSCORE38.text 
@@ -1560,28 +1539,28 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:172:5: ( ( MINUS NUMBER ) | ( NUMBER ) )
-                alt16 = 2
-                LA16_0 = self.input.LA(1)
+                alt15 = 2
+                LA15_0 = self.input.LA(1)
 
-                if (LA16_0 == MINUS) :
-                    alt16 = 1
-                elif (LA16_0 == NUMBER) :
-                    alt16 = 2
+                if (LA15_0 == MINUS) :
+                    alt15 = 1
+                elif (LA15_0 == NUMBER) :
+                    alt15 = 2
                 else:
-                    nvae = NoViableAltException("", 16, 0, self.input)
+                    nvae = NoViableAltException("", 15, 0, self.input)
 
                     raise nvae
 
 
-                if alt16 == 1:
+                if alt15 == 1:
                     # grammar/ShyRecognizerBackend.g:172:9: ( MINUS NUMBER )
                     pass 
                     # grammar/ShyRecognizerBackend.g:172:9: ( MINUS NUMBER )
                     # grammar/ShyRecognizerBackend.g:172:11: MINUS NUMBER
                     pass 
-                    MINUS39 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole1297)
+                    MINUS39 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_whole1293)
 
-                    NUMBER40 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1299)
+                    NUMBER40 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1295)
 
 
 
@@ -1592,13 +1571,13 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt16 == 2:
+                elif alt15 == 2:
                     # grammar/ShyRecognizerBackend.g:174:9: ( NUMBER )
                     pass 
                     # grammar/ShyRecognizerBackend.g:174:9: ( NUMBER )
                     # grammar/ShyRecognizerBackend.g:174:11: NUMBER
                     pass 
-                    NUMBER41 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1327)
+                    NUMBER41 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_whole1323)
 
 
 
@@ -1635,32 +1614,32 @@ class ShyRecognizerBackend(TreeParser):
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:180:5: ( ( MINUS n= NUMBER DIVIDE d= NUMBER ) | (n= NUMBER DIVIDE d= NUMBER ) )
-                alt17 = 2
-                LA17_0 = self.input.LA(1)
+                alt16 = 2
+                LA16_0 = self.input.LA(1)
 
-                if (LA17_0 == MINUS) :
-                    alt17 = 1
-                elif (LA17_0 == NUMBER) :
-                    alt17 = 2
+                if (LA16_0 == MINUS) :
+                    alt16 = 1
+                elif (LA16_0 == NUMBER) :
+                    alt16 = 2
                 else:
-                    nvae = NoViableAltException("", 17, 0, self.input)
+                    nvae = NoViableAltException("", 16, 0, self.input)
 
                     raise nvae
 
 
-                if alt17 == 1:
+                if alt16 == 1:
                     # grammar/ShyRecognizerBackend.g:180:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     pass 
                     # grammar/ShyRecognizerBackend.g:180:9: ( MINUS n= NUMBER DIVIDE d= NUMBER )
                     # grammar/ShyRecognizerBackend.g:180:11: MINUS n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    MINUS42 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract1372)
+                    MINUS42 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_num_fract1368)
 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1378)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1374)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1380)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1376)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1386)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1382)
 
 
 
@@ -1674,17 +1653,17 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                elif alt17 == 2:
+                elif alt16 == 2:
                     # grammar/ShyRecognizerBackend.g:185:9: (n= NUMBER DIVIDE d= NUMBER )
                     pass 
                     # grammar/ShyRecognizerBackend.g:185:9: (n= NUMBER DIVIDE d= NUMBER )
                     # grammar/ShyRecognizerBackend.g:185:11: n= NUMBER DIVIDE d= NUMBER
                     pass 
-                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1418)
+                    n = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1414)
 
-                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1420)
+                    self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_num_fract1416)
 
-                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1426)
+                    d = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_num_fract1422)
 
 
 
@@ -1727,56 +1706,56 @@ class ShyRecognizerBackend(TreeParser):
     FOLLOW_TREE_PROC_in_proc411 = frozenset([2])
     FOLLOW_ID_in_proc413 = frozenset([39])
     FOLLOW_proc_args_in_proc415 = frozenset([3])
-    FOLLOW_TREE_PROC_ARGS_in_proc_args470 = frozenset([2])
-    FOLLOW_ID_in_proc_args474 = frozenset([3, 14])
-    FOLLOW_TREE_CONSTS_in_consts521 = frozenset([2])
-    FOLLOW_ID_in_consts523 = frozenset([29, 33, 34])
-    FOLLOW_consts_items_in_consts525 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items580 = frozenset([1, 29, 33, 34])
-    FOLLOW_TREE_NUM_WHOLE_in_consts_item635 = frozenset([2])
-    FOLLOW_ID_in_consts_item637 = frozenset([16, 19])
-    FOLLOW_num_whole_in_consts_item639 = frozenset([3])
-    FOLLOW_TREE_NUM_FRACT_in_consts_item667 = frozenset([2])
-    FOLLOW_ID_in_consts_item669 = frozenset([16, 19])
-    FOLLOW_num_fract_in_consts_item671 = frozenset([3])
-    FOLLOW_TREE_EXPRESSION_in_consts_item699 = frozenset([2])
-    FOLLOW_ID_in_consts_item701 = frozenset([13])
-    FOLLOW_EXPRESSION_in_consts_item703 = frozenset([3])
-    FOLLOW_TREE_TYPES_in_types758 = frozenset([2])
-    FOLLOW_ID_in_types760 = frozenset([42])
-    FOLLOW_types_items_in_types762 = frozenset([3])
-    FOLLOW_types_item_in_types_items817 = frozenset([1, 42])
-    FOLLOW_TREE_TYPES_ITEM_in_types_item872 = frozenset([2])
-    FOLLOW_ID_in_types_item874 = frozenset([44])
-    FOLLOW_vars_hint_in_types_item876 = frozenset([3])
-    FOLLOW_TREE_VARS_HINT_in_vars_hint929 = frozenset([1, 45])
-    FOLLOW_var_hint_in_vars_hint933 = frozenset([1, 45])
-    FOLLOW_TREE_VAR_HINT_in_var_hint978 = frozenset([2])
-    FOLLOW_TREE_HINT_NONE_in_var_hint980 = frozenset([43])
-    FOLLOW_var_in_var_hint984 = frozenset([3, 43])
-    FOLLOW_TREE_VAR_HINT_in_var_hint1024 = frozenset([2])
-    FOLLOW_hint_in_var_hint1026 = frozenset([43])
-    FOLLOW_var_in_var_hint1030 = frozenset([3, 43])
-    FOLLOW_TREE_VAR_in_var1087 = frozenset([2])
-    FOLLOW_ID_in_var1089 = frozenset([3])
-    FOLLOW_TREE_HINT_in_hint1132 = frozenset([2])
-    FOLLOW_ID_in_hint1134 = frozenset([3])
-    FOLLOW_TREE_HINT_in_hint1162 = frozenset([2])
-    FOLLOW_ID_in_hint1164 = frozenset([14, 47])
-    FOLLOW_hint_args_in_hint1166 = frozenset([3])
-    FOLLOW_hint_arg_in_hint_args1221 = frozenset([1, 14, 47])
-    FOLLOW_ID_in_hint_arg1254 = frozenset([1])
-    FOLLOW_UNDERSCORE_in_hint_arg1266 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole1297 = frozenset([19])
-    FOLLOW_NUMBER_in_num_whole1299 = frozenset([1])
-    FOLLOW_NUMBER_in_num_whole1327 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract1372 = frozenset([19])
-    FOLLOW_NUMBER_in_num_fract1378 = frozenset([12])
-    FOLLOW_DIVIDE_in_num_fract1380 = frozenset([19])
-    FOLLOW_NUMBER_in_num_fract1386 = frozenset([1])
-    FOLLOW_NUMBER_in_num_fract1418 = frozenset([12])
-    FOLLOW_DIVIDE_in_num_fract1420 = frozenset([19])
-    FOLLOW_NUMBER_in_num_fract1426 = frozenset([1])
+    FOLLOW_TREE_PROC_ARGS_in_proc_args460 = frozenset([2])
+    FOLLOW_vars_hint_in_proc_args462 = frozenset([3])
+    FOLLOW_TREE_CONSTS_in_consts517 = frozenset([2])
+    FOLLOW_ID_in_consts519 = frozenset([29, 33, 34])
+    FOLLOW_consts_items_in_consts521 = frozenset([3])
+    FOLLOW_consts_item_in_consts_items576 = frozenset([1, 29, 33, 34])
+    FOLLOW_TREE_NUM_WHOLE_in_consts_item631 = frozenset([2])
+    FOLLOW_ID_in_consts_item633 = frozenset([16, 19])
+    FOLLOW_num_whole_in_consts_item635 = frozenset([3])
+    FOLLOW_TREE_NUM_FRACT_in_consts_item663 = frozenset([2])
+    FOLLOW_ID_in_consts_item665 = frozenset([16, 19])
+    FOLLOW_num_fract_in_consts_item667 = frozenset([3])
+    FOLLOW_TREE_EXPRESSION_in_consts_item695 = frozenset([2])
+    FOLLOW_ID_in_consts_item697 = frozenset([13])
+    FOLLOW_EXPRESSION_in_consts_item699 = frozenset([3])
+    FOLLOW_TREE_TYPES_in_types754 = frozenset([2])
+    FOLLOW_ID_in_types756 = frozenset([42])
+    FOLLOW_types_items_in_types758 = frozenset([3])
+    FOLLOW_types_item_in_types_items813 = frozenset([1, 42])
+    FOLLOW_TREE_TYPES_ITEM_in_types_item868 = frozenset([2])
+    FOLLOW_ID_in_types_item870 = frozenset([44])
+    FOLLOW_vars_hint_in_types_item872 = frozenset([3])
+    FOLLOW_TREE_VARS_HINT_in_vars_hint925 = frozenset([1, 45])
+    FOLLOW_var_hint_in_vars_hint929 = frozenset([1, 45])
+    FOLLOW_TREE_VAR_HINT_in_var_hint974 = frozenset([2])
+    FOLLOW_TREE_HINT_NONE_in_var_hint976 = frozenset([43])
+    FOLLOW_var_in_var_hint980 = frozenset([3, 43])
+    FOLLOW_TREE_VAR_HINT_in_var_hint1020 = frozenset([2])
+    FOLLOW_hint_in_var_hint1022 = frozenset([43])
+    FOLLOW_var_in_var_hint1026 = frozenset([3, 43])
+    FOLLOW_TREE_VAR_in_var1083 = frozenset([2])
+    FOLLOW_ID_in_var1085 = frozenset([3])
+    FOLLOW_TREE_HINT_in_hint1128 = frozenset([2])
+    FOLLOW_ID_in_hint1130 = frozenset([3])
+    FOLLOW_TREE_HINT_in_hint1158 = frozenset([2])
+    FOLLOW_ID_in_hint1160 = frozenset([14, 47])
+    FOLLOW_hint_args_in_hint1162 = frozenset([3])
+    FOLLOW_hint_arg_in_hint_args1217 = frozenset([1, 14, 47])
+    FOLLOW_ID_in_hint_arg1250 = frozenset([1])
+    FOLLOW_UNDERSCORE_in_hint_arg1262 = frozenset([1])
+    FOLLOW_MINUS_in_num_whole1293 = frozenset([19])
+    FOLLOW_NUMBER_in_num_whole1295 = frozenset([1])
+    FOLLOW_NUMBER_in_num_whole1323 = frozenset([1])
+    FOLLOW_MINUS_in_num_fract1368 = frozenset([19])
+    FOLLOW_NUMBER_in_num_fract1374 = frozenset([12])
+    FOLLOW_DIVIDE_in_num_fract1376 = frozenset([19])
+    FOLLOW_NUMBER_in_num_fract1382 = frozenset([1])
+    FOLLOW_NUMBER_in_num_fract1414 = frozenset([12])
+    FOLLOW_DIVIDE_in_num_fract1416 = frozenset([19])
+    FOLLOW_NUMBER_in_num_fract1422 = frozenset([1])
 
 
 

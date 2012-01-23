@@ -42,7 +42,7 @@ proc
     ;
 
 proc_args
-    :   ARGS ID + NEWLINE -> ^( TREE_PROC_ARGS ID + )
+    :   ARGS vars_hint -> ^( TREE_PROC_ARGS vars_hint )
     ;
 
 consts
