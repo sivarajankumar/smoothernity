@@ -167,15 +167,18 @@ class statement_call_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 arg1 arg2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'call1' : [ 'arg1' , 'arg2' ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
+                [ { 'arg1' : { } }
+                , { 'arg2' : { } } ] } ] } } } } )
     def test_args_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n    arg1 arg2\n    arg3' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'call1' : [ 'arg1' , 'arg2' , 'arg3' ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
+                [ { 'arg1' : { } }
+                , { 'arg2' : { } }
+                , { 'arg3' : { } } ] } ] } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

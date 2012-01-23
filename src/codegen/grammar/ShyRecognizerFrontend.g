@@ -56,7 +56,18 @@ proc_ops
         -> ^( TREE_PROC_OPS statement )
     ;
 
-statement : ID NEWLINE -> ^( TREE_STATEMENT ID ) ;
+statement
+    :   statement_call
+    ;
+
+statement_call
+    :   ID statement_call_args ? NEWLINE 
+        ( INDENT NEWLINE ( statement_call_args NEWLINE ) + DEDENT NEWLINE ) ?
+        ->  ^( TREE_STATEMENT_CALL ID
+                TREE_STATEMENT_CALL_ARGS statement_call_args * )
+    ;
+
+statement_call_args : ID + ;
 
 consts
     :   CONSTS ID NEWLINE
