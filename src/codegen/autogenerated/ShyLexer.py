@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyLexer.g 2012-01-24 14:40:57
+# $ANTLR 3.4 grammar/ShyLexer.g 2012-01-24 15:10:56
 
 import sys
 from antlr3 import *
@@ -41,35 +41,38 @@ REPLACE=25
 STATELESS=26
 STRING=27
 TREE_ARBITRARY_TOKEN=28
-TREE_CONSTS=29
-TREE_COPY=30
-TREE_COPY_PASTE=31
-TREE_EXPRESSION=32
-TREE_HINT=33
-TREE_HINT_NONE=34
-TREE_MODULE=35
-TREE_NUM_FRACT=36
-TREE_NUM_WHOLE=37
-TREE_PASTE=38
-TREE_PASTE_REPLACE=39
-TREE_PASTE_WITH=40
-TREE_PROC=41
-TREE_PROC_ARGS=42
-TREE_PROC_OPS=43
+TREE_CONDITION_ANY=29
+TREE_CONSTS=30
+TREE_COPY=31
+TREE_COPY_PASTE=32
+TREE_EXPRESSION=33
+TREE_HINT=34
+TREE_HINT_NONE=35
+TREE_MODULE=36
+TREE_NUM_FRACT=37
+TREE_NUM_WHOLE=38
+TREE_PASTE=39
+TREE_PASTE_REPLACE=40
+TREE_PASTE_WITH=41
+TREE_PROC=42
+TREE_PROC_ARGS=43
 TREE_PROC_VARS=44
 TREE_STATELESS=45
-TREE_STATEMENT_CALL=46
-TREE_STATEMENT_CALL_ARGS=47
-TREE_TYPES=48
-TREE_TYPES_ITEM=49
-TREE_VAR=50
-TREE_VARS_HINT=51
-TREE_VAR_HINT=52
-TYPES=53
-UNDERSCORE=54
-VARS=55
-WHITESPACE=56
-WITH=57
+TREE_STATEMENTS=46
+TREE_STATEMENT_CALL=47
+TREE_STATEMENT_CALL_ARGS=48
+TREE_STATEMENT_ELIF=49
+TREE_STATEMENT_IF=50
+TREE_TYPES=51
+TREE_TYPES_ITEM=52
+TREE_VAR=53
+TREE_VARS_HINT=54
+TREE_VAR_HINT=55
+TYPES=56
+UNDERSCORE=57
+VARS=58
+WHITESPACE=59
+WITH=60
 
 
 class ShyLexer(Lexer):
@@ -915,14 +918,37 @@ class ShyLexer(Lexer):
 
 
 
+    # $ANTLR start "TREE_CONDITION_ANY"
+    def mTREE_CONDITION_ANY(self, ):
+        try:
+            _type = TREE_CONDITION_ANY
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:53:20: ( 'TREE_COND_ANY' )
+            # grammar/ShyLexer.g:53:22: 'TREE_COND_ANY'
+            pass 
+            self.match("TREE_COND_ANY")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_CONDITION_ANY"
+
+
+
     # $ANTLR start "TREE_CONSTS"
     def mTREE_CONSTS(self, ):
         try:
             _type = TREE_CONSTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:53:13: ( 'TREE_CONSTS' )
-            # grammar/ShyLexer.g:53:15: 'TREE_CONSTS'
+            # grammar/ShyLexer.g:54:13: ( 'TREE_CONSTS' )
+            # grammar/ShyLexer.g:54:15: 'TREE_CONSTS'
             pass 
             self.match("TREE_CONSTS")
 
@@ -944,8 +970,8 @@ class ShyLexer(Lexer):
             _type = TREE_COPY
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:54:11: ( 'TREE_COPY' )
-            # grammar/ShyLexer.g:54:13: 'TREE_COPY'
+            # grammar/ShyLexer.g:55:11: ( 'TREE_COPY' )
+            # grammar/ShyLexer.g:55:13: 'TREE_COPY'
             pass 
             self.match("TREE_COPY")
 
@@ -967,8 +993,8 @@ class ShyLexer(Lexer):
             _type = TREE_COPY_PASTE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:55:17: ( 'TREE_COPY_PASTE' )
-            # grammar/ShyLexer.g:55:19: 'TREE_COPY_PASTE'
+            # grammar/ShyLexer.g:56:17: ( 'TREE_COPY_PASTE' )
+            # grammar/ShyLexer.g:56:19: 'TREE_COPY_PASTE'
             pass 
             self.match("TREE_COPY_PASTE")
 
@@ -990,8 +1016,8 @@ class ShyLexer(Lexer):
             _type = TREE_EXPRESSION
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:56:17: ( 'TREE_EXPRESSION' )
-            # grammar/ShyLexer.g:56:19: 'TREE_EXPRESSION'
+            # grammar/ShyLexer.g:57:17: ( 'TREE_EXPRESSION' )
+            # grammar/ShyLexer.g:57:19: 'TREE_EXPRESSION'
             pass 
             self.match("TREE_EXPRESSION")
 
@@ -1013,8 +1039,8 @@ class ShyLexer(Lexer):
             _type = TREE_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:57:11: ( 'TREE_HINT' )
-            # grammar/ShyLexer.g:57:13: 'TREE_HINT'
+            # grammar/ShyLexer.g:58:11: ( 'TREE_HINT' )
+            # grammar/ShyLexer.g:58:13: 'TREE_HINT'
             pass 
             self.match("TREE_HINT")
 
@@ -1036,8 +1062,8 @@ class ShyLexer(Lexer):
             _type = TREE_HINT_NONE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:58:16: ( 'TREE_HINT_NONE' )
-            # grammar/ShyLexer.g:58:18: 'TREE_HINT_NONE'
+            # grammar/ShyLexer.g:59:16: ( 'TREE_HINT_NONE' )
+            # grammar/ShyLexer.g:59:18: 'TREE_HINT_NONE'
             pass 
             self.match("TREE_HINT_NONE")
 
@@ -1059,8 +1085,8 @@ class ShyLexer(Lexer):
             _type = TREE_MODULE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:59:13: ( 'TREE_MODULE' )
-            # grammar/ShyLexer.g:59:15: 'TREE_MODULE'
+            # grammar/ShyLexer.g:60:13: ( 'TREE_MODULE' )
+            # grammar/ShyLexer.g:60:15: 'TREE_MODULE'
             pass 
             self.match("TREE_MODULE")
 
@@ -1082,8 +1108,8 @@ class ShyLexer(Lexer):
             _type = TREE_NUM_FRACT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:60:16: ( 'TREE_NUM_FRACT' )
-            # grammar/ShyLexer.g:60:18: 'TREE_NUM_FRACT'
+            # grammar/ShyLexer.g:61:16: ( 'TREE_NUM_FRACT' )
+            # grammar/ShyLexer.g:61:18: 'TREE_NUM_FRACT'
             pass 
             self.match("TREE_NUM_FRACT")
 
@@ -1105,8 +1131,8 @@ class ShyLexer(Lexer):
             _type = TREE_NUM_WHOLE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:61:16: ( 'TREE_NUM_WHOLE' )
-            # grammar/ShyLexer.g:61:18: 'TREE_NUM_WHOLE'
+            # grammar/ShyLexer.g:62:16: ( 'TREE_NUM_WHOLE' )
+            # grammar/ShyLexer.g:62:18: 'TREE_NUM_WHOLE'
             pass 
             self.match("TREE_NUM_WHOLE")
 
@@ -1128,8 +1154,8 @@ class ShyLexer(Lexer):
             _type = TREE_PASTE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:62:12: ( 'TREE_PASTE' )
-            # grammar/ShyLexer.g:62:14: 'TREE_PASTE'
+            # grammar/ShyLexer.g:63:12: ( 'TREE_PASTE' )
+            # grammar/ShyLexer.g:63:14: 'TREE_PASTE'
             pass 
             self.match("TREE_PASTE")
 
@@ -1151,8 +1177,8 @@ class ShyLexer(Lexer):
             _type = TREE_PASTE_REPLACE
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:63:20: ( 'TREE_PASTE_REPLACE' )
-            # grammar/ShyLexer.g:63:22: 'TREE_PASTE_REPLACE'
+            # grammar/ShyLexer.g:64:20: ( 'TREE_PASTE_REPLACE' )
+            # grammar/ShyLexer.g:64:22: 'TREE_PASTE_REPLACE'
             pass 
             self.match("TREE_PASTE_REPLACE")
 
@@ -1174,8 +1200,8 @@ class ShyLexer(Lexer):
             _type = TREE_PASTE_WITH
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:64:17: ( 'TREE_PASTE_WITH' )
-            # grammar/ShyLexer.g:64:19: 'TREE_PASTE_WITH'
+            # grammar/ShyLexer.g:65:17: ( 'TREE_PASTE_WITH' )
+            # grammar/ShyLexer.g:65:19: 'TREE_PASTE_WITH'
             pass 
             self.match("TREE_PASTE_WITH")
 
@@ -1197,8 +1223,8 @@ class ShyLexer(Lexer):
             _type = TREE_PROC
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:65:11: ( 'TREE_PROC' )
-            # grammar/ShyLexer.g:65:13: 'TREE_PROC'
+            # grammar/ShyLexer.g:66:11: ( 'TREE_PROC' )
+            # grammar/ShyLexer.g:66:13: 'TREE_PROC'
             pass 
             self.match("TREE_PROC")
 
@@ -1220,8 +1246,8 @@ class ShyLexer(Lexer):
             _type = TREE_PROC_ARGS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:66:16: ( 'TREE_PROC_ARGS' )
-            # grammar/ShyLexer.g:66:18: 'TREE_PROC_ARGS'
+            # grammar/ShyLexer.g:67:16: ( 'TREE_PROC_ARGS' )
+            # grammar/ShyLexer.g:67:18: 'TREE_PROC_ARGS'
             pass 
             self.match("TREE_PROC_ARGS")
 
@@ -1234,29 +1260,6 @@ class ShyLexer(Lexer):
             pass
 
     # $ANTLR end "TREE_PROC_ARGS"
-
-
-
-    # $ANTLR start "TREE_PROC_OPS"
-    def mTREE_PROC_OPS(self, ):
-        try:
-            _type = TREE_PROC_OPS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:67:15: ( 'TREE_PROC_OPS' )
-            # grammar/ShyLexer.g:67:17: 'TREE_PROC_OPS'
-            pass 
-            self.match("TREE_PROC_OPS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PROC_OPS"
 
 
 
@@ -1352,14 +1355,83 @@ class ShyLexer(Lexer):
 
 
 
+    # $ANTLR start "TREE_STATEMENT_ELIF"
+    def mTREE_STATEMENT_ELIF(self, ):
+        try:
+            _type = TREE_STATEMENT_ELIF
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:72:21: ( 'TREE_STATEMENT_ELIF' )
+            # grammar/ShyLexer.g:72:23: 'TREE_STATEMENT_ELIF'
+            pass 
+            self.match("TREE_STATEMENT_ELIF")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_ELIF"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_IF"
+    def mTREE_STATEMENT_IF(self, ):
+        try:
+            _type = TREE_STATEMENT_IF
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:73:19: ( 'TREE_STATEMENT_IF' )
+            # grammar/ShyLexer.g:73:21: 'TREE_STATEMENT_IF'
+            pass 
+            self.match("TREE_STATEMENT_IF")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_IF"
+
+
+
+    # $ANTLR start "TREE_STATEMENTS"
+    def mTREE_STATEMENTS(self, ):
+        try:
+            _type = TREE_STATEMENTS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:74:17: ( 'TREE_STATEMENTS' )
+            # grammar/ShyLexer.g:74:19: 'TREE_STATEMENTS'
+            pass 
+            self.match("TREE_STATEMENTS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENTS"
+
+
+
     # $ANTLR start "TREE_TYPES"
     def mTREE_TYPES(self, ):
         try:
             _type = TREE_TYPES
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:72:12: ( 'TREE_TYPES' )
-            # grammar/ShyLexer.g:72:14: 'TREE_TYPES'
+            # grammar/ShyLexer.g:75:12: ( 'TREE_TYPES' )
+            # grammar/ShyLexer.g:75:14: 'TREE_TYPES'
             pass 
             self.match("TREE_TYPES")
 
@@ -1381,8 +1453,8 @@ class ShyLexer(Lexer):
             _type = TREE_TYPES_ITEM
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:73:17: ( 'TREE_TYPES_ITEM' )
-            # grammar/ShyLexer.g:73:19: 'TREE_TYPES_ITEM'
+            # grammar/ShyLexer.g:76:17: ( 'TREE_TYPES_ITEM' )
+            # grammar/ShyLexer.g:76:19: 'TREE_TYPES_ITEM'
             pass 
             self.match("TREE_TYPES_ITEM")
 
@@ -1404,8 +1476,8 @@ class ShyLexer(Lexer):
             _type = TREE_VAR
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:74:10: ( 'TREE_VAR' )
-            # grammar/ShyLexer.g:74:12: 'TREE_VAR'
+            # grammar/ShyLexer.g:77:10: ( 'TREE_VAR' )
+            # grammar/ShyLexer.g:77:12: 'TREE_VAR'
             pass 
             self.match("TREE_VAR")
 
@@ -1427,8 +1499,8 @@ class ShyLexer(Lexer):
             _type = TREE_VAR_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:75:15: ( 'TREE_VAR_HINT' )
-            # grammar/ShyLexer.g:75:17: 'TREE_VAR_HINT'
+            # grammar/ShyLexer.g:78:15: ( 'TREE_VAR_HINT' )
+            # grammar/ShyLexer.g:78:17: 'TREE_VAR_HINT'
             pass 
             self.match("TREE_VAR_HINT")
 
@@ -1450,8 +1522,8 @@ class ShyLexer(Lexer):
             _type = TREE_VARS_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:76:16: ( 'TREE_VARS_HINT' )
-            # grammar/ShyLexer.g:76:18: 'TREE_VARS_HINT'
+            # grammar/ShyLexer.g:79:16: ( 'TREE_VARS_HINT' )
+            # grammar/ShyLexer.g:79:18: 'TREE_VARS_HINT'
             pass 
             self.match("TREE_VARS_HINT")
 
@@ -1468,8 +1540,8 @@ class ShyLexer(Lexer):
 
 
     def mTokens(self):
-        # grammar/ShyLexer.g:1:8: ( ARGS | CONSTS | COPY | DEDENT | DO | IF | INDENT | MODULE | OPS | PASTE | PROC | REPLACE | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | STRING | TREE_ARBITRARY_TOKEN | TREE_CONSTS | TREE_COPY | TREE_COPY_PASTE | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_PASTE | TREE_PASTE_REPLACE | TREE_PASTE_WITH | TREE_PROC | TREE_PROC_ARGS | TREE_PROC_OPS | TREE_PROC_VARS | TREE_STATELESS | TREE_STATEMENT_CALL | TREE_STATEMENT_CALL_ARGS | TREE_TYPES | TREE_TYPES_ITEM | TREE_VAR | TREE_VAR_HINT | TREE_VARS_HINT )
-        alt6 = 54
+        # grammar/ShyLexer.g:1:8: ( ARGS | CONSTS | COPY | DEDENT | DO | IF | INDENT | MODULE | OPS | PASTE | PROC | REPLACE | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | STRING | TREE_ARBITRARY_TOKEN | TREE_CONDITION_ANY | TREE_CONSTS | TREE_COPY | TREE_COPY_PASTE | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_PASTE | TREE_PASTE_REPLACE | TREE_PASTE_WITH | TREE_PROC | TREE_PROC_ARGS | TREE_PROC_VARS | TREE_STATELESS | TREE_STATEMENT_CALL | TREE_STATEMENT_CALL_ARGS | TREE_STATEMENT_ELIF | TREE_STATEMENT_IF | TREE_STATEMENTS | TREE_TYPES | TREE_TYPES_ITEM | TREE_VAR | TREE_VAR_HINT | TREE_VARS_HINT )
+        alt6 = 57
         alt6 = self.dfa6.predict(self.input)
         if alt6 == 1:
             # grammar/ShyLexer.g:1:10: ARGS
@@ -1682,168 +1754,189 @@ class ShyLexer(Lexer):
 
 
         elif alt6 == 31:
-            # grammar/ShyLexer.g:1:241: TREE_CONSTS
+            # grammar/ShyLexer.g:1:241: TREE_CONDITION_ANY
+            pass 
+            self.mTREE_CONDITION_ANY()
+
+
+
+        elif alt6 == 32:
+            # grammar/ShyLexer.g:1:260: TREE_CONSTS
             pass 
             self.mTREE_CONSTS()
 
 
 
-        elif alt6 == 32:
-            # grammar/ShyLexer.g:1:253: TREE_COPY
+        elif alt6 == 33:
+            # grammar/ShyLexer.g:1:272: TREE_COPY
             pass 
             self.mTREE_COPY()
 
 
 
-        elif alt6 == 33:
-            # grammar/ShyLexer.g:1:263: TREE_COPY_PASTE
+        elif alt6 == 34:
+            # grammar/ShyLexer.g:1:282: TREE_COPY_PASTE
             pass 
             self.mTREE_COPY_PASTE()
 
 
 
-        elif alt6 == 34:
-            # grammar/ShyLexer.g:1:279: TREE_EXPRESSION
+        elif alt6 == 35:
+            # grammar/ShyLexer.g:1:298: TREE_EXPRESSION
             pass 
             self.mTREE_EXPRESSION()
 
 
 
-        elif alt6 == 35:
-            # grammar/ShyLexer.g:1:295: TREE_HINT
+        elif alt6 == 36:
+            # grammar/ShyLexer.g:1:314: TREE_HINT
             pass 
             self.mTREE_HINT()
 
 
 
-        elif alt6 == 36:
-            # grammar/ShyLexer.g:1:305: TREE_HINT_NONE
+        elif alt6 == 37:
+            # grammar/ShyLexer.g:1:324: TREE_HINT_NONE
             pass 
             self.mTREE_HINT_NONE()
 
 
 
-        elif alt6 == 37:
-            # grammar/ShyLexer.g:1:320: TREE_MODULE
+        elif alt6 == 38:
+            # grammar/ShyLexer.g:1:339: TREE_MODULE
             pass 
             self.mTREE_MODULE()
 
 
 
-        elif alt6 == 38:
-            # grammar/ShyLexer.g:1:332: TREE_NUM_FRACT
+        elif alt6 == 39:
+            # grammar/ShyLexer.g:1:351: TREE_NUM_FRACT
             pass 
             self.mTREE_NUM_FRACT()
 
 
 
-        elif alt6 == 39:
-            # grammar/ShyLexer.g:1:347: TREE_NUM_WHOLE
+        elif alt6 == 40:
+            # grammar/ShyLexer.g:1:366: TREE_NUM_WHOLE
             pass 
             self.mTREE_NUM_WHOLE()
 
 
 
-        elif alt6 == 40:
-            # grammar/ShyLexer.g:1:362: TREE_PASTE
+        elif alt6 == 41:
+            # grammar/ShyLexer.g:1:381: TREE_PASTE
             pass 
             self.mTREE_PASTE()
 
 
 
-        elif alt6 == 41:
-            # grammar/ShyLexer.g:1:373: TREE_PASTE_REPLACE
+        elif alt6 == 42:
+            # grammar/ShyLexer.g:1:392: TREE_PASTE_REPLACE
             pass 
             self.mTREE_PASTE_REPLACE()
 
 
 
-        elif alt6 == 42:
-            # grammar/ShyLexer.g:1:392: TREE_PASTE_WITH
+        elif alt6 == 43:
+            # grammar/ShyLexer.g:1:411: TREE_PASTE_WITH
             pass 
             self.mTREE_PASTE_WITH()
 
 
 
-        elif alt6 == 43:
-            # grammar/ShyLexer.g:1:408: TREE_PROC
+        elif alt6 == 44:
+            # grammar/ShyLexer.g:1:427: TREE_PROC
             pass 
             self.mTREE_PROC()
 
 
 
-        elif alt6 == 44:
-            # grammar/ShyLexer.g:1:418: TREE_PROC_ARGS
+        elif alt6 == 45:
+            # grammar/ShyLexer.g:1:437: TREE_PROC_ARGS
             pass 
             self.mTREE_PROC_ARGS()
 
 
 
-        elif alt6 == 45:
-            # grammar/ShyLexer.g:1:433: TREE_PROC_OPS
-            pass 
-            self.mTREE_PROC_OPS()
-
-
-
         elif alt6 == 46:
-            # grammar/ShyLexer.g:1:447: TREE_PROC_VARS
+            # grammar/ShyLexer.g:1:452: TREE_PROC_VARS
             pass 
             self.mTREE_PROC_VARS()
 
 
 
         elif alt6 == 47:
-            # grammar/ShyLexer.g:1:462: TREE_STATELESS
+            # grammar/ShyLexer.g:1:467: TREE_STATELESS
             pass 
             self.mTREE_STATELESS()
 
 
 
         elif alt6 == 48:
-            # grammar/ShyLexer.g:1:477: TREE_STATEMENT_CALL
+            # grammar/ShyLexer.g:1:482: TREE_STATEMENT_CALL
             pass 
             self.mTREE_STATEMENT_CALL()
 
 
 
         elif alt6 == 49:
-            # grammar/ShyLexer.g:1:497: TREE_STATEMENT_CALL_ARGS
+            # grammar/ShyLexer.g:1:502: TREE_STATEMENT_CALL_ARGS
             pass 
             self.mTREE_STATEMENT_CALL_ARGS()
 
 
 
         elif alt6 == 50:
-            # grammar/ShyLexer.g:1:522: TREE_TYPES
+            # grammar/ShyLexer.g:1:527: TREE_STATEMENT_ELIF
+            pass 
+            self.mTREE_STATEMENT_ELIF()
+
+
+
+        elif alt6 == 51:
+            # grammar/ShyLexer.g:1:547: TREE_STATEMENT_IF
+            pass 
+            self.mTREE_STATEMENT_IF()
+
+
+
+        elif alt6 == 52:
+            # grammar/ShyLexer.g:1:565: TREE_STATEMENTS
+            pass 
+            self.mTREE_STATEMENTS()
+
+
+
+        elif alt6 == 53:
+            # grammar/ShyLexer.g:1:581: TREE_TYPES
             pass 
             self.mTREE_TYPES()
 
 
 
-        elif alt6 == 51:
-            # grammar/ShyLexer.g:1:533: TREE_TYPES_ITEM
+        elif alt6 == 54:
+            # grammar/ShyLexer.g:1:592: TREE_TYPES_ITEM
             pass 
             self.mTREE_TYPES_ITEM()
 
 
 
-        elif alt6 == 52:
-            # grammar/ShyLexer.g:1:549: TREE_VAR
+        elif alt6 == 55:
+            # grammar/ShyLexer.g:1:608: TREE_VAR
             pass 
             self.mTREE_VAR()
 
 
 
-        elif alt6 == 53:
-            # grammar/ShyLexer.g:1:558: TREE_VAR_HINT
+        elif alt6 == 56:
+            # grammar/ShyLexer.g:1:617: TREE_VAR_HINT
             pass 
             self.mTREE_VAR_HINT()
 
 
 
-        elif alt6 == 54:
-            # grammar/ShyLexer.g:1:572: TREE_VARS_HINT
+        elif alt6 == 57:
+            # grammar/ShyLexer.g:1:631: TREE_VARS_HINT
             pass 
             self.mTREE_VARS_HINT()
 
@@ -1861,13 +1954,13 @@ class ShyLexer(Lexer):
         u"\4\24\2\uffff\2\24\1\103\7\24\1\uffff\1\114\1\24\1\116\3\24\1\uffff"
         u"\1\24\1\123\3\24\1\127\1\130\2\uffff\1\24\1\uffff\3\24\1\136\1"
         u"\uffff\2\24\1\141\3\uffff\1\154\1\155\1\156\1\157\1\uffff\2\24"
-        u"\17\uffff\1\172\1\24\11\uffff\1\24\10\uffff\1\u008f\1\u0090\1\u0092"
-        u"\1\u0094\2\uffff\1\u0099\14\uffff\1\u009d\3\uffff\1\u00a4\22\uffff"
-        u"\1\u00b0\2\uffff"
+        u"\17\uffff\1\172\1\24\11\uffff\1\24\10\uffff\1\u0091\1\u0092\2\uffff"
+        u"\1\u0094\1\u0096\2\uffff\1\u009b\14\uffff\1\u009f\3\uffff\1\u00a5"
+        u"\24\uffff\1\u00b4\2\uffff"
         )
 
     DFA6_eof = DFA.unpack(
-        u"\u00b1\uffff"
+        u"\u00b5\uffff"
         )
 
     DFA6_min = DFA.unpack(
@@ -1880,10 +1973,11 @@ class ShyLexer(Lexer):
         u"\2\164\1\145\1\60\1\uffff\1\143\1\154\1\60\2\uffff\1\101\4\60\1"
         u"\uffff\2\145\2\uffff\1\117\1\uffff\1\111\1\uffff\1\125\1\101\1"
         u"\124\1\131\1\101\4\uffff\1\60\1\163\2\116\1\115\1\123\1\117\1\101"
-        u"\1\120\1\122\1\uffff\1\163\1\uffff\1\131\1\124\1\137\1\124\1\103"
-        u"\1\124\1\105\1\123\1\60\2\137\1\106\1\105\1\137\1\105\1\123\12"
-        u"\uffff\1\137\1\101\1\uffff\1\114\1\137\1\122\5\uffff\1\105\4\uffff"
-        u"\1\116\1\124\1\137\1\103\1\101\2\114\1\137\2\uffff"
+        u"\1\120\1\122\1\uffff\1\163\1\104\1\131\1\124\1\137\1\124\1\103"
+        u"\1\124\1\105\1\123\1\60\2\uffff\2\137\1\106\1\105\1\137\1\105\1"
+        u"\123\12\uffff\1\137\1\101\1\uffff\1\114\1\137\1\122\4\uffff\1\105"
+        u"\4\uffff\1\116\1\124\1\123\1\103\1\uffff\1\101\2\uffff\2\114\1"
+        u"\137\2\uffff"
         )
 
     DFA6_max = DFA.unpack(
@@ -1896,25 +1990,26 @@ class ShyLexer(Lexer):
         u"\1\uffff\2\164\1\145\1\172\1\uffff\1\143\1\154\1\172\2\uffff\1"
         u"\126\4\172\1\uffff\2\145\2\uffff\1\117\1\uffff\1\111\1\uffff\1"
         u"\125\1\122\1\124\1\131\1\101\4\uffff\1\172\1\163\1\120\1\116\1"
-        u"\115\1\123\1\117\1\101\1\120\1\122\1\uffff\1\163\1\uffff\1\131"
-        u"\1\124\1\137\1\124\1\103\1\124\1\105\1\137\1\172\2\137\1\127\1"
-        u"\105\1\137\1\105\1\123\12\uffff\1\137\1\126\1\uffff\1\115\1\137"
-        u"\1\127\5\uffff\1\105\4\uffff\1\116\1\124\1\137\1\103\1\101\2\114"
-        u"\1\137\2\uffff"
+        u"\115\1\123\1\117\1\101\1\120\1\122\1\uffff\1\163\1\123\1\131\1"
+        u"\124\1\137\1\124\1\103\1\124\1\105\1\137\1\172\2\uffff\2\137\1"
+        u"\127\1\105\1\137\1\105\1\123\12\uffff\1\137\1\126\1\uffff\1\115"
+        u"\1\137\1\127\4\uffff\1\105\4\uffff\1\116\1\124\1\137\1\111\1\uffff"
+        u"\1\101\2\uffff\2\114\1\137\2\uffff"
         )
 
     DFA6_accept = DFA.unpack(
         u"\15\uffff\1\21\1\uffff\1\23\1\24\1\25\1\27\1\30\1\31\1\32\1\33"
         u"\1\34\1\35\20\uffff\1\22\1\26\5\uffff\1\5\1\6\21\uffff\1\11\10"
         u"\uffff\1\1\1\uffff\1\3\4\uffff\1\13\3\uffff\1\17\1\20\5\uffff\1"
-        u"\12\2\uffff\1\16\1\36\1\uffff\1\42\1\uffff\1\45\5\uffff\1\2\1\4"
-        u"\1\7\1\10\12\uffff\1\14\1\uffff\1\37\20\uffff\1\65\1\66\1\64\1"
-        u"\15\1\41\1\40\1\44\1\43\1\46\1\47\2\uffff\1\53\3\uffff\1\50\1\54"
-        u"\1\55\1\56\1\57\1\uffff\1\63\1\62\1\51\1\52\10\uffff\1\61\1\60"
+        u"\12\2\uffff\1\16\1\36\1\uffff\1\43\1\uffff\1\46\5\uffff\1\2\1\4"
+        u"\1\7\1\10\12\uffff\1\14\13\uffff\1\37\1\40\7\uffff\1\70\1\71\1"
+        u"\67\1\15\1\42\1\41\1\45\1\44\1\47\1\50\2\uffff\1\54\3\uffff\1\51"
+        u"\1\55\1\56\1\57\1\uffff\1\66\1\65\1\52\1\53\4\uffff\1\64\1\uffff"
+        u"\1\62\1\63\3\uffff\1\61\1\60"
         )
 
     DFA6_special = DFA.unpack(
-        u"\u00b1\uffff"
+        u"\u00b5\uffff"
         )
 
 
@@ -2048,57 +2143,61 @@ class ShyLexer(Lexer):
         DFA.unpack(u"\1\u0084"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\u0085"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\u0086"),
-        DFA.unpack(u"\1\u0087"),
+        DFA.unpack(u"\1\u0086\16\uffff\1\u0087"),
         DFA.unpack(u"\1\u0088"),
         DFA.unpack(u"\1\u0089"),
         DFA.unpack(u"\1\u008a"),
         DFA.unpack(u"\1\u008b"),
         DFA.unpack(u"\1\u008c"),
-        DFA.unpack(u"\1\u008e\13\uffff\1\u008d"),
+        DFA.unpack(u"\1\u008d"),
+        DFA.unpack(u"\1\u008e"),
+        DFA.unpack(u"\1\u0090\13\uffff\1\u008f"),
         DFA.unpack(u"\12\24\45\uffff\1\24\1\uffff\32\24"),
-        DFA.unpack(u"\1\u0091"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
         DFA.unpack(u"\1\u0093"),
-        DFA.unpack(u"\1\u0095\20\uffff\1\u0096"),
-        DFA.unpack(u"\1\u0097"),
-        DFA.unpack(u"\1\u0098"),
+        DFA.unpack(u"\1\u0095"),
+        DFA.unpack(u"\1\u0097\20\uffff\1\u0098"),
+        DFA.unpack(u"\1\u0099"),
         DFA.unpack(u"\1\u009a"),
-        DFA.unpack(u"\1\u009b"),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
-        DFA.unpack(u""),
         DFA.unpack(u"\1\u009c"),
-        DFA.unpack(u"\1\u009e\15\uffff\1\u009f\6\uffff\1\u00a0"),
-        DFA.unpack(u""),
-        DFA.unpack(u"\1\u00a1\1\u00a2"),
-        DFA.unpack(u"\1\u00a3"),
-        DFA.unpack(u"\1\u00a5\4\uffff\1\u00a6"),
+        DFA.unpack(u"\1\u009d"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
-        DFA.unpack(u"\1\u00a7"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\u009e"),
+        DFA.unpack(u"\1\u00a0\24\uffff\1\u00a1"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\u00a2\1\u00a3"),
+        DFA.unpack(u"\1\u00a4"),
+        DFA.unpack(u"\1\u00a6\4\uffff\1\u00a7"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\u00a8"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
         DFA.unpack(u"\1\u00a9"),
         DFA.unpack(u"\1\u00aa"),
-        DFA.unpack(u"\1\u00ab"),
-        DFA.unpack(u"\1\u00ac"),
-        DFA.unpack(u"\1\u00ad"),
-        DFA.unpack(u"\1\u00ae"),
-        DFA.unpack(u"\1\u00af"),
+        DFA.unpack(u"\1\u00ac\13\uffff\1\u00ab"),
+        DFA.unpack(u"\1\u00ad\1\uffff\1\u00ae\3\uffff\1\u00af"),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\u00b0"),
+        DFA.unpack(u""),
+        DFA.unpack(u""),
+        DFA.unpack(u"\1\u00b1"),
+        DFA.unpack(u"\1\u00b2"),
+        DFA.unpack(u"\1\u00b3"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]

@@ -51,11 +51,23 @@ proc_vars
 
 proc_ops
     :   OPS NEWLINE INDENT NEWLINE statement + DEDENT NEWLINE
-        -> ^( TREE_PROC_OPS statement + )
+        -> ^( TREE_STATEMENTS statement + )
     ;
 
 statement
     :   statement_call
+    |   statement_if
+    ;
+
+statement_if
+    :   IF statement_call DO NEWLINE
+            INDENT NEWLINE statement + DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_IF
+                ^( TREE_STATEMENT_ELIF
+                    ^( TREE_CONDITION_ANY statement_call )
+                    ^( TREE_STATEMENTS statement + )
+                )
+            )
     ;
 
 statement_call
