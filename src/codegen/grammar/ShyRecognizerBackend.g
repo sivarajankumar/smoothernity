@@ -127,6 +127,7 @@ statement_call_arg
     returns [ value ]
     :   ID { $value = { $ID.text : { } } }
     |   num_whole { $value = $num_whole.value }
+    |   num_fract { $value = $num_fract.value }
     ;
 
 consts
