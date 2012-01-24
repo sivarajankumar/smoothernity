@@ -60,7 +60,7 @@ statement
     ;
 
 statement_if
-    :   IF statement_call DO NEWLINE
+    :   IF statement_call DO ? NEWLINE
             INDENT NEWLINE statement + DEDENT NEWLINE
         ->  ^( TREE_STATEMENT_IF
                 ^( TREE_STATEMENT_ELIF
@@ -71,7 +71,7 @@ statement_if
     ;
 
 statement_call
-    :   ID statement_call_args ? NEWLINE 
+    :   ID statement_call_args ? ( DO | NEWLINE )
         ( INDENT NEWLINE ( statement_call_args NEWLINE ) + DEDENT NEWLINE ) ?
         ->  ^( TREE_STATEMENT_CALL ID
                 TREE_STATEMENT_CALL_ARGS statement_call_args * )
