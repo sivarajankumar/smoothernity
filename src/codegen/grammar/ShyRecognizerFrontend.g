@@ -70,6 +70,7 @@ statement_call_args : statement_call_arg + ;
 statement_call_arg
     :   ID
     |   num_whole
+    |   num_fract
     ;
 
 consts
