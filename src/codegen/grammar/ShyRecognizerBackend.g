@@ -118,7 +118,15 @@ statement_call_args
     returns [ value ]
     @ init { $value = list ( ) }
     :   TREE_STATEMENT_CALL_ARGS 
-            ( ID { $value . append ( { $ID.text : { } } ) } ) *
+            ( statement_call_arg
+                { $value . append ( $statement_call_arg.value ) }
+            ) *
+    ;
+
+statement_call_arg
+    returns [ value ]
+    :   ID { $value = { $ID.text : { } } }
+    |   num_whole { $value = $num_whole.value }
     ;
 
 consts
