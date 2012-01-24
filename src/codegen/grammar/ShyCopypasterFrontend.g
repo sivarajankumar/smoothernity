@@ -65,6 +65,7 @@ paste_with
 arbitrary_token
     :   ARGS
     |   CONSTS
+    |   IF
     |   MODULE
     |   OPS
     |   PROC

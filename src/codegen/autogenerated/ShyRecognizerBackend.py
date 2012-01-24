@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-24 14:07:08
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-24 14:28:12
 
 import sys
 from antlr3 import *
@@ -34,61 +34,62 @@ DEDENT=11
 DIVIDE=12
 EXPRESSION=13
 ID=14
-INDENT=15
-MINUS=16
-MODULE=17
-NEWLINE=18
-NUMBER=19
-OPS=20
-PASTE=21
-PROC=22
-REPLACE=23
-STATELESS=24
-STRING=25
-TREE_ARBITRARY_TOKEN=26
-TREE_CONSTS=27
-TREE_COPY=28
-TREE_COPY_PASTE=29
-TREE_EXPRESSION=30
-TREE_HINT=31
-TREE_HINT_NONE=32
-TREE_MODULE=33
-TREE_NUM_FRACT=34
-TREE_NUM_WHOLE=35
-TREE_PASTE=36
-TREE_PASTE_REPLACE=37
-TREE_PASTE_WITH=38
-TREE_PROC=39
-TREE_PROC_ARGS=40
-TREE_PROC_OPS=41
-TREE_PROC_VARS=42
-TREE_STATELESS=43
-TREE_STATEMENT_CALL=44
-TREE_STATEMENT_CALL_ARGS=45
-TREE_TYPES=46
-TREE_TYPES_ITEM=47
-TREE_VAR=48
-TREE_VARS_HINT=49
-TREE_VAR_HINT=50
-TYPES=51
-UNDERSCORE=52
-VARS=53
-WHITESPACE=54
-WITH=55
+IF=15
+INDENT=16
+MINUS=17
+MODULE=18
+NEWLINE=19
+NUMBER=20
+OPS=21
+PASTE=22
+PROC=23
+REPLACE=24
+STATELESS=25
+STRING=26
+TREE_ARBITRARY_TOKEN=27
+TREE_CONSTS=28
+TREE_COPY=29
+TREE_COPY_PASTE=30
+TREE_EXPRESSION=31
+TREE_HINT=32
+TREE_HINT_NONE=33
+TREE_MODULE=34
+TREE_NUM_FRACT=35
+TREE_NUM_WHOLE=36
+TREE_PASTE=37
+TREE_PASTE_REPLACE=38
+TREE_PASTE_WITH=39
+TREE_PROC=40
+TREE_PROC_ARGS=41
+TREE_PROC_OPS=42
+TREE_PROC_VARS=43
+TREE_STATELESS=44
+TREE_STATEMENT_CALL=45
+TREE_STATEMENT_CALL_ARGS=46
+TREE_TYPES=47
+TREE_TYPES_ITEM=48
+TREE_VAR=49
+TREE_VARS_HINT=50
+TREE_VAR_HINT=51
+TYPES=52
+UNDERSCORE=53
+VARS=54
+WHITESPACE=55
+WITH=56
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", 
-    "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "INDENT", "MINUS", 
-    "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", "STATELESS", 
-    "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
-    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
-    "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
-    "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_OPS", "TREE_PROC_VARS", "TREE_STATELESS", 
-    "TREE_STATEMENT_CALL", "TREE_STATEMENT_CALL_ARGS", "TREE_TYPES", "TREE_TYPES_ITEM", 
-    "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", "UNDERSCORE", 
-    "VARS", "WHITESPACE", "WITH"
+    "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "IF", "INDENT", 
+    "MINUS", "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", 
+    "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", 
+    "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
+    "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
+    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_OPS", "TREE_PROC_VARS", 
+    "TREE_STATELESS", "TREE_STATEMENT_CALL", "TREE_STATEMENT_CALL_ARGS", 
+    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", 
+    "TYPES", "UNDERSCORE", "VARS", "WHITESPACE", "WITH"
 ]
 
 
@@ -2091,86 +2092,86 @@ class ShyRecognizerBackend(TreeParser):
 
  
 
-    FOLLOW_module_in_start87 = frozenset([1, 27, 33, 43, 46])
-    FOLLOW_stateless_in_start114 = frozenset([1, 27, 33, 43, 46])
-    FOLLOW_consts_in_start141 = frozenset([1, 27, 33, 43, 46])
-    FOLLOW_types_in_start167 = frozenset([1, 27, 33, 43, 46])
+    FOLLOW_module_in_start87 = frozenset([1, 28, 34, 44, 47])
+    FOLLOW_stateless_in_start114 = frozenset([1, 28, 34, 44, 47])
+    FOLLOW_consts_in_start141 = frozenset([1, 28, 34, 44, 47])
+    FOLLOW_types_in_start167 = frozenset([1, 28, 34, 44, 47])
     FOLLOW_TREE_MODULE_in_module222 = frozenset([2])
     FOLLOW_ID_in_module224 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless257 = frozenset([2])
     FOLLOW_ID_in_stateless259 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless287 = frozenset([2])
-    FOLLOW_ID_in_stateless289 = frozenset([39])
+    FOLLOW_ID_in_stateless289 = frozenset([40])
     FOLLOW_procs_in_stateless291 = frozenset([3])
-    FOLLOW_proc_in_procs346 = frozenset([1, 39])
+    FOLLOW_proc_in_procs346 = frozenset([1, 40])
     FOLLOW_TREE_PROC_in_proc391 = frozenset([2])
-    FOLLOW_ID_in_proc405 = frozenset([3, 40, 41, 42])
-    FOLLOW_proc_args_in_proc439 = frozenset([3, 41, 42])
-    FOLLOW_proc_vars_in_proc489 = frozenset([3, 41])
+    FOLLOW_ID_in_proc405 = frozenset([3, 41, 42, 43])
+    FOLLOW_proc_args_in_proc439 = frozenset([3, 42, 43])
+    FOLLOW_proc_vars_in_proc489 = frozenset([3, 42])
     FOLLOW_proc_ops_in_proc539 = frozenset([3])
     FOLLOW_TREE_PROC_ARGS_in_proc_args612 = frozenset([2])
     FOLLOW_vars_hint_in_proc_args614 = frozenset([3])
     FOLLOW_TREE_PROC_VARS_in_proc_vars659 = frozenset([2])
     FOLLOW_vars_hint_in_proc_vars661 = frozenset([3])
     FOLLOW_TREE_PROC_OPS_in_proc_ops716 = frozenset([2])
-    FOLLOW_statement_in_proc_ops720 = frozenset([3, 44])
+    FOLLOW_statement_in_proc_ops720 = frozenset([3, 45])
     FOLLOW_statement_call_in_statement776 = frozenset([1])
     FOLLOW_TREE_STATEMENT_CALL_in_statement_call819 = frozenset([2])
-    FOLLOW_ID_in_statement_call821 = frozenset([45])
+    FOLLOW_ID_in_statement_call821 = frozenset([46])
     FOLLOW_statement_call_args_in_statement_call823 = frozenset([3])
-    FOLLOW_TREE_STATEMENT_CALL_ARGS_in_statement_call_args876 = frozenset([1, 13, 14, 16, 19])
-    FOLLOW_statement_call_arg_in_statement_call_args893 = frozenset([1, 13, 14, 16, 19])
+    FOLLOW_TREE_STATEMENT_CALL_ARGS_in_statement_call_args876 = frozenset([1, 13, 14, 17, 20])
+    FOLLOW_statement_call_arg_in_statement_call_args893 = frozenset([1, 13, 14, 17, 20])
     FOLLOW_ID_in_statement_call_arg954 = frozenset([1])
     FOLLOW_EXPRESSION_in_statement_call_arg966 = frozenset([1])
     FOLLOW_num_whole_in_statement_call_arg978 = frozenset([1])
     FOLLOW_num_fract_in_statement_call_arg990 = frozenset([1])
     FOLLOW_TREE_CONSTS_in_consts1031 = frozenset([2])
-    FOLLOW_ID_in_consts1033 = frozenset([30, 34, 35])
+    FOLLOW_ID_in_consts1033 = frozenset([31, 35, 36])
     FOLLOW_consts_items_in_consts1035 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items1090 = frozenset([1, 30, 34, 35])
+    FOLLOW_consts_item_in_consts_items1090 = frozenset([1, 31, 35, 36])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item1145 = frozenset([2])
-    FOLLOW_ID_in_consts_item1147 = frozenset([16, 19])
+    FOLLOW_ID_in_consts_item1147 = frozenset([17, 20])
     FOLLOW_num_whole_in_consts_item1149 = frozenset([3])
     FOLLOW_TREE_NUM_FRACT_in_consts_item1177 = frozenset([2])
-    FOLLOW_ID_in_consts_item1179 = frozenset([16, 19])
+    FOLLOW_ID_in_consts_item1179 = frozenset([17, 20])
     FOLLOW_num_fract_in_consts_item1181 = frozenset([3])
     FOLLOW_TREE_EXPRESSION_in_consts_item1209 = frozenset([2])
     FOLLOW_ID_in_consts_item1211 = frozenset([13])
     FOLLOW_EXPRESSION_in_consts_item1213 = frozenset([3])
     FOLLOW_TREE_TYPES_in_types1268 = frozenset([2])
-    FOLLOW_ID_in_types1270 = frozenset([47])
+    FOLLOW_ID_in_types1270 = frozenset([48])
     FOLLOW_types_items_in_types1272 = frozenset([3])
-    FOLLOW_types_item_in_types_items1327 = frozenset([1, 47])
+    FOLLOW_types_item_in_types_items1327 = frozenset([1, 48])
     FOLLOW_TREE_TYPES_ITEM_in_types_item1382 = frozenset([2])
-    FOLLOW_ID_in_types_item1384 = frozenset([49])
+    FOLLOW_ID_in_types_item1384 = frozenset([50])
     FOLLOW_vars_hint_in_types_item1386 = frozenset([3])
-    FOLLOW_TREE_VARS_HINT_in_vars_hint1439 = frozenset([1, 50])
-    FOLLOW_var_hint_in_vars_hint1443 = frozenset([1, 50])
+    FOLLOW_TREE_VARS_HINT_in_vars_hint1439 = frozenset([1, 51])
+    FOLLOW_var_hint_in_vars_hint1443 = frozenset([1, 51])
     FOLLOW_TREE_VAR_HINT_in_var_hint1488 = frozenset([2])
-    FOLLOW_TREE_HINT_NONE_in_var_hint1490 = frozenset([48])
-    FOLLOW_var_in_var_hint1494 = frozenset([3, 48])
+    FOLLOW_TREE_HINT_NONE_in_var_hint1490 = frozenset([49])
+    FOLLOW_var_in_var_hint1494 = frozenset([3, 49])
     FOLLOW_TREE_VAR_HINT_in_var_hint1534 = frozenset([2])
-    FOLLOW_hint_in_var_hint1536 = frozenset([48])
-    FOLLOW_var_in_var_hint1540 = frozenset([3, 48])
+    FOLLOW_hint_in_var_hint1536 = frozenset([49])
+    FOLLOW_var_in_var_hint1540 = frozenset([3, 49])
     FOLLOW_TREE_VAR_in_var1597 = frozenset([2])
     FOLLOW_ID_in_var1599 = frozenset([3])
     FOLLOW_TREE_HINT_in_hint1642 = frozenset([2])
     FOLLOW_ID_in_hint1644 = frozenset([3])
     FOLLOW_TREE_HINT_in_hint1672 = frozenset([2])
-    FOLLOW_ID_in_hint1674 = frozenset([14, 52])
+    FOLLOW_ID_in_hint1674 = frozenset([14, 53])
     FOLLOW_hint_args_in_hint1676 = frozenset([3])
-    FOLLOW_hint_arg_in_hint_args1731 = frozenset([1, 14, 52])
+    FOLLOW_hint_arg_in_hint_args1731 = frozenset([1, 14, 53])
     FOLLOW_ID_in_hint_arg1764 = frozenset([1])
     FOLLOW_UNDERSCORE_in_hint_arg1776 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole1807 = frozenset([19])
+    FOLLOW_MINUS_in_num_whole1807 = frozenset([20])
     FOLLOW_NUMBER_in_num_whole1809 = frozenset([1])
     FOLLOW_NUMBER_in_num_whole1837 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract1882 = frozenset([19])
+    FOLLOW_MINUS_in_num_fract1882 = frozenset([20])
     FOLLOW_NUMBER_in_num_fract1888 = frozenset([12])
-    FOLLOW_DIVIDE_in_num_fract1890 = frozenset([19])
+    FOLLOW_DIVIDE_in_num_fract1890 = frozenset([20])
     FOLLOW_NUMBER_in_num_fract1896 = frozenset([1])
     FOLLOW_NUMBER_in_num_fract1928 = frozenset([12])
-    FOLLOW_DIVIDE_in_num_fract1930 = frozenset([19])
+    FOLLOW_DIVIDE_in_num_fract1930 = frozenset([20])
     FOLLOW_NUMBER_in_num_fract1936 = frozenset([1])
 
 
