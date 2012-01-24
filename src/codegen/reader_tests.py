@@ -210,6 +210,20 @@ class statement_call_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
                 [ '[ expr1 ]' ] } ] } } } } )
 
+class statement_if_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_one_cond ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if call1\n    call2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'any' : [ { 'call1' : [ ] } ]
+                    , 'ops' : [ { 'call2' : [ ] } ]
+                    } ] } ] } } } } )
+
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
