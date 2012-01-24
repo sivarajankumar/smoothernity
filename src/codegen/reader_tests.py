@@ -222,6 +222,18 @@ class statement_call_test_case ( unittest . TestCase ) :
 class statement_if_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
+    def test_raises ( self ) :
+        ar = self . assertRaises
+        r = self . h . rec
+        re = reader . exception
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n'
+            '   elif call1\n   do\n    call2\n' )
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n'
+            '   else call1\n   do\n    call2\n' )
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n'
+            '   if call1\n   do\n    call2\n'
+            '   else call3\n   do\n    call4\n'
+            '   else call5\n   do\n    call6\n' )
     def test_one_cond ( self ) :
         ae = self . assertEqual
         r = self . h . rec
