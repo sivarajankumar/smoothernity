@@ -117,6 +117,9 @@ statement_if
             ( statement_elif
                 { $value [ 'if' ] . append ( $statement_elif.value ) }
             ) +
+            ( statement_else
+                { $value [ 'else' ] = $statement_else.value }
+            ) ?
         )
     ;
 
@@ -127,6 +130,12 @@ statement_elif
                 'any' : $condition_any.value ,
                 'ops' : $statements.value }
             }
+    ;
+
+statement_else
+    returns [ value ]
+    :   ^( TREE_STATEMENT_ELSE statements )
+            { $value = $statements.value }
     ;
 
 condition_any
