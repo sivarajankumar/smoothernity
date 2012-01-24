@@ -162,6 +162,15 @@ class statement_call_test_case ( unittest . TestCase ) :
             '   call1\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' :
                 [ { 'call1' : [ ] } ] } } } } )
+    def test_do ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   call1 do call2 do call3\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' :
+                [ { 'call1' : [ ] }
+                , { 'call2' : [ ] }
+                , { 'call3' : [ ] } ] } } } } )
     def test_multi_calls ( self ) :
         ae = self . assertEqual
         r = self . h . rec
@@ -218,6 +227,16 @@ class statement_if_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   if call1\n   do\n    call2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'any' : [ { 'call1' : [ ] } ]
+                    , 'ops' : [ { 'call2' : [ ] } ]
+                    } ] } ] } } } } )
+    def test_do_on_same_line ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if call1 do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
                     { 'any' : [ { 'call1' : [ ] } ]
