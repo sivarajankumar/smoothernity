@@ -246,7 +246,7 @@ class statement_if_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if call1\n   do\n    call2\n'
+            '   if call1 do\n    call2\n'
             '   else\n    call3\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
@@ -255,6 +255,22 @@ class statement_if_test_case ( unittest . TestCase ) :
                     } ]
                 , 'else' : [ { 'call3' : [ ] } ]
                 } ] } } } } )
+    def test_elif ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if call1 do\n    call2\n'
+            '   elif call3 do\n    call4\n'
+            '   elif call5 do\n    call6\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' :
+                    [   { 'any' : [ { 'call1' : [ ] } ]
+                        , 'ops' : [ { 'call2' : [ ] } ] }
+                    ,   { 'any' : [ { 'call3' : [ ] } ]
+                        , 'ops' : [ { 'call4' : [ ] } ] }
+                    ,   { 'any' : [ { 'call5' : [ ] } ]
+                        , 'ops' : [ { 'call6' : [ ] } ] }
+                    ] } ] } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
