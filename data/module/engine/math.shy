@@ -44,9 +44,9 @@ stateless engine_math
         args result_value weight from_value from_weight to_value to_weight 
         vars value_diff weight_diff current_diff
         ops
-            if platform_conditions_fract_less_than_fract weight from_weight
+            if platform_conditions_fract_less_than_fract weight from_weight do
                 result_value <- from_value
-            elif platform_conditions_fract_less_than_fract weight to_weight
+            elif platform_conditions_fract_less_than_fract weight to_weight do
                 platform_math_sub_fracts
                     value_diff to_value from_value
                     weight_diff to_weight from_weight
@@ -62,9 +62,9 @@ stateless engine_math
             args result_value weight from_value from_weight to_value to_weight 
             vars p0 p1 p2 p3 delta_value t
             ops
-                if platform_conditions_fract_less_than_fract weight from_weight
+                if platform_conditions_fract_less_than_fract weight from_weight do
                     result_value <- from_value
-                elif platform_conditions_fract_less_than_fract weight to_weight
+                elif platform_conditions_fract_less_than_fract weight to_weight do
                     platform_math_sub_fracts delta_value from_value to_value
                     lerp t weight 0 from_weight 1 to_weight
                     how
@@ -99,12 +99,12 @@ stateless engine_math
              mid_value mid_weight
              to_value to_weight
         ops
-            if platform_conditions_fract_less_than_fract weight from_weight
+            if platform_conditions_fract_less_than_fract weight from_weight do
                 result_value <- from_value
-            elif platform_conditions_fract_less_than_fract weight mid_weight
+            elif platform_conditions_fract_less_than_fract weight mid_weight do
                 hard_in_easy_out result_value weight
                                  from_value from_weight mid_value mid_weight
-            elif platform_conditions_fract_less_than_fract weight to_weight
+            elif platform_conditions_fract_less_than_fract weight to_weight do
                 easy_in_easy_out result_value weight
                                  mid_value mid_weight to_value to_weight
             else
@@ -113,27 +113,27 @@ stateless engine_math
     copy
         proc clamp_what_dest
             args result num xfrom xto 
-            ops if platform_conditions_what_less_than_what num xfrom
+            ops if platform_conditions_what_less_than_what num xfrom do
                     result <- xfrom
-                elif platform_conditions_what_greater_than_what num xto
+                elif platform_conditions_what_greater_than_what num xto do
                     result <- xto
                 else
                     result <- num
         proc clamp_what_direct
             args num xfrom xto 
-            ops if platform_conditions_what_less_than_what num xfrom
+            ops if platform_conditions_what_less_than_what num xfrom do
                     num <- xfrom
-                elif platform_conditions_what_greater_than_what num xto
+                elif platform_conditions_what_greater_than_what num xto do
                     num <- xto
         proc min_what
             args result a b
-            ops if platform_conditions_what_less_than_what a b
+            ops if platform_conditions_what_less_than_what a b do
                     result <- a
                 else
                     result <- b
         proc max_what
             args result a b
-            ops if platform_conditions_what_greater_than_what a b
+            ops if platform_conditions_what_greater_than_what a b do
                     result <- a
                 else
                     result <- b
@@ -142,7 +142,7 @@ stateless engine_math
 
     proc abs_whole
         args result a
-        ops if platform_conditions_whole_less_than_zero a
+        ops if platform_conditions_whole_less_than_zero a do
                 platform_math_neg_whole result a
             else
                 result <- a

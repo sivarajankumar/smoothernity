@@ -22,6 +22,7 @@ ARGS : 'args' ;
 CONSTS : 'consts' ;
 COPY : 'copy' ;
 DEDENT : 'dedent' ;
+DO : 'do' ;
 IF : 'if' ;
 INDENT : 'indent' ;
 MODULE : 'module' ;

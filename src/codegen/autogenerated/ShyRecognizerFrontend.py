@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-24 14:28:09
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-24 14:40:58
 
 import sys
 from antlr3 import *
@@ -28,56 +28,57 @@ CURLY_CLOSE=9
 CURLY_OPEN=10
 DEDENT=11
 DIVIDE=12
-EXPRESSION=13
-ID=14
-IF=15
-INDENT=16
-MINUS=17
-MODULE=18
-NEWLINE=19
-NUMBER=20
-OPS=21
-PASTE=22
-PROC=23
-REPLACE=24
-STATELESS=25
-STRING=26
-TREE_ARBITRARY_TOKEN=27
-TREE_CONSTS=28
-TREE_COPY=29
-TREE_COPY_PASTE=30
-TREE_EXPRESSION=31
-TREE_HINT=32
-TREE_HINT_NONE=33
-TREE_MODULE=34
-TREE_NUM_FRACT=35
-TREE_NUM_WHOLE=36
-TREE_PASTE=37
-TREE_PASTE_REPLACE=38
-TREE_PASTE_WITH=39
-TREE_PROC=40
-TREE_PROC_ARGS=41
-TREE_PROC_OPS=42
-TREE_PROC_VARS=43
-TREE_STATELESS=44
-TREE_STATEMENT_CALL=45
-TREE_STATEMENT_CALL_ARGS=46
-TREE_TYPES=47
-TREE_TYPES_ITEM=48
-TREE_VAR=49
-TREE_VARS_HINT=50
-TREE_VAR_HINT=51
-TYPES=52
-UNDERSCORE=53
-VARS=54
-WHITESPACE=55
-WITH=56
+DO=13
+EXPRESSION=14
+ID=15
+IF=16
+INDENT=17
+MINUS=18
+MODULE=19
+NEWLINE=20
+NUMBER=21
+OPS=22
+PASTE=23
+PROC=24
+REPLACE=25
+STATELESS=26
+STRING=27
+TREE_ARBITRARY_TOKEN=28
+TREE_CONSTS=29
+TREE_COPY=30
+TREE_COPY_PASTE=31
+TREE_EXPRESSION=32
+TREE_HINT=33
+TREE_HINT_NONE=34
+TREE_MODULE=35
+TREE_NUM_FRACT=36
+TREE_NUM_WHOLE=37
+TREE_PASTE=38
+TREE_PASTE_REPLACE=39
+TREE_PASTE_WITH=40
+TREE_PROC=41
+TREE_PROC_ARGS=42
+TREE_PROC_OPS=43
+TREE_PROC_VARS=44
+TREE_STATELESS=45
+TREE_STATEMENT_CALL=46
+TREE_STATEMENT_CALL_ARGS=47
+TREE_TYPES=48
+TREE_TYPES_ITEM=49
+TREE_VAR=50
+TREE_VARS_HINT=51
+TREE_VAR_HINT=52
+TYPES=53
+UNDERSCORE=54
+VARS=55
+WHITESPACE=56
+WITH=57
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", 
-    "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "IF", "INDENT", 
+    "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "EXPRESSION", "ID", "IF", "INDENT", 
     "MINUS", "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", 
     "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", 
     "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
@@ -479,7 +480,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: proc, ID
+                # elements: ID, proc
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -779,7 +780,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: proc_vars, proc_args, ID, proc_ops
+                    # elements: proc_ops, proc_vars, ID, proc_args
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2114,7 +2115,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2167,7 +2168,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: EXPRESSION, ID
+                    # elements: ID, EXPRESSION
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2309,7 +2310,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: types_items, ID
+                # elements: ID, types_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -2494,7 +2495,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, vars_hint
+                # elements: vars_hint, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -3682,11 +3683,11 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA24_min = DFA.unpack(
-        u"\1\12\1\uffff\1\16\1\11\1\16\1\11\2\uffff\1\16"
+        u"\1\12\1\uffff\1\17\1\11\1\17\1\11\2\uffff\1\17"
         )
 
     DFA24_max = DFA.unpack(
-        u"\1\16\1\uffff\1\16\1\65\1\23\1\65\2\uffff\1\23"
+        u"\1\17\1\uffff\1\17\1\66\1\24\1\66\2\uffff\1\24"
         )
 
     DFA24_accept = DFA.unpack(
@@ -3699,12 +3700,12 @@ class ShyRecognizerFrontend(Parser):
 
 
     DFA24_transition = [
-        DFA.unpack(u"\1\2\3\uffff\1\1"),
+        DFA.unpack(u"\1\2\4\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\4\uffff\1\5\46\uffff\1\5"),
+        DFA.unpack(u"\1\4\5\uffff\1\5\46\uffff\1\5"),
         DFA.unpack(u"\1\6\4\uffff\1\7"),
-        DFA.unpack(u"\1\10\4\uffff\1\5\46\uffff\1\5"),
+        DFA.unpack(u"\1\10\5\uffff\1\5\46\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\4\uffff\1\7")
@@ -3718,120 +3719,120 @@ class ShyRecognizerFrontend(Parser):
 
  
 
-    FOLLOW_module_in_start82 = frozenset([1, 7, 18, 25, 52])
-    FOLLOW_stateless_in_start86 = frozenset([1, 7, 18, 25, 52])
-    FOLLOW_consts_in_start90 = frozenset([1, 7, 18, 25, 52])
-    FOLLOW_types_in_start94 = frozenset([1, 7, 18, 25, 52])
-    FOLLOW_MODULE_in_module113 = frozenset([14])
-    FOLLOW_ID_in_module115 = frozenset([19])
+    FOLLOW_module_in_start82 = frozenset([1, 7, 19, 26, 53])
+    FOLLOW_stateless_in_start86 = frozenset([1, 7, 19, 26, 53])
+    FOLLOW_consts_in_start90 = frozenset([1, 7, 19, 26, 53])
+    FOLLOW_types_in_start94 = frozenset([1, 7, 19, 26, 53])
+    FOLLOW_MODULE_in_module113 = frozenset([15])
+    FOLLOW_ID_in_module115 = frozenset([20])
     FOLLOW_NEWLINE_in_module117 = frozenset([1])
-    FOLLOW_STATELESS_in_stateless146 = frozenset([14])
-    FOLLOW_ID_in_stateless148 = frozenset([19])
-    FOLLOW_NEWLINE_in_stateless150 = frozenset([1, 16])
-    FOLLOW_INDENT_in_stateless154 = frozenset([19])
-    FOLLOW_NEWLINE_in_stateless156 = frozenset([23])
-    FOLLOW_proc_in_stateless158 = frozenset([11, 23])
-    FOLLOW_DEDENT_in_stateless162 = frozenset([19])
+    FOLLOW_STATELESS_in_stateless146 = frozenset([15])
+    FOLLOW_ID_in_stateless148 = frozenset([20])
+    FOLLOW_NEWLINE_in_stateless150 = frozenset([1, 17])
+    FOLLOW_INDENT_in_stateless154 = frozenset([20])
+    FOLLOW_NEWLINE_in_stateless156 = frozenset([24])
+    FOLLOW_proc_in_stateless158 = frozenset([11, 24])
+    FOLLOW_DEDENT_in_stateless162 = frozenset([20])
     FOLLOW_NEWLINE_in_stateless164 = frozenset([1])
-    FOLLOW_PROC_in_proc209 = frozenset([14])
-    FOLLOW_ID_in_proc211 = frozenset([19])
+    FOLLOW_PROC_in_proc209 = frozenset([15])
+    FOLLOW_ID_in_proc211 = frozenset([20])
     FOLLOW_NEWLINE_in_proc213 = frozenset([1])
-    FOLLOW_PROC_in_proc241 = frozenset([14])
-    FOLLOW_ID_in_proc243 = frozenset([19])
-    FOLLOW_NEWLINE_in_proc245 = frozenset([16])
-    FOLLOW_INDENT_in_proc247 = frozenset([19])
-    FOLLOW_NEWLINE_in_proc249 = frozenset([4, 11, 21, 54])
-    FOLLOW_proc_args_in_proc263 = frozenset([11, 21, 54])
-    FOLLOW_proc_vars_in_proc267 = frozenset([11, 21])
+    FOLLOW_PROC_in_proc241 = frozenset([15])
+    FOLLOW_ID_in_proc243 = frozenset([20])
+    FOLLOW_NEWLINE_in_proc245 = frozenset([17])
+    FOLLOW_INDENT_in_proc247 = frozenset([20])
+    FOLLOW_NEWLINE_in_proc249 = frozenset([4, 11, 22, 55])
+    FOLLOW_proc_args_in_proc263 = frozenset([11, 22, 55])
+    FOLLOW_proc_vars_in_proc267 = frozenset([11, 22])
     FOLLOW_proc_ops_in_proc271 = frozenset([11])
-    FOLLOW_DEDENT_in_proc283 = frozenset([19])
+    FOLLOW_DEDENT_in_proc283 = frozenset([20])
     FOLLOW_NEWLINE_in_proc285 = frozenset([1])
-    FOLLOW_ARGS_in_proc_args334 = frozenset([10, 14, 19])
+    FOLLOW_ARGS_in_proc_args334 = frozenset([10, 15, 20])
     FOLLOW_vars_hint_in_proc_args336 = frozenset([1])
-    FOLLOW_VARS_in_proc_vars365 = frozenset([10, 14, 19])
+    FOLLOW_VARS_in_proc_vars365 = frozenset([10, 15, 20])
     FOLLOW_vars_hint_in_proc_vars367 = frozenset([1])
-    FOLLOW_OPS_in_proc_ops396 = frozenset([19])
-    FOLLOW_NEWLINE_in_proc_ops398 = frozenset([16])
-    FOLLOW_INDENT_in_proc_ops400 = frozenset([19])
-    FOLLOW_NEWLINE_in_proc_ops402 = frozenset([14])
-    FOLLOW_statement_in_proc_ops404 = frozenset([11, 14])
-    FOLLOW_DEDENT_in_proc_ops408 = frozenset([19])
+    FOLLOW_OPS_in_proc_ops396 = frozenset([20])
+    FOLLOW_NEWLINE_in_proc_ops398 = frozenset([17])
+    FOLLOW_INDENT_in_proc_ops400 = frozenset([20])
+    FOLLOW_NEWLINE_in_proc_ops402 = frozenset([15])
+    FOLLOW_statement_in_proc_ops404 = frozenset([11, 15])
+    FOLLOW_DEDENT_in_proc_ops408 = frozenset([20])
     FOLLOW_NEWLINE_in_proc_ops410 = frozenset([1])
     FOLLOW_statement_call_in_statement449 = frozenset([1])
-    FOLLOW_ID_in_statement_call468 = frozenset([13, 14, 17, 19, 20])
-    FOLLOW_statement_call_args_in_statement_call470 = frozenset([19])
-    FOLLOW_NEWLINE_in_statement_call474 = frozenset([1, 16])
-    FOLLOW_INDENT_in_statement_call487 = frozenset([19])
-    FOLLOW_NEWLINE_in_statement_call489 = frozenset([13, 14, 17, 20])
-    FOLLOW_statement_call_args_in_statement_call493 = frozenset([19])
-    FOLLOW_NEWLINE_in_statement_call495 = frozenset([11, 13, 14, 17, 20])
-    FOLLOW_DEDENT_in_statement_call501 = frozenset([19])
+    FOLLOW_ID_in_statement_call468 = frozenset([14, 15, 18, 20, 21])
+    FOLLOW_statement_call_args_in_statement_call470 = frozenset([20])
+    FOLLOW_NEWLINE_in_statement_call474 = frozenset([1, 17])
+    FOLLOW_INDENT_in_statement_call487 = frozenset([20])
+    FOLLOW_NEWLINE_in_statement_call489 = frozenset([14, 15, 18, 21])
+    FOLLOW_statement_call_args_in_statement_call493 = frozenset([20])
+    FOLLOW_NEWLINE_in_statement_call495 = frozenset([11, 14, 15, 18, 21])
+    FOLLOW_DEDENT_in_statement_call501 = frozenset([20])
     FOLLOW_NEWLINE_in_statement_call503 = frozenset([1])
-    FOLLOW_statement_call_arg_in_statement_call_args561 = frozenset([1, 13, 14, 17, 20])
+    FOLLOW_statement_call_arg_in_statement_call_args561 = frozenset([1, 14, 15, 18, 21])
     FOLLOW_ID_in_statement_call_arg578 = frozenset([1])
     FOLLOW_EXPRESSION_in_statement_call_arg588 = frozenset([1])
     FOLLOW_num_whole_in_statement_call_arg598 = frozenset([1])
     FOLLOW_num_fract_in_statement_call_arg608 = frozenset([1])
-    FOLLOW_CONSTS_in_consts627 = frozenset([14])
-    FOLLOW_ID_in_consts629 = frozenset([19])
-    FOLLOW_NEWLINE_in_consts631 = frozenset([16])
-    FOLLOW_INDENT_in_consts641 = frozenset([19])
-    FOLLOW_NEWLINE_in_consts643 = frozenset([14])
+    FOLLOW_CONSTS_in_consts627 = frozenset([15])
+    FOLLOW_ID_in_consts629 = frozenset([20])
+    FOLLOW_NEWLINE_in_consts631 = frozenset([17])
+    FOLLOW_INDENT_in_consts641 = frozenset([20])
+    FOLLOW_NEWLINE_in_consts643 = frozenset([15])
     FOLLOW_consts_items_in_consts645 = frozenset([11])
-    FOLLOW_DEDENT_in_consts647 = frozenset([19])
+    FOLLOW_DEDENT_in_consts647 = frozenset([20])
     FOLLOW_NEWLINE_in_consts649 = frozenset([1])
-    FOLLOW_consts_item_in_consts_items681 = frozenset([1, 14])
-    FOLLOW_ID_in_consts_item697 = frozenset([17, 20])
-    FOLLOW_num_whole_in_consts_item699 = frozenset([19])
+    FOLLOW_consts_item_in_consts_items681 = frozenset([1, 15])
+    FOLLOW_ID_in_consts_item697 = frozenset([18, 21])
+    FOLLOW_num_whole_in_consts_item699 = frozenset([20])
     FOLLOW_NEWLINE_in_consts_item701 = frozenset([1])
-    FOLLOW_ID_in_consts_item723 = frozenset([17, 20])
-    FOLLOW_num_fract_in_consts_item725 = frozenset([19])
+    FOLLOW_ID_in_consts_item723 = frozenset([18, 21])
+    FOLLOW_num_fract_in_consts_item725 = frozenset([20])
     FOLLOW_NEWLINE_in_consts_item727 = frozenset([1])
-    FOLLOW_ID_in_consts_item749 = frozenset([13])
-    FOLLOW_EXPRESSION_in_consts_item751 = frozenset([19])
+    FOLLOW_ID_in_consts_item749 = frozenset([14])
+    FOLLOW_EXPRESSION_in_consts_item751 = frozenset([20])
     FOLLOW_NEWLINE_in_consts_item753 = frozenset([1])
-    FOLLOW_TYPES_in_types784 = frozenset([14])
-    FOLLOW_ID_in_types786 = frozenset([19])
-    FOLLOW_NEWLINE_in_types788 = frozenset([16])
-    FOLLOW_INDENT_in_types798 = frozenset([19])
-    FOLLOW_NEWLINE_in_types800 = frozenset([14])
+    FOLLOW_TYPES_in_types784 = frozenset([15])
+    FOLLOW_ID_in_types786 = frozenset([20])
+    FOLLOW_NEWLINE_in_types788 = frozenset([17])
+    FOLLOW_INDENT_in_types798 = frozenset([20])
+    FOLLOW_NEWLINE_in_types800 = frozenset([15])
     FOLLOW_types_items_in_types802 = frozenset([11])
-    FOLLOW_DEDENT_in_types804 = frozenset([19])
+    FOLLOW_DEDENT_in_types804 = frozenset([20])
     FOLLOW_NEWLINE_in_types806 = frozenset([1])
-    FOLLOW_types_item_in_types_items838 = frozenset([1, 14])
-    FOLLOW_ID_in_types_item848 = frozenset([10, 14, 19])
+    FOLLOW_types_item_in_types_items838 = frozenset([1, 15])
+    FOLLOW_ID_in_types_item848 = frozenset([10, 15, 20])
     FOLLOW_vars_hint_in_types_item850 = frozenset([1])
-    FOLLOW_var_hint_in_vars_hint877 = frozenset([19])
-    FOLLOW_NEWLINE_in_vars_hint881 = frozenset([1, 16])
-    FOLLOW_INDENT_in_vars_hint893 = frozenset([19])
-    FOLLOW_NEWLINE_in_vars_hint895 = frozenset([10, 14])
-    FOLLOW_var_hint_in_vars_hint899 = frozenset([19])
-    FOLLOW_NEWLINE_in_vars_hint901 = frozenset([10, 11, 14])
-    FOLLOW_DEDENT_in_vars_hint907 = frozenset([19])
+    FOLLOW_var_hint_in_vars_hint877 = frozenset([20])
+    FOLLOW_NEWLINE_in_vars_hint881 = frozenset([1, 17])
+    FOLLOW_INDENT_in_vars_hint893 = frozenset([20])
+    FOLLOW_NEWLINE_in_vars_hint895 = frozenset([10, 15])
+    FOLLOW_var_hint_in_vars_hint899 = frozenset([20])
+    FOLLOW_NEWLINE_in_vars_hint901 = frozenset([10, 11, 15])
+    FOLLOW_DEDENT_in_vars_hint907 = frozenset([20])
     FOLLOW_NEWLINE_in_vars_hint909 = frozenset([1])
-    FOLLOW_var_in_var_hint948 = frozenset([1, 14])
-    FOLLOW_hint_in_var_hint983 = frozenset([14])
-    FOLLOW_var_in_var_hint985 = frozenset([1, 14])
-    FOLLOW_hint_in_var_hint1019 = frozenset([19])
-    FOLLOW_NEWLINE_in_var_hint1021 = frozenset([16])
-    FOLLOW_INDENT_in_var_hint1023 = frozenset([19])
-    FOLLOW_NEWLINE_in_var_hint1025 = frozenset([14])
-    FOLLOW_var_in_var_hint1029 = frozenset([14, 19])
-    FOLLOW_NEWLINE_in_var_hint1033 = frozenset([11, 14])
+    FOLLOW_var_in_var_hint948 = frozenset([1, 15])
+    FOLLOW_hint_in_var_hint983 = frozenset([15])
+    FOLLOW_var_in_var_hint985 = frozenset([1, 15])
+    FOLLOW_hint_in_var_hint1019 = frozenset([20])
+    FOLLOW_NEWLINE_in_var_hint1021 = frozenset([17])
+    FOLLOW_INDENT_in_var_hint1023 = frozenset([20])
+    FOLLOW_NEWLINE_in_var_hint1025 = frozenset([15])
+    FOLLOW_var_in_var_hint1029 = frozenset([15, 20])
+    FOLLOW_NEWLINE_in_var_hint1033 = frozenset([11, 15])
     FOLLOW_DEDENT_in_var_hint1039 = frozenset([1])
     FOLLOW_ID_in_var1073 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint1098 = frozenset([14])
+    FOLLOW_CURLY_OPEN_in_hint1098 = frozenset([15])
     FOLLOW_ID_in_hint1100 = frozenset([9])
     FOLLOW_CURLY_CLOSE_in_hint1102 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_hint1122 = frozenset([14])
-    FOLLOW_ID_in_hint1124 = frozenset([14, 53])
-    FOLLOW_hint_arg_in_hint1126 = frozenset([9, 14, 53])
+    FOLLOW_CURLY_OPEN_in_hint1122 = frozenset([15])
+    FOLLOW_ID_in_hint1124 = frozenset([15, 54])
+    FOLLOW_hint_arg_in_hint1126 = frozenset([9, 15, 54])
     FOLLOW_CURLY_CLOSE_in_hint1130 = frozenset([1])
-    FOLLOW_MINUS_in_num_whole1169 = frozenset([20])
+    FOLLOW_MINUS_in_num_whole1169 = frozenset([21])
     FOLLOW_NUMBER_in_num_whole1173 = frozenset([1])
-    FOLLOW_MINUS_in_num_fract1181 = frozenset([20])
+    FOLLOW_MINUS_in_num_fract1181 = frozenset([21])
     FOLLOW_NUMBER_in_num_fract1185 = frozenset([12])
-    FOLLOW_DIVIDE_in_num_fract1187 = frozenset([20])
+    FOLLOW_DIVIDE_in_num_fract1187 = frozenset([21])
     FOLLOW_NUMBER_in_num_fract1189 = frozenset([1])
 
 

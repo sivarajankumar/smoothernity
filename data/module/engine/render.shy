@@ -137,6 +137,7 @@ module engine_render
             if platform_conditions_whole_less_than_whole
                             guts_next_vacant_mesh_id_index
                             consts_max_meshes
+            do
 
                 platform_static_array_element_ptr
                     vacant_mesh_id guts_vacant_mesh_ids
@@ -154,6 +155,7 @@ module engine_render
 
                 if platform_conditions_whole_greater_than_whole
                             msg_vertices consts_max_vertices
+                do
                     mesh_vertices_count <- consts_max_vertices
                     trace_mesh_too_many_vertices_error
                         msg_vertices consts_max_vertices
@@ -161,6 +163,7 @@ module engine_render
                 if platform_conditions_whole_greater_than_whole
                             msg_triangle_strip_indices
                             consts_max_indices
+                do
                     mesh_triangle_strip_indices_count <- consts_max_indices
                     trace_mesh_too_many_indices_error
                         msg_triangle_strip_indices consts_max_indices
@@ -168,6 +171,7 @@ module engine_render
                 if platform_conditions_whole_greater_than_whole
                             msg_triangle_fan_indices
                             consts_max_indices
+                do
                     mesh_triangle_fan_indices_count <- consts_max_indices
                     trace_mesh_too_many_indices_error
                         msg_triangle_fan_indices consts_max_indices
@@ -197,8 +201,10 @@ module engine_render
         ops
             if platform_conditions_whole_less_than_whole
                             msg_mesh_index consts_max_meshes
+            do
                 if platform_conditions_whole_greater_than_zero
                                 guts_next_vacant_mesh_id_index
+                do
                     platform_math_dec_whole guts_next_vacant_mesh_id_index
                     trace_meshes_in_use
                         guts_next_vacant_mesh_id_index consts_max_meshes
@@ -213,6 +219,7 @@ module engine_render
         ops
             if platform_conditions_whole_less_than_whole
                             msg_mesh_index consts_max_meshes
+            do
                 platform_static_array_element_ptr
                     mesh guts_meshes_datas msg_mesh_index
                 mesh_finalized <- true
@@ -226,29 +233,33 @@ module engine_render
         ops
             if platform_conditions_whole_less_than_whole
                             msg_mesh_index consts_max_meshes
+            do
                 platform_static_array_element_ptr
                     mesh guts_meshes_datas msg_mesh_index
-                if platform_conditions_whole_is_true mesh_finalized
+                if platform_conditions_whole_is_true mesh_finalized do
                     platform_render_matrix_push
                     platform_render_matrix_mult mesh_transform
                     with mesh
                         if platform_conditions_whole_greater_than_zero
                                         triangle_strip_indices_count
-                                platform_render_draw_triangle_strip
-                                    vertex_buffer_id
-                                    triangle_strip_index_buffer_id
-                                    triangle_strip_indices_count
+                        do
+                            platform_render_draw_triangle_strip
+                                vertex_buffer_id
+                                triangle_strip_index_buffer_id
+                                triangle_strip_indices_count
                         if platform_conditions_whole_greater_than_zero
                                         triangle_fan_indices_count
-                                platform_render_draw_triangle_fan
-                                    vertex_buffer_id
-                                    triangle_strip_index_buffer_id
-                                    triangle_strip_indices_count
+                        do
+                            platform_render_draw_triangle_fan
+                                vertex_buffer_id
+                                triangle_strip_index_buffer_id
+                                triangle_strip_indices_count
                     platform_render_matrix_pop
 
     request texture_create
         if platform_conditions_whole_less_than_whole
                         guts_next_texture_id consts_max_textures
+        do
             reply_texture_texture_id <- guts_next_texture_id
             platform_math_inc_whole guts_next_texture_id
             trace_textures_in_use guts_next_texture_id consts_max_textures
@@ -261,6 +272,7 @@ module engine_render
         ops
             if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
+            do
                 platform_static_array_element_ptr
                     texture guts_textures_datas msg_texture_texture_id
                 y <- msg_bottom
@@ -284,13 +296,16 @@ module engine_render
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_mesh_index consts_max_meshes
+                do
                     platform_static_array_element_ptr
                         mesh guts_meshes_datas msg_mesh_index
-                    if platform_conditions_whole_is_false mesh_finalized
+                    if platform_conditions_whole_is_false mesh_finalized do
                         if platform_conditions_whole_less_than_whole 
                                     msg_offset mesh_triangle_what_indices_count
+                        do
                             if platform_conditions_whole_less_than_whole
                                         msg_index mesh_vertices_count
+                            do
                                 platform_render_mapped_index_buffer_element
                                     index
                                     mesh_triangle_what_index_buffer_mapped_data
@@ -313,11 +328,13 @@ module engine_render
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_mesh_index consts_max_meshes
+                do
                     platform_static_array_element_ptr
                         mesh guts_meshes_datas msg_mesh_index
-                    if platform_conditions_whole_is_false mesh_finalized
+                    if platform_conditions_whole_is_false mesh_finalized do
                         if platform_conditions_whole_less_than_whole
                                         msg_offset mesh_vertices_count
+                        do
                             platform_render_mapped_vertex_buffer_element
                                 vertex
                                 mesh_vertex_buffer_mapped_data
@@ -345,6 +362,7 @@ module engine_render
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
+                do
                     platform_static_array_element_ptr
                         texture guts_textures_datas msg_texture_texture_id
                     how
@@ -372,6 +390,7 @@ module engine_render
             ops
                 if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
+                do
                     platform_static_array_element_ptr
                         texture guts_textures_datas msg_texture_texture_id
                     platform_math_mul_wholes

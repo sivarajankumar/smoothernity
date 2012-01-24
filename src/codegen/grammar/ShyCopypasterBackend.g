@@ -117,6 +117,7 @@ arbitrary_token
     returns [ value ]
     :   ARGS { $value = $ARGS.text }
     |   CONSTS { $value = $CONSTS.text }
+    |   DO { $value = $DO.text }
     |   IF { $value = $IF.text }
     |   MODULE { $value = $MODULE.text }
     |   OPS { $value = $OPS.text }
