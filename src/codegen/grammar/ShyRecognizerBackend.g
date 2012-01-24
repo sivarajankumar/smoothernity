@@ -76,8 +76,8 @@ proc
             ( proc_vars
                 { $content [ 'vars' ] = $proc_vars.value }
             ) ?
-            ( proc_ops
-                { $content [ 'ops' ] = $proc_ops.value }
+            ( statements
+                { $content [ 'ops' ] = $statements.value }
             ) ?
         )
     ;
@@ -94,10 +94,10 @@ proc_vars
             { $value = $vars_hint.value }
     ;
 
-proc_ops
+statements
     returns [ value ]
     @ init { $value = list ( ) }
-    :   ^( TREE_PROC_OPS ( statement 
+    :   ^( TREE_STATEMENTS ( statement 
             { $value . append ( $statement.value ) }
         ) + )
     ;
@@ -106,6 +106,36 @@ statement
     returns [ value ]
     :   statement_call
             { $value = $statement_call.value }
+    |   statement_if
+            { $value = $statement_if.value }
+    ;
+
+statement_if
+    returns [ value ]
+    @ init { $value = { 'if' : [ ] } }
+    :   ^( TREE_STATEMENT_IF
+            ( statement_elif
+                { $value [ 'if' ] . append ( $statement_elif.value ) }
+            ) +
+        )
+    ;
+
+statement_elif
+    returns [ value ]
+    :   ^( TREE_STATEMENT_ELIF condition_any statements )
+            { $value = {
+                'any' : $condition_any.value ,
+                'ops' : $statements.value }
+            }
+    ;
+
+condition_any
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ^( TREE_CONDITION_ANY
+            ( statement_call
+                { $value . append ( $statement_call.value ) }
+            ) + )
     ;
 
 statement_call
