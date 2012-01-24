@@ -202,6 +202,13 @@ class statement_call_test_case ( unittest . TestCase ) :
             '   call1 1 / 2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
                 [ f ( 1 , 2 ) ] } ] } } } } )
+    def test_args_expression ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   call1 [ expr1 ]\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
+                [ '[ expr1 ]' ] } ] } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

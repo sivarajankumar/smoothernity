@@ -126,6 +126,7 @@ statement_call_args
 statement_call_arg
     returns [ value ]
     :   ID { $value = { $ID.text : { } } }
+    |   EXPRESSION { $value = $EXPRESSION.text }
     |   num_whole { $value = $num_whole.value }
     |   num_fract { $value = $num_fract.value }
     ;
