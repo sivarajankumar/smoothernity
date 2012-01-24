@@ -23,6 +23,7 @@ CONSTS : 'consts' ;
 COPY : 'copy' ;
 DEDENT : 'dedent' ;
 DO : 'do' ;
+ELIF : 'elif' ;
 ELSE : 'else' ;
 IF : 'if' ;
 INDENT : 'indent' ;

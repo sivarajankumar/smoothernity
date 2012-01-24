@@ -66,6 +66,7 @@ arbitrary_token
     :   ARGS
     |   CONSTS
     |   DO
+    |   ELIF
     |   ELSE
     |   IF
     |   MODULE

@@ -61,15 +61,26 @@ statement
 
 statement_if
     :   statement_if_head
+        statement_elif *
         statement_else ?
         ->  ^( TREE_STATEMENT_IF
                 statement_if_head
+                statement_elif *
                 statement_else ?
             )
     ;
 
 statement_if_head
     :   IF statement_call DO ? NEWLINE
+            INDENT NEWLINE statement + DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_ELIF
+                ^( TREE_CONDITION_ANY statement_call )
+                ^( TREE_STATEMENTS statement + )
+            )
+    ;
+
+statement_elif
+    :   ELIF statement_call DO ? NEWLINE
             INDENT NEWLINE statement + DEDENT NEWLINE
         ->  ^( TREE_STATEMENT_ELIF
                 ^( TREE_CONDITION_ANY statement_call )

@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-24 20:19:23
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-24 20:23:54
 
 import sys
 from antlr3 import *
@@ -23,67 +23,68 @@ CURLY_OPEN=10
 DEDENT=11
 DIVIDE=12
 DO=13
-ELSE=14
-EXPRESSION=15
-ID=16
-IF=17
-INDENT=18
-MINUS=19
-MODULE=20
-NEWLINE=21
-NUMBER=22
-OPS=23
-PASTE=24
-PROC=25
-REPLACE=26
-STATELESS=27
-STRING=28
-TREE_ARBITRARY_TOKEN=29
-TREE_CONDITION_ANY=30
-TREE_CONSTS=31
-TREE_COPY=32
-TREE_COPY_PASTE=33
-TREE_EXPRESSION=34
-TREE_HINT=35
-TREE_HINT_NONE=36
-TREE_MODULE=37
-TREE_NUM_FRACT=38
-TREE_NUM_WHOLE=39
-TREE_PASTE=40
-TREE_PASTE_REPLACE=41
-TREE_PASTE_WITH=42
-TREE_PROC=43
-TREE_PROC_ARGS=44
-TREE_PROC_VARS=45
-TREE_STATELESS=46
-TREE_STATEMENTS=47
-TREE_STATEMENT_CALL=48
-TREE_STATEMENT_CALL_ARGS=49
-TREE_STATEMENT_ELIF=50
-TREE_STATEMENT_ELSE=51
-TREE_STATEMENT_IF=52
-TREE_TYPES=53
-TREE_TYPES_ITEM=54
-TREE_VAR=55
-TREE_VARS_HINT=56
-TREE_VAR_HINT=57
-TYPES=58
-UNDERSCORE=59
-VARS=60
-WHITESPACE=61
-WITH=62
+ELIF=14
+ELSE=15
+EXPRESSION=16
+ID=17
+IF=18
+INDENT=19
+MINUS=20
+MODULE=21
+NEWLINE=22
+NUMBER=23
+OPS=24
+PASTE=25
+PROC=26
+REPLACE=27
+STATELESS=28
+STRING=29
+TREE_ARBITRARY_TOKEN=30
+TREE_CONDITION_ANY=31
+TREE_CONSTS=32
+TREE_COPY=33
+TREE_COPY_PASTE=34
+TREE_EXPRESSION=35
+TREE_HINT=36
+TREE_HINT_NONE=37
+TREE_MODULE=38
+TREE_NUM_FRACT=39
+TREE_NUM_WHOLE=40
+TREE_PASTE=41
+TREE_PASTE_REPLACE=42
+TREE_PASTE_WITH=43
+TREE_PROC=44
+TREE_PROC_ARGS=45
+TREE_PROC_VARS=46
+TREE_STATELESS=47
+TREE_STATEMENTS=48
+TREE_STATEMENT_CALL=49
+TREE_STATEMENT_CALL_ARGS=50
+TREE_STATEMENT_ELIF=51
+TREE_STATEMENT_ELSE=52
+TREE_STATEMENT_IF=53
+TREE_TYPES=54
+TREE_TYPES_ITEM=55
+TREE_VAR=56
+TREE_VARS_HINT=57
+TREE_VAR_HINT=58
+TYPES=59
+UNDERSCORE=60
+VARS=61
+WHITESPACE=62
+WITH=63
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", 
-    "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "ELSE", "EXPRESSION", "ID", 
-    "IF", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", 
-    "PROC", "REPLACE", "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONDITION_ANY", 
-    "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", 
-    "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
-    "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", 
-    "TREE_PROC_ARGS", "TREE_PROC_VARS", "TREE_STATELESS", "TREE_STATEMENTS", 
+    "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "ELIF", "ELSE", "EXPRESSION", 
+    "ID", "IF", "INDENT", "MINUS", "MODULE", "NEWLINE", "NUMBER", "OPS", 
+    "PASTE", "PROC", "REPLACE", "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", 
+    "TREE_CONDITION_ANY", "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", 
+    "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", 
+    "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", 
+    "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", "TREE_STATELESS", "TREE_STATEMENTS", 
     "TREE_STATEMENT_CALL", "TREE_STATEMENT_CALL_ARGS", "TREE_STATEMENT_ELIF", 
     "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_TYPES", "TREE_TYPES_ITEM", 
     "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", "UNDERSCORE", 
@@ -206,7 +207,7 @@ class ShyCopypasterBackend(TreeParser):
                 # grammar/ShyCopypasterBackend.g:19:5: ( arbitrary_tokens NEWLINE | INDENT nl1= NEWLINE (b1= block )+ DEDENT nl2= NEWLINE | copy )
                 alt3 = 3
                 LA3 = self.input.LA(1)
-                if LA3 == ARGS or LA3 == ARROW_LEFT or LA3 == ARROW_RIGHT or LA3 == CONSTS or LA3 == CURLY_CLOSE or LA3 == CURLY_OPEN or LA3 == DIVIDE or LA3 == DO or LA3 == ELSE or LA3 == EXPRESSION or LA3 == ID or LA3 == IF or LA3 == MINUS or LA3 == MODULE or LA3 == NUMBER or LA3 == OPS or LA3 == PROC or LA3 == STATELESS or LA3 == STRING or LA3 == TYPES or LA3 == UNDERSCORE or LA3 == VARS or LA3 == WITH:
+                if LA3 == ARGS or LA3 == ARROW_LEFT or LA3 == ARROW_RIGHT or LA3 == CONSTS or LA3 == CURLY_CLOSE or LA3 == CURLY_OPEN or LA3 == DIVIDE or LA3 == DO or LA3 == ELIF or LA3 == ELSE or LA3 == EXPRESSION or LA3 == ID or LA3 == IF or LA3 == MINUS or LA3 == MODULE or LA3 == NUMBER or LA3 == OPS or LA3 == PROC or LA3 == STATELESS or LA3 == STRING or LA3 == TYPES or LA3 == UNDERSCORE or LA3 == VARS or LA3 == WITH:
                     alt3 = 1
                 elif LA3 == INDENT:
                     alt3 = 2
@@ -1028,7 +1029,7 @@ class ShyCopypasterBackend(TreeParser):
 
 
     # $ANTLR start "arbitrary_token"
-    # grammar/ShyCopypasterBackend.g:116:1: arbitrary_token returns [ value ] : ( ARGS | CONSTS | DO | ELSE | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
+    # grammar/ShyCopypasterBackend.g:116:1: arbitrary_token returns [ value ] : ( ARGS | CONSTS | DO | ELIF | ELSE | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
     def arbitrary_token(self, ):
         value = None
 
@@ -1036,31 +1037,32 @@ class ShyCopypasterBackend(TreeParser):
         ARGS24 = None
         CONSTS25 = None
         DO26 = None
-        ELSE27 = None
-        IF28 = None
-        MODULE29 = None
-        OPS30 = None
-        PROC31 = None
-        STATELESS32 = None
-        TYPES33 = None
-        VARS34 = None
-        WITH35 = None
-        ARROW_LEFT36 = None
-        ARROW_RIGHT37 = None
-        CURLY_OPEN38 = None
-        CURLY_CLOSE39 = None
-        DIVIDE40 = None
-        MINUS41 = None
-        UNDERSCORE42 = None
-        ID43 = None
-        NUMBER44 = None
-        EXPRESSION45 = None
-        STRING46 = None
+        ELIF27 = None
+        ELSE28 = None
+        IF29 = None
+        MODULE30 = None
+        OPS31 = None
+        PROC32 = None
+        STATELESS33 = None
+        TYPES34 = None
+        VARS35 = None
+        WITH36 = None
+        ARROW_LEFT37 = None
+        ARROW_RIGHT38 = None
+        CURLY_OPEN39 = None
+        CURLY_CLOSE40 = None
+        DIVIDE41 = None
+        MINUS42 = None
+        UNDERSCORE43 = None
+        ID44 = None
+        NUMBER45 = None
+        EXPRESSION46 = None
+        STRING47 = None
 
         try:
             try:
-                # grammar/ShyCopypasterBackend.g:118:5: ( ARGS | CONSTS | DO | ELSE | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
-                alt12 = 23
+                # grammar/ShyCopypasterBackend.g:118:5: ( ARGS | CONSTS | DO | ELIF | ELSE | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
+                alt12 = 24
                 LA12 = self.input.LA(1)
                 if LA12 == ARGS:
                     alt12 = 1
@@ -1068,46 +1070,48 @@ class ShyCopypasterBackend(TreeParser):
                     alt12 = 2
                 elif LA12 == DO:
                     alt12 = 3
-                elif LA12 == ELSE:
+                elif LA12 == ELIF:
                     alt12 = 4
-                elif LA12 == IF:
+                elif LA12 == ELSE:
                     alt12 = 5
-                elif LA12 == MODULE:
+                elif LA12 == IF:
                     alt12 = 6
-                elif LA12 == OPS:
+                elif LA12 == MODULE:
                     alt12 = 7
-                elif LA12 == PROC:
+                elif LA12 == OPS:
                     alt12 = 8
-                elif LA12 == STATELESS:
+                elif LA12 == PROC:
                     alt12 = 9
-                elif LA12 == TYPES:
+                elif LA12 == STATELESS:
                     alt12 = 10
-                elif LA12 == VARS:
+                elif LA12 == TYPES:
                     alt12 = 11
-                elif LA12 == WITH:
+                elif LA12 == VARS:
                     alt12 = 12
-                elif LA12 == ARROW_LEFT:
+                elif LA12 == WITH:
                     alt12 = 13
-                elif LA12 == ARROW_RIGHT:
+                elif LA12 == ARROW_LEFT:
                     alt12 = 14
-                elif LA12 == CURLY_OPEN:
+                elif LA12 == ARROW_RIGHT:
                     alt12 = 15
-                elif LA12 == CURLY_CLOSE:
+                elif LA12 == CURLY_OPEN:
                     alt12 = 16
-                elif LA12 == DIVIDE:
+                elif LA12 == CURLY_CLOSE:
                     alt12 = 17
-                elif LA12 == MINUS:
+                elif LA12 == DIVIDE:
                     alt12 = 18
-                elif LA12 == UNDERSCORE:
+                elif LA12 == MINUS:
                     alt12 = 19
-                elif LA12 == ID:
+                elif LA12 == UNDERSCORE:
                     alt12 = 20
-                elif LA12 == NUMBER:
+                elif LA12 == ID:
                     alt12 = 21
-                elif LA12 == EXPRESSION:
+                elif LA12 == NUMBER:
                     alt12 = 22
-                elif LA12 == STRING:
+                elif LA12 == EXPRESSION:
                     alt12 = 23
+                elif LA12 == STRING:
+                    alt12 = 24
                 else:
                     nvae = NoViableAltException("", 12, 0, self.input)
 
@@ -1148,221 +1152,232 @@ class ShyCopypasterBackend(TreeParser):
 
 
                 elif alt12 == 4:
-                    # grammar/ShyCopypasterBackend.g:121:9: ELSE
+                    # grammar/ShyCopypasterBackend.g:121:9: ELIF
                     pass 
-                    ELSE27 = self.match(self.input, ELSE, self.FOLLOW_ELSE_in_arbitrary_token1011)
+                    ELIF27 = self.match(self.input, ELIF, self.FOLLOW_ELIF_in_arbitrary_token1011)
 
                     #action start
-                    value = ELSE27.text 
+                    value = ELIF27.text 
                     #action end
 
 
 
                 elif alt12 == 5:
-                    # grammar/ShyCopypasterBackend.g:122:9: IF
+                    # grammar/ShyCopypasterBackend.g:122:9: ELSE
                     pass 
-                    IF28 = self.match(self.input, IF, self.FOLLOW_IF_in_arbitrary_token1023)
+                    ELSE28 = self.match(self.input, ELSE, self.FOLLOW_ELSE_in_arbitrary_token1023)
 
                     #action start
-                    value = IF28.text 
+                    value = ELSE28.text 
                     #action end
 
 
 
                 elif alt12 == 6:
-                    # grammar/ShyCopypasterBackend.g:123:9: MODULE
+                    # grammar/ShyCopypasterBackend.g:123:9: IF
                     pass 
-                    MODULE29 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_arbitrary_token1035)
+                    IF29 = self.match(self.input, IF, self.FOLLOW_IF_in_arbitrary_token1035)
 
                     #action start
-                    value = MODULE29.text 
+                    value = IF29.text 
                     #action end
 
 
 
                 elif alt12 == 7:
-                    # grammar/ShyCopypasterBackend.g:124:9: OPS
+                    # grammar/ShyCopypasterBackend.g:124:9: MODULE
                     pass 
-                    OPS30 = self.match(self.input, OPS, self.FOLLOW_OPS_in_arbitrary_token1047)
+                    MODULE30 = self.match(self.input, MODULE, self.FOLLOW_MODULE_in_arbitrary_token1047)
 
                     #action start
-                    value = OPS30.text 
+                    value = MODULE30.text 
                     #action end
 
 
 
                 elif alt12 == 8:
-                    # grammar/ShyCopypasterBackend.g:125:9: PROC
+                    # grammar/ShyCopypasterBackend.g:125:9: OPS
                     pass 
-                    PROC31 = self.match(self.input, PROC, self.FOLLOW_PROC_in_arbitrary_token1059)
+                    OPS31 = self.match(self.input, OPS, self.FOLLOW_OPS_in_arbitrary_token1059)
 
                     #action start
-                    value = PROC31.text 
+                    value = OPS31.text 
                     #action end
 
 
 
                 elif alt12 == 9:
-                    # grammar/ShyCopypasterBackend.g:126:9: STATELESS
+                    # grammar/ShyCopypasterBackend.g:126:9: PROC
                     pass 
-                    STATELESS32 = self.match(self.input, STATELESS, self.FOLLOW_STATELESS_in_arbitrary_token1071)
+                    PROC32 = self.match(self.input, PROC, self.FOLLOW_PROC_in_arbitrary_token1071)
 
                     #action start
-                    value = STATELESS32.text 
+                    value = PROC32.text 
                     #action end
 
 
 
                 elif alt12 == 10:
-                    # grammar/ShyCopypasterBackend.g:127:9: TYPES
+                    # grammar/ShyCopypasterBackend.g:127:9: STATELESS
                     pass 
-                    TYPES33 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_arbitrary_token1083)
+                    STATELESS33 = self.match(self.input, STATELESS, self.FOLLOW_STATELESS_in_arbitrary_token1083)
 
                     #action start
-                    value = TYPES33.text 
+                    value = STATELESS33.text 
                     #action end
 
 
 
                 elif alt12 == 11:
-                    # grammar/ShyCopypasterBackend.g:128:9: VARS
+                    # grammar/ShyCopypasterBackend.g:128:9: TYPES
                     pass 
-                    VARS34 = self.match(self.input, VARS, self.FOLLOW_VARS_in_arbitrary_token1095)
+                    TYPES34 = self.match(self.input, TYPES, self.FOLLOW_TYPES_in_arbitrary_token1095)
 
                     #action start
-                    value = VARS34.text 
+                    value = TYPES34.text 
                     #action end
 
 
 
                 elif alt12 == 12:
-                    # grammar/ShyCopypasterBackend.g:129:9: WITH
+                    # grammar/ShyCopypasterBackend.g:129:9: VARS
                     pass 
-                    WITH35 = self.match(self.input, WITH, self.FOLLOW_WITH_in_arbitrary_token1107)
+                    VARS35 = self.match(self.input, VARS, self.FOLLOW_VARS_in_arbitrary_token1107)
 
                     #action start
-                    value = WITH35.text 
+                    value = VARS35.text 
                     #action end
 
 
 
                 elif alt12 == 13:
-                    # grammar/ShyCopypasterBackend.g:131:9: ARROW_LEFT
+                    # grammar/ShyCopypasterBackend.g:130:9: WITH
                     pass 
-                    ARROW_LEFT36 = self.match(self.input, ARROW_LEFT, self.FOLLOW_ARROW_LEFT_in_arbitrary_token1120)
+                    WITH36 = self.match(self.input, WITH, self.FOLLOW_WITH_in_arbitrary_token1119)
 
                     #action start
-                    value = ARROW_LEFT36.text 
+                    value = WITH36.text 
                     #action end
 
 
 
                 elif alt12 == 14:
-                    # grammar/ShyCopypasterBackend.g:132:9: ARROW_RIGHT
+                    # grammar/ShyCopypasterBackend.g:132:9: ARROW_LEFT
                     pass 
-                    ARROW_RIGHT37 = self.match(self.input, ARROW_RIGHT, self.FOLLOW_ARROW_RIGHT_in_arbitrary_token1132)
+                    ARROW_LEFT37 = self.match(self.input, ARROW_LEFT, self.FOLLOW_ARROW_LEFT_in_arbitrary_token1132)
 
                     #action start
-                    value = ARROW_RIGHT37.text 
+                    value = ARROW_LEFT37.text 
                     #action end
 
 
 
                 elif alt12 == 15:
-                    # grammar/ShyCopypasterBackend.g:133:9: CURLY_OPEN
+                    # grammar/ShyCopypasterBackend.g:133:9: ARROW_RIGHT
                     pass 
-                    CURLY_OPEN38 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_arbitrary_token1144)
+                    ARROW_RIGHT38 = self.match(self.input, ARROW_RIGHT, self.FOLLOW_ARROW_RIGHT_in_arbitrary_token1144)
 
                     #action start
-                    value = CURLY_OPEN38.text 
+                    value = ARROW_RIGHT38.text 
                     #action end
 
 
 
                 elif alt12 == 16:
-                    # grammar/ShyCopypasterBackend.g:134:9: CURLY_CLOSE
+                    # grammar/ShyCopypasterBackend.g:134:9: CURLY_OPEN
                     pass 
-                    CURLY_CLOSE39 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_arbitrary_token1156)
+                    CURLY_OPEN39 = self.match(self.input, CURLY_OPEN, self.FOLLOW_CURLY_OPEN_in_arbitrary_token1156)
 
                     #action start
-                    value = CURLY_CLOSE39.text 
+                    value = CURLY_OPEN39.text 
                     #action end
 
 
 
                 elif alt12 == 17:
-                    # grammar/ShyCopypasterBackend.g:135:9: DIVIDE
+                    # grammar/ShyCopypasterBackend.g:135:9: CURLY_CLOSE
                     pass 
-                    DIVIDE40 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_arbitrary_token1168)
+                    CURLY_CLOSE40 = self.match(self.input, CURLY_CLOSE, self.FOLLOW_CURLY_CLOSE_in_arbitrary_token1168)
 
                     #action start
-                    value = DIVIDE40.text 
+                    value = CURLY_CLOSE40.text 
                     #action end
 
 
 
                 elif alt12 == 18:
-                    # grammar/ShyCopypasterBackend.g:136:9: MINUS
+                    # grammar/ShyCopypasterBackend.g:136:9: DIVIDE
                     pass 
-                    MINUS41 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_arbitrary_token1180)
+                    DIVIDE41 = self.match(self.input, DIVIDE, self.FOLLOW_DIVIDE_in_arbitrary_token1180)
 
                     #action start
-                    value = MINUS41.text 
+                    value = DIVIDE41.text 
                     #action end
 
 
 
                 elif alt12 == 19:
-                    # grammar/ShyCopypasterBackend.g:137:9: UNDERSCORE
+                    # grammar/ShyCopypasterBackend.g:137:9: MINUS
                     pass 
-                    UNDERSCORE42 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_arbitrary_token1192)
+                    MINUS42 = self.match(self.input, MINUS, self.FOLLOW_MINUS_in_arbitrary_token1192)
 
                     #action start
-                    value = UNDERSCORE42.text 
+                    value = MINUS42.text 
                     #action end
 
 
 
                 elif alt12 == 20:
-                    # grammar/ShyCopypasterBackend.g:138:9: ID
+                    # grammar/ShyCopypasterBackend.g:138:9: UNDERSCORE
                     pass 
-                    ID43 = self.match(self.input, ID, self.FOLLOW_ID_in_arbitrary_token1204)
+                    UNDERSCORE43 = self.match(self.input, UNDERSCORE, self.FOLLOW_UNDERSCORE_in_arbitrary_token1204)
 
                     #action start
-                    value = ID43.text 
+                    value = UNDERSCORE43.text 
                     #action end
 
 
 
                 elif alt12 == 21:
-                    # grammar/ShyCopypasterBackend.g:139:9: NUMBER
+                    # grammar/ShyCopypasterBackend.g:139:9: ID
                     pass 
-                    NUMBER44 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_arbitrary_token1216)
+                    ID44 = self.match(self.input, ID, self.FOLLOW_ID_in_arbitrary_token1216)
 
                     #action start
-                    value = NUMBER44.text 
+                    value = ID44.text 
                     #action end
 
 
 
                 elif alt12 == 22:
-                    # grammar/ShyCopypasterBackend.g:140:9: EXPRESSION
+                    # grammar/ShyCopypasterBackend.g:140:9: NUMBER
                     pass 
-                    EXPRESSION45 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_arbitrary_token1228)
+                    NUMBER45 = self.match(self.input, NUMBER, self.FOLLOW_NUMBER_in_arbitrary_token1228)
 
                     #action start
-                    value = EXPRESSION45.text 
+                    value = NUMBER45.text 
                     #action end
 
 
 
                 elif alt12 == 23:
-                    # grammar/ShyCopypasterBackend.g:141:9: STRING
+                    # grammar/ShyCopypasterBackend.g:141:9: EXPRESSION
                     pass 
-                    STRING46 = self.match(self.input, STRING, self.FOLLOW_STRING_in_arbitrary_token1240)
+                    EXPRESSION46 = self.match(self.input, EXPRESSION, self.FOLLOW_EXPRESSION_in_arbitrary_token1240)
 
                     #action start
-                    value = STRING46.text 
+                    value = EXPRESSION46.text 
+                    #action end
+
+
+
+                elif alt12 == 24:
+                    # grammar/ShyCopypasterBackend.g:142:9: STRING
+                    pass 
+                    STRING47 = self.match(self.input, STRING, self.FOLLOW_STRING_in_arbitrary_token1252)
+
+                    #action start
+                    value = STRING47.text 
                     #action end
 
 
@@ -1383,105 +1398,132 @@ class ShyCopypasterBackend(TreeParser):
     # lookup tables for DFA #10
 
     DFA10_eot = DFA.unpack(
-        u"\34\uffff"
+        u"\35\uffff"
         )
 
     DFA10_eof = DFA.unpack(
-        u"\34\uffff"
+        u"\35\uffff"
         )
 
     DFA10_min = DFA.unpack(
-        u"\1\52\1\2\1\4\27\3\2\uffff"
+        u"\1\53\1\2\1\4\30\3\2\uffff"
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\52\1\2\30\76\2\uffff"
+        u"\1\53\1\2\31\77\2\uffff"
         )
 
     DFA10_accept = DFA.unpack(
-        u"\32\uffff\1\2\1\1"
+        u"\33\uffff\1\2\1\1"
         )
 
     DFA10_special = DFA.unpack(
-        u"\34\uffff"
+        u"\35\uffff"
         )
 
 
     DFA10_transition = [
         DFA.unpack(u"\1\1"),
         DFA.unpack(u"\1\2"),
-        DFA.unpack(u"\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1\23\1"
-        u"\5\1\6\1\30\1\26\1\7\1\32\1\24\1\10\1\uffff\1\27\1\11\1\uffff\1"
-        u"\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
-        DFA.unpack(u"\1\33\1\3\1\17\1\20\1\4\1\uffff\1\22\1\21\1\uffff\1"
-        u"\23\1\5\1\6\1\30\1\26\1\7\1\uffff\1\24\1\10\1\32\1\27\1\11\1\uffff"
-        u"\1\12\1\uffff\1\13\1\31\35\uffff\1\14\1\25\1\15\1\uffff\1\16"),
+        DFA.unpack(u"\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1\24\1"
+        u"\5\1\6\1\7\1\31\1\27\1\10\1\33\1\25\1\11\1\uffff\1\30\1\12\1\uffff"
+        u"\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
+        DFA.unpack(u"\1\34\1\3\1\20\1\21\1\4\1\uffff\1\23\1\22\1\uffff\1"
+        u"\24\1\5\1\6\1\7\1\31\1\27\1\10\1\uffff\1\25\1\11\1\33\1\30\1\12"
+        u"\1\uffff\1\13\1\uffff\1\14\1\32\35\uffff\1\15\1\26\1\16\1\uffff"
+        u"\1\17"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]
@@ -1494,33 +1536,33 @@ class ShyCopypasterBackend(TreeParser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 32, 58, 59, 60, 62])
-    FOLLOW_arbitrary_tokens_in_block123 = frozenset([21])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 33, 59, 60, 61, 63])
+    FOLLOW_arbitrary_tokens_in_block123 = frozenset([22])
     FOLLOW_NEWLINE_in_block147 = frozenset([1])
-    FOLLOW_INDENT_in_block171 = frozenset([21])
-    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 32, 58, 59, 60, 62])
-    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 32, 58, 59, 60, 62])
-    FOLLOW_DEDENT_in_block244 = frozenset([21])
+    FOLLOW_INDENT_in_block171 = frozenset([22])
+    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 33, 59, 60, 61, 63])
+    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 33, 59, 60, 61, 63])
+    FOLLOW_DEDENT_in_block244 = frozenset([22])
     FOLLOW_NEWLINE_in_block250 = frozenset([1])
     FOLLOW_copy_in_block274 = frozenset([1])
-    FOLLOW_arbitrary_tokens_in_pure_block313 = frozenset([21])
+    FOLLOW_arbitrary_tokens_in_pure_block313 = frozenset([22])
     FOLLOW_NEWLINE_in_pure_block337 = frozenset([1])
-    FOLLOW_INDENT_in_pure_block361 = frozenset([21])
-    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 58, 59, 60, 62])
-    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 58, 59, 60, 62])
-    FOLLOW_DEDENT_in_pure_block434 = frozenset([21])
+    FOLLOW_INDENT_in_pure_block361 = frozenset([22])
+    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 59, 60, 61, 63])
+    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 59, 60, 61, 63])
+    FOLLOW_DEDENT_in_pure_block434 = frozenset([22])
     FOLLOW_NEWLINE_in_pure_block440 = frozenset([1])
-    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 58, 59, 60, 62])
+    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 59, 60, 61, 63])
     FOLLOW_TREE_COPY_in_copy548 = frozenset([2])
-    FOLLOW_copy_body_in_copy550 = frozenset([33])
+    FOLLOW_copy_body_in_copy550 = frozenset([34])
     FOLLOW_copy_pastes_in_copy552 = frozenset([3])
-    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 25, 27, 28, 58, 59, 60, 62])
-    FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 33])
+    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 28, 29, 59, 60, 61, 63])
+    FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 34])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste683 = frozenset([2])
     FOLLOW_pastes_in_copy_paste685 = frozenset([3])
-    FOLLOW_paste_in_pastes728 = frozenset([1, 40])
+    FOLLOW_paste_in_pastes728 = frozenset([1, 41])
     FOLLOW_TREE_PASTE_in_paste763 = frozenset([2])
-    FOLLOW_paste_replace_in_paste765 = frozenset([42])
+    FOLLOW_paste_replace_in_paste765 = frozenset([43])
     FOLLOW_paste_with_in_paste767 = frozenset([3])
     FOLLOW_TREE_PASTE_REPLACE_in_paste_replace808 = frozenset([2])
     FOLLOW_ID_in_paste_replace810 = frozenset([3])
@@ -1528,30 +1570,31 @@ class ShyCopypasterBackend(TreeParser):
     FOLLOW_arbitrary_tokens_in_paste_with845 = frozenset([3])
     FOLLOW_TREE_PASTE_WITH_in_paste_with869 = frozenset([2])
     FOLLOW_pure_blocks_in_paste_with871 = frozenset([3])
-    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 19, 20, 22, 23, 25, 27, 28, 58, 59, 60, 62])
+    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 26, 28, 29, 59, 60, 61, 63])
     FOLLOW_ARGS_in_arbitrary_token975 = frozenset([1])
     FOLLOW_CONSTS_in_arbitrary_token987 = frozenset([1])
     FOLLOW_DO_in_arbitrary_token999 = frozenset([1])
-    FOLLOW_ELSE_in_arbitrary_token1011 = frozenset([1])
-    FOLLOW_IF_in_arbitrary_token1023 = frozenset([1])
-    FOLLOW_MODULE_in_arbitrary_token1035 = frozenset([1])
-    FOLLOW_OPS_in_arbitrary_token1047 = frozenset([1])
-    FOLLOW_PROC_in_arbitrary_token1059 = frozenset([1])
-    FOLLOW_STATELESS_in_arbitrary_token1071 = frozenset([1])
-    FOLLOW_TYPES_in_arbitrary_token1083 = frozenset([1])
-    FOLLOW_VARS_in_arbitrary_token1095 = frozenset([1])
-    FOLLOW_WITH_in_arbitrary_token1107 = frozenset([1])
-    FOLLOW_ARROW_LEFT_in_arbitrary_token1120 = frozenset([1])
-    FOLLOW_ARROW_RIGHT_in_arbitrary_token1132 = frozenset([1])
-    FOLLOW_CURLY_OPEN_in_arbitrary_token1144 = frozenset([1])
-    FOLLOW_CURLY_CLOSE_in_arbitrary_token1156 = frozenset([1])
-    FOLLOW_DIVIDE_in_arbitrary_token1168 = frozenset([1])
-    FOLLOW_MINUS_in_arbitrary_token1180 = frozenset([1])
-    FOLLOW_UNDERSCORE_in_arbitrary_token1192 = frozenset([1])
-    FOLLOW_ID_in_arbitrary_token1204 = frozenset([1])
-    FOLLOW_NUMBER_in_arbitrary_token1216 = frozenset([1])
-    FOLLOW_EXPRESSION_in_arbitrary_token1228 = frozenset([1])
-    FOLLOW_STRING_in_arbitrary_token1240 = frozenset([1])
+    FOLLOW_ELIF_in_arbitrary_token1011 = frozenset([1])
+    FOLLOW_ELSE_in_arbitrary_token1023 = frozenset([1])
+    FOLLOW_IF_in_arbitrary_token1035 = frozenset([1])
+    FOLLOW_MODULE_in_arbitrary_token1047 = frozenset([1])
+    FOLLOW_OPS_in_arbitrary_token1059 = frozenset([1])
+    FOLLOW_PROC_in_arbitrary_token1071 = frozenset([1])
+    FOLLOW_STATELESS_in_arbitrary_token1083 = frozenset([1])
+    FOLLOW_TYPES_in_arbitrary_token1095 = frozenset([1])
+    FOLLOW_VARS_in_arbitrary_token1107 = frozenset([1])
+    FOLLOW_WITH_in_arbitrary_token1119 = frozenset([1])
+    FOLLOW_ARROW_LEFT_in_arbitrary_token1132 = frozenset([1])
+    FOLLOW_ARROW_RIGHT_in_arbitrary_token1144 = frozenset([1])
+    FOLLOW_CURLY_OPEN_in_arbitrary_token1156 = frozenset([1])
+    FOLLOW_CURLY_CLOSE_in_arbitrary_token1168 = frozenset([1])
+    FOLLOW_DIVIDE_in_arbitrary_token1180 = frozenset([1])
+    FOLLOW_MINUS_in_arbitrary_token1192 = frozenset([1])
+    FOLLOW_UNDERSCORE_in_arbitrary_token1204 = frozenset([1])
+    FOLLOW_ID_in_arbitrary_token1216 = frozenset([1])
+    FOLLOW_NUMBER_in_arbitrary_token1228 = frozenset([1])
+    FOLLOW_EXPRESSION_in_arbitrary_token1240 = frozenset([1])
+    FOLLOW_STRING_in_arbitrary_token1252 = frozenset([1])
 
 
 

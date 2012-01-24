@@ -118,6 +118,7 @@ arbitrary_token
     :   ARGS { $value = $ARGS.text }
     |   CONSTS { $value = $CONSTS.text }
     |   DO { $value = $DO.text }
+    |   ELIF { $value = $ELIF.text }
     |   ELSE { $value = $ELSE.text }
     |   IF { $value = $IF.text }
     |   MODULE { $value = $MODULE.text }
