@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-24 14:28:10
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-01-24 14:40:59
 
 import sys
 from antlr3 import *
@@ -28,56 +28,57 @@ CURLY_CLOSE=9
 CURLY_OPEN=10
 DEDENT=11
 DIVIDE=12
-EXPRESSION=13
-ID=14
-IF=15
-INDENT=16
-MINUS=17
-MODULE=18
-NEWLINE=19
-NUMBER=20
-OPS=21
-PASTE=22
-PROC=23
-REPLACE=24
-STATELESS=25
-STRING=26
-TREE_ARBITRARY_TOKEN=27
-TREE_CONSTS=28
-TREE_COPY=29
-TREE_COPY_PASTE=30
-TREE_EXPRESSION=31
-TREE_HINT=32
-TREE_HINT_NONE=33
-TREE_MODULE=34
-TREE_NUM_FRACT=35
-TREE_NUM_WHOLE=36
-TREE_PASTE=37
-TREE_PASTE_REPLACE=38
-TREE_PASTE_WITH=39
-TREE_PROC=40
-TREE_PROC_ARGS=41
-TREE_PROC_OPS=42
-TREE_PROC_VARS=43
-TREE_STATELESS=44
-TREE_STATEMENT_CALL=45
-TREE_STATEMENT_CALL_ARGS=46
-TREE_TYPES=47
-TREE_TYPES_ITEM=48
-TREE_VAR=49
-TREE_VARS_HINT=50
-TREE_VAR_HINT=51
-TYPES=52
-UNDERSCORE=53
-VARS=54
-WHITESPACE=55
-WITH=56
+DO=13
+EXPRESSION=14
+ID=15
+IF=16
+INDENT=17
+MINUS=18
+MODULE=19
+NEWLINE=20
+NUMBER=21
+OPS=22
+PASTE=23
+PROC=24
+REPLACE=25
+STATELESS=26
+STRING=27
+TREE_ARBITRARY_TOKEN=28
+TREE_CONSTS=29
+TREE_COPY=30
+TREE_COPY_PASTE=31
+TREE_EXPRESSION=32
+TREE_HINT=33
+TREE_HINT_NONE=34
+TREE_MODULE=35
+TREE_NUM_FRACT=36
+TREE_NUM_WHOLE=37
+TREE_PASTE=38
+TREE_PASTE_REPLACE=39
+TREE_PASTE_WITH=40
+TREE_PROC=41
+TREE_PROC_ARGS=42
+TREE_PROC_OPS=43
+TREE_PROC_VARS=44
+TREE_STATELESS=45
+TREE_STATEMENT_CALL=46
+TREE_STATEMENT_CALL_ARGS=47
+TREE_TYPES=48
+TREE_TYPES_ITEM=49
+TREE_VAR=50
+TREE_VARS_HINT=51
+TREE_VAR_HINT=52
+TYPES=53
+UNDERSCORE=54
+VARS=55
+WHITESPACE=56
+WITH=57
 
 # token names
 tokenNames = [
     "<invalid>", "<EOR>", "<DOWN>", "<UP>",
     "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", "CURLY_CLOSE", 
-    "CURLY_OPEN", "DEDENT", "DIVIDE", "EXPRESSION", "ID", "IF", "INDENT", 
+    "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "EXPRESSION", "ID", "IF", "INDENT", 
     "MINUS", "MODULE", "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", 
     "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONSTS", "TREE_COPY", 
     "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
@@ -250,7 +251,7 @@ class ShyCopypasterFrontend(Parser):
                 # grammar/ShyCopypasterFrontend.g:27:5: ( ( arbitrary_token )+ NEWLINE | INDENT NEWLINE ( block )+ DEDENT NEWLINE | COPY copy_body ( copy_paste )+ -> ^( TREE_COPY copy_body ( copy_paste )+ ) )
                 alt5 = 3
                 LA5 = self.input.LA(1)
-                if LA5 == ARGS or LA5 == ARROW_LEFT or LA5 == ARROW_RIGHT or LA5 == CONSTS or LA5 == CURLY_CLOSE or LA5 == CURLY_OPEN or LA5 == DIVIDE or LA5 == EXPRESSION or LA5 == ID or LA5 == IF or LA5 == MINUS or LA5 == MODULE or LA5 == NUMBER or LA5 == OPS or LA5 == PROC or LA5 == STATELESS or LA5 == STRING or LA5 == TYPES or LA5 == UNDERSCORE or LA5 == VARS or LA5 == WITH:
+                if LA5 == ARGS or LA5 == ARROW_LEFT or LA5 == ARROW_RIGHT or LA5 == CONSTS or LA5 == CURLY_CLOSE or LA5 == CURLY_OPEN or LA5 == DIVIDE or LA5 == DO or LA5 == EXPRESSION or LA5 == ID or LA5 == IF or LA5 == MINUS or LA5 == MODULE or LA5 == NUMBER or LA5 == OPS or LA5 == PROC or LA5 == STATELESS or LA5 == STRING or LA5 == TYPES or LA5 == UNDERSCORE or LA5 == VARS or LA5 == WITH:
                     alt5 = 1
                 elif LA5 == INDENT:
                     alt5 = 2
@@ -1158,7 +1159,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: paste_replace, paste_with
+                # elements: paste_with, paste_replace
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1568,7 +1569,7 @@ class ShyCopypasterFrontend(Parser):
 
 
     # $ANTLR start "arbitrary_token"
-    # grammar/ShyCopypasterFrontend.g:65:1: arbitrary_token : ( ARGS | CONSTS | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
+    # grammar/ShyCopypasterFrontend.g:65:1: arbitrary_token : ( ARGS | CONSTS | DO | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING );
     def arbitrary_token(self, ):
         retval = self.arbitrary_token_return()
         retval.start = self.input.LT(1)
@@ -1582,7 +1583,7 @@ class ShyCopypasterFrontend(Parser):
 
         try:
             try:
-                # grammar/ShyCopypasterFrontend.g:66:5: ( ARGS | CONSTS | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
+                # grammar/ShyCopypasterFrontend.g:66:5: ( ARGS | CONSTS | DO | IF | MODULE | OPS | PROC | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | ID | NUMBER | EXPRESSION | STRING )
                 # grammar/ShyCopypasterFrontend.g:
                 pass 
                 root_0 = self._adaptor.nil()
@@ -1628,53 +1629,53 @@ class ShyCopypasterFrontend(Parser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_arbitrary_token_in_block97 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
     FOLLOW_NEWLINE_in_block101 = frozenset([1])
-    FOLLOW_INDENT_in_block111 = frozenset([19])
-    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_DEDENT_in_block119 = frozenset([19])
+    FOLLOW_INDENT_in_block111 = frozenset([20])
+    FOLLOW_NEWLINE_in_block113 = frozenset([4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_block_in_block115 = frozenset([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_DEDENT_in_block119 = frozenset([20])
     FOLLOW_NEWLINE_in_block121 = frozenset([1])
-    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_copy_body_in_block133 = frozenset([22])
-    FOLLOW_copy_paste_in_block135 = frozenset([1, 22])
-    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
+    FOLLOW_COPY_in_block131 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_copy_body_in_block133 = frozenset([23])
+    FOLLOW_copy_paste_in_block135 = frozenset([1, 23])
+    FOLLOW_arbitrary_token_in_pure_block171 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
     FOLLOW_NEWLINE_in_pure_block175 = frozenset([1])
-    FOLLOW_INDENT_in_pure_block185 = frozenset([19])
-    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_DEDENT_in_pure_block193 = frozenset([19])
+    FOLLOW_INDENT_in_pure_block185 = frozenset([20])
+    FOLLOW_NEWLINE_in_pure_block187 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_pure_block_in_pure_block189 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_DEDENT_in_pure_block193 = frozenset([20])
     FOLLOW_NEWLINE_in_pure_block195 = frozenset([1])
-    FOLLOW_NEWLINE_in_copy_body214 = frozenset([16])
-    FOLLOW_INDENT_in_copy_body216 = frozenset([19])
-    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_DEDENT_in_copy_body224 = frozenset([19])
+    FOLLOW_NEWLINE_in_copy_body214 = frozenset([17])
+    FOLLOW_INDENT_in_copy_body216 = frozenset([20])
+    FOLLOW_NEWLINE_in_copy_body218 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_pure_block_in_copy_body220 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_DEDENT_in_copy_body224 = frozenset([20])
     FOLLOW_NEWLINE_in_copy_body226 = frozenset([1])
-    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
+    FOLLOW_arbitrary_token_in_copy_body242 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
     FOLLOW_NEWLINE_in_copy_body246 = frozenset([1])
-    FOLLOW_PASTE_in_copy_paste265 = frozenset([24])
+    FOLLOW_PASTE_in_copy_paste265 = frozenset([25])
     FOLLOW_paste_in_copy_paste267 = frozenset([1])
-    FOLLOW_PASTE_in_copy_paste295 = frozenset([19])
-    FOLLOW_NEWLINE_in_copy_paste297 = frozenset([16])
-    FOLLOW_INDENT_in_copy_paste299 = frozenset([19])
-    FOLLOW_NEWLINE_in_copy_paste301 = frozenset([24])
-    FOLLOW_paste_in_copy_paste303 = frozenset([11, 24])
-    FOLLOW_DEDENT_in_copy_paste307 = frozenset([19])
+    FOLLOW_PASTE_in_copy_paste295 = frozenset([20])
+    FOLLOW_NEWLINE_in_copy_paste297 = frozenset([17])
+    FOLLOW_INDENT_in_copy_paste299 = frozenset([20])
+    FOLLOW_NEWLINE_in_copy_paste301 = frozenset([25])
+    FOLLOW_paste_in_copy_paste303 = frozenset([11, 25])
+    FOLLOW_DEDENT_in_copy_paste307 = frozenset([20])
     FOLLOW_NEWLINE_in_copy_paste309 = frozenset([1])
-    FOLLOW_REPLACE_in_paste348 = frozenset([14])
-    FOLLOW_paste_replace_in_paste350 = frozenset([56])
-    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
+    FOLLOW_REPLACE_in_paste348 = frozenset([15])
+    FOLLOW_paste_replace_in_paste350 = frozenset([57])
+    FOLLOW_WITH_in_paste352 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
     FOLLOW_paste_with_in_paste354 = frozenset([1])
     FOLLOW_ID_in_paste_replace393 = frozenset([1])
-    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 25, 26, 52, 53, 54, 56])
+    FOLLOW_arbitrary_token_in_paste_with422 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 24, 26, 27, 53, 54, 55, 57])
     FOLLOW_NEWLINE_in_paste_with426 = frozenset([1])
-    FOLLOW_NEWLINE_in_paste_with457 = frozenset([16])
-    FOLLOW_INDENT_in_paste_with459 = frozenset([19])
-    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 25, 26, 52, 53, 54, 56])
-    FOLLOW_DEDENT_in_paste_with467 = frozenset([19])
+    FOLLOW_NEWLINE_in_paste_with457 = frozenset([17])
+    FOLLOW_INDENT_in_paste_with459 = frozenset([20])
+    FOLLOW_NEWLINE_in_paste_with461 = frozenset([4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_pure_block_in_paste_with463 = frozenset([4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 26, 27, 53, 54, 55, 57])
+    FOLLOW_DEDENT_in_paste_with467 = frozenset([20])
     FOLLOW_NEWLINE_in_paste_with469 = frozenset([1])
 
 

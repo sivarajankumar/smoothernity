@@ -26,7 +26,7 @@ module engine_rasterizer
                 y y guts_origin_y
             x_new y_new <- x y
             engine_render_stateless_clamp_texture_coords x_new y_new
-            if any platform_conditions_wholes_are_not_equal x x_new y y_new
+            if any platform_conditions_wholes_are_not_equal x x_new y y_new do
                 trace_coords_out_of_range_error x y
             x y <- x_new y_new
 
@@ -47,7 +47,7 @@ module engine_rasterizer
         ops
             y <- y_top
             while platform_conditions_whole_greater_or_equal_to_whole y y_mid
-                if platform_conditions_wholes_are_equal y_top y_mid
+                if platform_conditions_wholes_are_equal y_top y_mid do
                     x_top_mid <- x_mid
                 else
                     with platform_math
@@ -57,7 +57,7 @@ module engine_rasterizer
                         mul_wholes x_top_mid y_top_minus_y x_mid_minus_x_top
                         div_whole_by x_top_mid y_top_minus_y_mid
                         add_to_whole x_top_mid x_top
-                if platform_conditions_wholes_are_equal y_top y_bottom
+                if platform_conditions_wholes_are_equal y_top y_bottom do
                     x_top_bottom <- x_top
                 else
                     with platform_math
@@ -80,7 +80,7 @@ module engine_rasterizer
             y <- y_mid 
             while platform_conditions_whole_greater_or_equal_to_whole
                                                             y y_bottom
-                if platform_conditions_wholes_are_equal y_mid y_bottom
+                if platform_conditions_wholes_are_equal y_mid y_bottom do
                     x_mid_bottom <- x_mid
                 else
                     with platform_math
@@ -91,7 +91,7 @@ module engine_rasterizer
                                    y_mid_minus_y x_bottom_minus_x_mid
                         div_whole_by x_mid_bottom y_mid_minus_y_bottom
                         add_to_whole x_mid_bottom x_mid
-                if platform_conditions_wholes_are_equal y_top y_bottom
+                if platform_conditions_wholes_are_equal y_top y_bottom do
                     x_top_bottom <- x_bottom
                 else
                     with platform_math
@@ -149,6 +149,7 @@ module engine_rasterizer
                     cx_minus_x cx_plus_x cy_plus_y
                 if platform_conditions_whole_greater_than_zero 
                                             ellipse_error_mul_2_plus_x_change
+                do
                     with platform_math
                         dec_whole x
                         sub_from_whole stopping_x two_b_square
@@ -185,6 +186,7 @@ module engine_rasterizer
                     cx_minus_x cx_plus_x cy_plus_y
                 if platform_conditions_whole_greater_than_zero
                                             ellipse_error_mul_2_plus_y_change
+                do
                     with platform_math
                         dec_whole y
                         sub_from_whole stopping_y two_a_square
@@ -231,26 +233,32 @@ module engine_rasterizer
             guts_to_global_space x1 y1 x2 y2 x3 y3
             if all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y1 y2 y2 y3
+            do
                 guts_rasterize_top_triangle_part x1 y1 x2 y2 x3 y3
                 guts_rasterize_bottom_triangle_part x1 y1 x2 y2 x3 y3
             elif all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y1 y3 y3 y2
+            do
                 guts_rasterize_top_triangle_part x1 y1 x3 y3 x2 y2
                 guts_rasterize_bottom_triangle_part x1 y1 x3 y3 x2 y2
             elif all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y3 y1 y1 y2
+            do
                 guts_rasterize_top_triangle_part x3 y3 x1 y1 x2 y2
                 guts_rasterize_bottom_triangle_part x3 y3 x1 y1 x2 y2
             elif all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y3 y2 y2 y1
+            do
                 guts_rasterize_top_triangle_part x3 y3 x2 y2 x1 y1
                 guts_rasterize_bottom_triangle_part x3 y3 x2 y2 x1 y1
             elif all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y2 y1 y1 y3
+            do
                 guts_rasterize_top_triangle_part x2 y2 x1 y1 x3 y3
                 guts_rasterize_bottom_triangle_part x2 y2 x1 y1 x3 y3
             elif all platform_conditions_whole_greater_or_equal_to_whole
                                                                 y2 y3 y3 y1
+            do
                 guts_rasterize_top_triangle_part x2 y2 x3 y3 x1 y1
                 guts_rasterize_bottom_triangle_part x2 y2 x3 y3 x1 y1
 
