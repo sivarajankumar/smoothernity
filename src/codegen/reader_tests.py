@@ -150,7 +150,7 @@ class proc_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n   call1\n' ) ,
             { 'stateless' : { 'test1' :
-                { 'proc1' : { 'ops' : [ { 'call1' : [ ] } ] } } } } )
+                { 'proc1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } )
 
 class statement_assignment_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -161,8 +161,7 @@ class statement_assignment_test_case ( unittest . TestCase ) :
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   var1 <- var2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'assign_to' : [ 'var1' ]
-                , 'assign_from' : 'var2' } ] } } } } )
+                { 'assign' : [ 'var2' , [ 'var1' ] ] } ] } } } } )
 
 class statement_call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -173,51 +172,51 @@ class statement_call_test_case ( unittest . TestCase ) :
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' :
-                [ { 'call1' : [ ] } ] } } } } )
+                [ { 'call' : [ 'call1' ] } ] } } } } )
     def test_multi_calls ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n   call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' :
-                [ { 'call1' : [ ] }
-                , { 'call2' : [ ] } ] } } } } )
+                [ { 'call' : [ 'call1' ] }
+                , { 'call' : [ 'call2' ] } ] } } } } )
     def test_args_one_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 arg1 arg2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ 'arg1' , 'arg2' ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , 'arg1' , 'arg2' ] } ] } } } } )
     def test_args_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n    arg1 arg2\n    arg3' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ 'arg1' , 'arg2' , 'arg3' ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , 'arg1' , 'arg2' , 'arg3' ] } ] } } } } )
     def test_args_num_whole ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 1\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ 1 ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , 1 ] } ] } } } } )
     def test_args_num_fract ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         f = fractions . Fraction
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 1 / 2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ f ( 1 , 2 ) ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , f ( 1 , 2 ) ] } ] } } } } )
     def test_args_expression ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 [ expr1 ]\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ '[ expr1 ]' ] } ] } } } } )
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , '[ expr1 ]' ] } ] } } } } )
 
 class conditions_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -229,8 +228,8 @@ class conditions_test_case ( unittest . TestCase ) :
             '   if call1 do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ] } ] } } } } )
     def test_any_grouping ( self ) :
         ae = self . assertEqual
@@ -239,8 +238,8 @@ class conditions_test_case ( unittest . TestCase ) :
             '   if any call1 do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ] } ] } } } } )
     def test_all_grouping ( self ) :
         ae = self . assertEqual
@@ -249,8 +248,8 @@ class conditions_test_case ( unittest . TestCase ) :
             '   if all call1 do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'all' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'all' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ] } ] } } } } )
     def test_multi_call ( self ) :
         ae = self . assertEqual
@@ -259,9 +258,9 @@ class conditions_test_case ( unittest . TestCase ) :
             '   if any\n    call1\n    call2\n   do\n    call3\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] }
-                              , { 'call2' : [ ] } ]
-                    , 'ops' : [ { 'call3' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] }
+                              , { 'call' : [ 'call2' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call3' ] } ]
                     } ] } ] } } } } )
 
 class statement_if_test_case ( unittest . TestCase ) :
@@ -286,8 +285,8 @@ class statement_if_test_case ( unittest . TestCase ) :
             '   if call1\n   do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ] } ] } } } } )
     def test_do_on_same_line ( self ) :
         ae = self . assertEqual
@@ -296,8 +295,8 @@ class statement_if_test_case ( unittest . TestCase ) :
             '   if call1 do\n    call2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ] } ] } } } } )
     def test_else ( self ) :
         ae = self . assertEqual
@@ -307,10 +306,10 @@ class statement_if_test_case ( unittest . TestCase ) :
             '   else\n    call3\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
+                    { 'any' : [ { 'call' : [ 'call1' ] } ]
+                    , 'ops' : [ { 'call' : [ 'call2' ] } ]
                     } ]
-                , 'else' : [ { 'call3' : [ ] } ]
+                , 'else' : [ { 'call' : [ 'call3' ] } ]
                 } ] } } } } )
     def test_elif ( self ) :
         ae = self . assertEqual
@@ -321,12 +320,12 @@ class statement_if_test_case ( unittest . TestCase ) :
             '   elif call5 do\n    call6\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' :
-                    [   { 'any' : [ { 'call1' : [ ] } ]
-                        , 'ops' : [ { 'call2' : [ ] } ] }
-                    ,   { 'any' : [ { 'call3' : [ ] } ]
-                        , 'ops' : [ { 'call4' : [ ] } ] }
-                    ,   { 'any' : [ { 'call5' : [ ] } ]
-                        , 'ops' : [ { 'call6' : [ ] } ] }
+                    [   { 'any' : [ { 'call' : [ 'call1' ] } ]
+                        , 'ops' : [ { 'call' : [ 'call2' ] } ] }
+                    ,   { 'any' : [ { 'call' : [ 'call3' ] } ]
+                        , 'ops' : [ { 'call' : [ 'call4' ] } ] }
+                    ,   { 'any' : [ { 'call' : [ 'call5' ] } ]
+                        , 'ops' : [ { 'call' : [ 'call6' ] } ] }
                     ] } ] } } } } )
 
 class consts_test_case ( unittest . TestCase ) :
