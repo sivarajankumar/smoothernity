@@ -127,15 +127,13 @@ condition_call_line
 
 statement_call_single_line
     :   ID statement_call_args ?
-        ->  ^( TREE_STATEMENT_CALL ID
-                TREE_STATEMENT_CALL_ARGS statement_call_args ? )
+        ->  ^( TREE_STATEMENT_CALL ID statement_call_args ? )
     ;
 
 statement_call_multi_line
     :   ID statement_call_args ? NEWLINE
         INDENT NEWLINE ( statement_call_args NEWLINE ) + DEDENT NEWLINE
-        ->  ^( TREE_STATEMENT_CALL ID
-                TREE_STATEMENT_CALL_ARGS statement_call_args * )
+        ->  ^( TREE_STATEMENT_CALL ID statement_call_args * )
     ;
 
 statement_call_args : statement_call_arg + ;
