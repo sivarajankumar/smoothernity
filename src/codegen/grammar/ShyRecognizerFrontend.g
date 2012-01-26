@@ -93,6 +93,9 @@ condition
         ->  ^( TREE_CONDITION_ANY statement_call )
     |   ANY statement_call DO ? NEWLINE
         ->  ^( TREE_CONDITION_ANY statement_call )
+    |   ANY NEWLINE
+        INDENT NEWLINE statement_call + DEDENT NEWLINE DO NEWLINE
+        ->  ^( TREE_CONDITION_ANY statement_call + )
     |   ALL statement_call DO ? NEWLINE
         ->  ^( TREE_CONDITION_ALL statement_call )
     ;

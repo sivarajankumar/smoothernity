@@ -256,13 +256,12 @@ class conditions_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if any call1\n    call2\n    call3\ndo\n    call4\n' ) ,
+            '   if any\n    call1\n    call2\n   do\n    call3\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
                 { 'if' : [
                     { 'any' : [ { 'call1' : [ ] }
-                              , { 'call2' : [ ] }
-                              , { 'call3' : [ ] } ]
-                    , 'ops' : [ { 'call4' : [ ] } ]
+                              , { 'call2' : [ ] } ]
+                    , 'ops' : [ { 'call3' : [ ] } ]
                     } ] } ] } } } } )
 
 class statement_if_test_case ( unittest . TestCase ) :
