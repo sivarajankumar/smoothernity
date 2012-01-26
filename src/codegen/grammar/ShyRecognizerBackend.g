@@ -110,16 +110,23 @@ statement
             { $value = $statement_if.value }
     |   statement_assign
             { $value = $statement_assign.value }
+    |   statement_with
+            { $value = $statement_with.value }
+    ;
+
+statement_with
+    returns [ value ]
+    :   ^( TREE_STATEMENT_WITH ID statements )
+        { $value = { 'with' : { $ID.text : $statements.value } } }
     ;
 
 statement_assign
     returns [ value ]
-    @ init { $value = { 'assign' : [ ] } }
     :   ^( TREE_STATEMENT_ASSIGN
             arbitrary_value
                 {
-                    $value [ 'assign' ] . append ( $arbitrary_value.value )
-                    $value [ 'assign' ] . append ( list ( ) )
+                    $value = { 'assign' :
+                        [ $arbitrary_value.value , list ( ) ] }
                 }
             ( ID
                 { $value [ 'assign' ] [ - 1 ] . append ( $ID.text ) }
