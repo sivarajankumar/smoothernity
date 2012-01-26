@@ -113,7 +113,8 @@ stateless engine_math
     copy
         proc clamp_what_dest
             args result num xfrom xto 
-            ops if platform_conditions_what_less_than_what num xfrom do
+            ops
+                if platform_conditions_what_less_than_what num xfrom do
                     result <- xfrom
                 elif platform_conditions_what_greater_than_what num xto do
                     result <- xto
@@ -121,19 +122,22 @@ stateless engine_math
                     result <- num
         proc clamp_what_direct
             args num xfrom xto 
-            ops if platform_conditions_what_less_than_what num xfrom do
+            ops
+                if platform_conditions_what_less_than_what num xfrom do
                     num <- xfrom
                 elif platform_conditions_what_greater_than_what num xto do
                     num <- xto
         proc min_what
             args result a b
-            ops if platform_conditions_what_less_than_what a b do
+            ops
+                if platform_conditions_what_less_than_what a b do
                     result <- a
                 else
                     result <- b
         proc max_what
             args result a b
-            ops if platform_conditions_what_greater_than_what a b do
+            ops
+                if platform_conditions_what_greater_than_what a b do
                     result <- a
                 else
                     result <- b
@@ -142,7 +146,8 @@ stateless engine_math
 
     proc abs_whole
         args result a
-        ops if platform_conditions_whole_less_than_zero a do
+        ops
+            if platform_conditions_whole_less_than_zero a do
                 platform_math_neg_whole result a
             else
                 result <- a
@@ -167,7 +172,8 @@ stateless engine_math
 
     proc matrix_scale
         args matrix scale
-        ops with platform_matrix
+        ops
+            with platform_matrix
                 identity matrix
                 set_axis_x matrix scale 0 0
                 set_axis_y matrix 0 scale 0
