@@ -89,15 +89,23 @@ statement_elif
     ;
 
 condition
+    :   condition_statement
+        ->  ^( TREE_CONDITION_ANY condition_statement )
+    |   ANY condition_statements
+        ->  ^( TREE_CONDITION_ANY condition_statements )
+    |   ALL condition_statements
+        ->  ^( TREE_CONDITION_ALL condition_statements )
+    ;
+
+condition_statement
     :   statement_call DO ? NEWLINE
-        ->  ^( TREE_CONDITION_ANY statement_call )
-    |   ANY statement_call DO ? NEWLINE
-        ->  ^( TREE_CONDITION_ANY statement_call )
-    |   ANY NEWLINE
-        INDENT NEWLINE statement_call + DEDENT NEWLINE DO NEWLINE
-        ->  ^( TREE_CONDITION_ANY statement_call + )
-    |   ALL statement_call DO ? NEWLINE
-        ->  ^( TREE_CONDITION_ALL statement_call )
+        ->  statement_call
+    ;
+
+condition_statements
+    :   condition_statement
+    |   NEWLINE INDENT NEWLINE statement_call + DEDENT NEWLINE DO NEWLINE
+        ->  statement_call +
     ;
 
 statement_else
