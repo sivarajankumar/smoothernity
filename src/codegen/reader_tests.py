@@ -161,7 +161,9 @@ class statement_with_test_case ( unittest . TestCase ) :
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   with call1\n    call2\n    call3\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'with' :
-                { 'call1' : [ { 'call' : [ 'call1' ] } ] } } ] } } } } )
+                { 'call1' :
+                    [ { 'call' : [ 'call2' ] }
+                    , { 'call' : [ 'call3' ] } ] } } ] } } } } )
 
 class statement_assign_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

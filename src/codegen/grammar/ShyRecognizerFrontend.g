@@ -50,8 +50,8 @@ proc_vars
     ;
 
 proc_ops
-    :   OPS NEWLINE INDENT NEWLINE statement + DEDENT NEWLINE
-        -> ^( TREE_STATEMENTS statement + )
+    :   OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
+        -> statements
     ;
 
 statement
@@ -60,6 +60,18 @@ statement
     |   statement_call_multi_line
     |   statement_if
     |   statement_assign
+    |   statement_with
+    ;
+
+statements
+    :   statement +
+        -> ^( TREE_STATEMENTS statement + )
+    ;
+
+statement_with
+    :   WITH ID NEWLINE
+        INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_WITH ID statements )
     ;
 
 statement_assign
@@ -90,19 +102,14 @@ statement_elif
 
 statement_elif_body
     :   condition NEWLINE ? DO NEWLINE
-            INDENT NEWLINE statement + DEDENT NEWLINE
-        ->  ^( TREE_STATEMENT_ELIF
-                condition
-                ^( TREE_STATEMENTS statement + )
-            )
+            INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_ELIF condition statements )
     ;
 
 statement_else
     :   ELSE NEWLINE
-            INDENT NEWLINE statement + DEDENT NEWLINE
-        ->  ^( TREE_STATEMENT_ELSE
-                ^( TREE_STATEMENTS statement + )
-            )
+            INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_ELSE statements )
     ;
 
 condition
