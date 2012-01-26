@@ -122,12 +122,8 @@ statement_with
 
 statement_assign
     returns [ value ]
-    :   ^( TREE_STATEMENT_ASSIGN
-            arbitrary_value
-                {
-                    $value = { 'assign' :
-                        [ $arbitrary_value.value , list ( ) ] }
-                }
+    :   ^( TREE_STATEMENT_ASSIGN arbitrary_value
+            { $value = { 'assign' : [ $arbitrary_value.value , list ( ) ] } }
             ( ID
                 { $value [ 'assign' ] [ - 1 ] . append ( $ID.text ) }
             ) +
