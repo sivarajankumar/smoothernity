@@ -55,7 +55,9 @@ proc_ops
     ;
 
 statement
-    :   statement_call
+    :   statement_call_single_line NEWLINE
+            -> statement_call_single_line
+    |   statement_call_multi_line
     |   statement_if
     ;
 
@@ -71,7 +73,7 @@ statement_if
     ;
 
 statement_if_head
-    :   IF condition
+    :   IF condition NEWLINE ? DO NEWLINE
             INDENT NEWLINE statement + DEDENT NEWLINE
         ->  ^( TREE_STATEMENT_ELIF
                 condition
@@ -80,32 +82,12 @@ statement_if_head
     ;
 
 statement_elif
-    :   ELIF condition
+    :   ELIF condition NEWLINE ? DO NEWLINE
             INDENT NEWLINE statement + DEDENT NEWLINE
         ->  ^( TREE_STATEMENT_ELIF
                 condition
                 ^( TREE_STATEMENTS statement + )
             )
-    ;
-
-condition
-    :   condition_statement
-        ->  ^( TREE_CONDITION_ANY condition_statement )
-    |   ANY condition_statements
-        ->  ^( TREE_CONDITION_ANY condition_statements )
-    |   ALL condition_statements
-        ->  ^( TREE_CONDITION_ALL condition_statements )
-    ;
-
-condition_statement
-    :   statement_call DO ? NEWLINE
-        ->  statement_call
-    ;
-
-condition_statements
-    :   condition_statement
-    |   NEWLINE INDENT NEWLINE statement_call + DEDENT NEWLINE DO NEWLINE
-        ->  statement_call +
     ;
 
 statement_else
@@ -116,9 +98,41 @@ statement_else
             )
     ;
 
-statement_call
-    :   ID statement_call_args ? ( DO | NEWLINE )
-        ( INDENT NEWLINE ( statement_call_args NEWLINE ) + DEDENT NEWLINE ) ?
+condition
+    :   condition_call
+        ->  ^( TREE_CONDITION_ANY condition_call )
+    |   ANY condition_calls
+        ->  ^( TREE_CONDITION_ANY condition_calls )
+    |   ALL condition_calls
+        ->  ^( TREE_CONDITION_ALL condition_calls )
+    ;
+
+condition_calls
+    :   condition_call
+    |   NEWLINE INDENT NEWLINE condition_call_line + DEDENT NEWLINE
+        ->  condition_call_line +
+    ;
+
+condition_call
+    :   statement_call_single_line
+    |   statement_call_multi_line
+    ;
+
+condition_call_line
+    :   statement_call_single_line NEWLINE
+            -> statement_call_single_line
+    |   statement_call_multi_line
+    ;
+
+statement_call_single_line
+    :   ID statement_call_args ?
+        ->  ^( TREE_STATEMENT_CALL ID
+                TREE_STATEMENT_CALL_ARGS statement_call_args ? )
+    ;
+
+statement_call_multi_line
+    :   ID statement_call_args ? NEWLINE
+        INDENT NEWLINE ( statement_call_args NEWLINE ) + DEDENT NEWLINE
         ->  ^( TREE_STATEMENT_CALL ID
                 TREE_STATEMENT_CALL_ARGS statement_call_args * )
     ;
