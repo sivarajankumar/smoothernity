@@ -108,6 +108,23 @@ statement
             { $value = $statement_call.value }
     |   statement_if
             { $value = $statement_if.value }
+    |   statement_assign
+            { $value = $statement_assign.value }
+    ;
+
+statement_assign
+    returns [ value ]
+    @ init { $value = { 'assign' : [ ] } }
+    :   ^( TREE_STATEMENT_ASSIGN
+            arbitrary_value
+                {
+                    $value [ 'assign' ] . append ( $arbitrary_value.value )
+                    $value [ 'assign' ] . append ( list ( ) )
+                }
+            ( ID
+                { $value [ 'assign' ] [ - 1 ] . append ( $ID.text ) }
+            ) +
+        )
     ;
 
 statement_if
@@ -170,12 +187,12 @@ statement_call
 statement_call_args
     returns [ value ]
     @ init { $value = list ( ) }
-    :   ( statement_call_arg
-            { $value . append ( $statement_call_arg.value ) }
+    :   ( arbitrary_value
+            { $value . append ( $arbitrary_value.value ) }
         ) *
     ;
 
-statement_call_arg
+arbitrary_value
     returns [ value ]
     :   ID { $value = $ID.text }
     |   EXPRESSION { $value = $EXPRESSION.text }
