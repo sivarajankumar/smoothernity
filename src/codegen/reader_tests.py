@@ -152,6 +152,18 @@ class proc_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'test1' :
                 { 'proc1' : { 'ops' : [ { 'call1' : [ ] } ] } } } } )
 
+class statement_assignment_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_no_args ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   var1 <- var2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'assign_to' : [ 'var1' ]
+                , 'assign_from' : 'var2' } ] } } } } )
+
 class statement_call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
@@ -176,17 +188,14 @@ class statement_call_test_case ( unittest . TestCase ) :
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1 arg1 arg2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ { 'arg1' : { } }
-                , { 'arg2' : { } } ] } ] } } } } )
+                [ 'arg1' , 'arg2' ] } ] } } } } )
     def test_args_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   call1\n    arg1 arg2\n    arg3' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
-                [ { 'arg1' : { } }
-                , { 'arg2' : { } }
-                , { 'arg3' : { } } ] } ] } } } } )
+                [ 'arg1' , 'arg2' , 'arg3' ] } ] } } } } )
     def test_args_num_whole ( self ) :
         ae = self . assertEqual
         r = self . h . rec

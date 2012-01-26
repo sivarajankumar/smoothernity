@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-26 18:24:59
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-26 19:19:12
 
 import sys
 from antlr3 import *
@@ -1397,7 +1397,7 @@ class ShyRecognizerBackend(TreeParser):
                     ID31 = self.match(self.input, ID, self.FOLLOW_ID_in_statement_call_arg1437)
 
                     #action start
-                    value = { ID31.text : { } } 
+                    value = ID31.text 
                     #action end
 
 
