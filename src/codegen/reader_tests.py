@@ -152,16 +152,16 @@ class proc_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'test1' :
                 { 'proc1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } )
 
-class statement_copy_test_case ( unittest . TestCase ) :
+class statement_assign_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
-    def test_no_args ( self ) :
+    def test_single ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   var1 <- var2\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'copy' : [ 'var2' , [ 'var1' ] ] } ] } } } } )
+                { 'assign' : [ 'var2' , [ 'var1' ] ] } ] } } } } )
 
 class statement_call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :

@@ -59,6 +59,12 @@ statement
             -> statement_call_single_line
     |   statement_call_multi_line
     |   statement_if
+    |   statement_assign
+    ;
+
+statement_assign
+    :   ID ARROW_LEFT arbitrary_value NEWLINE
+        ->  ^( TREE_STATEMENT_ASSIGN arbitrary_value ID )
     ;
 
 statement_if
@@ -136,9 +142,9 @@ statement_call_multi_line
         ->  ^( TREE_STATEMENT_CALL ID statement_call_args * )
     ;
 
-statement_call_args : statement_call_arg + ;
+statement_call_args : arbitrary_value + ;
 
-statement_call_arg
+arbitrary_value
     :   ID
     |   EXPRESSION
     |   num_whole
