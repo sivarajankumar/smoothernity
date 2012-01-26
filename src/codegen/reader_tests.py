@@ -219,6 +219,52 @@ class statement_call_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call1' :
                 [ '[ expr1 ]' ] } ] } } } } )
 
+class conditions_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . h = helper ( )
+    def test_no_grouping ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if call1 do\n    call2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'any' : [ { 'call1' : [ ] } ]
+                    , 'ops' : [ { 'call2' : [ ] } ]
+                    } ] } ] } } } } )
+    def test_any_grouping ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if any call1 do\n    call2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'any' : [ { 'call1' : [ ] } ]
+                    , 'ops' : [ { 'call2' : [ ] } ]
+                    } ] } ] } } } } )
+    def test_all_grouping ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if all call1 do\n    call2\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'all' : [ { 'call1' : [ ] } ]
+                    , 'ops' : [ { 'call2' : [ ] } ]
+                    } ] } ] } } } } )
+    def test_multi_call ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            '   if any call1\n    call2\n    call3\ndo\n    call4\n' ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+                { 'if' : [
+                    { 'any' : [ { 'call1' : [ ] }
+                              , { 'call2' : [ ] }
+                              , { 'call3' : [ ] } ]
+                    , 'ops' : [ { 'call4' : [ ] } ]
+                    } ] } ] } } } } )
+
 class statement_if_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
@@ -243,50 +289,6 @@ class statement_if_test_case ( unittest . TestCase ) :
                 { 'if' : [
                     { 'any' : [ { 'call1' : [ ] } ]
                     , 'ops' : [ { 'call2' : [ ] } ]
-                    } ] } ] } } } } )
-    def test_any_cond_one_call ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if any call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
-                    } ] } ] } } } } )
-    def test_any_cond_multi_call ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if any call1\n    call2\n    call3\ndo\n    call4\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'if' : [
-                    { 'any' : [ { 'call1' : [ ] }
-                              , { 'call2' : [ ] }
-                              , { 'call3' : [ ] } ]
-                    , 'ops' : [ { 'call4' : [ ] } ]
-                    } ] } ] } } } } )
-    def test_all_cond_one_call ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if all call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'if' : [
-                    { 'all' : [ { 'call1' : [ ] } ]
-                    , 'ops' : [ { 'call2' : [ ] } ]
-                    } ] } ] } } } } )
-    def test_all_cond_multi_call ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
-            '   if all call1\n    call2\n    call3\ndo\n    call4\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
-                { 'if' : [
-                    { 'all' : [ { 'call1' : [ ] }
-                              , { 'call2' : [ ] }
-                              , { 'call3' : [ ] } ]
-                    , 'ops' : [ { 'call4' : [ ] } ]
                     } ] } ] } } } } )
     def test_do_on_same_line ( self ) :
         ae = self . assertEqual

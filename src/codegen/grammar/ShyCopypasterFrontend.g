@@ -63,7 +63,9 @@ paste_with
     ;
 
 arbitrary_token
-    :   ARGS
+    :   ALL
+    |   ANY
+    |   ARGS
     |   CONSTS
     |   DO
     |   ELIF

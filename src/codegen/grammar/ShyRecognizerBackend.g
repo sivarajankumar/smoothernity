@@ -130,6 +130,11 @@ statement_elif
                 'any' : $condition_any.value ,
                 'ops' : $statements.value }
             }
+    |   ^( TREE_STATEMENT_ELIF condition_all statements )
+            { $value = {
+                'all' : $condition_all.value ,
+                'ops' : $statements.value }
+            }
     ;
 
 statement_else
@@ -142,6 +147,15 @@ condition_any
     returns [ value ]
     @ init { $value = list ( ) }
     :   ^( TREE_CONDITION_ANY
+            ( statement_call
+                { $value . append ( $statement_call.value ) }
+            ) + )
+    ;
+
+condition_all
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ^( TREE_CONDITION_ALL
             ( statement_call
                 { $value . append ( $statement_call.value ) }
             ) + )
