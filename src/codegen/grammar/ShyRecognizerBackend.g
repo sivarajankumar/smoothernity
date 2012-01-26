@@ -163,20 +163,16 @@ condition_all
 
 statement_call
     returns [ value ]
-    :   ^( TREE_STATEMENT_CALL ID statement_call_args )
-            {
-                $value = {
-                    'call' : [ $ID.text ] + $statement_call_args.value }
-            }
+    :   ^( TREE_STATEMENT_CALL statement_call_args )
+            { $value = { 'call' : $statement_call_args.value } }
     ;
 
 statement_call_args
     returns [ value ]
     @ init { $value = list ( ) }
-    :   TREE_STATEMENT_CALL_ARGS 
-            ( statement_call_arg
-                { $value . append ( $statement_call_arg.value ) }
-            ) *
+    :   ( statement_call_arg
+            { $value . append ( $statement_call_arg.value ) }
+        ) *
     ;
 
 statement_call_arg
