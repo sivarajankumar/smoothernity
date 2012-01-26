@@ -18,6 +18,8 @@ options
         raise ShyLexerException ( msg )
 }
 
+ALL : 'all' ;
+ANY : 'any' ;
 ARGS : 'args' ;
 CONSTS : 'consts' ;
 COPY : 'copy' ;
@@ -52,7 +54,8 @@ EXPRESSION : '[' . * ']' ;
 STRING : '\'' . * '\'' ;
 
 TREE_ARBITRARY_TOKEN : 'TREE_ARBITRARY_TOKEN' ;
-TREE_CONDITION_ANY : 'TREE_COND_ANY' ;
+TREE_CONDITION_ALL : 'TREE_CONDITION_ALL' ;
+TREE_CONDITION_ANY : 'TREE_CONDITION_ANY' ;
 TREE_CONSTS : 'TREE_CONSTS' ;
 TREE_COPY : 'TREE_COPY' ;
 TREE_COPY_PASTE : 'TREE_COPY_PASTE' ;

@@ -91,6 +91,10 @@ statement_elif
 condition
     :   statement_call DO ? NEWLINE
         ->  ^( TREE_CONDITION_ANY statement_call )
+    |   ANY statement_call DO ? NEWLINE
+        ->  ^( TREE_CONDITION_ANY statement_call )
+    |   ALL statement_call DO ? NEWLINE
+        ->  ^( TREE_CONDITION_ALL statement_call )
     ;
 
 statement_else

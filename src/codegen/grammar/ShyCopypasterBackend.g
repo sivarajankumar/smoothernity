@@ -115,7 +115,9 @@ arbitrary_tokens
 
 arbitrary_token
     returns [ value ]
-    :   ARGS { $value = $ARGS.text }
+    :   ALL { $value = $ALL.text }
+    |   ANY { $value = $ANY.text }
+    |   ARGS { $value = $ARGS.text }
     |   CONSTS { $value = $CONSTS.text }
     |   DO { $value = $DO.text }
     |   ELIF { $value = $ELIF.text }
