@@ -29,6 +29,7 @@ ELIF : 'elif' ;
 ELSE : 'else' ;
 IF : 'if' ;
 INDENT : 'indent' ;
+MESSAGES : 'messages' ;
 MODULE : 'module' ;
 OPS : 'ops' ;
 PASTE : 'paste' ;

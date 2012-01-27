@@ -71,6 +71,7 @@ arbitrary_token
     |   ELIF
     |   ELSE
     |   IF
+    |   MESSAGES
     |   MODULE
     |   OPS
     |   PROC
