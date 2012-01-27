@@ -1,13 +1,7 @@
 import unittest
-import io
 import fractions
 import reader
-
-class helper :
-    def __init__ ( self ) :
-        self . _r = reader . reader ( )
-    def rec ( self , s ) :
-        return self . _r . run ( io . StringIO ( s ) ) 
+from reader_tests_parts . helper import helper
 
 class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
