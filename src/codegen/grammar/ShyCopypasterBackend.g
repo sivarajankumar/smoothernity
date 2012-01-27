@@ -123,6 +123,7 @@ arbitrary_token
     |   ELIF { $value = $ELIF.text }
     |   ELSE { $value = $ELSE.text }
     |   IF { $value = $IF.text }
+    |   MESSAGES { $value = $MESSAGES.text }
     |   MODULE { $value = $MODULE.text }
     |   OPS { $value = $OPS.text }
     |   PROC { $value = $PROC.text }
