@@ -1,7 +1,7 @@
 import unittest
 import fractions
 import reader
-from reader_tests_parts . helper import helper
+from reader_tests_cases . helper import helper
 
 class lexer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
