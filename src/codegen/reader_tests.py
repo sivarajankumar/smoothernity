@@ -6,6 +6,7 @@ from reader_tests_cases . copy_paste import *
 from reader_tests_cases . hints import *
 from reader_tests_cases . ids import *
 from reader_tests_cases . lexer import *
+from reader_tests_cases . messages import *
 from reader_tests_cases . modules import *
 from reader_tests_cases . proc import *
 from reader_tests_cases . start import *
