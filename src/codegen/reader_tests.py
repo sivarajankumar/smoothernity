@@ -1,4 +1,5 @@
 import unittest
+from reader_tests_cases . attrs_hints import *
 from reader_tests_cases . conditions import *
 from reader_tests_cases . consts import *
 from reader_tests_cases . copy_paste import *
