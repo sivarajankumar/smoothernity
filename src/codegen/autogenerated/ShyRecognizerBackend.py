@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-31 18:35:44
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-01-31 18:37:04
 
 import sys
 from antlr3 import *
@@ -55,36 +55,36 @@ REQUEST=32
 STATELESS=33
 STRING=34
 TREE_ARBITRARY_TOKEN=35
-TREE_CONDITION_ALL=36
-TREE_CONDITION_ANY=37
-TREE_CONSTS=38
-TREE_COPY=39
-TREE_COPY_PASTE=40
-TREE_EXPRESSION=41
-TREE_HINT=42
-TREE_HINT_NONE=43
-TREE_MODULE=44
-TREE_NUM_FRACT=45
-TREE_NUM_WHOLE=46
-TREE_PASTE=47
-TREE_PASTE_REPLACE=48
-TREE_PASTE_WITH=49
-TREE_PROC=50
-TREE_PROC_ARGS=51
-TREE_PROC_VARS=52
-TREE_STATELESS=53
-TREE_STATEMENTS=54
-TREE_STATEMENT_ASSIGN=55
-TREE_STATEMENT_CALL=56
-TREE_STATEMENT_ELIF=57
-TREE_STATEMENT_ELSE=58
-TREE_STATEMENT_IF=59
-TREE_STATEMENT_WITH=60
-TREE_TYPES=61
-TREE_TYPES_ITEM=62
-TREE_VAR=63
-TREE_VARS_HINT=64
-TREE_VAR_HINT=65
+TREE_ATTR=36
+TREE_ATTRS_HINTS=37
+TREE_ATTR_HINT=38
+TREE_CONDITION_ALL=39
+TREE_CONDITION_ANY=40
+TREE_CONSTS=41
+TREE_COPY=42
+TREE_COPY_PASTE=43
+TREE_EXPRESSION=44
+TREE_HINT=45
+TREE_HINT_NONE=46
+TREE_MODULE=47
+TREE_NUM_FRACT=48
+TREE_NUM_WHOLE=49
+TREE_PASTE=50
+TREE_PASTE_REPLACE=51
+TREE_PASTE_WITH=52
+TREE_PROC=53
+TREE_PROC_ARGS=54
+TREE_PROC_VARS=55
+TREE_STATELESS=56
+TREE_STATEMENTS=57
+TREE_STATEMENT_ASSIGN=58
+TREE_STATEMENT_CALL=59
+TREE_STATEMENT_ELIF=60
+TREE_STATEMENT_ELSE=61
+TREE_STATEMENT_IF=62
+TREE_STATEMENT_WITH=63
+TREE_TYPES=64
+TREE_TYPES_ITEM=65
 TYPES=66
 UNDERSCORE=67
 VARS=68
@@ -98,15 +98,15 @@ tokenNames = [
     "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "ELIF", "ELSE", 
     "EXPRESSION", "ID", "IF", "INDENT", "MESSAGES", "MINUS", "MODULE", "NEWLINE", 
     "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", "REPLY", "REQUEST", "STATELESS", 
-    "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", 
-    "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", 
-    "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
-    "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", 
-    "TREE_PROC_ARGS", "TREE_PROC_VARS", "TREE_STATELESS", "TREE_STATEMENTS", 
-    "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", 
-    "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WITH", "TREE_TYPES", 
-    "TREE_TYPES_ITEM", "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", 
-    "UNDERSCORE", "VARS", "WHITESPACE", "WITH"
+    "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", "TREE_ATTR_HINT", 
+    "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", "TREE_COPY", 
+    "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
+    "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
+    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", 
+    "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_CALL", 
+    "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WITH", 
+    "TREE_TYPES", "TREE_TYPES_ITEM", "TYPES", "UNDERSCORE", "VARS", "WHITESPACE", 
+    "WITH"
 ]
 
 
@@ -2043,7 +2043,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "attrs_hints"
-    # grammar/ShyRecognizerBackend.g:252:1: attrs_hints returns [ value ] : TREE_VARS_HINT ( attr_hint )* ;
+    # grammar/ShyRecognizerBackend.g:252:1: attrs_hints returns [ value ] : TREE_ATTRS_HINTS ( attr_hint )* ;
     def attrs_hints(self, ):
         value = None
 
@@ -2054,22 +2054,22 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:255:5: ( TREE_VARS_HINT ( attr_hint )* )
-                # grammar/ShyRecognizerBackend.g:255:9: TREE_VARS_HINT ( attr_hint )*
+                # grammar/ShyRecognizerBackend.g:255:5: ( TREE_ATTRS_HINTS ( attr_hint )* )
+                # grammar/ShyRecognizerBackend.g:255:9: TREE_ATTRS_HINTS ( attr_hint )*
                 pass 
-                self.match(self.input, TREE_VARS_HINT, self.FOLLOW_TREE_VARS_HINT_in_attrs_hints2095)
+                self.match(self.input, TREE_ATTRS_HINTS, self.FOLLOW_TREE_ATTRS_HINTS_in_attrs_hints2095)
 
-                # grammar/ShyRecognizerBackend.g:255:24: ( attr_hint )*
+                # grammar/ShyRecognizerBackend.g:255:26: ( attr_hint )*
                 while True: #loop20
                     alt20 = 2
                     LA20_0 = self.input.LA(1)
 
-                    if (LA20_0 == TREE_VAR_HINT) :
+                    if (LA20_0 == TREE_ATTR_HINT) :
                         alt20 = 1
 
 
                     if alt20 == 1:
-                        # grammar/ShyRecognizerBackend.g:255:26: attr_hint
+                        # grammar/ShyRecognizerBackend.g:255:28: attr_hint
                         pass 
                         self._state.following.append(self.FOLLOW_attr_hint_in_attrs_hints2099)
                         attr_hint54 = self.attr_hint()
@@ -2102,7 +2102,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "attr_hint"
-    # grammar/ShyRecognizerBackend.g:258:1: attr_hint returns [ value ] : ( ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID ) )+ ) | ^( TREE_VAR_HINT hint ( ^( TREE_VAR ID ) )+ ) );
+    # grammar/ShyRecognizerBackend.g:258:1: attr_hint returns [ value ] : ( ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID ) )+ ) | ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID ) )+ ) );
     def attr_hint(self, ):
         value = None
 
@@ -2115,11 +2115,11 @@ class ShyRecognizerBackend(TreeParser):
         value = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:261:5: ( ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID ) )+ ) | ^( TREE_VAR_HINT hint ( ^( TREE_VAR ID ) )+ ) )
+                # grammar/ShyRecognizerBackend.g:261:5: ( ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID ) )+ ) | ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID ) )+ ) )
                 alt23 = 2
                 LA23_0 = self.input.LA(1)
 
-                if (LA23_0 == TREE_VAR_HINT) :
+                if (LA23_0 == TREE_ATTR_HINT) :
                     LA23_1 = self.input.LA(2)
 
                     if (LA23_1 == 2) :
@@ -2148,27 +2148,27 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 if alt23 == 1:
-                    # grammar/ShyRecognizerBackend.g:261:9: ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID ) )+ )
+                    # grammar/ShyRecognizerBackend.g:261:9: ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID ) )+ )
                     pass 
-                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_attr_hint2144)
+                    self.match(self.input, TREE_ATTR_HINT, self.FOLLOW_TREE_ATTR_HINT_in_attr_hint2144)
 
                     self.match(self.input, DOWN, None)
                     self.match(self.input, TREE_HINT_NONE, self.FOLLOW_TREE_HINT_NONE_in_attr_hint2146)
 
-                    # grammar/ShyRecognizerBackend.g:261:41: ( ^( TREE_VAR ID ) )+
+                    # grammar/ShyRecognizerBackend.g:261:42: ( ^( TREE_ATTR ID ) )+
                     cnt21 = 0
                     while True: #loop21
                         alt21 = 2
                         LA21_0 = self.input.LA(1)
 
-                        if (LA21_0 == TREE_VAR) :
+                        if (LA21_0 == TREE_ATTR) :
                             alt21 = 1
 
 
                         if alt21 == 1:
-                            # grammar/ShyRecognizerBackend.g:261:43: ^( TREE_VAR ID )
+                            # grammar/ShyRecognizerBackend.g:261:44: ^( TREE_ATTR ID )
                             pass 
-                            self.match(self.input, TREE_VAR, self.FOLLOW_TREE_VAR_in_attr_hint2152)
+                            self.match(self.input, TREE_ATTR, self.FOLLOW_TREE_ATTR_in_attr_hint2152)
 
                             self.match(self.input, DOWN, None)
                             ID55 = self.match(self.input, ID, self.FOLLOW_ID_in_attr_hint2154)
@@ -2197,9 +2197,9 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 elif alt23 == 2:
-                    # grammar/ShyRecognizerBackend.g:264:9: ^( TREE_VAR_HINT hint ( ^( TREE_VAR ID ) )+ )
+                    # grammar/ShyRecognizerBackend.g:264:9: ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID ) )+ )
                     pass 
-                    self.match(self.input, TREE_VAR_HINT, self.FOLLOW_TREE_VAR_HINT_in_attr_hint2196)
+                    self.match(self.input, TREE_ATTR_HINT, self.FOLLOW_TREE_ATTR_HINT_in_attr_hint2196)
 
                     self.match(self.input, DOWN, None)
                     self._state.following.append(self.FOLLOW_hint_in_attr_hint2198)
@@ -2207,20 +2207,20 @@ class ShyRecognizerBackend(TreeParser):
 
                     self._state.following.pop()
 
-                    # grammar/ShyRecognizerBackend.g:264:31: ( ^( TREE_VAR ID ) )+
+                    # grammar/ShyRecognizerBackend.g:264:32: ( ^( TREE_ATTR ID ) )+
                     cnt22 = 0
                     while True: #loop22
                         alt22 = 2
                         LA22_0 = self.input.LA(1)
 
-                        if (LA22_0 == TREE_VAR) :
+                        if (LA22_0 == TREE_ATTR) :
                             alt22 = 1
 
 
                         if alt22 == 1:
-                            # grammar/ShyRecognizerBackend.g:264:33: ^( TREE_VAR ID )
+                            # grammar/ShyRecognizerBackend.g:264:34: ^( TREE_ATTR ID )
                             pass 
-                            self.match(self.input, TREE_VAR, self.FOLLOW_TREE_VAR_in_attr_hint2204)
+                            self.match(self.input, TREE_ATTR, self.FOLLOW_TREE_ATTR_in_attr_hint2204)
 
                             self.match(self.input, DOWN, None)
                             ID56 = self.match(self.input, ID, self.FOLLOW_ID_in_attr_hint2206)
@@ -2655,54 +2655,54 @@ class ShyRecognizerBackend(TreeParser):
 
  
 
-    FOLLOW_module_in_start87 = frozenset([1, 38, 44, 53, 61])
-    FOLLOW_stateless_in_start114 = frozenset([1, 38, 44, 53, 61])
-    FOLLOW_consts_in_start141 = frozenset([1, 38, 44, 53, 61])
-    FOLLOW_types_in_start167 = frozenset([1, 38, 44, 53, 61])
+    FOLLOW_module_in_start87 = frozenset([1, 41, 47, 56, 64])
+    FOLLOW_stateless_in_start114 = frozenset([1, 41, 47, 56, 64])
+    FOLLOW_consts_in_start141 = frozenset([1, 41, 47, 56, 64])
+    FOLLOW_types_in_start167 = frozenset([1, 41, 47, 56, 64])
     FOLLOW_TREE_MODULE_in_module222 = frozenset([2])
     FOLLOW_ID_in_module224 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless257 = frozenset([2])
     FOLLOW_ID_in_stateless259 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless287 = frozenset([2])
-    FOLLOW_ID_in_stateless289 = frozenset([50])
+    FOLLOW_ID_in_stateless289 = frozenset([53])
     FOLLOW_procs_in_stateless291 = frozenset([3])
-    FOLLOW_proc_in_procs346 = frozenset([1, 50])
+    FOLLOW_proc_in_procs346 = frozenset([1, 53])
     FOLLOW_TREE_PROC_in_proc391 = frozenset([2])
-    FOLLOW_ID_in_proc405 = frozenset([3, 51, 52, 54])
-    FOLLOW_proc_args_in_proc439 = frozenset([3, 52, 54])
-    FOLLOW_proc_vars_in_proc489 = frozenset([3, 54])
+    FOLLOW_ID_in_proc405 = frozenset([3, 54, 55, 57])
+    FOLLOW_proc_args_in_proc439 = frozenset([3, 55, 57])
+    FOLLOW_proc_vars_in_proc489 = frozenset([3, 57])
     FOLLOW_statements_in_proc539 = frozenset([3])
     FOLLOW_TREE_PROC_ARGS_in_proc_args612 = frozenset([2])
     FOLLOW_attrs_hints_in_proc_args614 = frozenset([3])
     FOLLOW_TREE_PROC_VARS_in_proc_vars659 = frozenset([2])
     FOLLOW_attrs_hints_in_proc_vars661 = frozenset([3])
     FOLLOW_TREE_STATEMENTS_in_statements716 = frozenset([2])
-    FOLLOW_statement_in_statements720 = frozenset([3, 55, 56, 59, 60])
+    FOLLOW_statement_in_statements720 = frozenset([3, 58, 59, 62, 63])
     FOLLOW_statement_call_in_statement776 = frozenset([1])
     FOLLOW_statement_if_in_statement800 = frozenset([1])
     FOLLOW_statement_assign_in_statement824 = frozenset([1])
     FOLLOW_statement_with_in_statement848 = frozenset([1])
     FOLLOW_TREE_STATEMENT_WITH_in_statement_with891 = frozenset([2])
-    FOLLOW_ID_in_statement_with893 = frozenset([54])
+    FOLLOW_ID_in_statement_with893 = frozenset([57])
     FOLLOW_statements_in_statement_with895 = frozenset([3])
     FOLLOW_TREE_STATEMENT_ASSIGN_in_statement_assign936 = frozenset([2])
     FOLLOW_arbitrary_value_in_statement_assign938 = frozenset([19])
     FOLLOW_ID_in_statement_assign968 = frozenset([3, 19])
     FOLLOW_TREE_STATEMENT_IF_in_statement_if1051 = frozenset([2])
-    FOLLOW_statement_elif_in_statement_if1067 = frozenset([3, 57, 58])
+    FOLLOW_statement_elif_in_statement_if1067 = frozenset([3, 60, 61])
     FOLLOW_statement_else_in_statement_if1117 = frozenset([3])
     FOLLOW_TREE_STATEMENT_ELIF_in_statement_elif1190 = frozenset([2])
-    FOLLOW_condition_any_in_statement_elif1192 = frozenset([54])
+    FOLLOW_condition_any_in_statement_elif1192 = frozenset([57])
     FOLLOW_statements_in_statement_elif1194 = frozenset([3])
     FOLLOW_TREE_STATEMENT_ELIF_in_statement_elif1222 = frozenset([2])
-    FOLLOW_condition_all_in_statement_elif1224 = frozenset([54])
+    FOLLOW_condition_all_in_statement_elif1224 = frozenset([57])
     FOLLOW_statements_in_statement_elif1226 = frozenset([3])
     FOLLOW_TREE_STATEMENT_ELSE_in_statement_else1271 = frozenset([2])
     FOLLOW_statements_in_statement_else1273 = frozenset([3])
     FOLLOW_TREE_CONDITION_ANY_in_condition_any1328 = frozenset([2])
-    FOLLOW_statement_call_in_condition_any1344 = frozenset([3, 56])
+    FOLLOW_statement_call_in_condition_any1344 = frozenset([3, 59])
     FOLLOW_TREE_CONDITION_ALL_in_condition_all1419 = frozenset([2])
-    FOLLOW_statement_call_in_condition_all1435 = frozenset([3, 56])
+    FOLLOW_statement_call_in_condition_all1435 = frozenset([3, 59])
     FOLLOW_TREE_STATEMENT_CALL_in_statement_call1500 = frozenset([2])
     FOLLOW_statement_call_args_in_statement_call1502 = frozenset([3])
     FOLLOW_arbitrary_value_in_statement_call_args1557 = frozenset([1, 18, 19, 23, 26])
@@ -2711,9 +2711,9 @@ class ShyRecognizerBackend(TreeParser):
     FOLLOW_num_whole_in_arbitrary_value1634 = frozenset([1])
     FOLLOW_num_fract_in_arbitrary_value1646 = frozenset([1])
     FOLLOW_TREE_CONSTS_in_consts1687 = frozenset([2])
-    FOLLOW_ID_in_consts1689 = frozenset([41, 45, 46])
+    FOLLOW_ID_in_consts1689 = frozenset([44, 48, 49])
     FOLLOW_consts_items_in_consts1691 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items1746 = frozenset([1, 41, 45, 46])
+    FOLLOW_consts_item_in_consts_items1746 = frozenset([1, 44, 48, 49])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item1801 = frozenset([2])
     FOLLOW_ID_in_consts_item1803 = frozenset([23, 26])
     FOLLOW_num_whole_in_consts_item1805 = frozenset([3])
@@ -2724,21 +2724,21 @@ class ShyRecognizerBackend(TreeParser):
     FOLLOW_ID_in_consts_item1867 = frozenset([18])
     FOLLOW_EXPRESSION_in_consts_item1869 = frozenset([3])
     FOLLOW_TREE_TYPES_in_types1924 = frozenset([2])
-    FOLLOW_ID_in_types1926 = frozenset([62])
+    FOLLOW_ID_in_types1926 = frozenset([65])
     FOLLOW_types_items_in_types1928 = frozenset([3])
-    FOLLOW_types_item_in_types_items1983 = frozenset([1, 62])
+    FOLLOW_types_item_in_types_items1983 = frozenset([1, 65])
     FOLLOW_TREE_TYPES_ITEM_in_types_item2038 = frozenset([2])
-    FOLLOW_ID_in_types_item2040 = frozenset([64])
+    FOLLOW_ID_in_types_item2040 = frozenset([37])
     FOLLOW_attrs_hints_in_types_item2042 = frozenset([3])
-    FOLLOW_TREE_VARS_HINT_in_attrs_hints2095 = frozenset([1, 65])
-    FOLLOW_attr_hint_in_attrs_hints2099 = frozenset([1, 65])
-    FOLLOW_TREE_VAR_HINT_in_attr_hint2144 = frozenset([2])
-    FOLLOW_TREE_HINT_NONE_in_attr_hint2146 = frozenset([63])
-    FOLLOW_TREE_VAR_in_attr_hint2152 = frozenset([2])
+    FOLLOW_TREE_ATTRS_HINTS_in_attrs_hints2095 = frozenset([1, 38])
+    FOLLOW_attr_hint_in_attrs_hints2099 = frozenset([1, 38])
+    FOLLOW_TREE_ATTR_HINT_in_attr_hint2144 = frozenset([2])
+    FOLLOW_TREE_HINT_NONE_in_attr_hint2146 = frozenset([36])
+    FOLLOW_TREE_ATTR_in_attr_hint2152 = frozenset([2])
     FOLLOW_ID_in_attr_hint2154 = frozenset([3])
-    FOLLOW_TREE_VAR_HINT_in_attr_hint2196 = frozenset([2])
-    FOLLOW_hint_in_attr_hint2198 = frozenset([63])
-    FOLLOW_TREE_VAR_in_attr_hint2204 = frozenset([2])
+    FOLLOW_TREE_ATTR_HINT_in_attr_hint2196 = frozenset([2])
+    FOLLOW_hint_in_attr_hint2198 = frozenset([36])
+    FOLLOW_TREE_ATTR_in_attr_hint2204 = frozenset([2])
     FOLLOW_ID_in_attr_hint2206 = frozenset([3])
     FOLLOW_TREE_HINT_in_hint2275 = frozenset([2])
     FOLLOW_ID_in_hint2277 = frozenset([3])

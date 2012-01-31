@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-31 18:33:10
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-31 18:37:03
 
 import sys
 from antlr3 import *
@@ -45,36 +45,36 @@ REQUEST=32
 STATELESS=33
 STRING=34
 TREE_ARBITRARY_TOKEN=35
-TREE_CONDITION_ALL=36
-TREE_CONDITION_ANY=37
-TREE_CONSTS=38
-TREE_COPY=39
-TREE_COPY_PASTE=40
-TREE_EXPRESSION=41
-TREE_HINT=42
-TREE_HINT_NONE=43
-TREE_MODULE=44
-TREE_NUM_FRACT=45
-TREE_NUM_WHOLE=46
-TREE_PASTE=47
-TREE_PASTE_REPLACE=48
-TREE_PASTE_WITH=49
-TREE_PROC=50
-TREE_PROC_ARGS=51
-TREE_PROC_VARS=52
-TREE_STATELESS=53
-TREE_STATEMENTS=54
-TREE_STATEMENT_ASSIGN=55
-TREE_STATEMENT_CALL=56
-TREE_STATEMENT_ELIF=57
-TREE_STATEMENT_ELSE=58
-TREE_STATEMENT_IF=59
-TREE_STATEMENT_WITH=60
-TREE_TYPES=61
-TREE_TYPES_ITEM=62
-TREE_VAR=63
-TREE_VARS_HINT=64
-TREE_VAR_HINT=65
+TREE_ATTR=36
+TREE_ATTRS_HINTS=37
+TREE_ATTR_HINT=38
+TREE_CONDITION_ALL=39
+TREE_CONDITION_ANY=40
+TREE_CONSTS=41
+TREE_COPY=42
+TREE_COPY_PASTE=43
+TREE_EXPRESSION=44
+TREE_HINT=45
+TREE_HINT_NONE=46
+TREE_MODULE=47
+TREE_NUM_FRACT=48
+TREE_NUM_WHOLE=49
+TREE_PASTE=50
+TREE_PASTE_REPLACE=51
+TREE_PASTE_WITH=52
+TREE_PROC=53
+TREE_PROC_ARGS=54
+TREE_PROC_VARS=55
+TREE_STATELESS=56
+TREE_STATEMENTS=57
+TREE_STATEMENT_ASSIGN=58
+TREE_STATEMENT_CALL=59
+TREE_STATEMENT_ELIF=60
+TREE_STATEMENT_ELSE=61
+TREE_STATEMENT_IF=62
+TREE_STATEMENT_WITH=63
+TREE_TYPES=64
+TREE_TYPES_ITEM=65
 TYPES=66
 UNDERSCORE=67
 VARS=68
@@ -88,15 +88,15 @@ tokenNames = [
     "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "ELIF", "ELSE", 
     "EXPRESSION", "ID", "IF", "INDENT", "MESSAGES", "MINUS", "MODULE", "NEWLINE", 
     "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", "REPLY", "REQUEST", "STATELESS", 
-    "STRING", "TREE_ARBITRARY_TOKEN", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", 
-    "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", 
-    "TREE_HINT_NONE", "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
-    "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", 
-    "TREE_PROC_ARGS", "TREE_PROC_VARS", "TREE_STATELESS", "TREE_STATEMENTS", 
-    "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", 
-    "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WITH", "TREE_TYPES", 
-    "TREE_TYPES_ITEM", "TREE_VAR", "TREE_VARS_HINT", "TREE_VAR_HINT", "TYPES", 
-    "UNDERSCORE", "VARS", "WHITESPACE", "WITH"
+    "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", "TREE_ATTR_HINT", 
+    "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", "TREE_COPY", 
+    "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
+    "TREE_MODULE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
+    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", 
+    "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_CALL", 
+    "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WITH", 
+    "TREE_TYPES", "TREE_TYPES_ITEM", "TYPES", "UNDERSCORE", "VARS", "WHITESPACE", 
+    "WITH"
 ]
 
 
@@ -1484,11 +1484,11 @@ class ShyCopypasterBackend(TreeParser):
         )
 
     DFA10_min = DFA.unpack(
-        u"\1\61\1\2\1\4\35\3\2\uffff"
+        u"\1\64\1\2\1\4\35\3\2\uffff"
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\61\1\2\36\106\2\uffff"
+        u"\1\64\1\2\36\106\2\uffff"
         )
 
     DFA10_accept = DFA.unpack(
@@ -1635,12 +1635,12 @@ class ShyCopypasterBackend(TreeParser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 39, 66, 67, 68, 70])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 42, 66, 67, 68, 70])
     FOLLOW_arbitrary_tokens_in_block123 = frozenset([25])
     FOLLOW_NEWLINE_in_block147 = frozenset([1])
     FOLLOW_INDENT_in_block171 = frozenset([25])
-    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 39, 66, 67, 68, 70])
-    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 39, 66, 67, 68, 70])
+    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 42, 66, 67, 68, 70])
+    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 42, 66, 67, 68, 70])
     FOLLOW_DEDENT_in_block244 = frozenset([25])
     FOLLOW_NEWLINE_in_block250 = frozenset([1])
     FOLLOW_copy_in_block274 = frozenset([1])
@@ -1653,15 +1653,15 @@ class ShyCopypasterBackend(TreeParser):
     FOLLOW_NEWLINE_in_pure_block440 = frozenset([1])
     FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 66, 67, 68, 70])
     FOLLOW_TREE_COPY_in_copy548 = frozenset([2])
-    FOLLOW_copy_body_in_copy550 = frozenset([40])
+    FOLLOW_copy_body_in_copy550 = frozenset([43])
     FOLLOW_copy_pastes_in_copy552 = frozenset([3])
     FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 31, 32, 33, 34, 66, 67, 68, 70])
-    FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 40])
+    FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 43])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste683 = frozenset([2])
     FOLLOW_pastes_in_copy_paste685 = frozenset([3])
-    FOLLOW_paste_in_pastes728 = frozenset([1, 47])
+    FOLLOW_paste_in_pastes728 = frozenset([1, 50])
     FOLLOW_TREE_PASTE_in_paste763 = frozenset([2])
-    FOLLOW_paste_replace_in_paste765 = frozenset([49])
+    FOLLOW_paste_replace_in_paste765 = frozenset([52])
     FOLLOW_paste_with_in_paste767 = frozenset([3])
     FOLLOW_TREE_PASTE_REPLACE_in_paste_replace808 = frozenset([2])
     FOLLOW_ID_in_paste_replace810 = frozenset([3])
