@@ -258,17 +258,12 @@ vars_hint
 var_hint
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ^( TREE_VAR_HINT TREE_HINT_NONE ( var
-            { $value [ $var.value ] = dict ( ) }
+    :   ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID )
+            { $value [ $ID.text ] = dict ( ) }
         ) + )
-    |   ^( TREE_VAR_HINT hint ( var
-            { $value [ $var.value ] = $hint.value }
+    |   ^( TREE_VAR_HINT hint ( ^( TREE_VAR ID )
+            { $value [ $ID.text ] = $hint.value }
         ) + )
-    ;
-
-var
-    returns [ value ]
-    :   ^( TREE_VAR ID ) { $value = $ID.text }
     ;
 
 hint
