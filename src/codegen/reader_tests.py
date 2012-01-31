@@ -8,6 +8,7 @@ from reader_tests_cases . ids import *
 from reader_tests_cases . lexer import *
 from reader_tests_cases . modules import *
 from reader_tests_cases . proc import *
+from reader_tests_cases . start import *
 from reader_tests_cases . stateless import *
 from reader_tests_cases . statement_assign import *
 from reader_tests_cases . statement_call import *

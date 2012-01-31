@@ -19,11 +19,3 @@ class types_test_case ( unittest . TestCase ) :
             { 'types' : { 'test1' : 
                 { 'type1' : { 'atr1' : { } }
                 , 'type2' : { 'atr2' : { } } } } } )
-    def test_combine ( self ) :
-        ae = self . assertEqual
-        r = self . h . rec
-        ae ( r ( 'types test1\n type1 atr1\n'
-                 'types test1\n type2 atr2\n' ) ,
-            { 'types' : { 'test1' : 
-                { 'type1' : { 'atr1' : { } }
-                , 'type2' : { 'atr2' : { } } } } } )
