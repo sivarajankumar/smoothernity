@@ -36,17 +36,17 @@ proc
     :   PROC ID NEWLINE
         -> ^( TREE_PROC ID )
     |   PROC ID NEWLINE INDENT NEWLINE
-            proc_args ? proc_vars ? proc_ops ?
+            proc_args ? proc_attrs ? proc_ops ?
         DEDENT NEWLINE
-        -> ^( TREE_PROC ID proc_args ? proc_vars ? proc_ops ? )
+        -> ^( TREE_PROC ID proc_args ? proc_attrs ? proc_ops ? )
     ;
 
 proc_args
-    :   ARGS vars_hint -> ^( TREE_PROC_ARGS vars_hint )
+    :   ARGS attrs_hints -> ^( TREE_PROC_ARGS attrs_hints )
     ;
 
-proc_vars
-    :   VARS vars_hint -> ^( TREE_PROC_VARS vars_hint )
+proc_attrs
+    :   VARS attrs_hints -> ^( TREE_PROC_VARS attrs_hints )
     ;
 
 proc_ops
@@ -176,27 +176,26 @@ types
         -> ^( TREE_TYPES ID types_items )
     ;
 types_items : types_item + ;
-types_item : ID vars_hint -> ^( TREE_TYPES_ITEM ID vars_hint ) ;
+types_item : ID attrs_hints -> ^( TREE_TYPES_ITEM ID attrs_hints ) ;
 
-vars_hint
-    :   var_hint NEWLINE
-        -> TREE_VARS_HINT var_hint
+attrs_hints
+    :   attr_hint NEWLINE
+        -> TREE_VARS_HINT attr_hint
     |   NEWLINE
-        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_VARS_HINT var_hint +
-    |   var_hint NEWLINE
-        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_VARS_HINT var_hint +
+        ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
+        -> TREE_VARS_HINT attr_hint +
+    |   attr_hint NEWLINE
+        ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
+        -> TREE_VARS_HINT attr_hint +
     ;
-var_hint 
-    :   var + 
-        -> ^( TREE_VAR_HINT TREE_HINT_NONE var + )
-    |   hint var +
-        -> ^( TREE_VAR_HINT hint var + )
-    |   hint NEWLINE INDENT NEWLINE ( var + NEWLINE ) + DEDENT
-        -> ^( TREE_VAR_HINT hint var + )
+attr_hint 
+    :   ID + 
+        -> ^( TREE_VAR_HINT TREE_HINT_NONE ^( TREE_VAR ID ) + )
+    |   hint ID +
+        -> ^( TREE_VAR_HINT hint ^( TREE_VAR ID ) + )
+    |   hint NEWLINE INDENT NEWLINE ( ID + NEWLINE ) + DEDENT
+        -> ^( TREE_VAR_HINT hint ^( TREE_VAR ID ) + )
     ;
-var : ID -> ^( TREE_VAR ID ) ;
 
 hint
     :   CURLY_OPEN ID CURLY_CLOSE -> ^( TREE_HINT ID )
