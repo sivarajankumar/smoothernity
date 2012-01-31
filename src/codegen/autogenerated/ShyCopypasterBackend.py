@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-31 18:37:03
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-01-31 18:37:41
 
 import sys
 from antlr3 import *

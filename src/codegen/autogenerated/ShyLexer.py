@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyLexer.g 2012-01-31 18:36:58
+# $ANTLR 3.4 grammar/ShyLexer.g 2012-01-31 18:37:36
 
 import sys
 from antlr3 import *
@@ -1089,635 +1089,14 @@ class ShyLexer(Lexer):
 
 
 
-    # $ANTLR start "TREE_CONDITION_ALL"
-    def mTREE_CONDITION_ALL(self, ):
-        try:
-            _type = TREE_CONDITION_ALL
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:60:20: ( 'TREE_CONDITION_ALL' )
-            # grammar/ShyLexer.g:60:22: 'TREE_CONDITION_ALL'
-            pass 
-            self.match("TREE_CONDITION_ALL")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_CONDITION_ALL"
-
-
-
-    # $ANTLR start "TREE_CONDITION_ANY"
-    def mTREE_CONDITION_ANY(self, ):
-        try:
-            _type = TREE_CONDITION_ANY
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:61:20: ( 'TREE_CONDITION_ANY' )
-            # grammar/ShyLexer.g:61:22: 'TREE_CONDITION_ANY'
-            pass 
-            self.match("TREE_CONDITION_ANY")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_CONDITION_ANY"
-
-
-
-    # $ANTLR start "TREE_CONSTS"
-    def mTREE_CONSTS(self, ):
-        try:
-            _type = TREE_CONSTS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:62:13: ( 'TREE_CONSTS' )
-            # grammar/ShyLexer.g:62:15: 'TREE_CONSTS'
-            pass 
-            self.match("TREE_CONSTS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_CONSTS"
-
-
-
-    # $ANTLR start "TREE_COPY"
-    def mTREE_COPY(self, ):
-        try:
-            _type = TREE_COPY
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:63:11: ( 'TREE_COPY' )
-            # grammar/ShyLexer.g:63:13: 'TREE_COPY'
-            pass 
-            self.match("TREE_COPY")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_COPY"
-
-
-
-    # $ANTLR start "TREE_COPY_PASTE"
-    def mTREE_COPY_PASTE(self, ):
-        try:
-            _type = TREE_COPY_PASTE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:64:17: ( 'TREE_COPY_PASTE' )
-            # grammar/ShyLexer.g:64:19: 'TREE_COPY_PASTE'
-            pass 
-            self.match("TREE_COPY_PASTE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_COPY_PASTE"
-
-
-
-    # $ANTLR start "TREE_EXPRESSION"
-    def mTREE_EXPRESSION(self, ):
-        try:
-            _type = TREE_EXPRESSION
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:65:17: ( 'TREE_EXPRESSION' )
-            # grammar/ShyLexer.g:65:19: 'TREE_EXPRESSION'
-            pass 
-            self.match("TREE_EXPRESSION")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_EXPRESSION"
-
-
-
-    # $ANTLR start "TREE_HINT"
-    def mTREE_HINT(self, ):
-        try:
-            _type = TREE_HINT
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:66:11: ( 'TREE_HINT' )
-            # grammar/ShyLexer.g:66:13: 'TREE_HINT'
-            pass 
-            self.match("TREE_HINT")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_HINT"
-
-
-
-    # $ANTLR start "TREE_HINT_NONE"
-    def mTREE_HINT_NONE(self, ):
-        try:
-            _type = TREE_HINT_NONE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:67:16: ( 'TREE_HINT_NONE' )
-            # grammar/ShyLexer.g:67:18: 'TREE_HINT_NONE'
-            pass 
-            self.match("TREE_HINT_NONE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_HINT_NONE"
-
-
-
-    # $ANTLR start "TREE_MODULE"
-    def mTREE_MODULE(self, ):
-        try:
-            _type = TREE_MODULE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:68:13: ( 'TREE_MODULE' )
-            # grammar/ShyLexer.g:68:15: 'TREE_MODULE'
-            pass 
-            self.match("TREE_MODULE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_MODULE"
-
-
-
-    # $ANTLR start "TREE_NUM_FRACT"
-    def mTREE_NUM_FRACT(self, ):
-        try:
-            _type = TREE_NUM_FRACT
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:69:16: ( 'TREE_NUM_FRACT' )
-            # grammar/ShyLexer.g:69:18: 'TREE_NUM_FRACT'
-            pass 
-            self.match("TREE_NUM_FRACT")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_NUM_FRACT"
-
-
-
-    # $ANTLR start "TREE_NUM_WHOLE"
-    def mTREE_NUM_WHOLE(self, ):
-        try:
-            _type = TREE_NUM_WHOLE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:70:16: ( 'TREE_NUM_WHOLE' )
-            # grammar/ShyLexer.g:70:18: 'TREE_NUM_WHOLE'
-            pass 
-            self.match("TREE_NUM_WHOLE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_NUM_WHOLE"
-
-
-
-    # $ANTLR start "TREE_PASTE"
-    def mTREE_PASTE(self, ):
-        try:
-            _type = TREE_PASTE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:71:12: ( 'TREE_PASTE' )
-            # grammar/ShyLexer.g:71:14: 'TREE_PASTE'
-            pass 
-            self.match("TREE_PASTE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PASTE"
-
-
-
-    # $ANTLR start "TREE_PASTE_REPLACE"
-    def mTREE_PASTE_REPLACE(self, ):
-        try:
-            _type = TREE_PASTE_REPLACE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:72:20: ( 'TREE_PASTE_REPLACE' )
-            # grammar/ShyLexer.g:72:22: 'TREE_PASTE_REPLACE'
-            pass 
-            self.match("TREE_PASTE_REPLACE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PASTE_REPLACE"
-
-
-
-    # $ANTLR start "TREE_PASTE_WITH"
-    def mTREE_PASTE_WITH(self, ):
-        try:
-            _type = TREE_PASTE_WITH
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:73:17: ( 'TREE_PASTE_WITH' )
-            # grammar/ShyLexer.g:73:19: 'TREE_PASTE_WITH'
-            pass 
-            self.match("TREE_PASTE_WITH")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PASTE_WITH"
-
-
-
-    # $ANTLR start "TREE_PROC"
-    def mTREE_PROC(self, ):
-        try:
-            _type = TREE_PROC
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:74:11: ( 'TREE_PROC' )
-            # grammar/ShyLexer.g:74:13: 'TREE_PROC'
-            pass 
-            self.match("TREE_PROC")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PROC"
-
-
-
-    # $ANTLR start "TREE_PROC_ARGS"
-    def mTREE_PROC_ARGS(self, ):
-        try:
-            _type = TREE_PROC_ARGS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:75:16: ( 'TREE_PROC_ARGS' )
-            # grammar/ShyLexer.g:75:18: 'TREE_PROC_ARGS'
-            pass 
-            self.match("TREE_PROC_ARGS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PROC_ARGS"
-
-
-
-    # $ANTLR start "TREE_PROC_VARS"
-    def mTREE_PROC_VARS(self, ):
-        try:
-            _type = TREE_PROC_VARS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:76:16: ( 'TREE_PROC_VARS' )
-            # grammar/ShyLexer.g:76:18: 'TREE_PROC_VARS'
-            pass 
-            self.match("TREE_PROC_VARS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_PROC_VARS"
-
-
-
-    # $ANTLR start "TREE_STATELESS"
-    def mTREE_STATELESS(self, ):
-        try:
-            _type = TREE_STATELESS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:77:16: ( 'TREE_STATELESS' )
-            # grammar/ShyLexer.g:77:18: 'TREE_STATELESS'
-            pass 
-            self.match("TREE_STATELESS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATELESS"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_ASSIGN"
-    def mTREE_STATEMENT_ASSIGN(self, ):
-        try:
-            _type = TREE_STATEMENT_ASSIGN
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:78:23: ( 'TREE_STATEMENT_ASSIGN' )
-            # grammar/ShyLexer.g:78:25: 'TREE_STATEMENT_ASSIGN'
-            pass 
-            self.match("TREE_STATEMENT_ASSIGN")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_ASSIGN"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_CALL"
-    def mTREE_STATEMENT_CALL(self, ):
-        try:
-            _type = TREE_STATEMENT_CALL
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:79:21: ( 'TREE_STATEMENT_CALL' )
-            # grammar/ShyLexer.g:79:23: 'TREE_STATEMENT_CALL'
-            pass 
-            self.match("TREE_STATEMENT_CALL")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_CALL"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_ELIF"
-    def mTREE_STATEMENT_ELIF(self, ):
-        try:
-            _type = TREE_STATEMENT_ELIF
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:80:21: ( 'TREE_STATEMENT_ELIF' )
-            # grammar/ShyLexer.g:80:23: 'TREE_STATEMENT_ELIF'
-            pass 
-            self.match("TREE_STATEMENT_ELIF")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_ELIF"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_ELSE"
-    def mTREE_STATEMENT_ELSE(self, ):
-        try:
-            _type = TREE_STATEMENT_ELSE
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:81:21: ( 'TREE_STATEMENT_ELSE' )
-            # grammar/ShyLexer.g:81:23: 'TREE_STATEMENT_ELSE'
-            pass 
-            self.match("TREE_STATEMENT_ELSE")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_ELSE"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_IF"
-    def mTREE_STATEMENT_IF(self, ):
-        try:
-            _type = TREE_STATEMENT_IF
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:82:19: ( 'TREE_STATEMENT_IF' )
-            # grammar/ShyLexer.g:82:21: 'TREE_STATEMENT_IF'
-            pass 
-            self.match("TREE_STATEMENT_IF")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_IF"
-
-
-
-    # $ANTLR start "TREE_STATEMENT_WITH"
-    def mTREE_STATEMENT_WITH(self, ):
-        try:
-            _type = TREE_STATEMENT_WITH
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:83:21: ( 'TREE_STATEMENT_WITH' )
-            # grammar/ShyLexer.g:83:23: 'TREE_STATEMENT_WITH'
-            pass 
-            self.match("TREE_STATEMENT_WITH")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENT_WITH"
-
-
-
-    # $ANTLR start "TREE_STATEMENTS"
-    def mTREE_STATEMENTS(self, ):
-        try:
-            _type = TREE_STATEMENTS
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:84:17: ( 'TREE_STATEMENTS' )
-            # grammar/ShyLexer.g:84:19: 'TREE_STATEMENTS'
-            pass 
-            self.match("TREE_STATEMENTS")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_STATEMENTS"
-
-
-
-    # $ANTLR start "TREE_TYPES"
-    def mTREE_TYPES(self, ):
-        try:
-            _type = TREE_TYPES
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:85:12: ( 'TREE_TYPES' )
-            # grammar/ShyLexer.g:85:14: 'TREE_TYPES'
-            pass 
-            self.match("TREE_TYPES")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_TYPES"
-
-
-
-    # $ANTLR start "TREE_TYPES_ITEM"
-    def mTREE_TYPES_ITEM(self, ):
-        try:
-            _type = TREE_TYPES_ITEM
-            _channel = DEFAULT_CHANNEL
-
-            # grammar/ShyLexer.g:86:17: ( 'TREE_TYPES_ITEM' )
-            # grammar/ShyLexer.g:86:19: 'TREE_TYPES_ITEM'
-            pass 
-            self.match("TREE_TYPES_ITEM")
-
-
-
-
-            self._state.type = _type
-            self._state.channel = _channel
-        finally:
-            pass
-
-    # $ANTLR end "TREE_TYPES_ITEM"
-
-
-
     # $ANTLR start "TREE_ATTR"
     def mTREE_ATTR(self, ):
         try:
             _type = TREE_ATTR
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:87:11: ( 'TREE_ATTR' )
-            # grammar/ShyLexer.g:87:13: 'TREE_ATTR'
+            # grammar/ShyLexer.g:60:11: ( 'TREE_ATTR' )
+            # grammar/ShyLexer.g:60:13: 'TREE_ATTR'
             pass 
             self.match("TREE_ATTR")
 
@@ -1739,8 +1118,8 @@ class ShyLexer(Lexer):
             _type = TREE_ATTR_HINT
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:88:16: ( 'TREE_ATTR_HINT' )
-            # grammar/ShyLexer.g:88:18: 'TREE_ATTR_HINT'
+            # grammar/ShyLexer.g:61:16: ( 'TREE_ATTR_HINT' )
+            # grammar/ShyLexer.g:61:18: 'TREE_ATTR_HINT'
             pass 
             self.match("TREE_ATTR_HINT")
 
@@ -1762,8 +1141,8 @@ class ShyLexer(Lexer):
             _type = TREE_ATTRS_HINTS
             _channel = DEFAULT_CHANNEL
 
-            # grammar/ShyLexer.g:89:18: ( 'TREE_ATTRS_HINTS' )
-            # grammar/ShyLexer.g:89:20: 'TREE_ATTRS_HINTS'
+            # grammar/ShyLexer.g:62:18: ( 'TREE_ATTRS_HINTS' )
+            # grammar/ShyLexer.g:62:20: 'TREE_ATTRS_HINTS'
             pass 
             self.match("TREE_ATTRS_HINTS")
 
@@ -1779,8 +1158,629 @@ class ShyLexer(Lexer):
 
 
 
+    # $ANTLR start "TREE_CONDITION_ALL"
+    def mTREE_CONDITION_ALL(self, ):
+        try:
+            _type = TREE_CONDITION_ALL
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:63:20: ( 'TREE_CONDITION_ALL' )
+            # grammar/ShyLexer.g:63:22: 'TREE_CONDITION_ALL'
+            pass 
+            self.match("TREE_CONDITION_ALL")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_CONDITION_ALL"
+
+
+
+    # $ANTLR start "TREE_CONDITION_ANY"
+    def mTREE_CONDITION_ANY(self, ):
+        try:
+            _type = TREE_CONDITION_ANY
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:64:20: ( 'TREE_CONDITION_ANY' )
+            # grammar/ShyLexer.g:64:22: 'TREE_CONDITION_ANY'
+            pass 
+            self.match("TREE_CONDITION_ANY")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_CONDITION_ANY"
+
+
+
+    # $ANTLR start "TREE_CONSTS"
+    def mTREE_CONSTS(self, ):
+        try:
+            _type = TREE_CONSTS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:65:13: ( 'TREE_CONSTS' )
+            # grammar/ShyLexer.g:65:15: 'TREE_CONSTS'
+            pass 
+            self.match("TREE_CONSTS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_CONSTS"
+
+
+
+    # $ANTLR start "TREE_COPY"
+    def mTREE_COPY(self, ):
+        try:
+            _type = TREE_COPY
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:66:11: ( 'TREE_COPY' )
+            # grammar/ShyLexer.g:66:13: 'TREE_COPY'
+            pass 
+            self.match("TREE_COPY")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_COPY"
+
+
+
+    # $ANTLR start "TREE_COPY_PASTE"
+    def mTREE_COPY_PASTE(self, ):
+        try:
+            _type = TREE_COPY_PASTE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:67:17: ( 'TREE_COPY_PASTE' )
+            # grammar/ShyLexer.g:67:19: 'TREE_COPY_PASTE'
+            pass 
+            self.match("TREE_COPY_PASTE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_COPY_PASTE"
+
+
+
+    # $ANTLR start "TREE_EXPRESSION"
+    def mTREE_EXPRESSION(self, ):
+        try:
+            _type = TREE_EXPRESSION
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:68:17: ( 'TREE_EXPRESSION' )
+            # grammar/ShyLexer.g:68:19: 'TREE_EXPRESSION'
+            pass 
+            self.match("TREE_EXPRESSION")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_EXPRESSION"
+
+
+
+    # $ANTLR start "TREE_HINT"
+    def mTREE_HINT(self, ):
+        try:
+            _type = TREE_HINT
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:69:11: ( 'TREE_HINT' )
+            # grammar/ShyLexer.g:69:13: 'TREE_HINT'
+            pass 
+            self.match("TREE_HINT")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_HINT"
+
+
+
+    # $ANTLR start "TREE_HINT_NONE"
+    def mTREE_HINT_NONE(self, ):
+        try:
+            _type = TREE_HINT_NONE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:70:16: ( 'TREE_HINT_NONE' )
+            # grammar/ShyLexer.g:70:18: 'TREE_HINT_NONE'
+            pass 
+            self.match("TREE_HINT_NONE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_HINT_NONE"
+
+
+
+    # $ANTLR start "TREE_MODULE"
+    def mTREE_MODULE(self, ):
+        try:
+            _type = TREE_MODULE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:71:13: ( 'TREE_MODULE' )
+            # grammar/ShyLexer.g:71:15: 'TREE_MODULE'
+            pass 
+            self.match("TREE_MODULE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_MODULE"
+
+
+
+    # $ANTLR start "TREE_NUM_FRACT"
+    def mTREE_NUM_FRACT(self, ):
+        try:
+            _type = TREE_NUM_FRACT
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:72:16: ( 'TREE_NUM_FRACT' )
+            # grammar/ShyLexer.g:72:18: 'TREE_NUM_FRACT'
+            pass 
+            self.match("TREE_NUM_FRACT")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_NUM_FRACT"
+
+
+
+    # $ANTLR start "TREE_NUM_WHOLE"
+    def mTREE_NUM_WHOLE(self, ):
+        try:
+            _type = TREE_NUM_WHOLE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:73:16: ( 'TREE_NUM_WHOLE' )
+            # grammar/ShyLexer.g:73:18: 'TREE_NUM_WHOLE'
+            pass 
+            self.match("TREE_NUM_WHOLE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_NUM_WHOLE"
+
+
+
+    # $ANTLR start "TREE_PASTE"
+    def mTREE_PASTE(self, ):
+        try:
+            _type = TREE_PASTE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:74:12: ( 'TREE_PASTE' )
+            # grammar/ShyLexer.g:74:14: 'TREE_PASTE'
+            pass 
+            self.match("TREE_PASTE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PASTE"
+
+
+
+    # $ANTLR start "TREE_PASTE_REPLACE"
+    def mTREE_PASTE_REPLACE(self, ):
+        try:
+            _type = TREE_PASTE_REPLACE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:75:20: ( 'TREE_PASTE_REPLACE' )
+            # grammar/ShyLexer.g:75:22: 'TREE_PASTE_REPLACE'
+            pass 
+            self.match("TREE_PASTE_REPLACE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PASTE_REPLACE"
+
+
+
+    # $ANTLR start "TREE_PASTE_WITH"
+    def mTREE_PASTE_WITH(self, ):
+        try:
+            _type = TREE_PASTE_WITH
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:76:17: ( 'TREE_PASTE_WITH' )
+            # grammar/ShyLexer.g:76:19: 'TREE_PASTE_WITH'
+            pass 
+            self.match("TREE_PASTE_WITH")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PASTE_WITH"
+
+
+
+    # $ANTLR start "TREE_PROC"
+    def mTREE_PROC(self, ):
+        try:
+            _type = TREE_PROC
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:77:11: ( 'TREE_PROC' )
+            # grammar/ShyLexer.g:77:13: 'TREE_PROC'
+            pass 
+            self.match("TREE_PROC")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PROC"
+
+
+
+    # $ANTLR start "TREE_PROC_ARGS"
+    def mTREE_PROC_ARGS(self, ):
+        try:
+            _type = TREE_PROC_ARGS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:78:16: ( 'TREE_PROC_ARGS' )
+            # grammar/ShyLexer.g:78:18: 'TREE_PROC_ARGS'
+            pass 
+            self.match("TREE_PROC_ARGS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PROC_ARGS"
+
+
+
+    # $ANTLR start "TREE_PROC_VARS"
+    def mTREE_PROC_VARS(self, ):
+        try:
+            _type = TREE_PROC_VARS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:79:16: ( 'TREE_PROC_VARS' )
+            # grammar/ShyLexer.g:79:18: 'TREE_PROC_VARS'
+            pass 
+            self.match("TREE_PROC_VARS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_PROC_VARS"
+
+
+
+    # $ANTLR start "TREE_STATELESS"
+    def mTREE_STATELESS(self, ):
+        try:
+            _type = TREE_STATELESS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:80:16: ( 'TREE_STATELESS' )
+            # grammar/ShyLexer.g:80:18: 'TREE_STATELESS'
+            pass 
+            self.match("TREE_STATELESS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATELESS"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_ASSIGN"
+    def mTREE_STATEMENT_ASSIGN(self, ):
+        try:
+            _type = TREE_STATEMENT_ASSIGN
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:81:23: ( 'TREE_STATEMENT_ASSIGN' )
+            # grammar/ShyLexer.g:81:25: 'TREE_STATEMENT_ASSIGN'
+            pass 
+            self.match("TREE_STATEMENT_ASSIGN")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_ASSIGN"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_CALL"
+    def mTREE_STATEMENT_CALL(self, ):
+        try:
+            _type = TREE_STATEMENT_CALL
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:82:21: ( 'TREE_STATEMENT_CALL' )
+            # grammar/ShyLexer.g:82:23: 'TREE_STATEMENT_CALL'
+            pass 
+            self.match("TREE_STATEMENT_CALL")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_CALL"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_ELIF"
+    def mTREE_STATEMENT_ELIF(self, ):
+        try:
+            _type = TREE_STATEMENT_ELIF
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:83:21: ( 'TREE_STATEMENT_ELIF' )
+            # grammar/ShyLexer.g:83:23: 'TREE_STATEMENT_ELIF'
+            pass 
+            self.match("TREE_STATEMENT_ELIF")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_ELIF"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_ELSE"
+    def mTREE_STATEMENT_ELSE(self, ):
+        try:
+            _type = TREE_STATEMENT_ELSE
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:84:21: ( 'TREE_STATEMENT_ELSE' )
+            # grammar/ShyLexer.g:84:23: 'TREE_STATEMENT_ELSE'
+            pass 
+            self.match("TREE_STATEMENT_ELSE")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_ELSE"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_IF"
+    def mTREE_STATEMENT_IF(self, ):
+        try:
+            _type = TREE_STATEMENT_IF
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:85:19: ( 'TREE_STATEMENT_IF' )
+            # grammar/ShyLexer.g:85:21: 'TREE_STATEMENT_IF'
+            pass 
+            self.match("TREE_STATEMENT_IF")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_IF"
+
+
+
+    # $ANTLR start "TREE_STATEMENT_WITH"
+    def mTREE_STATEMENT_WITH(self, ):
+        try:
+            _type = TREE_STATEMENT_WITH
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:86:21: ( 'TREE_STATEMENT_WITH' )
+            # grammar/ShyLexer.g:86:23: 'TREE_STATEMENT_WITH'
+            pass 
+            self.match("TREE_STATEMENT_WITH")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENT_WITH"
+
+
+
+    # $ANTLR start "TREE_STATEMENTS"
+    def mTREE_STATEMENTS(self, ):
+        try:
+            _type = TREE_STATEMENTS
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:87:17: ( 'TREE_STATEMENTS' )
+            # grammar/ShyLexer.g:87:19: 'TREE_STATEMENTS'
+            pass 
+            self.match("TREE_STATEMENTS")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_STATEMENTS"
+
+
+
+    # $ANTLR start "TREE_TYPES"
+    def mTREE_TYPES(self, ):
+        try:
+            _type = TREE_TYPES
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:88:12: ( 'TREE_TYPES' )
+            # grammar/ShyLexer.g:88:14: 'TREE_TYPES'
+            pass 
+            self.match("TREE_TYPES")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_TYPES"
+
+
+
+    # $ANTLR start "TREE_TYPES_ITEM"
+    def mTREE_TYPES_ITEM(self, ):
+        try:
+            _type = TREE_TYPES_ITEM
+            _channel = DEFAULT_CHANNEL
+
+            # grammar/ShyLexer.g:89:17: ( 'TREE_TYPES_ITEM' )
+            # grammar/ShyLexer.g:89:19: 'TREE_TYPES_ITEM'
+            pass 
+            self.match("TREE_TYPES_ITEM")
+
+
+
+
+            self._state.type = _type
+            self._state.channel = _channel
+        finally:
+            pass
+
+    # $ANTLR end "TREE_TYPES_ITEM"
+
+
+
     def mTokens(self):
-        # grammar/ShyLexer.g:1:8: ( ALL | ANY | ARGS | CONSTS | COPY | DEDENT | DO | ELIF | ELSE | IF | INDENT | MESSAGES | MODULE | OPS | PASTE | PROC | REQUEST | REPLACE | REPLY | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | STRING | TREE_ARBITRARY_TOKEN | TREE_CONDITION_ALL | TREE_CONDITION_ANY | TREE_CONSTS | TREE_COPY | TREE_COPY_PASTE | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_PASTE | TREE_PASTE_REPLACE | TREE_PASTE_WITH | TREE_PROC | TREE_PROC_ARGS | TREE_PROC_VARS | TREE_STATELESS | TREE_STATEMENT_ASSIGN | TREE_STATEMENT_CALL | TREE_STATEMENT_ELIF | TREE_STATEMENT_ELSE | TREE_STATEMENT_IF | TREE_STATEMENT_WITH | TREE_STATEMENTS | TREE_TYPES | TREE_TYPES_ITEM | TREE_ATTR | TREE_ATTR_HINT | TREE_ATTRS_HINTS )
+        # grammar/ShyLexer.g:1:8: ( ALL | ANY | ARGS | CONSTS | COPY | DEDENT | DO | ELIF | ELSE | IF | INDENT | MESSAGES | MODULE | OPS | PASTE | PROC | REQUEST | REPLACE | REPLY | STATELESS | TYPES | VARS | WITH | ARROW_LEFT | ARROW_RIGHT | CURLY_OPEN | CURLY_CLOSE | DIVIDE | MINUS | UNDERSCORE | NEWLINE | ID | NUMBER | WHITESPACE | EXPRESSION | STRING | TREE_ARBITRARY_TOKEN | TREE_ATTR | TREE_ATTR_HINT | TREE_ATTRS_HINTS | TREE_CONDITION_ALL | TREE_CONDITION_ANY | TREE_CONSTS | TREE_COPY | TREE_COPY_PASTE | TREE_EXPRESSION | TREE_HINT | TREE_HINT_NONE | TREE_MODULE | TREE_NUM_FRACT | TREE_NUM_WHOLE | TREE_PASTE | TREE_PASTE_REPLACE | TREE_PASTE_WITH | TREE_PROC | TREE_PROC_ARGS | TREE_PROC_VARS | TREE_STATELESS | TREE_STATEMENT_ASSIGN | TREE_STATEMENT_CALL | TREE_STATEMENT_ELIF | TREE_STATEMENT_ELSE | TREE_STATEMENT_IF | TREE_STATEMENT_WITH | TREE_STATEMENTS | TREE_TYPES | TREE_TYPES_ITEM )
         alt6 = 67
         alt6 = self.dfa6.predict(self.input)
         if alt6 == 1:
@@ -2043,212 +2043,212 @@ class ShyLexer(Lexer):
 
 
         elif alt6 == 38:
-            # grammar/ShyLexer.g:1:282: TREE_CONDITION_ALL
-            pass 
-            self.mTREE_CONDITION_ALL()
-
-
-
-        elif alt6 == 39:
-            # grammar/ShyLexer.g:1:301: TREE_CONDITION_ANY
-            pass 
-            self.mTREE_CONDITION_ANY()
-
-
-
-        elif alt6 == 40:
-            # grammar/ShyLexer.g:1:320: TREE_CONSTS
-            pass 
-            self.mTREE_CONSTS()
-
-
-
-        elif alt6 == 41:
-            # grammar/ShyLexer.g:1:332: TREE_COPY
-            pass 
-            self.mTREE_COPY()
-
-
-
-        elif alt6 == 42:
-            # grammar/ShyLexer.g:1:342: TREE_COPY_PASTE
-            pass 
-            self.mTREE_COPY_PASTE()
-
-
-
-        elif alt6 == 43:
-            # grammar/ShyLexer.g:1:358: TREE_EXPRESSION
-            pass 
-            self.mTREE_EXPRESSION()
-
-
-
-        elif alt6 == 44:
-            # grammar/ShyLexer.g:1:374: TREE_HINT
-            pass 
-            self.mTREE_HINT()
-
-
-
-        elif alt6 == 45:
-            # grammar/ShyLexer.g:1:384: TREE_HINT_NONE
-            pass 
-            self.mTREE_HINT_NONE()
-
-
-
-        elif alt6 == 46:
-            # grammar/ShyLexer.g:1:399: TREE_MODULE
-            pass 
-            self.mTREE_MODULE()
-
-
-
-        elif alt6 == 47:
-            # grammar/ShyLexer.g:1:411: TREE_NUM_FRACT
-            pass 
-            self.mTREE_NUM_FRACT()
-
-
-
-        elif alt6 == 48:
-            # grammar/ShyLexer.g:1:426: TREE_NUM_WHOLE
-            pass 
-            self.mTREE_NUM_WHOLE()
-
-
-
-        elif alt6 == 49:
-            # grammar/ShyLexer.g:1:441: TREE_PASTE
-            pass 
-            self.mTREE_PASTE()
-
-
-
-        elif alt6 == 50:
-            # grammar/ShyLexer.g:1:452: TREE_PASTE_REPLACE
-            pass 
-            self.mTREE_PASTE_REPLACE()
-
-
-
-        elif alt6 == 51:
-            # grammar/ShyLexer.g:1:471: TREE_PASTE_WITH
-            pass 
-            self.mTREE_PASTE_WITH()
-
-
-
-        elif alt6 == 52:
-            # grammar/ShyLexer.g:1:487: TREE_PROC
-            pass 
-            self.mTREE_PROC()
-
-
-
-        elif alt6 == 53:
-            # grammar/ShyLexer.g:1:497: TREE_PROC_ARGS
-            pass 
-            self.mTREE_PROC_ARGS()
-
-
-
-        elif alt6 == 54:
-            # grammar/ShyLexer.g:1:512: TREE_PROC_VARS
-            pass 
-            self.mTREE_PROC_VARS()
-
-
-
-        elif alt6 == 55:
-            # grammar/ShyLexer.g:1:527: TREE_STATELESS
-            pass 
-            self.mTREE_STATELESS()
-
-
-
-        elif alt6 == 56:
-            # grammar/ShyLexer.g:1:542: TREE_STATEMENT_ASSIGN
-            pass 
-            self.mTREE_STATEMENT_ASSIGN()
-
-
-
-        elif alt6 == 57:
-            # grammar/ShyLexer.g:1:564: TREE_STATEMENT_CALL
-            pass 
-            self.mTREE_STATEMENT_CALL()
-
-
-
-        elif alt6 == 58:
-            # grammar/ShyLexer.g:1:584: TREE_STATEMENT_ELIF
-            pass 
-            self.mTREE_STATEMENT_ELIF()
-
-
-
-        elif alt6 == 59:
-            # grammar/ShyLexer.g:1:604: TREE_STATEMENT_ELSE
-            pass 
-            self.mTREE_STATEMENT_ELSE()
-
-
-
-        elif alt6 == 60:
-            # grammar/ShyLexer.g:1:624: TREE_STATEMENT_IF
-            pass 
-            self.mTREE_STATEMENT_IF()
-
-
-
-        elif alt6 == 61:
-            # grammar/ShyLexer.g:1:642: TREE_STATEMENT_WITH
-            pass 
-            self.mTREE_STATEMENT_WITH()
-
-
-
-        elif alt6 == 62:
-            # grammar/ShyLexer.g:1:662: TREE_STATEMENTS
-            pass 
-            self.mTREE_STATEMENTS()
-
-
-
-        elif alt6 == 63:
-            # grammar/ShyLexer.g:1:678: TREE_TYPES
-            pass 
-            self.mTREE_TYPES()
-
-
-
-        elif alt6 == 64:
-            # grammar/ShyLexer.g:1:689: TREE_TYPES_ITEM
-            pass 
-            self.mTREE_TYPES_ITEM()
-
-
-
-        elif alt6 == 65:
-            # grammar/ShyLexer.g:1:705: TREE_ATTR
+            # grammar/ShyLexer.g:1:282: TREE_ATTR
             pass 
             self.mTREE_ATTR()
 
 
 
-        elif alt6 == 66:
-            # grammar/ShyLexer.g:1:715: TREE_ATTR_HINT
+        elif alt6 == 39:
+            # grammar/ShyLexer.g:1:292: TREE_ATTR_HINT
             pass 
             self.mTREE_ATTR_HINT()
 
 
 
-        elif alt6 == 67:
-            # grammar/ShyLexer.g:1:730: TREE_ATTRS_HINTS
+        elif alt6 == 40:
+            # grammar/ShyLexer.g:1:307: TREE_ATTRS_HINTS
             pass 
             self.mTREE_ATTRS_HINTS()
+
+
+
+        elif alt6 == 41:
+            # grammar/ShyLexer.g:1:324: TREE_CONDITION_ALL
+            pass 
+            self.mTREE_CONDITION_ALL()
+
+
+
+        elif alt6 == 42:
+            # grammar/ShyLexer.g:1:343: TREE_CONDITION_ANY
+            pass 
+            self.mTREE_CONDITION_ANY()
+
+
+
+        elif alt6 == 43:
+            # grammar/ShyLexer.g:1:362: TREE_CONSTS
+            pass 
+            self.mTREE_CONSTS()
+
+
+
+        elif alt6 == 44:
+            # grammar/ShyLexer.g:1:374: TREE_COPY
+            pass 
+            self.mTREE_COPY()
+
+
+
+        elif alt6 == 45:
+            # grammar/ShyLexer.g:1:384: TREE_COPY_PASTE
+            pass 
+            self.mTREE_COPY_PASTE()
+
+
+
+        elif alt6 == 46:
+            # grammar/ShyLexer.g:1:400: TREE_EXPRESSION
+            pass 
+            self.mTREE_EXPRESSION()
+
+
+
+        elif alt6 == 47:
+            # grammar/ShyLexer.g:1:416: TREE_HINT
+            pass 
+            self.mTREE_HINT()
+
+
+
+        elif alt6 == 48:
+            # grammar/ShyLexer.g:1:426: TREE_HINT_NONE
+            pass 
+            self.mTREE_HINT_NONE()
+
+
+
+        elif alt6 == 49:
+            # grammar/ShyLexer.g:1:441: TREE_MODULE
+            pass 
+            self.mTREE_MODULE()
+
+
+
+        elif alt6 == 50:
+            # grammar/ShyLexer.g:1:453: TREE_NUM_FRACT
+            pass 
+            self.mTREE_NUM_FRACT()
+
+
+
+        elif alt6 == 51:
+            # grammar/ShyLexer.g:1:468: TREE_NUM_WHOLE
+            pass 
+            self.mTREE_NUM_WHOLE()
+
+
+
+        elif alt6 == 52:
+            # grammar/ShyLexer.g:1:483: TREE_PASTE
+            pass 
+            self.mTREE_PASTE()
+
+
+
+        elif alt6 == 53:
+            # grammar/ShyLexer.g:1:494: TREE_PASTE_REPLACE
+            pass 
+            self.mTREE_PASTE_REPLACE()
+
+
+
+        elif alt6 == 54:
+            # grammar/ShyLexer.g:1:513: TREE_PASTE_WITH
+            pass 
+            self.mTREE_PASTE_WITH()
+
+
+
+        elif alt6 == 55:
+            # grammar/ShyLexer.g:1:529: TREE_PROC
+            pass 
+            self.mTREE_PROC()
+
+
+
+        elif alt6 == 56:
+            # grammar/ShyLexer.g:1:539: TREE_PROC_ARGS
+            pass 
+            self.mTREE_PROC_ARGS()
+
+
+
+        elif alt6 == 57:
+            # grammar/ShyLexer.g:1:554: TREE_PROC_VARS
+            pass 
+            self.mTREE_PROC_VARS()
+
+
+
+        elif alt6 == 58:
+            # grammar/ShyLexer.g:1:569: TREE_STATELESS
+            pass 
+            self.mTREE_STATELESS()
+
+
+
+        elif alt6 == 59:
+            # grammar/ShyLexer.g:1:584: TREE_STATEMENT_ASSIGN
+            pass 
+            self.mTREE_STATEMENT_ASSIGN()
+
+
+
+        elif alt6 == 60:
+            # grammar/ShyLexer.g:1:606: TREE_STATEMENT_CALL
+            pass 
+            self.mTREE_STATEMENT_CALL()
+
+
+
+        elif alt6 == 61:
+            # grammar/ShyLexer.g:1:626: TREE_STATEMENT_ELIF
+            pass 
+            self.mTREE_STATEMENT_ELIF()
+
+
+
+        elif alt6 == 62:
+            # grammar/ShyLexer.g:1:646: TREE_STATEMENT_ELSE
+            pass 
+            self.mTREE_STATEMENT_ELSE()
+
+
+
+        elif alt6 == 63:
+            # grammar/ShyLexer.g:1:666: TREE_STATEMENT_IF
+            pass 
+            self.mTREE_STATEMENT_IF()
+
+
+
+        elif alt6 == 64:
+            # grammar/ShyLexer.g:1:684: TREE_STATEMENT_WITH
+            pass 
+            self.mTREE_STATEMENT_WITH()
+
+
+
+        elif alt6 == 65:
+            # grammar/ShyLexer.g:1:704: TREE_STATEMENTS
+            pass 
+            self.mTREE_STATEMENTS()
+
+
+
+        elif alt6 == 66:
+            # grammar/ShyLexer.g:1:720: TREE_TYPES
+            pass 
+            self.mTREE_TYPES()
+
+
+
+        elif alt6 == 67:
+            # grammar/ShyLexer.g:1:731: TREE_TYPES_ITEM
+            pass 
+            self.mTREE_TYPES_ITEM()
 
 
 
@@ -2322,12 +2322,12 @@ class ShyLexer(Lexer):
         u"\1\43\1\44\24\uffff\1\31\1\35\7\uffff\1\7\2\uffff\1\12\15\uffff"
         u"\1\1\1\2\11\uffff\1\16\11\uffff\1\3\1\uffff\1\5\1\uffff\1\10\1"
         u"\11\4\uffff\1\20\5\uffff\1\26\1\27\6\uffff\1\17\2\uffff\1\23\1"
-        u"\uffff\1\25\2\uffff\1\53\1\uffff\1\56\4\uffff\1\4\1\6\1\13\1\uffff"
-        u"\1\15\3\uffff\1\45\11\uffff\1\21\1\22\12\uffff\1\14\3\uffff\1\50"
-        u"\7\uffff\1\24\1\102\1\103\1\101\1\uffff\1\52\1\51\1\55\1\54\1\57"
-        u"\1\60\2\uffff\1\64\4\uffff\1\61\1\65\1\66\1\67\1\uffff\1\100\1"
-        u"\77\1\uffff\1\62\1\63\7\uffff\1\76\1\uffff\1\70\1\71\1\uffff\1"
-        u"\74\1\75\1\46\1\47\1\uffff\1\72\1\73"
+        u"\uffff\1\25\2\uffff\1\56\1\uffff\1\61\4\uffff\1\4\1\6\1\13\1\uffff"
+        u"\1\15\3\uffff\1\45\11\uffff\1\21\1\22\12\uffff\1\14\3\uffff\1\53"
+        u"\7\uffff\1\24\1\47\1\50\1\46\1\uffff\1\55\1\54\1\60\1\57\1\62\1"
+        u"\63\2\uffff\1\67\4\uffff\1\64\1\70\1\71\1\72\1\uffff\1\103\1\102"
+        u"\1\uffff\1\65\1\66\7\uffff\1\101\1\uffff\1\73\1\74\1\uffff\1\77"
+        u"\1\100\1\51\1\52\1\uffff\1\75\1\76"
         )
 
     DFA6_special = DFA.unpack(

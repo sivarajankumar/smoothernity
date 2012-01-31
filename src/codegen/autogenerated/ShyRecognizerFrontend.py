@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-31 18:36:59
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-01-31 18:37:37
 
 import sys
 from antlr3 import *
@@ -540,7 +540,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, proc
+                # elements: proc, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -840,7 +840,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, proc_ops, proc_attrs, proc_args
+                    # elements: ID, proc_ops, proc_args, proc_attrs
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -3847,7 +3847,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_whole, ID
+                    # elements: ID, num_whole
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -4283,7 +4283,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4991,7 +4991,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: hint, ID
+                    # elements: ID, hint
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -5234,7 +5234,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, hint_arg
+                    # elements: hint_arg, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
