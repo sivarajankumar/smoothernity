@@ -42,6 +42,11 @@ start
                 update_start_dict ( $value , 'types' ,
                     $types.title , $types.content )
             }
+        | messages
+            {
+                update_start_dict ( $value , 'messages' ,
+                    $messages.title , $messages.content )
+            }
         ) *
     ;
 
@@ -246,6 +251,27 @@ types_items
 types_item
     returns [ name , value ]
     :   ^( TREE_TYPES_ITEM ID attrs_hints )
+            { $name , $value = $ID.text , $attrs_hints.value }
+    ;
+
+messages
+    returns [ title , content ]
+    @ init { $content = dict ( ) }
+    :   ^( TREE_MESSAGES ID messages_items )
+            { $title , $content = $ID.text , $messages_items.value }
+    ;
+
+messages_items
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( messages_item
+            { $value [ $messages_item.name ] = $messages_item.value }
+        ) +
+    ;
+
+messages_item
+    returns [ name , value ]
+    :   ^( TREE_MESSAGES_ITEM ID attrs_hints )
             { $name , $value = $ID.text , $attrs_hints.value }
     ;
 
