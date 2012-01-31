@@ -21,7 +21,7 @@ options
         raise ShyRecognizerFrontendException ( msg )
 }
 
-start : ( module | stateless | consts | types | messages ) * ;
+start : ( module | stateless | consts | types | messages | vars ) * ;
 
 module
     :   MODULE ID NEWLINE -> ^( TREE_MODULE ID )
@@ -183,6 +183,11 @@ messages
         -> ^( TREE_MESSAGES ID messages_item + )
     ;
 messages_item : ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID attrs_hints ) ;
+
+vars
+    :   VARS ID attrs_hints
+        -> ^( TREE_VARS ID attrs_hints )
+    ;
 
 attrs_hints
     :   attr_hint NEWLINE
