@@ -84,14 +84,14 @@ proc
 
 proc_args
     returns [ value ]
-    :   ^( TREE_PROC_ARGS vars_hint )
-            { $value = $vars_hint.value }
+    :   ^( TREE_PROC_ARGS attrs_hints )
+            { $value = $attrs_hints.value }
     ;
 
 proc_vars
     returns [ value ]
-    :   ^( TREE_PROC_VARS vars_hint )
-            { $value = $vars_hint.value }
+    :   ^( TREE_PROC_VARS attrs_hints )
+            { $value = $attrs_hints.value }
     ;
 
 statements
@@ -245,17 +245,17 @@ types_items
 
 types_item
     returns [ name , value ]
-    :   ^( TREE_TYPES_ITEM ID vars_hint )
-            { $name , $value = $ID.text , $vars_hint.value }
+    :   ^( TREE_TYPES_ITEM ID attrs_hints )
+            { $name , $value = $ID.text , $attrs_hints.value }
     ;
 
-vars_hint
+attrs_hints
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   TREE_VARS_HINT ( var_hint { $value . update ( $var_hint.value ) } ) *
+    :   TREE_VARS_HINT ( attr_hint { $value . update ( $attr_hint.value ) } ) *
     ;
 
-var_hint
+attr_hint
     returns [ value ]
     @ init { $value = dict ( ) }
     :   ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID )
