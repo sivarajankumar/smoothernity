@@ -20,3 +20,10 @@ class modules_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'module test1\n module_queue test2\n' ) ,
             { 'module' : { 'test1' : { 'module_queue' : 'test2' } } } )
+    def test_procs ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'module test1\n proc proc1\n proc proc2' ) ,
+            { 'module' : { 'test1' : { 'procs' : 
+                { 'proc1' : { }
+                , 'proc2' : { } } } } } )

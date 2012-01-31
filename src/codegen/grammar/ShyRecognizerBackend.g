@@ -62,6 +62,9 @@ module
             ( module_queue 
                 { $content [ 'module_queue' ] = $module_queue.value }
             ) ?
+            ( procs
+                { $content [ 'procs' ] = $procs.value }
+            ) ?
         )
     ;
 
