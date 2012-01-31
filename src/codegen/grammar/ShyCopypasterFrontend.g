@@ -73,6 +73,7 @@ arbitrary_token
     |   IF
     |   MESSAGES
     |   MODULE
+    |   MODULE_QUEUE
     |   OPS
     |   PROC
     |   REQUEST

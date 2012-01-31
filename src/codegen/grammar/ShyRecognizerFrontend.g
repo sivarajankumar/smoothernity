@@ -24,21 +24,29 @@ options
 start : ( module | stateless | consts | types | messages | vars ) * ;
 
 module
-    :   MODULE ID NEWLINE -> ^( TREE_MODULE ID )
+    :   MODULE ID NEWLINE INDENT NEWLINE
+        module_queue ?
+        DEDENT NEWLINE
+        ->  ^( TREE_MODULE ID module_queue ? )
+    ;
+
+module_queue
+    :   MODULE_QUEUE ID NEWLINE
+        ->  ^( TREE_MODULE_QUEUE ID )
     ;
 
 stateless
     :   STATELESS ID NEWLINE ( INDENT NEWLINE proc + DEDENT NEWLINE ) ?
-        -> ^( TREE_STATELESS ID proc * )
+        ->  ^( TREE_STATELESS ID proc * )
     ;
 
 proc
     :   PROC ID NEWLINE
-        -> ^( TREE_PROC ID )
+        ->  ^( TREE_PROC ID )
     |   PROC ID NEWLINE INDENT NEWLINE
             proc_args ? proc_attrs ? proc_ops ?
         DEDENT NEWLINE
-        -> ^( TREE_PROC ID proc_args ? proc_attrs ? proc_ops ? )
+        ->  ^( TREE_PROC ID proc_args ? proc_attrs ? proc_ops ? )
     ;
 
 proc_args
@@ -65,7 +73,7 @@ statement
 
 statements
     :   statement +
-        -> ^( TREE_STATEMENTS statement + )
+        ->  ^( TREE_STATEMENTS statement + )
     ;
 
 statement_with
