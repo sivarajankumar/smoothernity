@@ -180,21 +180,21 @@ types_item : ID attrs_hints -> ^( TREE_TYPES_ITEM ID attrs_hints ) ;
 
 attrs_hints
     :   attr_hint NEWLINE
-        -> TREE_VARS_HINT attr_hint
+        -> TREE_ATTRS_HINTS attr_hint
     |   NEWLINE
         ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_VARS_HINT attr_hint +
+        -> TREE_ATTRS_HINTS attr_hint +
     |   attr_hint NEWLINE
         ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_VARS_HINT attr_hint +
+        -> TREE_ATTRS_HINTS attr_hint +
     ;
 attr_hint 
     :   ID + 
-        -> ^( TREE_VAR_HINT TREE_HINT_NONE ^( TREE_VAR ID ) + )
+        -> ^( TREE_ATTR_HINT TREE_HINT_NONE ^( TREE_ATTR ID ) + )
     |   hint ID +
-        -> ^( TREE_VAR_HINT hint ^( TREE_VAR ID ) + )
+        -> ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
     |   hint NEWLINE INDENT NEWLINE ( ID + NEWLINE ) + DEDENT
-        -> ^( TREE_VAR_HINT hint ^( TREE_VAR ID ) + )
+        -> ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
     ;
 
 hint

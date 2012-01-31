@@ -252,16 +252,16 @@ types_item
 attrs_hints
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   TREE_VARS_HINT ( attr_hint { $value . update ( $attr_hint.value ) } ) *
+    :   TREE_ATTRS_HINTS ( attr_hint { $value . update ( $attr_hint.value ) } ) *
     ;
 
 attr_hint
     returns [ value ]
     @ init { $value = dict ( ) }
-    :   ^( TREE_VAR_HINT TREE_HINT_NONE ( ^( TREE_VAR ID )
+    :   ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID )
             { $value [ $ID.text ] = dict ( ) }
         ) + )
-    |   ^( TREE_VAR_HINT hint ( ^( TREE_VAR ID )
+    |   ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID )
             { $value [ $ID.text ] = $hint.value }
         ) + )
     ;
