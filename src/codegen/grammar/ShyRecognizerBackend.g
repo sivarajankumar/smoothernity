@@ -25,7 +25,7 @@ start
     :   ( module 
             {
                 update_start_dict ( $value , 'module' ,
-                    $module.value , dict ( ) )
+                    $module.title , $module.content )
             }
         | stateless 
             {
@@ -56,8 +56,18 @@ start
     ;
 
 module
+    returns [ title , content ]
+    :   ^( TREE_MODULE ID
+            { $title , $content = $ID.text , dict ( ) }
+            ( module_queue 
+                { $content [ 'module_queue' ] = $module_queue.value }
+            ) ?
+        )
+    ;
+
+module_queue
     returns [ value ]
-    :   ^( TREE_MODULE ID ) { $value = $ID.text }
+    :   ^( TREE_MODULE_QUEUE ID ) { $value = $ID.text }
     ;
 
 stateless

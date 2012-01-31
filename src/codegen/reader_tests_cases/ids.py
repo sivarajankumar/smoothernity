@@ -7,7 +7,11 @@ class ids_test_case ( unittest . TestCase ) :
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . h . rec
-        ae ( r ( 'module t\n' ) , { 'module' : { 't' : { } } } )
-        ae ( r ( 'module test\n' ) , { 'module' : { 'test' : { } } } )
-        ae ( r ( 'module test1\n' ) , { 'module' : { 'test1' : { } } } )
-        ae ( r ( 'module test_1\n' ) , { 'module' : { 'test_1' : { } } } )
+        ae ( r ( 'consts t\n a 1' ) ,
+            { 'consts' : { 't' : { 'a' : 1 } } } )
+        ae ( r ( 'consts test\n a 1' ) ,
+            { 'consts' : { 'test' : { 'a' : 1 } } } )
+        ae ( r ( 'consts test1\n a 1' ) ,
+            { 'consts' : { 'test1' : { 'a' : 1 } } } )
+        ae ( r ( 'consts test_1\n a 1' ) ,
+            { 'consts' : { 'test_1' : { 'a' : 1 } } } )

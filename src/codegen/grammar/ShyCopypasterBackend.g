@@ -125,6 +125,7 @@ arbitrary_token
     |   IF { $value = $IF.text }
     |   MESSAGES { $value = $MESSAGES.text }
     |   MODULE { $value = $MODULE.text }
+    |   MODULE_QUEUE { $value = $MODULE_QUEUE.text }
     |   OPS { $value = $OPS.text }
     |   PROC { $value = $PROC.text }
     |   REQUEST { $value = $REQUEST.text }
