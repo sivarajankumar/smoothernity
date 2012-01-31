@@ -26,8 +26,12 @@ start : ( module | stateless | consts | types | messages | vars ) * ;
 module
     :   MODULE ID NEWLINE INDENT NEWLINE
         module_queue ?
+        proc *
         DEDENT NEWLINE
-        ->  ^( TREE_MODULE ID module_queue ? )
+        ->  ^( TREE_MODULE ID
+                module_queue ?
+                proc *
+            )
     ;
 
 module_queue
