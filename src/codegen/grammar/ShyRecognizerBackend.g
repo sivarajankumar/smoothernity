@@ -47,6 +47,11 @@ start
                 update_start_dict ( $value , 'messages' ,
                     $messages.title , $messages.content )
             }
+        | vars
+            {
+                update_start_dict ( $value , 'vars' ,
+                    $vars.title , $vars.content )
+            }
         ) *
     ;
 
@@ -273,6 +278,12 @@ messages_item
     returns [ name , value ]
     :   ^( TREE_MESSAGES_ITEM ID attrs_hints )
             { $name , $value = $ID.text , $attrs_hints.value }
+    ;
+
+vars
+    returns [ title , content ]
+    :   ^( TREE_VARS ID attrs_hints )
+            { $title , $content = $ID.text , $attrs_hints.value }
     ;
 
 attrs_hints

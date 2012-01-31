@@ -16,6 +16,7 @@ from reader_tests_cases . statement_call import *
 from reader_tests_cases . statement_if import *
 from reader_tests_cases . statement_with import *
 from reader_tests_cases . types import *
+from reader_tests_cases . vars import *
 
 if __name__ == '__main__' :
     unittest . main ( )
