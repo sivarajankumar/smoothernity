@@ -179,9 +179,14 @@ types_items : types_item + ;
 types_item : ID vars_hint -> ^( TREE_TYPES_ITEM ID vars_hint ) ;
 
 vars_hint
-    :   var_hint ? NEWLINE
-        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE ) ?
-        -> TREE_VARS_HINT var_hint *
+    :   var_hint NEWLINE
+        -> TREE_VARS_HINT var_hint
+    |   NEWLINE
+        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE )
+        -> TREE_VARS_HINT var_hint +
+    |   var_hint NEWLINE
+        ( INDENT NEWLINE ( var_hint NEWLINE ) + DEDENT NEWLINE )
+        -> TREE_VARS_HINT var_hint +
     ;
 var_hint 
     :   var + 

@@ -1,14 +1,15 @@
 import unittest
+import reader
 from reader_tests_cases . helper import helper
 
 class types_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
-    def test_empty ( self ) :
-        ae = self . assertEqual
+    def test_raises ( self ) :
+        ar = self . assertRaises
         r = self . h . rec
-        ae ( r ( 'types test1\n type1\n type2\n' ) ,
-            { 'types' : { 'test1' : { 'type1' : { } , 'type2' : { } } } } )
+        re = reader . exception
+        ar ( re , r , 'types test1\n type1\n type2\n' )
     def test_combine ( self ) :
         ae = self . assertEqual
         r = self . h . rec

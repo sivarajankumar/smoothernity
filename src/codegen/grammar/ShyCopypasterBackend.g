@@ -127,6 +127,8 @@ arbitrary_token
     |   MODULE { $value = $MODULE.text }
     |   OPS { $value = $OPS.text }
     |   PROC { $value = $PROC.text }
+    |   REQUEST { $value = $REQUEST.text }
+    |   REPLY { $value = $REPLY.text }
     |   STATELESS { $value = $STATELESS.text }
     |   TYPES { $value = $TYPES.text }
     |   VARS { $value = $VARS.text }

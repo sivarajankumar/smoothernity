@@ -75,6 +75,8 @@ arbitrary_token
     |   MODULE
     |   OPS
     |   PROC
+    |   REQUEST
+    |   REPLY
     |   STATELESS
     |   TYPES
     |   VARS
