@@ -129,6 +129,8 @@ statement
             { $value = $statement_assign.value }
     |   statement_with
             { $value = $statement_with.value }
+    |   statement_while
+            { $value = $statement_while.value }
     ;
 
 statement_with
@@ -161,33 +163,33 @@ statement_if
     returns [ value ]
     @ init { $value = { 'if' : [ ] } }
     :   ^( TREE_STATEMENT_IF
-            ( statement_elif
-                { $value [ 'if' ] . append ( $statement_elif.value ) }
+            ( ^( TREE_STATEMENT_ELIF conditional_ops )
+                { $value [ 'if' ] . append ( $conditional_ops.value ) }
             ) +
-            ( statement_else
-                { $value [ 'else' ] = $statement_else.value }
+            ( ^( TREE_STATEMENT_ELSE statements )
+                { $value [ 'else' ] = $statements.value }
             ) ?
         )
     ;
 
-statement_elif
+statement_while
     returns [ value ]
-    :   ^( TREE_STATEMENT_ELIF condition_any statements )
+    :   ^( TREE_STATEMENT_WHILE conditional_ops )
+            { $value = { 'while' : $conditional_ops.value } }
+    ;
+
+conditional_ops
+    returns [ value ]
+    :   condition_any statements
             { $value = {
                 'any' : $condition_any.value ,
                 'ops' : $statements.value }
             }
-    |   ^( TREE_STATEMENT_ELIF condition_all statements )
+    |   condition_all statements
             { $value = {
                 'all' : $condition_all.value ,
                 'ops' : $statements.value }
             }
-    ;
-
-statement_else
-    returns [ value ]
-    :   ^( TREE_STATEMENT_ELSE statements )
-            { $value = $statements.value }
     ;
 
 condition_any
