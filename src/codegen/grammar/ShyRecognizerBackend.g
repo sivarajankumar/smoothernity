@@ -139,10 +139,20 @@ statement_with
 
 statement_assign
     returns [ value ]
-    @ init { $value = { 'assign' : dict ( ) } }
-    :   ^( TREE_STATEMENT_ASSIGN arbitrary_value
+    @ init { $value = { 'assign' : { 'from' : list ( ) , 'to' : list ( ) } } }
+    :   ^( TREE_STATEMENT_ASSIGN
+            ( arbitrary_value
+                {
+                    $value [ 'assign' ] [ 'from' ] . append (
+                        $arbitrary_value.value )
+                }
+            ) +
+            TREE_STATEMENT_ASSIGN_TO
             ( ID
-                { $value [ 'assign' ] [ $ID.text ] = $arbitrary_value.value }
+                {
+                    $value [ 'assign' ] [ 'to' ] . append (
+                        $ID.text )
+                }
             ) +
         )
     ;
