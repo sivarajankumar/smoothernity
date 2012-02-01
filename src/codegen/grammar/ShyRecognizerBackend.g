@@ -9,14 +9,8 @@ options
 
 @ header
 {
+    from utils import merge
     from fractions import Fraction
-
-    def update_start_dict ( res , part , name , value ) :
-        if part not in res :
-            res [ part ] = dict ( )
-        if name not in res [ part ] :
-            res [ part ] [ name ] = dict ( )
-        res [ part ] [ name ] . update ( value )
 }
 
 start
@@ -24,33 +18,33 @@ start
     @ init { $value = dict ( ) }
     :   ( module 
             {
-                update_start_dict ( $value , 'module' ,
-                    $module.title , $module.content )
+                $value = merge ( $value , { 'module' :
+                    { $module.title : $module.content } } )
             }
         | stateless 
             {
-                update_start_dict ( $value , 'stateless' ,
-                    $stateless.title , $stateless.content )
+                $value = merge ( $value , { 'stateless' :
+                    { $stateless.title : $stateless.content } } )
             }
         | consts
             {
-                update_start_dict ( $value , 'consts' ,
-                    $consts.title , $consts.content )
+                $value = merge ( $value , { 'consts' :
+                    { $consts.title : $consts.content } } )
             }
         | types
             {
-                update_start_dict ( $value , 'types' ,
-                    $types.title , $types.content )
+                $value = merge ( $value , { 'types' :
+                    { $types.title : $types.content } } )
             }
         | messages
             {
-                update_start_dict ( $value , 'messages' ,
-                    $messages.title , $messages.content )
+                $value = merge ( $value , { 'messages' :
+                    { $messages.title : $messages.content } } )
             }
         | vars
             {
-                update_start_dict ( $value , 'vars' ,
-                    $vars.title , $vars.content )
+                $value = merge ( $value , { 'vars' :
+                    { $vars.title : $vars.content } } )
             }
         ) *
     ;
