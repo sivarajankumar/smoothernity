@@ -15,7 +15,7 @@ class start_test_case ( unittest . TestCase ) :
     def test_combine_list ( self ) :
         ae = self . assertEqual
         r = self . h . rec
-        ae ( r ( 'module test1\n proc proc1\n'
-                 'module test1\n proc proc2\n' ) ,
-            { 'modules' : { 'module1' : 
+        ae ( r ( 'module module1\n proc proc1\n'
+                 'module module1\n proc proc2\n' ) ,
+            { 'module' : { 'module1' : 
                 { 'procs' : { 'proc1' : { } , 'proc2' : { } } } } } )
