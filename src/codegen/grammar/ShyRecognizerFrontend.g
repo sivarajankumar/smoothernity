@@ -89,10 +89,19 @@ statement_with
 
 statement_assign
     :   ID + ARROW_LEFT arbitrary_value + NEWLINE
-        ->  ^( TREE_STATEMENT_ASSIGN
-                arbitrary_value +
-                TREE_STATEMENT_ASSIGN_TO
-                ID + )
+        ->  ^( TREE_STATEMENT_ASSIGN arbitrary_value +
+                TREE_STATEMENT_ASSIGN_TO ID + )
+    |   ID + ARROW_LEFT NEWLINE INDENT NEWLINE
+        ( arbitrary_value + NEWLINE ) + DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_ASSIGN arbitrary_value +
+                TREE_STATEMENT_ASSIGN_TO ID + )
+    |   arbitrary_value + ARROW_RIGHT ID + NEWLINE
+        ->  ^( TREE_STATEMENT_ASSIGN arbitrary_value +
+                TREE_STATEMENT_ASSIGN_TO ID + )
+    |   arbitrary_value + ARROW_RIGHT NEWLINE INDENT NEWLINE
+        ( ID + NEWLINE ) + DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_ASSIGN arbitrary_value +
+                TREE_STATEMENT_ASSIGN_TO ID + )
     ;
 
 statement_while
