@@ -1,9 +1,18 @@
 import unittest
+import reader
 from reader_tests_cases . helper import helper
 
 class statement_assign_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . h = helper ( )
+    def test_raises ( self ) :
+        ar = self . assertRaises
+        r = self . h . rec
+        re = reader . exception
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n   a <-\n' )
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n   a ->\n' )
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n   a -> 1\n' )
+        ar ( re , r , 'stateless test1\n proc proc1\n  ops\n   1 <- a\n' )
     def test_left_one_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
