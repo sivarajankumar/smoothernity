@@ -133,6 +133,7 @@ arbitrary_token
     |   STATELESS { $value = $STATELESS.text }
     |   TYPES { $value = $TYPES.text }
     |   VARS { $value = $VARS.text }
+    |   WHILE { $value = $WHILE.text }
     |   WITH { $value = $WITH.text }
 
     |   ARROW_LEFT { $value = $ARROW_LEFT.text }

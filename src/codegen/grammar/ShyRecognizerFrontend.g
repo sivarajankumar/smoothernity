@@ -72,6 +72,7 @@ statement
     |   statement_call_multi_line
     |   statement_if
     |   statement_assign
+    |   statement_while
     |   statement_with
     ;
 
@@ -92,6 +93,12 @@ statement_assign
                 arbitrary_value +
                 TREE_STATEMENT_ASSIGN_TO
                 ID + )
+    ;
+
+statement_while
+    :   WHILE condition NEWLINE ? DO NEWLINE
+            INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_WHILE condition statements )
     ;
 
 statement_if

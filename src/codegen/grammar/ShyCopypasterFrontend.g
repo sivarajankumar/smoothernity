@@ -81,6 +81,7 @@ arbitrary_token
     |   STATELESS
     |   TYPES
     |   VARS
+    |   WHILE
     |   WITH
 
     |   ARROW_LEFT
