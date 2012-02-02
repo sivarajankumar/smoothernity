@@ -218,6 +218,7 @@ statement_call_args : arbitrary_value + ;
 arbitrary_value
     :   ID
     |   EXPRESSION
+    |   STRING
     |   num_whole
     |   num_fract
     ;
