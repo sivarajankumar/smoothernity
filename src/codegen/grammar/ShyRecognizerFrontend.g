@@ -257,13 +257,13 @@ messages_item
         ->  ^( TREE_MESSAGES_ITEM ID
                 TREE_MESSAGES_ITEM_REPLY attrs_hints
             )
-    |   ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE
-        ->  ^( TREE_MESSAGES_ITEM ID
-                TREE_MESSAGES_ITEM_REPLY attrs_hints
-            )
     |   ID REQUEST attrs_hints
         ->  ^( TREE_MESSAGES_ITEM ID
                 TREE_MESSAGES_ITEM_REQUEST attrs_hints
+            )
+    |   ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REPLY attrs_hints
             )
     |   ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE
         ->  ^( TREE_MESSAGES_ITEM ID
