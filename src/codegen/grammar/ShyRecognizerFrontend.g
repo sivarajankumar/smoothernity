@@ -51,6 +51,8 @@ stateless
 request
     :   REQUEST ID NEWLINE
         ->  ^( TREE_REQUEST ID )
+    |   REQUEST ID NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_REQUEST ID statements )
     |   REQUEST ID NEWLINE INDENT NEWLINE
             local_vars ? local_ops ?
         DEDENT NEWLINE
@@ -60,6 +62,8 @@ request
 receive
     :   RECEIVE ID NEWLINE
         ->  ^( TREE_RECEIVE ID )
+    |   RECEIVE ID NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_RECEIVE ID statements )
     |   RECEIVE ID NEWLINE INDENT NEWLINE
             local_vars ? local_ops ?
         DEDENT NEWLINE

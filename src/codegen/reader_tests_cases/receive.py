@@ -22,3 +22,9 @@ class receive_test_case ( unittest . TestCase ) :
         ae ( r ( 'module test1\n receive rcv1\n  ops\n   call1\n' ) ,
             { 'module' : { 'test1' : { 'receive' :
                 { 'rcv1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } } )
+    def test_silent_ops ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'module test1\n receive rcv1\n  call1\n' ) ,
+            { 'module' : { 'test1' : { 'receive' :
+                { 'rcv1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } } )
