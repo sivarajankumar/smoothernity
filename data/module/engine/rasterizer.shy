@@ -285,7 +285,8 @@ module engine_rasterizer
 trace engine_rasterizer
     proc coords_out_of_range_error
         args x y
-        ops with platform_trace
+        ops
+            with platform_trace
                 begin module_name
                 string_error 'Error. Texture coordinates X = '
                 num_whole_error x
