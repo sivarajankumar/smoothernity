@@ -28,3 +28,9 @@ class request_test_case ( unittest . TestCase ) :
         ae ( r ( 'module test1\n request req1\n  call1\n' ) ,
             { 'module' : { 'test1' : { 'request' :
                 { 'req1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } } )
+    def test_silent_ops_same_line ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'module test1\n request req1 call1\n' ) ,
+            { 'module' : { 'test1' : { 'request' :
+                { 'req1' : { 'ops' : [ { 'call' : [ 'call1' ] } ] } } } } } )
