@@ -111,6 +111,7 @@ if __name__ == '__main__' :
     from sys import argv
     from sys import stdin
     import os
+    import pprint
 
     class trace :
         def write_error ( self , name , error ) :
@@ -127,7 +128,8 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     try :
-        print reader ( ) . run ( stdin )
+        pp = pprint . PrettyPrinter ( indent = 1 ) 
+        pp . pprint ( reader ( ) . run ( stdin ) )
     except reader_exception as e :
         print e . get_src ( )
         print 'exception:' , str ( e )
