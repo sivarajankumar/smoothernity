@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-02 19:07:01
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-02 20:04:35
 
 import sys
 from antlr3 import *
@@ -2851,7 +2851,7 @@ class ShyRecognizerBackend(TreeParser):
                         self._state.following.pop()
 
                         #action start
-                        value [ ((messages_item77 is not None) and [messages_item77.name] or [None])[0] ] = ((messages_item77 is not None) and [messages_item77.value] or [None])[0] 
+                        value = merge ( value, messages_item77 ) 
                         #action end
 
 
@@ -2880,22 +2880,11 @@ class ShyRecognizerBackend(TreeParser):
     # $ANTLR end "messages_items"
 
 
-    class messages_item_return(TreeRuleReturnScope):
-        def __init__(self):
-            super(ShyRecognizerBackend.messages_item_return, self).__init__()
-
-            self.name = None
-            self.value = None
-
-
-
-
 
     # $ANTLR start "messages_item"
-    # grammar/ShyRecognizerBackend.g:358:1: messages_item returns [ name , value ] : ^( TREE_MESSAGES_ITEM ID attrs_hints ) ;
+    # grammar/ShyRecognizerBackend.g:358:1: messages_item returns [ value ] : ^( TREE_MESSAGES_ITEM ID attrs_hints ) ;
     def messages_item(self, ):
-        retval = self.messages_item_return()
-        retval.start = self.input.LT(1)
+        value = None
 
 
         ID78 = None
@@ -2921,7 +2910,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                 #action start
-                retval.name , retval.value = ID78.text , attrs_hints79 
+                value = { 'receive' : { ID78.text : attrs_hints79 } } 
                 #action end
 
 
@@ -2934,7 +2923,7 @@ class ShyRecognizerBackend(TreeParser):
 
         finally:
             pass
-        return retval
+        return value
 
     # $ANTLR end "messages_item"
 
