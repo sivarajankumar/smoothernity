@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 10:13:07
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 18:35:00
 
 import sys
 from antlr3 import *
@@ -46,54 +46,55 @@ NUMBER=27
 OPS=28
 PASTE=29
 PROC=30
-REPLACE=31
-REPLY=32
-REQUEST=33
-STATELESS=34
-STRING=35
-TREE_ARBITRARY_TOKEN=36
-TREE_ATTR=37
-TREE_ATTRS_HINTS=38
-TREE_ATTR_HINT=39
-TREE_CONDITION_ALL=40
-TREE_CONDITION_ANY=41
-TREE_CONSTS=42
-TREE_COPY=43
-TREE_COPY_PASTE=44
-TREE_EXPRESSION=45
-TREE_HINT=46
-TREE_HINT_NONE=47
-TREE_LOCAL_VARS=48
-TREE_MESSAGES=49
-TREE_MESSAGES_ITEM=50
-TREE_MODULE=51
-TREE_MODULE_QUEUE=52
-TREE_NUM_FRACT=53
-TREE_NUM_WHOLE=54
-TREE_PASTE=55
-TREE_PASTE_REPLACE=56
-TREE_PASTE_WITH=57
-TREE_PROC=58
-TREE_PROC_ARGS=59
-TREE_STATELESS=60
-TREE_STATEMENTS=61
-TREE_STATEMENT_ASSIGN=62
-TREE_STATEMENT_ASSIGN_TO=63
-TREE_STATEMENT_CALL=64
-TREE_STATEMENT_ELIF=65
-TREE_STATEMENT_ELSE=66
-TREE_STATEMENT_IF=67
-TREE_STATEMENT_WHILE=68
-TREE_STATEMENT_WITH=69
-TREE_TYPES=70
-TREE_TYPES_ITEM=71
-TREE_VARS=72
-TYPES=73
-UNDERSCORE=74
-VARS=75
-WHILE=76
-WHITESPACE=77
-WITH=78
+RECEIVE=31
+REPLACE=32
+REPLY=33
+REQUEST=34
+STATELESS=35
+STRING=36
+TREE_ARBITRARY_TOKEN=37
+TREE_ATTR=38
+TREE_ATTRS_HINTS=39
+TREE_ATTR_HINT=40
+TREE_CONDITION_ALL=41
+TREE_CONDITION_ANY=42
+TREE_CONSTS=43
+TREE_COPY=44
+TREE_COPY_PASTE=45
+TREE_EXPRESSION=46
+TREE_HINT=47
+TREE_HINT_NONE=48
+TREE_LOCAL_VARS=49
+TREE_MESSAGES=50
+TREE_MESSAGES_ITEM=51
+TREE_MODULE=52
+TREE_MODULE_QUEUE=53
+TREE_NUM_FRACT=54
+TREE_NUM_WHOLE=55
+TREE_PASTE=56
+TREE_PASTE_REPLACE=57
+TREE_PASTE_WITH=58
+TREE_PROC=59
+TREE_PROC_ARGS=60
+TREE_STATELESS=61
+TREE_STATEMENTS=62
+TREE_STATEMENT_ASSIGN=63
+TREE_STATEMENT_ASSIGN_TO=64
+TREE_STATEMENT_CALL=65
+TREE_STATEMENT_ELIF=66
+TREE_STATEMENT_ELSE=67
+TREE_STATEMENT_IF=68
+TREE_STATEMENT_WHILE=69
+TREE_STATEMENT_WITH=70
+TREE_TYPES=71
+TREE_TYPES_ITEM=72
+TREE_VARS=73
+TYPES=74
+UNDERSCORE=75
+VARS=76
+WHILE=77
+WHITESPACE=78
+WITH=79
 
 # token names
 tokenNames = [
@@ -101,18 +102,18 @@ tokenNames = [
     "ALL", "ANY", "ARGS", "ARROW_LEFT", "ARROW_RIGHT", "CONSTS", "COPY", 
     "CURLY_CLOSE", "CURLY_OPEN", "DEDENT", "DIVIDE", "DO", "ELIF", "ELSE", 
     "EXPRESSION", "ID", "IF", "INDENT", "MESSAGES", "MINUS", "MODULE", "MODULE_QUEUE", 
-    "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "REPLACE", "REPLY", "REQUEST", 
-    "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", 
-    "TREE_ATTR_HINT", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", 
-    "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
-    "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", 
-    "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", 
-    "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", 
-    "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", 
-    "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", 
-    "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", "TREE_STATEMENT_WITH", 
-    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_VARS", "TYPES", "UNDERSCORE", 
-    "VARS", "WHILE", "WHITESPACE", "WITH"
+    "NEWLINE", "NUMBER", "OPS", "PASTE", "PROC", "RECEIVE", "REPLACE", "REPLY", 
+    "REQUEST", "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", 
+    "TREE_ATTRS_HINTS", "TREE_ATTR_HINT", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", 
+    "TREE_CONSTS", "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", 
+    "TREE_HINT_NONE", "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", 
+    "TREE_MODULE", "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
+    "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", 
+    "TREE_PROC_ARGS", "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", 
+    "TREE_STATEMENT_ASSIGN_TO", "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", 
+    "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", 
+    "TREE_STATEMENT_WITH", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_VARS", 
+    "TYPES", "UNDERSCORE", "VARS", "WHILE", "WHITESPACE", "WITH"
 ]
 
 
@@ -1083,7 +1084,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: local_vars, local_ops, ID, proc_args
+                    # elements: proc_args, local_ops, ID, local_vars
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2064,7 +2065,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: arbitrary_value, ID
+                    # elements: ID, arbitrary_value
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2236,7 +2237,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: arbitrary_value, ID
+                    # elements: ID, arbitrary_value
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2536,7 +2537,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: arbitrary_value, ID
+                    # elements: ID, arbitrary_value
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2724,7 +2725,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: condition, statements
+                # elements: statements, condition
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -2865,7 +2866,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statement_else, statement_if_head, statement_elif
+                # elements: statement_if_head, statement_else, statement_elif
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4028,7 +4029,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, statement_call_args
+                # elements: statement_call_args, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4601,7 +4602,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: consts_items, ID
+                # elements: ID, consts_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4862,7 +4863,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_whole
+                    # elements: num_whole, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -4918,7 +4919,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_fract
+                    # elements: num_fract, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -5137,7 +5138,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, types_item
+                # elements: types_item, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -5628,7 +5629,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6902,7 +6903,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\116\1\33\4\uffff\4\33\1\116\2\33\2\uffff\1\33"
+        u"\1\117\1\33\4\uffff\4\33\1\117\2\33\2\uffff\1\33"
         )
 
     DFA10_accept = DFA.unpack(
@@ -6915,7 +6916,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     DFA10_transition = [
-        DFA.unpack(u"\1\3\1\1\1\2\2\uffff\1\3\3\uffff\1\3\60\uffff\1\4\1"
+        DFA.unpack(u"\1\3\1\1\1\2\2\uffff\1\3\3\uffff\1\3\61\uffff\1\4\1"
         u"\uffff\1\5"),
         DFA.unpack(u"\2\3\11\uffff\1\7\1\6\3\uffff\1\10\2\uffff\1\12\1\11"),
         DFA.unpack(u""),
@@ -6928,7 +6929,7 @@ class ShyRecognizerFrontend(Parser):
         DFA.unpack(u"\1\11"),
         DFA.unpack(u"\1\3\5\uffff\1\14\3\uffff\1\7\1\13\3\uffff\1\10\2\uffff"
         u"\1\12\1\11"),
-        DFA.unpack(u"\1\16\4\uffff\3\16\1\15\1\uffff\1\16\3\uffff\1\16\60"
+        DFA.unpack(u"\1\16\4\uffff\3\16\1\15\1\uffff\1\16\3\uffff\1\16\61"
         u"\uffff\1\16\1\uffff\1\16"),
         DFA.unpack(u"\1\3\11\uffff\1\7\1\13\3\uffff\1\10\2\uffff\1\12\1"
         u"\11"),
@@ -7107,7 +7108,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA43_max = DFA.unpack(
-        u"\2\32\1\23\1\uffff\1\113\1\112\2\uffff\1\32\1\112\1\32\1\25\2\32"
+        u"\2\32\1\23\1\uffff\1\114\1\113\2\uffff\1\32\1\113\1\32\1\25\2\32"
         u"\1\23\1\32\1\23\1\32"
         )
 
@@ -7126,12 +7127,12 @@ class ShyRecognizerFrontend(Parser):
         DFA.unpack(u"\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\3\uffff\1\6\5\uffff\1\6\1\uffff\1\7\1\6\1\uffff"
-        u"\1\6\3\uffff\1\6\5\uffff\1\6\46\uffff\1\6\1\uffff\1\6"),
-        DFA.unpack(u"\1\10\7\uffff\1\11\66\uffff\1\11"),
+        u"\1\6\3\uffff\1\6\6\uffff\1\6\46\uffff\1\6\1\uffff\1\6"),
+        DFA.unpack(u"\1\10\7\uffff\1\11\67\uffff\1\11"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\12\6\uffff\1\13"),
-        DFA.unpack(u"\1\14\7\uffff\1\11\66\uffff\1\11"),
+        DFA.unpack(u"\1\14\7\uffff\1\11\67\uffff\1\11"),
         DFA.unpack(u"\1\12\6\uffff\1\4"),
         DFA.unpack(u"\1\15"),
         DFA.unpack(u"\1\12\6\uffff\1\13"),
@@ -7163,7 +7164,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA48_max = DFA.unpack(
-        u"\1\23\1\uffff\1\23\1\112\1\32\1\112\2\uffff\1\32"
+        u"\1\23\1\uffff\1\23\1\113\1\32\1\113\2\uffff\1\32"
         )
 
     DFA48_accept = DFA.unpack(
@@ -7179,9 +7180,9 @@ class ShyRecognizerFrontend(Parser):
         DFA.unpack(u"\1\2\6\uffff\1\1"),
         DFA.unpack(u""),
         DFA.unpack(u"\1\3"),
-        DFA.unpack(u"\1\4\7\uffff\1\5\66\uffff\1\5"),
+        DFA.unpack(u"\1\4\7\uffff\1\5\67\uffff\1\5"),
         DFA.unpack(u"\1\6\6\uffff\1\7"),
-        DFA.unpack(u"\1\10\7\uffff\1\5\66\uffff\1\5"),
+        DFA.unpack(u"\1\10\7\uffff\1\5\67\uffff\1\5"),
         DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6\6\uffff\1\7")
@@ -7195,12 +7196,12 @@ class ShyRecognizerFrontend(Parser):
 
  
 
-    FOLLOW_module_in_start82 = frozenset([1, 9, 22, 24, 34, 73, 75])
-    FOLLOW_stateless_in_start86 = frozenset([1, 9, 22, 24, 34, 73, 75])
-    FOLLOW_consts_in_start90 = frozenset([1, 9, 22, 24, 34, 73, 75])
-    FOLLOW_types_in_start94 = frozenset([1, 9, 22, 24, 34, 73, 75])
-    FOLLOW_messages_in_start98 = frozenset([1, 9, 22, 24, 34, 73, 75])
-    FOLLOW_vars_in_start102 = frozenset([1, 9, 22, 24, 34, 73, 75])
+    FOLLOW_module_in_start82 = frozenset([1, 9, 22, 24, 35, 74, 76])
+    FOLLOW_stateless_in_start86 = frozenset([1, 9, 22, 24, 35, 74, 76])
+    FOLLOW_consts_in_start90 = frozenset([1, 9, 22, 24, 35, 74, 76])
+    FOLLOW_types_in_start94 = frozenset([1, 9, 22, 24, 35, 74, 76])
+    FOLLOW_messages_in_start98 = frozenset([1, 9, 22, 24, 35, 74, 76])
+    FOLLOW_vars_in_start102 = frozenset([1, 9, 22, 24, 35, 74, 76])
     FOLLOW_MODULE_in_module121 = frozenset([19])
     FOLLOW_ID_in_module123 = frozenset([26])
     FOLLOW_NEWLINE_in_module125 = frozenset([21])
@@ -7228,8 +7229,8 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_proc396 = frozenset([26])
     FOLLOW_NEWLINE_in_proc398 = frozenset([21])
     FOLLOW_INDENT_in_proc400 = frozenset([26])
-    FOLLOW_NEWLINE_in_proc402 = frozenset([6, 13, 28, 75])
-    FOLLOW_proc_args_in_proc416 = frozenset([13, 28, 75])
+    FOLLOW_NEWLINE_in_proc402 = frozenset([6, 13, 28, 76])
+    FOLLOW_proc_args_in_proc416 = frozenset([13, 28, 76])
     FOLLOW_local_vars_in_proc420 = frozenset([13, 28])
     FOLLOW_local_ops_in_proc424 = frozenset([13])
     FOLLOW_DEDENT_in_proc436 = frozenset([26])
@@ -7241,7 +7242,7 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_OPS_in_local_ops550 = frozenset([26])
     FOLLOW_NEWLINE_in_local_ops552 = frozenset([21])
     FOLLOW_INDENT_in_local_ops554 = frozenset([26])
-    FOLLOW_NEWLINE_in_local_ops556 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_NEWLINE_in_local_ops556 = frozenset([18, 19, 20, 23, 27, 77, 79])
     FOLLOW_statements_in_local_ops558 = frozenset([13])
     FOLLOW_DEDENT_in_local_ops560 = frozenset([26])
     FOLLOW_NEWLINE_in_local_ops562 = frozenset([1])
@@ -7252,12 +7253,12 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_statement_assign_in_statement641 = frozenset([1])
     FOLLOW_statement_while_in_statement651 = frozenset([1])
     FOLLOW_statement_with_in_statement661 = frozenset([1])
-    FOLLOW_statement_in_statements680 = frozenset([1, 18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_statement_in_statements680 = frozenset([1, 18, 19, 20, 23, 27, 77, 79])
     FOLLOW_WITH_in_statement_with722 = frozenset([19])
     FOLLOW_ID_in_statement_with724 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_with726 = frozenset([21])
     FOLLOW_INDENT_in_statement_with736 = frozenset([26])
-    FOLLOW_NEWLINE_in_statement_with738 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_NEWLINE_in_statement_with738 = frozenset([18, 19, 20, 23, 27, 77, 79])
     FOLLOW_statements_in_statement_with740 = frozenset([13])
     FOLLOW_DEDENT_in_statement_with742 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_with744 = frozenset([1])
@@ -7293,7 +7294,7 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_DO_in_statement_while1101 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_while1103 = frozenset([21])
     FOLLOW_INDENT_in_statement_while1117 = frozenset([26])
-    FOLLOW_NEWLINE_in_statement_while1119 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_NEWLINE_in_statement_while1119 = frozenset([18, 19, 20, 23, 27, 77, 79])
     FOLLOW_statements_in_statement_while1121 = frozenset([13])
     FOLLOW_DEDENT_in_statement_while1123 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_while1125 = frozenset([1])
@@ -7309,14 +7310,14 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_DO_in_statement_elif_body1369 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_elif_body1371 = frozenset([21])
     FOLLOW_INDENT_in_statement_elif_body1385 = frozenset([26])
-    FOLLOW_NEWLINE_in_statement_elif_body1387 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_NEWLINE_in_statement_elif_body1387 = frozenset([18, 19, 20, 23, 27, 77, 79])
     FOLLOW_statements_in_statement_elif_body1389 = frozenset([13])
     FOLLOW_DEDENT_in_statement_elif_body1391 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_elif_body1393 = frozenset([1])
     FOLLOW_ELSE_in_statement_else1433 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_else1435 = frozenset([21])
     FOLLOW_INDENT_in_statement_else1449 = frozenset([26])
-    FOLLOW_NEWLINE_in_statement_else1451 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_NEWLINE_in_statement_else1451 = frozenset([18, 19, 20, 23, 27, 77, 79])
     FOLLOW_statements_in_statement_else1453 = frozenset([13])
     FOLLOW_DEDENT_in_statement_else1455 = frozenset([26])
     FOLLOW_NEWLINE_in_statement_else1457 = frozenset([1])
@@ -7425,8 +7426,8 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_hint2582 = frozenset([11])
     FOLLOW_CURLY_CLOSE_in_hint2584 = frozenset([1])
     FOLLOW_CURLY_OPEN_in_hint2604 = frozenset([19])
-    FOLLOW_ID_in_hint2606 = frozenset([19, 74])
-    FOLLOW_hint_arg_in_hint2608 = frozenset([11, 19, 74])
+    FOLLOW_ID_in_hint2606 = frozenset([19, 75])
+    FOLLOW_hint_arg_in_hint2608 = frozenset([11, 19, 75])
     FOLLOW_CURLY_CLOSE_in_hint2612 = frozenset([1])
     FOLLOW_MINUS_in_num_whole2651 = frozenset([27])
     FOLLOW_NUMBER_in_num_whole2655 = frozenset([1])

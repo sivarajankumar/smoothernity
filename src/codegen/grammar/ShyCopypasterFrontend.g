@@ -76,6 +76,7 @@ arbitrary_token
     |   MODULE_QUEUE
     |   OPS
     |   PROC
+    |   RECEIVE
     |   REQUEST
     |   REPLY
     |   STATELESS
