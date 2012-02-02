@@ -90,8 +90,8 @@ proc
             ( proc_args
                 { $content [ 'args' ] = $proc_args.value }
             ) ?
-            ( proc_vars
-                { $content [ 'vars' ] = $proc_vars.value }
+            ( local_vars
+                { $content [ 'vars' ] = $local_vars.value }
             ) ?
             ( statements
                 { $content [ 'ops' ] = $statements.value }
@@ -105,9 +105,9 @@ proc_args
             { $value = $attrs_hints.value }
     ;
 
-proc_vars
+local_vars
     returns [ value ]
-    :   ^( TREE_PROC_VARS attrs_hints )
+    :   ^( TREE_LOCAL_VARS attrs_hints )
             { $value = $attrs_hints.value }
     ;
 

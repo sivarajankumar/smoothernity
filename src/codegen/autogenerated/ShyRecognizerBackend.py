@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-01 19:43:04
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-02 10:13:13
 
 import sys
 from antlr3 import *
@@ -61,18 +61,18 @@ TREE_COPY_PASTE=44
 TREE_EXPRESSION=45
 TREE_HINT=46
 TREE_HINT_NONE=47
-TREE_MESSAGES=48
-TREE_MESSAGES_ITEM=49
-TREE_MODULE=50
-TREE_MODULE_QUEUE=51
-TREE_NUM_FRACT=52
-TREE_NUM_WHOLE=53
-TREE_PASTE=54
-TREE_PASTE_REPLACE=55
-TREE_PASTE_WITH=56
-TREE_PROC=57
-TREE_PROC_ARGS=58
-TREE_PROC_VARS=59
+TREE_LOCAL_VARS=48
+TREE_MESSAGES=49
+TREE_MESSAGES_ITEM=50
+TREE_MODULE=51
+TREE_MODULE_QUEUE=52
+TREE_NUM_FRACT=53
+TREE_NUM_WHOLE=54
+TREE_PASTE=55
+TREE_PASTE_REPLACE=56
+TREE_PASTE_WITH=57
+TREE_PROC=58
+TREE_PROC_ARGS=59
 TREE_STATELESS=60
 TREE_STATEMENTS=61
 TREE_STATEMENT_ASSIGN=62
@@ -103,9 +103,9 @@ tokenNames = [
     "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", 
     "TREE_ATTR_HINT", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", 
     "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
-    "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", "TREE_MODULE_QUEUE", 
-    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
-    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", 
+    "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", 
+    "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", 
+    "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", 
     "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", 
     "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", 
     "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", "TREE_STATEMENT_WITH", 
@@ -633,7 +633,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
     # $ANTLR start "proc"
-    # grammar/ShyRecognizerBackend.g:84:1: proc returns [ title , content ] : ^( TREE_PROC ID ( proc_args )? ( proc_vars )? ( statements )? ) ;
+    # grammar/ShyRecognizerBackend.g:84:1: proc returns [ title , content ] : ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( statements )? ) ;
     def proc(self, ):
         retval = self.proc_return()
         retval.start = self.input.LT(1)
@@ -642,7 +642,7 @@ class ShyRecognizerBackend(TreeParser):
         ID15 = None
         proc_args16 = None
 
-        proc_vars17 = None
+        local_vars17 = None
 
         statements18 = None
 
@@ -650,8 +650,8 @@ class ShyRecognizerBackend(TreeParser):
         retval.content = dict ( ) 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:87:5: ( ^( TREE_PROC ID ( proc_args )? ( proc_vars )? ( statements )? ) )
-                # grammar/ShyRecognizerBackend.g:87:9: ^( TREE_PROC ID ( proc_args )? ( proc_vars )? ( statements )? )
+                # grammar/ShyRecognizerBackend.g:87:5: ( ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( statements )? ) )
+                # grammar/ShyRecognizerBackend.g:87:9: ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( statements )? )
                 pass 
                 self.match(self.input, TREE_PROC, self.FOLLOW_TREE_PROC_in_proc599)
 
@@ -685,22 +685,22 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-                # grammar/ShyRecognizerBackend.g:93:13: ( proc_vars )?
+                # grammar/ShyRecognizerBackend.g:93:13: ( local_vars )?
                 alt7 = 2
                 LA7_0 = self.input.LA(1)
 
-                if (LA7_0 == TREE_PROC_VARS) :
+                if (LA7_0 == TREE_LOCAL_VARS) :
                     alt7 = 1
                 if alt7 == 1:
-                    # grammar/ShyRecognizerBackend.g:93:15: proc_vars
+                    # grammar/ShyRecognizerBackend.g:93:15: local_vars
                     pass 
-                    self._state.following.append(self.FOLLOW_proc_vars_in_proc697)
-                    proc_vars17 = self.proc_vars()
+                    self._state.following.append(self.FOLLOW_local_vars_in_proc697)
+                    local_vars17 = self.local_vars()
 
                     self._state.following.pop()
 
                     #action start
-                    retval.content [ 'vars' ] = proc_vars17 
+                    retval.content [ 'vars' ] = local_vars17 
                     #action end
 
 
@@ -792,9 +792,9 @@ class ShyRecognizerBackend(TreeParser):
 
 
 
-    # $ANTLR start "proc_vars"
-    # grammar/ShyRecognizerBackend.g:108:1: proc_vars returns [ value ] : ^( TREE_PROC_VARS attrs_hints ) ;
-    def proc_vars(self, ):
+    # $ANTLR start "local_vars"
+    # grammar/ShyRecognizerBackend.g:108:1: local_vars returns [ value ] : ^( TREE_LOCAL_VARS attrs_hints ) ;
+    def local_vars(self, ):
         value = None
 
 
@@ -803,13 +803,13 @@ class ShyRecognizerBackend(TreeParser):
 
         try:
             try:
-                # grammar/ShyRecognizerBackend.g:110:5: ( ^( TREE_PROC_VARS attrs_hints ) )
-                # grammar/ShyRecognizerBackend.g:110:9: ^( TREE_PROC_VARS attrs_hints )
+                # grammar/ShyRecognizerBackend.g:110:5: ( ^( TREE_LOCAL_VARS attrs_hints ) )
+                # grammar/ShyRecognizerBackend.g:110:9: ^( TREE_LOCAL_VARS attrs_hints )
                 pass 
-                self.match(self.input, TREE_PROC_VARS, self.FOLLOW_TREE_PROC_VARS_in_proc_vars867)
+                self.match(self.input, TREE_LOCAL_VARS, self.FOLLOW_TREE_LOCAL_VARS_in_local_vars867)
 
                 self.match(self.input, DOWN, None)
-                self._state.following.append(self.FOLLOW_attrs_hints_in_proc_vars869)
+                self._state.following.append(self.FOLLOW_attrs_hints_in_local_vars869)
                 attrs_hints20 = self.attrs_hints()
 
                 self._state.following.pop()
@@ -833,7 +833,7 @@ class ShyRecognizerBackend(TreeParser):
             pass
         return value
 
-    # $ANTLR end "proc_vars"
+    # $ANTLR end "local_vars"
 
 
 
@@ -3076,33 +3076,33 @@ class ShyRecognizerBackend(TreeParser):
 
  
 
-    FOLLOW_module_in_start87 = frozenset([1, 42, 48, 50, 60, 70, 72])
-    FOLLOW_stateless_in_start114 = frozenset([1, 42, 48, 50, 60, 70, 72])
-    FOLLOW_consts_in_start141 = frozenset([1, 42, 48, 50, 60, 70, 72])
-    FOLLOW_types_in_start167 = frozenset([1, 42, 48, 50, 60, 70, 72])
-    FOLLOW_messages_in_start193 = frozenset([1, 42, 48, 50, 60, 70, 72])
-    FOLLOW_vars_in_start219 = frozenset([1, 42, 48, 50, 60, 70, 72])
+    FOLLOW_module_in_start87 = frozenset([1, 42, 49, 51, 60, 70, 72])
+    FOLLOW_stateless_in_start114 = frozenset([1, 42, 49, 51, 60, 70, 72])
+    FOLLOW_consts_in_start141 = frozenset([1, 42, 49, 51, 60, 70, 72])
+    FOLLOW_types_in_start167 = frozenset([1, 42, 49, 51, 60, 70, 72])
+    FOLLOW_messages_in_start193 = frozenset([1, 42, 49, 51, 60, 70, 72])
+    FOLLOW_vars_in_start219 = frozenset([1, 42, 49, 51, 60, 70, 72])
     FOLLOW_TREE_MODULE_in_module274 = frozenset([2])
-    FOLLOW_ID_in_module276 = frozenset([3, 51, 57])
-    FOLLOW_module_queue_in_module306 = frozenset([3, 57])
+    FOLLOW_ID_in_module276 = frozenset([3, 52, 58])
+    FOLLOW_module_queue_in_module306 = frozenset([3, 58])
     FOLLOW_procs_in_module357 = frozenset([3])
     FOLLOW_TREE_MODULE_QUEUE_in_module_queue430 = frozenset([2])
     FOLLOW_ID_in_module_queue432 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless465 = frozenset([2])
     FOLLOW_ID_in_stateless467 = frozenset([3])
     FOLLOW_TREE_STATELESS_in_stateless495 = frozenset([2])
-    FOLLOW_ID_in_stateless497 = frozenset([57])
+    FOLLOW_ID_in_stateless497 = frozenset([58])
     FOLLOW_procs_in_stateless499 = frozenset([3])
-    FOLLOW_proc_in_procs554 = frozenset([1, 57])
+    FOLLOW_proc_in_procs554 = frozenset([1, 58])
     FOLLOW_TREE_PROC_in_proc599 = frozenset([2])
-    FOLLOW_ID_in_proc613 = frozenset([3, 58, 59, 61])
-    FOLLOW_proc_args_in_proc647 = frozenset([3, 59, 61])
-    FOLLOW_proc_vars_in_proc697 = frozenset([3, 61])
+    FOLLOW_ID_in_proc613 = frozenset([3, 48, 59, 61])
+    FOLLOW_proc_args_in_proc647 = frozenset([3, 48, 61])
+    FOLLOW_local_vars_in_proc697 = frozenset([3, 61])
     FOLLOW_statements_in_proc747 = frozenset([3])
     FOLLOW_TREE_PROC_ARGS_in_proc_args820 = frozenset([2])
     FOLLOW_attrs_hints_in_proc_args822 = frozenset([3])
-    FOLLOW_TREE_PROC_VARS_in_proc_vars867 = frozenset([2])
-    FOLLOW_attrs_hints_in_proc_vars869 = frozenset([3])
+    FOLLOW_TREE_LOCAL_VARS_in_local_vars867 = frozenset([2])
+    FOLLOW_attrs_hints_in_local_vars869 = frozenset([3])
     FOLLOW_TREE_STATEMENTS_in_statements924 = frozenset([2])
     FOLLOW_statement_in_statements928 = frozenset([3, 62, 64, 67, 68, 69])
     FOLLOW_statement_call_in_statement984 = frozenset([1])
@@ -3140,9 +3140,9 @@ class ShyRecognizerBackend(TreeParser):
     FOLLOW_num_whole_in_arbitrary_value1924 = frozenset([1])
     FOLLOW_num_fract_in_arbitrary_value1936 = frozenset([1])
     FOLLOW_TREE_CONSTS_in_consts1977 = frozenset([2])
-    FOLLOW_ID_in_consts1979 = frozenset([45, 52, 53])
+    FOLLOW_ID_in_consts1979 = frozenset([45, 53, 54])
     FOLLOW_consts_items_in_consts1981 = frozenset([3])
-    FOLLOW_consts_item_in_consts_items2036 = frozenset([1, 45, 52, 53])
+    FOLLOW_consts_item_in_consts_items2036 = frozenset([1, 45, 53, 54])
     FOLLOW_TREE_NUM_WHOLE_in_consts_item2091 = frozenset([2])
     FOLLOW_ID_in_consts_item2093 = frozenset([23, 27])
     FOLLOW_num_whole_in_consts_item2095 = frozenset([3])
@@ -3160,9 +3160,9 @@ class ShyRecognizerBackend(TreeParser):
     FOLLOW_ID_in_types_item2330 = frozenset([38])
     FOLLOW_attrs_hints_in_types_item2332 = frozenset([3])
     FOLLOW_TREE_MESSAGES_in_messages2387 = frozenset([2])
-    FOLLOW_ID_in_messages2389 = frozenset([49])
+    FOLLOW_ID_in_messages2389 = frozenset([50])
     FOLLOW_messages_items_in_messages2391 = frozenset([3])
-    FOLLOW_messages_item_in_messages_items2446 = frozenset([1, 49])
+    FOLLOW_messages_item_in_messages_items2446 = frozenset([1, 50])
     FOLLOW_TREE_MESSAGES_ITEM_in_messages_item2501 = frozenset([2])
     FOLLOW_ID_in_messages_item2503 = frozenset([38])
     FOLLOW_attrs_hints_in_messages_item2505 = frozenset([3])

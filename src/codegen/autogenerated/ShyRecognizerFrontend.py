@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-01 22:16:34
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 10:13:07
 
 import sys
 from antlr3 import *
@@ -63,18 +63,18 @@ TREE_COPY_PASTE=44
 TREE_EXPRESSION=45
 TREE_HINT=46
 TREE_HINT_NONE=47
-TREE_MESSAGES=48
-TREE_MESSAGES_ITEM=49
-TREE_MODULE=50
-TREE_MODULE_QUEUE=51
-TREE_NUM_FRACT=52
-TREE_NUM_WHOLE=53
-TREE_PASTE=54
-TREE_PASTE_REPLACE=55
-TREE_PASTE_WITH=56
-TREE_PROC=57
-TREE_PROC_ARGS=58
-TREE_PROC_VARS=59
+TREE_LOCAL_VARS=48
+TREE_MESSAGES=49
+TREE_MESSAGES_ITEM=50
+TREE_MODULE=51
+TREE_MODULE_QUEUE=52
+TREE_NUM_FRACT=53
+TREE_NUM_WHOLE=54
+TREE_PASTE=55
+TREE_PASTE_REPLACE=56
+TREE_PASTE_WITH=57
+TREE_PROC=58
+TREE_PROC_ARGS=59
 TREE_STATELESS=60
 TREE_STATEMENTS=61
 TREE_STATEMENT_ASSIGN=62
@@ -105,9 +105,9 @@ tokenNames = [
     "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", 
     "TREE_ATTR_HINT", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", 
     "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
-    "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", "TREE_MODULE_QUEUE", 
-    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
-    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", 
+    "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", 
+    "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", 
+    "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", 
     "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", 
     "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", 
     "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", "TREE_STATEMENT_WITH", 
@@ -490,7 +490,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: module_queue, proc, ID
+                # elements: proc, module_queue, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -857,7 +857,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "proc"
-    # grammar/ShyRecognizerFrontend.g:47:1: proc : ( PROC ID NEWLINE -> ^( TREE_PROC ID ) | PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( proc_attrs )? ( proc_ops )? DEDENT NEWLINE -> ^( TREE_PROC ID ( proc_args )? ( proc_attrs )? ( proc_ops )? ) );
+    # grammar/ShyRecognizerFrontend.g:47:1: proc : ( PROC ID NEWLINE -> ^( TREE_PROC ID ) | PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( local_vars )? ( local_ops )? DEDENT NEWLINE -> ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( local_ops )? ) );
     def proc(self, ):
         retval = self.proc_return()
         retval.start = self.input.LT(1)
@@ -877,9 +877,9 @@ class ShyRecognizerFrontend(Parser):
         NEWLINE39 = None
         proc_args35 = None
 
-        proc_attrs36 = None
+        local_vars36 = None
 
-        proc_ops37 = None
+        local_ops37 = None
 
 
         PROC27_tree = None
@@ -897,12 +897,12 @@ class ShyRecognizerFrontend(Parser):
         stream_ID = RewriteRuleTokenStream(self._adaptor, "token ID")
         stream_INDENT = RewriteRuleTokenStream(self._adaptor, "token INDENT")
         stream_PROC = RewriteRuleTokenStream(self._adaptor, "token PROC")
-        stream_proc_ops = RewriteRuleSubtreeStream(self._adaptor, "rule proc_ops")
         stream_proc_args = RewriteRuleSubtreeStream(self._adaptor, "rule proc_args")
-        stream_proc_attrs = RewriteRuleSubtreeStream(self._adaptor, "rule proc_attrs")
+        stream_local_ops = RewriteRuleSubtreeStream(self._adaptor, "rule local_ops")
+        stream_local_vars = RewriteRuleSubtreeStream(self._adaptor, "rule local_vars")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:48:5: ( PROC ID NEWLINE -> ^( TREE_PROC ID ) | PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( proc_attrs )? ( proc_ops )? DEDENT NEWLINE -> ^( TREE_PROC ID ( proc_args )? ( proc_attrs )? ( proc_ops )? ) )
+                # grammar/ShyRecognizerFrontend.g:48:5: ( PROC ID NEWLINE -> ^( TREE_PROC ID ) | PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( local_vars )? ( local_ops )? DEDENT NEWLINE -> ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( local_ops )? ) )
                 alt9 = 2
                 LA9_0 = self.input.LA(1)
 
@@ -995,7 +995,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 elif alt9 == 2:
-                    # grammar/ShyRecognizerFrontend.g:50:9: PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( proc_attrs )? ( proc_ops )? DEDENT NEWLINE
+                    # grammar/ShyRecognizerFrontend.g:50:9: PROC ID NEWLINE INDENT NEWLINE ( proc_args )? ( local_vars )? ( local_ops )? DEDENT NEWLINE
                     pass 
                     PROC30 = self.match(self.input, PROC, self.FOLLOW_PROC_in_proc394) 
                     stream_PROC.add(PROC30)
@@ -1036,39 +1036,39 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-                    # grammar/ShyRecognizerFrontend.g:51:25: ( proc_attrs )?
+                    # grammar/ShyRecognizerFrontend.g:51:25: ( local_vars )?
                     alt7 = 2
                     LA7_0 = self.input.LA(1)
 
                     if (LA7_0 == VARS) :
                         alt7 = 1
                     if alt7 == 1:
-                        # grammar/ShyRecognizerFrontend.g:51:25: proc_attrs
+                        # grammar/ShyRecognizerFrontend.g:51:25: local_vars
                         pass 
-                        self._state.following.append(self.FOLLOW_proc_attrs_in_proc420)
-                        proc_attrs36 = self.proc_attrs()
+                        self._state.following.append(self.FOLLOW_local_vars_in_proc420)
+                        local_vars36 = self.local_vars()
 
                         self._state.following.pop()
-                        stream_proc_attrs.add(proc_attrs36.tree)
+                        stream_local_vars.add(local_vars36.tree)
 
 
 
 
 
-                    # grammar/ShyRecognizerFrontend.g:51:38: ( proc_ops )?
+                    # grammar/ShyRecognizerFrontend.g:51:38: ( local_ops )?
                     alt8 = 2
                     LA8_0 = self.input.LA(1)
 
                     if (LA8_0 == OPS) :
                         alt8 = 1
                     if alt8 == 1:
-                        # grammar/ShyRecognizerFrontend.g:51:38: proc_ops
+                        # grammar/ShyRecognizerFrontend.g:51:38: local_ops
                         pass 
-                        self._state.following.append(self.FOLLOW_proc_ops_in_proc424)
-                        proc_ops37 = self.proc_ops()
+                        self._state.following.append(self.FOLLOW_local_ops_in_proc424)
+                        local_ops37 = self.local_ops()
 
                         self._state.following.pop()
-                        stream_proc_ops.add(proc_ops37.tree)
+                        stream_local_ops.add(local_ops37.tree)
 
 
 
@@ -1083,7 +1083,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: proc_args, ID, proc_attrs, proc_ops
+                    # elements: local_vars, local_ops, ID, proc_args
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1097,8 +1097,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 53:9: -> ^( TREE_PROC ID ( proc_args )? ( proc_attrs )? ( proc_ops )? )
-                    # grammar/ShyRecognizerFrontend.g:53:13: ^( TREE_PROC ID ( proc_args )? ( proc_attrs )? ( proc_ops )? )
+                    # 53:9: -> ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( local_ops )? )
+                    # grammar/ShyRecognizerFrontend.g:53:13: ^( TREE_PROC ID ( proc_args )? ( local_vars )? ( local_ops )? )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_PROC, "TREE_PROC")
@@ -1115,19 +1115,19 @@ class ShyRecognizerFrontend(Parser):
 
                     stream_proc_args.reset();
 
-                    # grammar/ShyRecognizerFrontend.g:53:41: ( proc_attrs )?
-                    if stream_proc_attrs.hasNext():
-                        self._adaptor.addChild(root_1, stream_proc_attrs.nextTree())
+                    # grammar/ShyRecognizerFrontend.g:53:41: ( local_vars )?
+                    if stream_local_vars.hasNext():
+                        self._adaptor.addChild(root_1, stream_local_vars.nextTree())
 
 
-                    stream_proc_attrs.reset();
+                    stream_local_vars.reset();
 
-                    # grammar/ShyRecognizerFrontend.g:53:54: ( proc_ops )?
-                    if stream_proc_ops.hasNext():
-                        self._adaptor.addChild(root_1, stream_proc_ops.nextTree())
+                    # grammar/ShyRecognizerFrontend.g:53:54: ( local_ops )?
+                    if stream_local_ops.hasNext():
+                        self._adaptor.addChild(root_1, stream_local_ops.nextTree())
 
 
-                    stream_proc_ops.reset();
+                    stream_local_ops.reset();
 
                     self._adaptor.addChild(root_0, root_1)
 
@@ -1256,9 +1256,9 @@ class ShyRecognizerFrontend(Parser):
     # $ANTLR end "proc_args"
 
 
-    class proc_attrs_return(ParserRuleReturnScope):
+    class local_vars_return(ParserRuleReturnScope):
         def __init__(self):
-            super(ShyRecognizerFrontend.proc_attrs_return, self).__init__()
+            super(ShyRecognizerFrontend.local_vars_return, self).__init__()
 
             self.tree = None
 
@@ -1266,10 +1266,10 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-    # $ANTLR start "proc_attrs"
-    # grammar/ShyRecognizerFrontend.g:60:1: proc_attrs : VARS attrs_hints -> ^( TREE_PROC_VARS attrs_hints ) ;
-    def proc_attrs(self, ):
-        retval = self.proc_attrs_return()
+    # $ANTLR start "local_vars"
+    # grammar/ShyRecognizerFrontend.g:60:1: local_vars : VARS attrs_hints -> ^( TREE_LOCAL_VARS attrs_hints ) ;
+    def local_vars(self, ):
+        retval = self.local_vars_return()
         retval.start = self.input.LT(1)
 
 
@@ -1284,14 +1284,14 @@ class ShyRecognizerFrontend(Parser):
         stream_attrs_hints = RewriteRuleSubtreeStream(self._adaptor, "rule attrs_hints")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:61:5: ( VARS attrs_hints -> ^( TREE_PROC_VARS attrs_hints ) )
+                # grammar/ShyRecognizerFrontend.g:61:5: ( VARS attrs_hints -> ^( TREE_LOCAL_VARS attrs_hints ) )
                 # grammar/ShyRecognizerFrontend.g:61:9: VARS attrs_hints
                 pass 
-                VARS42 = self.match(self.input, VARS, self.FOLLOW_VARS_in_proc_attrs519) 
+                VARS42 = self.match(self.input, VARS, self.FOLLOW_VARS_in_local_vars519) 
                 stream_VARS.add(VARS42)
 
 
-                self._state.following.append(self.FOLLOW_attrs_hints_in_proc_attrs521)
+                self._state.following.append(self.FOLLOW_attrs_hints_in_local_vars521)
                 attrs_hints43 = self.attrs_hints()
 
                 self._state.following.pop()
@@ -1313,11 +1313,11 @@ class ShyRecognizerFrontend(Parser):
 
 
                 root_0 = self._adaptor.nil()
-                # 61:26: -> ^( TREE_PROC_VARS attrs_hints )
-                # grammar/ShyRecognizerFrontend.g:61:29: ^( TREE_PROC_VARS attrs_hints )
+                # 61:26: -> ^( TREE_LOCAL_VARS attrs_hints )
+                # grammar/ShyRecognizerFrontend.g:61:29: ^( TREE_LOCAL_VARS attrs_hints )
                 root_1 = self._adaptor.nil()
                 root_1 = self._adaptor.becomeRoot(
-                self._adaptor.createFromType(TREE_PROC_VARS, "TREE_PROC_VARS")
+                self._adaptor.createFromType(TREE_LOCAL_VARS, "TREE_LOCAL_VARS")
                 , root_1)
 
                 self._adaptor.addChild(root_1, stream_attrs_hints.nextTree())
@@ -1350,12 +1350,12 @@ class ShyRecognizerFrontend(Parser):
             pass
         return retval
 
-    # $ANTLR end "proc_attrs"
+    # $ANTLR end "local_vars"
 
 
-    class proc_ops_return(ParserRuleReturnScope):
+    class local_ops_return(ParserRuleReturnScope):
         def __init__(self):
-            super(ShyRecognizerFrontend.proc_ops_return, self).__init__()
+            super(ShyRecognizerFrontend.local_ops_return, self).__init__()
 
             self.tree = None
 
@@ -1363,10 +1363,10 @@ class ShyRecognizerFrontend(Parser):
 
 
 
-    # $ANTLR start "proc_ops"
-    # grammar/ShyRecognizerFrontend.g:64:1: proc_ops : OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE -> statements ;
-    def proc_ops(self, ):
-        retval = self.proc_ops_return()
+    # $ANTLR start "local_ops"
+    # grammar/ShyRecognizerFrontend.g:64:1: local_ops : OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE -> statements ;
+    def local_ops(self, ):
+        retval = self.local_ops_return()
         retval.start = self.input.LT(1)
 
 
@@ -1397,34 +1397,34 @@ class ShyRecognizerFrontend(Parser):
                 # grammar/ShyRecognizerFrontend.g:65:5: ( OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE -> statements )
                 # grammar/ShyRecognizerFrontend.g:65:9: OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
                 pass 
-                OPS44 = self.match(self.input, OPS, self.FOLLOW_OPS_in_proc_ops550) 
+                OPS44 = self.match(self.input, OPS, self.FOLLOW_OPS_in_local_ops550) 
                 stream_OPS.add(OPS44)
 
 
-                NEWLINE45 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_proc_ops552) 
+                NEWLINE45 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_local_ops552) 
                 stream_NEWLINE.add(NEWLINE45)
 
 
-                INDENT46 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_proc_ops554) 
+                INDENT46 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_local_ops554) 
                 stream_INDENT.add(INDENT46)
 
 
-                NEWLINE47 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_proc_ops556) 
+                NEWLINE47 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_local_ops556) 
                 stream_NEWLINE.add(NEWLINE47)
 
 
-                self._state.following.append(self.FOLLOW_statements_in_proc_ops558)
+                self._state.following.append(self.FOLLOW_statements_in_local_ops558)
                 statements48 = self.statements()
 
                 self._state.following.pop()
                 stream_statements.add(statements48.tree)
 
 
-                DEDENT49 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_proc_ops560) 
+                DEDENT49 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_local_ops560) 
                 stream_DEDENT.add(DEDENT49)
 
 
-                NEWLINE50 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_proc_ops562) 
+                NEWLINE50 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_local_ops562) 
                 stream_NEWLINE.add(NEWLINE50)
 
 
@@ -1472,7 +1472,7 @@ class ShyRecognizerFrontend(Parser):
             pass
         return retval
 
-    # $ANTLR end "proc_ops"
+    # $ANTLR end "local_ops"
 
 
     class statement_return(ParserRuleReturnScope):
@@ -1851,7 +1851,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statements, ID
+                # elements: ID, statements
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -2064,7 +2064,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, arbitrary_value
+                    # elements: arbitrary_value, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2236,7 +2236,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, arbitrary_value
+                    # elements: arbitrary_value, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2364,7 +2364,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: arbitrary_value, ID
+                    # elements: ID, arbitrary_value
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2536,7 +2536,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, arbitrary_value
+                    # elements: arbitrary_value, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2865,7 +2865,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statement_else, statement_elif, statement_if_head
+                # elements: statement_else, statement_if_head, statement_elif
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4601,7 +4601,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, consts_items
+                # elements: consts_items, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4918,7 +4918,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: num_fract, ID
+                    # elements: ID, num_fract
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -5137,7 +5137,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: types_item, ID
+                # elements: ID, types_item
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -5246,7 +5246,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: attrs_hints, ID
+                # elements: ID, attrs_hints
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -5411,7 +5411,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, messages_item
+                # elements: messages_item, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -5520,7 +5520,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -7230,21 +7230,21 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_INDENT_in_proc400 = frozenset([26])
     FOLLOW_NEWLINE_in_proc402 = frozenset([6, 13, 28, 75])
     FOLLOW_proc_args_in_proc416 = frozenset([13, 28, 75])
-    FOLLOW_proc_attrs_in_proc420 = frozenset([13, 28])
-    FOLLOW_proc_ops_in_proc424 = frozenset([13])
+    FOLLOW_local_vars_in_proc420 = frozenset([13, 28])
+    FOLLOW_local_ops_in_proc424 = frozenset([13])
     FOLLOW_DEDENT_in_proc436 = frozenset([26])
     FOLLOW_NEWLINE_in_proc438 = frozenset([1])
     FOLLOW_ARGS_in_proc_args488 = frozenset([12, 19, 26])
     FOLLOW_attrs_hints_in_proc_args490 = frozenset([1])
-    FOLLOW_VARS_in_proc_attrs519 = frozenset([12, 19, 26])
-    FOLLOW_attrs_hints_in_proc_attrs521 = frozenset([1])
-    FOLLOW_OPS_in_proc_ops550 = frozenset([26])
-    FOLLOW_NEWLINE_in_proc_ops552 = frozenset([21])
-    FOLLOW_INDENT_in_proc_ops554 = frozenset([26])
-    FOLLOW_NEWLINE_in_proc_ops556 = frozenset([18, 19, 20, 23, 27, 76, 78])
-    FOLLOW_statements_in_proc_ops558 = frozenset([13])
-    FOLLOW_DEDENT_in_proc_ops560 = frozenset([26])
-    FOLLOW_NEWLINE_in_proc_ops562 = frozenset([1])
+    FOLLOW_VARS_in_local_vars519 = frozenset([12, 19, 26])
+    FOLLOW_attrs_hints_in_local_vars521 = frozenset([1])
+    FOLLOW_OPS_in_local_ops550 = frozenset([26])
+    FOLLOW_NEWLINE_in_local_ops552 = frozenset([21])
+    FOLLOW_INDENT_in_local_ops554 = frozenset([26])
+    FOLLOW_NEWLINE_in_local_ops556 = frozenset([18, 19, 20, 23, 27, 76, 78])
+    FOLLOW_statements_in_local_ops558 = frozenset([13])
+    FOLLOW_DEDENT_in_local_ops560 = frozenset([26])
+    FOLLOW_NEWLINE_in_local_ops562 = frozenset([1])
     FOLLOW_statement_call_single_line_in_statement593 = frozenset([26])
     FOLLOW_NEWLINE_in_statement595 = frozenset([1])
     FOLLOW_statement_call_multi_line_in_statement621 = frozenset([1])
