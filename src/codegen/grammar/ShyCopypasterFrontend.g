@@ -80,6 +80,7 @@ arbitrary_token
     |   REQUEST
     |   REPLY
     |   STATELESS
+    |   TRACE
     |   TYPES
     |   VARS
     |   WHILE

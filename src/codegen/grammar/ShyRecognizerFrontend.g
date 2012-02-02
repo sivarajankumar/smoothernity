@@ -21,7 +21,7 @@ options
         raise ShyRecognizerFrontendException ( msg )
 }
 
-start : ( module | stateless | consts | types | messages | vars ) * ;
+start : ( module | stateless | consts | types | messages | vars | trace ) * ;
 
 module
     :   MODULE ID NEWLINE INDENT NEWLINE
@@ -41,6 +41,11 @@ module
 module_queue
     :   MODULE_QUEUE ID NEWLINE
         ->  ^( TREE_MODULE_QUEUE ID )
+    ;
+
+trace
+    :   TRACE ID NEWLINE ( INDENT NEWLINE proc + DEDENT NEWLINE ) ?
+        ->  ^( TREE_TRACE ID proc * )
     ;
 
 stateless

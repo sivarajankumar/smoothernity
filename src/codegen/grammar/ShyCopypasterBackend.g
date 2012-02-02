@@ -132,6 +132,7 @@ arbitrary_token
     |   REQUEST { $value = $REQUEST.text }
     |   REPLY { $value = $REPLY.text }
     |   STATELESS { $value = $STATELESS.text }
+    |   TRACE { $value = $TRACE.text }
     |   TYPES { $value = $TYPES.text }
     |   VARS { $value = $VARS.text }
     |   WHILE { $value = $WHILE.text }
