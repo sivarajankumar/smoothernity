@@ -18,4 +18,4 @@ class start_test_case ( unittest . TestCase ) :
         ae ( r ( 'module module1\n proc proc1\n'
                  'module module1\n proc proc2\n' ) ,
             { 'module' : { 'module1' : 
-                { 'procs' : { 'proc1' : { } , 'proc2' : { } } } } } )
+                { 'proc' : { 'proc1' : { } , 'proc2' : { } } } } } )

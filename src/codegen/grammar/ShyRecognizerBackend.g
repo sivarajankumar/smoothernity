@@ -57,7 +57,10 @@ module
                 { $content [ 'module_queue' ] = $module_queue.value }
             ) ?
             ( procs
-                { $content [ 'procs' ] = $procs.value }
+                { $content [ 'proc' ] = $procs.value }
+            ) ?
+            ( receives
+                { $content [ 'receive' ] = $receives.value }
             ) ?
         )
     ;
@@ -73,6 +76,27 @@ stateless
             { $title , $content = $ID.text , dict ( ) }
     |   ^( TREE_STATELESS ID procs )
             { $title , $content = $ID.text , $procs.value }
+    ;
+
+receives
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( receive { $value [ $receive.title ] = $receive.content } ) +
+    ;
+
+receive
+    returns [ title , content ]
+    @ init { $content = dict ( ) }
+    :   ^( TREE_RECEIVE
+            ID
+                { $title = $ID.text }
+            ( local_vars
+                { $content [ 'vars' ] = $local_vars.value }
+            ) ?
+            ( statements
+                { $content [ 'ops' ] = $statements.value }
+            ) ?
+        )
     ;
 
 procs
