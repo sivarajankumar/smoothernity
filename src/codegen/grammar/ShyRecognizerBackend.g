@@ -26,6 +26,11 @@ start
                 $value = merge ( $value , { 'stateless' :
                     { $stateless.title : $stateless.content } } )
             }
+        | trace 
+            {
+                $value = merge ( $value , { 'trace' :
+                    { $trace.title : $trace.content } } )
+            }
         | consts
             {
                 $value = merge ( $value , { 'consts' :
@@ -71,6 +76,14 @@ module
 module_queue
     returns [ value ]
     :   ^( TREE_MODULE_QUEUE ID ) { $value = $ID.text }
+    ;
+
+trace
+    returns [ title , content ]
+    :   ^( TREE_TRACE ID )
+            { $title , $content = $ID.text , dict ( ) }
+    |   ^( TREE_TRACE ID procs )
+            { $title , $content = $ID.text , $procs.value }
     ;
 
 stateless
