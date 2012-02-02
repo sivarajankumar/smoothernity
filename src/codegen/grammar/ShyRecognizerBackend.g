@@ -357,8 +357,27 @@ messages_items
 
 messages_item
     returns [ value ]
-    :   ^( TREE_MESSAGES_ITEM ID attrs_hints )
-            { $value = { 'receive' : { $ID.text : $attrs_hints.value } } }
+    @ init { $value = dict ( ) }
+    :   ^( TREE_MESSAGES_ITEM ID
+            ( TREE_MESSAGES_ITEM_RECEIVE a = attrs_hints
+                {
+                    $value = merge ( $value ,
+                        { 'receive' : { $ID.text : $a.value } } )
+                }
+            ) ?
+            ( TREE_MESSAGES_ITEM_REQUEST c = attrs_hints
+                {
+                    $value = merge ( $value ,
+                        { 'request' : { $ID.text : $c.value } } )
+                }
+            ) ?
+            ( TREE_MESSAGES_ITEM_REPLY b = attrs_hints
+                {
+                    $value = merge ( $value ,
+                        { 'reply' : { $ID.text : $b.value } } )
+                }
+            ) ?
+        )
     ;
 
 vars
