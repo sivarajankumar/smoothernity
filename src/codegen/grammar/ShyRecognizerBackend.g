@@ -351,14 +351,14 @@ messages_items
     returns [ value ]
     @ init { $value = dict ( ) }
     :   ( messages_item
-            { $value [ $messages_item.name ] = $messages_item.value }
+            { $value = merge ( $value, $messages_item.value ) }
         ) +
     ;
 
 messages_item
-    returns [ name , value ]
+    returns [ value ]
     :   ^( TREE_MESSAGES_ITEM ID attrs_hints )
-            { $name , $value = $ID.text , $attrs_hints.value }
+            { $value = { 'receive' : { $ID.text : $attrs_hints.value } } }
     ;
 
 vars
