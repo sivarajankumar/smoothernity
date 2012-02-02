@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-02-01 19:37:40
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-02-02 10:13:12
 
 import sys
 from antlr3 import *
@@ -57,18 +57,18 @@ TREE_COPY_PASTE=44
 TREE_EXPRESSION=45
 TREE_HINT=46
 TREE_HINT_NONE=47
-TREE_MESSAGES=48
-TREE_MESSAGES_ITEM=49
-TREE_MODULE=50
-TREE_MODULE_QUEUE=51
-TREE_NUM_FRACT=52
-TREE_NUM_WHOLE=53
-TREE_PASTE=54
-TREE_PASTE_REPLACE=55
-TREE_PASTE_WITH=56
-TREE_PROC=57
-TREE_PROC_ARGS=58
-TREE_PROC_VARS=59
+TREE_LOCAL_VARS=48
+TREE_MESSAGES=49
+TREE_MESSAGES_ITEM=50
+TREE_MODULE=51
+TREE_MODULE_QUEUE=52
+TREE_NUM_FRACT=53
+TREE_NUM_WHOLE=54
+TREE_PASTE=55
+TREE_PASTE_REPLACE=56
+TREE_PASTE_WITH=57
+TREE_PROC=58
+TREE_PROC_ARGS=59
 TREE_STATELESS=60
 TREE_STATEMENTS=61
 TREE_STATEMENT_ASSIGN=62
@@ -99,9 +99,9 @@ tokenNames = [
     "STATELESS", "STRING", "TREE_ARBITRARY_TOKEN", "TREE_ATTR", "TREE_ATTRS_HINTS", 
     "TREE_ATTR_HINT", "TREE_CONDITION_ALL", "TREE_CONDITION_ANY", "TREE_CONSTS", 
     "TREE_COPY", "TREE_COPY_PASTE", "TREE_EXPRESSION", "TREE_HINT", "TREE_HINT_NONE", 
-    "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", "TREE_MODULE_QUEUE", 
-    "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", "TREE_PASTE_REPLACE", 
-    "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", "TREE_PROC_VARS", 
+    "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", "TREE_MODULE", 
+    "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", "TREE_PASTE", 
+    "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", "TREE_PROC_ARGS", 
     "TREE_STATELESS", "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", 
     "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", 
     "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", "TREE_STATEMENT_WITH", 
@@ -1522,11 +1522,11 @@ class ShyCopypasterBackend(TreeParser):
         )
 
     DFA10_min = DFA.unpack(
-        u"\1\70\1\2\1\4\37\3\2\uffff"
+        u"\1\71\1\2\1\4\37\3\2\uffff"
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\70\1\2\40\116\2\uffff"
+        u"\1\71\1\2\40\116\2\uffff"
         )
 
     DFA10_accept = DFA.unpack(
@@ -1705,9 +1705,9 @@ class ShyCopypasterBackend(TreeParser):
     FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 44])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste683 = frozenset([2])
     FOLLOW_pastes_in_copy_paste685 = frozenset([3])
-    FOLLOW_paste_in_pastes728 = frozenset([1, 54])
+    FOLLOW_paste_in_pastes728 = frozenset([1, 55])
     FOLLOW_TREE_PASTE_in_paste763 = frozenset([2])
-    FOLLOW_paste_replace_in_paste765 = frozenset([56])
+    FOLLOW_paste_replace_in_paste765 = frozenset([57])
     FOLLOW_paste_with_in_paste767 = frozenset([3])
     FOLLOW_TREE_PASTE_REPLACE_in_paste_replace808 = frozenset([2])
     FOLLOW_ID_in_paste_replace810 = frozenset([3])

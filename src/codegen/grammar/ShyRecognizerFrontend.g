@@ -48,20 +48,20 @@ proc
     :   PROC ID NEWLINE
         ->  ^( TREE_PROC ID )
     |   PROC ID NEWLINE INDENT NEWLINE
-            proc_args ? proc_attrs ? proc_ops ?
+            proc_args ? local_vars ? local_ops ?
         DEDENT NEWLINE
-        ->  ^( TREE_PROC ID proc_args ? proc_attrs ? proc_ops ? )
+        ->  ^( TREE_PROC ID proc_args ? local_vars ? local_ops ? )
     ;
 
 proc_args
     :   ARGS attrs_hints -> ^( TREE_PROC_ARGS attrs_hints )
     ;
 
-proc_attrs
-    :   VARS attrs_hints -> ^( TREE_PROC_VARS attrs_hints )
+local_vars
+    :   VARS attrs_hints -> ^( TREE_LOCAL_VARS attrs_hints )
     ;
 
-proc_ops
+local_ops
     :   OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
         -> statements
     ;
