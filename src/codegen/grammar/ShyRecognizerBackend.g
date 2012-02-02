@@ -58,19 +58,22 @@ module
     returns [ title , content ]
     :   ^( TREE_MODULE ID
             { $title , $content = $ID.text , dict ( ) }
-            ( module_queue 
-                { $content [ 'module_queue' ] = $module_queue.value }
-            ) ?
-            ( procs
-                { $content [ 'proc' ] = $procs.value }
-            ) ?
-            ( receives
-                { $content [ 'receive' ] = $receives.value }
-            ) ?
-            ( requests
-                { $content [ 'request' ] = $requests.value }
-            ) ?
+            ( module_item
+                { $content = merge ( $content , $module_item.value ) }
+            ) *
         )
+    ;
+
+module_item
+    returns [ value ]
+    :   module_queue 
+            { $value = { 'module_queue' : $module_queue.value } }
+    |   proc
+            { $value = { 'proc' : { $proc.title : $proc.content } } }
+    |   receive
+            { $value = { 'receive' : { $receive.title : $receive.content } } }
+    |   request
+            { $value = { 'request' : { $request.title : $request.content } } }
     ;
 
 module_queue
@@ -94,12 +97,6 @@ stateless
             { $title , $content = $ID.text , $procs.value }
     ;
 
-requests
-    returns [ value ]
-    @ init { $value = dict ( ) }
-    :   ( request { $value [ $request.title ] = $request.content } ) +
-    ;
-
 request
     returns [ title , content ]
     @ init { $content = dict ( ) }
@@ -113,12 +110,6 @@ request
                 { $content [ 'ops' ] = $statements.value }
             ) ?
         )
-    ;
-
-receives
-    returns [ value ]
-    @ init { $value = dict ( ) }
-    :   ( receive { $value [ $receive.title ] = $receive.content } ) +
     ;
 
 receive
