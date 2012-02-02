@@ -59,8 +59,8 @@ messages engine_render
     mesh_set_vertex_position mesh offset x y z
     mesh_set_vertex_tex_coord mesh offset u v
     mesh_create
-        reply mesh
         request vertices triangle_strip_indices triangle_fan_indices
+        reply mesh
     copy
         projection_what x_left x_right y_bottom y_top z_near z_far
     paste replace what with frustum
