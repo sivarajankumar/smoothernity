@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 20:18:10
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 20:19:44
 
 import sys
 from antlr3 import *
@@ -580,7 +580,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: receive, request, proc, module_queue, ID
+                # elements: receive, request, module_queue, ID, proc
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -887,7 +887,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, proc
+                # elements: proc, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1069,7 +1069,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: proc, ID
+                # elements: ID, proc
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1460,7 +1460,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, local_ops, local_vars
+                    # elements: local_vars, ID, local_ops
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1750,7 +1750,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: statements, ID
+                    # elements: ID, statements
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1857,7 +1857,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: local_vars, ID, local_ops
+                    # elements: local_ops, local_vars, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2150,7 +2150,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: statements, ID
+                    # elements: ID, statements
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2276,7 +2276,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, local_vars, proc_args, local_ops
+                    # elements: local_vars, ID, local_ops, proc_args
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -3557,7 +3557,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: arbitrary_value, ID
+                    # elements: ID, arbitrary_value
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -4058,7 +4058,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statement_elif, statement_if_head, statement_else
+                # elements: statement_if_head, statement_else, statement_elif
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -4408,7 +4408,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statements, condition
+                # elements: condition, statements
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -5811,7 +5811,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: consts_items, ID
+                # elements: ID, consts_items
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6072,7 +6072,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, num_whole
+                    # elements: num_whole, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -6347,7 +6347,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: types_item, ID
+                # elements: ID, types_item
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6456,7 +6456,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6621,7 +6621,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: messages_item, ID
+                # elements: ID, messages_item
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6698,7 +6698,7 @@ class ShyRecognizerFrontend(Parser):
 
 
     # $ANTLR start "messages_item"
-    # grammar/ShyRecognizerFrontend.g:251:1: messages_item : ( ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_RECEIVE attrs_hints ) | ID REPLY attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID REQUEST attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints TREE_MESSAGES_ITEM_REPLY attrs_hints ) );
+    # grammar/ShyRecognizerFrontend.g:251:1: messages_item : ( ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_RECEIVE attrs_hints ) | ID REPLY attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID REQUEST attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints TREE_MESSAGES_ITEM_REPLY attrs_hints ) );
     def messages_item(self, ):
         retval = self.messages_item_return()
         retval.start = self.input.LT(1)
@@ -6710,14 +6710,14 @@ class ShyRecognizerFrontend(Parser):
         ID257 = None
         REPLY258 = None
         ID260 = None
-        NEWLINE261 = None
-        INDENT262 = None
-        NEWLINE263 = None
-        REPLY264 = None
-        DEDENT266 = None
-        NEWLINE267 = None
-        ID268 = None
-        REQUEST269 = None
+        REQUEST261 = None
+        ID263 = None
+        NEWLINE264 = None
+        INDENT265 = None
+        NEWLINE266 = None
+        REPLY267 = None
+        DEDENT269 = None
+        NEWLINE270 = None
         ID271 = None
         NEWLINE272 = None
         INDENT273 = None
@@ -6737,9 +6737,9 @@ class ShyRecognizerFrontend(Parser):
 
         attrs_hints259 = None
 
-        attrs_hints265 = None
+        attrs_hints262 = None
 
-        attrs_hints270 = None
+        attrs_hints268 = None
 
         attrs_hints276 = None
 
@@ -6752,14 +6752,14 @@ class ShyRecognizerFrontend(Parser):
         ID257_tree = None
         REPLY258_tree = None
         ID260_tree = None
-        NEWLINE261_tree = None
-        INDENT262_tree = None
-        NEWLINE263_tree = None
-        REPLY264_tree = None
-        DEDENT266_tree = None
-        NEWLINE267_tree = None
-        ID268_tree = None
-        REQUEST269_tree = None
+        REQUEST261_tree = None
+        ID263_tree = None
+        NEWLINE264_tree = None
+        INDENT265_tree = None
+        NEWLINE266_tree = None
+        REPLY267_tree = None
+        DEDENT269_tree = None
+        NEWLINE270_tree = None
         ID271_tree = None
         NEWLINE272_tree = None
         INDENT273_tree = None
@@ -6784,7 +6784,7 @@ class ShyRecognizerFrontend(Parser):
         stream_attrs_hints = RewriteRuleSubtreeStream(self._adaptor, "rule attrs_hints")
         try:
             try:
-                # grammar/ShyRecognizerFrontend.g:252:5: ( ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_RECEIVE attrs_hints ) | ID REPLY attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID REQUEST attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints TREE_MESSAGES_ITEM_REPLY attrs_hints ) )
+                # grammar/ShyRecognizerFrontend.g:252:5: ( ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_RECEIVE attrs_hints ) | ID REPLY attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID REQUEST attrs_hints -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints ) | ID NEWLINE INDENT NEWLINE REQUEST attrs_hints REPLY attrs_hints DEDENT NEWLINE -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints TREE_MESSAGES_ITEM_REPLY attrs_hints ) )
                 alt51 = 6
                 alt51 = self.dfa51.predict(self.input)
                 if alt51 == 1:
@@ -6904,41 +6904,21 @@ class ShyRecognizerFrontend(Parser):
 
 
                 elif alt51 == 3:
-                    # grammar/ShyRecognizerFrontend.g:260:9: ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE
+                    # grammar/ShyRecognizerFrontend.g:260:9: ID REQUEST attrs_hints
                     pass 
                     ID260 = self.match(self.input, ID, self.FOLLOW_ID_in_messages_item2862) 
                     stream_ID.add(ID260)
 
 
-                    NEWLINE261 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2864) 
-                    stream_NEWLINE.add(NEWLINE261)
+                    REQUEST261 = self.match(self.input, REQUEST, self.FOLLOW_REQUEST_in_messages_item2864) 
+                    stream_REQUEST.add(REQUEST261)
 
 
-                    INDENT262 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_messages_item2866) 
-                    stream_INDENT.add(INDENT262)
-
-
-                    NEWLINE263 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2868) 
-                    stream_NEWLINE.add(NEWLINE263)
-
-
-                    REPLY264 = self.match(self.input, REPLY, self.FOLLOW_REPLY_in_messages_item2870) 
-                    stream_REPLY.add(REPLY264)
-
-
-                    self._state.following.append(self.FOLLOW_attrs_hints_in_messages_item2872)
-                    attrs_hints265 = self.attrs_hints()
+                    self._state.following.append(self.FOLLOW_attrs_hints_in_messages_item2866)
+                    attrs_hints262 = self.attrs_hints()
 
                     self._state.following.pop()
-                    stream_attrs_hints.add(attrs_hints265.tree)
-
-
-                    DEDENT266 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_messages_item2874) 
-                    stream_DEDENT.add(DEDENT266)
-
-
-                    NEWLINE267 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2876) 
-                    stream_NEWLINE.add(NEWLINE267)
+                    stream_attrs_hints.add(attrs_hints262.tree)
 
 
                     # AST Rewrite
@@ -6956,8 +6936,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 261:9: -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints )
-                    # grammar/ShyRecognizerFrontend.g:261:13: ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints )
+                    # 261:9: -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints )
+                    # grammar/ShyRecognizerFrontend.g:261:13: ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_MESSAGES_ITEM, "TREE_MESSAGES_ITEM")
@@ -6968,7 +6948,7 @@ class ShyRecognizerFrontend(Parser):
                     )
 
                     self._adaptor.addChild(root_1, 
-                    self._adaptor.createFromType(TREE_MESSAGES_ITEM_REPLY, "TREE_MESSAGES_ITEM_REPLY")
+                    self._adaptor.createFromType(TREE_MESSAGES_ITEM_REQUEST, "TREE_MESSAGES_ITEM_REQUEST")
                     )
 
                     self._adaptor.addChild(root_1, stream_attrs_hints.nextTree())
@@ -6984,25 +6964,45 @@ class ShyRecognizerFrontend(Parser):
 
 
                 elif alt51 == 4:
-                    # grammar/ShyRecognizerFrontend.g:264:9: ID REQUEST attrs_hints
+                    # grammar/ShyRecognizerFrontend.g:264:9: ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE
                     pass 
-                    ID268 = self.match(self.input, ID, self.FOLLOW_ID_in_messages_item2937) 
-                    stream_ID.add(ID268)
+                    ID263 = self.match(self.input, ID, self.FOLLOW_ID_in_messages_item2927) 
+                    stream_ID.add(ID263)
 
 
-                    REQUEST269 = self.match(self.input, REQUEST, self.FOLLOW_REQUEST_in_messages_item2939) 
-                    stream_REQUEST.add(REQUEST269)
+                    NEWLINE264 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2929) 
+                    stream_NEWLINE.add(NEWLINE264)
 
 
-                    self._state.following.append(self.FOLLOW_attrs_hints_in_messages_item2941)
-                    attrs_hints270 = self.attrs_hints()
+                    INDENT265 = self.match(self.input, INDENT, self.FOLLOW_INDENT_in_messages_item2931) 
+                    stream_INDENT.add(INDENT265)
+
+
+                    NEWLINE266 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2933) 
+                    stream_NEWLINE.add(NEWLINE266)
+
+
+                    REPLY267 = self.match(self.input, REPLY, self.FOLLOW_REPLY_in_messages_item2935) 
+                    stream_REPLY.add(REPLY267)
+
+
+                    self._state.following.append(self.FOLLOW_attrs_hints_in_messages_item2937)
+                    attrs_hints268 = self.attrs_hints()
 
                     self._state.following.pop()
-                    stream_attrs_hints.add(attrs_hints270.tree)
+                    stream_attrs_hints.add(attrs_hints268.tree)
+
+
+                    DEDENT269 = self.match(self.input, DEDENT, self.FOLLOW_DEDENT_in_messages_item2939) 
+                    stream_DEDENT.add(DEDENT269)
+
+
+                    NEWLINE270 = self.match(self.input, NEWLINE, self.FOLLOW_NEWLINE_in_messages_item2941) 
+                    stream_NEWLINE.add(NEWLINE270)
 
 
                     # AST Rewrite
-                    # elements: ID, attrs_hints
+                    # elements: attrs_hints, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7016,8 +7016,8 @@ class ShyRecognizerFrontend(Parser):
 
 
                     root_0 = self._adaptor.nil()
-                    # 265:9: -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints )
-                    # grammar/ShyRecognizerFrontend.g:265:13: ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REQUEST attrs_hints )
+                    # 265:9: -> ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints )
+                    # grammar/ShyRecognizerFrontend.g:265:13: ^( TREE_MESSAGES_ITEM ID TREE_MESSAGES_ITEM_REPLY attrs_hints )
                     root_1 = self._adaptor.nil()
                     root_1 = self._adaptor.becomeRoot(
                     self._adaptor.createFromType(TREE_MESSAGES_ITEM, "TREE_MESSAGES_ITEM")
@@ -7028,7 +7028,7 @@ class ShyRecognizerFrontend(Parser):
                     )
 
                     self._adaptor.addChild(root_1, 
-                    self._adaptor.createFromType(TREE_MESSAGES_ITEM_REQUEST, "TREE_MESSAGES_ITEM_REQUEST")
+                    self._adaptor.createFromType(TREE_MESSAGES_ITEM_REPLY, "TREE_MESSAGES_ITEM_REPLY")
                     )
 
                     self._adaptor.addChild(root_1, stream_attrs_hints.nextTree())
@@ -7082,7 +7082,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, attrs_hints
+                    # elements: attrs_hints, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7290,7 +7290,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -8782,7 +8782,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA51_min = DFA.unpack(
-        u"\1\23\1\14\1\uffff\1\25\2\uffff\1\32\1\14\1\uffff\1\14\2\23\1\25"
+        u"\1\23\1\14\2\uffff\1\25\1\uffff\1\32\1\14\1\uffff\1\14\2\23\1\25"
         u"\1\15\1\13\1\32\1\uffff\1\32\1\uffff\1\23\1\13\2\14\1\23\1\25\5"
         u"\23\1\32\1\14\1\13\1\14\1\13\1\23\1\32\1\23\1\13\1\32\1\23\1\13"
         u"\1\23\1\15\1\23\1\25\1\23\1\15\1\23\1\25\1\23\1\15\3\32\4\23\2"
@@ -8790,7 +8790,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA51_max = DFA.unpack(
-        u"\1\23\1\42\1\uffff\1\25\2\uffff\1\32\1\42\1\uffff\2\32\1\23\1\25"
+        u"\1\23\1\42\2\uffff\1\25\1\uffff\1\32\1\42\1\uffff\2\32\1\23\1\25"
         u"\1\41\1\122\1\32\1\uffff\1\32\1\uffff\1\32\1\122\2\23\1\32\1\25"
         u"\2\32\1\23\1\32\1\23\1\32\1\23\1\122\1\23\1\122\1\23\2\32\1\122"
         u"\2\32\1\122\1\32\1\41\1\32\1\25\1\32\1\41\1\32\1\25\1\32\1\23\3"
@@ -8798,7 +8798,7 @@ class ShyRecognizerFrontend(Parser):
         )
 
     DFA51_accept = DFA.unpack(
-        u"\2\uffff\1\2\1\uffff\1\4\1\1\2\uffff\1\3\7\uffff\1\5\1\uffff\1"
+        u"\2\uffff\1\2\1\3\1\uffff\1\1\2\uffff\1\4\7\uffff\1\5\1\uffff\1"
         u"\6\54\uffff"
         )
 
@@ -8809,10 +8809,10 @@ class ShyRecognizerFrontend(Parser):
 
     DFA51_transition = [
         DFA.unpack(u"\1\1"),
-        DFA.unpack(u"\1\5\6\uffff\1\5\6\uffff\1\3\6\uffff\1\2\1\4"),
+        DFA.unpack(u"\1\5\6\uffff\1\5\6\uffff\1\4\6\uffff\1\2\1\3"),
+        DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\6"),
-        DFA.unpack(u""),
         DFA.unpack(u""),
         DFA.unpack(u"\1\7"),
         DFA.unpack(u"\1\5\6\uffff\1\5\15\uffff\1\10\1\11"),
@@ -9243,17 +9243,17 @@ class ShyRecognizerFrontend(Parser):
     FOLLOW_ID_in_messages_item2797 = frozenset([33])
     FOLLOW_REPLY_in_messages_item2799 = frozenset([12, 19, 26])
     FOLLOW_attrs_hints_in_messages_item2801 = frozenset([1])
-    FOLLOW_ID_in_messages_item2862 = frozenset([26])
-    FOLLOW_NEWLINE_in_messages_item2864 = frozenset([21])
-    FOLLOW_INDENT_in_messages_item2866 = frozenset([26])
-    FOLLOW_NEWLINE_in_messages_item2868 = frozenset([33])
-    FOLLOW_REPLY_in_messages_item2870 = frozenset([12, 19, 26])
-    FOLLOW_attrs_hints_in_messages_item2872 = frozenset([13])
-    FOLLOW_DEDENT_in_messages_item2874 = frozenset([26])
-    FOLLOW_NEWLINE_in_messages_item2876 = frozenset([1])
-    FOLLOW_ID_in_messages_item2937 = frozenset([34])
-    FOLLOW_REQUEST_in_messages_item2939 = frozenset([12, 19, 26])
-    FOLLOW_attrs_hints_in_messages_item2941 = frozenset([1])
+    FOLLOW_ID_in_messages_item2862 = frozenset([34])
+    FOLLOW_REQUEST_in_messages_item2864 = frozenset([12, 19, 26])
+    FOLLOW_attrs_hints_in_messages_item2866 = frozenset([1])
+    FOLLOW_ID_in_messages_item2927 = frozenset([26])
+    FOLLOW_NEWLINE_in_messages_item2929 = frozenset([21])
+    FOLLOW_INDENT_in_messages_item2931 = frozenset([26])
+    FOLLOW_NEWLINE_in_messages_item2933 = frozenset([33])
+    FOLLOW_REPLY_in_messages_item2935 = frozenset([12, 19, 26])
+    FOLLOW_attrs_hints_in_messages_item2937 = frozenset([13])
+    FOLLOW_DEDENT_in_messages_item2939 = frozenset([26])
+    FOLLOW_NEWLINE_in_messages_item2941 = frozenset([1])
     FOLLOW_ID_in_messages_item3002 = frozenset([26])
     FOLLOW_NEWLINE_in_messages_item3004 = frozenset([21])
     FOLLOW_INDENT_in_messages_item3006 = frozenset([26])
