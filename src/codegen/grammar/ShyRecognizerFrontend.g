@@ -28,11 +28,13 @@ module
         module_queue ?
         proc *
         receive *
+        request *
         DEDENT NEWLINE
         ->  ^( TREE_MODULE ID
                 module_queue ?
                 proc *
                 receive *
+                request *
             )
     ;
 
@@ -44,6 +46,15 @@ module_queue
 stateless
     :   STATELESS ID NEWLINE ( INDENT NEWLINE proc + DEDENT NEWLINE ) ?
         ->  ^( TREE_STATELESS ID proc * )
+    ;
+
+request
+    :   REQUEST ID NEWLINE
+        ->  ^( TREE_REQUEST ID )
+    |   REQUEST ID NEWLINE INDENT NEWLINE
+            local_vars ? local_ops ?
+        DEDENT NEWLINE
+        ->  ^( TREE_REQUEST ID local_vars ? local_ops ? )
     ;
 
 receive
