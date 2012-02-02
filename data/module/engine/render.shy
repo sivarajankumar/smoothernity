@@ -141,7 +141,7 @@ module engine_render
 
                 platform_static_array_element_ptr
                     vacant_mesh_id guts_vacant_mesh_ids
-                        guts_next_vacant_mesh_id_index
+                    guts_next_vacant_mesh_id_index
                     mesh guts_meshes_datas vacant_mesh_id
 
                 with msg
@@ -278,9 +278,11 @@ module engine_render
                 y <- msg_bottom
                 while platform_conditions_whole_less_or_equal_to_whole
                                                             y msg_top
+                do
                     x <- msg_left
                     while platform_conditions_whole_less_or_equal_to_whole
                                                             x msg_right
+                    do
                         platform_math_mul_wholes
                             texel_offset consts_texture_width y
                         platform_math_add_to_whole texel_offset x
@@ -405,7 +407,8 @@ module engine_render
     paste
         replace what with set_texel_rgba
         replace how with
-            platform_render_set_texel_color texel with msg r g b a
+            with msg
+                platform_render_set_texel_color texel r g b a
 
     receive init
         vars mesh texture vacant_id i
@@ -416,6 +419,7 @@ module engine_render
             i <- 0
             while platform_conditions_whole_less_than_whole
                         i consts_max_meshes
+            do
                 with platform_static_array_element_ptr
                     mesh guts_meshes_datas i
                     vacant_id guts_vacant_mesh_ids i
@@ -431,6 +435,7 @@ module engine_render
             i <- 0
             while platform_conditions_whole_less_than_whole
                         i consts_max_textures
+            do
                 platform_static_array_element_ptr
                     texture guts_textures_datas i
                 platform_render_create_texture_id
@@ -443,6 +448,7 @@ module engine_render
             i <- 0
             while platform_conditions_whole_less_than_whole
                         i consts_max_meshes
+            do
                 platform_static_array_element_ptr mesh guts_meshes_datas i
                 with platform_render_delete
                     vertex_buffer mesh_vertex_buffer_id
@@ -452,6 +458,7 @@ module engine_render
             i <- 0
             while platform_conditions_whole_less_than_whole
                         i consts_max_textures
+            do
                 platform_static_array_element_ptr
                     texture guts_textures_datas i
                 platform_render_delete_texture_id texture_render_id
