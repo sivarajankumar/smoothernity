@@ -97,6 +97,8 @@ local_vars
 local_ops
     :   OPS NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
         -> statements
+    |   OPS statement
+        ->  ^( TREE_STATEMENTS statement )
     ;
 
 statement
