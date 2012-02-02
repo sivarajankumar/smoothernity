@@ -24,19 +24,10 @@ options
 start : ( module | stateless | consts | types | messages | vars | trace ) * ;
 
 module
-    :   MODULE ID NEWLINE INDENT NEWLINE
-        module_queue ?
-        proc *
-        receive *
-        request *
-        DEDENT NEWLINE
-        ->  ^( TREE_MODULE ID
-                module_queue ?
-                proc *
-                receive *
-                request *
-            )
+    :   MODULE ID NEWLINE INDENT NEWLINE module_item * DEDENT NEWLINE
+        ->  ^( TREE_MODULE ID module_item * )
     ;
+module_item : module_queue | proc | receive | request ;
 
 module_queue
     :   MODULE_QUEUE ID NEWLINE
