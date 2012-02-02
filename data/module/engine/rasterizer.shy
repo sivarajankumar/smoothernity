@@ -265,8 +265,6 @@ module engine_rasterizer
             do
                 guts_rasterize_top_triangle_part x2 y2 x3 y3 x1 y1
                 guts_rasterize_bottom_triangle_part x2 y2 x3 y3 x1 y1
-
-    request finalize
     
     receive init
         0 ->
@@ -281,6 +279,8 @@ module engine_rasterizer
             guts_texture_id <- texture
             guts_origin_x <- origin_x
             guts_origin_y <- origin_y
+
+    request finalize
 
 trace engine_rasterizer
     proc coords_out_of_range_error
