@@ -35,6 +35,7 @@ MODULE_QUEUE : 'module_queue' ;
 OPS : 'ops' ;
 PASTE : 'paste' ;
 PROC : 'proc' ;
+RECEIVE : 'receive' ;
 REQUEST : 'request' ;
 REPLACE : 'replace' ;
 REPLY : 'reply' ;

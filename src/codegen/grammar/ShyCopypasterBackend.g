@@ -128,6 +128,7 @@ arbitrary_token
     |   MODULE_QUEUE { $value = $MODULE_QUEUE.text }
     |   OPS { $value = $OPS.text }
     |   PROC { $value = $PROC.text }
+    |   RECEIVE { $value = $RECEIVE.text }
     |   REQUEST { $value = $REQUEST.text }
     |   REPLY { $value = $REPLY.text }
     |   STATELESS { $value = $STATELESS.text }
