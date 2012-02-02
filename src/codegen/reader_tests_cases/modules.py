@@ -19,6 +19,8 @@ class modules_test_case ( unittest . TestCase ) :
             ' proc test1\n module_queue test2\n proc test3\n' )
         ar ( re , r , 'module test1\n'
             ' receive test1\n module_queue test2\n receive test3\n' )
+        ar ( re , r , 'module test1\n'
+            ' request test1\n module_queue test2\n request test3\n' )
     def test_queue ( self ) :
         ae = self . assertEqual
         r = self . h . rec
@@ -38,3 +40,10 @@ class modules_test_case ( unittest . TestCase ) :
             { 'module' : { 'test1' : { 'receive' : 
                 { 'rcv1' : { }
                 , 'rcv2' : { } } } } } )
+    def test_requests ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'module test1\n request req1\n request req2' ) ,
+            { 'module' : { 'test1' : { 'request' : 
+                { 'req1' : { }
+                , 'req2' : { } } } } } )

@@ -62,6 +62,9 @@ module
             ( receives
                 { $content [ 'receive' ] = $receives.value }
             ) ?
+            ( requests
+                { $content [ 'request' ] = $requests.value }
+            ) ?
         )
     ;
 
@@ -76,6 +79,27 @@ stateless
             { $title , $content = $ID.text , dict ( ) }
     |   ^( TREE_STATELESS ID procs )
             { $title , $content = $ID.text , $procs.value }
+    ;
+
+requests
+    returns [ value ]
+    @ init { $value = dict ( ) }
+    :   ( request { $value [ $request.title ] = $request.content } ) +
+    ;
+
+request
+    returns [ title , content ]
+    @ init { $content = dict ( ) }
+    :   ^( TREE_REQUEST
+            ID
+                { $title = $ID.text }
+            ( local_vars
+                { $content [ 'vars' ] = $local_vars.value }
+            ) ?
+            ( statements
+                { $content [ 'ops' ] = $statements.value }
+            ) ?
+        )
     ;
 
 receives

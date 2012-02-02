@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-02-02 18:47:20
+# $ANTLR 3.4 grammar/ShyCopypasterBackend.g 2012-02-02 18:53:51
 
 import sys
 from antlr3 import *
@@ -71,25 +71,26 @@ TREE_PASTE_WITH=58
 TREE_PROC=59
 TREE_PROC_ARGS=60
 TREE_RECEIVE=61
-TREE_STATELESS=62
-TREE_STATEMENTS=63
-TREE_STATEMENT_ASSIGN=64
-TREE_STATEMENT_ASSIGN_TO=65
-TREE_STATEMENT_CALL=66
-TREE_STATEMENT_ELIF=67
-TREE_STATEMENT_ELSE=68
-TREE_STATEMENT_IF=69
-TREE_STATEMENT_WHILE=70
-TREE_STATEMENT_WITH=71
-TREE_TYPES=72
-TREE_TYPES_ITEM=73
-TREE_VARS=74
-TYPES=75
-UNDERSCORE=76
-VARS=77
-WHILE=78
-WHITESPACE=79
-WITH=80
+TREE_REQUEST=62
+TREE_STATELESS=63
+TREE_STATEMENTS=64
+TREE_STATEMENT_ASSIGN=65
+TREE_STATEMENT_ASSIGN_TO=66
+TREE_STATEMENT_CALL=67
+TREE_STATEMENT_ELIF=68
+TREE_STATEMENT_ELSE=69
+TREE_STATEMENT_IF=70
+TREE_STATEMENT_WHILE=71
+TREE_STATEMENT_WITH=72
+TREE_TYPES=73
+TREE_TYPES_ITEM=74
+TREE_VARS=75
+TYPES=76
+UNDERSCORE=77
+VARS=78
+WHILE=79
+WHITESPACE=80
+WITH=81
 
 # token names
 tokenNames = [
@@ -104,11 +105,12 @@ tokenNames = [
     "TREE_HINT_NONE", "TREE_LOCAL_VARS", "TREE_MESSAGES", "TREE_MESSAGES_ITEM", 
     "TREE_MODULE", "TREE_MODULE_QUEUE", "TREE_NUM_FRACT", "TREE_NUM_WHOLE", 
     "TREE_PASTE", "TREE_PASTE_REPLACE", "TREE_PASTE_WITH", "TREE_PROC", 
-    "TREE_PROC_ARGS", "TREE_RECEIVE", "TREE_STATELESS", "TREE_STATEMENTS", 
-    "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", "TREE_STATEMENT_CALL", 
-    "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", 
-    "TREE_STATEMENT_WITH", "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_VARS", 
-    "TYPES", "UNDERSCORE", "VARS", "WHILE", "WHITESPACE", "WITH"
+    "TREE_PROC_ARGS", "TREE_RECEIVE", "TREE_REQUEST", "TREE_STATELESS", 
+    "TREE_STATEMENTS", "TREE_STATEMENT_ASSIGN", "TREE_STATEMENT_ASSIGN_TO", 
+    "TREE_STATEMENT_CALL", "TREE_STATEMENT_ELIF", "TREE_STATEMENT_ELSE", 
+    "TREE_STATEMENT_IF", "TREE_STATEMENT_WHILE", "TREE_STATEMENT_WITH", 
+    "TREE_TYPES", "TREE_TYPES_ITEM", "TREE_VARS", "TYPES", "UNDERSCORE", 
+    "VARS", "WHILE", "WHITESPACE", "WITH"
 ]
 
 
@@ -1542,7 +1544,7 @@ class ShyCopypasterBackend(TreeParser):
         )
 
     DFA10_max = DFA.unpack(
-        u"\1\72\1\2\41\120\2\uffff"
+        u"\1\72\1\2\41\121\2\uffff"
         )
 
     DFA10_accept = DFA.unpack(
@@ -1559,136 +1561,136 @@ class ShyCopypasterBackend(TreeParser):
         DFA.unpack(u"\1\2"),
         DFA.unpack(u"\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1\uffff"
         u"\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\43\1\13\1\35\1\14\1\15\1\uffff"
-        u"\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1\42\46\uffff"
+        u"\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1\42\47\uffff"
         u"\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u"\1\44\1\3\1\4\1\5\1\30\1\31\1\6\1\uffff\1\33\1\32\1"
         u"\uffff\1\34\1\7\1\10\1\11\1\41\1\37\1\12\1\uffff\1\13\1\35\1\14"
         u"\1\15\1\43\1\40\1\16\1\uffff\1\17\1\20\1\uffff\1\22\1\21\1\23\1"
-        u"\42\46\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
+        u"\42\47\uffff\1\24\1\36\1\25\1\26\1\uffff\1\27"),
         DFA.unpack(u""),
         DFA.unpack(u"")
     ]
@@ -1701,27 +1703,27 @@ class ShyCopypasterBackend(TreeParser):
 
  
 
-    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 75, 76, 77, 78, 80])
+    FOLLOW_block_in_start80 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 76, 77, 78, 79, 81])
     FOLLOW_arbitrary_tokens_in_block123 = frozenset([26])
     FOLLOW_NEWLINE_in_block147 = frozenset([1])
     FOLLOW_INDENT_in_block171 = frozenset([26])
-    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 75, 76, 77, 78, 80])
-    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 75, 76, 77, 78, 80])
+    FOLLOW_NEWLINE_in_block177 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 76, 77, 78, 79, 81])
+    FOLLOW_block_in_block207 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 44, 76, 77, 78, 79, 81])
     FOLLOW_DEDENT_in_block244 = frozenset([26])
     FOLLOW_NEWLINE_in_block250 = frozenset([1])
     FOLLOW_copy_in_block274 = frozenset([1])
     FOLLOW_arbitrary_tokens_in_pure_block313 = frozenset([26])
     FOLLOW_NEWLINE_in_pure_block337 = frozenset([1])
     FOLLOW_INDENT_in_pure_block361 = frozenset([26])
-    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 75, 76, 77, 78, 80])
-    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 75, 76, 77, 78, 80])
+    FOLLOW_NEWLINE_in_pure_block367 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 76, 77, 78, 79, 81])
+    FOLLOW_pure_block_in_pure_block397 = frozenset([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 76, 77, 78, 79, 81])
     FOLLOW_DEDENT_in_pure_block434 = frozenset([26])
     FOLLOW_NEWLINE_in_pure_block440 = frozenset([1])
-    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 75, 76, 77, 78, 80])
+    FOLLOW_pure_block_in_pure_blocks493 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 76, 77, 78, 79, 81])
     FOLLOW_TREE_COPY_in_copy548 = frozenset([2])
     FOLLOW_copy_body_in_copy550 = frozenset([45])
     FOLLOW_copy_pastes_in_copy552 = frozenset([3])
-    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 75, 76, 77, 78, 80])
+    FOLLOW_pure_block_in_copy_body603 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 76, 77, 78, 79, 81])
     FOLLOW_copy_paste_in_copy_pastes648 = frozenset([1, 45])
     FOLLOW_TREE_COPY_PASTE_in_copy_paste683 = frozenset([2])
     FOLLOW_pastes_in_copy_paste685 = frozenset([3])
@@ -1735,7 +1737,7 @@ class ShyCopypasterBackend(TreeParser):
     FOLLOW_arbitrary_tokens_in_paste_with845 = frozenset([3])
     FOLLOW_TREE_PASTE_WITH_in_paste_with869 = frozenset([2])
     FOLLOW_pure_blocks_in_paste_with871 = frozenset([3])
-    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 75, 76, 77, 78, 80])
+    FOLLOW_arbitrary_token_in_arbitrary_tokens922 = frozenset([1, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 25, 27, 28, 30, 31, 33, 34, 35, 36, 76, 77, 78, 79, 81])
     FOLLOW_ALL_in_arbitrary_token975 = frozenset([1])
     FOLLOW_ANY_in_arbitrary_token987 = frozenset([1])
     FOLLOW_ARGS_in_arbitrary_token999 = frozenset([1])

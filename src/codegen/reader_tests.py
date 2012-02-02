@@ -10,6 +10,7 @@ from reader_tests_cases . messages import *
 from reader_tests_cases . modules import *
 from reader_tests_cases . proc import *
 from reader_tests_cases . receive import *
+from reader_tests_cases . request import *
 from reader_tests_cases . start import *
 from reader_tests_cases . stateless import *
 from reader_tests_cases . statement_assign import *
