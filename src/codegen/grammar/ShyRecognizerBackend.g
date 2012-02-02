@@ -289,6 +289,7 @@ arbitrary_value
     returns [ value ]
     :   ID { $value = $ID.text }
     |   EXPRESSION { $value = $EXPRESSION.text }
+    |   STRING { $value = $STRING.text }
     |   num_whole { $value = $num_whole.value }
     |   num_fract { $value = $num_fract.value }
     ;

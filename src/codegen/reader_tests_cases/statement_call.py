@@ -56,3 +56,10 @@ class statement_call_test_case ( unittest . TestCase ) :
             '   call1 [ expr1 ]\n' ) ,
             { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
                 [ 'call1' , '[ expr1 ]' ] } ] } } } } )
+    def test_args_string ( self ) :
+        ae = self . assertEqual
+        r = self . h . rec
+        ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
+            "   call1 ' str1 '\n" ) ,
+            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'call' :
+                [ 'call1' , "' str1 '" ] } ] } } } } )
