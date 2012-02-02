@@ -226,7 +226,7 @@ arbitrary_value
 consts
     :   CONSTS ID NEWLINE
         INDENT NEWLINE consts_items DEDENT NEWLINE
-        -> ^( TREE_CONSTS ID consts_items )
+        ->  ^( TREE_CONSTS ID consts_items )
     ;
 consts_items : consts_item + ;
 consts_item
@@ -238,39 +238,69 @@ consts_item
 types
     :   TYPES ID NEWLINE
         INDENT NEWLINE types_item + DEDENT NEWLINE
-        -> ^( TREE_TYPES ID types_item + )
+        ->  ^( TREE_TYPES ID types_item + )
     ;
 types_item : ID attrs_hints -> ^( TREE_TYPES_ITEM ID attrs_hints ) ;
 
 messages
     :   MESSAGES ID NEWLINE
         INDENT NEWLINE messages_item + DEDENT NEWLINE
-        -> ^( TREE_MESSAGES ID messages_item + )
+        ->  ^( TREE_MESSAGES ID messages_item + )
     ;
-messages_item : ID attrs_hints -> ^( TREE_MESSAGES_ITEM ID attrs_hints ) ;
+
+messages_item
+    :   ID attrs_hints
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_RECEIVE attrs_hints
+            )
+    |   ID REPLY attrs_hints
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REPLY attrs_hints
+            )
+    |   ID NEWLINE INDENT NEWLINE REPLY attrs_hints DEDENT NEWLINE
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REPLY attrs_hints
+            )
+    |   ID REQUEST attrs_hints
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REQUEST attrs_hints
+            )
+    |   ID NEWLINE INDENT NEWLINE REQUEST attrs_hints DEDENT NEWLINE
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REQUEST attrs_hints
+            )
+    |   ID NEWLINE INDENT NEWLINE
+            REQUEST attrs_hints
+            REPLY attrs_hints
+        DEDENT NEWLINE
+        ->  ^( TREE_MESSAGES_ITEM ID
+                TREE_MESSAGES_ITEM_REQUEST attrs_hints
+                TREE_MESSAGES_ITEM_REPLY attrs_hints
+            )
+    ;
 
 vars
     :   VARS ID attrs_hints
-        -> ^( TREE_VARS ID attrs_hints )
+        ->  ^( TREE_VARS ID attrs_hints )
     ;
 
 attrs_hints
     :   attr_hint NEWLINE
-        -> TREE_ATTRS_HINTS attr_hint
+        ->  TREE_ATTRS_HINTS attr_hint
     |   NEWLINE
         ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_ATTRS_HINTS attr_hint +
+        ->  TREE_ATTRS_HINTS attr_hint +
     |   attr_hint NEWLINE
         ( INDENT NEWLINE ( attr_hint NEWLINE ) + DEDENT NEWLINE )
-        -> TREE_ATTRS_HINTS attr_hint +
+        ->  TREE_ATTRS_HINTS attr_hint +
     ;
 attr_hint 
     :   ID + 
-        -> ^( TREE_ATTR_HINT TREE_HINT_NONE ^( TREE_ATTR ID ) + )
+        ->  ^( TREE_ATTR_HINT TREE_HINT_NONE ^( TREE_ATTR ID ) + )
     |   hint ID +
-        -> ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
+        ->  ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
     |   hint NEWLINE INDENT NEWLINE ( ID + NEWLINE ) + DEDENT
-        -> ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
+        ->  ^( TREE_ATTR_HINT hint ^( TREE_ATTR ID ) + )
     ;
 
 hint
