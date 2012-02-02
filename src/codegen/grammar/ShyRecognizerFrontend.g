@@ -69,6 +69,8 @@ receive
 proc
     :   PROC ID NEWLINE
         ->  ^( TREE_PROC ID )
+    |   PROC ID NEWLINE INDENT NEWLINE statements DEDENT NEWLINE
+        ->  ^( TREE_PROC ID statements )
     |   PROC ID NEWLINE INDENT NEWLINE
             proc_args ? local_vars ? local_ops ?
         DEDENT NEWLINE
