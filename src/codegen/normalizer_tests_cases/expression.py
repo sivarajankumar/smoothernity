@@ -6,12 +6,17 @@ class expression_test_case ( unittest . TestCase ) :
         self . n = normalizer . normalizer ( )
     def test_raises ( self ) :
         ar = self . assertRaises
-        ae = self . assertEqual
         r = self . n . run
-        p = self . n . path
         ne = normalizer . exception
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
-        ae ( p ( ) , [ 'consts' , 'test1' , 'test2' ] )
+    def test_exception_path ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        try :
+            r ( { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
+        except Exception as e :
+            pass
+        ae ( e . path , [ 'consts' , 'test1' , 'test2' ] )
     def test_number ( self ) :
         ae = self . assertEqual
         r = self . n . run
