@@ -9,7 +9,7 @@ class normalizer :
                 res [ 'consts' ] [ module ] = dict ( )
                 for k , v in consts . items ( ) :
                     if type ( v ) is str :
-                        assert v [ 0 ] == '[' and v [ - 1 ] == ']'
+                        assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
                         env = { }
                         exec ( '_expr = ' + v [ 1 : - 1 ] ) in env
                         v = env [ '_expr' ]
