@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
         Exception . __init__ ( self , text )
@@ -18,7 +20,7 @@ class normalizer :
                 for k , v in consts . items ( ) :
                     if type ( v ) in ( str , unicode ) :
                         assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
-                        env = { }
+                        env = deepcopy ( consts )
                         try :
                             exec ( '_expr = ' + v [ 1 : - 1 ] ) in env
                         except Exception as e :
