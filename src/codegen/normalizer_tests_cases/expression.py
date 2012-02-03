@@ -39,3 +39,10 @@ class expression_test_case ( unittest . TestCase ) :
             { 'test1' : 1 , 'test2' : '[ test1 + 1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 1 , 'test2' : 2 } } } )
+    def test_refs_to_expressions ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : '[ test2 + 1]' , 'test2' : '[ 1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 2 , 'test2' : 1 } } } )

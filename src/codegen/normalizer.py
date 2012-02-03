@@ -17,15 +17,15 @@ class normalizer :
             res [ 'consts' ] = dict ( )
             for module , consts in src [ 'consts' ] . items ( ) :
                 res [ 'consts' ] [ module ] = dict ( )
-                for k , v in consts . items ( ) :
+                for k , v in sorted ( consts . items ( ) ) :
                     if type ( v ) in ( str , unicode ) :
                         assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
                         env = deepcopy ( consts )
                         try :
-                            exec ( '_expr = ' + v [ 1 : - 1 ] ) in env
+                            exec ( k + ' = ' + v [ 1 : - 1 ] ) in env
                         except Exception as e :
                             raise exception ( str ( e ) , src ,
                                 [ 'consts' , module , k ] )
-                        v = env [ '_expr' ]
+                        v = env [ k ]
                     res [ 'consts' ] [ module ] [ k ] = v
         return res
