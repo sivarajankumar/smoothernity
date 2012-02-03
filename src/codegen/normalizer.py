@@ -22,10 +22,9 @@ class normalizer :
                         assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
                         env = deepcopy ( consts )
                         try :
-                            exec ( k + ' = ' + v [ 1 : - 1 ] ) in env
+                            v = eval ( v [ 1 : - 1 ] , env )
                         except Exception as e :
                             raise exception ( str ( e ) , src ,
                                 [ 'consts' , module , k ] )
-                        v = env [ k ]
                     res [ 'consts' ] [ module ] [ k ] = v
         return res
