@@ -1,7 +1,12 @@
 class exception ( Exception ) :
-    def __init__ ( self , s , p ) :
-        Exception . __init__ ( self , s + str ( p ) )
-        self . path = p
+    def __init__ ( self , text , src , path ) :
+        Exception . __init__ ( self , text )
+        self . _path = path
+        self . _src = src
+    def get_path ( self ) :
+        return self . _path
+    def get_src ( self ) :
+        return self . _src
 
 class normalizer :
     def run ( self , src ) :
@@ -11,13 +16,13 @@ class normalizer :
             for module , consts in src [ 'consts' ] . items ( ) :
                 res [ 'consts' ] [ module ] = dict ( )
                 for k , v in consts . items ( ) :
-                    if type ( v ) is str :
+                    if type ( v ) in ( str , unicode ) :
                         assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
                         env = { }
                         try :
                             exec ( '_expr = ' + v [ 1 : - 1 ] ) in env
                         except Exception as e :
-                            raise exception ( str ( e ) ,
+                            raise exception ( str ( e ) , src ,
                                 [ 'consts' , module , k ] )
                         v = env [ '_expr' ]
                     res [ 'consts' ] [ module ] [ k ] = v

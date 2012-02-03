@@ -16,7 +16,12 @@ class expression_test_case ( unittest . TestCase ) :
             r ( { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
         except Exception as e :
             pass
-        ae ( e . path , [ 'consts' , 'test1' , 'test2' ] )
+        ae ( e . get_path ( ) , [ 'consts' , 'test1' , 'test2' ] )
+    def test_unicode ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'test1' : { 'test2' : u'[ 1 ]' } } } ) ,
+            { 'consts' : { 'test1' : { 'test2' : 1 } } } )
     def test_number ( self ) :
         ae = self . assertEqual
         r = self . n . run
