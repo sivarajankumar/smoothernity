@@ -1,5 +1,7 @@
 from hashlib import md5
 from os . path import dirname
+from normalizer import normalizer
+from normalizer import exception as normalizer_exception
 from reader import reader
 from reader import exception as reader_exception
 
@@ -111,7 +113,7 @@ if __name__ == '__main__' :
     from sys import argv
     from sys import stdin
     import os
-    import pprint
+    from pprint import pprint
 
     class trace :
         def write_error ( self , name , error ) :
@@ -128,9 +130,13 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     try :
-        pp = pprint . PrettyPrinter ( indent = 1 ) 
-        pp . pprint ( reader ( ) . run ( stdin ) )
+        pprint ( normalizer ( ) . run ( reader ( ) . run ( stdin ) ) )
     except reader_exception as e :
-        print e . get_src ( )
-        print 'exception:' , str ( e )
+        pprint ( e . get_src ( ) )
+        print 'reader exception:' , str ( e )
+    except normalizer_exception as e :
+        pprint ( e . get_src ( ) )
+        print 'normalizer exception:' , str ( e )
+        print 'at'
+        pprint ( e . get_path ( ) )
     reify ( generate ( [ ] ) , open , trace ( ) , options ( ) , os )
