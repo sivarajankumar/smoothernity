@@ -17,7 +17,8 @@ class const_value :
         v = self . _v
         if type ( v ) in ( str , unicode ) :
             assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
-            return eval ( v [ 1 : - 1 ] , self . _env )
+            ev = eval ( v [ 1 : - 1 ] , self . _env )
+            return ev . value ( ) if isinstance ( ev , const_value ) else ev
         else :
             return v
     def _calc ( self , a , b , op ) :
@@ -74,8 +75,11 @@ class normalizer :
         res = dict ( )
         if 'consts' in src :
             res [ 'consts' ] = dict ( )
+            env = dict ( )
             for module , consts in src [ 'consts' ] . items ( ) :
-                env = dict ( )
+                for k , v in consts . items ( ) :
+                    env [ module + '_consts_' + k ] = const_value ( v , env )
+            for module , consts in src [ 'consts' ] . items ( ) :
                 for k , v in consts . items ( ) :
                     env [ k ] = const_value ( v , env )
                 res [ 'consts' ] [ module ] = dict ( )

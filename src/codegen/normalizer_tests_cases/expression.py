@@ -41,6 +41,22 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ test1 + test2 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 1 , 'test2' : 1 , 'test3' : 2 } } } )
+    def test_pure_ref ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 1 , 'test2' : '[ test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 1 , 'test2' : 1 } } } )
+    def test_global_ref ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' :
+            { 'consts1' : { 'test1' : 1 }
+            , 'consts2' : { 'test2' : '[ consts1_consts_test1 ]' } } } ) ,
+            { 'consts' :
+            { 'consts1' : { 'test1' : 1 }
+            , 'consts2' : { 'test2' : 1 } } } )
 
 class expression_math_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
