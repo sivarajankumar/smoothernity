@@ -60,6 +60,10 @@ class const_value :
         return self . _calc ( self , a , operator . and_ )
     def __rand__ ( self , a ) :
         return self . _calc ( a , self , operator . and_ )
+    def __or__ ( self , a ) :
+        return self . _calc ( self , a , operator . or_ )
+    def __ror__ ( self , a ) :
+        return self . _calc ( a , self , operator . or_ )
 
 class normalizer :
     def run ( self , src ) :

@@ -121,3 +121,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 0x1111 & test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 0xFF00 , 'test2' : 0x1100 , 'test3' : 0x1100 } } } )
+    def test_ref_or ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 0x2233
+            , 'test2' : '[ test1 | 0x1111 ]'
+            , 'test3' : '[ 0x1111 | test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 0x2233 , 'test2' : 0x3333 , 'test3' : 0x3333 } } } )
