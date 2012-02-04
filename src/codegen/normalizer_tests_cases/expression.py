@@ -8,6 +8,7 @@ class expression_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run
         ne = normalizer . exception
+        ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ ]' } } } )
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 / 0 ]' } } } )
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ test3 ]' } } } )
@@ -24,7 +25,7 @@ class expression_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'consts' : { 'test1' : { 'test2' : u'[ 1 ]' } } } ) ,
             { 'consts' : { 'test1' : { 'test2' : 1 } } } )
-    def test_refs_to_expressions ( self ) :
+    def test_ref_to_expressions ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
