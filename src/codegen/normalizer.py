@@ -43,6 +43,10 @@ class const_value :
         return self . _calc ( self , a , operator . rshift )
     def __rrshift__ ( self , a ) :
         return self . _calc ( a , self , operator . rshift )
+    def __div__ ( self , a ) :
+        return self . _calc ( self , a , operator . div )
+    def __rdiv__ ( self , a ) :
+        return self . _calc ( a , self , operator . div )
 
 class normalizer :
     def run ( self , src ) :
