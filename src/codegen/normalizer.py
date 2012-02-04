@@ -56,6 +56,10 @@ class const_value :
         return self . _calc ( self , a , operator . pow )
     def __rpow__ ( self , a ) :
         return self . _calc ( a , self , operator . pow )
+    def __and__ ( self , a ) :
+        return self . _calc ( self , a , operator . and_ )
+    def __rand__ ( self , a ) :
+        return self . _calc ( a , self , operator . and_ )
 
 class normalizer :
     def run ( self , src ) :

@@ -112,3 +112,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 ** test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 8 , 'test3' : 9 } } } )
+    def test_ref_and ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 0xFF00
+            , 'test2' : '[ test1 & 0x1111 ]'
+            , 'test3' : '[ 0x1111 & test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 0xFF00 , 'test2' : 0x1100 , 'test3' : 0x1100 } } } )
