@@ -75,8 +75,8 @@ class normalizer :
     def bind_func ( self , func , args ) :
         pass
     def run ( self , src ) :
-        return merge ( src , self . _run_consts ( src ) )
-    def _run_consts ( self , src ) :
+        return merge ( src , self . _norm_consts ( src ) )
+    def _norm_consts ( self , src ) :
         res = dict ( )
         if 'consts' in src :
             res [ 'consts' ] = dict ( )

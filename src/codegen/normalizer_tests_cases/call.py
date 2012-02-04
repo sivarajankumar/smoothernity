@@ -4,7 +4,7 @@ import unittest
 class call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
-    def test_number ( self ) :
+    def test_split ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
