@@ -44,7 +44,7 @@ class expression_test_case ( unittest . TestCase ) :
 class expression_math_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
-    def test_ref_add ( self ) :
+    def test_add ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -53,7 +53,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 1 + test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 1 , 'test2' : 2 , 'test3' : 2 } } } )
-    def test_ref_sub ( self ) :
+    def test_sub ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -62,7 +62,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 - test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 1 , 'test3' : 1 } } } )
-    def test_ref_mul ( self ) :
+    def test_mul ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -71,7 +71,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 * test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 6 , 'test3' : 6 } } } )
-    def test_ref_lshift ( self ) :
+    def test_lshift ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -80,7 +80,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 << test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 1 , 'test2' : 8 , 'test3' : 6 } } } )
-    def test_ref_rshift ( self ) :
+    def test_rshift ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -89,7 +89,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 4 >> test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 1 , 'test3' : 1 } } } )
-    def test_ref_div ( self ) :
+    def test_div ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -98,7 +98,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 8 / test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 4 , 'test2' : 2 , 'test3' : 2 } } } )
-    def test_ref_mod ( self ) :
+    def test_mod ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -107,7 +107,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 7 % test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 3 , 'test2' : 1 , 'test3' : 1 } } } )
-    def test_ref_pow ( self ) :
+    def test_pow ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -116,7 +116,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 ** test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 8 , 'test3' : 9 } } } )
-    def test_ref_and ( self ) :
+    def test_and ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -125,7 +125,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 0x1111 & test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 0xFF00 , 'test2' : 0x1100 , 'test3' : 0x1100 } } } )
-    def test_ref_or ( self ) :
+    def test_or ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
@@ -134,7 +134,7 @@ class expression_math_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 0x1111 | test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 0x2233 , 'test2' : 0x3333 , 'test3' : 0x3333 } } } )
-    def test_ref_xor ( self ) :
+    def test_xor ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'consts' : { 'consts1' :
