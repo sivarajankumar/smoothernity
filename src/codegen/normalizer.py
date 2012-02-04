@@ -48,6 +48,10 @@ class const_value :
         return self . _calc ( self , a , operator . div )
     def __rdiv__ ( self , a ) :
         return self . _calc ( a , self , operator . div )
+    def __mod__ ( self , a ) :
+        return self . _calc ( self , a , operator . mod )
+    def __rmod__ ( self , a ) :
+        return self . _calc ( a , self , operator . mod )
 
 class normalizer :
     def run ( self , src ) :
