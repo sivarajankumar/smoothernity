@@ -1,4 +1,5 @@
 import operator
+from utils import merge
 
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
@@ -72,7 +73,7 @@ class const_value :
 
 class normalizer :
     def run ( self , src ) :
-        return self . _run_consts ( src )
+        return merge ( src , self . _run_consts ( src ) )
     def _run_consts ( self , src ) :
         res = dict ( )
         if 'consts' in src :
