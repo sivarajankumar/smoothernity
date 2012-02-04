@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
         Exception . __init__ ( self , text )
