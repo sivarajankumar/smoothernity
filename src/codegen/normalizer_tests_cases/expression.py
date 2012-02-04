@@ -9,6 +9,7 @@ class expression_test_case ( unittest . TestCase ) :
         r = self . n . run
         ne = normalizer . exception
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
+        ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ test3 ]' } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run

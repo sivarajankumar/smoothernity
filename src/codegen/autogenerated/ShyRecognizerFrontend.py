@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-02 20:51:08
+# $ANTLR 3.4 grammar/ShyRecognizerFrontend.g 2012-02-03 22:28:15
 
 import sys
 from antlr3 import *
@@ -914,7 +914,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, proc
+                # elements: proc, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -1560,7 +1560,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, local_ops, local_vars
+                    # elements: ID, local_vars, local_ops
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1839,7 +1839,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: statement, ID
+                    # elements: ID, statement
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2030,7 +2030,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, local_vars, local_ops
+                    # elements: local_ops, local_vars, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2323,7 +2323,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, statements
+                    # elements: statements, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -2449,7 +2449,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: proc_args, local_vars, local_ops, ID
+                    # elements: local_vars, ID, proc_args, local_ops
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -3805,7 +3805,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, arbitrary_value
+                    # elements: arbitrary_value, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -4306,7 +4306,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: statement_else, statement_elif, statement_if_head
+                # elements: statement_elif, statement_else, statement_if_head
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6704,7 +6704,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: attrs_hints, ID
+                # elements: ID, attrs_hints
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -6869,7 +6869,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, messages_item
+                # elements: messages_item, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -7050,7 +7050,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, attrs_hints
+                    # elements: attrs_hints, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7110,7 +7110,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: attrs_hints, ID
+                    # elements: ID, attrs_hints
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7330,7 +7330,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: attrs_hints, ID
+                    # elements: ID, attrs_hints
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7421,7 +7421,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, attrs_hints, attrs_hints
+                    # elements: attrs_hints, attrs_hints, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -7538,7 +7538,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: ID, attrs_hints
+                # elements: attrs_hints, ID
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
@@ -8246,7 +8246,7 @@ class ShyRecognizerFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: ID, hint
+                    # elements: hint, ID
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
