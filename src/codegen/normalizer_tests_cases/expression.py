@@ -40,6 +40,10 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ test1 + test2 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 1 , 'test2' : 1 , 'test3' : 2 } } } )
+
+class expression_math_test_case ( unittest . TestCase ) :
+    def setUp ( self ) :
+        self . n = normalizer . normalizer ( )
     def test_ref_add ( self ) :
         ae = self . assertEqual
         r = self . n . run
