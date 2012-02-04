@@ -39,6 +39,10 @@ class const_value :
         return self . _calc ( self , a , operator . lshift )
     def __rlshift__ ( self , a ) :
         return self . _calc ( a , self , operator . lshift )
+    def __rshift__ ( self , a ) :
+        return self . _calc ( self , a , operator . rshift )
+    def __rrshift__ ( self , a ) :
+        return self . _calc ( a , self , operator . rshift )
 
 class normalizer :
     def run ( self , src ) :
