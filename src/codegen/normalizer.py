@@ -72,6 +72,8 @@ class const_value :
         return self . _calc ( a , self , operator . xor )
 
 class normalizer :
+    def bind_func ( self , func , args ) :
+        pass
     def run ( self , src ) :
         return merge ( src , self . _run_consts ( src ) )
     def _run_consts ( self , src ) :
