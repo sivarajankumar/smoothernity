@@ -52,6 +52,10 @@ class const_value :
         return self . _calc ( self , a , operator . mod )
     def __rmod__ ( self , a ) :
         return self . _calc ( a , self , operator . mod )
+    def __pow__ ( self , a ) :
+        return self . _calc ( self , a , operator . pow )
+    def __rpow__ ( self , a ) :
+        return self . _calc ( a , self , operator . pow )
 
 class normalizer :
     def run ( self , src ) :
