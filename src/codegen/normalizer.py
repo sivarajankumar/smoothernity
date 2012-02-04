@@ -12,8 +12,7 @@ class exception ( Exception ) :
 
 class const_value :
     def __init__ ( self , v , env ) :
-        self . _v = v
-        self . _env = env
+        self . _v , self . _env = v , env
     def value ( self ) :
         v = self . _v
         if type ( v ) in ( str , unicode ) :
@@ -22,11 +21,9 @@ class const_value :
         else :
             return v
     def _calc ( self , a , b , op ) :
-        if isinstance ( a , const_value ) :
-            a = a . value ( )
-        if isinstance ( b , const_value ) :
-            b = b . value ( )
-        return op ( a , b )
+        return op \
+            ( a . value ( ) if isinstance ( a , const_value ) else a
+            , b . value ( ) if isinstance ( b , const_value ) else b )
     def __add__ ( self , a ) :
         return self . _calc ( self , a , operator . add )
     def __radd__ ( self , a ) :
