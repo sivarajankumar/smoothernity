@@ -75,3 +75,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 4 >> test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 1 , 'test3' : 1 } } } )
+    def test_ref_div ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 4
+            , 'test2' : '[ test1 / 2 ]'
+            , 'test3' : '[ 8 / test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 4 , 'test2' : 2 , 'test3' : 2 } } } )
