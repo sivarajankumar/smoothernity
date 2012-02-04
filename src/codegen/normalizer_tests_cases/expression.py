@@ -57,3 +57,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 3 * test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 2 , 'test2' : 6 , 'test3' : 6 } } } )
+    def test_ref_lshift ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 1
+            , 'test2' : '[ test1 << 3 ]'
+            , 'test3' : '[ 3 << test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 1 , 'test2' : 8 , 'test3' : 6 } } } )
