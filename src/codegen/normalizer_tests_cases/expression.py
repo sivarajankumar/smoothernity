@@ -9,6 +9,7 @@ class expression_test_case ( unittest . TestCase ) :
         r = self . n . run
         ne = normalizer . exception
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 + ]' } } } )
+        ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ 1 / 0 ]' } } } )
         ar ( ne , r , { 'consts' : { 'test1' : { 'test2' : '[ test3 ]' } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
@@ -93,3 +94,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 8 / test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 4 , 'test2' : 2 , 'test3' : 2 } } } )
+    def test_ref_mod ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 3
+            , 'test2' : '[ test1 % 2 ]'
+            , 'test3' : '[ 7 % test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 3 , 'test2' : 1 , 'test3' : 1 } } } )
