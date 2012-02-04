@@ -72,6 +72,8 @@ class const_value :
 
 class normalizer :
     def run ( self , src ) :
+        return self . _run_consts ( src )
+    def _run_consts ( self , src ) :
         res = dict ( )
         if 'consts' in src :
             res [ 'consts' ] = dict ( )
