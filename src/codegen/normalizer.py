@@ -33,6 +33,8 @@ class const_value :
         return self . _calc ( a , self , operator . add )
     def __mul__ ( self , a ) :
         return self . _calc ( self , a , operator . mul )
+    def __rmul__ ( self , a ) :
+        return self . _calc ( self , a , operator . mul )
 
 class normalizer :
     def run ( self , src ) :
