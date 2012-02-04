@@ -31,6 +31,10 @@ class const_value :
         return self . _calc ( self , a , operator . add )
     def __radd__ ( self , a ) :
         return self . _calc ( a , self , operator . add )
+    def __sub__ ( self , a ) :
+        return self . _calc ( self , a , operator . sub )
+    def __rsub__ ( self , a ) :
+        return self . _calc ( a , self , operator . sub )
     def __mul__ ( self , a ) :
         return self . _calc ( self , a , operator . mul )
     def __rmul__ ( self , a ) :
