@@ -1,3 +1,5 @@
+import operator
+
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
         Exception . __init__ ( self , text )
@@ -19,16 +21,18 @@ class const_value :
             return eval ( v [ 1 : - 1 ] , self . _env )
         else :
             return v
+    def _calc ( self , a , b , op ) :
+        if isinstance ( a , const_value ) :
+            a = a . value ( )
+        if isinstance ( b , const_value ) :
+            b = b . value ( )
+        return op ( a , b )
     def __add__ ( self , a ) :
-        if isinstance ( a , const_value ) :
-            return self . value ( ) + a . value ( )
-        else :
-            return self . value ( ) + a
+        return self . _calc ( self , a , operator . add )
     def __radd__ ( self , a ) :
-        if isinstance ( a , const_value ) :
-            return self . value ( ) + a . value ( )
-        else :
-            return self . value ( ) + a
+        return self . _calc ( a , self , operator . add )
+    def __mul__ ( self , a ) :
+        return self . _calc ( self , a , operator . mul )
 
 class normalizer :
     def run ( self , src ) :
