@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-02-02 20:14:08
+# $ANTLR 3.4 grammar/ShyCopypasterFrontend.g 2012-02-03 22:28:16
 
 import sys
 from antlr3 import *
@@ -451,7 +451,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                     # AST Rewrite
-                    # elements: copy_paste, copy_body
+                    # elements: copy_body, copy_paste
                     # token labels: 
                     # rule labels: retval
                     # token list labels: 
@@ -1195,7 +1195,7 @@ class ShyCopypasterFrontend(Parser):
 
 
                 # AST Rewrite
-                # elements: paste_replace, paste_with
+                # elements: paste_with, paste_replace
                 # token labels: 
                 # rule labels: retval
                 # token list labels: 
