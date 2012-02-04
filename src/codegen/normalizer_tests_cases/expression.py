@@ -103,3 +103,12 @@ class expression_test_case ( unittest . TestCase ) :
             , 'test3' : '[ 7 % test1 ]' } } } ) ,
             { 'consts' : { 'consts1' :
             { 'test1' : 3 , 'test2' : 1 , 'test3' : 1 } } } )
+    def test_ref_pow ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'consts' : { 'consts1' :
+            { 'test1' : 2
+            , 'test2' : '[ test1 ** 3 ]'
+            , 'test3' : '[ 3 ** test1 ]' } } } ) ,
+            { 'consts' : { 'consts1' :
+            { 'test1' : 2 , 'test2' : 8 , 'test3' : 9 } } } )
