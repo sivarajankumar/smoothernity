@@ -64,6 +64,10 @@ class const_value :
         return self . _calc ( self , a , operator . or_ )
     def __ror__ ( self , a ) :
         return self . _calc ( a , self , operator . or_ )
+    def __xor__ ( self , a ) :
+        return self . _calc ( self , a , operator . xor )
+    def __rxor__ ( self , a ) :
+        return self . _calc ( a , self , operator . xor )
 
 class normalizer :
     def run ( self , src ) :
