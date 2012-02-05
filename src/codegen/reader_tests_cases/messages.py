@@ -20,37 +20,37 @@ class messages_test_case ( unittest . TestCase ) :
                     ' msg1 atr1\n'
                     ' msg2 atr2\n' ) ,
             { 'messages' : { 'test1' : { 'receive' :
-                { 'msg1' : { 'atr1' : { } }
-                , 'msg2' : { 'atr2' : { } } } } } } )
+                { 'msg1' : [ { 'atr1' : { } } ]
+                , 'msg2' : [ { 'atr2' : { } } ] } } } } )
     def test_reply_same_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'messages test1\n msg1 reply atr1\n' ) ,
             { 'messages' : { 'test1' : { 'reply' : { 'msg1' :
-                { 'atr1' : { } } } } } } )
+                [ { 'atr1' : { } } ] } } } } )
     def test_reply_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'messages test1\n msg1\n  reply atr1\n' ) ,
             { 'messages' : { 'test1' : { 'reply' : { 'msg1' :
-                { 'atr1' : { } } } } } } )
+                [ { 'atr1' : { } } ] } } } } )
     def test_request_same_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'messages test1\n msg1 request atr1\n' ) ,
             { 'messages' : { 'test1' : { 'request' : { 'msg1' :
-                { 'atr1' : { } } } } } } )
+                [ { 'atr1' : { } } ] } } } } )
     def test_request_indented ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'messages test1\n msg1\n  request atr1\n' ) ,
             { 'messages' : { 'test1' : { 'request' : { 'msg1' :
-                { 'atr1' : { } } } } } } )
+                [ { 'atr1' : { } } ] } } } } )
     def test_request_reply ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'messages test1\n msg1\n  request atr1\n  reply atr2\n' ) ,
             { 'messages' : { 'test1' :
-                { 'request' : { 'msg1' : { 'atr1' : { } } }
-                , 'reply' : { 'msg1' : { 'atr2' : { } } } } } } )
+                { 'request' : { 'msg1' : [ { 'atr1' : { } } ] }
+                , 'reply' : { 'msg1' : [ { 'atr2' : { } } ] } } } } )
 

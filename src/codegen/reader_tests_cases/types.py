@@ -17,5 +17,5 @@ class types_test_case ( unittest . TestCase ) :
                     ' type1 atr1\n'
                     ' type2 atr2\n' ) ,
             { 'types' : { 'test1' : 
-                { 'type1' : { 'atr1' : { } }
-                , 'type2' : { 'atr2' : { } } } } } )
+                { 'type1' : [ { 'atr1' : { } } ]
+                , 'type2' : [ { 'atr2' : { } } ] } } } )

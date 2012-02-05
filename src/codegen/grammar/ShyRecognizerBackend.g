@@ -379,18 +379,18 @@ vars
 
 attrs_hints
     returns [ value ]
-    @ init { $value = dict ( ) }
-    :   TREE_ATTRS_HINTS ( attr_hint { $value . update ( $attr_hint.value ) } ) *
+    @ init { $value = list ( ) }
+    :   TREE_ATTRS_HINTS ( attr_hint { $value += $attr_hint.value } ) *
     ;
 
 attr_hint
     returns [ value ]
-    @ init { $value = dict ( ) }
+    @ init { $value = list ( ) }
     :   ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID )
-            { $value [ $ID.text ] = dict ( ) }
+            { $value . append ( { $ID.text : dict ( ) } ) }
         ) + )
     |   ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID )
-            { $value [ $ID.text ] = $hint.value }
+            { $value . append ( { $ID.text : $hint.value } ) }
         ) + )
     ;
 

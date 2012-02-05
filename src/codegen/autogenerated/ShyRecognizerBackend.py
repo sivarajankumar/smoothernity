@@ -1,4 +1,4 @@
-# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-03 22:28:19
+# $ANTLR 3.4 grammar/ShyRecognizerBackend.g 2012-02-05 22:11:18
 
 import sys
 from antlr3 import *
@@ -2985,7 +2985,7 @@ class ShyRecognizerBackend(TreeParser):
         attr_hint80 = None
 
 
-        value = dict ( ) 
+        value = list ( ) 
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:383:5: ( TREE_ATTRS_HINTS ( attr_hint )* )
@@ -3011,7 +3011,7 @@ class ShyRecognizerBackend(TreeParser):
                         self._state.following.pop()
 
                         #action start
-                        value . update ( attr_hint80 ) 
+                        value += attr_hint80 
                         #action end
 
 
@@ -3046,7 +3046,7 @@ class ShyRecognizerBackend(TreeParser):
         hint83 = None
 
 
-        value = dict ( ) 
+        value = list ( ) 
         try:
             try:
                 # grammar/ShyRecognizerBackend.g:389:5: ( ^( TREE_ATTR_HINT TREE_HINT_NONE ( ^( TREE_ATTR ID ) )+ ) | ^( TREE_ATTR_HINT hint ( ^( TREE_ATTR ID ) )+ ) )
@@ -3111,7 +3111,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                             #action start
-                            value [ ID81.text ] = dict ( ) 
+                            value . append ( { ID81.text : dict ( ) } ) 
                             #action end
 
 
@@ -3163,7 +3163,7 @@ class ShyRecognizerBackend(TreeParser):
 
 
                             #action start
-                            value [ ID82.text ] = hint83 
+                            value . append ( { ID82.text : hint83 } ) 
                             #action end
 
 

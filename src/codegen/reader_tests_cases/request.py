@@ -15,7 +15,7 @@ class request_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'module test1\n request req1\n  vars var1\n' ) ,
             { 'module' : { 'test1' : { 'request' :
-                { 'req1' : { 'vars' : { 'var1' : { } } } } } } } )
+                { 'req1' : { 'vars' : [ { 'var1' : { } } ] } } } } } )
     def test_ops ( self ) :
         ae = self . assertEqual
         r = self . h . rec

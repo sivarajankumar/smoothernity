@@ -15,13 +15,13 @@ class proc_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  args arg1\n' ) ,
             { 'stateless' : { 'test1' :
-                { 'proc1' : { 'args' : { 'arg1' : { } } } } } } )
+                { 'proc1' : { 'args' : [ { 'arg1' : { } } ] } } } } )
     def test_vars ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  vars arg1\n' ) ,
             { 'stateless' : { 'test1' :
-                { 'proc1' : { 'vars' : { 'arg1' : { } } } } } } )
+                { 'proc1' : { 'vars' : [ { 'arg1' : { } } ] } } } } )
     def test_ops ( self ) :
         ae = self . assertEqual
         r = self . h . rec
