@@ -12,6 +12,8 @@ class call_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ { } , { } ] )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' ] } ] } } } } )
+        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc1' : { 'ops' :
+            [ { 'call' : [ 'unknown' , 'a2' ] } ] } } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run

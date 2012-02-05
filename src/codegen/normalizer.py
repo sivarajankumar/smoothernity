@@ -74,6 +74,7 @@ class normalizer :
     def __init__ ( self ) :
         self . _bind_funcs = { }
         self . _src = None
+        self . _path = None
     def bind_func ( self , func , args ) :
         self . _bind_funcs [ func ] = args
     def run ( self , src ) :
@@ -81,6 +82,8 @@ class normalizer :
         self . _src = self . _norm_consts ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
         return self . _src
+    def _error ( self , text ) :
+        raise exception ( text , self . _src , self . _path )
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             res = dict ( )
@@ -89,24 +92,26 @@ class normalizer :
         elif isinstance ( src , list ) :
             res = list ( )
             for iv in xrange ( len ( src ) ) :
+                self . _path = path + [ iv ]
                 v = src [ iv ]
                 if isinstance ( v , dict ) and 'call' in v \
                                 and len ( v [ 'call' ] ) > 1 :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
+                    if func not in self . _bind_funcs :
+                        self . _error ( "Unknown function '%s'" % func )
                     bind_args = self . _bind_funcs [ func ]
+                    if len ( args ) % len ( bind_args ) > 0 :
+                        self . _error ( 'Need %i more args' % \
+                            ( len ( args ) % len ( bind_args ) ) )
                     while args :
                         split_args = [ ]
                         for i in xrange ( len ( bind_args ) ) :
-                            if not args :
-                                raise exception ( 'Need %i more args' %
-                                    ( len ( bind_args ) - i - 1 ) ,
-                                    self . _src , path + [ iv ] )
                             split_args . append ( args [ 0 ] )
                             args = args [ 1 : ]
                         res . append ( { 'call' : [ func ] + split_args } )
                 else :
-                    res . append ( self . _norm_calls ( v , path + [ iv ] ) )
+                    res . append ( self . _norm_calls ( v , self . _path ) )
         else :
             res = src
         return res
@@ -124,12 +129,12 @@ class normalizer :
                         env [ k ] = const_value ( v , env )
                     res [ 'consts' ] [ module ] = dict ( )
                     for k in sorted ( consts . keys ( ) ) :
+                        self . _path = [ 'consts' , module , k ]
                         try :
                             res [ 'consts' ] [ module ] [ k ] = \
                                 env [ k ] . value ( )
                         except Exception as e :
-                            raise exception ( str ( e ) , src ,
-                                [ 'consts' , module , k ] )
+                            self . _error ( str ( e ) )
             else :
                 res [ root_k ] = root_v
         return res
