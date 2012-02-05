@@ -16,4 +16,3 @@ class call_test_case ( unittest . TestCase ) :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
             ] } } } } )
-            
