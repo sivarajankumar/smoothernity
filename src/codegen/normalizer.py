@@ -71,8 +71,10 @@ class const_value :
         return self . _calc ( a , self , operator . xor )
 
 class normalizer :
+    def __init__ ( self ) :
+        self . _bind_funcs = { }
     def bind_func ( self , func , args ) :
-        pass
+        self . _bind_funcs [ func ] = args
     def run ( self , src ) :
         return self . _norm_calls ( self . _norm_consts ( src ) )
     def _norm_calls ( self , src ) :
@@ -84,7 +86,15 @@ class normalizer :
             res = list ( )
             for v in src :
                 if isinstance ( v , dict ) and 'call' in v :
-                    res . append ( 'splitted call' )
+                    func = v [ 'call' ] [ 0 ]
+                    args = v [ 'call' ] [ 1 : ]
+                    bind_args = self . _bind_funcs [ func ]
+                    while args :
+                        split_args = [ ]
+                        for i in xrange ( len ( bind_args ) ) :
+                            split_args . append ( args [ 0 ] )
+                            args = args [ 1 : ]
+                        res . append ( { 'call' : [ func ] + split_args } )
                 else :
                     res . append ( self . _norm_calls ( v ) )
         else :
