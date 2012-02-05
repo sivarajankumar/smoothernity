@@ -8,4 +8,4 @@ class vars_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'vars test1\n var1\n' ) ,
-            { 'vars' : { 'test1' : { 'var1' : { } } } } )
+            { 'vars' : { 'test1' : [ { 'var1' : { } } ] } } )

@@ -15,7 +15,7 @@ class receive_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'module test1\n receive rcv1\n  vars var1\n' ) ,
             { 'module' : { 'test1' : { 'receive' :
-                { 'rcv1' : { 'vars' : { 'var1' : { } } } } } } } )
+                { 'rcv1' : { 'vars' : [ { 'var1' : { } } ] } } } } } )
     def test_ops ( self ) :
         ae = self . assertEqual
         r = self . h . rec
