@@ -73,18 +73,23 @@ class const_value :
 class normalizer :
     def __init__ ( self ) :
         self . _bind_funcs = { }
+        self . _src = None
     def bind_func ( self , func , args ) :
         self . _bind_funcs [ func ] = args
     def run ( self , src ) :
-        return self . _norm_calls ( self . _norm_consts ( src ) )
-    def _norm_calls ( self , src ) :
+        self . _src = src
+        self . _src = self . _norm_consts ( self . _src )
+        self . _src = self . _norm_calls ( self . _src )
+        return self . _src
+    def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             res = dict ( )
             for k , v in src . items ( ) :
-                res [ k ] = self . _norm_calls ( v )
+                res [ k ] = self . _norm_calls ( v , path + [ k ] )
         elif isinstance ( src , list ) :
             res = list ( )
-            for v in src :
+            for iv in xrange ( len ( src ) ) :
+                v = src [ iv ]
                 if isinstance ( v , dict ) and 'call' in v :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
@@ -92,6 +97,10 @@ class normalizer :
                     while args :
                         split_args = [ ]
                         for i in xrange ( len ( bind_args ) ) :
+                            if not args :
+                                raise exception ( 'Need %i more args' %
+                                    ( len ( bind_args ) - i - 1 ) ,
+                                    self . _src , path + [ iv ] )
                             split_args . append ( args [ 0 ] )
                             args = args [ 1 : ]
                         res . append ( { 'call' : [ func ] + split_args } )
