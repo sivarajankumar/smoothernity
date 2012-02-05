@@ -130,7 +130,24 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     try :
-        pprint ( normalizer ( ) . run ( reader ( ) . run ( stdin ) ) )
+        n = normalizer ( )
+        bf = n . bind_func
+        bf ( 'platform_conditions_fract_greater_than_fract' , [ { } ] * 2 )
+        bf ( 'platform_conditions_fract_less_than_fract' , [ { } ] * 2 )
+        bf ( 'platform_conditions_whole_greater_than_whole' , [ { } ] * 2 )
+        bf ( 'platform_conditions_whole_less_than_whole' , [ { } ] * 2 )
+        bf ( 'platform_conditions_whole_less_than_zero' , [ { } ] * 1 )
+        bf ( 'platform_math_add_fracts' , [ { } ] * 3 )
+        bf ( 'platform_math_add_to_fract' , [ { } ] * 2 )
+        bf ( 'platform_math_cos' , [ { } ] * 2 )
+        bf ( 'platform_math_mul_fracts' , [ { } ] * 3 )
+        bf ( 'platform_math_neg_whole' , [ { } ] * 2 )
+        bf ( 'platform_math_sin' , [ { } ] * 2 )
+        bf ( 'platform_math_sub_fracts' , [ { } ] * 3 )
+        bf ( 'platform_math_sub_from_fract' , [ { } ] * 2 )
+        bf ( 'platform_vector_mul_by' , [ { } ] * 2 )
+        bf ( 'platform_vector_xyz' , [ { } ] * 4 )
+        pprint ( n . run ( reader ( ) . run ( stdin ) ) )
     except reader_exception as e :
         pprint ( e . get_src ( ) )
         print 'reader exception:' , str ( e )
