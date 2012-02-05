@@ -90,7 +90,8 @@ class normalizer :
             res = list ( )
             for iv in xrange ( len ( src ) ) :
                 v = src [ iv ]
-                if isinstance ( v , dict ) and 'call' in v :
+                if isinstance ( v , dict ) and 'call' in v \
+                                and len ( v [ 'call' ] ) > 1 :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
                     bind_args = self . _bind_funcs [ func ]
@@ -105,7 +106,7 @@ class normalizer :
                             args = args [ 1 : ]
                         res . append ( { 'call' : [ func ] + split_args } )
                 else :
-                    res . append ( self . _norm_calls ( v ) )
+                    res . append ( self . _norm_calls ( v , path + [ iv ] ) )
         else :
             res = src
         return res
