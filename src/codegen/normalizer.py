@@ -1,5 +1,4 @@
 import operator
-from utils import merge
 
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
@@ -77,24 +76,33 @@ class normalizer :
     def run ( self , src ) :
         return self . _norm_calls ( self . _norm_consts ( src ) )
     def _norm_calls ( self , src ) :
-        return src
+        if isinstance ( src , dict ) :
+            res = dict ( )
+            for k , v in src . items ( ) :
+                res [ k ] = self . _norm_calls ( v )
+        else :
+            res = src
+        return res
     def _norm_consts ( self , src ) :
         res = dict ( )
-        if 'consts' in src :
-            res [ 'consts' ] = dict ( )
-            env = dict ( )
-            for module , consts in src [ 'consts' ] . items ( ) :
-                for k , v in consts . items ( ) :
-                    env [ module + '_consts_' + k ] = const_value ( v , env )
-            for module , consts in src [ 'consts' ] . items ( ) :
-                for k , v in consts . items ( ) :
-                    env [ k ] = const_value ( v , env )
-                res [ 'consts' ] [ module ] = dict ( )
-                for k in sorted ( consts . keys ( ) ) :
-                    try :
-                        res [ 'consts' ] [ module ] [ k ] = \
-                            env [ k ] . value ( )
-                    except Exception as e :
-                        raise exception ( str ( e ) , src ,
-                            [ 'consts' , module , k ] )
-        return merge ( src , res )
+        for root_k , root_v in src . items ( ) :
+            if root_k == 'consts' :
+                res [ 'consts' ] = dict ( )
+                env = dict ( )
+                for module , consts in src [ 'consts' ] . items ( ) :
+                    for k , v in consts . items ( ) :
+                        env [ module + '_consts_' + k ] = const_value ( v , env )
+                for module , consts in src [ 'consts' ] . items ( ) :
+                    for k , v in consts . items ( ) :
+                        env [ k ] = const_value ( v , env )
+                    res [ 'consts' ] [ module ] = dict ( )
+                    for k in sorted ( consts . keys ( ) ) :
+                        try :
+                            res [ 'consts' ] [ module ] [ k ] = \
+                                env [ k ] . value ( )
+                        except Exception as e :
+                            raise exception ( str ( e ) , src ,
+                                [ 'consts' , module , k ] )
+            else :
+                res [ root_k ] = root_v
+        return res
