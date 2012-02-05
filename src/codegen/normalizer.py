@@ -80,6 +80,13 @@ class normalizer :
             res = dict ( )
             for k , v in src . items ( ) :
                 res [ k ] = self . _norm_calls ( v )
+        elif isinstance ( src , list ) :
+            res = list ( )
+            for v in src :
+                if isinstance ( v , dict ) and 'call' in v :
+                    res . append ( 'splitted call' )
+                else :
+                    res . append ( self . _norm_calls ( v ) )
         else :
             res = src
         return res
