@@ -84,6 +84,20 @@ class normalizer :
         return self . _src
     def _error ( self , text ) :
         raise exception ( text , self . _src , self . _path )
+    def _local_proc ( self , name ) :
+        what , which = self . _path [ 0 ] , self . _path [ 1 ]
+        storage = self . _src [ what ] [ which ]
+        if 'proc' in storage and name in storage [ 'proc' ] :
+            return storage [ 'proc' ] [ name ]
+        else :
+            return None
+    def _get_call_args ( self , name ) :
+        if name in self . _bind_funcs :
+            return self . _bind_funcs [ name ]
+        elif self . _local_proc ( name ) :
+            return self . _local_proc ( name ) [ 'args' ]
+        else :
+            self . _error ( "Unknown callable entity '%s'" % name )
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             res = dict ( )
@@ -98,10 +112,7 @@ class normalizer :
                                 and len ( v [ 'call' ] ) > 1 :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
-                    if func in self . _bind_funcs :
-                        need_args = self . _bind_funcs [ func ]
-                    else :
-                        self . _error ( "Unknown function '%s'" % func )
+                    need_args = self . _get_call_args ( func )
                     if len ( args ) % len ( need_args ) > 0 :
                         self . _error ( 'Need %i more args' % \
                             ( len ( args ) % len ( need_args ) ) )
