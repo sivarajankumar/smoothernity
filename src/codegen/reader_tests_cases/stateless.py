@@ -21,5 +21,5 @@ class stateless_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n proc proc2\n' ) ,
-            { 'stateless' : { 'test1' :
-                { 'proc1' : { } , 'proc2' : { } } } } )
+            { 'stateless' : { 'test1' : { 'proc' :
+                { 'proc1' : { } , 'proc2' : { } } } } } )

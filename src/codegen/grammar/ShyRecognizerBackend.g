@@ -54,6 +54,38 @@ start
         ) *
     ;
 
+trace
+    returns [ title , content ]
+    :   ^( TREE_TRACE ID
+            { $title , $content = $ID.text , dict ( ) }
+            ( trace_item
+                { $content = merge ( $content , $trace_item.value ) }
+            ) *
+        )
+    ;
+
+trace_item
+    returns [ value ]
+    :   proc
+            { $value = { 'proc' : { $proc.title : $proc.content } } }
+    ;
+
+stateless
+    returns [ title , content ]
+    :   ^( TREE_STATELESS ID
+            { $title , $content = $ID.text , dict ( ) }
+            ( stateless_item
+                { $content = merge ( $content , $stateless_item.value ) }
+            ) *
+        )
+    ;
+
+stateless_item
+    returns [ value ]
+    :   proc
+            { $value = { 'proc' : { $proc.title : $proc.content } } }
+    ;
+
 module
     returns [ title , content ]
     :   ^( TREE_MODULE ID
@@ -79,22 +111,6 @@ module_item
 module_queue
     returns [ value ]
     :   ^( TREE_MODULE_QUEUE ID ) { $value = $ID.text }
-    ;
-
-trace
-    returns [ title , content ]
-    :   ^( TREE_TRACE ID )
-            { $title , $content = $ID.text , dict ( ) }
-    |   ^( TREE_TRACE ID procs )
-            { $title , $content = $ID.text , $procs.value }
-    ;
-
-stateless
-    returns [ title , content ]
-    :   ^( TREE_STATELESS ID )
-            { $title , $content = $ID.text , dict ( ) }
-    |   ^( TREE_STATELESS ID procs )
-            { $title , $content = $ID.text , $procs.value }
     ;
 
 request
@@ -125,12 +141,6 @@ receive
                 { $content [ 'ops' ] = $statements.value }
             ) ?
         )
-    ;
-
-procs
-    returns [ value ]
-    @ init { $value = dict ( ) }
-    :   ( proc { $value [ $proc.title ] = $proc.content } ) +
     ;
 
 proc
