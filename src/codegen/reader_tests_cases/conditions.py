@@ -9,7 +9,8 @@ class conditions_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   if call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [
                 { 'if' : [
                     { 'any' : [ { 'call' : [ 'call1' ] } ]
                     , 'ops' : [ { 'call' : [ 'call2' ] } ]
@@ -19,7 +20,8 @@ class conditions_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   if any call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [
                 { 'if' : [
                     { 'any' : [ { 'call' : [ 'call1' ] } ]
                     , 'ops' : [ { 'call' : [ 'call2' ] } ]
@@ -29,7 +31,8 @@ class conditions_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   if all call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [
                 { 'if' : [
                     { 'all' : [ { 'call' : [ 'call1' ] } ]
                     , 'ops' : [ { 'call' : [ 'call2' ] } ]
@@ -39,7 +42,8 @@ class conditions_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   if any\n    call1\n    call2\n   do\n    call3\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [
                 { 'if' : [
                     { 'any' : [ { 'call' : [ 'call1' ] }
                               , { 'call' : [ 'call2' ] } ]
