@@ -28,7 +28,7 @@ class call_test_case ( unittest . TestCase ) :
         gp = e . get_path ( )
         ae ( gp , [ 'stateless' , 'st1' , 'proc1' ,
             'ops' , 0 , 'if' , 0 , 'any' , 0 ] )
-    def test_split ( self ) :
+    def test_split_bind_func ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
@@ -39,6 +39,20 @@ class call_test_case ( unittest . TestCase ) :
             { 'stateless' : { 'st1' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
+            ] } } } } )
+    def test_split_proc ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'stateless' : { 'st1' : 
+            { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
+            , 'proc2' : { 'ops' :
+            [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
+            ] } } } } ) ,
+            { 'stateless' : { 'st1' :
+            { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
+            , 'proc2' : { 'ops' :
+            [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
+            , { 'call' : [ 'proc1' , 'a3' , 'a4' ] }
             ] } } } } )
     def test_no_args ( self ) :
         ae = self . assertEqual
