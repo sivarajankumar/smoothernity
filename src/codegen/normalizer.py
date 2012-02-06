@@ -95,7 +95,10 @@ class normalizer :
         if name in self . _bind_funcs :
             return self . _bind_funcs [ name ]
         elif self . _local_proc ( name ) :
-            return self . _local_proc ( name ) [ 'args' ]
+            if 'args' in self . _local_proc ( name ) :
+                return self . _local_proc ( name ) [ 'args' ]
+            else :
+                self . _error ( "Callable entity '%s' takes no args" % name )
         else :
             self . _error ( "Unknown callable entity '%s'" % name )
     def _norm_calls ( self , src , path = [ ] ) :
