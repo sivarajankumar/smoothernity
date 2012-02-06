@@ -14,6 +14,10 @@ class call_test_case ( unittest . TestCase ) :
             { 'ops' : [ { 'call' : [ 'func1' , 'a1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'ops' : [ { 'call' : [ 'unknown' , 'a2' ] } ] } } } } } )
+        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
+            { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' , 'a' , 'b' ] } ] }
+            , 'proc2' : { 'ops' : [ { 'call' : [ 'proc1' , 'a' ] } ] }
+            } } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run
