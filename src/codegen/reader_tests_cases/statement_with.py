@@ -9,7 +9,7 @@ class statement_with_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   with call1\n    call2\n    call3\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [ { 'with' :
-                { 'call1' :
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' :
+                [ { 'with' : { 'call1' :
                     [ { 'call' : [ 'call2' ] }
-                    , { 'call' : [ 'call3' ] } ] } } ] } } } } )
+                    , { 'call' : [ 'call3' ] } ] } } ] } } } } } )

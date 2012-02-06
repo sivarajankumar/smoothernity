@@ -98,15 +98,16 @@ class normalizer :
                                 and len ( v [ 'call' ] ) > 1 :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
-                    if func not in self . _bind_funcs :
+                    if func in self . _bind_funcs :
+                        need_args = self . _bind_funcs [ func ]
+                    else :
                         self . _error ( "Unknown function '%s'" % func )
-                    bind_args = self . _bind_funcs [ func ]
-                    if len ( args ) % len ( bind_args ) > 0 :
+                    if len ( args ) % len ( need_args ) > 0 :
                         self . _error ( 'Need %i more args' % \
-                            ( len ( args ) % len ( bind_args ) ) )
+                            ( len ( args ) % len ( need_args ) ) )
                     while args :
                         split_args = [ ]
-                        for i in xrange ( len ( bind_args ) ) :
+                        for i in xrange ( len ( need_args ) ) :
                             split_args . append ( args [ 0 ] )
                             args = args [ 1 : ]
                         res . append ( { 'call' : [ func ] + split_args } )

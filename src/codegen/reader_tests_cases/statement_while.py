@@ -10,18 +10,18 @@ class statement_while_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   while call1\n   do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
                 { 'while' :
                     { 'any' : [ { 'call' : [ 'call1' ] } ]
                     , 'ops' : [ { 'call' : [ 'call2' ] } ]
-                    } } ] } } } } )
+                    } } ] } } } } } )
     def test_do_on_same_line ( self ) :
         ae = self . assertEqual
         r = self . h . rec
         ae ( r ( 'stateless test1\n proc proc1\n  ops\n'
             '   while call1 do\n    call2\n' ) ,
-            { 'stateless' : { 'test1' : { 'proc1' : { 'ops' : [
+            { 'stateless' : { 'test1' : { 'proc' : { 'proc1' : { 'ops' : [
                 { 'while' :
                     { 'any' : [ { 'call' : [ 'call1' ] } ]
                     , 'ops' : [ { 'call' : [ 'call2' ] } ]
-                    } } ] } } } } )
+                    } } ] } } } } } )
