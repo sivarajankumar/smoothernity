@@ -148,7 +148,10 @@ proc
     @ init { $content = dict ( ) }
     :   ^( TREE_PROC
             ID
-                { $title = $ID.text }
+                {
+                    $title = $ID.text
+                    $content = { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+                }
             ( proc_args
                 { $content [ 'args' ] = $proc_args.value }
             ) ?
