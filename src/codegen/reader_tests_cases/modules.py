@@ -23,9 +23,7 @@ class modules_test_case ( unittest . TestCase ) :
         r = self . h . rec
         ae ( r ( 'module test1\n proc proc1\n proc proc2' ) ,
             { 'module' : { 'test1' : { 'proc' : 
-                { 'proc1' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                , 'proc2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                } } } } )
+                { 'proc1' : { } , 'proc2' : { } } } } } )
     def test_receives ( self ) :
         ae = self . assertEqual
         r = self . h . rec
@@ -46,7 +44,5 @@ class modules_test_case ( unittest . TestCase ) :
         ae ( r ( 'module test1\n'
             ' proc proc1\n request req1\n proc proc2\n' ) ,
             { 'module' : { 'test1' :
-                { 'proc' :
-                    { 'proc1' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                    , 'proc2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] } }
+                { 'proc' : { 'proc1' : { } , 'proc2' : { } }
                 , 'request' : { 'req1' : { } } } } } )
