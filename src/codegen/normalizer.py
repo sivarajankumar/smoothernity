@@ -1,4 +1,5 @@
 import operator
+from utils import merge
 
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
@@ -79,6 +80,7 @@ class normalizer :
         self . _bind_funcs [ func ] = args
     def run ( self , src ) :
         self . _src = src
+        self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
         return self . _src
@@ -98,6 +100,11 @@ class normalizer :
             return self . _local_proc ( name ) [ 'args' ]
         else :
             self . _error ( "Unknown callable entity '%s'" % name )
+    def _norm_skeleton ( self , src ) :
+        return merge ( src ,
+            { 'consts' : { } , 'messages' : { } , 'types' : { }
+            , 'vars' : { } , 'module' : { } , 'stateless' : { }
+            , 'trace' : { } } )
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             res = dict ( )
