@@ -101,10 +101,13 @@ class normalizer :
         else :
             self . _error ( "Unknown callable entity '%s'" % name )
     def _norm_skeleton ( self , src ) :
-        return merge ( src ,
+        res = merge ( src ,
             { 'consts' : { } , 'messages' : { } , 'types' : { }
             , 'vars' : { } , 'module' : { } , 'stateless' : { }
             , 'trace' : { } } )
+        for k , v in res [ 'stateless' ] . items ( ) :
+            res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
+        return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             res = dict ( )
