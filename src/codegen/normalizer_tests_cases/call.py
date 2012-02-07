@@ -1,6 +1,7 @@
 import normalizer
 import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
+from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 
 class call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -39,24 +40,40 @@ class call_test_case ( unittest . TestCase ) :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-            { 'args' : [ ] , 'vars' : [ ] , 'ops' :
-            [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
-            , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
-            ] } } } } } ) )
-    def test_split_proc ( self ) :
+                mproc ( { 'ops' :
+                    [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
+                    , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
+                    ] } ) } } } } ) )
+    def test_split_proc_local ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
+            { 'proc1' : { 'args' : [ { } , { } ] }
             , 'proc2' : { 'ops' :
-            [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
-            ] } } } } } ) ,
+                [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
+                ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'args' : [ { } , { } ] , 'vars' : [ ] , 'ops' : [ ] }
-            , 'proc2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' :
-            [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
-            , { 'call' : [ 'proc1' , 'a3' , 'a4' ] }
-            ] } } } } } ) )
+            { 'proc1' : mproc ( { 'args' : [ { } , { } ] } )
+            , 'proc2' : mproc ( { 'ops' :
+                [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
+                , { 'call' : [ 'proc1' , 'a3' , 'a4' ] }
+                ] } ) } } } } ) )
+    def test_split_proc_global ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'stateless' :
+            { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } , { } ] } } }
+            , 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ { 'call' :
+                [ 'st1_stateless_proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
+                ] } } } } } ) ,
+            mroot ( { 'stateless' :
+                { 'st1' : { 'proc' : { 'proc1' :
+                    mproc ( { 'args' : [ { } , { } ] } ) } }
+                , 'st2' : { 'proc' : { 'proc2' :
+                    mproc ( { 'ops' :
+                        [ { 'call' : [ 'st1_stateless_proc1' , 'a1' , 'a2' ] }
+                        , { 'call' : [ 'st1_stateless_proc1' , 'a3' , 'a4' ] }
+                        ] } ) } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -65,5 +82,4 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-            { 'args' : [ ] , 'vars' : [ ] , 'ops' :
-            [ { 'call' : [ 'func1' ] } ] } } } } } ) )
+                mproc ( { 'ops' : [ { 'call' : [ 'func1' ] } ] } ) } } } } ) )
