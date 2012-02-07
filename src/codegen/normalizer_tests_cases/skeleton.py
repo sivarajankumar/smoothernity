@@ -14,3 +14,8 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'stateless' : { 'test1' : { } } } ) ,
             mskel ( { 'stateless' : { 'test1' : { 'proc' : { } } } } ) )
+    def test_trace ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'trace' : { 'test1' : { } } } ) ,
+            mskel ( { 'trace' : { 'test1' : { 'proc' : { } } } } ) )
