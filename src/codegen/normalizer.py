@@ -106,7 +106,9 @@ class normalizer :
             , 'vars' : { } , 'module' : { } , 'stateless' : { }
             , 'trace' : { } } )
         for k , v in res [ 'stateless' ] . items ( ) :
-            res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
+            res [ 'stateless' ] [ k ] = merge ( v , { 'proc' : { } } )
+        for k , v in res [ 'trace' ] . items ( ) :
+            res [ 'trace' ] [ k ] = merge ( v , { 'proc' : { } } )
         return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
