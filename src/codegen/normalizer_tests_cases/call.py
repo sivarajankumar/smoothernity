@@ -38,7 +38,8 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
             ] } } } } } ) )
@@ -51,8 +52,8 @@ class call_test_case ( unittest . TestCase ) :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
             mskel ( { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
-            , 'proc2' : { 'ops' :
+            { 'proc1' : { 'args' : [ { } , { } ] , 'vars' : [ ] , 'ops' : [ ] }
+            , 'proc2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'proc1' , 'a3' , 'a4' ] }
             ] } } } } } ) )
@@ -63,5 +64,6 @@ class call_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ ] )
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } ) ,
-            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } ) )
