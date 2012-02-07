@@ -1,5 +1,6 @@
 import normalizer
 import unittest
+from normalizer_tests_cases . helper import merge_skeleton as mskel
 
 class call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -37,12 +38,10 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'trace' : { } 
-            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
-            ] } } } } } )
+            ] } } } } } ) )
     def test_split_proc ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -51,23 +50,18 @@ class call_test_case ( unittest . TestCase ) :
             , 'proc2' : { 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'trace' : { } 
-            , 'stateless' : { 'st1' : { 'proc' :
+            mskel ( { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
             , 'proc2' : { 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'proc1' , 'a3' , 'a4' ] }
-            ] } } } } } )
+            ] } } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'func1' , [ ] )
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-            [ { 'call' : [ 'func1' ] }
-            ] } } } } } ) ,
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'trace' : { } 
-            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-            [ { 'call' : [ 'func1' ] } ] } } } } } )
+            [ { 'call' : [ 'func1' ] } ] } } } } } ) ,
+            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            [ { 'call' : [ 'func1' ] } ] } } } } } ) )

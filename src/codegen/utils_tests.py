@@ -13,6 +13,13 @@ class merge_test_case ( unittest . TestCase ) :
         ae ( m ( { } , [ ] ) , [ ] )
         ae ( m ( 1 , 2 ) , 2 )
         ae ( m ( 'test1' , 'test2' ) , 'test2' )
+    def test_deepcopy ( self ) :
+        ane = self . assertNotEqual
+        m = utils . merge
+        a , b = { } , [ ]
+        ane ( id ( m ( a , b ) ) , id ( b ) )
+        ane ( id ( m ( a , a ) ) , id ( a ) )
+        ane ( id ( m ( b , b ) ) , id ( b ) )
     def test_lists ( self ) :
         ae = self . assertEqual
         m = utils . merge

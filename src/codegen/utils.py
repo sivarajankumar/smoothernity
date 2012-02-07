@@ -1,4 +1,8 @@
-def merge ( dst , src ) :
+from copy import deepcopy
+
+def merge ( dst_ , src_ ) :
+    dst = deepcopy ( dst_ )
+    src = deepcopy ( src_ )
     types = ( type ( dst ) , type ( src ) )
     if types == ( dict , dict ) :
         for k , v in src . items ( ) :

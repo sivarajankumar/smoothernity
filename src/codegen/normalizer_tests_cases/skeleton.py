@@ -1,5 +1,6 @@
 import normalizer
 import unittest
+from normalizer_tests_cases . helper import skeleton
 
 class skeleton_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -7,7 +8,4 @@ class skeleton_test_case ( unittest . TestCase ) :
     def test_empty ( self ) :
         ae = self . assertEqual
         r = self . n . run
-        ae ( r ( { } ) ,
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'stateless' : { }
-            , 'trace' : { } } )
+        ae ( r ( { } ) , skeleton )
