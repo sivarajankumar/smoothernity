@@ -37,7 +37,9 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            { 'consts' : { } , 'messages' : { } , 'types' : { }
+            , 'vars' : { } , 'module' : { } , 'trace' : { } 
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
             ] } } } } } )
@@ -49,7 +51,9 @@ class call_test_case ( unittest . TestCase ) :
             , 'proc2' : { 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            { 'stateless' : { 'st1' : { 'proc' :
+            { 'consts' : { } , 'messages' : { } , 'types' : { }
+            , 'vars' : { } , 'module' : { } , 'trace' : { } 
+            , 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'args' : [ { } , { } ] , 'ops' : [ ] }
             , 'proc2' : { 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
@@ -63,5 +67,7 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' ] }
             ] } } } } } ) ,
-            { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            { 'consts' : { } , 'messages' : { } , 'types' : { }
+            , 'vars' : { } , 'module' : { } , 'trace' : { } 
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } )
