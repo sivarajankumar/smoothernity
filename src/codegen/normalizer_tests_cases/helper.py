@@ -18,3 +18,10 @@ def merge_skeleton_module ( x ) :
         , 'receive' : { }
         , 'request' : { }
         } , x )
+
+def merge_skeleton_proc ( x ) :
+    return merge (
+        { 'vars' : [ ]
+        , 'args' : [ ]
+        , 'ops' : [ ]
+        } , x )

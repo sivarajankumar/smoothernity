@@ -2,6 +2,7 @@ import normalizer
 import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from normalizer_tests_cases . helper import merge_skeleton_module as mmod
+from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 
 class skeleton_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -31,7 +32,7 @@ class skeleton_test_case ( unittest . TestCase ) :
         ae ( r ( { 'anywhere' : { 'test1' : { 'proc' : {
             'test2' : { } } } } } ) ,
             mroot ( { 'anywhere' : { 'test1' : { 'proc' : {
-            'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+            'test2' : mproc ( { } )
             } } } } ) )
     def test_request ( self ) :
         ae = self . assertEqual
