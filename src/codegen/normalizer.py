@@ -120,6 +120,11 @@ class normalizer :
                         res [ k ] [ kk ] [ 'proc' ] [ kkk ] = merge (
                             { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
                             , vvv )
+        for k , v in res [ 'module' ] . items ( ) :
+            for kk in [ 'request' , 'receive' ] :
+                for kkk , vvv in v [ kk ] . items ( ) :
+                    res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
+                        { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
