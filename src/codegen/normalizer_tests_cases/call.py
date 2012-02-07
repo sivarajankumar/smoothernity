@@ -1,6 +1,6 @@
 import normalizer
 import unittest
-from normalizer_tests_cases . helper import merge_skeleton as mskel
+from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 
 class call_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -38,7 +38,7 @@ class call_test_case ( unittest . TestCase ) :
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
             , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
@@ -51,7 +51,7 @@ class call_test_case ( unittest . TestCase ) :
             , 'proc2' : { 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
             ] } } } } } ) ,
-            mskel ( { 'stateless' : { 'st1' : { 'proc' :
+            mroot ( { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'args' : [ { } , { } ] , 'vars' : [ ] , 'ops' : [ ] }
             , 'proc2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
@@ -64,6 +64,6 @@ class call_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ ] )
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } ) ,
-            mskel ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'args' : [ ] , 'vars' : [ ] , 'ops' :
             [ { 'call' : [ 'func1' ] } ] } } } } } ) )
