@@ -19,3 +19,17 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'trace' : { 'test1' : { } } } ) ,
             mskel ( { 'trace' : { 'test1' : { 'proc' : { } } } } ) )
+    def test_module ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'module' : { 'test1' : { } } } ) ,
+            mskel ( { 'module' : { 'test1' : { 'module_queue' : '' ,
+                'proc' : { } , 'receive' : { } , 'request' : { } } } } ) )
+    def test_proc ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'anywhere' : { 'test1' : { 'proc' : {
+            'test2' : { } } } } } ) ,
+            mskel ( { 'anywhere' : { 'test1' : { 'proc' : {
+            'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+            } } } } ) )
