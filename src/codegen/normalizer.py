@@ -93,11 +93,34 @@ class normalizer :
             return storage [ 'proc' ] [ name ]
         else :
             return None
+    def _some_proc ( self , what , name ) :
+        parts = name . split ( '_%s_' % what )
+        if len ( parts ) > 1 :
+            which , proc = parts
+            if which in self . _src [ what ] :
+                procs = self . _src [ what ] [ which ] [ 'proc' ]
+                if proc in procs :
+                    return procs [ proc ]
+                else :
+                    self . _error ( "Unknown proc '%s' in %s '%s'" %
+                        ( proc , what , which ) )
+            else :
+                self . _error ( "Unknown %s '%s'" % ( what , which ) )
+        else :
+            return None
+    def _stateless_proc ( self , name ) :
+        return self . _some_proc ( 'stateless' , name )
+    def _trace_proc ( self , name ) :
+        return self . _some_proc ( 'trace' , name )
     def _get_call_args ( self , name ) :
         if name in self . _bind_funcs :
             return self . _bind_funcs [ name ]
         elif self . _local_proc ( name ) :
             return self . _local_proc ( name ) [ 'args' ]
+        elif self . _stateless_proc ( name ) :
+            return self . _stateless_proc ( name ) [ 'args' ]
+        elif self . _trace_proc ( name ) :
+            return self . _trace_proc ( name ) [ 'args' ]
         else :
             self . _error ( "Unknown callable entity '%s'" % name )
     def _norm_skeleton ( self , src ) :
