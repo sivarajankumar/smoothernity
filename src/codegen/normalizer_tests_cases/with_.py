@@ -38,6 +38,16 @@ class with_test_case ( unittest . TestCase ) :
             { 'test1' : { 'anywhere' : [ 'func1' ] } } } ] } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
                 { 'anywhere' : [ 'func1' ] } } } ) )
+    def test_nested_with ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        bf = self . n . bind_func
+        bf ( 'test1test2func1' , [ ] )
+        ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
+            { 'test1' : { 'anywhere' : [ { 'with' :
+                { 'test2' : { 'anywhere' : [ 'func1' ] } } } ] } } } ] } } ) ,
+            mroot ( { 'anywhere' : { 'anywhere' :
+                { 'anywhere' : [ 'test1test2func1' ] } } } ) )
     def test_bound_func ( self ) :
         ae = self . assertEqual
         r = self . n . run
