@@ -56,12 +56,3 @@ class with_test_case ( unittest . TestCase ) :
                 , { 'call' : [ 'test1func2' ] }
                 , { 'call' : [ 'test2func3' ] }
                 ] } ] } } ) )
-    def test_bound_func ( self ) :
-        ae = self . assertEqual
-        r = self . n . run
-        bf = self . n . bind_func
-        bf ( 'test1func1' , [ ] )
-        ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } ) ,
-            mroot ( { 'anywhere' : { 'anywhere' :
-                [ { 'call' : [ 'test1func1' ] } ] } } ) )

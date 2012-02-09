@@ -124,7 +124,7 @@ class normalizer :
         elif self . _trace_proc ( name ) :
             return self . _trace_proc ( name ) [ 'args' ]
         else :
-            self . _error ( "Unknown callable entity '%s'" % name )
+            return None
     def _norm_skeleton ( self , src ) :
         res = merge (
             { 'consts' : { } , 'messages' : { } , 'types' : { }
@@ -151,15 +151,14 @@ class normalizer :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
-    def _is_callable ( self , name ) :
-        return name in self . _bind_funcs
     def _norm_withs ( self , src , path = [ ] , prefixes = [ ] ) :
         if isinstance ( src , dict ) :
             if 'call' in src :
                 self . _path = path
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
-                candidates = filter ( self . _is_callable ,
+                candidates = filter (
+                    lambda x : self . _get_call_args ( x ) != None ,
                     [ p + func for p in set (
                         [ '' , '' . join ( prefixes ) ] + prefixes ) ] )
                 if len ( candidates ) > 1 :
@@ -235,6 +234,9 @@ class normalizer :
                     func = v [ 'call' ] [ 0 ]
                     args = v [ 'call' ] [ 1 : ]
                     need_args = self . _get_call_args ( func )
+                    if need_args == None :
+                        self . _error ( "Unknown callable entity '%s'" %
+                            func )
                     if len ( args ) % len ( need_args ) > 0 :
                         self . _error ( 'Need %i more args' % \
                             ( len ( args ) % len ( need_args ) ) )
