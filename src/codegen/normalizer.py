@@ -82,6 +82,7 @@ class normalizer :
         self . _src = src
         self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
+        self . _src = self . _norm_withs ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
         self . _src = self . _norm_assigns ( self . _src )
         return self . _src
@@ -149,6 +150,33 @@ class normalizer :
                 for kkk , vvv in v [ kk ] . items ( ) :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
+        return res
+    def _norm_withs ( self , src , path = [ ] , prefix = '' ) :
+        if isinstance ( src , dict ) :
+            if 'call' in src :
+                res = src
+                self . _path = path
+            elif 'with' in src :
+                res = list ( )
+                for k , v in src [ 'with' ] . items ( ) :
+                    for iv in xrange ( len ( v ) ) :
+                        res . append ( self . _norm_withs \
+                            ( v [ iv ]
+                            , path + [ 'with' , k , iv ]
+                            , prefix + k ) )
+            else :
+                res = dict ( )
+                for k , v in src . items ( ) :
+                    res [ k ] = self . _norm_withs (
+                        v , path + [ k ] , prefix )
+        elif isinstance ( src , list ) :
+            res = list ( )
+            for iv in xrange ( len ( src ) ) :
+                v = src [ iv ]
+                res . append ( self . _norm_withs (
+                    v , path + [ iv ] , prefix ) )
+        else :
+            res = src
         return res
     def _norm_assigns ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
