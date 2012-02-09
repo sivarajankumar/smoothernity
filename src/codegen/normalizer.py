@@ -156,6 +156,8 @@ class normalizer :
             if 'call' in src :
                 res = src
                 self . _path = path
+                func = src [ 'call' ] [ 0 ]
+                args = src [ 'call' ] [ 1 : ]
             elif 'with' in src :
                 res = list ( )
                 for k , v in src [ 'with' ] . items ( ) :

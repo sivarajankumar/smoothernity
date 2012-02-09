@@ -43,13 +43,19 @@ class with_test_case ( unittest . TestCase ) :
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'test1test2func1' , [ ] )
+        bf ( 'test1func2' , [ ] )
+        bf ( 'test2func3' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : [ { 'anywhere' : [ { 'with' :
-                { 'test2' : [ { 'call' : [ 'func1' ] } ] }
-            } ] } ] } } ] } } ) ,
-            mroot ( { 'anywhere' : { 'anywhere' :
-                [ { 'anywhere' : [ { 'call' : [ 'test1test2func1' ] } ] } ]
-            } } ) )
+            { 'test1' : [ { 'anywhere' : [ { 'with' : { 'test2' :
+                [ { 'call' : [ 'func1' ] }
+                , { 'call' : [ 'func2' ] }
+                , { 'call' : [ 'func3' ] }
+                ] } } ] } ] } } ] } } ) ,
+            mroot ( { 'anywhere' : { 'anywhere' : [ { 'anywhere' :
+                [ { 'call' : [ 'test1test2func1' ] }
+                , { 'call' : [ 'test1func2' ] }
+                , { 'call' : [ 'test2func3' ] }
+                ] } ] } } ) )
     def test_bound_func ( self ) :
         ae = self . assertEqual
         r = self . n . run
