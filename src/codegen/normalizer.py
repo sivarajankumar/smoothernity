@@ -83,6 +83,7 @@ class normalizer :
         self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
+        self . _src = self . _norm_assigns ( self . _src )
         return self . _src
     def _error ( self , text ) :
         raise exception ( text , self . _src , self . _path )
@@ -148,6 +149,31 @@ class normalizer :
                 for kkk , vvv in v [ kk ] . items ( ) :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
+        return res
+    def _norm_assigns ( self , src , path = [ ] ) :
+        if isinstance ( src , dict ) :
+            res = dict ( )
+            for k , v in src . items ( ) :
+                res [ k ] = self . _norm_assigns ( v , path + [ k ] )
+        elif isinstance ( src , list ) :
+            res = list ( )
+            for iv in xrange ( len ( src ) ) :
+                self . _path = path + [ iv ]
+                v = src [ iv ]
+                if isinstance ( v , dict ) and 'assign' in v :
+                    froms = v [ 'assign' ] [ 'from' ]
+                    tos = v [ 'assign' ] [ 'to' ]
+                    if len ( tos ) % len ( froms ) > 0 :
+                        self . _error ( 'Need %i more assign targets' %
+                            ( len ( tos ) % len ( froms ) ) )
+                    for i in xrange ( len ( tos ) ) :
+                        res . append ( { 'assign' :
+                            { 'from' : [ froms [ i % len ( froms ) ] ]
+                            , 'to' : [ tos [ i ] ] } } )
+                else :
+                    res . append ( self . _norm_assigns ( v , self . _path ) )
+        else :
+            res = src
         return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
