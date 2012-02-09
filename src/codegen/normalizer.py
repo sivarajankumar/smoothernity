@@ -151,13 +151,24 @@ class normalizer :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
-    def _norm_withs ( self , src , path = [ ] , prefix = '' ) :
+    def _is_callable ( self , name ) :
+        return name in self . _bind_funcs
+    def _norm_withs ( self , src , path = [ ] , prefixes = [ ] ) :
         if isinstance ( src , dict ) :
             if 'call' in src :
-                res = src
                 self . _path = path
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
+                candidates = filter ( self . _is_callable ,
+                    [ p + func for p in set (
+                        [ '' , '' . join ( prefixes ) ] + prefixes ) ] )
+                if len ( candidates ) > 1 :
+                    self . _error ( 'Ambiguous callables: %s' %
+                        ( ', ' . join ( candidates ) ) )
+                if candidates :
+                    res = { 'call' : candidates + args }
+                else :
+                    res = src
             elif 'with' in src :
                 res = list ( )
                 for k , v in src [ 'with' ] . items ( ) :
@@ -165,18 +176,22 @@ class normalizer :
                         res . append ( self . _norm_withs \
                             ( v [ iv ]
                             , path + [ 'with' , k , iv ]
-                            , prefix + k ) )
+                            , prefixes + [ k ] ) )
             else :
                 res = dict ( )
                 for k , v in src . items ( ) :
                     res [ k ] = self . _norm_withs (
-                        v , path + [ k ] , prefix )
+                        v , path + [ k ] , prefixes )
         elif isinstance ( src , list ) :
             res = list ( )
             for iv in xrange ( len ( src ) ) :
                 v = src [ iv ]
-                res . append ( self . _norm_withs (
-                    v , path + [ iv ] , prefix ) )
+                a = self . _norm_withs (
+                    v , path + [ iv ] , prefixes )
+                if isinstance ( a , list ) :
+                    res += a
+                else :
+                    res . append ( a )
         else :
             res = src
         return res
