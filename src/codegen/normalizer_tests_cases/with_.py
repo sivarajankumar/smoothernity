@@ -14,7 +14,7 @@ class with_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ ] )
         bf ( 'test1func1' , [ ] )
         ar ( ne , r , { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : { 'anywhere' : [ 'func1' ] } } } ] } } )
+            { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -24,36 +24,38 @@ class with_test_case ( unittest . TestCase ) :
         bf ( 'test1func1' , [ ] )
         try :
             r ( { 'path1' : { 'path2' : [ { 'with' :
-                { 'test1' : { 'path3' : [ 'func1' ] } } } ] } } )
+                { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } )
         except ne as e :
             pass
         gp = e . get_path ( )
-        ae ( gp , [ 'path1' , 'path2' , 0 , 'with' , 'test1' , 'path3' , 0 ] )
+        ae ( gp , [ 'path1' , 'path2' , 0 , 'with' , 'test1' , 0 ] )
     def test_same_func ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'func1' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : { 'anywhere' : [ 'func1' ] } } } ] } } ) ,
+            { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
-                { 'anywhere' : [ 'func1' ] } } } ) )
+                [ { 'call' : [ 'func1' ] } ] } } ) )
     def test_nested_with ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'test1test2func1' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : { 'anywhere' : [ { 'with' :
-                { 'test2' : { 'anywhere' : [ 'func1' ] } } } ] } } } ] } } ) ,
+            { 'test1' : [ { 'anywhere' : [ { 'with' :
+                { 'test2' : [ { 'call' : [ 'func1' ] } ] }
+            } ] } ] } } ] } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
-                { 'anywhere' : [ 'test1test2func1' ] } } } ) )
+                [ { 'anywhere' : [ { 'call' : [ 'test1test2func1' ] } ] } ]
+            } } ) )
     def test_bound_func ( self ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'test1func1' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : { 'anywhere' : [ 'func1' ] } } } ] } } ) ,
+            { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
-                { 'anywhere' : [ 'test1func1' ] } } } ) )
+                [ { 'call' : [ 'test1func1' ] } ] } } ) )
