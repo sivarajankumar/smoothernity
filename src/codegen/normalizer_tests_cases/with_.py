@@ -42,17 +42,23 @@ class with_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
-        bf ( 'test1test2func1' , [ ] )
-        bf ( 'test1func2' , [ ] )
-        bf ( 'test2func3' , [ ] )
+        bf ( 'test1test2test3func1' , [ ] )
+        bf ( 'test2test3func2' , [ ] )
+        bf ( 'test1func3' , [ ] )
+        bf ( 'test2func4' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : [ { 'anywhere' : [ { 'with' : { 'test2' :
-                [ { 'call' : [ 'func1' ] }
-                , { 'call' : [ 'func2' ] }
-                , { 'call' : [ 'func3' ] }
-                ] } } ] } ] } } ] } } ) ,
-            mroot ( { 'anywhere' : { 'anywhere' : [ { 'anywhere' :
+            { 'test1' : [ { 'anywhere' : [ { 'with' :
+                { 'test2' : [ { 'anywhere' : [ { 'with' :
+                    { 'test3' :
+                        [ { 'call' : [ 'func1' ] }
+                        , { 'call' : [ 'func2' ] }
+                        , { 'call' : [ 'func3' ] }
+                        , { 'call' : [ 'func4' ] }
+                        ] } } ] } ] } } ] } ] } } ] } } ) ,
+            mroot ( { 'anywhere' : { 'anywhere' :
+                [ { 'anywhere' : [ { 'anywhere' :
                 [ { 'call' : [ 'test1test2func1' ] }
-                , { 'call' : [ 'test1func2' ] }
-                , { 'call' : [ 'test2func3' ] }
-                ] } ] } } ) )
+                , { 'call' : [ 'test2test3func2' ] }
+                , { 'call' : [ 'test1func3' ] }
+                , { 'call' : [ 'test2func4' ] }
+                ] } ] } ] } } ) )
