@@ -188,26 +188,31 @@ class normalizer :
         return res
     def _norm_assigns ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
-            res = dict ( )
-            for k , v in src . items ( ) :
-                res [ k ] = self . _norm_assigns ( v , path + [ k ] )
+            if 'assign' in src :
+                self . _path = path
+                res = list ( )
+                froms = src [ 'assign' ] [ 'from' ]
+                tos = src [ 'assign' ] [ 'to' ]
+                if len ( tos ) % len ( froms ) > 0 :
+                    self . _error ( 'Need %i more assign targets' %
+                        ( len ( tos ) % len ( froms ) ) )
+                for i in xrange ( len ( tos ) ) :
+                    res . append ( { 'assign' :
+                        { 'from' : [ froms [ i % len ( froms ) ] ]
+                        , 'to' : [ tos [ i ] ] } } )
+            else :
+                res = dict ( )
+                for k , v in src . items ( ) :
+                    res [ k ] = self . _norm_assigns ( v , path + [ k ] )
         elif isinstance ( src , list ) :
             res = list ( )
             for iv in xrange ( len ( src ) ) :
-                self . _path = path + [ iv ]
                 v = src [ iv ]
-                if isinstance ( v , dict ) and 'assign' in v :
-                    froms = v [ 'assign' ] [ 'from' ]
-                    tos = v [ 'assign' ] [ 'to' ]
-                    if len ( tos ) % len ( froms ) > 0 :
-                        self . _error ( 'Need %i more assign targets' %
-                            ( len ( tos ) % len ( froms ) ) )
-                    for i in xrange ( len ( tos ) ) :
-                        res . append ( { 'assign' :
-                            { 'from' : [ froms [ i % len ( froms ) ] ]
-                            , 'to' : [ tos [ i ] ] } } )
+                a = self . _norm_assigns ( v , path + [ iv ] )
+                if isinstance ( a , list ) :
+                    res += a
                 else :
-                    res . append ( self . _norm_assigns ( v , self . _path ) )
+                    res . append ( a )
         else :
             res = src
         return res
