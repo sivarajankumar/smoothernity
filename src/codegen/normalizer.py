@@ -93,8 +93,6 @@ class normalizer :
         storage = self . _src [ what ] [ which ]
         if 'proc' in storage and name in storage [ 'proc' ] :
             return storage [ 'proc' ] [ name ]
-        else :
-            return None
     def _some_proc ( self , what , name ) :
         parts = name . split ( '_%s_' % what )
         if len ( parts ) > 1 :
@@ -103,12 +101,6 @@ class normalizer :
                 procs = self . _src [ what ] [ which ] [ 'proc' ]
                 if proc in procs :
                     return procs [ proc ]
-                else :
-                    return None
-            else :
-                return None
-        else :
-            return None
     def _stateless_proc ( self , name ) :
         return self . _some_proc ( 'stateless' , name )
     def _trace_proc ( self , name ) :
@@ -122,8 +114,6 @@ class normalizer :
             return self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
             return self . _trace_proc ( name ) [ 'args' ]
-        else :
-            return None
     def _norm_skeleton ( self , src ) :
         res = merge (
             { 'consts' : { } , 'messages' : { } , 'types' : { }
