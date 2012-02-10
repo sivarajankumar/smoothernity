@@ -134,9 +134,11 @@ if __name__ == '__main__' :
         bf = n . bind_func
         bf ( 'platform_conditions_fract_greater_than_fract' , [ { } ] * 2 )
         bf ( 'platform_conditions_fract_less_than_fract' , [ { } ] * 2 )
+        bf ( 'platform_conditions_whole_greater_or_equal_to_whole' , [ { } ] * 2 )
         bf ( 'platform_conditions_whole_greater_than_whole' , [ { } ] * 2 )
         bf ( 'platform_conditions_whole_less_than_whole' , [ { } ] * 2 )
         bf ( 'platform_conditions_whole_less_than_zero' , [ { } ] * 1 )
+        bf ( 'platform_conditions_wholes_are_not_equal' , [ { } ] * 2 )
         bf ( 'platform_math_add_fracts' , [ { } ] * 3 )
         bf ( 'platform_math_add_wholes' , [ { } ] * 3 )
         bf ( 'platform_math_add_to_fract' , [ { } ] * 2 )

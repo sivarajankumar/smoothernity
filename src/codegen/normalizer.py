@@ -94,6 +94,14 @@ class normalizer :
         storage = self . _src [ what ] [ which ]
         if 'proc' in storage and name in storage [ 'proc' ] :
             return storage [ 'proc' ] [ name ]
+    def _local_some_proc ( self , what , name ) :
+        if name . startswith ( what + '_' ) :
+            proc = name . split ( '%s_' % what ) [ 1 ]
+            which = self . _path [ 1 ]
+            if which in self . _src [ what ] :
+                storage = self . _src [ what ] [ which ]
+                if proc in storage [ 'proc' ] :
+                    return storage [ 'proc' ] [ proc ]
     def _some_proc ( self , what , name ) :
         parts = name . split ( '_%s_' % what )
         if len ( parts ) > 1 :
@@ -106,11 +114,19 @@ class normalizer :
         return self . _some_proc ( 'stateless' , name )
     def _trace_proc ( self , name ) :
         return self . _some_proc ( 'trace' , name )
+    def _local_stateless_proc ( self , name ) :
+        return self . _local_some_proc ( 'stateless' , name )
+    def _local_trace_proc ( self , name ) :
+        return self . _local_some_proc ( 'trace' , name )
     def _get_call_args ( self , name ) :
         if name in self . _bind_funcs :
             return self . _bind_funcs [ name ]
         elif self . _local_proc ( name ) :
             return self . _local_proc ( name ) [ 'args' ]
+        elif self . _local_stateless_proc ( name ) :
+            return self . _local_stateless_proc ( name ) [ 'args' ]
+        elif self . _local_trace_proc ( name ) :
+            return self . _local_trace_proc ( name ) [ 'args' ]
         elif self . _stateless_proc ( name ) :
             return self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
