@@ -100,6 +100,7 @@ statement
     :   statement_call_single_line NEWLINE
             -> statement_call_single_line
     |   statement_call_multi_line
+    |   statement_send
     |   statement_if
     |   statement_assign
     |   statement_while
@@ -211,6 +212,16 @@ statement_call_multi_line
     ;
 
 statement_call_args : arbitrary_value + ;
+
+statement_send
+    :   SEND ID statement_send_args ? NEWLINE
+        ->  ^( TREE_STATEMENT_SEND ID statement_send_args ? )
+    |   SEND ID statement_send_args ? NEWLINE
+        INDENT NEWLINE ( statement_send_args NEWLINE ) + DEDENT NEWLINE
+        ->  ^( TREE_STATEMENT_SEND ID statement_send_args * )
+    ;
+
+statement_send_args : arbitrary_value + ;
 
 arbitrary_value
     :   ID
