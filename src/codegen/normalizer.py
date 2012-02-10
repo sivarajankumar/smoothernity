@@ -218,33 +218,37 @@ class normalizer :
         return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
-            res = dict ( )
-            for k , v in src . items ( ) :
-                res [ k ] = self . _norm_calls ( v , path + [ k ] )
+            if 'call' in src and len ( src [ 'call' ] ) > 1 :
+                res = list ( )
+                self . _path = path
+                func = src [ 'call' ] [ 0 ]
+                args = src [ 'call' ] [ 1 : ]
+                need_args = self . _get_call_args ( func )
+                if need_args == None :
+                    self . _error ( "Unknown callable entity '%s'" %
+                        func )
+                if len ( args ) % len ( need_args ) > 0 :
+                    self . _error ( 'Need %i more args' % \
+                        ( len ( args ) % len ( need_args ) ) )
+                while args :
+                    split_args = [ ]
+                    for i in xrange ( len ( need_args ) ) :
+                        split_args . append ( args [ 0 ] )
+                        args = args [ 1 : ]
+                    res . append ( { 'call' : [ func ] + split_args } )
+            else :
+                res = dict ( )
+                for k , v in src . items ( ) :
+                    res [ k ] = self . _norm_calls ( v , path + [ k ] )
         elif isinstance ( src , list ) :
             res = list ( )
             for iv in xrange ( len ( src ) ) :
-                self . _path = path + [ iv ]
                 v = src [ iv ]
-                if isinstance ( v , dict ) and 'call' in v \
-                                and len ( v [ 'call' ] ) > 1 :
-                    func = v [ 'call' ] [ 0 ]
-                    args = v [ 'call' ] [ 1 : ]
-                    need_args = self . _get_call_args ( func )
-                    if need_args == None :
-                        self . _error ( "Unknown callable entity '%s'" %
-                            func )
-                    if len ( args ) % len ( need_args ) > 0 :
-                        self . _error ( 'Need %i more args' % \
-                            ( len ( args ) % len ( need_args ) ) )
-                    while args :
-                        split_args = [ ]
-                        for i in xrange ( len ( need_args ) ) :
-                            split_args . append ( args [ 0 ] )
-                            args = args [ 1 : ]
-                        res . append ( { 'call' : [ func ] + split_args } )
+                a = self . _norm_calls ( v , path + [ iv ] )
+                if isinstance ( a , list ) :
+                    res += a
                 else :
-                    res . append ( self . _norm_calls ( v , self . _path ) )
+                    res . append ( a )
         else :
             res = src
         return res
