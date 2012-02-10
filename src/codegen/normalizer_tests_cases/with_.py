@@ -43,7 +43,7 @@ class with_test_case ( unittest . TestCase ) :
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'test1_test2_test3_func1' , [ ] )
-        bf ( 'test2_test3_func2' , [ ] )
+        bf ( 'test1_test3_func2' , [ ] )
         bf ( 'test1_func3' , [ ] )
         bf ( 'test2_func4' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
@@ -58,7 +58,7 @@ class with_test_case ( unittest . TestCase ) :
             mroot ( { 'anywhere' : { 'anywhere' :
                 [ { 'anywhere' : [ { 'anywhere' :
                 [ { 'call' : [ 'test1_test2_test3_func1' ] }
-                , { 'call' : [ 'test2_test3_func2' ] }
+                , { 'call' : [ 'test1_test3_func2' ] }
                 , { 'call' : [ 'test1_func3' ] }
                 , { 'call' : [ 'test2_func4' ] }
                 ] } ] } ] } } ) )
