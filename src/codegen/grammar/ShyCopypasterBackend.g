@@ -131,6 +131,7 @@ arbitrary_token
     |   RECEIVE { $value = $RECEIVE.text }
     |   REQUEST { $value = $REQUEST.text }
     |   REPLY { $value = $REPLY.text }
+    |   SEND { $value = $SEND.text }
     |   STATELESS { $value = $STATELESS.text }
     |   TRACE { $value = $TRACE.text }
     |   TYPES { $value = $TYPES.text }

@@ -79,6 +79,7 @@ arbitrary_token
     |   RECEIVE
     |   REQUEST
     |   REPLY
+    |   SEND
     |   STATELESS
     |   TRACE
     |   TYPES

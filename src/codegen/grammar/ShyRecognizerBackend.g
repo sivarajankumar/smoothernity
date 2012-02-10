@@ -185,6 +185,8 @@ statement
     returns [ value ]
     :   statement_call
             { $value = $statement_call.value }
+    |   statement_send
+            { $value = $statement_send.value }
     |   statement_if
             { $value = $statement_if.value }
     |   statement_assign
@@ -279,6 +281,20 @@ statement_call
     ;
 
 statement_call_args
+    returns [ value ]
+    @ init { $value = list ( ) }
+    :   ( arbitrary_value
+            { $value . append ( $arbitrary_value.value ) }
+        ) *
+    ;
+
+statement_send
+    returns [ value ]
+    :   ^( TREE_STATEMENT_SEND statement_send_args )
+            { $value = { 'send' : $statement_send_args.value } }
+    ;
+
+statement_send_args
     returns [ value ]
     @ init { $value = list ( ) }
     :   ( arbitrary_value
