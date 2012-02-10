@@ -17,6 +17,7 @@ from reader_tests_cases . stateless import *
 from reader_tests_cases . statement_assign import *
 from reader_tests_cases . statement_call import *
 from reader_tests_cases . statement_if import *
+from reader_tests_cases . statement_send import *
 from reader_tests_cases . statement_while import *
 from reader_tests_cases . statement_with import *
 from reader_tests_cases . trace import *
