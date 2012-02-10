@@ -76,7 +76,7 @@ stateless engine_render
         ops platform_render_set_texel_color texel r g b a
     proc clamp_texture_coords
         args x y
-        ops engine_math_stateless_clamp_whole
+        ops engine_math_stateless_clamp_whole_dest
                 x x 0 [ consts_texture_width - 1 ]
                 y y 0 [ consts_texture_height - 1 ]
 

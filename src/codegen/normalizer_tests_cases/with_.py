@@ -12,7 +12,7 @@ class with_test_case ( unittest . TestCase ) :
         ne = normalizer . exception
         bf = self . n . bind_func
         bf ( 'func1' , [ ] )
-        bf ( 'test1func1' , [ ] )
+        bf ( 'test1_func1' , [ ] )
         ar ( ne , r , { 'anywhere' : { 'anywhere' : [ { 'with' :
             { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } )
     def test_exception_path ( self ) :
@@ -21,7 +21,7 @@ class with_test_case ( unittest . TestCase ) :
         bf = self . n . bind_func
         ne = normalizer . exception
         bf ( 'func1' , [ ] )
-        bf ( 'test1func1' , [ ] )
+        bf ( 'test1_func1' , [ ] )
         try :
             r ( { 'path1' : { 'path2' : [ { 'with' :
                 { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ] } } )
@@ -42,10 +42,10 @@ class with_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run
         bf = self . n . bind_func
-        bf ( 'test1test2test3func1' , [ ] )
-        bf ( 'test2test3func2' , [ ] )
-        bf ( 'test1func3' , [ ] )
-        bf ( 'test2func4' , [ ] )
+        bf ( 'test1_test2_test3_func1' , [ ] )
+        bf ( 'test2_test3_func2' , [ ] )
+        bf ( 'test1_func3' , [ ] )
+        bf ( 'test2_func4' , [ ] )
         ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'with' :
             { 'test1' : [ { 'anywhere' : [ { 'with' :
                 { 'test2' : [ { 'anywhere' : [ { 'with' :
@@ -57,8 +57,8 @@ class with_test_case ( unittest . TestCase ) :
                         ] } } ] } ] } } ] } ] } } ] } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
                 [ { 'anywhere' : [ { 'anywhere' :
-                [ { 'call' : [ 'test1test2func1' ] }
-                , { 'call' : [ 'test2test3func2' ] }
-                , { 'call' : [ 'test1func3' ] }
-                , { 'call' : [ 'test2func4' ] }
+                [ { 'call' : [ 'test1_test2_test3_func1' ] }
+                , { 'call' : [ 'test2_test3_func2' ] }
+                , { 'call' : [ 'test1_func3' ] }
+                , { 'call' : [ 'test2_func4' ] }
                 ] } ] } ] } } ) )

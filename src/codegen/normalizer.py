@@ -104,10 +104,9 @@ class normalizer :
                 if proc in procs :
                     return procs [ proc ]
                 else :
-                    self . _error ( "Unknown proc '%s' in %s '%s'" %
-                        ( proc , what , which ) )
+                    return None
             else :
-                self . _error ( "Unknown %s '%s'" % ( what , which ) )
+                return None
         else :
             return None
     def _stateless_proc ( self , name ) :
@@ -157,10 +156,13 @@ class normalizer :
                 self . _path = path
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
+                candidates = [ func ]
+                candidates += [ p + '_' + func for p in prefixes ]
+                if len ( prefixes ) > 1 :
+                    candidates += [ '_' . join ( prefixes ) + '_' + func ]
                 candidates = filter (
                     lambda x : self . _get_call_args ( x ) != None ,
-                    [ p + func for p in set (
-                        [ '' , '' . join ( prefixes ) ] + prefixes ) ] )
+                    candidates )
                 if len ( candidates ) > 1 :
                     self . _error ( 'Ambiguous callables: %s' %
                         ( ', ' . join ( candidates ) ) )
