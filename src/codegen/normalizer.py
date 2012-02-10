@@ -1,5 +1,6 @@
 import operator
 from utils import merge
+from itertools import combinations
 
 class exception ( Exception ) :
     def __init__ ( self , text , src , path ) :
@@ -146,20 +147,15 @@ class normalizer :
                 self . _path = path
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
-                candidates = [ func ]
-                candidates += [ p + '_' + func for p in prefixes ]
-                if len ( prefixes ) > 1 :
-                    candidates += [ '_' . join ( prefixes ) + '_' + func ]
                 candidates = filter (
                     lambda x : self . _get_call_args ( x ) != None ,
-                    candidates )
+                    [ func ] + [ '_' . join ( c ) + '_' + func
+                        for i in xrange ( len ( prefixes ) )
+                            for c in combinations ( prefixes , i + 1 ) ] )
                 if len ( candidates ) > 1 :
                     self . _error ( 'Ambiguous callables: %s' %
                         ( ', ' . join ( candidates ) ) )
-                if candidates :
-                    res = { 'call' : candidates + args }
-                else :
-                    res = src
+                res = { 'call' : candidates + args } if candidates else src
             elif 'with' in src :
                 res = list ( )
                 for k , v in src [ 'with' ] . items ( ) :
