@@ -138,7 +138,6 @@ module engine_render
                             guts_next_vacant_mesh_id_index
                             consts_max_meshes
             do
-
                 platform_static_array_element_ptr
                     vacant_mesh_id guts_vacant_mesh_ids
                     guts_next_vacant_mesh_id_index
@@ -384,7 +383,7 @@ module engine_render
         replace what with select
         replace how with
             platform_render_enable_texturing
-            platform_render_use_texture_ texture_render_id
+            platform_render_use_texture texture_render_id
 
     copy
         receive texture_what
@@ -420,7 +419,7 @@ module engine_render
             while platform_conditions_whole_less_than_whole
                         i consts_max_meshes
             do
-                with platform_static_array_element_ptr
+                platform_static_array_element_ptr
                     mesh guts_meshes_datas i
                     vacant_id guts_vacant_mesh_ids i
                 with platform_render_create
