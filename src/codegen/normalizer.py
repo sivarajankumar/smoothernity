@@ -140,13 +140,18 @@ class normalizer :
             res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
         for k , v in res [ 'trace' ] . items ( ) :
             res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
-        for k , v in res [ 'messages' ] . items ( ) :
-            res [ 'messages' ] [ k ] = merge (
-                { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
         for k , v in res [ 'module' ] . items ( ) :
             res [ 'module' ] [ k ] = merge (
                 { 'proc' : { } , 'receive' : { }
                 , 'request' : { } , 'module_queue' : '' } , v )
+        for k , v in res [ 'module' ] . items ( ) :
+            for kk in v [ 'request' ] . keys ( ) :
+                res = merge ( { 'messages' : { k :
+                    { 'request' : { kk : { } }
+                    , 'reply' : { kk : { } } } } } , res )
+        for k , v in res [ 'messages' ] . items ( ) :
+            res [ 'messages' ] [ k ] = merge (
+                { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
         for k , v in res . items ( ) :
             for kk , vv in v . items ( ) :
                 if 'proc' in vv :
