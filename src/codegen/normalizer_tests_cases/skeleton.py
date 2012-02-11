@@ -3,6 +3,7 @@ import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from normalizer_tests_cases . helper import merge_skeleton_module as mmod
 from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
+from normalizer_tests_cases . helper import merge_skeleton_messages as mmsg
 
 class skeleton_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -26,6 +27,11 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'module' : { 'test1' : { } } } ) ,
             mroot ( { 'module' : { 'test1' : mmod ( { } ) } } ) )
+    def test_messages ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r ( { 'messages' : { 'test1' : { } } } ) ,
+            mroot ( { 'messages' : { 'test1' : mmsg ( { } ) } } ) )
     def test_proc ( self ) :
         ae = self . assertEqual
         r = self . n . run
