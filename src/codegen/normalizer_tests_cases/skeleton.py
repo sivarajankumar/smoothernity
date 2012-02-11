@@ -45,8 +45,14 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'module' : { 'test1' : { 'request' : {
             'test2' : { } } } } } ) ,
-            mroot ( { 'module' : { 'test1' : mmod ( { 'request' : {
-            'test2' : { 'vars' : [ ] , 'ops' : [ ] } } } ) } } ) )
+            mroot (
+                { 'messages' : { 'test1' : mmsg (
+                    { 'request' : { 'test2' : { } }
+                    , 'reply' : { 'test2' : { } } } ) } 
+                , 'module' : { 'test1' : mmod (
+                    { 'request' : { 'test2' :
+                        { 'vars' : [ ] , 'ops' : [ ] }
+                } } ) } } ) )
     def test_receive ( self ) :
         ae = self . assertEqual
         r = self . n . run
