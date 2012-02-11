@@ -47,8 +47,8 @@ class skeleton_test_case ( unittest . TestCase ) :
             'test2' : { } } } } } ) ,
             mroot (
                 { 'messages' : { 'test1' : mmsg (
-                    { 'request' : { 'test2' : { } }
-                    , 'reply' : { 'test2' : { } } } ) } 
+                    { 'request' : { 'test2' : [ ] }
+                    , 'reply' : { 'test2' : [ ] } } ) } 
                 , 'module' : { 'test1' : mmod (
                     { 'request' : { 'test2' :
                         { 'vars' : [ ] , 'ops' : [ ] }
@@ -60,7 +60,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             'test2' : { } } } } } ) ,
             mroot (
                 { 'messages' : { 'test1' : mmsg (
-                    { 'receive' : { 'test2' : { } } } ) }
+                    { 'receive' : { 'test2' : [ ] } } ) }
                 , 'module' : { 'test1' : mmod (
                     { 'receive' : { 'test2' :
                         { 'vars' : [ ] , 'ops' : [ ] }

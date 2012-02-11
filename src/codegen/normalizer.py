@@ -147,11 +147,11 @@ class normalizer :
         for k , v in res [ 'module' ] . items ( ) :
             for kk in v [ 'request' ] . keys ( ) :
                 res = merge ( { 'messages' : { k :
-                    { 'request' : { kk : { } }
-                    , 'reply' : { kk : { } } } } } , res )
+                    { 'request' : { kk : [ ] }
+                    , 'reply' : { kk : [ ] } } } } , res )
             for kk in v [ 'receive' ] . keys ( ) :
                 res = merge ( { 'messages' : { k :
-                    { 'receive' : { kk : { } } } } } , res )
+                    { 'receive' : { kk : [ ] } } } } , res )
         for k , v in res [ 'messages' ] . items ( ) :
             res [ 'messages' ] [ k ] = merge (
                 { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
