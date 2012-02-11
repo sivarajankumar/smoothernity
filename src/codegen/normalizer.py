@@ -149,6 +149,9 @@ class normalizer :
                 res = merge ( { 'messages' : { k :
                     { 'request' : { kk : { } }
                     , 'reply' : { kk : { } } } } } , res )
+            for kk in v [ 'receive' ] . keys ( ) :
+                res = merge ( { 'messages' : { k :
+                    { 'receive' : { kk : { } } } } } , res )
         for k , v in res [ 'messages' ] . items ( ) :
             res [ 'messages' ] [ k ] = merge (
                 { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
