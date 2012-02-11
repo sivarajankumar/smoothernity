@@ -58,5 +58,10 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = self . n . run
         ae ( r ( { 'module' : { 'test1' : { 'receive' : {
             'test2' : { } } } } } ) ,
-            mroot ( { 'module' : { 'test1' : mmod ( { 'receive' : {
-            'test2' : { 'vars' : [ ] , 'ops' : [ ] } } } ) } } ) )
+            mroot (
+                { 'messages' : { 'test1' : mmsg (
+                    { 'receive' : { 'test2' : { } } } ) }
+                , 'module' : { 'test1' : mmod (
+                    { 'receive' : { 'test2' :
+                        { 'vars' : [ ] , 'ops' : [ ] }
+                } } ) } } ) )
