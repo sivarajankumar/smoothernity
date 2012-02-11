@@ -141,7 +141,7 @@ class normalizer :
         for k , v in res [ 'trace' ] . items ( ) :
             res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
         for k , v in res [ 'messages' ] . items ( ) :
-            res [ 'messages'] [ k ] = merge (
+            res [ 'messages' ] [ k ] = merge (
                 { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
         for k , v in res [ 'module' ] . items ( ) :
             res [ 'module' ] [ k ] = merge (
