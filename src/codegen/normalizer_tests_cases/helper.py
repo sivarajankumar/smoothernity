@@ -25,3 +25,10 @@ def merge_skeleton_proc ( x ) :
         , 'args' : [ ]
         , 'ops' : [ ]
         } , x )
+
+def merge_skeleton_messages ( x ) :
+    return merge (
+        { 'receive' : { }
+        , 'reply' : { }
+        , 'request' : { }
+        } , x )
