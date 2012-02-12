@@ -176,20 +176,24 @@ class normalizer :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
+    def _candidates ( self , name , prefixes , criteria ) :
+        candidates = filter (
+            criteria ,
+            [ name ] + [ '_' . join ( c ) + '_' + name
+                for i in xrange ( len ( prefixes ) )
+                    for c in combinations ( prefixes , i + 1 ) ] )
+        if len ( candidates ) > 1 :
+            self . _error ( 'Ambiguous identifiers: %s' %
+                ( ', ' . join ( candidates ) ) )
+        return candidates
     def _norm_withs ( self , src , path = [ ] , prefixes = [ ] ) :
         if isinstance ( src , dict ) :
             if 'call' in src :
                 self . _path = path
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
-                candidates = filter (
-                    lambda x : self . _get_call_args ( x ) != None ,
-                    [ func ] + [ '_' . join ( c ) + '_' + func
-                        for i in xrange ( len ( prefixes ) )
-                            for c in combinations ( prefixes , i + 1 ) ] )
-                if len ( candidates ) > 1 :
-                    self . _error ( 'Ambiguous callables: %s' %
-                        ( ', ' . join ( candidates ) ) )
+                candidates = self . _candidates ( func , prefixes ,
+                    lambda x : self . _get_call_args ( x ) != None )
                 res = { 'call' : candidates + args } if candidates else src
             elif 'with' in src :
                 res = list ( )
