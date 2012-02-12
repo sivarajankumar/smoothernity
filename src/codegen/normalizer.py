@@ -84,6 +84,7 @@ class normalizer :
         self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
         self . _src = self . _norm_withs ( self . _src )
+        self . _src = self . _norm_sends ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
         self . _src = self . _norm_assigns ( self . _src )
         return self . _src
@@ -131,6 +132,13 @@ class normalizer :
             return self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
             return self . _trace_proc ( name ) [ 'args' ]
+    def _get_send_args ( self , name ) :
+        all = { }
+        for k , v in self . _src [ 'messages' ] . items ( ) :
+            for kk , vv in v [ 'receive' ] . items ( ) :
+                all [ k + '_' + kk ] = vv
+        if name in all :
+            return all [ name ]
     def _norm_skeleton ( self , src ) :
         res = merge (
             { 'consts' : { } , 'messages' : { } , 'types' : { }
@@ -232,6 +240,41 @@ class normalizer :
             for iv in xrange ( len ( src ) ) :
                 v = src [ iv ]
                 a = self . _norm_assigns ( v , path + [ iv ] )
+                if isinstance ( a , list ) :
+                    res += a
+                else :
+                    res . append ( a )
+        else :
+            res = src
+        return res
+    def _norm_sends ( self , src , path = [ ] ) :
+        if isinstance ( src , dict ) :
+            if 'send' in src and len ( src [ 'send' ] ) > 1 :
+                res = list ( )
+                self . _path = path
+                msg = src [ 'send' ] [ 0 ]
+                args = src [ 'send' ] [ 1 : ]
+                need_args = self . _get_send_args ( msg )
+                if need_args == None :
+                    self . _error ( "Unknown message '%s'" % msg )
+                if len ( args ) % len ( need_args ) > 0 :
+                    self . _error ( 'Need %i more args' % \
+                        ( len ( args ) % len ( need_args ) ) )
+                while args :
+                    split_args = [ ]
+                    for i in xrange ( len ( need_args ) ) :
+                        split_args . append ( args [ 0 ] )
+                        args = args [ 1 : ]
+                    res . append ( { 'send' : [ msg ] + split_args } )
+            else :
+                res = dict ( )
+                for k , v in src . items ( ) :
+                    res [ k ] = self . _norm_sends ( v , path + [ k ] )
+        elif isinstance ( src , list ) :
+            res = list ( )
+            for iv in xrange ( len ( src ) ) :
+                v = src [ iv ]
+                a = self . _norm_sends ( v , path + [ iv ] )
                 if isinstance ( a , list ) :
                     res += a
                 else :

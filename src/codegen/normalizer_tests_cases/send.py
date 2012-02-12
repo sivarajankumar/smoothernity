@@ -65,7 +65,7 @@ class send_test_case ( unittest . TestCase ) :
             } } } } } ) ,
             mroot (
                 { 'messages' : { 'test1' : mmsg (
-                    { 'receive' : { 'msg1' : [ { } , { } ] } } ) }
+                    { 'receive' : { 'msg1' : [ ] } } ) }
                 , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                     mproc ( { 'ops' :
                         [ { 'send' : [ 'test1_msg1' ] }
