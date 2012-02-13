@@ -132,50 +132,13 @@ class normalizer :
             return name , self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
             return name , self . _trace_proc ( name ) [ 'args' ]
-    def _get_send_args ( self , name ) :
+    def _get_sendable ( self , name ) :
         all = { }
         for k , v in self . _src [ 'messages' ] . items ( ) :
             for kk , vv in v [ 'receive' ] . items ( ) :
                 all [ k + '_' + kk ] = vv
         if name in all :
-            return all [ name ]
-    def _norm_skeleton ( self , src ) :
-        res = merge (
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'stateless' : { }
-            , 'trace' : { } } , src )
-        for k , v in res [ 'stateless' ] . items ( ) :
-            res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
-        for k , v in res [ 'trace' ] . items ( ) :
-            res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
-        for k , v in res [ 'module' ] . items ( ) :
-            res [ 'module' ] [ k ] = merge (
-                { 'proc' : { } , 'receive' : { }
-                , 'request' : { } , 'module_queue' : '' } , v )
-        for k , v in res [ 'module' ] . items ( ) :
-            for kk in v [ 'request' ] . keys ( ) :
-                res = merge ( { 'messages' : { k :
-                    { 'request' : { kk : [ ] }
-                    , 'reply' : { kk : [ ] } } } } , res )
-            for kk in v [ 'receive' ] . keys ( ) :
-                res = merge ( { 'messages' : { k :
-                    { 'receive' : { kk : [ ] } } } } , res )
-        for k , v in res [ 'messages' ] . items ( ) :
-            res [ 'messages' ] [ k ] = merge (
-                { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
-        for k , v in res . items ( ) :
-            for kk , vv in v . items ( ) :
-                if 'proc' in vv :
-                    for kkk , vvv in vv [ 'proc' ] . items ( ) :
-                        res [ k ] [ kk ] [ 'proc' ] [ kkk ] = merge (
-                            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                            , vvv )
-        for k , v in res [ 'module' ] . items ( ) :
-            for kk in [ 'request' , 'receive' ] :
-                for kkk , vvv in v [ kk ] . items ( ) :
-                    res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
-                        { 'vars' : [ ] , 'ops' : [ ] } , vvv )
-        return res
+            return name , all [ name ]
     def _with_prefixes ( self ) :
         res = list ( )
         for i in xrange ( len ( self . _path ) - 1 ) :
@@ -215,6 +178,43 @@ class normalizer :
         else :
             res = src
         return res
+    def _norm_skeleton ( self , src ) :
+        res = merge (
+            { 'consts' : { } , 'messages' : { } , 'types' : { }
+            , 'vars' : { } , 'module' : { } , 'stateless' : { }
+            , 'trace' : { } } , src )
+        for k , v in res [ 'stateless' ] . items ( ) :
+            res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
+        for k , v in res [ 'trace' ] . items ( ) :
+            res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
+        for k , v in res [ 'module' ] . items ( ) :
+            res [ 'module' ] [ k ] = merge (
+                { 'proc' : { } , 'receive' : { }
+                , 'request' : { } , 'module_queue' : '' } , v )
+        for k , v in res [ 'module' ] . items ( ) :
+            for kk in v [ 'request' ] . keys ( ) :
+                res = merge ( { 'messages' : { k :
+                    { 'request' : { kk : [ ] }
+                    , 'reply' : { kk : [ ] } } } } , res )
+            for kk in v [ 'receive' ] . keys ( ) :
+                res = merge ( { 'messages' : { k :
+                    { 'receive' : { kk : [ ] } } } } , res )
+        for k , v in res [ 'messages' ] . items ( ) :
+            res [ 'messages' ] [ k ] = merge (
+                { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
+        for k , v in res . items ( ) :
+            for kk , vv in v . items ( ) :
+                if 'proc' in vv :
+                    for kkk , vvv in vv [ 'proc' ] . items ( ) :
+                        res [ k ] [ kk ] [ 'proc' ] [ kkk ] = merge (
+                            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+                            , vvv )
+        for k , v in res [ 'module' ] . items ( ) :
+            for kk in [ 'request' , 'receive' ] :
+                for kkk , vvv in v [ kk ] . items ( ) :
+                    res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
+                        { 'vars' : [ ] , 'ops' : [ ] } , vvv )
+        return res
     def _norm_withs ( self , src ) :
         if isinstance ( src , dict ) :
             if 'with' in src :
@@ -238,52 +238,37 @@ class normalizer :
                         , 'to' : [ tos [ i ] ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
-    def _norm_sends ( self , src ) :
+    def _norm_arguable ( self , src , what , how ) :
         if isinstance ( src , dict ) :
-            if 'send' in src and len ( src [ 'send' ] ) > 1 :
+            if what in src :
                 res = list ( )
-                msg = src [ 'send' ] [ 0 ]
-                args = src [ 'send' ] [ 1 : ]
-                need_args = self . _use_withs ( msg , self . _get_send_args )
-                if len ( args ) % len ( need_args ) > 0 :
-                    self . _error ( 'Need %i more args' % \
-                        ( len ( args ) % len ( need_args ) ) )
-                while args :
-                    split_args = [ ]
-                    for i in xrange ( len ( need_args ) ) :
-                        split_args . append ( args [ 0 ] )
-                        args = args [ 1 : ]
-                    res . append ( { 'send' : [ msg ] + split_args } )
-                return res if len ( res ) > 1 else res [ 0 ]
-        return src
-    def _norm_calls ( self , src ) :
-        if isinstance ( src , dict ) :
-            if 'call' in src :
-                res = list ( )
-                name = src [ 'call' ] [ 0 ]
-                args = src [ 'call' ] [ 1 : ]
-                name , need_args = \
-                    self . _use_withs ( name , self . _get_callable )
+                name = src [ what ] [ 0 ]
+                args = src [ what ] [ 1 : ]
+                name , need_args = self . _use_withs ( name , how )
                 if args and not need_args :
-                    self . _error ( 'Call %s does not accept any args'
+                    self . _error ( "'%s' does not accept any args"
                         % name )
                 elif need_args and not args :
-                    self . _error ( 'Call %s needs %i args'
+                    self . _error ( "'%s' needs %i args"
                         % ( name , len ( need_args ) ) )
                 elif args and len ( args ) % len ( need_args ) > 0 :
                     self . _error ( 'Need %i more args' % \
                         ( len ( args ) % len ( need_args ) ) )
                 if not args :
-                    res . append ( { 'call' : [ name ] } )
+                    res . append ( { what : [ name ] } )
                 else :
                     while args :
                         split_args = [ ]
                         for i in xrange ( len ( need_args ) ) :
                             split_args . append ( args [ 0 ] )
                             args = args [ 1 : ]
-                        res . append ( { 'call' : [ name ] + split_args } )
+                        res . append ( { what : [ name ] + split_args } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
+    def _norm_calls ( self , src ) :
+        return self . _norm_arguable ( src , 'call' , self . _get_callable )
+    def _norm_sends ( self , src ) :
+        return self . _norm_arguable ( src , 'send' , self . _get_sendable )
     def _norm_consts ( self , src ) :
         res = dict ( )
         for root_k , root_v in src . items ( ) :
