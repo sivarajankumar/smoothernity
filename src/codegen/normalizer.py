@@ -254,15 +254,12 @@ class normalizer :
                 elif args and len ( args ) % len ( need_args ) > 0 :
                     self . _error ( 'Need %i more args' % \
                         ( len ( args ) % len ( need_args ) ) )
-                if not args :
-                    res . append ( { what : [ name ] } )
-                else :
-                    while args :
-                        split_args = [ ]
-                        for i in xrange ( len ( need_args ) ) :
-                            split_args . append ( args [ 0 ] )
-                            args = args [ 1 : ]
-                        res . append ( { what : [ name ] + split_args } )
+                while True :
+                    res . append ( { what : [ name ] + \
+                        args [ : len ( need_args ) ] } )
+                    args = args [ len ( need_args ) : ]
+                    if not args :
+                        break
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_calls ( self , src ) :
