@@ -12,8 +12,13 @@ class call_test_case ( unittest . TestCase ) :
         bf = self . n . bind_func
         ne = normalizer . exception
         bf ( 'func1' , [ { } , { } ] )
+        bf ( 'func2' , [ ] )
+        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'ops' : [ { 'call' : [ 'func1' , 'a1' ] } ] } } } } } )
+        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'ops' : [ { 'call' : [ 'func2' , 'a1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'ops' : [ { 'call' : [ 'unknown' , 'a2' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' :
@@ -64,10 +69,12 @@ class call_test_case ( unittest . TestCase ) :
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = self . n . run
+        bf = self . n . bind_func
+        bf ( 'func1' , [ ] )
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-            [ { 'call' : [ 'some_func' ] } ] } } } } } ) ,
+            [ { 'call' : [ 'func1' ] } ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                mproc ( { 'ops' : [ { 'call' : [ 'some_func' ] } ] } )
+                mproc ( { 'ops' : [ { 'call' : [ 'func1' ] } ] } )
             } } } } ) )
     def test_bind_func ( self ) :
         ae = self . assertEqual
