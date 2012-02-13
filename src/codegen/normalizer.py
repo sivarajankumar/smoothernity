@@ -84,7 +84,7 @@ class normalizer :
         self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
         self . _src = self . _norm_withs ( self . _src )
-        self . _src = self . _norm_sends ( self . _src )
+        self . _src = self . _walk ( self . _src , self . _norm_sends )
         self . _src = self . _norm_calls ( self . _src )
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
@@ -256,11 +256,10 @@ class normalizer :
                         { 'from' : [ froms [ i % len ( froms ) ] ]
                         , 'to' : [ tos [ i ] ] } } )
                 return res
-    def _norm_sends ( self , src , path = [ ] ) :
+    def _norm_sends ( self , src ) :
         if isinstance ( src , dict ) :
             if 'send' in src and len ( src [ 'send' ] ) > 1 :
                 res = list ( )
-                self . _path = path
                 msg = src [ 'send' ] [ 0 ]
                 args = src [ 'send' ] [ 1 : ]
                 need_args = self . _get_send_args ( msg )
@@ -275,22 +274,7 @@ class normalizer :
                         split_args . append ( args [ 0 ] )
                         args = args [ 1 : ]
                     res . append ( { 'send' : [ msg ] + split_args } )
-            else :
-                res = dict ( )
-                for k , v in src . items ( ) :
-                    res [ k ] = self . _norm_sends ( v , path + [ k ] )
-        elif isinstance ( src , list ) :
-            res = list ( )
-            for iv in xrange ( len ( src ) ) :
-                v = src [ iv ]
-                a = self . _norm_sends ( v , path + [ iv ] )
-                if isinstance ( a , list ) :
-                    res += a
-                else :
-                    res . append ( a )
-        else :
-            res = src
-        return res
+                return res
     def _norm_calls ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             if 'call' in src and len ( src [ 'call' ] ) > 1 :
