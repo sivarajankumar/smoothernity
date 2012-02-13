@@ -245,19 +245,13 @@ class normalizer :
                 name = src [ what ] [ 0 ]
                 args = src [ what ] [ 1 : ]
                 name , need_args = self . _use_withs ( name , how )
-                if args and not need_args :
-                    self . _error ( "'%s' does not accept any args"
-                        % name )
-                elif need_args and not args :
-                    self . _error ( "'%s' needs %i args"
-                        % ( name , len ( need_args ) ) )
-                elif args and len ( args ) % len ( need_args ) > 0 :
-                    self . _error ( 'Need %i more args' % \
-                        ( len ( args ) % len ( need_args ) ) )
+                la , lna = len ( args ) , len ( need_args )
+                if la != lna and ( not lna or not la or la % lna > 0 ) :
+                    self . _error ( "'%s' takes n*%i args, "
+                        "but has been given %i" % ( name , lna , la ) )
                 while True :
-                    res . append ( { what : [ name ] + \
-                        args [ : len ( need_args ) ] } )
-                    args = args [ len ( need_args ) : ]
+                    res . append ( { what : [ name ] + args [ : lna ] } )
+                    args = args [ lna : ]
                     if not args :
                         break
                 return res if len ( res ) > 1 else res [ 0 ]
