@@ -86,7 +86,7 @@ class normalizer :
         self . _src = self . _norm_withs ( self . _src )
         self . _src = self . _norm_sends ( self . _src )
         self . _src = self . _norm_calls ( self . _src )
-        self . _src = self . _norm_assigns ( self . _src )
+        self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
     def _error ( self , text ) :
         raise exception ( text , self . _src , self . _path )
@@ -221,10 +221,30 @@ class normalizer :
         else :
             res = src
         return res
-    def _norm_assigns ( self , src , path = [ ] ) :
+    def _walk ( self , src , visit , path = [ ] ) :
+        self . _path = path
+        v = visit ( src )
+        if v != None :
+            res = v
+        elif isinstance ( src , dict ) :
+            res = dict ( )
+            for k , v in src . items ( ) :
+                res [ k ] = self . _walk ( v , visit , path + [ k ] )
+        elif isinstance ( src , list ) :
+            res = list ( )
+            for iv in xrange ( len ( src ) ) :
+                v = src [ iv ]
+                a = self . _walk ( v , visit , path + [ iv ] )
+                if isinstance ( a , list ) :
+                    res += a
+                else :
+                    res . append ( a )
+        else :
+            res = src
+        return res
+    def _norm_assigns ( self , src ) :
         if isinstance ( src , dict ) :
             if 'assign' in src :
-                self . _path = path
                 res = list ( )
                 froms = src [ 'assign' ] [ 'from' ]
                 tos = src [ 'assign' ] [ 'to' ]
@@ -235,22 +255,7 @@ class normalizer :
                     res . append ( { 'assign' :
                         { 'from' : [ froms [ i % len ( froms ) ] ]
                         , 'to' : [ tos [ i ] ] } } )
-            else :
-                res = dict ( )
-                for k , v in src . items ( ) :
-                    res [ k ] = self . _norm_assigns ( v , path + [ k ] )
-        elif isinstance ( src , list ) :
-            res = list ( )
-            for iv in xrange ( len ( src ) ) :
-                v = src [ iv ]
-                a = self . _norm_assigns ( v , path + [ iv ] )
-                if isinstance ( a , list ) :
-                    res += a
-                else :
-                    res . append ( a )
-        else :
-            res = src
-        return res
+                return res
     def _norm_sends ( self , src , path = [ ] ) :
         if isinstance ( src , dict ) :
             if 'send' in src and len ( src [ 'send' ] ) > 1 :
