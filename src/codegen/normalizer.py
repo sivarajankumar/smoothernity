@@ -83,10 +83,10 @@ class normalizer :
         self . _src = src
         self . _src = self . _norm_skeleton ( self . _src )
         self . _src = self . _norm_consts ( self . _src )
-        self . _src = self . _norm_withs ( self . _src )
         self . _src = self . _walk ( self . _src , self . _norm_sends )
         self . _src = self . _walk ( self . _src , self . _norm_calls )
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
+        self . _src = self . _walk ( self . _src , self . _norm_withs )
         return self . _src
     def _error ( self , text ) :
         raise exception ( text , self . _src , self . _path )
@@ -176,51 +176,26 @@ class normalizer :
                     res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                         { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
-    def _candidates ( self , name , prefixes , criteria ) :
-        candidates = filter (
-            criteria ,
+    def _with_prefixes ( self ) :
+        res = list ( )
+        for i in xrange ( len ( self . _path ) - 1 ) :
+            if self . _path [ i ] == 'with' :
+                res . append ( self . _path [ i + 1 ] )
+        return res
+    def _candidates ( self , name , func , prefixes ) :
+        return filter ( lambda x : func ( x ) != None ,
             [ name ] + [ '_' . join ( c ) + '_' + name
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
+    def _use_withs ( self , name , func ) :
+        prefixes = self . _with_prefixes ( )
+        candidates = self . _candidates ( name , func , prefixes )
         if len ( candidates ) > 1 :
             self . _error ( 'Ambiguous identifiers: %s' %
                 ( ', ' . join ( candidates ) ) )
-        return candidates
-    def _norm_withs ( self , src , path = [ ] , prefixes = [ ] ) :
-        if isinstance ( src , dict ) :
-            if 'call' in src :
-                self . _path = path
-                func = src [ 'call' ] [ 0 ]
-                args = src [ 'call' ] [ 1 : ]
-                candidates = self . _candidates ( func , prefixes ,
-                    lambda x : self . _get_call_args ( x ) != None )
-                res = { 'call' : candidates + args } if candidates else src
-            elif 'with' in src :
-                res = list ( )
-                for k , v in src [ 'with' ] . items ( ) :
-                    for iv in xrange ( len ( v ) ) :
-                        res . append ( self . _norm_withs \
-                            ( v [ iv ]
-                            , path + [ 'with' , k , iv ]
-                            , prefixes + [ k ] ) )
-            else :
-                res = dict ( )
-                for k , v in src . items ( ) :
-                    res [ k ] = self . _norm_withs (
-                        v , path + [ k ] , prefixes )
-        elif isinstance ( src , list ) :
-            res = list ( )
-            for iv in xrange ( len ( src ) ) :
-                v = src [ iv ]
-                a = self . _norm_withs (
-                    v , path + [ iv ] , prefixes )
-                if isinstance ( a , list ) :
-                    res += a
-                else :
-                    res . append ( a )
-        else :
-            res = src
-        return res
+        if len ( candidates ) == 0 :
+            self . _error ( 'Unknown identifier: %s' % name )
+        return func ( candidates [ 0 ] )
     def _walk ( self , src , visit , path = [ ] ) :
         self . _path = path
         src = visit ( src )
@@ -240,6 +215,14 @@ class normalizer :
         else :
             res = src
         return res
+    def _norm_withs ( self , src ) :
+        if isinstance ( src , dict ) :
+            if 'with' in src :
+                res = list ( )
+                for k , v in src [ 'with' ] . items ( ) :
+                    res += v
+                return res
+        return src
     def _norm_assigns ( self , src ) :
         if isinstance ( src , dict ) :
             if 'assign' in src :
@@ -261,9 +244,7 @@ class normalizer :
                 res = list ( )
                 msg = src [ 'send' ] [ 0 ]
                 args = src [ 'send' ] [ 1 : ]
-                need_args = self . _get_send_args ( msg )
-                if need_args == None :
-                    self . _error ( "Unknown message '%s'" % msg )
+                need_args = self . _use_withs ( msg , self . _get_send_args )
                 if len ( args ) % len ( need_args ) > 0 :
                     self . _error ( 'Need %i more args' % \
                         ( len ( args ) % len ( need_args ) ) )
@@ -277,23 +258,29 @@ class normalizer :
         return src
     def _norm_calls ( self , src ) :
         if isinstance ( src , dict ) :
-            if 'call' in src and len ( src [ 'call' ] ) > 1 :
+            if 'call' in src :
                 res = list ( )
                 func = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
-                need_args = self . _get_call_args ( func )
-                if need_args == None :
-                    self . _error ( "Unknown callable entity '%s'" %
-                        func )
-                if len ( args ) % len ( need_args ) > 0 :
+                need_args = self . _use_withs ( func , self . _get_call_args )
+                if args and not need_args :
+                    self . _error ( 'Call %s does not accept any args'
+                        % func )
+                elif need_args and not args :
+                    self . _error ( 'Call %s needs %i args'
+                        % ( func , len ( need_args ) ) )
+                elif args and len ( args ) % len ( need_args ) > 0 :
                     self . _error ( 'Need %i more args' % \
                         ( len ( args ) % len ( need_args ) ) )
-                while args :
-                    split_args = [ ]
-                    for i in xrange ( len ( need_args ) ) :
-                        split_args . append ( args [ 0 ] )
-                        args = args [ 1 : ]
-                    res . append ( { 'call' : [ func ] + split_args } )
+                if not args :
+                    res . append ( { 'call' : [ func ] } )
+                else :
+                    while args :
+                        split_args = [ ]
+                        for i in xrange ( len ( need_args ) ) :
+                            split_args . append ( args [ 0 ] )
+                            args = args [ 1 : ]
+                        res . append ( { 'call' : [ func ] + split_args } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_consts ( self , src ) :
