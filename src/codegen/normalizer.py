@@ -223,10 +223,8 @@ class normalizer :
         return res
     def _walk ( self , src , visit , path = [ ] ) :
         self . _path = path
-        v = visit ( src )
-        if v != None :
-            res = v
-        elif isinstance ( src , dict ) :
+        src = visit ( src )
+        if isinstance ( src , dict ) :
             res = dict ( )
             for k , v in src . items ( ) :
                 res [ k ] = self . _walk ( v , visit , path + [ k ] )
@@ -255,7 +253,8 @@ class normalizer :
                     res . append ( { 'assign' :
                         { 'from' : [ froms [ i % len ( froms ) ] ]
                         , 'to' : [ tos [ i ] ] } } )
-                return res
+                return res if len ( res ) > 1 else res [ 0 ]
+        return src
     def _norm_sends ( self , src ) :
         if isinstance ( src , dict ) :
             if 'send' in src and len ( src [ 'send' ] ) > 1 :
@@ -274,7 +273,8 @@ class normalizer :
                         split_args . append ( args [ 0 ] )
                         args = args [ 1 : ]
                     res . append ( { 'send' : [ msg ] + split_args } )
-                return res
+                return res if len ( res ) > 1 else res [ 0 ]
+        return src
     def _norm_calls ( self , src ) :
         if isinstance ( src , dict ) :
             if 'call' in src and len ( src [ 'call' ] ) > 1 :
@@ -294,7 +294,8 @@ class normalizer :
                         split_args . append ( args [ 0 ] )
                         args = args [ 1 : ]
                     res . append ( { 'call' : [ func ] + split_args } )
-                return res
+                return res if len ( res ) > 1 else res [ 0 ]
+        return src
     def _norm_consts ( self , src ) :
         res = dict ( )
         for root_k , root_v in src . items ( ) :
