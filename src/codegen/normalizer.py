@@ -246,7 +246,7 @@ class normalizer :
                 args = src [ what ] [ 1 : ]
                 name , need_args = self . _use_withs ( name , how )
                 la , lna = len ( args ) , len ( need_args )
-                if la != lna and ( not lna or not la or la % lna > 0 ) :
+                if la != lna and ( not la * lna or la % lna ) :
                     self . _error ( "'%s' takes n*%i args, "
                         "but has been given %i" % ( name , lna , la ) )
                 while True :
