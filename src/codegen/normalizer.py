@@ -119,19 +119,19 @@ class normalizer :
         return self . _local_some_proc ( 'stateless' , name )
     def _local_trace_proc ( self , name ) :
         return self . _local_some_proc ( 'trace' , name )
-    def _get_call_args ( self , name ) :
+    def _get_callable ( self , name ) :
         if name in self . _bind_funcs :
-            return self . _bind_funcs [ name ]
+            return name , self . _bind_funcs [ name ]
         elif self . _local_proc ( name ) :
-            return self . _local_proc ( name ) [ 'args' ]
+            return name , self . _local_proc ( name ) [ 'args' ]
         elif self . _local_stateless_proc ( name ) :
-            return self . _local_stateless_proc ( name ) [ 'args' ]
+            return name , self . _local_stateless_proc ( name ) [ 'args' ]
         elif self . _local_trace_proc ( name ) :
-            return self . _local_trace_proc ( name ) [ 'args' ]
+            return name , self . _local_trace_proc ( name ) [ 'args' ]
         elif self . _stateless_proc ( name ) :
-            return self . _stateless_proc ( name ) [ 'args' ]
+            return name , self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
-            return self . _trace_proc ( name ) [ 'args' ]
+            return name , self . _trace_proc ( name ) [ 'args' ]
     def _get_send_args ( self , name ) :
         all = { }
         for k , v in self . _src [ 'messages' ] . items ( ) :
@@ -260,27 +260,28 @@ class normalizer :
         if isinstance ( src , dict ) :
             if 'call' in src :
                 res = list ( )
-                func = src [ 'call' ] [ 0 ]
+                name = src [ 'call' ] [ 0 ]
                 args = src [ 'call' ] [ 1 : ]
-                need_args = self . _use_withs ( func , self . _get_call_args )
+                name , need_args = \
+                    self . _use_withs ( name , self . _get_callable )
                 if args and not need_args :
                     self . _error ( 'Call %s does not accept any args'
-                        % func )
+                        % name )
                 elif need_args and not args :
                     self . _error ( 'Call %s needs %i args'
-                        % ( func , len ( need_args ) ) )
+                        % ( name , len ( need_args ) ) )
                 elif args and len ( args ) % len ( need_args ) > 0 :
                     self . _error ( 'Need %i more args' % \
                         ( len ( args ) % len ( need_args ) ) )
                 if not args :
-                    res . append ( { 'call' : [ func ] } )
+                    res . append ( { 'call' : [ name ] } )
                 else :
                     while args :
                         split_args = [ ]
                         for i in xrange ( len ( need_args ) ) :
                             split_args . append ( args [ 0 ] )
                             args = args [ 1 : ]
-                        res . append ( { 'call' : [ func ] + split_args } )
+                        res . append ( { 'call' : [ name ] + split_args } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_consts ( self , src ) :
