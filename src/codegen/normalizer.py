@@ -106,7 +106,7 @@ class normalizer :
     def _some_proc ( self , what , name ) :
         parts = name . split ( '_%s_' % what )
         if len ( parts ) > 1 :
-            which , proc = parts
+            which , proc = parts [ : 2 ]
             if which in self . _src [ what ] :
                 procs = self . _src [ what ] [ which ] [ 'proc' ]
                 if proc in procs :

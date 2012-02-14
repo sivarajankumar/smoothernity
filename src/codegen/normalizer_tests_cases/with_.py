@@ -62,3 +62,16 @@ class with_test_case ( unittest . TestCase ) :
                 , { 'call' : [ 'test1_func3' ] }
                 , { 'call' : [ 'test2_func4' ] }
                 ] } ] } ] } } ) )
+    def test_double_prefix ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        ae ( r (
+            { 'stateless' : { 'test1' : { 'proc' :
+                { 'func1' : { } } } }
+            , 'anywhere' : { 'anywhere' : [ { 'with' : { 'test1_stateless' :
+                [ { 'call' : [ 'test1_stateless_func1' ] } ] } } ] } } ) ,
+            mroot (
+            { 'stateless' : { 'test1' : { 'proc' :
+                { 'func1' : mproc ( { } ) } } }
+            , 'anywhere' : { 'anywhere' :
+                [ { 'call' : [ 'test1_stateless_func1' ] } ] } } ) )
