@@ -497,6 +497,13 @@ trace engine_render
             string_error 'Meshes underflow error.'
             end
 
+    proc trying_to_modify_finalized_mesh_error
+        with platform_trace_trace
+            begin module_name
+            string_error 'Error. Trying to modify mesh '
+            string_error 'that has been already finalized.'
+            end
+
     copy
         proc mesh_place1_out_of_range_error
             args current total
