@@ -175,9 +175,9 @@ stateless engine_math
         ops
             with platform_matrix
                 identity matrix
-                set_axis_x matrix scale 0 0
-                set_axis_y matrix 0 scale 0
-                set_axis_z matrix 0 0 scale
+                set_fract_axis_x matrix scale 0 0
+                set_fract_axis_y matrix 0 scale 0
+                set_fract_axis_z matrix 0 0 scale
 
     proc matrix_scale_rotation_z
         args matrix scale angle
@@ -191,9 +191,9 @@ stateless engine_math
                 axis_y scale
                 axis_z scale
             with platform_matrix
-                set_axis_x matrix axis_x
-                set_axis_y matrix axis_y
-                set_axis_z matrix axis_z
+                set_vector_axis_x matrix axis_x
+                set_vector_axis_y matrix axis_y
+                set_vector_axis_z matrix axis_z
 
     proc matrix_look_at
         args matrix vfrom vto norm_up 
@@ -205,10 +205,10 @@ stateless engine_math
                 cross_product axis_x norm_up axis_z
                 cross_product axis_y axis_z axis_x
             with platform_matrix
-                set_axis_x matrix axis_x
-                set_axis_y matrix axis_y
-                set_axis_z matrix axis_z
-                set_origin matrix from
+                set_vector_axis_x matrix axis_x
+                set_vector_axis_y matrix axis_y
+                set_vector_axis_z matrix axis_z
+                set_vector_origin matrix vfrom
                 inverse_rotation_translation matrix
 
     proc add_frame_to_time
