@@ -17,7 +17,7 @@ stateless engine_math
                 platform_math_sub_fracts p0_coeff t2_mul_2 t
                 platform_math_sub_from_fract p0_coeff t3
                 platform_math_sub_fracts p1_coeff t3_mul_3 t2_mul_5
-                platform_math_add_to_fract p1_coeff fract_2
+                platform_math_add_to_fract p1_coeff 2
                 platform_math_sub_fracts p2_coeff t2_mul_4 t3_mul_3
                 platform_math_add_to_fract p2_coeff t
                 platform_math_sub_fracts p3_coeff t3 t2

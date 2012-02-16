@@ -16,6 +16,10 @@ class values_test_case ( unittest . TestCase ) :
         ar ( ne , r , { 'vars' : { 'test1' : [ { 'test2' : { } } ] } ,
                 'anywhere' : { 'test3' : [ { 'call' :
                     [ 'func1' , 'test2' ] } ] } } )
+        ar ( ne , r , { 'anywhere' : { 'anywhere' : 
+                { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
+                , 'args' : [ { 'test2' : { } } ]
+                , 'vars' : [ { 'test2' : { } } ] } } } )
     def test_args ( self ) :
         ae = self . assertEqual
         r = self . n . run
