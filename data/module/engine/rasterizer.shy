@@ -32,11 +32,11 @@ module engine_rasterizer
 
     proc guts_rasterize_horizontal_line 
         args x1 x2 y
-        vars left right
+        vars xleft xright
         ops
             with engine_math_stateless
-                min_whole left x1 x2
-                max_whole right x1 x2
+                min_whole xleft x1 x2
+                max_whole xright x1 x2
             send engine_render_texture_set_texels_rect
                 guts_texture_id xleft y xright y guts_texel
 
