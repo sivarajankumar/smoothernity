@@ -93,22 +93,28 @@ class normalizer :
         return self . _src
     def run_skeleton ( self , src ) :
         self . _src = src
-        return self . _norm_skeleton ( self . _src )
+        self . _src = self . _norm_skeleton ( self . _src )
+        return self . _src
     def run_consts ( self , src ) :
         self . _src = src
-        return self . _norm_consts ( self . _src )
+        self . _src = self . _norm_consts ( self . _src )
+        return self . _src
     def run_sends ( self , src ) :
         self . _src = src
-        return self . _walk ( self . _src , self . _norm_sends )
+        self . _src = self . _walk ( self . _src , self . _norm_sends )
+        return self . _src
     def run_calls ( self , src ) :
         self . _src = src
-        return self . _walk ( self . _src , self . _norm_calls )
+        self . _src = self . _walk ( self . _src , self . _norm_calls )
+        return self . _src
     def run_assigns ( self , src ) :
         self . _src = src
-        return self . _walk ( self . _src , self . _norm_assigns )
+        self . _src = self . _walk ( self . _src , self . _norm_assigns )
+        return self . _src
     def run_withs ( self , src ) :
         self . _src = src
-        return self . _walk ( self . _src , self . _norm_withs )
+        self . _src = self . _walk ( self . _src , self . _norm_withs )
+        return self . _src
     def _error ( self , text ) :
         raise exception ( text , self . _src , self . _path )
     def _local_proc ( self , name ) :
