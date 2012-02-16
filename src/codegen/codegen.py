@@ -4,6 +4,7 @@ from normalizer import normalizer
 from normalizer import exception as normalizer_exception
 from reader import reader
 from reader import exception as reader_exception
+from fractions import Fraction
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -131,7 +132,9 @@ if __name__ == '__main__' :
         
     try :
         n = normalizer ( )
+        bc = n . bind_const
         bf = n . bind_func
+        bc ( 'platform_consts_seconds_per_frame' , Fraction ( 1 , 60 ) )
         bf ( 'platform_conditions_fract_greater_than_fract' , [ { } ] * 2 )
         bf ( 'platform_conditions_fract_less_than_fract' , [ { } ] * 2 )
         bf ( 'platform_conditions_whole_greater_or_equal_to_whole' , [ { } ] * 2 )
@@ -167,10 +170,10 @@ if __name__ == '__main__' :
         bf ( 'platform_math_sub_wholes' , [ { } ] * 3 )
         bf ( 'platform_matrix_identity' , [ { } ] * 1 )
         bf ( 'platform_matrix_inverse_rotation_translation' , [ { } ] * 1 )
-        bf ( 'platform_matrix_set_axis_x' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_axis_y' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_axis_z' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_origin' , [ { } ] * 2 )
+        bf ( 'platform_matrix_set_axis_x' , [ { } ] * 4 )
+        bf ( 'platform_matrix_set_axis_y' , [ { } ] * 4 )
+        bf ( 'platform_matrix_set_axis_z' , [ { } ] * 4 )
+        bf ( 'platform_matrix_set_origin' , [ { } ] * 4 )
         bf ( 'platform_render_blend_disable' , [ ] )
         bf ( 'platform_render_blend_src_alpha_dst_one_minus_alpha' , [ ] )
         bf ( 'platform_render_clear_screen' , [ { } ] * 3 )

@@ -151,21 +151,26 @@ class normalizer :
                     all [ 'consts_' + kk ] = vv
         return merge ( self . _bind_consts , all )
     def _get_value ( self , name ) :
+        res = [ ]
         if name in self . _all_consts ( ) :
-            return self . _all_consts ( ) [ name ]
-        else :
-            what = self . _path [ 1 ]
-            if what in self . _src [ 'vars' ] :
-                vars = self . _src [ 'vars' ] [ what ]
-                if name in reduce ( merge , vars , { } ) :
-                    return name
-            cur = self . _src
-            for p in self . _path :
+            res . append ( self . _all_consts ( ) [ name ] )
+        what = self . _path [ 1 ]
+        if what in self . _src [ 'vars' ] :
+            vars = self . _src [ 'vars' ] [ what ]
+            if name in reduce ( merge , vars , { } ) :
+                res . append ( name )
+        cur = self . _src
+        for p in self . _path :
+            if p in cur :
                 cur = cur [ p ]
                 for a in ( 'vars' , 'args' ) :
                     if a in cur :
                         if name in reduce ( merge , cur [ a ] , { } ) :
-                            return name
+                            res . append ( name )
+        if len ( res ) > 1 :
+            self . _error ( "Ambiguous value '%s'" % name )
+        elif res :
+            return res [ 0 ]
     def _with_prefixes ( self ) :
         res = list ( )
         for i in xrange ( len ( self . _path ) - 1 ) :
@@ -181,10 +186,10 @@ class normalizer :
         prefixes = self . _with_prefixes ( )
         candidates = self . _candidates ( name , func , prefixes )
         if len ( candidates ) > 1 :
-            self . _error ( 'Ambiguous identifiers: %s' %
+            self . _error ( "Ambiguous identifiers: '%s'" %
                 ( ', ' . join ( candidates ) ) )
         if len ( candidates ) == 0 :
-            self . _error ( 'Unknown identifier: %s' % name )
+            self . _error ( "Unknown identifier: '%s'" % name )
         return func ( candidates [ 0 ] )
     def _walk ( self , src , visit , path = [ ] ) :
         self . _path = path
@@ -256,11 +261,12 @@ class normalizer :
                 res = list ( )
                 froms = src [ 'assign' ] [ 'from' ]
                 tos = src [ 'assign' ] [ 'to' ]
-                if len ( tos ) % len ( froms ) > 0 :
+                lf , lt = len ( froms ) , len ( tos )
+                if lt % lf > 0 :
                     self . _error ( 'Need %i more assign targets' %
-                        ( len ( tos ) % len ( froms ) ) )
-                for i in xrange ( len ( tos ) ) :
-                    f = self . _norm_value ( froms [ i % len ( froms ) ] )
+                        ( lf - ( lt % lf ) ) )
+                for i in xrange ( lt ) :
+                    f = self . _norm_value ( froms [ i % lf ] )
                     t = self . _norm_value ( tos [ i ] )
                     res . append ( { 'assign' :
                         { 'from' : [ f ]
