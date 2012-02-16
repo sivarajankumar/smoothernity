@@ -75,3 +75,16 @@ class with_test_case ( unittest . TestCase ) :
                 { 'func1' : mproc ( { } ) } } }
             , 'anywhere' : { 'anywhere' :
                 [ { 'call' : [ 'test1_stateless_func1' ] } ] } } ) )
+    def test_arguments ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        bf = self . n . bind_func
+        bf ( 'func1' , [ { } ] )
+        ae ( r (
+            { 'vars' : { 'test1' : [ { 'prefix1_var1' : { } } ] }
+            , 'anywhere' : { 'test1' : [ { 'with' : { 'prefix1' :
+                [ { 'call' : [ 'func1' , 'var1' ] } ] } } ] } } ) ,
+            mroot (
+                { 'vars' : { 'test1' : [ { 'prefix1_var1' : { } } ] }
+                , 'anywhere' : { 'test1' : 
+                    [ { 'call' : [ 'func1' , 'prefix1_var1' ] } ] } } ) )
