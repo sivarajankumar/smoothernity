@@ -75,10 +75,13 @@ class const_value :
 class normalizer :
     def __init__ ( self ) :
         self . _bind_funcs = { }
+        self . _bind_consts = { }
         self . _src = None
         self . _path = None
     def bind_func ( self , func , args ) :
         self . _bind_funcs [ func ] = args
+    def bind_const ( self , const , value ) :
+        self . _bind_consts [ const ] = value
     def run ( self , src ) :
         self . _src = src
         self . _src = self . _norm_skeleton ( self . _src )
@@ -146,7 +149,7 @@ class normalizer :
                 all [ k + '_consts_' + kk ] = vv
                 if self . _path [ 1 ] == k :
                     all [ 'consts_' + kk ] = vv
-        return all
+        return merge ( self . _bind_consts , all )
     def _get_value ( self , name ) :
         if name in self . _all_consts ( ) :
             return self . _all_consts ( ) [ name ]

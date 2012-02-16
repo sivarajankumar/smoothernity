@@ -93,4 +93,22 @@ class values_test_case ( unittest . TestCase ) :
                 { 'consts' : { 'test1' : { 'test2' : 1 } }
                 , 'anywhere' : { 'test1' : [ { 'call' :
                     [ 'func1' , 1 ] } ] } } ) )
+    def test_bound_consts ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        bc = self . n . bind_const
+        bc ( 'const1' , 1 )
+        ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'call' :
+                    [ 'func1' , 'const1' ] } ] } } ) ,
+            mroot ( { 'anywhere' : { 'anywhere' : [ { 'call' :
+                    [ 'func1' , 1 ] } ] } } ) )
+    def test_bound_consts_expression ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        bc = self . n . bind_const
+        bc ( 'const1' , 1 )
+        ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'call' :
+                    [ 'func1' , '[ const1 ]' ] } ] } } ) ,
+            mroot ( { 'anywhere' : { 'anywhere' : [ { 'call' :
+                    [ 'func1' , 1 ] } ] } } ) )
 
