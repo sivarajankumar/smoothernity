@@ -4,7 +4,6 @@ from normalizer import normalizer
 from normalizer import exception as normalizer_exception
 from reader import reader
 from reader import exception as reader_exception
-from fractions import Fraction
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -115,6 +114,7 @@ if __name__ == '__main__' :
     from sys import stdin
     import os
     from pprint import pprint
+    from fractions import Fraction
 
     class trace :
         def write_error ( self , name , error ) :
