@@ -9,30 +9,48 @@ class assign_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run
         ne = normalizer . exception
-        ar ( ne , r , { 'anywhere' : { 'anywhere' : [ { 'assign' :
-            { 'from' : [ 'test1' , 'test2' ]
-            , 'to' : [ 'test3' , 'test4' , 'test5' ] } } ] } } )
+        ar ( ne , r , { 'anywhere' : { 'anywhere' :
+            { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                       , { 'a3' : { } } , { 'a4' : { } }
+                       , { 'a5' : { } } ]
+            , 'ops' : [ { 'assign' :
+                { 'from' : [ 'a1' , 'a2' ]
+                , 'to' : [ 'a3' , 'a4' , 'a5' ]
+                } } ] } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ne = normalizer . exception
         try :
-            r ( { 'path1' : { 'path2' : [ { 'assign' :
-                { 'from' : [ 'test1' , 'test2' ]
-                , 'to' : [ 'test3' , 'test4' , 'test5' ] } } ] } } )
+            r ( { 'path1' : { 'path2' :
+                { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                           , { 'a3' : { } } , { 'a4' : { } }
+                           , { 'a5' : { } } ]
+                , 'ops' : [ { 'assign' :
+                    { 'from' : [ 'a1' , 'a2' ]
+                    , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } } )
         except ne as e :
             pass
         gp = e . get_path ( )
-        ae ( gp , [ 'path1' , 'path2' , 0 ] )
+        ae ( gp , [ 'path1' , 'path2' , 'ops' , 0 ] )
     def test_split ( self ) :
         ae = self . assertEqual
         r = self . n . run
-        ae ( r ( { 'anywhere' : { 'anywhere' : [ { 'assign' :
-            { 'from' : [ 'test1' , 'test2' ]
-            , 'to' : [ 'test3' , 'test4' , 'test5' , 'test6' ] } } ] } } ) ,
+        ae ( r ( { 'anywhere' : { 'anywhere' :
+            { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                       , { 'a3' : { } } , { 'a4' : { } }
+                       , { 'a5' : { } } , { 'a6' : { } } ]
+            , 'ops' : [ { 'assign' :
+                { 'from' : [ 'a1' , 'a2' ]
+                , 'to' : [ 'a3' , 'a4' , 'a5' , 'a6' ]
+                } } ] } } } ) ,
             mroot ( { 'anywhere' : { 'anywhere' :
-                [ { 'assign' : { 'from' : [ 'test1' ] , 'to' : [ 'test3' ] } }
-                , { 'assign' : { 'from' : [ 'test2' ] , 'to' : [ 'test4' ] } }
-                , { 'assign' : { 'from' : [ 'test1' ] , 'to' : [ 'test5' ] } }
-                , { 'assign' : { 'from' : [ 'test2' ] , 'to' : [ 'test6' ] } }
-                ] } } ) )
+                { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                           , { 'a3' : { } } , { 'a4' : { } }
+                           , { 'a5' : { } } , { 'a6' : { } } ]
+                , 'ops' : 
+                    [ { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a3' ] } }
+                    , { 'assign' : { 'from' : [ 'a2' ] , 'to' : [ 'a4' ] } }
+                    , { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a5' ] } }
+                    , { 'assign' : { 'from' : [ 'a2' ] , 'to' : [ 'a6' ] } }
+                    ] } } } ) )

@@ -256,9 +256,11 @@ class normalizer :
                     self . _error ( 'Need %i more assign targets' %
                         ( len ( tos ) % len ( froms ) ) )
                 for i in xrange ( len ( tos ) ) :
+                    f = self . _norm_value ( froms [ i % len ( froms ) ] )
+                    t = self . _norm_value ( tos [ i ] )
                     res . append ( { 'assign' :
-                        { 'from' : [ froms [ i % len ( froms ) ] ]
-                        , 'to' : [ tos [ i ] ] } } )
+                        { 'from' : [ f ]
+                        , 'to' : [ t ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_arguable ( self , src , what , how ) :

@@ -88,3 +88,25 @@ class with_test_case ( unittest . TestCase ) :
                 { 'vars' : { 'test1' : [ { 'prefix1_var1' : { } } ] }
                 , 'anywhere' : { 'test1' : 
                     [ { 'call' : [ 'func1' , 'prefix1_var1' ] } ] } } ) )
+    def test_assign ( self ) :
+        ae = self . assertEqual
+        r = self . n . run
+        bf = self . n . bind_func
+        bf ( 'func1' , [ { } ] )
+        ae ( r (
+            { 'vars' : { 'test1' :
+                [ { 'prefix1_var1' : { } }
+                , { 'prefix1_var2' : { } } ] }
+            , 'anywhere' : { 'test1' : [ { 'with' : { 'prefix1' :
+                [ { 'assign' :
+                    { 'from' : [ 'var1' ]
+                    , 'to' : [ 'var2' ]
+                    } } ] } } ] } } ) ,
+            mroot (
+                { 'vars' : { 'test1' :
+                    [ { 'prefix1_var1' : { } }
+                    , { 'prefix1_var2' : { } } ] }
+                , 'anywhere' : { 'test1' : 
+                    [ { 'assign' :
+                        { 'from' : [ 'prefix1_var1' ]
+                        , 'to' : [ 'prefix1_var2' ] } } ] } } ) )
