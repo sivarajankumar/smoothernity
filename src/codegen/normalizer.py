@@ -159,9 +159,10 @@ class normalizer :
             cur = self . _src
             for p in self . _path :
                 cur = cur [ p ]
-                if 'vars' in cur :
-                    if name in reduce ( merge , cur [ 'vars' ] , { } ) :
-                        return name
+                for a in ( 'vars' , 'args' ) :
+                    if a in cur :
+                        if name in reduce ( merge , cur [ a ] , { } ) :
+                            return name
     def _with_prefixes ( self ) :
         res = list ( )
         for i in xrange ( len ( self . _path ) - 1 ) :
