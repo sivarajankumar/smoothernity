@@ -139,6 +139,29 @@ class normalizer :
                 all [ k + '_' + kk ] = vv
         if name in all :
             return name , all [ name ]
+    def _all_consts ( self ) :
+        all = { }
+        for k , v in self . _src [ 'consts' ] . items ( ) :
+            for kk , vv in v . items ( ) :
+                all [ k + '_consts_' + kk ] = vv
+                if self . _path [ 1 ] == k :
+                    all [ 'consts_' + kk ] = vv
+        return all
+    def _get_value ( self , name ) :
+        if name in self . _all_consts ( ) :
+            return self . _all_consts ( ) [ name ]
+        else :
+            what = self . _path [ 1 ]
+            if what in self . _src [ 'vars' ] :
+                vars = self . _src [ 'vars' ] [ what ]
+                if name in reduce ( merge , vars , { } ) :
+                    return name
+            cur = self . _src
+            for p in self . _path :
+                cur = cur [ p ]
+                if 'vars' in cur :
+                    if name in reduce ( merge , cur [ 'vars' ] , { } ) :
+                        return name
     def _with_prefixes ( self ) :
         res = list ( )
         for i in xrange ( len ( self . _path ) - 1 ) :
@@ -250,11 +273,19 @@ class normalizer :
                     self . _error ( "'%s' takes n*%i args, "
                         "but has been given %i" % ( name , lna , la ) )
                 while True :
-                    res . append ( { what : [ name ] + args [ : lna ] } )
+                    res . append ( { what : [ name ] + [ self . _norm_value ( a )
+                        for a in args [ : lna ] ] } )
                     args = args [ lna : ]
                     if not args :
                         break
                 return res if len ( res ) > 1 else res [ 0 ]
+        return src
+    def _norm_value ( self , src ) :
+        if type ( src ) in ( str , unicode ) :
+            if ( src [ 0 ] , src [ - 1 ] ) == ( '[' , ']' ) :
+                return eval ( src [ 1 : - 1 ] , self . _all_consts ( ) )
+            else :
+                return self . _use_withs ( src , self . _get_value )
         return src
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )

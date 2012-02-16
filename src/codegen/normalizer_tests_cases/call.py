@@ -16,27 +16,33 @@ class call_test_case ( unittest . TestCase ) :
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
             { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-            { 'ops' : [ { 'call' : [ 'func1' , 'a1' ] } ] } } } } } )
+            { 'vars' : [ { 'a1' : { } } ]
+            , 'ops' : [ { 'call' : [ 'func1' , 'a1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-            { 'ops' : [ { 'call' : [ 'func2' , 'a1' ] } ] } } } } } )
+            { 'vars' : [ { 'a1' : { } } ]
+            , 'ops' : [ { 'call' : [ 'func2' , 'a1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-            { 'ops' : [ { 'call' : [ 'unknown' , 'a2' ] } ] } } } } } )
+            { 'vars' : [ { 'a1' : { } } ]
+            , 'ops' : [ { 'call' : [ 'unknown' , 'a1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' :
             { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } }
-            , 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ {
-                'call' : [ 'st1_stateless_unknown' , 'a2' ]
+            , 'st2' : { 'proc' : { 'proc2' :
+                { 'vars' : [ { 'a2' : { } } ]
+                , 'ops' : [ { 'call' : [ 'st1_stateless_unknown' , 'a2' ]
             } ] } } } } } )
         ar ( ne , r , { 'stateless' :
             { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } }
-            , 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ {
-                'call' : [ 'unknown_stateless_proc1' , 'a2' ]
+            , 'st2' : { 'proc' : { 'proc2' :
+                { 'vars' : [ { 'a2' : { } } ]
+                , 'ops' : [ { 'call' : [ 'unknown_stateless_proc1' , 'a2' ]
             } ] } } } } } )
         ar ( ne , r ,
             { 'trace' :
                 { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } } }
             , 'stateless' :
-                { 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ {
-                    'call' : [ 'trace_proc1' , 'a2' ]
+                { 'st2' : { 'proc' : { 'proc2' :
+                    { 'vars' : [ { 'a2' : { } } ]
+                    , 'ops' : [ { 'call' : [ 'trace_proc1' , 'a2' ]
             } ] } } } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
@@ -45,7 +51,9 @@ class call_test_case ( unittest . TestCase ) :
         ne = normalizer . exception
         bf ( 'func1' , [ { } , { } ] )
         try :
-            r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+            r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'vars' : [ { 'a1' : { } } ]
+                , 'ops' :
                 [ { 'if' : [ { 'any' : [ { 'call' : [ 'func1' , 'a1' ] } ] } ]
                 } ] } } } } } )
         except ne as e :
@@ -58,14 +66,20 @@ class call_test_case ( unittest . TestCase ) :
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'func1' , [ { } , { } ] )
-        ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-            [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
-            ] } } } } } ) ,
+        ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                       , { 'a3' : { } } , { 'a4' : { } } ]
+            , 'ops' :
+                [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
+                ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                mproc ( { 'ops' :
-                    [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
-                    , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
-                    ] } ) } } } } ) )
+                mproc (
+                    { 'vars' : [ { 'a1' : { } } , { 'a2' : { } }
+                               , { 'a3' : { } } , { 'a4' : { } } ]
+                    , 'ops' :
+                        [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
+                        , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
+                        ] } ) } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -81,56 +95,66 @@ class call_test_case ( unittest . TestCase ) :
         r = self . n . run
         bf = self . n . bind_func
         bf ( 'func1' , [ { } ] )
-        ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-            [ { 'call' : [ 'func1' , 'a1' ] }
+        ae ( r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'vars' : [ { 'a1' : { } } ]
+            , 'ops' : [ { 'call' : [ 'func1' , 'a1' ] }
             ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                mproc ( { 'ops' :
-                    [ { 'call' : [ 'func1' , 'a1' ] }
+                mproc (
+                    { 'vars' : [ { 'a1' : { } } ]
+                    , 'ops' : [ { 'call' : [ 'func1' , 'a1' ] }
                     ] } ) } } } } ) )
     def test_proc_local ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'args' : [ { } ] }
-            , 'proc2' : { 'ops' :
-                [ { 'call' : [ 'proc1' , 'a1' ] }
+            , 'proc2' :
+                { 'vars' : [ { 'a1' : { } } ]
+                , 'ops' : [ { 'call' : [ 'proc1' , 'a1' ] }
                 ] } } } } } ) ,
             mroot ( { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : mproc ( { 'args' : [ { } ] } )
-            , 'proc2' : mproc ( { 'ops' :
-                [ { 'call' : [ 'proc1' , 'a1' ] }
+            , 'proc2' : mproc (
+                { 'vars' : [ { 'a1' : { } } ]
+                , 'ops' : [ { 'call' : [ 'proc1' , 'a1' ] }
                 ] } ) } } } } ) )
     def test_proc_stateless ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'stateless' :
             { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } }
-            , 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ { 'call' :
-                [ 'st1_stateless_proc1' , 'a1' ] }
+            , 'st2' : { 'proc' : { 'proc2' :
+                { 'vars' : [ { 'a1' : { } } ]
+                , 'ops' : [ { 'call' : [ 'st1_stateless_proc1' , 'a1' ] }
                 ] } } } } } ) ,
             mroot ( { 'stateless' :
                 { 'st1' : { 'proc' : { 'proc1' :
                     mproc ( { 'args' : [ { } ] } ) } }
                 , 'st2' : { 'proc' : { 'proc2' :
-                    mproc ( { 'ops' :
-                        [ { 'call' : [ 'st1_stateless_proc1' , 'a1' ] }
-                        ] } ) } } } } ) )
+                    mproc (
+                        { 'vars' : [ { 'a1' : { } } ]
+                        , 'ops' :
+                            [ { 'call' : [ 'st1_stateless_proc1' , 'a1' ] }
+                            ] } ) } } } } ) )
     def test_proc_trace ( self ) :
         ae = self . assertEqual
         r = self . n . run
         ae ( r ( { 'trace' :
             { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } }
-            , 'st2' : { 'proc' : { 'proc2' : { 'ops' : [ { 'call' :
-                [ 'st1_trace_proc1' , 'a1' ] }
+            , 'st2' : { 'proc' : { 'proc2' :
+                { 'vars' : [ { 'a1' : { } } ]
+                , 'ops' : [ { 'call' : [ 'st1_trace_proc1' , 'a1' ] }
                 ] } } } } } ) ,
             mroot ( { 'trace' :
                 { 'st1' : { 'proc' : { 'proc1' :
                     mproc ( { 'args' : [ { } ] } ) } }
                 , 'st2' : { 'proc' : { 'proc2' :
-                    mproc ( { 'ops' :
-                        [ { 'call' : [ 'st1_trace_proc1' , 'a1' ] }
-                        ] } ) } } } } ) )
+                    mproc (
+                        { 'vars' : [ { 'a1' : { } } ]
+                        , 'ops' :
+                            [ { 'call' : [ 'st1_trace_proc1' , 'a1' ] }
+                            ] } ) } } } } ) )
     def test_proc_stateless_local ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -138,8 +162,9 @@ class call_test_case ( unittest . TestCase ) :
             { 'stateless' :
                 { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } } }
             , 'trace' :
-                { 'st1' : { 'proc' : { 'proc2' : { 'ops' : [ { 'call' :
-                    [ 'stateless_proc1' , 'a1' ] }
+                { 'st1' : { 'proc' : { 'proc2' :
+                    { 'vars' : [ { 'a1' : { } } ]
+                    , 'ops' : [ { 'call' : [ 'stateless_proc1' , 'a1' ] }
                     ] } } } } } ) ,
             mroot (
                 { 'stateless' :
@@ -147,9 +172,11 @@ class call_test_case ( unittest . TestCase ) :
                         mproc ( { 'args' : [ { } ] } ) } } }
                 , 'trace' :
                     { 'st1' : { 'proc' : { 'proc2' :
-                        mproc ( { 'ops' :
-                            [ { 'call' : [ 'stateless_proc1' , 'a1' ] }
-                            ] } ) } } } } ) )
+                        mproc (
+                            { 'vars' : [ { 'a1' : { } } ]
+                            , 'ops' :
+                                [ { 'call' : [ 'stateless_proc1' , 'a1' ] }
+                                ] } ) } } } } ) )
     def test_proc_trace_local ( self ) :
         ae = self . assertEqual
         r = self . n . run
@@ -157,8 +184,9 @@ class call_test_case ( unittest . TestCase ) :
             { 'trace' :
                 { 'st1' : { 'proc' : { 'proc1' : { 'args' : [ { } ] } } } }
             , 'stateless' :
-                { 'st1' : { 'proc' : { 'proc2' : { 'ops' : [ { 'call' :
-                    [ 'trace_proc1' , 'a1' ] }
+                { 'st1' : { 'proc' : { 'proc2' :
+                    { 'vars' : [ { 'a1' : { } } ]
+                    , 'ops' : [ { 'call' : [ 'trace_proc1' , 'a1' ] }
                     ] } } } } } ) ,
             mroot (
                 { 'trace' :
@@ -166,6 +194,8 @@ class call_test_case ( unittest . TestCase ) :
                         mproc ( { 'args' : [ { } ] } ) } } }
                 , 'stateless' :
                     { 'st1' : { 'proc' : { 'proc2' :
-                        mproc ( { 'ops' :
-                            [ { 'call' : [ 'trace_proc1' , 'a1' ] }
-                            ] } ) } } } } ) )
+                        mproc (
+                            { 'vars' : [ { 'a1' : { } } ]
+                            , 'ops' :
+                                [ { 'call' : [ 'trace_proc1' , 'a1' ] }
+                                ] } ) } } } } ) )
