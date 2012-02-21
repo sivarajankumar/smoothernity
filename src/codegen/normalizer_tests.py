@@ -1,6 +1,7 @@
 import unittest
 from normalizer_tests_cases . assign import *
 from normalizer_tests_cases . call import *
+from normalizer_tests_cases . calls_split import *
 from normalizer_tests_cases . consts import *
 from normalizer_tests_cases . expression import *
 from normalizer_tests_cases . send import *
