@@ -95,29 +95,29 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run_calls_split
         s = mroot ( { 'stateless' : { 'st1' : { 'proc' :
-                { 'proc1' : mproc ( { 'args' : [ { } ] } )
-                , 'proc2' : mproc ( { 'ops' : [ { 'call' : [ 'proc1' , 'a' ] }
-                ] } ) } } } } )
+            { 'proc1' : mproc ( { 'args' : [ { } ] } )
+            , 'proc2' : mproc ( { 'ops' : [ { 'call' : [ 'proc1' , 'a' ] }
+            ] } ) } } } } )
         ae ( r ( s ) , s )
     def test_proc_stateless ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls_split
         s = mroot ( { 'stateless' :
-                { 'st1' : { 'proc' : { 'proc1' :
-                    mproc ( { 'args' : [ { } ] } ) } }
-                , 'st2' : { 'proc' : { 'proc2' :
-                    mproc ( { 'ops' : [ { 'call' :
-                        [ 'st1_stateless_proc1' , 'a' ] } ] } ) } } } } )
+            { 'st1' : { 'proc' : { 'proc1' :
+                mproc ( { 'args' : [ { } ] } ) } }
+            , 'st2' : { 'proc' : { 'proc2' :
+                mproc ( { 'ops' : [ { 'call' :
+                    [ 'st1_stateless_proc1' , 'a' ] } ] } ) } } } } )
         ae ( r ( s ) , s )
     def test_proc_trace ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls_split
         s = mroot ( { 'trace' :
-                { 'st1' : { 'proc' : { 'proc1' :
-                    mproc ( { 'args' : [ { } ] } ) } } }
-                , 'st2' : { 'proc' : { 'proc2' :
-                    mproc ( { 'ops' : [ { 'call' :
-                        [ 'st1_trace_proc1' , 'a' ] } ] } ) } } } )
+            { 'st1' : { 'proc' : { 'proc1' :
+                mproc ( { 'args' : [ { } ] } ) } } }
+            , 'st2' : { 'proc' : { 'proc2' :
+                mproc ( { 'ops' : [ { 'call' :
+                    [ 'st1_trace_proc1' , 'a' ] } ] } ) } } } )
         ae ( r ( s ) , s )
     def test_proc_stateless_local ( self ) :
         ae = self . assertEqual
@@ -135,11 +135,11 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run_calls_split
         s = mroot (
-                { 'trace' :
-                    { 'st1' : { 'proc' : { 'proc1' :
-                        mproc ( { 'args' : [ { } ] } ) } } }
-                , 'stateless' :
-                    { 'st1' : { 'proc' : { 'proc2' :
-                        mproc ( { 'ops' : [ { 'call' :
-                            [ 'trace_proc1' , 'a' ] } ] } ) } } } } )
+            { 'trace' :
+                { 'st1' : { 'proc' : { 'proc1' :
+                    mproc ( { 'args' : [ { } ] } ) } } }
+            , 'stateless' :
+                { 'st1' : { 'proc' : { 'proc2' :
+                    mproc ( { 'ops' : [ { 'call' :
+                        [ 'trace_proc1' , 'a' ] } ] } ) } } } } )
         ae ( r ( s ) , s )
