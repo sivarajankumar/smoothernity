@@ -88,7 +88,7 @@ class normalizer :
         self . _src = self . run_consts ( self . _src )
         self . _src = self . run_sends_split ( self . _src )
         self . _src = self . run_sends_values ( self . _src )
-        self . _src = self . run_calls_split ( self . _src )
+        #self . _src = self . run_calls_split ( self . _src )
         self . _src = self . run_calls_values ( self . _src )
         self . _src = self . run_assigns_split ( self . _src )
         self . _src = self . run_assigns_values ( self . _src )
