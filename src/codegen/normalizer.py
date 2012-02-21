@@ -110,7 +110,9 @@ class normalizer :
     def run_sends_values ( self , src ) :
         return src
     def run_calls_split ( self , src ) :
-        return src
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _norm_calls_split )
+        return self . _src
     def run_calls_values ( self , src ) :
         return src
     def run_assigns_split ( self , src ) :
@@ -334,6 +336,26 @@ class normalizer :
                         break
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
+    def _norm_arguable_split ( self , src , what , how ) :
+        if isinstance ( src , dict ) :
+            if what in src :
+                res = list ( )
+                name = src [ what ] [ 0 ]
+                args = src [ what ] [ 1 : ]
+                if how ( name ) == None :
+                    self . _error ( "Unknown arguable '%s'" % name )
+                name , need_args = how ( name )
+                la , lna = len ( args ) , len ( need_args )
+                if la != lna and ( not la * lna or la % lna ) :
+                    self . _error ( "'%s' takes n*%i args, "
+                        "but has been given %i" % ( name , lna , la ) )
+                while True :
+                    res . append ( { what : [ name ] + args [ : lna ] } )
+                    args = args [ lna : ]
+                    if not args :
+                        break
+                return res if len ( res ) > 1 else res [ 0 ]
+        return src
     def _norm_value ( self , src ) :
         if type ( src ) in ( str , unicode ) :
             if ( src [ 0 ] , src [ - 1 ] ) == ( '[' , ']' ) :
@@ -341,6 +363,8 @@ class normalizer :
             else :
                 return self . _use_withs ( src , self . _get_value )
         return src
+    def _norm_calls_split ( self , src ) :
+        return self . _norm_arguable_split ( src , 'call' , self . _get_callable )
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
