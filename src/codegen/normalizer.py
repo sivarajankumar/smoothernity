@@ -86,9 +86,15 @@ class normalizer :
         self . _src = src
         self . _src = self . run_skeleton ( self . _src )
         self . _src = self . run_consts ( self . _src )
-        self . _src = self . run_sends ( self . _src )
-        self . _src = self . run_calls ( self . _src )
-        self . _src = self . run_assigns ( self . _src )
+        self . _src = self . run_sends_split ( self . _src )
+        self . _src = self . run_sends_values ( self . _src )
+        self . _src = self . run_calls_split ( self . _src )
+        self . _src = self . run_calls_values ( self . _src )
+        self . _src = self . run_assigns_split ( self . _src )
+        self . _src = self . run_assigns_values ( self . _src )
+        self . _src = self . old_run_sends ( self . _src )
+        self . _src = self . old_run_calls ( self . _src )
+        self . _src = self . old_run_assigns ( self . _src )
         self . _src = self . run_withs ( self . _src )
         return self . _src
     def run_skeleton ( self , src ) :
@@ -99,15 +105,27 @@ class normalizer :
         self . _src = src
         self . _src = self . _norm_consts ( self . _src )
         return self . _src
-    def run_sends ( self , src ) :
+    def run_sends_split ( self , src ) :
+        return src
+    def run_sends_values ( self , src ) :
+        return src
+    def run_calls_split ( self , src ) :
+        return src
+    def run_calls_values ( self , src ) :
+        return src
+    def run_assigns_split ( self , src ) :
+        return src
+    def run_assigns_values ( self , src ) :
+        return src
+    def old_run_sends ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_sends )
         return self . _src
-    def run_calls ( self , src ) :
+    def old_run_calls ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_calls )
         return self . _src
-    def run_assigns ( self , src ) :
+    def old_run_assigns ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
