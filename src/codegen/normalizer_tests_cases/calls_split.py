@@ -51,9 +51,8 @@ class calls_split_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ { } , { } ] )
         try :
             r ( mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                mproc ( { 'ops' :
-                [ { 'if' : [ { 'any' : [ { 'call' : [ 'func1' , 'a1' ] } ] } ]
-                } ] } ) } } } } ) )
+                    mproc ( { 'ops' : [ { 'if' : [ { 'any' : [ { 'call' :
+                        [ 'func1' , 'a' ] } ] } ] } ] } ) } } } } ) )
         except ne as e :
             pass
         gp = e . get_path ( )
