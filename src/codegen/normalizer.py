@@ -86,7 +86,7 @@ class normalizer :
         self . _src = src
         self . _src = self . run_skeleton ( self . _src )
         self . _src = self . run_consts ( self . _src )
-        self . _src = self . run_sends_split ( self . _src )
+        #self . _src = self . run_sends_split ( self . _src )
         self . _src = self . run_sends_values ( self . _src )
         #self . _src = self . run_calls_split ( self . _src )
         self . _src = self . run_calls_values ( self . _src )
@@ -106,7 +106,9 @@ class normalizer :
         self . _src = self . _norm_consts ( self . _src )
         return self . _src
     def run_sends_split ( self , src ) :
-        return src
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _norm_sends_split )
+        return self . _src
     def run_sends_values ( self , src ) :
         return src
     def run_calls_split ( self , src ) :
@@ -365,6 +367,8 @@ class normalizer :
         return src
     def _norm_calls_split ( self , src ) :
         return self . _norm_arguable_split ( src , 'call' , self . _get_callable )
+    def _norm_sends_split ( self , src ) :
+        return self . _norm_arguable_split ( src , 'send' , self . _get_sendable )
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
