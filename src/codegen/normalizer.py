@@ -118,7 +118,9 @@ class normalizer :
     def run_calls_values ( self , src ) :
         return src
     def run_assigns_split ( self , src ) :
-        return src
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _norm_assigns_split )
+        return self . _src
     def run_assigns_values ( self , src ) :
         return src
     def old_run_sends ( self , src ) :
@@ -317,6 +319,22 @@ class normalizer :
                     res . append ( { 'assign' :
                         { 'from' : [ f ]
                         , 'to' : [ t ] } } )
+                return res if len ( res ) > 1 else res [ 0 ]
+        return src
+    def _norm_assigns_split ( self , src ) :
+        if isinstance ( src , dict ) :
+            if 'assign' in src :
+                res = list ( )
+                froms = src [ 'assign' ] [ 'from' ]
+                tos = src [ 'assign' ] [ 'to' ]
+                lf , lt = len ( froms ) , len ( tos )
+                if lt % lf > 0 :
+                    self . _error ( 'Need %i more assign targets' %
+                        ( lf - ( lt % lf ) ) )
+                for i in xrange ( lt ) :
+                    res . append ( { 'assign' :
+                        { 'from' : [ froms [ i % lf ] ]
+                        , 'to' : [ tos [ i ] ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_arguable ( self , src , what , how ) :
