@@ -4,12 +4,12 @@ from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 from normalizer_tests_cases . helper import merge_skeleton_messages as mmsg
 
-class sends_split_test_case ( unittest . TestCase ) :
+class sends_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
-        r = self . n . run_sends_split
+        r = self . n . run_sends
         ne = normalizer . exception
         ar ( ne , r , mroot (
             { 'messages' : { 'test1' : mmsg ( { 'receive' :
@@ -25,7 +25,7 @@ class sends_split_test_case ( unittest . TestCase ) :
             } ) } } } } ) )
     def test_exception_path ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends_split
+        r = self . n . run_sends
         ne = normalizer . exception
         try :
             r ( mroot (
@@ -41,7 +41,7 @@ class sends_split_test_case ( unittest . TestCase ) :
             'ops' , 0 , 'if' , 0 , 'any' , 0 ] )
     def test_split_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends_split
+        r = self . n . run_sends
         ae ( r ( mroot (
             { 'messages' : { 'test1' : mmsg (
                 { 'receive' : { 'msg1' : [ { } , { } ] } } ) }
@@ -58,7 +58,7 @@ class sends_split_test_case ( unittest . TestCase ) :
             ] } ) } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends_split
+        r = self . n . run_sends
         s = mroot (
             { 'messages' : { 'test1' : mmsg (
                 { 'receive' : { 'msg1' : [ ] } } ) }

@@ -2,12 +2,12 @@ import normalizer
 import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 
-class assigns_split_test_case ( unittest . TestCase ) :
+class assigns_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
-        r = self . n . run_assigns_split
+        r = self . n . run_assigns
         ne = normalizer . exception
         ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' :
             { 'ops' : [ { 'assign' :
@@ -16,7 +16,7 @@ class assigns_split_test_case ( unittest . TestCase ) :
                 } } ] } } } ) )
     def test_exception_path ( self ) :
         ae = self . assertEqual
-        r = self . n . run_assigns_split
+        r = self . n . run_assigns
         ne = normalizer . exception
         try :
             r ( mroot ( { 'path1' : { 'path2' :
@@ -29,7 +29,7 @@ class assigns_split_test_case ( unittest . TestCase ) :
         ae ( gp , [ 'path1' , 'path2' , 'ops' , 0 ] )
     def test_split ( self ) :
         ae = self . assertEqual
-        r = self . n . run_assigns_split
+        r = self . n . run_assigns
         ae ( r (
             mroot ( { 'anywhere' : { 'anywhere' :
                 { 'ops' : [ { 'assign' :
