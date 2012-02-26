@@ -86,12 +86,9 @@ class normalizer :
         self . _src = src
         self . _src = self . run_skeleton ( self . _src )
         self . _src = self . run_consts ( self . _src )
-        #self . _src = self . run_sends_split ( self . _src )
-        self . _src = self . run_sends_values ( self . _src )
-        #self . _src = self . run_calls_split ( self . _src )
-        self . _src = self . run_calls_values ( self . _src )
-        self . _src = self . run_assigns_split ( self . _src )
-        self . _src = self . run_assigns_values ( self . _src )
+        #self . _src = self . run_sends ( self . _src )
+        #self . _src = self . run_calls ( self . _src )
+        #self . _src = self . run_assigns ( self . _src )
         self . _src = self . old_run_sends ( self . _src )
         self . _src = self . old_run_calls ( self . _src )
         self . _src = self . old_run_assigns ( self . _src )
@@ -105,35 +102,29 @@ class normalizer :
         self . _src = src
         self . _src = self . _norm_consts ( self . _src )
         return self . _src
-    def run_sends_split ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_sends_split )
-        return self . _src
-    def run_sends_values ( self , src ) :
-        return src
-    def run_calls_split ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_calls_split )
-        return self . _src
-    def run_calls_values ( self , src ) :
-        return src
-    def run_assigns_split ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_assigns_split )
-        return self . _src
-    def run_assigns_values ( self , src ) :
-        return src
-    def old_run_sends ( self , src ) :
+    def run_sends ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_sends )
         return self . _src
-    def old_run_calls ( self , src ) :
+    def run_calls ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_calls )
         return self . _src
-    def old_run_assigns ( self , src ) :
+    def run_assigns ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
+        return self . _src
+    def old_run_sends ( self , src ) :
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _old_norm_sends )
+        return self . _src
+    def old_run_calls ( self , src ) :
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _old_norm_calls )
+        return self . _src
+    def old_run_assigns ( self , src ) :
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _old_norm_assigns )
         return self . _src
     def run_withs ( self , src ) :
         self . _src = src
@@ -303,7 +294,7 @@ class normalizer :
                     res += v
                 return res
         return src
-    def _norm_assigns ( self , src ) :
+    def _old_norm_assigns ( self , src ) :
         if isinstance ( src , dict ) :
             if 'assign' in src :
                 res = list ( )
@@ -321,7 +312,7 @@ class normalizer :
                         , 'to' : [ t ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
-    def _norm_assigns_split ( self , src ) :
+    def _norm_assigns ( self , src ) :
         if isinstance ( src , dict ) :
             if 'assign' in src :
                 res = list ( )
@@ -337,7 +328,7 @@ class normalizer :
                         , 'to' : [ tos [ i ] ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
-    def _norm_arguable ( self , src , what , how ) :
+    def _old_norm_arguable ( self , src , what , how ) :
         if isinstance ( src , dict ) :
             if what in src :
                 res = list ( )
@@ -356,7 +347,7 @@ class normalizer :
                         break
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
-    def _norm_arguable_split ( self , src , what , how ) :
+    def _norm_arguable ( self , src , what , how ) :
         if isinstance ( src , dict ) :
             if what in src :
                 res = list ( )
@@ -383,14 +374,14 @@ class normalizer :
             else :
                 return self . _use_withs ( src , self . _get_value )
         return src
-    def _norm_calls_split ( self , src ) :
-        return self . _norm_arguable_split ( src , 'call' , self . _get_callable )
-    def _norm_sends_split ( self , src ) :
-        return self . _norm_arguable_split ( src , 'send' , self . _get_sendable )
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
         return self . _norm_arguable ( src , 'send' , self . _get_sendable )
+    def _old_norm_calls ( self , src ) :
+        return self . _old_norm_arguable ( src , 'call' , self . _get_callable )
+    def _old_norm_sends ( self , src ) :
+        return self . _old_norm_arguable ( src , 'send' , self . _get_sendable )
     def _norm_consts ( self , src ) :
         res = dict ( )
         for root_k , root_v in src . items ( ) :

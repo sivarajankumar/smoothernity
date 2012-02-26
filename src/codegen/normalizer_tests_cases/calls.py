@@ -3,12 +3,12 @@ import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 
-class calls_split_test_case ( unittest . TestCase ) :
+class calls_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         ne = normalizer . exception
         bf = self . n . bind_func
         bf ( 'func1' , [ { } , { } ] )
@@ -45,7 +45,7 @@ class calls_split_test_case ( unittest . TestCase ) :
             } ] } ) } } } } ) )
     def test_exception_path ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         bf = self . n . bind_func
         ne = normalizer . exception
         bf ( 'func1' , [ { } , { } ] )
@@ -60,7 +60,7 @@ class calls_split_test_case ( unittest . TestCase ) :
             'ops' , 0 , 'if' , 0 , 'any' , 0 ] )
     def test_split_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         bf = self . n . bind_func
         bf ( 'func1' , [ { } , { } ] )
         ae ( r (
@@ -75,7 +75,7 @@ class calls_split_test_case ( unittest . TestCase ) :
                 ] } ) } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         bf = self . n . bind_func
         bf ( 'func1' , [ ] )
         s = mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
@@ -84,7 +84,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_bind_func ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         bf = self . n . bind_func
         bf ( 'func1' , [ { } ] )
         s = mroot ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
@@ -93,7 +93,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_proc_local ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         s = mroot ( { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : mproc ( { 'args' : [ { } ] } )
             , 'proc2' : mproc ( { 'ops' : [ { 'call' : [ 'proc1' , 'a' ] }
@@ -101,7 +101,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_proc_stateless ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         s = mroot ( { 'stateless' :
             { 'st1' : { 'proc' : { 'proc1' :
                 mproc ( { 'args' : [ { } ] } ) } }
@@ -111,7 +111,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_proc_trace ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         s = mroot ( { 'trace' :
             { 'st1' : { 'proc' : { 'proc1' :
                 mproc ( { 'args' : [ { } ] } ) } } }
@@ -121,7 +121,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_proc_stateless_local ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         s = mroot (
             { 'stateless' :
                 { 'st1' : { 'proc' : { 'proc1' :
@@ -133,7 +133,7 @@ class calls_split_test_case ( unittest . TestCase ) :
         ae ( r ( s ) , s )
     def test_proc_trace_local ( self ) :
         ae = self . assertEqual
-        r = self . n . run_calls_split
+        r = self . n . run_calls
         s = mroot (
             { 'trace' :
                 { 'st1' : { 'proc' : { 'proc1' :
