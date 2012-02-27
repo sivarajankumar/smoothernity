@@ -12,12 +12,15 @@ class exception ( Exception ) :
     def get_src ( self ) :
         return self . _src
 
+def _is_text ( s ) :
+    return type ( s ) in ( str , unicode )
+
 class const_value :
     def __init__ ( self , v , env ) :
         self . _v , self . _env = v , env
     def value ( self ) :
         v = self . _v
-        if type ( v ) in ( str , unicode ) :
+        if _is_text ( v ) :
             assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
             ev = eval ( v [ 1 : - 1 ] , self . _env )
             return ev . value ( ) if isinstance ( ev , const_value ) else ev
@@ -116,7 +119,9 @@ class normalizer :
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
     def run_names ( self , src ) :
-        return src
+        self . _src = src
+        self . _src = self . _walk ( self . _src , self . _norm_names )
+        return self . _src
     def old_run_sends ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _old_norm_sends )
@@ -371,12 +376,17 @@ class normalizer :
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_value ( self , src ) :
-        if type ( src ) in ( str , unicode ) :
+        if _is_text ( src ) :
             if ( src [ 0 ] , src [ - 1 ] ) == ( '[' , ']' ) :
                 return eval ( src [ 1 : - 1 ] , self . _all_consts ( ) )
             else :
                 return self . _use_withs ( src , self . _get_value )
         return src
+    def _norm_names ( self , src ) :
+        if _is_text ( src ) :
+            return src
+        else :
+            return src
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
