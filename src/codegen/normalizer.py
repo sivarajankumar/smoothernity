@@ -89,6 +89,7 @@ class normalizer :
         #self . _src = self . run_sends ( self . _src )
         #self . _src = self . run_calls ( self . _src )
         #self . _src = self . run_assigns ( self . _src )
+        #self . _src = self . run_names ( self . _src )
         self . _src = self . old_run_sends ( self . _src )
         self . _src = self . old_run_calls ( self . _src )
         self . _src = self . old_run_assigns ( self . _src )
@@ -114,6 +115,8 @@ class normalizer :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
+    def run_names ( self , src ) :
+        return src
     def old_run_sends ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _old_norm_sends )
