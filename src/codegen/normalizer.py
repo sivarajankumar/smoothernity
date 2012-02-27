@@ -192,6 +192,8 @@ class normalizer :
     def _get_name ( self , name ) :
         if self . _get_callable ( name ) :
             return self . _get_callable ( name ) [ 0 ]
+        elif self . _get_sendable ( name ) :
+            return self . _get_sendable ( name ) [ 0 ]
     def _all_consts ( self ) :
         all = { }
         for k , v in self . _src [ 'consts' ] . items ( ) :

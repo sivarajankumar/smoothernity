@@ -2,6 +2,7 @@ import normalizer
 import unittest
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
+from normalizer_tests_cases . helper import merge_skeleton_messages as mmsg
 
 class names_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -39,6 +40,20 @@ class names_test_case ( unittest . TestCase ) :
                 { 'test1' : [ 'func1' ] } } } } ) ) , mroot (
             { 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_func1' ] } } } } ) )
+    def test_sendable ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        bf = self . n . bind_func
+        bf ( 'test1_func1' , [ ] )
+        ae ( r ( mroot (
+            { 'messages' : { 'test1' : mmsg (
+                { 'receive' : { 'msg1' : [ ] } } ) }
+            , 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'msg1' ] } } } } ) ) , mroot (
+            { 'messages' : { 'test1' : mmsg (
+                { 'receive' : { 'msg1' : [ ] } } ) }
+            , 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'test1_msg1' ] } } } } ) )
     def test_unknown_func ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
