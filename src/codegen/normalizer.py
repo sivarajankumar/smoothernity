@@ -189,6 +189,9 @@ class normalizer :
                 all [ k + '_' + kk ] = vv
         if name in all :
             return name , all [ name ]
+    def _get_name ( self , name ) :
+        if self . _get_callable ( name ) :
+            return self . _get_callable ( name ) [ 0 ]
     def _all_consts ( self ) :
         all = { }
         for k , v in self . _src [ 'consts' ] . items ( ) :
@@ -229,7 +232,7 @@ class normalizer :
             [ name ] + [ '_' . join ( c ) + '_' + name
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
-    def _use_withs ( self , name , func ) :
+    def _old_use_withs ( self , name , func ) :
         prefixes = self . _with_prefixes ( )
         candidates = self . _candidates ( name , func , prefixes )
         if len ( candidates ) > 1 :
@@ -238,6 +241,13 @@ class normalizer :
         if len ( candidates ) == 0 :
             self . _error ( "Unknown identifier: '%s'" % name )
         return func ( candidates [ 0 ] )
+    def _use_withs ( self , name , func ) :
+        prefixes = self . _with_prefixes ( )
+        candidates = self . _candidates ( name , func , prefixes )
+        if len ( candidates ) > 1 :
+            self . _error ( "Ambiguous identifiers: '%s'" %
+                ( ', ' . join ( candidates ) ) )
+        return func ( candidates [ 0 ] ) if candidates else name
     def _walk ( self , src , visit , path = [ ] ) :
         self . _path = path
         src = visit ( src )
@@ -342,7 +352,7 @@ class normalizer :
                 res = list ( )
                 name = src [ what ] [ 0 ]
                 args = src [ what ] [ 1 : ]
-                name , need_args = self . _use_withs ( name , how )
+                name , need_args = self . _old_use_withs ( name , how )
                 la , lna = len ( args ) , len ( need_args )
                 if la != lna and ( not la * lna or la % lna ) :
                     self . _error ( "'%s' takes n*%i args, "
@@ -380,11 +390,11 @@ class normalizer :
             if ( src [ 0 ] , src [ - 1 ] ) == ( '[' , ']' ) :
                 return eval ( src [ 1 : - 1 ] , self . _all_consts ( ) )
             else :
-                return self . _use_withs ( src , self . _get_value )
+                return self . _old_use_withs ( src , self . _get_value )
         return src
     def _norm_names ( self , src ) :
         if _is_text ( src ) :
-            return src
+            return self . _use_withs ( src , self . _get_name )
         else :
             return src
     def _norm_calls ( self , src ) :
