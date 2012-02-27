@@ -6,6 +6,39 @@ from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 class names_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . n = normalizer . normalizer ( )
+    def test_raises ( self ) :
+        ar = self . assertRaises
+        r = self . n . run_names
+        ne = normalizer . exception
+        bf = self . n . bind_func
+        bf ( 'func1' , [ ] )
+        bf ( 'test1_func1' , [ ] )
+        ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' : [ { 'with' :
+            { 'test1' : [ 'func1' ] } } ] } } ) )
+    def test_exception_path ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        bf = self . n . bind_func
+        ne = normalizer . exception
+        bf ( 'func1' , [ ] )
+        bf ( 'test1_func1' , [ ] )
+        try :
+            r ( { 'path1' : { 'path2' : [ { 'with' :
+                { 'test1' : [ 'func1' ] } } ] } } )
+        except ne as e :
+            pass
+        gp = e . get_path ( )
+        ae ( gp , [ 'path1' , 'path2' , 0 , 'with' , 'test1' , 0 ] )
+    def test_callable ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        bf = self . n . bind_func
+        bf ( 'test1_func1' , [ ] )
+        ae ( r ( mroot (
+            { 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'func1' ] } } } } ) ) , mroot (
+            { 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'test1_func1' ] } } } } ) )
     def test_unknown_func ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
