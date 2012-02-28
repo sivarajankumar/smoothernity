@@ -7,7 +7,7 @@ from normalizer_tests_cases . names import *
 from normalizer_tests_cases . sends import *
 from normalizer_tests_cases . skeleton import *
 from normalizer_tests_cases . values import *
-from normalizer_tests_cases . with_ import *
+from normalizer_tests_cases . withs import *
 
 if __name__ == '__main__' :
     unittest . main ( )
