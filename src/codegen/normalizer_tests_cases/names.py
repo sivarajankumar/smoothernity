@@ -12,10 +12,20 @@ class names_test_case ( unittest . TestCase ) :
         r = self . n . run_names
         ne = normalizer . exception
         bf = self . n . bind_func
+        bf ( 'msg1' , [ ] )
         bf ( 'func1' , [ ] )
         bf ( 'test1_func1' , [ ] )
         ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' : [ { 'with' :
             { 'test1' : [ 'func1' ] } } ] } } ) )
+        ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' : 
+            { 'ops' : [ 'test1' ]
+            , 'args' : [ { 'test1' : { } } ]
+            , 'vars' : [ { 'test1' : { } } ] } } } ) )
+        ar ( ne , r , mroot (
+            { 'messages' : { 'test1' : mmsg (
+                { 'receive' : { 'msg1' : [ ] } } ) }
+            , 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'msg1' ] } } } } ) )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
@@ -43,8 +53,6 @@ class names_test_case ( unittest . TestCase ) :
     def test_sendable ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        bf = self . n . bind_func
-        bf ( 'test1_func1' , [ ] )
         ae ( r ( mroot (
             { 'messages' : { 'test1' : mmsg (
                 { 'receive' : { 'msg1' : [ ] } } ) }
@@ -54,7 +62,17 @@ class names_test_case ( unittest . TestCase ) :
                 { 'receive' : { 'msg1' : [ ] } } ) }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_msg1' ] } } } } ) )
-    def test_unknown_func ( self ) :
+    def test_vars_global ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        ae ( r ( mroot (
+            { 'vars' : { 'space1' : [ { 'test1_var1' : { } } ] }
+            , 'anywhere' : { 'space1' : { 'with' :
+                { 'test1' : [ 'var1' ] } } } } ) ) , mroot (
+            { 'vars' : { 'space1' : [ { 'test1_var1' : { } } ] }
+            , 'anywhere' : { 'space1' : { 'with' :
+                { 'test1' : [ 'test1_var1' ] } } } } ) )
+    def test_unknown_name ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
         s = mroot ( { 'anywhere' : { 'anywhere' : { 'with' :
