@@ -365,10 +365,6 @@ class normalizer :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
         return self . _norm_arguable ( src , 'send' , self . _get_sendable )
-    def _old_norm_calls ( self , src ) :
-        return self . _old_norm_arguable ( src , 'call' , self . _old_get_callable )
-    def _old_norm_sends ( self , src ) :
-        return self . _old_norm_arguable ( src , 'send' , self . _old_get_sendable )
     def _norm_consts ( self , src ) :
         res = dict ( )
         for root_k , root_v in src . items ( ) :
