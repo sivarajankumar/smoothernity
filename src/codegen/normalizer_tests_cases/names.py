@@ -72,6 +72,30 @@ class names_test_case ( unittest . TestCase ) :
             { 'vars' : { 'space1' : [ { 'test1_var1' : { } } ] }
             , 'anywhere' : { 'space1' : { 'with' :
                 { 'test1' : [ 'test1_var1' ] } } } } ) )
+    def test_vars_local ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        ae ( r ( mroot (
+            { 'anywhere' : { 'anywhere' :
+                { 'vars' : [ { 'test1_var1' : { } } ]
+                , 'ops' : { 'with' :
+                    { 'test1' : [ 'var1' ] } } } } } ) ) , mroot (
+            { 'anywhere' : { 'anywhere' :
+                { 'vars' : [ { 'test1_var1' : { } } ]
+                , 'ops' : { 'with' :
+                    { 'test1' : [ 'test1_var1' ] } } } } } ) )
+    def test_args_local ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        ae ( r ( mroot (
+            { 'anywhere' : { 'anywhere' :
+                { 'args' : [ { 'test1_arg1' : { } } ]
+                , 'ops' : { 'with' :
+                    { 'test1' : [ 'arg1' ] } } } } } ) ) , mroot (
+            { 'anywhere' : { 'anywhere' :
+                { 'args' : [ { 'test1_arg1' : { } } ]
+                , 'ops' : { 'with' :
+                    { 'test1' : [ 'test1_arg1' ] } } } } } ) )
     def test_unknown_name ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
