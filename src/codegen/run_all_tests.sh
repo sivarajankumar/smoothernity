@@ -1,4 +1,5 @@
 python -B codegen_tests.py
+python -B explorer_tests.py
 python -B formatter_tests.py
 python -B indenter_tests.py
 python -B normalizer_tests.py
