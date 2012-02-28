@@ -194,6 +194,27 @@ class normalizer :
             return self . _get_callable ( name ) [ 0 ]
         elif self . _get_sendable ( name ) :
             return self . _get_sendable ( name ) [ 0 ]
+        elif self . _get_valuable ( name ) :
+            return self . _get_valuable ( name )
+    def _get_valuable ( self , name ) :
+        res = [ ]
+        what = self . _path [ 1 ]
+        if what in self . _src [ 'vars' ] :
+            vars = self . _src [ 'vars' ] [ what ]
+            if name in reduce ( merge , vars , { } ) :
+                res . append ( name )
+        cur = self . _src
+        for p in self . _path :
+            if p in cur :
+                cur = cur [ p ]
+                for a in ( 'vars' , 'args' ) :
+                    if a in cur :
+                        if name in reduce ( merge , cur [ a ] , { } ) :
+                            res . append ( name )
+        if len ( res ) > 1 :
+            self . _error ( "Ambiguous value '%s'" % name )
+        elif res :
+            return res [ 0 ]
     def _all_consts ( self ) :
         all = { }
         for k , v in self . _src [ 'consts' ] . items ( ) :
