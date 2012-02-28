@@ -72,6 +72,26 @@ class names_test_case ( unittest . TestCase ) :
             { 'consts' : { 'test1' : { 'const1' : 1 } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1_consts' : [ 'test1_consts_const1' ] } } } } ) )
+    def test_consts_local ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        ae ( r ( mroot (
+            { 'consts' : { 'space1' : { 'test1_const1' : 1 } }
+            , 'anywhere' : { 'space1' : { 'with' :
+                { 'consts_test1' : [ 'const1' ] } } } } ) ) , mroot (
+            { 'consts' : { 'space1' : { 'test1_const1' : 1 } }
+            , 'anywhere' : { 'space1' : { 'with' :
+                { 'consts_test1' : [ 'consts_test1_const1' ] } } } } ) )
+    def test_consts_bound ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        bc = self . n . bind_const
+        bc ( 'test1_const1' , 1 )
+        ae ( r ( mroot (
+            { 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'const1' ] } } } } ) ) , mroot (
+            { 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1' : [ 'test1_const1' ] } } } } ) )
     def test_vars_global ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
