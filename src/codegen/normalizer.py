@@ -89,13 +89,10 @@ class normalizer :
         self . _src = src
         self . _src = self . run_skeleton ( self . _src )
         self . _src = self . run_consts ( self . _src )
-        #self . _src = self . run_sends ( self . _src )
-        #self . _src = self . run_calls ( self . _src )
-        #self . _src = self . run_assigns ( self . _src )
-        #self . _src = self . run_names ( self . _src )
-        self . _src = self . old_run_sends ( self . _src )
-        self . _src = self . old_run_calls ( self . _src )
-        self . _src = self . old_run_assigns ( self . _src )
+        self . _src = self . run_sends ( self . _src )
+        self . _src = self . run_calls ( self . _src )
+        self . _src = self . run_assigns ( self . _src )
+        self . _src = self . run_names ( self . _src )
         self . _src = self . run_withs ( self . _src )
         return self . _src
     def run_skeleton ( self , src ) :
@@ -121,18 +118,6 @@ class normalizer :
     def run_names ( self , src ) :
         self . _src = src
         self . _src = self . _walk ( self . _src , self . _norm_names )
-        return self . _src
-    def old_run_sends ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _old_norm_sends )
-        return self . _src
-    def old_run_calls ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _old_norm_calls )
-        return self . _src
-    def old_run_assigns ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _old_norm_assigns )
         return self . _src
     def run_withs ( self , src ) :
         self . _src = src
@@ -193,26 +178,6 @@ class normalizer :
         if name in all :
             res . append ( all [ name ] )
         return res
-    def _old_get_callable ( self , name ) :
-        if name in self . _bind_funcs :
-            return name , self . _bind_funcs [ name ]
-        elif self . _local_proc ( name ) :
-            return name , self . _local_proc ( name ) [ 'args' ]
-        elif self . _local_stateless_proc ( name ) :
-            return name , self . _local_stateless_proc ( name ) [ 'args' ]
-        elif self . _local_trace_proc ( name ) :
-            return name , self . _local_trace_proc ( name ) [ 'args' ]
-        elif self . _stateless_proc ( name ) :
-            return name , self . _stateless_proc ( name ) [ 'args' ]
-        elif self . _trace_proc ( name ) :
-            return name , self . _trace_proc ( name ) [ 'args' ]
-    def _old_get_sendable ( self , name ) :
-        all = { }
-        for k , v in self . _src [ 'messages' ] . items ( ) :
-            for kk , vv in v [ 'receive' ] . items ( ) :
-                all [ k + '_' + kk ] = vv
-        if name in all :
-            return name , all [ name ]
     def _get_anything ( self , name ) :
         res = [ ]
         res += self . _get_callable ( name )
@@ -280,20 +245,6 @@ class normalizer :
             [ name ] + [ '_' . join ( c ) + '_' + name
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
-    def _old_candidates ( self , name , func , prefixes ) :
-        return filter ( lambda x : func ( x ) != None ,
-            [ name ] + [ '_' . join ( c ) + '_' + name
-                for i in xrange ( len ( prefixes ) )
-                    for c in combinations ( prefixes , i + 1 ) ] )
-    def _old_use_withs ( self , name , func ) :
-        prefixes = self . _with_prefixes ( )
-        candidates = self . _old_candidates ( name , func , prefixes )
-        if len ( candidates ) > 1 :
-            self . _error ( "Ambiguous identifiers: '%s'" %
-                ( ', ' . join ( candidates ) ) )
-        if len ( candidates ) == 0 :
-            self . _error ( "Unknown identifier: '%s'" % name )
-        return func ( candidates [ 0 ] )
     def _use_withs ( self , name , func ) :
         prefixes = self . _with_prefixes ( )
         candidates = self . _candidates ( name , func , prefixes )
@@ -368,24 +319,6 @@ class normalizer :
                     res += v
                 return res
         return src
-    def _old_norm_assigns ( self , src ) :
-        if isinstance ( src , dict ) :
-            if 'assign' in src :
-                res = list ( )
-                froms = src [ 'assign' ] [ 'from' ]
-                tos = src [ 'assign' ] [ 'to' ]
-                lf , lt = len ( froms ) , len ( tos )
-                if lt % lf > 0 :
-                    self . _error ( 'Need %i more assign targets' %
-                        ( lf - ( lt % lf ) ) )
-                for i in xrange ( lt ) :
-                    f = self . _norm_value ( froms [ i % lf ] )
-                    t = self . _norm_value ( tos [ i ] )
-                    res . append ( { 'assign' :
-                        { 'from' : [ f ]
-                        , 'to' : [ t ] } } )
-                return res if len ( res ) > 1 else res [ 0 ]
-        return src
     def _norm_assigns ( self , src ) :
         if isinstance ( src , dict ) :
             if 'assign' in src :
@@ -400,25 +333,6 @@ class normalizer :
                     res . append ( { 'assign' :
                         { 'from' : [ froms [ i % lf ] ]
                         , 'to' : [ tos [ i ] ] } } )
-                return res if len ( res ) > 1 else res [ 0 ]
-        return src
-    def _old_norm_arguable ( self , src , what , how ) :
-        if isinstance ( src , dict ) :
-            if what in src :
-                res = list ( )
-                name = src [ what ] [ 0 ]
-                args = src [ what ] [ 1 : ]
-                name , need_args = self . _old_use_withs ( name , how )
-                la , lna = len ( args ) , len ( need_args )
-                if la != lna and ( not la * lna or la % lna ) :
-                    self . _error ( "'%s' takes n*%i args, "
-                        "but has been given %i" % ( name , lna , la ) )
-                while True :
-                    res . append ( { what : [ name ] + [ self . _norm_value ( a )
-                        for a in args [ : lna ] ] } )
-                    args = args [ lna : ]
-                    if not args :
-                        break
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_arguable ( self , src , what , how ) :
@@ -441,13 +355,6 @@ class normalizer :
                     if not args :
                         break
                 return res if len ( res ) > 1 else res [ 0 ]
-        return src
-    def _norm_value ( self , src ) :
-        if _is_text ( src ) :
-            if ( src [ 0 ] , src [ - 1 ] ) == ( '[' , ']' ) :
-                return eval ( src [ 1 : - 1 ] , self . _all_consts ( ) )
-            else :
-                return self . _old_use_withs ( src , self . _get_value )
         return src
     def _norm_names ( self , src ) :
         if _is_text ( src ) :
