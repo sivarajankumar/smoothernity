@@ -170,6 +170,30 @@ class normalizer :
     def _local_trace_proc ( self , name ) :
         return self . _local_some_proc ( 'trace' , name )
     def _get_callable ( self , name ) :
+        res = [ ]
+        if name in self . _bind_funcs :
+            res . append ( self . _bind_funcs [ name ] )
+        if self . _local_proc ( name ) :
+            res . append ( self . _local_proc ( name ) [ 'args' ] )
+        if self . _local_stateless_proc ( name ) :
+            res . append ( self . _local_stateless_proc ( name ) [ 'args' ] )
+        if self . _local_trace_proc ( name ) :
+            res . append ( self . _local_trace_proc ( name ) [ 'args' ] )
+        if self . _stateless_proc ( name ) :
+            res . append ( self . _stateless_proc ( name ) [ 'args' ] )
+        if self . _trace_proc ( name ) :
+            res . append ( self . _trace_proc ( name ) [ 'args' ] )
+        return res
+    def _get_sendable ( self , name ) :
+        all = { }
+        for k , v in self . _src [ 'messages' ] . items ( ) :
+            for kk , vv in v [ 'receive' ] . items ( ) :
+                all [ k + '_' + kk ] = vv
+        res = [ ]
+        if name in all :
+            res . append ( all [ name ] )
+        return res
+    def _old_get_callable ( self , name ) :
         if name in self . _bind_funcs :
             return name , self . _bind_funcs [ name ]
         elif self . _local_proc ( name ) :
@@ -182,20 +206,22 @@ class normalizer :
             return name , self . _stateless_proc ( name ) [ 'args' ]
         elif self . _trace_proc ( name ) :
             return name , self . _trace_proc ( name ) [ 'args' ]
-    def _get_sendable ( self , name ) :
+    def _old_get_sendable ( self , name ) :
         all = { }
         for k , v in self . _src [ 'messages' ] . items ( ) :
             for kk , vv in v [ 'receive' ] . items ( ) :
                 all [ k + '_' + kk ] = vv
         if name in all :
             return name , all [ name ]
-    def _get_name ( self , name ) :
-        if self . _get_callable ( name ) :
-            return self . _get_callable ( name ) [ 0 ]
-        elif self . _get_sendable ( name ) :
-            return self . _get_sendable ( name ) [ 0 ]
-        elif self . _get_valuable ( name ) :
-            return self . _get_valuable ( name )
+    def _get_anything ( self , name ) :
+        res = [ ]
+        res += self . _get_callable ( name )
+        res += self . _get_sendable ( name )
+        res += self . _get_valuable ( name )
+        #TODO: move this check somewhere else
+        if len ( res ) > 1 :
+            self . _error ( "Ambiguous identifier '%s'" % name )
+        return res
     def _get_valuable ( self , name ) :
         res = [ ]
         what = self . _path [ 1 ]
@@ -211,10 +237,7 @@ class normalizer :
                     if a in cur :
                         if name in reduce ( merge , cur [ a ] , { } ) :
                             res . append ( name )
-        if len ( res ) > 1 :
-            self . _error ( "Ambiguous value '%s'" % name )
-        elif res :
-            return res [ 0 ]
+        return res
     def _all_consts ( self ) :
         all = { }
         for k , v in self . _src [ 'consts' ] . items ( ) :
@@ -251,13 +274,18 @@ class normalizer :
                 res . append ( self . _path [ i + 1 ] )
         return res
     def _candidates ( self , name , func , prefixes ) :
+        return filter ( func ,
+            [ name ] + [ '_' . join ( c ) + '_' + name
+                for i in xrange ( len ( prefixes ) )
+                    for c in combinations ( prefixes , i + 1 ) ] )
+    def _old_candidates ( self , name , func , prefixes ) :
         return filter ( lambda x : func ( x ) != None ,
             [ name ] + [ '_' . join ( c ) + '_' + name
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
     def _old_use_withs ( self , name , func ) :
         prefixes = self . _with_prefixes ( )
-        candidates = self . _candidates ( name , func , prefixes )
+        candidates = self . _old_candidates ( name , func , prefixes )
         if len ( candidates ) > 1 :
             self . _error ( "Ambiguous identifiers: '%s'" %
                 ( ', ' . join ( candidates ) ) )
@@ -270,7 +298,10 @@ class normalizer :
         if len ( candidates ) > 1 :
             self . _error ( "Ambiguous identifiers: '%s'" %
                 ( ', ' . join ( candidates ) ) )
-        return func ( candidates [ 0 ] ) if candidates else name
+        elif candidates :
+            return candidates [ 0 ]
+        else :
+            return name
     def _walk ( self , src , visit , path = [ ] ) :
         self . _path = path
         src = visit ( src )
@@ -394,9 +425,10 @@ class normalizer :
                 res = list ( )
                 name = src [ what ] [ 0 ]
                 args = src [ what ] [ 1 : ]
-                if how ( name ) == None :
+                if not how ( name ) :
                     self . _error ( "Unknown arguable '%s'" % name )
-                name , need_args = how ( name )
+                assert len ( how ( name ) ) == 1 #TODO: raise here
+                need_args = how ( name ) [ 0 ]
                 la , lna = len ( args ) , len ( need_args )
                 if la != lna and ( not la * lna or la % lna ) :
                     self . _error ( "'%s' takes n*%i args, "
@@ -417,7 +449,7 @@ class normalizer :
         return src
     def _norm_names ( self , src ) :
         if _is_text ( src ) :
-            return self . _use_withs ( src , self . _get_name )
+            return self . _use_withs ( src , self . _get_anything )
         else :
             return src
     def _norm_calls ( self , src ) :
@@ -425,9 +457,9 @@ class normalizer :
     def _norm_sends ( self , src ) :
         return self . _norm_arguable ( src , 'send' , self . _get_sendable )
     def _old_norm_calls ( self , src ) :
-        return self . _old_norm_arguable ( src , 'call' , self . _get_callable )
+        return self . _old_norm_arguable ( src , 'call' , self . _old_get_callable )
     def _old_norm_sends ( self , src ) :
-        return self . _old_norm_arguable ( src , 'send' , self . _get_sendable )
+        return self . _old_norm_arguable ( src , 'send' , self . _old_get_sendable )
     def _norm_consts ( self , src ) :
         res = dict ( )
         for root_k , root_v in src . items ( ) :
