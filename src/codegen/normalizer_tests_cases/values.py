@@ -20,39 +20,6 @@ class values_test_case ( unittest . TestCase ) :
                 { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
                 , 'args' : [ { 'test2' : { } } ]
                 , 'vars' : [ { 'test2' : { } } ] } } } )
-    def test_args ( self ) :
-        ae = self . assertEqual
-        r = self . n . run
-        ae ( r (
-            { 'anywhere' : { 'anywhere' : 
-                { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
-                , 'args' : [ { 'test2' : { } } ] } } } ) ,
-            mroot (
-                { 'anywhere' : { 'anywhere' : 
-                    { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
-                    , 'args' : [ { 'test2' : { } } ] } } } ) )
-    def test_vars_global ( self ) :
-        ae = self . assertEqual
-        r = self . n . run
-        ae ( r (
-            { 'vars' : { 'test1' : [ { 'test2' : { } } ] }
-            , 'anywhere' : { 'test1' : [ { 'call' :
-                [ 'func1' , 'test2' ] } ] } } ) ,
-            mroot (
-                { 'vars' : { 'test1' : [ { 'test2' : { } } ] }
-                , 'anywhere' : { 'test1' : [ { 'call' :
-                    [ 'func1' , 'test2' ] } ] } } ) )
-    def test_vars_local ( self ) :
-        ae = self . assertEqual
-        r = self . n . run
-        ae ( r (
-            { 'anywhere' : { 'anywhere' : 
-                { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
-                , 'vars' : [ { 'test2' : { } } ] } } } ) ,
-            mroot (
-                { 'anywhere' : { 'anywhere' : 
-                    { 'ops' : [ { 'call' : [ 'func1' , 'test2' ] } ]
-                    , 'vars' : [ { 'test2' : { } } ] } } } ) )
     def test_consts_global ( self ) :
         ae = self . assertEqual
         r = self . n . run
