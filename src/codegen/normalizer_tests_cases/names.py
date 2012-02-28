@@ -34,8 +34,8 @@ class names_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ ] )
         bf ( 'test1_func1' , [ ] )
         try :
-            r ( { 'path1' : { 'path2' : [ { 'with' :
-                { 'test1' : [ 'func1' ] } } ] } } )
+            r ( mroot ( { 'path1' : { 'path2' : [ { 'with' :
+                { 'test1' : [ 'func1' ] } } ] } } ) )
         except ne as e :
             pass
         gp = e . get_path ( )
