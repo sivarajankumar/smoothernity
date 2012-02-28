@@ -62,6 +62,16 @@ class names_test_case ( unittest . TestCase ) :
                 { 'receive' : { 'msg1' : [ ] } } ) }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_msg1' ] } } } } ) )
+    def test_consts_global ( self ) :
+        ae = self . assertEqual
+        r = self . n . run_names
+        ae ( r ( mroot (
+            { 'consts' : { 'test1' : { 'const1' : 1 } }
+            , 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1_consts' : [ 'const1' ] } } } } ) ) , mroot (
+            { 'consts' : { 'test1' : { 'const1' : 1 } }
+            , 'anywhere' : { 'anywhere' : { 'with' :
+                { 'test1_consts' : [ 'test1_consts_const1' ] } } } } ) )
     def test_vars_global ( self ) :
         ae = self . assertEqual
         r = self . n . run_names

@@ -224,6 +224,8 @@ class normalizer :
         return res
     def _get_valuable ( self , name ) :
         res = [ ]
+        if name in self . _all_consts ( ) :
+            res . append ( self . _all_consts ( ) [ name ] )
         what = self . _path [ 1 ]
         if what in self . _src [ 'vars' ] :
             vars = self . _src [ 'vars' ] [ what ]
