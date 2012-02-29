@@ -30,50 +30,23 @@ class const_value :
         return op \
             ( a . value ( ) if isinstance ( a , const_value ) else a
             , b . value ( ) if isinstance ( b , const_value ) else b )
-    def __add__ ( self , a ) :
-        return self . _calc ( self , a , operator . add )
-    def __radd__ ( self , a ) :
-        return self . _calc ( a , self , operator . add )
-    def __sub__ ( self , a ) :
-        return self . _calc ( self , a , operator . sub )
-    def __rsub__ ( self , a ) :
-        return self . _calc ( a , self , operator . sub )
-    def __mul__ ( self , a ) :
-        return self . _calc ( self , a , operator . mul )
-    def __rmul__ ( self , a ) :
-        return self . _calc ( a , self , operator . mul )
-    def __lshift__ ( self , a ) :
-        return self . _calc ( self , a , operator . lshift )
-    def __rlshift__ ( self , a ) :
-        return self . _calc ( a , self , operator . lshift )
-    def __rshift__ ( self , a ) :
-        return self . _calc ( self , a , operator . rshift )
-    def __rrshift__ ( self , a ) :
-        return self . _calc ( a , self , operator . rshift )
-    def __div__ ( self , a ) :
-        return self . _calc ( self , a , operator . div )
-    def __rdiv__ ( self , a ) :
-        return self . _calc ( a , self , operator . div )
-    def __mod__ ( self , a ) :
-        return self . _calc ( self , a , operator . mod )
-    def __rmod__ ( self , a ) :
-        return self . _calc ( a , self , operator . mod )
-    def __pow__ ( self , a ) :
-        return self . _calc ( self , a , operator . pow )
-    def __rpow__ ( self , a ) :
-        return self . _calc ( a , self , operator . pow )
-    def __and__ ( self , a ) :
-        return self . _calc ( self , a , operator . and_ )
-    def __rand__ ( self , a ) :
-        return self . _calc ( a , self , operator . and_ )
-    def __or__ ( self , a ) :
-        return self . _calc ( self , a , operator . or_ )
-    def __ror__ ( self , a ) :
-        return self . _calc ( a , self , operator . or_ )
-    def __xor__ ( self , a ) :
-        return self . _calc ( self , a , operator . xor )
-    def __rxor__ ( self , a ) :
-        return self . _calc ( a , self , operator . xor )
+    def _ops ( op ) :
+        def fwd ( self , a ) :
+            return self . _calc ( self , a , op )
+        def back ( self , a ) :
+            return self . _calc ( a , self , op )
+        return fwd , back
+    __or__ , __ror__ = _ops ( operator . or_ )
+    __add__ , __radd__ = _ops ( operator . add )
+    __sub__ , __rsub__ = _ops ( operator . sub )
+    __mul__ , __rmul__ = _ops ( operator . mul )
+    __div__ , __rdiv__ = _ops ( operator . div )
+    __mod__ , __rmod__ = _ops ( operator . mod )
+    __pow__ , __rpow__ = _ops ( operator . pow )
+    __and__ , __rand__ = _ops ( operator . and_ )
+    __xor__ , __rxor__ = _ops ( operator . xor )
+    __lshift__ , __rlshift__ = _ops ( operator . lshift )
+    __rshift__ , __rrshift__ = _ops ( operator . rshift )
 
 class normalizer :
     def __init__ ( self ) :
