@@ -39,3 +39,9 @@ class explorer :
         return self . _trace_procs
     def get_local_procs ( self , path ) :
         return self . _storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]
+    def get_local_stateless_procs ( self , path ) :
+        res = { }
+        for kk , vv in self . _storage [ 'stateless' ] \
+                        [ path [ 1 ] ] [ 'proc' ] . items ( ) :
+            res [ 'stateless_%s' % kk ] = vv
+        return vv

@@ -47,6 +47,24 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'proc2' : 'test2' } } } } ) ) ,
             { 'proc1' : 'test1'
             , 'proc2' : 'test2' } )
+    def test_get_local_stateless_procs ( self ) :
+        g = lambda p , x : self . e ( x ) . get_local_stateless_procs ( p )
+        ae = self . assertEqual
+        ae ( g (
+            [ 'foo' , 'st1' ] , mroot (
+            { 'stateless' :
+                { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
+                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
+            { 'stateless_proc1' : 'test1' } )
+    def test_get_local_trace_procs ( self ) :
+        g = lambda p , x : self . e ( x ) . get_local_trace_procs ( p )
+        ae = self . assertEqual
+        ae ( g (
+            [ 'foo' , 'st1' ] , mroot (
+            { 'trace' :
+                { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
+                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
+            { 'trace_proc1' : 'test1' } )
 
 if __name__ == '__main__' :
     unittest . main ( )
