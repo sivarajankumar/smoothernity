@@ -251,7 +251,7 @@ class normalizer :
         res = merge (
             { 'consts' : { } , 'messages' : { } , 'types' : { }
             , 'vars' : { } , 'module' : { } , 'stateless' : { }
-            , 'trace' : { } } , src )
+            , 'trace' : { } , 'platform_procs' : { } } , src )
         for k , v in res [ 'stateless' ] . items ( ) :
             res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
         for k , v in res [ 'trace' ] . items ( ) :
