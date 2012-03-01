@@ -37,3 +37,5 @@ class explorer :
         return self . _stateless_procs
     def get_trace_procs ( self ) :
         return self . _trace_procs
+    def get_local_procs ( self , path ) :
+        return self . _storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]

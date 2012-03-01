@@ -37,6 +37,16 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'group2' : { 'receive' : { 'msg2' : 'test2' } } } } ) ) ,
             { 'group1_msg1' : 'test1'
             , 'group2_msg2' : 'test2' } )
+    def test_get_local_procs ( self ) :
+        g = lambda p , x : self . e ( x ) . get_local_procs ( p )
+        ae = self . assertEqual
+        ae ( g (
+            [ 'somewhere' , 'faraway' ] , mroot (
+            { 'somewhere' : { 'faraway' : { 'proc' :
+            { 'proc1' : 'test1'
+            , 'proc2' : 'test2' } } } } ) ) ,
+            { 'proc1' : 'test1'
+            , 'proc2' : 'test2' } )
 
 if __name__ == '__main__' :
     unittest . main ( )
