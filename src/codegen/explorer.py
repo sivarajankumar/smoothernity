@@ -32,6 +32,11 @@ class explorer :
             , self . get_stateless_procs ( )
             , self . get_trace_procs ( )
             ] , { } )
+    def get_everything ( self , path ) :
+        return reduce ( merge ,
+            [ self . get_callables ( path )
+            , self . get_messages_receives ( )
+            ] , { } )
 
 def _extract_stateless_procs ( storage ) :
     res = { }
