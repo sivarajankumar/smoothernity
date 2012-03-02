@@ -1,3 +1,5 @@
+from utils import merge
+
 class explorer :
     def __init__ ( self , storage ) :
         self . _storage = storage
@@ -21,6 +23,12 @@ class explorer :
     def get_local_trace_procs ( self , path ) :
         return _extract_local_some_procs \
             ( self . _storage , path , 'trace' )
+    def get_callables ( self , path ) :
+        return reduce ( merge ,
+            [ self . get_stateless_procs ( )
+            , self . get_trace_procs ( )
+            , self . get_platform_procs ( )
+            ] , { } )
 
 def _extract_stateless_procs ( storage ) :
     res = { }
