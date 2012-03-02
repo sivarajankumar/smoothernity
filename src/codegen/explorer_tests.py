@@ -3,6 +3,12 @@ import explorer
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from utils import merge
 
+def mpath ( path , src ) :
+    return mroot ( merge ( src ,
+        { 'stateless' : { path [ 1 ] : { 'proc' : { } } }
+        , 'trace'     : { path [ 1 ] : { 'proc' : { } } }
+        , path [ 0 ]  : { path [ 1 ] : { 'proc' : { } } } } ) )
+
 class explorer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . e = explorer . explorer
@@ -11,18 +17,16 @@ class explorer_test_case ( unittest . TestCase ) :
         for some in ( 'stateless' , 'trace' ) :
             g = lambda x : getattr ( self . e ( x ) ,
                                 'get_%s_procs' % some ) ( )
-            s = mroot ( merge (
+            p = [ 'somewhere' , 'faraway' ]
+            s = mpath ( p , 
                 { some :
                     { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ,
-                { 'somewhere' : { 'faraway' : { 'proc' : { } } }
-                , 'stateless' : { 'faraway' : { 'proc' : { } } }
-                , 'trace'     : { 'faraway' : { 'proc' : { } } } } ) )
+                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } )
             r = { 'st1_%s_proc1' % some : 'test1'
                 , 'st2_%s_proc2' % some : 'test2' }
             ae = self . assertEqual
             ae ( g ( s ) , r )
-            ae ( gc ( s , [ 'somewhere' , 'faraway' ] ) , r )
+            ae ( gc ( s , p ) , r )
     def test_get_platform_procs ( self ) :
         g = lambda x : self . e ( x ) . get_platform_procs ( )
         gc = lambda x , p : self . e ( x ) . get_callables ( p )
