@@ -1,6 +1,7 @@
 import unittest
 import explorer
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
+from utils import merge
 
 class explorer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -59,16 +60,19 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( p , s ) , r )
         ae ( gc ( p , s ) , r )
     def test_get_local_some_procs ( self ) :
+        gc = lambda p , x : self . e ( x ) . get_callables ( p )
         for some in ( 'stateless' , 'trace' ) :
             g = lambda p , x : getattr ( self . e ( x ) ,
                                     'get_local_%s_procs' % some ) ( p )
-            ae = self . assertEqual
-            ae ( g (
-                [ 'foo' , 'st1' ] , mroot (
+            p = [ 'foo' , 'group1' ]
+            s = mroot (
                 { some :
-                    { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-                { '%s_proc1' % some : 'test1' } )
+                    { 'group1' : { 'proc' : { 'proc1' : 'test1' } }
+                    , 'group2' : { 'proc' : { 'proc2' : 'test2' } } } } )
+            r = { '%s_proc1' % some : 'test1' }
+            ae = self . assertEqual
+            ae ( g ( p , s ) , r )
+            ae ( gc ( p , s ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
