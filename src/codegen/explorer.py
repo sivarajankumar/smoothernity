@@ -26,6 +26,8 @@ class explorer :
     def get_callables ( self , path ) :
         return reduce ( merge ,
             [ self . get_local_procs ( path )
+            , self . get_local_stateless_procs ( path )
+            , self . get_local_trace_procs ( path )
             , self . get_platform_procs ( )
             , self . get_stateless_procs ( )
             , self . get_trace_procs ( )

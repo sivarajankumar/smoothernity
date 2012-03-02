@@ -64,15 +64,22 @@ class explorer_test_case ( unittest . TestCase ) :
         for some in ( 'stateless' , 'trace' ) :
             g = lambda p , x : getattr ( self . e ( x ) ,
                                     'get_local_%s_procs' % some ) ( p )
-            p = [ 'foo' , 'group1' ]
-            s = mroot (
+            p = [ 'somewhere' , 'group1' ]
+            s1 = mroot (
                 { some :
                     { 'group1' : { 'proc' : { 'proc1' : 'test1' } }
                     , 'group2' : { 'proc' : { 'proc2' : 'test2' } } } } )
-            r = { '%s_proc1' % some : 'test1' }
+            r1 = { '%s_proc1' % some : 'test1' }
+            s2 = mroot ( merge ( s1 ,
+                { 'stateless' : { 'group1' : { 'proc' : { } } }
+                , 'trace' : { 'group1' : { 'proc' : { } } }
+                , 'somewhere' : { 'group1' : { 'proc' : { } } } } ) )
+            r2 = merge ( r1 ,
+                { 'group1_%s_proc1' % some : 'test1'
+                , 'group2_%s_proc2' % some : 'test2' } )
             ae = self . assertEqual
-            ae ( g ( p , s ) , r )
-            ae ( gc ( p , s ) , r )
+            ae ( g ( p , s1 ) , r1 )
+            ae ( gc ( p , s2 ) , r2 )
 
 if __name__ == '__main__' :
     unittest . main ( )
