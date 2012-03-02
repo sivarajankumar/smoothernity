@@ -6,23 +6,29 @@ class explorer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . e = explorer . explorer
     def test_get_some_procs ( self ) :
+        gc = lambda x , p : self . e ( x ) . get_callables ( p )
         for some in ( 'stateless' , 'trace' ) :
             g = lambda x : getattr ( self . e ( x ) ,
                                 'get_%s_procs' % some ) ( )
-            ae = self . assertEqual
-            ae ( g ( mroot ( { some :
+            s = mroot ( { some :
                 { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-                { 'st1_%s_proc1' % some : 'test1'
-                , 'st2_%s_proc2' % some : 'test2' } )
+                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } )
+            r = { 'st1_%s_proc1' % some : 'test1'
+                , 'st2_%s_proc2' % some : 'test2' }
+            ae = self . assertEqual
+            ae ( g ( s ) , r )
+            ae ( gc ( s , [ 'some' , 'where' ] ) , r )
     def test_get_platform_procs ( self ) :
         g = lambda x : self . e ( x ) . get_platform_procs ( )
+        gc = lambda x , p : self . e ( x ) . get_callables ( p )
+        s = mroot ( { 'platform_procs' :
+            { 'func1' : 'test1'
+            , 'func2' : 'test2' } } )
+        r = { 'func1' : 'test1'
+            , 'func2' : 'test2' }
         ae = self . assertEqual
-        ae ( g ( mroot ( { 'platform_procs' :
-            { 'func1' : 'test1'
-            , 'func2' : 'test2' } } ) ) ,
-            { 'func1' : 'test1'
-            , 'func2' : 'test2' } )
+        ae ( g ( s ) , r )
+        ae ( gc ( s , [ 'some' , 'where' ] ) , r )
     def test_get_messages_receives ( self ) :
         g = lambda x : self . e ( x ) . get_messages_receives ( )
         ae = self . assertEqual
