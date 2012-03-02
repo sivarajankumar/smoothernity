@@ -30,18 +30,16 @@ class explorer_test_case ( unittest . TestCase ) :
     def test_get_platform_procs ( self ) :
         g = lambda x : self . e ( x ) . get_platform_procs ( )
         gc = lambda x , p : self . e ( x ) . get_callables ( p )
-        s = mroot (
+        p = [ 'somewhere' , 'faraway' ]
+        s = mpath ( p ,
             { 'platform_procs' :
                 { 'func1' : 'test1'
-                , 'func2' : 'test2' }
-            , 'somewhere' : { 'faraway' : { 'proc' : { } } }
-            , 'stateless' : { 'faraway' : { 'proc' : { } } }
-            , 'trace'     : { 'faraway' : { 'proc' : { } } } } )
+                , 'func2' : 'test2' } } )
         r = { 'func1' : 'test1'
             , 'func2' : 'test2' }
         ae = self . assertEqual
         ae ( g ( s ) , r )
-        ae ( gc ( s , [ 'somewhere' , 'faraway' ] ) , r )
+        ae ( gc ( s , p ) , r )
     def test_get_messages_receives ( self ) :
         g = lambda x : self . e ( x ) . get_messages_receives ( )
         ae = self . assertEqual
@@ -51,24 +49,22 @@ class explorer_test_case ( unittest . TestCase ) :
             { 'group1_msg1' : 'test1'
             , 'group2_msg2' : 'test2' } )
     def test_get_local_procs ( self ) :
-        g = lambda p , x : self . e ( x ) . get_local_procs ( p )
-        gc = lambda p , x : self . e ( x ) . get_callables ( p )
+        g = lambda x , p : self . e ( x ) . get_local_procs ( p )
+        gc = lambda x , p : self . e ( x ) . get_callables ( p )
         p = [ 'somewhere' , 'faraway' ]
-        s = mroot (
+        s = mpath ( p ,
             { 'somewhere' : { 'faraway' : { 'proc' :
                 { 'proc1' : 'test1'
-                , 'proc2' : 'test2' } } }
-            , 'stateless' : { 'faraway' : { 'proc' : { } } }
-            , 'trace'     : { 'faraway' : { 'proc' : { } } } } )
+                , 'proc2' : 'test2' } } } } )
         r = { 'proc1' : 'test1'
             , 'proc2' : 'test2' }
         ae = self . assertEqual
-        ae ( g ( p , s ) , r )
-        ae ( gc ( p , s ) , r )
+        ae ( g ( s , p ) , r )
+        ae ( gc ( s , p ) , r )
     def test_get_local_some_procs ( self ) :
-        gc = lambda p , x : self . e ( x ) . get_callables ( p )
+        gc = lambda x , p : self . e ( x ) . get_callables ( p )
         for some in ( 'stateless' , 'trace' ) :
-            g = lambda p , x : getattr ( self . e ( x ) ,
+            g = lambda x , p : getattr ( self . e ( x ) ,
                                     'get_local_%s_procs' % some ) ( p )
             p = [ 'somewhere' , 'group1' ]
             s1 = mroot (
@@ -76,16 +72,13 @@ class explorer_test_case ( unittest . TestCase ) :
                     { 'group1' : { 'proc' : { 'proc1' : 'test1' } }
                     , 'group2' : { 'proc' : { 'proc2' : 'test2' } } } } )
             r1 = { '%s_proc1' % some : 'test1' }
-            s2 = mroot ( merge ( s1 ,
-                { 'stateless' : { 'group1' : { 'proc' : { } } }
-                , 'trace'     : { 'group1' : { 'proc' : { } } }
-                , 'somewhere' : { 'group1' : { 'proc' : { } } } } ) )
+            s2 = mpath ( p , s1 )
             r2 = merge ( r1 ,
                 { 'group1_%s_proc1' % some : 'test1'
                 , 'group2_%s_proc2' % some : 'test2' } )
             ae = self . assertEqual
-            ae ( g ( p , s1 ) , r1 )
-            ae ( gc ( p , s2 ) , r2 )
+            ae ( g ( s1 , p ) , r1 )
+            ae ( gc ( s2 , p ) , r2 )
 
 if __name__ == '__main__' :
     unittest . main ( )
