@@ -11,13 +11,13 @@ class explorer_test_case ( unittest . TestCase ) :
         for some in ( 'stateless' , 'trace' ) :
             g = lambda x : getattr ( self . e ( x ) ,
                                 'get_%s_procs' % some ) ( )
-            s = mroot (
+            s = mroot ( merge (
                 { some :
                     { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } }
-                , 'somewhere' :
-                    { 'faraway' : { 'proc' : { } } }
-                } )
+                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ,
+                { 'somewhere' : { 'faraway' : { 'proc' : { } } }
+                , 'stateless' : { 'faraway' : { 'proc' : { } } }
+                , 'trace'     : { 'faraway' : { 'proc' : { } } } } ) )
             r = { 'st1_%s_proc1' % some : 'test1'
                 , 'st2_%s_proc2' % some : 'test2' }
             ae = self . assertEqual
@@ -30,9 +30,9 @@ class explorer_test_case ( unittest . TestCase ) :
             { 'platform_procs' :
                 { 'func1' : 'test1'
                 , 'func2' : 'test2' }
-            , 'somewhere' :
-                { 'faraway' : { 'proc' : { } } }
-            } )
+            , 'somewhere' : { 'faraway' : { 'proc' : { } } }
+            , 'stateless' : { 'faraway' : { 'proc' : { } } }
+            , 'trace'     : { 'faraway' : { 'proc' : { } } } } )
         r = { 'func1' : 'test1'
             , 'func2' : 'test2' }
         ae = self . assertEqual
@@ -52,8 +52,10 @@ class explorer_test_case ( unittest . TestCase ) :
         p = [ 'somewhere' , 'faraway' ]
         s = mroot (
             { 'somewhere' : { 'faraway' : { 'proc' :
-            { 'proc1' : 'test1'
-            , 'proc2' : 'test2' } } } } )
+                { 'proc1' : 'test1'
+                , 'proc2' : 'test2' } } }
+            , 'stateless' : { 'faraway' : { 'proc' : { } } }
+            , 'trace'     : { 'faraway' : { 'proc' : { } } } } )
         r = { 'proc1' : 'test1'
             , 'proc2' : 'test2' }
         ae = self . assertEqual
@@ -72,7 +74,7 @@ class explorer_test_case ( unittest . TestCase ) :
             r1 = { '%s_proc1' % some : 'test1' }
             s2 = mroot ( merge ( s1 ,
                 { 'stateless' : { 'group1' : { 'proc' : { } } }
-                , 'trace' : { 'group1' : { 'proc' : { } } }
+                , 'trace'     : { 'group1' : { 'proc' : { } } }
                 , 'somewhere' : { 'group1' : { 'proc' : { } } } } ) )
             r2 = merge ( r1 ,
                 { 'group1_%s_proc1' % some : 'test1'
