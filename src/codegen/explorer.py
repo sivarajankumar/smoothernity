@@ -25,9 +25,10 @@ class explorer :
             ( self . _storage , path , 'trace' )
     def get_callables ( self , path ) :
         return reduce ( merge ,
-            [ self . get_stateless_procs ( )
-            , self . get_trace_procs ( )
+            [ self . get_local_procs ( path )
             , self . get_platform_procs ( )
+            , self . get_stateless_procs ( )
+            , self . get_trace_procs ( )
             ] , { } )
 
 def _extract_stateless_procs ( storage ) :

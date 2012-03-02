@@ -39,14 +39,17 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'group2_msg2' : 'test2' } )
     def test_get_local_procs ( self ) :
         g = lambda p , x : self . e ( x ) . get_local_procs ( p )
-        ae = self . assertEqual
-        ae ( g (
-            [ 'somewhere' , 'faraway' ] , mroot (
+        gc = lambda p , x : self . e ( x ) . get_callables ( p )
+        p = [ 'somewhere' , 'faraway' ]
+        s = mroot (
             { 'somewhere' : { 'faraway' : { 'proc' :
             { 'proc1' : 'test1'
-            , 'proc2' : 'test2' } } } } ) ) ,
-            { 'proc1' : 'test1'
-            , 'proc2' : 'test2' } )
+            , 'proc2' : 'test2' } } } } )
+        r = { 'proc1' : 'test1'
+            , 'proc2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( p , s ) , r )
+        ae ( gc ( p , s ) , r )
     def test_get_local_some_procs ( self ) :
         for some in ( 'stateless' , 'trace' ) :
             g = lambda p , x : getattr ( self . e ( x ) ,
