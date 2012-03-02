@@ -5,22 +5,16 @@ from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 class explorer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . e = explorer . explorer
-    def test_get_stateless_procs ( self ) :
-        g = lambda x : self . e ( x ) . get_stateless_procs ( )
-        ae = self . assertEqual
-        ae ( g ( mroot ( { 'stateless' :
-            { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-            , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-            { 'st1_stateless_proc1' : 'test1'
-            , 'st2_stateless_proc2' : 'test2' } )
-    def test_get_trace_procs ( self ) :
-        g = lambda x : self . e ( x ) . get_trace_procs ( )
-        ae = self . assertEqual
-        ae ( g ( mroot ( { 'trace' :
-            { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-            , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-            { 'st1_trace_proc1' : 'test1'
-            , 'st2_trace_proc2' : 'test2' } )
+    def test_get_some_procs ( self ) :
+        for some in ( 'stateless' , 'trace' ) :
+            g = lambda x : getattr ( self . e ( x ) ,
+                                'get_%s_procs' % some ) ( )
+            ae = self . assertEqual
+            ae ( g ( mroot ( { some :
+                { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
+                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
+                { 'st1_%s_proc1' % some : 'test1'
+                , 'st2_%s_proc2' % some : 'test2' } )
     def test_get_platform_procs ( self ) :
         g = lambda x : self . e ( x ) . get_platform_procs ( )
         ae = self . assertEqual
@@ -47,24 +41,17 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'proc2' : 'test2' } } } } ) ) ,
             { 'proc1' : 'test1'
             , 'proc2' : 'test2' } )
-    def test_get_local_stateless_procs ( self ) :
-        g = lambda p , x : self . e ( x ) . get_local_stateless_procs ( p )
-        ae = self . assertEqual
-        ae ( g (
-            [ 'foo' , 'st1' ] , mroot (
-            { 'stateless' :
-                { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-            { 'stateless_proc1' : 'test1' } )
-    def test_get_local_trace_procs ( self ) :
-        g = lambda p , x : self . e ( x ) . get_local_trace_procs ( p )
-        ae = self . assertEqual
-        ae ( g (
-            [ 'foo' , 'st1' ] , mroot (
-            { 'trace' :
-                { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
-            { 'trace_proc1' : 'test1' } )
+    def test_get_local_some_procs ( self ) :
+        for some in ( 'stateless' , 'trace' ) :
+            g = lambda p , x : getattr ( self . e ( x ) ,
+                                    'get_local_%s_procs' % some ) ( p )
+            ae = self . assertEqual
+            ae ( g (
+                [ 'foo' , 'st1' ] , mroot (
+                { some :
+                    { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
+                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } ) ) ,
+                { '%s_proc1' % some : 'test1' } )
 
 if __name__ == '__main__' :
     unittest . main ( )
