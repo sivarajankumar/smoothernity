@@ -5,6 +5,7 @@ def merge_skeleton_root ( x ) :
         { 'consts' : { }
         , 'messages' : { }
         , 'module' : { }
+        , 'platform_consts' : { }
         , 'platform_procs' : { }
         , 'stateless' : { }
         , 'trace' : { }

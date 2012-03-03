@@ -4,11 +4,14 @@ class explorer :
     def __init__ ( self , storage ) :
         self . _storage = storage
         self . _messages_receives = _extract_messages_receives ( storage )
+        self . _platform_consts = _extract_platform_consts ( storage )
         self . _platform_procs = _extract_platform_procs ( storage )
         self . _stateless_procs = _extract_stateless_procs ( storage )
         self . _trace_procs = _extract_trace_procs ( storage )
     def get_messages_receives ( self ) :
         return self . _messages_receives
+    def get_platform_consts ( self ) :
+        return self . _platform_consts
     def get_platform_procs ( self ) :
         return self . _platform_procs
     def get_stateless_procs ( self ) :
@@ -32,9 +35,14 @@ class explorer :
             , self . get_stateless_procs ( )
             , self . get_trace_procs ( )
             ] , { } )
+    def get_consts ( self , path ) :
+        return reduce ( merge ,
+            [ self . get_platform_consts ( )
+            ] , { } )
     def get_everything ( self , path ) :
         return reduce ( merge ,
             [ self . get_callables ( path )
+            , self . get_consts ( path )
             , self . get_messages_receives ( )
             ] , { } )
 
@@ -51,6 +59,9 @@ def _extract_trace_procs ( storage ) :
         for kk , vv in v [ 'proc' ] . items ( ) :
             res [ '%s_trace_%s' % ( k , kk ) ] = vv
     return res
+
+def _extract_platform_consts ( storage ) :
+    return storage [ 'platform_consts' ]
 
 def _extract_platform_procs ( storage ) :
     return storage [ 'platform_procs' ]
