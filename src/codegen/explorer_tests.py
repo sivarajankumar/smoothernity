@@ -92,6 +92,21 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( g ( s1 , p ) , r1 )
             ae ( gc ( s2 , p ) , r2 )
             ae ( ge ( s2 , p ) , r2 )
+    def test_get_platform_consts ( self ) :
+        g = lambda x : self . e ( x ) . get_platform_consts ( )
+        gc = lambda x , p : self . e ( x ) . get_consts ( p )
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'somewhere' , 'faraway' ]
+        s = mpath ( p ,
+            { 'platform_consts' :
+                { 'const1' : 'test1'
+                , 'const2' : 'test2' } } )
+        r = { 'const1' : 'test1'
+            , 'const2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s ) , r )
+        ae ( gc ( s , p ) , r )
+        ae ( ge ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
