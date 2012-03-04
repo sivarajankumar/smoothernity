@@ -3,11 +3,14 @@ from utils import merge
 class explorer :
     def __init__ ( self , storage ) :
         self . _storage = storage
+        self . _global_consts = _extract_global_consts ( storage )
         self . _messages_receives = _extract_messages_receives ( storage )
         self . _platform_consts = _extract_platform_consts ( storage )
         self . _platform_procs = _extract_platform_procs ( storage )
         self . _stateless_procs = _extract_stateless_procs ( storage )
         self . _trace_procs = _extract_trace_procs ( storage )
+    def get_global_consts ( self ) :
+        return self . _global_consts
     def get_messages_receives ( self ) :
         return self . _messages_receives
     def get_platform_consts ( self ) :
@@ -37,7 +40,8 @@ class explorer :
             ] , { } )
     def get_consts ( self , path ) :
         return reduce ( merge ,
-            [ self . get_platform_consts ( )
+            [ self . get_global_consts ( )
+            , self . get_platform_consts ( )
             ] , { } )
     def get_everything ( self , path ) :
         return reduce ( merge ,
@@ -81,3 +85,10 @@ def _extract_local_some_procs ( storage , path , some ) :
 
 def _extract_local_procs ( storage , path ) :
     return storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]
+
+def _extract_global_consts ( storage ) :
+    res = { }
+    for k , v in storage [ 'consts' ] . items ( ) :
+        for kk , vv in v . items ( ) :
+            res [ '%s_consts_%s' % ( k , kk ) ] = vv
+    return res

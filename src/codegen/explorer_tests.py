@@ -107,6 +107,21 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s ) , r )
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
+    def test_get_global_consts ( self ) :
+        g = lambda x : self . e ( x ) . get_global_consts ( )
+        gc = lambda x , p : self . e ( x ) . get_consts ( p )
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'somewhere' , 'faraway' ]
+        s = mpath ( p ,
+            { 'consts' :
+                { 'group1' : { 'const1' : 'test1' }
+                , 'group2' : { 'const2' : 'test2' } } } )
+        r = { 'group1_consts_const1' : 'test1'
+            , 'group2_consts_const2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s ) , r )
+        ae ( gc ( s , p ) , r )
+        ae ( ge ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
