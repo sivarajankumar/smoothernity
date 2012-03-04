@@ -122,6 +122,23 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s ) , r )
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
+    def test_get_local_consts ( self ) :
+        g = lambda x , p : self . e ( x ) . get_local_consts ( p )
+        gc = lambda x , p : self . e ( x ) . get_consts ( p )
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'somewhere' , 'group1' ]
+        s = mpath ( p ,
+            { 'consts' : { 'group1' :
+                { 'const1' : 'test1'
+                , 'const2' : 'test2' } } } )
+        r = { 'group1_consts_const1' : 'test1'
+            , 'group1_consts_const2' : 'test2'
+            , 'consts_const1' : 'test1'
+            , 'consts_const2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s , p ) , r )
+        ae ( gc ( s , p ) , r )
+        ae ( ge ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
