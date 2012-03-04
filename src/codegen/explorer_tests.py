@@ -7,6 +7,7 @@ def mpath ( path , src ) :
     return mroot ( merge ( src ,
         { 'stateless' : { path [ 1 ] : { 'proc' : { } } }
         , 'trace'     : { path [ 1 ] : { 'proc' : { } } }
+        , 'consts'    : { path [ 1 ] : { } }
         , path [ 0 ]  : { path [ 1 ] : { 'proc' : { } } } } ) )
 
 class explorer_test_case ( unittest . TestCase ) :
@@ -131,14 +132,16 @@ class explorer_test_case ( unittest . TestCase ) :
             { 'consts' : { 'group1' :
                 { 'const1' : 'test1'
                 , 'const2' : 'test2' } } } )
-        r = { 'group1_consts_const1' : 'test1'
-            , 'group1_consts_const2' : 'test2'
-            , 'consts_const1' : 'test1'
+        r1 = \
+            { 'consts_const1' : 'test1'
             , 'consts_const2' : 'test2' }
+        r2 = merge ( r1 ,
+            { 'group1_consts_const1' : 'test1'
+            , 'group1_consts_const2' : 'test2' } )
         ae = self . assertEqual
-        ae ( g ( s , p ) , r )
-        ae ( gc ( s , p ) , r )
-        ae ( ge ( s , p ) , r )
+        ae ( g ( s , p ) , r1 )
+        ae ( gc ( s , p ) , r2 )
+        ae ( ge ( s , p ) , r2 )
 
 if __name__ == '__main__' :
     unittest . main ( )

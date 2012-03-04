@@ -11,6 +11,8 @@ class explorer :
         self . _trace_procs = _extract_trace_procs ( storage )
     def get_global_consts ( self ) :
         return self . _global_consts
+    def get_local_consts ( self , path ) :
+        return _extract_local_consts ( self . _storage , path )
     def get_messages_receives ( self ) :
         return self . _messages_receives
     def get_platform_consts ( self ) :
@@ -41,6 +43,7 @@ class explorer :
     def get_consts ( self , path ) :
         return reduce ( merge ,
             [ self . get_global_consts ( )
+            , self . get_local_consts ( path )
             , self . get_platform_consts ( )
             ] , { } )
     def get_everything ( self , path ) :
@@ -91,4 +94,10 @@ def _extract_global_consts ( storage ) :
     for k , v in storage [ 'consts' ] . items ( ) :
         for kk , vv in v . items ( ) :
             res [ '%s_consts_%s' % ( k , kk ) ] = vv
+    return res
+
+def _extract_local_consts ( storage , path ) :
+    res = { }
+    for k , v in storage [ 'consts' ] [ path [ 1 ] ] . items ( ) :
+        res [ 'consts_%s' % k ] = v
     return res
