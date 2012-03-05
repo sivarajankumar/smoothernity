@@ -142,6 +142,21 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s , p ) , r1 )
         ae ( gc ( s , p ) , r2 )
         ae ( ge ( s , p ) , r2 )
+    def test_get_global_vars ( self ) :
+        g = lambda x , p : self . e ( x ) . get_global_vars ( p )
+        gv = lambda x , p : self . e ( x ) . get_vars ( p )
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'somewhere' , 'group1' ]
+        s = mpath ( p ,
+            { 'vars' : { 'group1' :
+                [ { 'var1' : 'test1' }
+                , { 'var2' : 'test2' } ] } } )
+        r = { 'var1' : 'test1'
+            , 'var2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s , p ) , r )
+        ae ( gv ( s , p ) , r )
+        ae ( ge ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
