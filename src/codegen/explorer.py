@@ -11,6 +11,8 @@ class explorer :
         self . _trace_procs = _extract_trace_procs ( storage )
     def get_global_consts ( self ) :
         return self . _global_consts
+    def get_global_vars ( self , path ) :
+        pass
     def get_local_consts ( self , path ) :
         return _extract_local_consts ( self . _storage , path )
     def get_messages_receives ( self ) :
