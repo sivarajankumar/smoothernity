@@ -33,6 +33,8 @@ class explorer :
     def get_local_trace_procs ( self , path ) :
         return _extract_local_some_procs \
             ( self . _storage , path , 'trace' )
+    def get_local_args ( self , path ) :
+        return _extract_local_values ( self . _storage , path , 'args' )
     def get_local_vars ( self , path ) :
         return _extract_local_values ( self . _storage , path , 'vars' )
     def get_callables ( self , path ) :
@@ -50,17 +52,18 @@ class explorer :
             , self . get_local_consts ( path )
             , self . get_platform_consts ( )
             ] , { } )
-    def get_vars ( self , path ) :
+    def get_values ( self , path ) :
         return reduce ( merge ,
             [ self . get_global_vars ( path )
             , self . get_local_vars ( path )
+            , self . get_local_args ( path )
             ] , { } )
     def get_everything ( self , path ) :
         return reduce ( merge ,
             [ self . get_callables ( path )
             , self . get_consts ( path )
             , self . get_messages_receives ( )
-            , self . get_vars ( path )
+            , self . get_values ( path )
             ] , { } )
 
 def _extract_stateless_procs ( storage ) :
