@@ -3,9 +3,7 @@ from utils import merge
 from itertools import combinations
 from normalizer . exception import exception
 from normalizer . consts import run as run_consts
-
-def _is_text ( s ) :
-    return type ( s ) in ( str , unicode )
+from utils import is_text
 
 class normalizer :
     def __init__ ( self ) :
@@ -286,7 +284,7 @@ class normalizer :
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_names ( self , src ) :
-        if _is_text ( src ) :
+        if is_text ( src ) :
             return self . _use_withs ( src , self . _get_anything )
         else :
             return src
