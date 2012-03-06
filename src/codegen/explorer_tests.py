@@ -8,6 +8,7 @@ def mpath ( path , src ) :
         { 'stateless' : { path [ 1 ] : { 'proc' : { } } }
         , 'trace'     : { path [ 1 ] : { 'proc' : { } } }
         , 'consts'    : { path [ 1 ] : { } }
+        , 'vars'      : { path [ 1 ] : [ ] }
         , path [ 0 ]  : { path [ 1 ] : { 'proc' : { } } } } ) )
 
 class explorer_test_case ( unittest . TestCase ) :

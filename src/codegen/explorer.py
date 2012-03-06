@@ -12,7 +12,7 @@ class explorer :
     def get_global_consts ( self ) :
         return self . _global_consts
     def get_global_vars ( self , path ) :
-        pass
+        return _extract_global_vars ( self . _storage , path )
     def get_local_consts ( self , path ) :
         return _extract_local_consts ( self . _storage , path )
     def get_messages_receives ( self ) :
@@ -48,11 +48,16 @@ class explorer :
             , self . get_local_consts ( path )
             , self . get_platform_consts ( )
             ] , { } )
+    def get_vars ( self , path ) :
+        return reduce ( merge ,
+            [ self . get_global_vars ( path )
+            ] , { } )
     def get_everything ( self , path ) :
         return reduce ( merge ,
             [ self . get_callables ( path )
             , self . get_consts ( path )
             , self . get_messages_receives ( )
+            , self . get_vars ( path )
             ] , { } )
 
 def _extract_stateless_procs ( storage ) :
@@ -103,3 +108,6 @@ def _extract_local_consts ( storage , path ) :
     for k , v in storage [ 'consts' ] [ path [ 1 ] ] . items ( ) :
         res [ 'consts_%s' % k ] = v
     return res
+
+def _extract_global_vars ( storage , path ) :
+    return reduce ( merge , storage [ 'vars' ] [ path [ 1 ] ] , { } )
