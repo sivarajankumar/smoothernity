@@ -1,9 +1,8 @@
-import operator
-from utils import merge
+from utils import merge , is_text
 from itertools import combinations
 from normalizer . exception import exception
 from normalizer . consts import run as run_consts
-from utils import is_text
+from normalizer . skeleton import run as run_skeleton
 
 class normalizer :
     def __init__ ( self ) :
@@ -17,17 +16,13 @@ class normalizer :
         self . _bind_consts [ const ] = value
     def run ( self , src ) :
         self . _src = src
-        self . _src = self . run_skeleton ( self . _src )
+        self . _src = run_skeleton ( self . _src )
         self . _src = run_consts ( self . _src )
         self . _src = self . run_sends ( self . _src )
         self . _src = self . run_calls ( self . _src )
         self . _src = self . run_assigns ( self . _src )
         self . _src = self . run_names ( self . _src )
         self . _src = self . run_withs ( self . _src )
-        return self . _src
-    def run_skeleton ( self , src ) :
-        self . _src = src
-        self . _src = self . _norm_skeleton ( self . _src )
         return self . _src
     def run_sends ( self , src ) :
         self . _src = src
@@ -199,44 +194,6 @@ class normalizer :
                     res . append ( a )
         else :
             res = src
-        return res
-    def _norm_skeleton ( self , src ) :
-        res = merge (
-            { 'consts' : { } , 'messages' : { } , 'types' : { }
-            , 'vars' : { } , 'module' : { } , 'stateless' : { }
-            , 'trace' : { } , 'platform_consts' : { }
-            , 'platform_procs' : { } } , src )
-        for k , v in res [ 'stateless' ] . items ( ) :
-            res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
-        for k , v in res [ 'trace' ] . items ( ) :
-            res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
-        for k , v in res [ 'module' ] . items ( ) :
-            res [ 'module' ] [ k ] = merge (
-                { 'proc' : { } , 'receive' : { }
-                , 'request' : { } , 'module_queue' : '' } , v )
-        for k , v in res [ 'module' ] . items ( ) :
-            for kk in v [ 'request' ] . keys ( ) :
-                res = merge ( { 'messages' : { k :
-                    { 'request' : { kk : [ ] }
-                    , 'reply' : { kk : [ ] } } } } , res )
-            for kk in v [ 'receive' ] . keys ( ) :
-                res = merge ( { 'messages' : { k :
-                    { 'receive' : { kk : [ ] } } } } , res )
-        for k , v in res [ 'messages' ] . items ( ) :
-            res [ 'messages' ] [ k ] = merge (
-                { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
-        for k , v in res . items ( ) :
-            for kk , vv in v . items ( ) :
-                if 'proc' in vv :
-                    for kkk , vvv in vv [ 'proc' ] . items ( ) :
-                        res [ k ] [ kk ] [ 'proc' ] [ kkk ] = merge (
-                            { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                            , vvv )
-        for k , v in res [ 'module' ] . items ( ) :
-            for kk in [ 'request' , 'receive' ] :
-                for kkk , vvv in v [ kk ] . items ( ) :
-                    res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
-                        { 'vars' : [ ] , 'ops' : [ ] } , vvv )
         return res
     def _norm_withs ( self , src ) :
         if isinstance ( src , dict ) :
