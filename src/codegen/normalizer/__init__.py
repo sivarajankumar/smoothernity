@@ -2,42 +2,10 @@ import operator
 from utils import merge
 from itertools import combinations
 from normalizer . exception import exception
+from normalizer . consts import run as run_consts
 
 def _is_text ( s ) :
     return type ( s ) in ( str , unicode )
-
-class const_value :
-    def __init__ ( self , v , env ) :
-        self . _v , self . _env = v , env
-    def value ( self ) :
-        v = self . _v
-        if _is_text ( v ) :
-            assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
-            ev = eval ( v [ 1 : - 1 ] , self . _env )
-            return ev . value ( ) if isinstance ( ev , const_value ) else ev
-        else :
-            return v
-    def _calc ( self , a , b , op ) :
-        return op \
-            ( a . value ( ) if isinstance ( a , const_value ) else a
-            , b . value ( ) if isinstance ( b , const_value ) else b )
-    def _ops ( op ) :
-        def fwd ( self , a ) :
-            return self . _calc ( self , a , op )
-        def back ( self , a ) :
-            return self . _calc ( a , self , op )
-        return fwd , back
-    __or__ , __ror__ = _ops ( operator . or_ )
-    __add__ , __radd__ = _ops ( operator . add )
-    __sub__ , __rsub__ = _ops ( operator . sub )
-    __mul__ , __rmul__ = _ops ( operator . mul )
-    __div__ , __rdiv__ = _ops ( operator . div )
-    __mod__ , __rmod__ = _ops ( operator . mod )
-    __pow__ , __rpow__ = _ops ( operator . pow )
-    __and__ , __rand__ = _ops ( operator . and_ )
-    __xor__ , __rxor__ = _ops ( operator . xor )
-    __lshift__ , __rlshift__ = _ops ( operator . lshift )
-    __rshift__ , __rrshift__ = _ops ( operator . rshift )
 
 class normalizer :
     def __init__ ( self ) :
@@ -52,7 +20,7 @@ class normalizer :
     def run ( self , src ) :
         self . _src = src
         self . _src = self . run_skeleton ( self . _src )
-        self . _src = self . run_consts ( self . _src )
+        self . _src = run_consts ( self . _src )
         self . _src = self . run_sends ( self . _src )
         self . _src = self . run_calls ( self . _src )
         self . _src = self . run_assigns ( self . _src )
@@ -62,10 +30,6 @@ class normalizer :
     def run_skeleton ( self , src ) :
         self . _src = src
         self . _src = self . _norm_skeleton ( self . _src )
-        return self . _src
-    def run_consts ( self , src ) :
-        self . _src = src
-        self . _src = self . _norm_consts ( self . _src )
         return self . _src
     def run_sends ( self , src ) :
         self . _src = src
@@ -330,27 +294,3 @@ class normalizer :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
     def _norm_sends ( self , src ) :
         return self . _norm_arguable ( src , 'send' , self . _get_sendable )
-    def _norm_consts ( self , src ) :
-        res = dict ( )
-        for root_k , root_v in src . items ( ) :
-            if root_k == 'consts' :
-                res [ 'consts' ] = dict ( )
-                env = dict ( )
-                for module , consts in src [ 'consts' ] . items ( ) :
-                    for k , v in consts . items ( ) :
-                        env [ module + '_consts_' + k ] = const_value ( v , env )
-                for module , consts in src [ 'consts' ] . items ( ) :
-                    for k , v in consts . items ( ) :
-                        env [ k ] = const_value ( v , env )
-                    res [ 'consts' ] [ module ] = dict ( )
-                    for k in sorted ( consts . keys ( ) ) :
-                        self . _path = [ 'consts' , module , k ]
-                        try :
-                            res [ 'consts' ] [ module ] [ k ] = \
-                                env [ k ] . value ( )
-                        except Exception as e :
-                            self . _error ( str ( e ) )
-            else :
-                res [ root_k ] = root_v
-        return res
-
