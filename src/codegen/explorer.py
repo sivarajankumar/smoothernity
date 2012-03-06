@@ -33,6 +33,8 @@ class explorer :
     def get_local_trace_procs ( self , path ) :
         return _extract_local_some_procs \
             ( self . _storage , path , 'trace' )
+    def get_local_vars ( self , path ) :
+        return _extract_local_values ( self . _storage , path , 'vars' )
     def get_callables ( self , path ) :
         return reduce ( merge ,
             [ self . get_local_procs ( path )
@@ -51,6 +53,7 @@ class explorer :
     def get_vars ( self , path ) :
         return reduce ( merge ,
             [ self . get_global_vars ( path )
+            , self . get_local_vars ( path )
             ] , { } )
     def get_everything ( self , path ) :
         return reduce ( merge ,
@@ -111,3 +114,12 @@ def _extract_local_consts ( storage , path ) :
 
 def _extract_global_vars ( storage , path ) :
     return reduce ( merge , storage [ 'vars' ] [ path [ 1 ] ] , { } )
+
+def _extract_local_values ( storage , path , some ) :
+    res = { }
+    cur = storage
+    for p in path :
+        cur = cur [ p ]
+        if some in cur :
+            res = reduce ( merge , cur [ some ] , res )
+    return res
