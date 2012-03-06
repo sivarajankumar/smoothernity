@@ -158,6 +158,23 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s , p ) , r )
         ae ( gv ( s , p ) , r )
         ae ( ge ( s , p ) , r )
+    def test_get_local_vars ( self ) :
+        g = lambda x , p : self . e ( x ) . get_local_vars ( p )
+        gv = lambda x , p : self . e ( x ) . get_vars ( p )
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'path1' , 'path2' , 'path3' , 'path4' ]
+        s = mpath ( p ,
+            { 'path1' : { 'path2' : { 'path3' :
+                { 'path4' : { }
+                , 'vars' :
+                    [ { 'var1' : 'test1' }
+                    , { 'var2' : 'test2' } ] } } } } )
+        r = { 'var1' : 'test1'
+            , 'var2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s , p ) , r )
+        ae ( gv ( s , p ) , r )
+        ae ( ge ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
