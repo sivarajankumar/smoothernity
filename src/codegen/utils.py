@@ -13,3 +13,6 @@ def merge ( dst_ , src_ ) :
         return dst
     else :
         return src
+
+def is_text ( s ) :
+    return type ( s ) in ( str , unicode )

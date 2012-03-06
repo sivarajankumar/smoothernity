@@ -34,5 +34,14 @@ class merge_test_case ( unittest . TestCase ) :
         m = utils . merge
         ae ( m ( { 1 : [ 2 ] } , { 1 : [ 3 ] } ) , { 1 : [ 2 , 3 ] } )
 
+class utils_test_case ( unittest . TestCase ) :
+    def test_is_text ( self ) :
+        at = self . assertTrue
+        af = self . assertFalse
+        t = utils . is_text
+        at ( t ( 'test' ) )
+        at ( t ( u'test' ) )
+        af ( t ( 123 ) )
+
 if __name__ == '__main__' :
     unittest . main ( )

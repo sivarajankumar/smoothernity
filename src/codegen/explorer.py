@@ -112,7 +112,10 @@ def _extract_global_consts ( storage ) :
 def _extract_local_consts ( storage , path ) :
     res = { }
     for k , v in storage [ 'consts' ] [ path [ 1 ] ] . items ( ) :
-        res [ 'consts_%s' % k ] = v
+        if path [ 0 ] == 'consts' :
+            res [ '%s' % k ] = v
+        else :
+            res [ 'consts_%s' % k ] = v
     return res
 
 def _extract_global_vars ( storage , path ) :

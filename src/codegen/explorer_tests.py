@@ -143,6 +143,17 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s , p ) , r1 )
         ae ( gc ( s , p ) , r2 )
         ae ( ge ( s , p ) , r2 )
+    def test_get_local_consts_in_consts ( self ) :
+        g = lambda x , p : self . e ( x ) . get_local_consts ( p )
+        p = [ 'consts' , 'group1' ]
+        s = mroot (
+            { 'consts' : { 'group1' :
+                { 'const1' : 'test1'
+                , 'const2' : 'test2' } } } )
+        r = { 'const1' : 'test1'
+            , 'const2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s , p ) , r )
     def test_get_global_vars ( self ) :
         g = lambda x , p : self . e ( x ) . get_global_vars ( p )
         gv = lambda x , p : self . e ( x ) . get_values ( p )
