@@ -1,7 +1,7 @@
 import unittest
 import explorer
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
-from utils import merge
+from utils import merge , merge_exception
 
 def mpath ( path , src ) :
     return mroot ( merge ( src ,
@@ -14,6 +14,15 @@ def mpath ( path , src ) :
 class explorer_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
         self . e = explorer . explorer
+    def test_ambiguity ( self ) :
+        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        p = [ 'somewhere' , 'faraway' ]
+        s = mpath ( p ,
+            { 'platform_consts' : { 'group1_consts_const1' : 'test1' }
+            , 'consts' : { 'group1' : { 'const1' : 'test2' } } } )
+        me = merge_exception
+        ar = self . assertRaises
+        ar ( me , ge , s , p )
     def test_get_some_procs ( self ) :
         gc = lambda x , p : self . e ( x ) . get_callables ( p )
         ge = lambda x , p : self . e ( x ) . get_everything ( p )
