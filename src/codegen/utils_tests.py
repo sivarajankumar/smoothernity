@@ -2,6 +2,15 @@ import unittest
 import utils
 
 class merge_test_case ( unittest . TestCase ) :
+    def test_no_overwrite ( self ) :
+        ae = self . assertEqual
+        me = utils . merge_exception
+        m = lambda x , y : utils . merge ( x , y , overwrite = False )
+        try :
+            m ( { 'test1' : 'test2' } , { 'test1' : 'test3' } )
+            self . fail ( )
+        except me as e :
+            ae ( e . get_key ( ) , 'test1' )
     def test_empty ( self ) :
         ae = self . assertEqual
         m = utils . merge
