@@ -1,11 +1,8 @@
 from utils import merge
 
 def run ( src ) :
-    res = merge (
-        { 'consts' : { } , 'messages' : { } , 'types' : { }
-        , 'vars' : { } , 'module' : { } , 'stateless' : { }
-        , 'trace' : { } , 'platform_consts' : { }
-        , 'platform_procs' : { } } , src )
+    res = src
+    res = run_outmost ( res )
     for k , v in res [ 'stateless' ] . items ( ) :
         res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
     for k , v in res [ 'trace' ] . items ( ) :
@@ -38,3 +35,10 @@ def run ( src ) :
                 res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
                     { 'vars' : [ ] , 'ops' : [ ] } , vvv )
     return res
+
+def run_outmost ( src ) :
+    return merge (
+        { 'consts' : { } , 'messages' : { } , 'types' : { }
+        , 'vars' : { } , 'module' : { } , 'stateless' : { }
+        , 'trace' : { } , 'platform_consts' : { }
+        , 'platform_procs' : { } } , src )
