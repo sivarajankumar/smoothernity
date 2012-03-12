@@ -91,17 +91,17 @@ def _extract_platform_procs ( storage ) :
     return storage [ 'platform_procs' ]
 
 def _extract_messages_receives ( storage ) :
-    res = [ ]
-    for k , v in storage [ 'messages' ] . items ( ) :
-        for kk , vv in v [ 'receive' ] . items ( ) :
-            res . append ( { '%s_%s' % ( k , kk ) : vv } )
-    return _glue ( res , { } )
+    return _glue ( [
+        { '%s_%s' % ( k , kk ) : vv }
+        for k , v in storage [ 'messages' ] . items ( )
+            for kk , vv in v [ 'receive' ] . items ( )
+        ] , { } )
 
 def _extract_local_some_procs ( storage , path , some ) :
-    res = [ ]
-    for kk , vv in storage [ some ] [ path [ 1 ] ] [ 'proc' ] . items ( ) :
-        res . append ( { '%s_%s' % ( some , kk ) : vv } )
-    return _glue ( res , { } )
+    return _glue ( [
+        { '%s_%s' % ( some , k ) : v }
+        for k , v in storage [ some ] [ path [ 1 ] ] [ 'proc' ] . items ( )
+        ] , { } )
 
 def _extract_local_procs ( storage , path ) :
     return storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]
