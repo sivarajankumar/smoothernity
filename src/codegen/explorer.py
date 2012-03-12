@@ -124,10 +124,8 @@ def _extract_global_vars ( storage , path ) :
     return _glue ( storage [ 'vars' ] [ path [ 1 ] ] , { } )
 
 def _extract_local_values ( storage , path , some ) :
-    res = { }
-    cur = storage
-    for p in path :
-        cur = cur [ p ]
-        if some in cur :
-            res = _glue ( cur [ some ] , res )
-    return res
+    def _walk ( s , p , x ) :
+        return _glue ( s [ x ] , { } ) \
+            if x in s else _walk ( s [ p [ 0 ] ] , p [ 1 : ] , x ) \
+                if p else { }
+    return _walk ( storage [ path [ 0 ] ] , path [ 1 : ] , some )
