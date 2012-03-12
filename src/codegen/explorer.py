@@ -71,18 +71,17 @@ def _glue ( items , first ) :
         items , first )
 
 def _extract_stateless_procs ( storage ) :
-    res = [ ]
-    for k , v in storage [ 'stateless' ] . items ( ) :
-        for kk , vv in v [ 'proc' ] . items ( ) :
-            res . append ( { '%s_stateless_%s' % ( k , kk ) : vv } )
-    return _glue ( res , { } )
+    return _extract_some_procs ( storage , 'stateless' )
 
 def _extract_trace_procs ( storage ) :
-    res = [ ]
-    for k , v in storage [ 'trace' ] . items ( ) :
-        for kk , vv in v [ 'proc' ] . items ( ) :
-            res . append ( { '%s_trace_%s' % ( k , kk ) : vv } )
-    return _glue ( res , { } )
+    return _extract_some_procs ( storage , 'trace' )
+
+def _extract_some_procs ( storage , some ) :
+    return _glue ( [
+        { '%s_%s_%s' % ( k , some , kk ) : vv }
+        for k , v in storage [ some ] . items ( )
+            for kk , vv in v [ 'proc' ] . items ( )
+        ] , { } )
 
 def _extract_platform_consts ( storage ) :
     return storage [ 'platform_consts' ]
