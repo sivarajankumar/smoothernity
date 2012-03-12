@@ -114,13 +114,12 @@ def _extract_global_consts ( storage ) :
     return _glue ( res , { } )
 
 def _extract_local_consts ( storage , path ) :
-    res = [ ]
-    for k , v in storage [ 'consts' ] [ path [ 1 ] ] . items ( ) :
-        if path [ 0 ] == 'consts' :
-            res . append ( { '%s' % k : v } )
-        else :
-            res . append ( { 'consts_%s' % k : v } )
-    return _glue ( res , { } )
+    return _glue ( [
+        { '%s' % k : v }
+            if path [ 0 ] == 'consts' else
+        { 'consts_%s' % k : v }
+            for k , v in storage [ 'consts' ] [ path [ 1 ] ] . items ( )
+        ] , { } )
 
 def _extract_global_vars ( storage , path ) :
     return _glue ( storage [ 'vars' ] [ path [ 1 ] ] , { } )
