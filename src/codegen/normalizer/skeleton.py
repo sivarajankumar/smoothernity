@@ -2,7 +2,7 @@ from utils import merge
 
 def run ( src ) :
     res = src
-    res = run_outmost ( res )
+    res = run_outermost ( res )
     res = run_stateless ( res )
     res = run_trace ( res )
     res = run_module ( res )
@@ -10,14 +10,10 @@ def run ( src ) :
     res = run_module_request ( res )
     res = run_messages ( res )
     res = run_procs ( res )
-    for k , v in res [ 'module' ] . items ( ) :
-        for kk in [ 'request' , 'receive' ] :
-            for kkk , vvv in v [ kk ] . items ( ) :
-                res [ 'module' ] [ k ] [ kk ] [ kkk ] = merge (
-                    { 'vars' : [ ] , 'ops' : [ ] } , vvv )
+    res = run_message_handlers ( res )
     return res
 
-def run_outmost ( src ) :
+def run_outermost ( src ) :
     return merge (
         { 'consts' : { } , 'messages' : { } , 'types' : { }
         , 'vars' : { } , 'module' : { } , 'stateless' : { }
@@ -65,6 +61,16 @@ def run_procs ( src ) :
             for kk , vv in v . items ( )
                 if 'proc' in vv
                     for kkk in vv [ 'proc' ] . keys ( ) ] ,
+        src )
+
+def run_message_handlers ( src ) :
+    return reduce ( merge ,
+        [ { 'module' : { k : { kk : { kkk :
+            { 'vars' : [ ]
+            , 'ops'  : [ ] } } } } }
+        for k , v in src [ 'module' ] . items ( )
+            for kk in [ 'request' , 'receive' ]
+                for kkk in v [ kk ] . keys ( ) ] ,
         src )
 
 def run_some_storage ( src , what , skel ) :
