@@ -1,17 +1,17 @@
 from utils import merge
 
 def run ( src ) :
-    res = src
-    res = run_outermost ( res )
-    res = run_stateless ( res )
-    res = run_trace ( res )
-    res = run_module ( res )
-    res = run_module_receive ( res )
-    res = run_module_request ( res )
-    res = run_messages ( res )
-    res = run_procs ( res )
-    res = run_message_handlers ( res )
-    return res
+    return reduce ( lambda x , y : lambda a : y ( x ( a ) ) ,
+        [ run_outermost
+        , run_stateless
+        , run_trace
+        , run_module
+        , run_module_receive
+        , run_module_request
+        , run_messages
+        , run_procs
+        , run_message_handlers
+        ] , lambda a : a ) ( src )
 
 def run_outermost ( src ) :
     return merge (
