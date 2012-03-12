@@ -8,9 +8,7 @@ def run ( src ) :
     res = run_module ( res )
     res = run_module_receive ( res )
     res = run_module_request ( res )
-    for k , v in res [ 'messages' ] . items ( ) :
-        res [ 'messages' ] [ k ] = merge (
-            { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
+    res = run_messages ( res )
     for k , v in res . items ( ) :
         for kk , vv in v . items ( ) :
             if 'proc' in vv :
@@ -43,10 +41,6 @@ def run_module ( src ) :
         { 'proc' : { } , 'receive' : { }
         , 'request' : { } , 'module_queue' : '' } )
 
-def run_some_storage ( src , what , skel ) :
-    return merge ( { what : dict (
-        [ ( k , skel ) for k in src [ what ] . keys ( ) ] ) } , src )
-
 def run_module_request ( src ) :
     return reduce ( merge ,
         [ { 'messages' : { k :
@@ -62,3 +56,11 @@ def run_module_receive ( src ) :
         for k , v in src [ 'module' ] . items ( )
             for kk in v [ 'receive' ] . keys ( ) ] ,
         src )
+
+def run_messages ( src ) :
+    return run_some_storage ( src , 'messages' , 
+        { 'receive' : { } , 'reply' : { } , 'request' : { } } )
+
+def run_some_storage ( src , what , skel ) :
+    return merge ( { what : dict (
+        [ ( k , skel ) for k in src [ what ] . keys ( ) ] ) } , src )
