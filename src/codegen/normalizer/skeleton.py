@@ -5,10 +5,7 @@ def run ( src ) :
     res = run_outmost ( res )
     res = run_stateless ( res )
     res = run_trace ( res )
-    for k , v in res [ 'module' ] . items ( ) :
-        res [ 'module' ] [ k ] = merge (
-            { 'proc' : { } , 'receive' : { }
-            , 'request' : { } , 'module_queue' : '' } , v )
+    res = run_module ( res )
     for k , v in res [ 'module' ] . items ( ) :
         for kk in v [ 'request' ] . keys ( ) :
             res = merge ( { 'messages' : { k :
@@ -46,6 +43,11 @@ def run_stateless ( src ) :
 
 def run_trace ( src ) :
     return run_some_storage ( src , 'trace' , { 'proc' : { } } )
+
+def run_module ( src ) :
+    return run_some_storage ( src , 'module' , 
+        { 'proc' : { } , 'receive' : { }
+        , 'request' : { } , 'module_queue' : '' } )
 
 def run_some_storage ( src , what , skel ) :
     return merge ( { what : dict (
