@@ -67,8 +67,8 @@ class explorer :
             ] , { } )
 
 def _glue ( items , first ) :
-    m = lambda x , y : merge ( x , y , overwrite = False )
-    return reduce ( m , items , first )
+    return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
+        items , first )
 
 def _extract_stateless_procs ( storage ) :
     res = [ ]
