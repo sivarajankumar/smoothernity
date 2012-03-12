@@ -107,11 +107,11 @@ def _extract_local_procs ( storage , path ) :
     return storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]
 
 def _extract_global_consts ( storage ) :
-    res = [ ]
-    for k , v in storage [ 'consts' ] . items ( ) :
-        for kk , vv in v . items ( ) :
-            res . append ( { '%s_consts_%s' % ( k , kk ) : vv } )
-    return _glue ( res , { } )
+    return _glue ( [
+        { '%s_consts_%s' % ( k , kk ) : vv }
+        for k , v in storage [ 'consts' ] . items ( )
+            for kk , vv in v . items ( )
+        ] , { } )
 
 def _extract_local_consts ( storage , path ) :
     return _glue ( [
