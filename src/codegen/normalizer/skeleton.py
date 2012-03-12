@@ -9,13 +9,7 @@ def run ( src ) :
     res = run_module_receive ( res )
     res = run_module_request ( res )
     res = run_messages ( res )
-    for k , v in res . items ( ) :
-        for kk , vv in v . items ( ) :
-            if 'proc' in vv :
-                for kkk , vvv in vv [ 'proc' ] . items ( ) :
-                    res [ k ] [ kk ] [ 'proc' ] [ kkk ] = merge (
-                        { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-                        , vvv )
+    res = run_procs ( res )
     for k , v in res [ 'module' ] . items ( ) :
         for kk in [ 'request' , 'receive' ] :
             for kkk , vvv in v [ kk ] . items ( ) :
@@ -61,6 +55,20 @@ def run_messages ( src ) :
     return run_some_storage ( src , 'messages' , 
         { 'receive' : { } , 'reply' : { } , 'request' : { } } )
 
+def run_procs ( src ) :
+    return reduce ( merge ,
+        [ { k : { kk : { 'proc' : { kkk :
+            { 'args' : [ ]
+            , 'vars' : [ ]
+            , 'ops'  : [ ] } } } } }
+        for k , v in src . items ( )
+            for kk , vv in v . items ( )
+                if 'proc' in vv
+                    for kkk in vv [ 'proc' ] . keys ( ) ] ,
+        src )
+
 def run_some_storage ( src , what , skel ) :
-    return merge ( { what : dict (
-        [ ( k , skel ) for k in src [ what ] . keys ( ) ] ) } , src )
+    return reduce ( merge ,
+        [ { what : { k : skel } }
+            for k in src [ what ] . keys ( ) ] ,
+        src )
