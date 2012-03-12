@@ -6,14 +6,8 @@ def run ( src ) :
     res = run_stateless ( res )
     res = run_trace ( res )
     res = run_module ( res )
-    for k , v in res [ 'module' ] . items ( ) :
-        for kk in v [ 'request' ] . keys ( ) :
-            res = merge ( { 'messages' : { k :
-                { 'request' : { kk : [ ] }
-                , 'reply' : { kk : [ ] } } } } , res )
-        for kk in v [ 'receive' ] . keys ( ) :
-            res = merge ( { 'messages' : { k :
-                { 'receive' : { kk : [ ] } } } } , res )
+    res = run_module_receive ( res )
+    res = run_module_request ( res )
     for k , v in res [ 'messages' ] . items ( ) :
         res [ 'messages' ] [ k ] = merge (
             { 'receive' : { } , 'reply' : { } , 'request' : { } } , v )
@@ -52,3 +46,19 @@ def run_module ( src ) :
 def run_some_storage ( src , what , skel ) :
     return merge ( { what : dict (
         [ ( k , skel ) for k in src [ what ] . keys ( ) ] ) } , src )
+
+def run_module_request ( src ) :
+    return reduce ( merge ,
+        [ { 'messages' : { k :
+            { 'request' : { kk : [ ] }
+            , 'reply'   : { kk : [ ] } } } }
+        for k , v in src [ 'module' ] . items ( )
+            for kk in v [ 'request' ] . keys ( ) ] ,
+        src )
+
+def run_module_receive ( src ) :
+    return reduce ( merge ,
+        [ { 'messages' : { k : { 'receive' : { kk : [ ] } } } }
+        for k , v in src [ 'module' ] . items ( )
+            for kk in v [ 'receive' ] . keys ( ) ] ,
+        src )
