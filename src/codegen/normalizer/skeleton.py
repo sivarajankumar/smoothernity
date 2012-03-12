@@ -3,10 +3,8 @@ from utils import merge
 def run ( src ) :
     res = src
     res = run_outmost ( res )
-    for k , v in res [ 'stateless' ] . items ( ) :
-        res [ 'stateless' ] [ k ] = merge ( { 'proc' : { } } , v )
-    for k , v in res [ 'trace' ] . items ( ) :
-        res [ 'trace' ] [ k ] = merge ( { 'proc' : { } } , v )
+    res = run_stateless ( res )
+    res = run_trace ( res )
     for k , v in res [ 'module' ] . items ( ) :
         res [ 'module' ] [ k ] = merge (
             { 'proc' : { } , 'receive' : { }
@@ -42,3 +40,13 @@ def run_outmost ( src ) :
         , 'vars' : { } , 'module' : { } , 'stateless' : { }
         , 'trace' : { } , 'platform_consts' : { }
         , 'platform_procs' : { } } , src )
+
+def run_stateless ( src ) :
+    return run_some_storage ( src , 'stateless' , { 'proc' : { } } )
+
+def run_trace ( src ) :
+    return run_some_storage ( src , 'trace' , { 'proc' : { } } )
+
+def run_some_storage ( src , what , skel ) :
+    return merge ( { what : dict (
+        [ ( k , skel ) for k in src [ what ] . keys ( ) ] ) } , src )
