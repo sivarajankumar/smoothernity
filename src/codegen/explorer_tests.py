@@ -1,5 +1,5 @@
 import unittest
-import explorer
+from explorer import explorer
 from normalizer_tests_cases . helper import merge_skeleton_root as mroot
 from utils import merge , merge_exception
 
@@ -12,10 +12,8 @@ def mpath ( path , src ) :
         , path [ 0 ]  : { path [ 1 ] : { 'proc' : { } } } } ) )
 
 class explorer_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . e = explorer . explorer
     def test_ambiguity ( self ) :
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'platform_consts' : { 'group1_consts_const1' : 'test1' }
@@ -24,10 +22,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         ar ( me , ge , s , p )
     def test_get_some_procs ( self ) :
-        gc = lambda x , p : self . e ( x ) . get_callables ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        gc = lambda x , p : explorer ( x ) . get_callables ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         for some in ( 'stateless' , 'trace' ) :
-            g = lambda x : getattr ( self . e ( x ) ,
+            g = lambda x : getattr ( explorer ( x ) ,
                                 'get_%s_procs' % some ) ( )
             p = [ 'somewhere' , 'faraway' ]
             s = mpath ( p , 
@@ -41,9 +39,9 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( gc ( s , p ) , r )
             ae ( ge ( s , p ) , r )
     def test_get_platform_procs ( self ) :
-        g = lambda x : self . e ( x ) . get_platform_procs ( )
-        gc = lambda x , p : self . e ( x ) . get_callables ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x : explorer ( x ) . get_platform_procs ( )
+        gc = lambda x , p : explorer ( x ) . get_callables ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'platform_procs' :
@@ -56,8 +54,8 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_messages_receives ( self ) :
-        g = lambda x : self . e ( x ) . get_messages_receives ( )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x : explorer ( x ) . get_messages_receives ( )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'messages' :
@@ -69,9 +67,9 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_local_procs ( self ) :
-        g = lambda x , p : self . e ( x ) . get_local_procs ( p )
-        gc = lambda x , p : self . e ( x ) . get_callables ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x , p : explorer ( x ) . get_local_procs ( p )
+        gc = lambda x , p : explorer ( x ) . get_callables ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'somewhere' : { 'faraway' : { 'proc' :
@@ -84,10 +82,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_local_some_procs ( self ) :
-        gc = lambda x , p : self . e ( x ) . get_callables ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        gc = lambda x , p : explorer ( x ) . get_callables ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         for some in ( 'stateless' , 'trace' ) :
-            g = lambda x , p : getattr ( self . e ( x ) ,
+            g = lambda x , p : getattr ( explorer ( x ) ,
                                     'get_local_%s_procs' % some ) ( p )
             p = [ 'somewhere' , 'group1' ]
             s1 = mroot (
@@ -104,9 +102,9 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( gc ( s2 , p ) , r2 )
             ae ( ge ( s2 , p ) , r2 )
     def test_get_platform_consts ( self ) :
-        g = lambda x : self . e ( x ) . get_platform_consts ( )
-        gc = lambda x , p : self . e ( x ) . get_consts ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x : explorer ( x ) . get_platform_consts ( )
+        gc = lambda x , p : explorer ( x ) . get_consts ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'platform_consts' :
@@ -119,9 +117,9 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_global_consts ( self ) :
-        g = lambda x : self . e ( x ) . get_global_consts ( )
-        gc = lambda x , p : self . e ( x ) . get_consts ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x : explorer ( x ) . get_global_consts ( )
+        gc = lambda x , p : explorer ( x ) . get_consts ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'consts' :
@@ -134,9 +132,9 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_local_consts ( self ) :
-        g = lambda x , p : self . e ( x ) . get_local_consts ( p )
-        gc = lambda x , p : self . e ( x ) . get_consts ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x , p : explorer ( x ) . get_local_consts ( p )
+        gc = lambda x , p : explorer ( x ) . get_consts ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'consts' : { 'group1' :
@@ -153,7 +151,7 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r2 )
         ae ( ge ( s , p ) , r2 )
     def test_get_local_consts_in_consts ( self ) :
-        g = lambda x , p : self . e ( x ) . get_local_consts ( p )
+        g = lambda x , p : explorer ( x ) . get_local_consts ( p )
         p = [ 'consts' , 'group1' ]
         s = mroot (
             { 'consts' : { 'group1' :
@@ -164,9 +162,9 @@ class explorer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( g ( s , p ) , r )
     def test_get_global_vars ( self ) :
-        g = lambda x , p : self . e ( x ) . get_global_vars ( p )
-        gv = lambda x , p : self . e ( x ) . get_values ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        g = lambda x , p : explorer ( x ) . get_global_vars ( p )
+        gv = lambda x , p : explorer ( x ) . get_values ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'vars' : { 'group1' :
@@ -179,10 +177,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gv ( s , p ) , r )
         ae ( ge ( s , p ) , r )
     def test_get_local_values ( self ) :
-        gv = lambda x , p : self . e ( x ) . get_values ( p )
-        ge = lambda x , p : self . e ( x ) . get_everything ( p )
+        gv = lambda x , p : explorer ( x ) . get_values ( p )
+        ge = lambda x , p : explorer ( x ) . get_everything ( p )
         for some in ( 'vars' , 'args' ) :
-            g = lambda x , p : getattr ( self . e ( x ) ,
+            g = lambda x , p : getattr ( explorer ( x ) ,
                                 'get_local_%s' % some ) ( p )
             p = [ 'path1' , 'path2' , 'path3' , 'path4' ]
             s = mpath ( p ,
