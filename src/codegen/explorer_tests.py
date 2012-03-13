@@ -1,10 +1,10 @@
 import unittest
 from explorer import explorer
-from normalizer_tests_cases . helper import merge_skeleton_root as mroot
+from normalizer . skeleton import run as rskel
 from utils import merge , merge_exception
 
 def mpath ( path , src ) :
-    return mroot ( merge ( src ,
+    return rskel ( merge ( src ,
         { 'stateless' : { path [ 1 ] : { 'proc' : { } } }
         , 'trace'     : { path [ 1 ] : { 'proc' : { } } }
         , 'consts'    : { path [ 1 ] : { } }
@@ -73,10 +73,12 @@ class explorer_test_case ( unittest . TestCase ) :
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'somewhere' : { 'faraway' : { 'proc' :
-                { 'proc1' : 'test1'
-                , 'proc2' : 'test2' } } } } )
-        r = { 'proc1' : 'test1'
-            , 'proc2' : 'test2' }
+                { 'proc1' : { 'ops' : [ 'test1' ] }
+                , 'proc2' : { 'ops' : [ 'test2' ] } } } } } )
+        p1 = s [ 'somewhere' ] [ 'faraway' ] [ 'proc' ] [ 'proc1' ]
+        p2 = s [ 'somewhere' ] [ 'faraway' ] [ 'proc' ] [ 'proc2' ]
+        r = { 'proc1' : p1
+            , 'proc2' : p2 }
         ae = self . assertEqual
         ae ( g ( s , p ) , r )
         ae ( gc ( s , p ) , r )
@@ -88,7 +90,7 @@ class explorer_test_case ( unittest . TestCase ) :
             g = lambda x , p : getattr ( explorer ( x ) ,
                                     'get_local_%s_procs' % some ) ( p )
             p = [ 'somewhere' , 'group1' ]
-            s1 = mroot (
+            s1 = rskel (
                 { some :
                     { 'group1' : { 'proc' : { 'proc1' : 'test1' } }
                     , 'group2' : { 'proc' : { 'proc2' : 'test2' } } } } )
@@ -153,7 +155,7 @@ class explorer_test_case ( unittest . TestCase ) :
     def test_get_local_consts_in_consts ( self ) :
         g = lambda x , p : explorer ( x ) . get_local_consts ( p )
         p = [ 'consts' , 'group1' ]
-        s = mroot (
+        s = rskel (
             { 'consts' : { 'group1' :
                 { 'const1' : 'test1'
                 , 'const2' : 'test2' } } } )
