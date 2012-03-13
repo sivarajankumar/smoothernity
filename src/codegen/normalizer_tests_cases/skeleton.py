@@ -39,6 +39,19 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'receive' : { 'rcv1' :
                     { 'vars' : [ ]
                     , 'ops' : [ ] } } } } } )
+    def test_breed ( self ) :
+        ae = self . assertEqual
+        r = skeleton . run_breed
+        ae ( r ( { 'somewhere' : 'test1' } ) ,
+            { 'consts'    : { 'test1' : { } }
+            , 'messages'  : { 'test1' : { } }
+            , 'module'    : { 'test1' : { } }
+            , 'stateless' : { 'test1' : { } }
+            , 'trace'     : { 'test1' : { } }
+            , 'types'     : { 'test1' : { } }
+            , 'vars'      : { 'test1' : { } }
+            , 'somewhere' : { 'test1' : { } }
+            } )
     def test_outermost ( self ) :
         ae = self . assertEqual
         r = skeleton . run_outermost
