@@ -1,6 +1,6 @@
 import normalizer
 import unittest
-from normalizer_tests_cases . helper import merge_skeleton_root as mroot
+from normalizer . skeleton import run as rskel
 
 class assigns_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -9,7 +9,7 @@ class assigns_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run_assigns
         ne = normalizer . exception
-        ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' :
+        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' :
             { 'ops' : [ { 'assign' :
                 { 'from' : [ 'a1' , 'a2' ]
                 , 'to' : [ 'a3' , 'a4' , 'a5' ]
@@ -19,7 +19,7 @@ class assigns_test_case ( unittest . TestCase ) :
         r = self . n . run_assigns
         ne = normalizer . exception
         try :
-            r ( mroot ( { 'path1' : { 'path2' :
+            r ( rskel ( { 'path1' : { 'path2' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' , 'a2' ]
                     , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } } ) )
@@ -31,12 +31,12 @@ class assigns_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run_assigns
         ae ( r (
-            mroot ( { 'anywhere' : { 'anywhere' :
+            rskel ( { 'anywhere' : { 'anywhere' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' , 'a2' ]
                     , 'to' : [ 'a3' , 'a4' , 'a5' , 'a6' ]
                     } } ] } } } ) ) ,
-            mroot ( { 'anywhere' : { 'anywhere' :
+            rskel ( { 'anywhere' : { 'anywhere' :
                 { 'ops' : 
                     [ { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a3' ] } }
                     , { 'assign' : { 'from' : [ 'a2' ] , 'to' : [ 'a4' ] } }
