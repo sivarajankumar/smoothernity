@@ -54,6 +54,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'trace' : { }
             , 'vars' : { }
             , 'consts' : { }
+            , 'types' : { }
             , 'platform_procs' : { }
             , 'platform_consts' : { }
             , 'messages' : { 'test1' :
