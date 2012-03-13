@@ -94,17 +94,22 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'request' : { } } } } )
     def test_messages ( self ) :
         ae = self . assertEqual
-        r = skeleton . run
+        r = skeleton . run_messages
         ae ( r ( { 'messages' : { 'test1' : { } } } ) ,
-            mroot ( { 'messages' : { 'test1' : mmsg ( { } ) } } ) )
-    def test_proc ( self ) :
+            { 'messages' : { 'test1' : 
+                { 'receive' : { }
+                , 'request' : { }
+                , 'reply' : { } } } } )
+    def test_procs ( self ) :
         ae = self . assertEqual
-        r = skeleton . run
-        ae ( r ( { 'anywhere' : { 'test1' : { 'proc' : {
-            'test2' : { } } } } } ) ,
-            mroot ( { 'anywhere' : { 'test1' : { 'proc' : {
-            'test2' : mproc ( { } )
-            } } } } ) )
+        r = skeleton . run_procs
+        ae ( r (
+            { 'anywhere' : { 'test1' : { 'proc' : {
+                'test2' : { } } } } } ) ,
+            { 'anywhere' : { 'test1' : { 'proc' : {
+                'test2' :
+                    { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+            } } } } )
     def test_request ( self ) :
         ae = self . assertEqual
         r = skeleton . run
