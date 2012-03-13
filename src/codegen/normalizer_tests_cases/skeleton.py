@@ -9,7 +9,8 @@ class skeleton_test_case ( unittest . TestCase ) :
             { 'module' : { 'test1' :
                 { 'proc' : { 'proc1' : { } }
                 , 'request' : { 'req1' : { } }
-                , 'receive' : { 'rcv1' : { } } } } } ) ,
+                , 'receive' : { 'rcv1' : { } } } }
+            , 'messages' : { 'test2' : { } } } ) ,
             { 'stateless' : { }
             , 'trace' : { }
             , 'vars' : { }
@@ -17,10 +18,15 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'types' : { }
             , 'platform_procs' : { }
             , 'platform_consts' : { }
-            , 'messages' : { 'test1' :
-                { 'request' : { 'req1' : [ ] }
-                , 'reply' : { 'req1' : [ ] }
-                , 'receive' : { 'rcv1' : [ ] } } }
+            , 'messages' :
+                { 'test1' :
+                    { 'request' : { 'req1' : [ ] }
+                    , 'reply' : { 'req1' : [ ] }
+                    , 'receive' : { 'rcv1' : [ ] } }
+                , 'test2' :
+                    { 'request' : { } 
+                    , 'reply' : { }
+                    , 'receive' : { } } }
             , 'module' : { 'test1' :
                 { 'module_queue' : ''
                 , 'proc' : { 'proc1' :
