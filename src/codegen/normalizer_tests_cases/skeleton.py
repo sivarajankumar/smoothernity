@@ -2,47 +2,8 @@ import unittest
 from normalizer import skeleton
 from utils import merge
 
-def mroot ( x ) :
-    return merge (
-        { 'consts' : { }
-        , 'messages' : { }
-        , 'module' : { }
-        , 'platform_consts' : { }
-        , 'platform_procs' : { }
-        , 'stateless' : { }
-        , 'trace' : { }
-        , 'types' : { }
-        , 'vars' : { }
-        } , x )
-
-def mmod ( x ) :
-    return merge (
-        { 'module_queue' : ''
-        , 'proc' : { }
-        , 'receive' : { }
-        , 'request' : { }
-        } , x )
-
-def mproc ( x ) :
-    return merge (
-        { 'vars' : [ ]
-        , 'args' : [ ]
-        , 'ops' : [ ]
-        } , x )
-
-def mmsg ( x ) :
-    return merge (
-        { 'receive' : { }
-        , 'reply' : { }
-        , 'request' : { }
-        } , x )
-
 class skeleton_test_case ( unittest . TestCase ) :
-    def test_empty ( self ) :
-        ae = self . assertEqual
-        r = skeleton . run
-        ae ( r ( { } ) , mroot ( { } ) )
-    def test_full ( self ) :
+    def test_all ( self ) :
         ae = self . assertEqual
         r = skeleton . run
         ae ( r (
@@ -73,6 +34,20 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'receive' : { 'rcv1' :
                     { 'vars' : [ ]
                     , 'ops' : [ ] } } } } } )
+    def test_outermost ( self ) :
+        ae = self . assertEqual
+        r = skeleton . run_outermost
+        ae ( r ( { } ) ,
+            { 'consts' : { }
+            , 'messages' : { }
+            , 'module' : { }
+            , 'platform_consts' : { }
+            , 'platform_procs' : { }
+            , 'stateless' : { }
+            , 'trace' : { }
+            , 'types' : { }
+            , 'vars' : { }
+            } )
     def test_stateless ( self ) :
         ae = self . assertEqual
         r = skeleton . run_stateless
