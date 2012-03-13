@@ -1,8 +1,6 @@
 import normalizer
 import unittest
-from normalizer_tests_cases . helper import merge_skeleton_root as mroot
-from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
-from normalizer_tests_cases . helper import merge_skeleton_messages as mmsg
+from normalizer . skeleton import run as rskel
 
 class names_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -15,15 +13,15 @@ class names_test_case ( unittest . TestCase ) :
         bf ( 'msg1' , [ ] )
         bf ( 'func1' , [ ] )
         bf ( 'test1_func1' , [ ] )
-        ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' : [ { 'with' :
+        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' : [ { 'with' :
             { 'test1' : [ 'func1' ] } } ] } } ) )
-        ar ( ne , r , mroot ( { 'anywhere' : { 'anywhere' : 
+        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' : 
             { 'ops' : [ 'test1' ]
             , 'args' : [ { 'test1' : { } } ]
             , 'vars' : [ { 'test1' : { } } ] } } } ) )
-        ar ( ne , r , mroot (
-            { 'messages' : { 'test1' : mmsg (
-                { 'receive' : { 'msg1' : [ ] } } ) }
+        ar ( ne , r , rskel (
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ ] } } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'msg1' ] } } } } ) )
     def test_exception_path ( self ) :
@@ -34,7 +32,7 @@ class names_test_case ( unittest . TestCase ) :
         bf ( 'func1' , [ ] )
         bf ( 'test1_func1' , [ ] )
         try :
-            r ( mroot ( { 'path1' : { 'path2' : [ { 'with' :
+            r ( rskel ( { 'path1' : { 'path2' : [ { 'with' :
                 { 'test1' : [ 'func1' ] } } ] } } ) )
         except ne as e :
             pass
@@ -45,40 +43,40 @@ class names_test_case ( unittest . TestCase ) :
         r = self . n . run_names
         bf = self . n . bind_func
         bf ( 'test1_func1' , [ ] )
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'anywhere' : { 'anywhere' : { 'with' :
-                { 'test1' : [ 'func1' ] } } } } ) ) , mroot (
+                { 'test1' : [ 'func1' ] } } } } ) ) , rskel (
             { 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_func1' ] } } } } ) )
     def test_sendable ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
-            { 'messages' : { 'test1' : mmsg (
-                { 'receive' : { 'msg1' : [ ] } } ) }
+        ae ( r ( rskel (
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ ] } } }
             , 'anywhere' : { 'anywhere' : { 'with' :
-                { 'test1' : [ 'msg1' ] } } } } ) ) , mroot (
-            { 'messages' : { 'test1' : mmsg (
-                { 'receive' : { 'msg1' : [ ] } } ) }
+                { 'test1' : [ 'msg1' ] } } } } ) ) , rskel (
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ ] } } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_msg1' ] } } } } ) )
     def test_consts_global ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'consts' : { 'test1' : { 'const1' : 1 } }
             , 'anywhere' : { 'anywhere' : { 'with' :
-                { 'test1_consts' : [ 'const1' ] } } } } ) ) , mroot (
+                { 'test1_consts' : [ 'const1' ] } } } } ) ) , rskel (
             { 'consts' : { 'test1' : { 'const1' : 1 } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1_consts' : [ 'test1_consts_const1' ] } } } } ) )
     def test_consts_local ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'consts' : { 'space1' : { 'test1_const1' : 1 } }
             , 'anywhere' : { 'space1' : { 'with' :
-                { 'consts_test1' : [ 'const1' ] } } } } ) ) , mroot (
+                { 'consts_test1' : [ 'const1' ] } } } } ) ) , rskel (
             { 'consts' : { 'space1' : { 'test1_const1' : 1 } }
             , 'anywhere' : { 'space1' : { 'with' :
                 { 'consts_test1' : [ 'consts_test1_const1' ] } } } } ) )
@@ -87,29 +85,29 @@ class names_test_case ( unittest . TestCase ) :
         r = self . n . run_names
         bc = self . n . bind_const
         bc ( 'test1_const1' , 1 )
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'anywhere' : { 'anywhere' : { 'with' :
-                { 'test1' : [ 'const1' ] } } } } ) ) , mroot (
+                { 'test1' : [ 'const1' ] } } } } ) ) , rskel (
             { 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_const1' ] } } } } ) )
     def test_vars_global ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'vars' : { 'space1' : [ { 'test1_var1' : { } } ] }
             , 'anywhere' : { 'space1' : { 'with' :
-                { 'test1' : [ 'var1' ] } } } } ) ) , mroot (
+                { 'test1' : [ 'var1' ] } } } } ) ) , rskel (
             { 'vars' : { 'space1' : [ { 'test1_var1' : { } } ] }
             , 'anywhere' : { 'space1' : { 'with' :
                 { 'test1' : [ 'test1_var1' ] } } } } ) )
     def test_vars_local ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'anywhere' : { 'anywhere' :
                 { 'vars' : [ { 'test1_var1' : { } } ]
                 , 'ops' : { 'with' :
-                    { 'test1' : [ 'var1' ] } } } } } ) ) , mroot (
+                    { 'test1' : [ 'var1' ] } } } } } ) ) , rskel (
             { 'anywhere' : { 'anywhere' :
                 { 'vars' : [ { 'test1_var1' : { } } ]
                 , 'ops' : { 'with' :
@@ -117,11 +115,11 @@ class names_test_case ( unittest . TestCase ) :
     def test_args_local ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'anywhere' : { 'anywhere' :
                 { 'args' : [ { 'test1_arg1' : { } } ]
                 , 'ops' : { 'with' :
-                    { 'test1' : [ 'arg1' ] } } } } } ) ) , mroot (
+                    { 'test1' : [ 'arg1' ] } } } } } ) ) , rskel (
             { 'anywhere' : { 'anywhere' :
                 { 'args' : [ { 'test1_arg1' : { } } ]
                 , 'ops' : { 'with' :
@@ -129,13 +127,13 @@ class names_test_case ( unittest . TestCase ) :
     def test_unknown_name ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        s = mroot ( { 'anywhere' : { 'anywhere' : { 'with' :
+        s = rskel ( { 'anywhere' : { 'anywhere' : { 'with' :
             { 'test1' : [ 'unknown' ] } } } } )
         ae ( r ( s ) , s )
     def test_double_prefix ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        s = mroot (
+        s = rskel (
             { 'stateless' : { 'test1' : { 'proc' :
                 { 'func1' : { } } } }
             , 'anywhere' : { 'anywhere' : [ { 'with' : { 'test1_stateless' :
@@ -150,7 +148,7 @@ class names_test_case ( unittest . TestCase ) :
         bf ( 'test1_test3_func2' , [ ] )
         bf ( 'test1_func3' , [ ] )
         bf ( 'test2_func4' , [ ] )
-        ae ( r ( mroot (
+        ae ( r ( rskel (
             { 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
@@ -159,7 +157,7 @@ class names_test_case ( unittest . TestCase ) :
                             , 'func2'
                             , 'func3'
                             , 'func4'
-                            ] } } ] } ] } } ] } ] } } ] } } ) ) , mroot (
+                            ] } } ] } ] } } ] } ] } } ] } } ) ) , rskel (
             { 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
