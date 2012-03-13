@@ -42,6 +42,36 @@ class skeleton_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = run
         ae ( r ( { } ) , mroot ( { } ) )
+    def test_full ( self ) :
+        ae = self . assertEqual
+        r = run
+        ae ( r (
+            { 'module' : { 'test1' :
+                { 'proc' : { 'proc1' : { } }
+                , 'request' : { 'req1' : { } }
+                , 'receive' : { 'rcv1' : { } } } } } ) ,
+            { 'stateless' : { }
+            , 'trace' : { }
+            , 'vars' : { }
+            , 'consts' : { }
+            , 'platform_procs' : { }
+            , 'platform_consts' : { }
+            , 'messages' : { 'test1' :
+                { 'request' : { 'req1' : [ ] }
+                , 'reply' : { 'req1' : [ ] }
+                , 'receive' : { 'rcv1' : [ ] } } }
+            , 'module' : { 'test1' :
+                { 'module_queue' : ''
+                , 'proc' : { 'proc1' :
+                    { 'vars' : [ ]
+                    , 'args' : [ ]
+                    , 'ops' : [ ] } }
+                , 'request' : { 'req1' : 
+                    { 'vars' : [ ]
+                    , 'ops' : [ ] } }
+                , 'receive' : { 'rcv1' :
+                    { 'vars' : [ ]
+                    , 'ops' : [ ] } } } } } )
     def test_stateless ( self ) :
         ae = self . assertEqual
         r = run
