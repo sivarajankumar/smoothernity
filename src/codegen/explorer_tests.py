@@ -30,10 +30,14 @@ class explorer_test_case ( unittest . TestCase ) :
             p = [ 'somewhere' , 'faraway' ]
             s = mpath ( p , 
                 { some :
-                    { 'st1' : { 'proc' : { 'proc1' : 'test1' } }
-                    , 'st2' : { 'proc' : { 'proc2' : 'test2' } } } } )
-            r = { 'st1_%s_proc1' % some : 'test1'
-                , 'st2_%s_proc2' % some : 'test2' }
+                    { 'st1' : { 'proc' :
+                        { 'proc1' : { 'ops' : [ 'test1' ] } } }
+                    , 'st2' : { 'proc' :
+                        { 'proc2' : { 'ops' : [ 'test2' ] } } } } } )
+            st1p1 = s [ some ] [ 'st1' ] [ 'proc' ] [ 'proc1' ]
+            st2p2 = s [ some ] [ 'st2' ] [ 'proc' ] [ 'proc2' ]
+            r = { 'st1_%s_proc1' % some : st1p1
+                , 'st2_%s_proc2' % some : st2p2 }
             ae = self . assertEqual
             ae ( g ( s ) , r )
             ae ( gc ( s , p ) , r )
