@@ -1,5 +1,5 @@
 import unittest
-from normalizer . skeleton import run
+from normalizer import skeleton
 from utils import merge
 
 def mroot ( x ) :
@@ -40,11 +40,11 @@ def mmsg ( x ) :
 class skeleton_test_case ( unittest . TestCase ) :
     def test_empty ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r ( { } ) , mroot ( { } ) )
     def test_full ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r (
             { 'module' : { 'test1' :
                 { 'proc' : { 'proc1' : { } }
@@ -75,27 +75,31 @@ class skeleton_test_case ( unittest . TestCase ) :
                     , 'ops' : [ ] } } } } } )
     def test_stateless ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run_stateless
         ae ( r ( { 'stateless' : { 'test1' : { } } } ) ,
-            mroot ( { 'stateless' : { 'test1' : { 'proc' : { } } } } ) )
+            { 'stateless' : { 'test1' : { 'proc' : { } } } } )
     def test_trace ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run_trace
         ae ( r ( { 'trace' : { 'test1' : { } } } ) ,
-            mroot ( { 'trace' : { 'test1' : { 'proc' : { } } } } ) )
+            { 'trace' : { 'test1' : { 'proc' : { } } } } )
     def test_module ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run_module
         ae ( r ( { 'module' : { 'test1' : { } } } ) ,
-            mroot ( { 'module' : { 'test1' : mmod ( { } ) } } ) )
+            { 'module' : { 'test1' :
+                { 'module_queue' : ''
+                , 'proc' : { }
+                , 'receive' : { }
+                , 'request' : { } } } } )
     def test_messages ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r ( { 'messages' : { 'test1' : { } } } ) ,
             mroot ( { 'messages' : { 'test1' : mmsg ( { } ) } } ) )
     def test_proc ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r ( { 'anywhere' : { 'test1' : { 'proc' : {
             'test2' : { } } } } } ) ,
             mroot ( { 'anywhere' : { 'test1' : { 'proc' : {
@@ -103,7 +107,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             } } } } ) )
     def test_request ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r ( { 'module' : { 'test1' : { 'request' : {
             'test2' : { } } } } } ) ,
             mroot (
@@ -116,7 +120,7 @@ class skeleton_test_case ( unittest . TestCase ) :
                 } } ) } } ) )
     def test_receive ( self ) :
         ae = self . assertEqual
-        r = run
+        r = skeleton . run
         ae ( r ( { 'module' : { 'test1' : { 'receive' : {
             'test2' : { } } } } } ) ,
             mroot (
