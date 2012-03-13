@@ -1,6 +1,5 @@
 import normalizer
 import unittest
-from normalizer . skeleton import run as rskel
 
 class assigns_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -9,20 +8,20 @@ class assigns_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run_assigns
         ne = normalizer . exception
-        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' :
+        ar ( ne , r , { 'anywhere' : { 'anywhere' :
             { 'ops' : [ { 'assign' :
                 { 'from' : [ 'a1' , 'a2' ]
                 , 'to' : [ 'a3' , 'a4' , 'a5' ]
-                } } ] } } } ) )
+                } } ] } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run_assigns
         ne = normalizer . exception
         try :
-            r ( rskel ( { 'path1' : { 'path2' :
+            r ( { 'path1' : { 'path2' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' , 'a2' ]
-                    , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } } ) )
+                    , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } } )
         except ne as e :
             pass
         gp = e . get_path ( )
@@ -31,15 +30,15 @@ class assigns_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run_assigns
         ae ( r (
-            rskel ( { 'anywhere' : { 'anywhere' :
+            { 'anywhere' : { 'anywhere' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' , 'a2' ]
                     , 'to' : [ 'a3' , 'a4' , 'a5' , 'a6' ]
-                    } } ] } } } ) ) ,
-            rskel ( { 'anywhere' : { 'anywhere' :
+                    } } ] } } } ) ,
+            { 'anywhere' : { 'anywhere' :
                 { 'ops' : 
                     [ { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a3' ] } }
                     , { 'assign' : { 'from' : [ 'a2' ] , 'to' : [ 'a4' ] } }
                     , { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a5' ] } }
                     , { 'assign' : { 'from' : [ 'a2' ] , 'to' : [ 'a6' ] } }
-                    ] } } } ) )
+                    ] } } } )
