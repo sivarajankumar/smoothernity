@@ -109,19 +109,17 @@ class skeleton_test_case ( unittest . TestCase ) :
             { 'anywhere' : { 'test1' : { 'proc' : {
                 'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
             } } } } )
-    def test_request ( self ) :
+    def test_module_request ( self ) :
         ae = self . assertEqual
-        r = skeleton . run
-        ae ( r ( { 'module' : { 'test1' : { 'request' : {
-            'test2' : { } } } } } ) ,
-            mroot (
-                { 'messages' : { 'test1' : mmsg (
-                    { 'request' : { 'test2' : [ ] }
-                    , 'reply' : { 'test2' : [ ] } } ) } 
-                , 'module' : { 'test1' : mmod (
-                    { 'request' : { 'test2' :
-                        { 'vars' : [ ] , 'ops' : [ ] }
-                } } ) } } ) )
+        r = skeleton . run_module_request
+        ae ( r (
+            { 'module' : { 'test1' : { 'request' : {
+                'test2' : { } } } } } ) ,
+            { 'messages' : { 'test1' : 
+                { 'request' : { 'test2' : [ ] }
+                , 'reply' : { 'test2' : [ ] } } } 
+            , 'module' : { 'test1' : { 'request' : {
+                'test2' : { } } } } } )
     def test_receive ( self ) :
         ae = self . assertEqual
         r = skeleton . run
