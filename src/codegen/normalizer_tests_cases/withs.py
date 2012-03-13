@@ -1,7 +1,5 @@
 import normalizer
 import unittest
-from normalizer_tests_cases . helper import merge_skeleton_root as mroot
-from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
 
 class withs_test_case ( unittest . TestCase ) :
     def setUp ( self ) :
@@ -9,8 +7,8 @@ class withs_test_case ( unittest . TestCase ) :
     def test_strip ( self ) :
         ae = self . assertEqual
         r = self . n . run_withs
-        ae ( r ( mroot (
+        ae ( r ( 
             { 'anywhere' : { 'anywhere' : { 'with' :
-                { 'prefix' : [ 'something' ] } } } } ) ) , mroot (
+                { 'prefix' : [ 'something' ] } } } } ) ,
             { 'anywhere' : { 'anywhere' : 
-                [ 'something' ] } } ) )
+                [ 'something' ] } } ) 
