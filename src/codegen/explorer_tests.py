@@ -92,13 +92,18 @@ class explorer_test_case ( unittest . TestCase ) :
             p = [ 'somewhere' , 'group1' ]
             s1 = rskel (
                 { some :
-                    { 'group1' : { 'proc' : { 'proc1' : 'test1' } }
-                    , 'group2' : { 'proc' : { 'proc2' : 'test2' } } } } )
-            r1 = { '%s_proc1' % some : 'test1' }
+                    { 'group1' : { 'proc' :
+                        { 'proc1' : { 'ops' : [ 'test1' ] } } }
+                    , 'group2' : { 'proc' :
+                        { 'proc2' : { 'ops' : [ 'test2' ] } } } } } )
+            p1 = s1 [ some ] [ 'group1' ] [ 'proc' ] [ 'proc1' ]
+            r1 = { '%s_proc1' % some : p1 }
             s2 = mpath ( p , s1 )
+            g1p1 = s2 [ some ] [ 'group1' ] [ 'proc' ] [ 'proc1' ]
+            g2p2 = s2 [ some ] [ 'group2' ] [ 'proc' ] [ 'proc2' ]
             r2 = merge ( r1 ,
-                { 'group1_%s_proc1' % some : 'test1'
-                , 'group2_%s_proc2' % some : 'test2' } )
+                { 'group1_%s_proc1' % some : g1p1
+                , 'group2_%s_proc2' % some : g2p2 } )
             ae = self . assertEqual
             ae ( g ( s1 , p ) , r1 )
             ae ( gc ( s2 , p ) , r2 )
