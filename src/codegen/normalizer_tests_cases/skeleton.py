@@ -107,8 +107,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             { 'anywhere' : { 'test1' : { 'proc' : {
                 'test2' : { } } } } } ) ,
             { 'anywhere' : { 'test1' : { 'proc' : {
-                'test2' :
-                    { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
+                'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
             } } } } )
     def test_request ( self ) :
         ae = self . assertEqual
