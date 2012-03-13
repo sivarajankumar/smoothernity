@@ -1,6 +1,5 @@
 import unittest
 from normalizer import skeleton
-from utils import merge
 
 class skeleton_test_case ( unittest . TestCase ) :
     def test_all ( self ) :
