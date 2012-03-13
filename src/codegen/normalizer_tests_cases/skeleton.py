@@ -39,9 +39,9 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'receive' : { 'rcv1' :
                     { 'vars' : [ ]
                     , 'ops' : [ ] } } } } } )
-    def test_breed ( self ) :
+    def test_populate ( self ) :
         ae = self . assertEqual
-        r = skeleton . run_breed
+        r = skeleton . run_populate
         ae ( r ( { 'somewhere' : 'test1' } ) ,
             { 'consts'    : { 'test1' : { } }
             , 'messages'  : { 'test1' : { } }
