@@ -120,15 +120,13 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'reply' : { 'test2' : [ ] } } } 
             , 'module' : { 'test1' : { 'request' : {
                 'test2' : { } } } } } )
-    def test_receive ( self ) :
+    def test_module_receive ( self ) :
         ae = self . assertEqual
-        r = skeleton . run
-        ae ( r ( { 'module' : { 'test1' : { 'receive' : {
-            'test2' : { } } } } } ) ,
-            mroot (
-                { 'messages' : { 'test1' : mmsg (
-                    { 'receive' : { 'test2' : [ ] } } ) }
-                , 'module' : { 'test1' : mmod (
-                    { 'receive' : { 'test2' :
-                        { 'vars' : [ ] , 'ops' : [ ] }
-                } } ) } } ) )
+        r = skeleton . run_module_receive
+        ae ( r (
+            { 'module' : { 'test1' : { 'receive' : {
+                'test2' : { } } } } } ) ,
+            { 'messages' : { 'test1' :
+                { 'receive' : { 'test2' : [ ] } } }
+            , 'module' : { 'test1' : { 'receive' : {
+                'test2' : { } } } } } )
