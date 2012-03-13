@@ -1,9 +1,41 @@
 import unittest
 from normalizer . skeleton import run
-from normalizer_tests_cases . helper import merge_skeleton_root as mroot
-from normalizer_tests_cases . helper import merge_skeleton_module as mmod
-from normalizer_tests_cases . helper import merge_skeleton_proc as mproc
-from normalizer_tests_cases . helper import merge_skeleton_messages as mmsg
+from utils import merge
+
+def mroot ( x ) :
+    return merge (
+        { 'consts' : { }
+        , 'messages' : { }
+        , 'module' : { }
+        , 'platform_consts' : { }
+        , 'platform_procs' : { }
+        , 'stateless' : { }
+        , 'trace' : { }
+        , 'types' : { }
+        , 'vars' : { }
+        } , x )
+
+def mmod ( x ) :
+    return merge (
+        { 'module_queue' : ''
+        , 'proc' : { }
+        , 'receive' : { }
+        , 'request' : { }
+        } , x )
+
+def mproc ( x ) :
+    return merge (
+        { 'vars' : [ ]
+        , 'args' : [ ]
+        , 'ops' : [ ]
+        } , x )
+
+def mmsg ( x ) :
+    return merge (
+        { 'receive' : { }
+        , 'reply' : { }
+        , 'request' : { }
+        } , x )
 
 class skeleton_test_case ( unittest . TestCase ) :
     def test_empty ( self ) :
