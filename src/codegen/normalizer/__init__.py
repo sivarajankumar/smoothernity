@@ -9,15 +9,12 @@ class normalizer :
     def __init__ ( self ) :
         self . _src = None
         self . _path = None
-        self . _bound = { 'platform_procs' : { } , 'platform_consts' : { } }
+        self . _bound = { 'platform_procs' : { } }
     def bind_func ( self , func , args ) :
         self . _bound = merge ( self . _bound ,
             { 'platform_procs' : { func : args } } )
-    def bind_const ( self , const , value ) :
-        self . _bound = merge ( self . _bound ,
-            { 'platform_consts' : { const : value } } )
     def run ( self , src ) :
-        self . _src = merge ( src , self . _bound )
+        self . _src = src
         self . _src = run_skeleton ( self . _src )
         self . _src = run_consts ( self . _src )
         self . _src = self . run_sends ( self . _src )
@@ -79,8 +76,9 @@ class normalizer :
         return self . _local_some_proc ( 'trace' , name )
     def _get_callable ( self , name ) :
         res = [ ]
-        if name in self . _bound [ 'platform_procs' ] :
-            res . append ( self . _bound [ 'platform_procs' ] [ name ] )
+        m = merge ( self . _src , self . _bound )
+        if name in m [ 'platform_procs' ] :
+            res . append ( m [ 'platform_procs' ] [ name ] )
         if self . _local_proc ( name ) :
             res . append ( self . _local_proc ( name ) [ 'args' ] )
         if self . _local_stateless_proc ( name ) :
