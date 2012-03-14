@@ -3,19 +3,21 @@ from itertools import combinations
 from normalizer . exception import exception
 from normalizer . consts import run as run_consts
 from normalizer . skeleton import run as run_skeleton
+from utils import merge
 
 class normalizer :
     def __init__ ( self ) :
-        self . _bind_funcs = { }
-        self . _bind_consts = { }
         self . _src = None
         self . _path = None
+        self . _bound = { 'platform_procs' : { } , 'platform_consts' : { } }
     def bind_func ( self , func , args ) :
-        self . _bind_funcs [ func ] = args
+        self . _bound = merge ( self . _bound ,
+            { 'platform_procs' : { func : args } } )
     def bind_const ( self , const , value ) :
-        self . _bind_consts [ const ] = value
+        self . _bound = merge ( self . _bound ,
+            { 'platform_consts' : { const : value } } )
     def run ( self , src ) :
-        self . _src = src
+        self . _src = merge ( src , self . _bound )
         self . _src = run_skeleton ( self . _src )
         self . _src = run_consts ( self . _src )
         self . _src = self . run_sends ( self . _src )
@@ -77,8 +79,8 @@ class normalizer :
         return self . _local_some_proc ( 'trace' , name )
     def _get_callable ( self , name ) :
         res = [ ]
-        if name in self . _bind_funcs :
-            res . append ( self . _bind_funcs [ name ] )
+        if name in self . _bound [ 'platform_procs' ] :
+            res . append ( self . _bound [ 'platform_procs' ] [ name ] )
         if self . _local_proc ( name ) :
             res . append ( self . _local_proc ( name ) [ 'args' ] )
         if self . _local_stateless_proc ( name ) :
@@ -133,7 +135,7 @@ class normalizer :
                 all [ k + '_consts_' + kk ] = vv
                 if self . _path [ 1 ] == k :
                     all [ 'consts_' + kk ] = vv
-        return merge ( self . _bind_consts , all )
+        return merge ( self . _bound [ 'platform_consts' ] , all )
     def _get_value ( self , name ) :
         res = [ ]
         if name in self . _all_consts ( ) :
