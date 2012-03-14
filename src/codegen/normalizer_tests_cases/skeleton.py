@@ -42,7 +42,11 @@ class skeleton_test_case ( unittest . TestCase ) :
     def test_populate ( self ) :
         ae = self . assertEqual
         r = skeleton . run_populate
-        ae ( r ( { 'somewhere' : 'test1' } ) ,
+        ae ( r (
+            { 'somewhere' : { 'test1' : { } }
+            , 'platform_procs' : { 'test2' : { } }
+            , 'platform_consts' : { 'test3' : { } }
+            } ) ,
             { 'consts'    : { 'test1' : { } }
             , 'messages'  : { 'test1' : { } }
             , 'module'    : { 'test1' : { } }
@@ -51,6 +55,8 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'types'     : { 'test1' : { } }
             , 'vars'      : { 'test1' : { } }
             , 'somewhere' : { 'test1' : { } }
+            , 'platform_procs' : { 'test2' : { } }
+            , 'platform_consts' : { 'test3' : { } }
             } )
     def test_outermost ( self ) :
         ae = self . assertEqual
