@@ -70,9 +70,10 @@ def run_procs ( src ) :
             , 'vars' : [ ]
             , 'ops'  : [ ] } } } } }
         for k , v in src . items ( )
-            for kk , vv in v . items ( )
-                if 'proc' in vv
-                    for kkk in vv [ 'proc' ] . keys ( ) ] ,
+            if k not in ( 'platform_consts' , 'platform_procs' )
+                for kk , vv in v . items ( )
+                    if 'proc' in vv
+                        for kkk in vv [ 'proc' ] . keys ( ) ] ,
         src )
 
 def run_message_handlers ( src ) :
