@@ -2,7 +2,8 @@ from utils import merge
 
 def run ( src ) :
     return reduce ( lambda x , y : lambda a : y ( x ( a ) ) ,
-        [ run_outermost
+        [ run_populate
+        , run_outermost
         , run_stateless
         , run_trace
         , run_module

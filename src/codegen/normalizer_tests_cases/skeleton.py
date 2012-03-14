@@ -11,11 +11,21 @@ class skeleton_test_case ( unittest . TestCase ) :
                 , 'request' : { 'req1' : { } }
                 , 'receive' : { 'rcv1' : { } } } }
             , 'messages' : { 'test2' : { } } } ) ,
-            { 'stateless' : { }
-            , 'trace' : { }
-            , 'vars' : { }
-            , 'consts' : { }
-            , 'types' : { }
+            { 'stateless' :
+                { 'test1' : { 'proc' : { } }
+                , 'test2' : { 'proc' : { } } }
+            , 'trace' :
+                { 'test1' : { 'proc' : { } }
+                , 'test2' : { 'proc' : { } } }
+            , 'vars' :
+                { 'test1' : [ ]
+                , 'test2' : [ ] }
+            , 'consts' :
+                { 'test1' : { }
+                , 'test2' : { } }
+            , 'types' :
+                { 'test1' : { }
+                , 'test2' : { } }
             , 'platform_procs' : { }
             , 'platform_consts' : { }
             , 'messages' :
@@ -27,18 +37,20 @@ class skeleton_test_case ( unittest . TestCase ) :
                     { 'request' : { } 
                     , 'reply' : { }
                     , 'receive' : { } } }
-            , 'module' : { 'test1' :
-                { 'module_queue' : ''
-                , 'proc' : { 'proc1' :
-                    { 'vars' : [ ]
-                    , 'args' : [ ]
-                    , 'ops' : [ ] } }
-                , 'request' : { 'req1' : 
-                    { 'vars' : [ ]
-                    , 'ops' : [ ] } }
-                , 'receive' : { 'rcv1' :
-                    { 'vars' : [ ]
-                    , 'ops' : [ ] } } } } } )
+            , 'module' :
+                { 'test1' :
+                    { 'module_queue' : ''
+                    , 'proc' : { 'proc1' :
+                        { 'vars' : [ ] , 'args' : [ ] , 'ops' : [ ] } }
+                    , 'request' : { 'req1' : 
+                        { 'vars' : [ ] , 'ops' : [ ] } }
+                    , 'receive' : { 'rcv1' :
+                        { 'vars' : [ ] , 'ops' : [ ] } } }
+                , 'test2' :
+                    { 'module_queue' : ''
+                    , 'proc' : { }
+                    , 'request' : { }
+                    , 'receive' : { } } } } )
     def test_populate ( self ) :
         ae = self . assertEqual
         r = skeleton . run_populate
