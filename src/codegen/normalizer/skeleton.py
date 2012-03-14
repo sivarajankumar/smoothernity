@@ -13,12 +13,23 @@ def run ( src ) :
         , run_message_handlers
         ] , lambda a : a ) ( src )
 
+def run_populate ( src ) :
+    return reduce ( merge , [
+        dict ( [ ( x , { kk : { } } )
+        for x in
+            ( 'consts' , 'messages' , 'types' , 'vars'
+            , 'module' , 'stateless' , 'trace' ) ] )
+        for k , v in src . items ( )
+            if k not in ( 'platform_procs' , 'platform_consts' )
+                for kk in v . keys ( )
+        ] , src )
+
 def run_outermost ( src ) :
-    return merge (
-        { 'consts' : { } , 'messages' : { } , 'types' : { }
-        , 'vars' : { } , 'module' : { } , 'stateless' : { }
-        , 'trace' : { } , 'platform_consts' : { }
-        , 'platform_procs' : { } } , src )
+    return merge ( dict ( [ ( k , { } )
+        for k in
+            ( 'consts' , 'messages' , 'types' , 'vars' , 'module' , 'trace'
+            , 'stateless' , 'platform_consts' , 'platform_procs'
+            ) ] ) , src )
 
 def run_stateless ( src ) :
     return run_some_storage ( src , 'stateless' , { 'proc' : { } } )
