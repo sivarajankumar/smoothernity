@@ -8,9 +8,6 @@ class calls_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run_calls
         ne = normalizer . exception
-        bf = self . n . bind_func
-        bf ( 'func1' , [ { } , { } ] )
-        bf ( 'func2' , [ ] )
         ar ( ne , r ,
             { 'platform_procs' : { 'func1' : [ { } , { } ] }
             , 'stateless' : { 'st1' : { 'proc' :
