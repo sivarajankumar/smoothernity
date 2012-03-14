@@ -53,7 +53,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'stateless' : { 'test1' : { } }
             , 'trace'     : { 'test1' : { } }
             , 'types'     : { 'test1' : { } }
-            , 'vars'      : { 'test1' : { } }
+            , 'vars'      : { 'test1' : [ ] }
             , 'somewhere' : { 'test1' : { } }
             , 'platform_procs' : { 'test2' : { } }
             , 'platform_consts' : { 'test3' : { } }

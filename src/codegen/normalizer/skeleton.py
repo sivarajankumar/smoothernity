@@ -14,10 +14,10 @@ def run ( src ) :
         ] , lambda a : a ) ( src )
 
 def run_populate ( src ) :
-    return reduce ( merge , [
-        dict ( [ ( x , { kk : { } } )
+    return reduce ( merge , [ dict ( [ ( 'vars' , { kk : [ ] } ) ] +
+        [ ( x , { kk : { } } )
         for x in
-            ( 'consts' , 'messages' , 'types' , 'vars'
+            ( 'consts' , 'messages' , 'types'
             , 'module' , 'stateless' , 'trace' ) ] )
         for k , v in src . items ( )
             if k not in ( 'platform_procs' , 'platform_consts' )
