@@ -9,18 +9,19 @@ class names_test_case ( unittest . TestCase ) :
         ar = self . assertRaises
         r = self . n . run_names
         ne = normalizer . exception
-        bf = self . n . bind_func
-        bf ( 'msg1' , [ ] )
-        bf ( 'func1' , [ ] )
-        bf ( 'test1_func1' , [ ] )
-        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' : [ { 'with' :
-            { 'test1' : [ 'func1' ] } } ] } } ) )
-        ar ( ne , r , rskel ( { 'anywhere' : { 'anywhere' : 
-            { 'ops' : [ 'test1' ]
-            , 'args' : [ { 'test1' : { } } ]
-            , 'vars' : [ { 'test1' : { } } ] } } } ) )
         ar ( ne , r , rskel (
-            { 'messages' : { 'test1' : 
+            { 'platform_procs' : { 'func1' : [ ] , 'test1_func1' : [ ] }
+            , 'anywhere' : { 'anywhere' : [ { 'with' :
+                { 'test1' : [ 'func1' ] } } ] } } ) )
+        ar ( ne , r , rskel (
+            { 'platform_procs' : { 'func1' : [ ] }
+            , 'anywhere' : { 'anywhere' : 
+                { 'ops' : [ 'test1' ]
+                , 'args' : [ { 'test1' : { } } ]
+                , 'vars' : [ { 'test1' : { } } ] } } } ) )
+        ar ( ne , r , rskel (
+            { 'platform_procs' : { 'msg1' : [ ] }
+            , 'messages' : { 'test1' : 
                 { 'receive' : { 'msg1' : [ ] } } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'msg1' ] } } } } ) )
