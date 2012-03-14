@@ -28,13 +28,12 @@ class names_test_case ( unittest . TestCase ) :
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        bf = self . n . bind_func
         ne = normalizer . exception
-        bf ( 'func1' , [ ] )
-        bf ( 'test1_func1' , [ ] )
         try :
-            r ( rskel ( { 'path1' : { 'path2' : [ { 'with' :
-                { 'test1' : [ 'func1' ] } } ] } } ) )
+            r ( rskel (
+                { 'platform_procs' : { 'func1' : [ ] , 'test1_func1' : [ ] }
+                , 'path1' : { 'path2' : [ { 'with' :
+                    { 'test1' : [ 'func1' ] } } ] } } ) )
         except ne as e :
             pass
         gp = e . get_path ( )
