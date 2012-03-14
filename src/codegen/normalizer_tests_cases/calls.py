@@ -60,14 +60,14 @@ class calls_test_case ( unittest . TestCase ) :
     def test_split_args ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls
-        bf = self . n . bind_func
-        bf ( 'func1' , [ { } , { } ] )
         ae ( r (
-            { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'platform_procs' : { 'func1' : [ { } , { } ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' :
                     [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
                 ] } } } } } ) , 
-            { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+            { 'platform_procs' : { 'func1' : [ { } , { } ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' :
                         [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
                         , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
@@ -75,17 +75,15 @@ class calls_test_case ( unittest . TestCase ) :
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls
-        bf = self . n . bind_func
-        bf ( 'func1' , [ ] )
-        s = { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+        s = { 'platform_procs' : { 'func1' : [ ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } }
         ae ( r ( s ) , s )
     def test_bind_func ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls
-        bf = self . n . bind_func
-        bf ( 'func1' , [ { } ] )
-        s = { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+        s = { 'platform_procs' : { 'func1' : [ { } ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' : [ { 'call' : [ 'func1' , 'a' ] } ] } } } } }
         ae ( r ( s ) , s )
     def test_proc_local ( self ) :
