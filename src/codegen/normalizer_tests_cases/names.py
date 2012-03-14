@@ -41,12 +41,12 @@ class names_test_case ( unittest . TestCase ) :
     def test_callable ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        bf = self . n . bind_func
-        bf ( 'test1_func1' , [ ] )
         ae ( r ( rskel (
-            { 'anywhere' : { 'anywhere' : { 'with' :
+            { 'platform_procs' : { 'test1_func1' : [ ] }
+            , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'func1' ] } } } } ) ) , rskel (
-            { 'anywhere' : { 'anywhere' : { 'with' :
+            { 'platform_procs' : { 'test1_func1' : [ ] }
+            , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_func1' ] } } } } ) )
     def test_sendable ( self ) :
         ae = self . assertEqual
