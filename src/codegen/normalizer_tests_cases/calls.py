@@ -11,8 +11,10 @@ class calls_test_case ( unittest . TestCase ) :
         bf = self . n . bind_func
         bf ( 'func1' , [ { } , { } ] )
         bf ( 'func2' , [ ] )
-        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } } )
+        ar ( ne , r ,
+            { 'platform_procs' : { 'func1' : [ { } , { } ] }
+            , 'stateless' : { 'st1' : { 'proc' :
+                { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' , 'a' ] } ] } } } }
             } )
