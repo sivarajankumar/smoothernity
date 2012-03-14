@@ -15,12 +15,16 @@ class calls_test_case ( unittest . TestCase ) :
             { 'platform_procs' : { 'func1' : [ { } , { } ] }
             , 'stateless' : { 'st1' : { 'proc' :
                 { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' ] } ] } } } } } )
-        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' , 'a' ] } ] } } } }
-            } )
-        ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
-            { 'proc1' : { 'ops' : [ { 'call' : [ 'func2' , 'a' ] } ]
-            } } } } } )
+        ar ( ne , r ,
+            { 'platform_procs' : { 'func1' : [ { } , { } ] }
+            , 'stateless' : { 'st1' : { 'proc' :
+                { 'proc1' : { 'ops' : [ { 'call' : [ 'func1' , 'a' ] } ] } } }
+            } } )
+        ar ( ne , r ,
+            { 'platform_procs' : { 'func2' : [ ] }
+            , 'stateless' : { 'st1' : { 'proc' :
+                { 'proc1' : { 'ops' : [ { 'call' : [ 'func2' , 'a' ] } ]
+                } } } } } )
         ar ( ne , r , { 'stateless' : { 'st1' : { 'proc' :
             { 'proc1' : { 'ops' : [ { 'call' : [ 'unknown' , 'a' ] }
             ] } } } } } )
