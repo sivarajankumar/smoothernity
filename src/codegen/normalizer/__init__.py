@@ -9,10 +9,6 @@ class normalizer :
     def __init__ ( self ) :
         self . _src = None
         self . _path = None
-        self . _bound = { 'platform_procs' : { } }
-    def bind_func ( self , func , args ) :
-        self . _bound = merge ( self . _bound ,
-            { 'platform_procs' : { func : args } } )
     def run ( self , src ) :
         self . _src = src
         self . _src = run_skeleton ( self . _src )
@@ -76,7 +72,7 @@ class normalizer :
         return self . _local_some_proc ( 'trace' , name )
     def _get_callable ( self , name ) :
         res = [ ]
-        m = merge ( self . _src , self . _bound )
+        m = merge ( self . _src , { 'platform_procs' : { } } )
         if name in m [ 'platform_procs' ] :
             res . append ( m [ 'platform_procs' ] [ name ] )
         if self . _local_proc ( name ) :
