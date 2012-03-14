@@ -143,13 +143,13 @@ class names_test_case ( unittest . TestCase ) :
     def test_nested_with ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        bf = self . n . bind_func
-        bf ( 'test1_test2_test3_func1' , [ ] )
-        bf ( 'test1_test3_func2' , [ ] )
-        bf ( 'test1_func3' , [ ] )
-        bf ( 'test2_func4' , [ ] )
         ae ( r ( rskel (
-            { 'anywhere' : { 'anywhere' : [ { 'with' :
+            { 'platform_procs' :
+                { 'test1_test2_test3_func1' : [ ]
+                , 'test1_test3_func2' : [ ]
+                , 'test1_func3' : [ ]
+                , 'test2_func4' : [ ] }
+            , 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
                         { 'test3' :
@@ -158,7 +158,12 @@ class names_test_case ( unittest . TestCase ) :
                             , 'func3'
                             , 'func4'
                             ] } } ] } ] } } ] } ] } } ] } } ) ) , rskel (
-            { 'anywhere' : { 'anywhere' : [ { 'with' :
+            { 'platform_procs' :
+                { 'test1_test2_test3_func1' : [ ]
+                , 'test1_test3_func2' : [ ]
+                , 'test1_func3' : [ ]
+                , 'test2_func4' : [ ] }
+            , 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
                         { 'test3' :
