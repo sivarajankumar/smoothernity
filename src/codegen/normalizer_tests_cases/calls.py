@@ -46,13 +46,12 @@ class calls_test_case ( unittest . TestCase ) :
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = self . n . run_calls
-        bf = self . n . bind_func
         ne = normalizer . exception
-        bf ( 'func1' , [ { } , { } ] )
         try :
-            r ( { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                { 'ops' : [ { 'if' : [ { 'any' : [ { 'call' :
-                    [ 'func1' , 'a' ] } ] } ] } ] } } } } } )
+            r ( { 'platform_procs' : { 'func1' : [ { } , { } ] }
+                , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                    { 'ops' : [ { 'if' : [ { 'any' : [ { 'call' :
+                        [ 'func1' , 'a' ] } ] } ] } ] } } } } } )
         except ne as e :
             pass
         gp = e . get_path ( )
