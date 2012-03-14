@@ -83,12 +83,12 @@ class names_test_case ( unittest . TestCase ) :
     def test_consts_bound ( self ) :
         ae = self . assertEqual
         r = self . n . run_names
-        bc = self . n . bind_const
-        bc ( 'test1_const1' , 1 )
         ae ( r ( rskel (
-            { 'anywhere' : { 'anywhere' : { 'with' :
+            { 'platform_consts' : { 'test1_const1' : 1 }
+            , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'const1' ] } } } } ) ) , rskel (
-            { 'anywhere' : { 'anywhere' : { 'with' :
+            { 'platform_consts' : { 'test1_const1' : 1 }
+            , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_const1' ] } } } } ) )
     def test_vars_global ( self ) :
         ae = self . assertEqual

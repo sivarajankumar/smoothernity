@@ -135,7 +135,7 @@ class normalizer :
                 all [ k + '_consts_' + kk ] = vv
                 if self . _path [ 1 ] == k :
                     all [ 'consts_' + kk ] = vv
-        return merge ( self . _bound [ 'platform_consts' ] , all )
+        return merge ( self . _src [ 'platform_consts' ] , all )
     def _get_value ( self , name ) :
         res = [ ]
         if name in self . _all_consts ( ) :

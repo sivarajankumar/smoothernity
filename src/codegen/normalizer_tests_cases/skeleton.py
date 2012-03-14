@@ -56,8 +56,8 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = skeleton . run_populate
         ae ( r (
             { 'somewhere' : { 'test1' : { } }
-            , 'platform_procs' : { 'test2' : { } }
-            , 'platform_consts' : { 'test3' : { } }
+            , 'platform_procs' : { 'test2' : [ ] }
+            , 'platform_consts' : { 'test3' : 1 }
             } ) ,
             { 'consts'    : { 'test1' : { } }
             , 'messages'  : { 'test1' : { } }
@@ -67,8 +67,8 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'types'     : { 'test1' : { } }
             , 'vars'      : { 'test1' : [ ] }
             , 'somewhere' : { 'test1' : { } }
-            , 'platform_procs' : { 'test2' : { } }
-            , 'platform_consts' : { 'test3' : { } }
+            , 'platform_procs' : { 'test2' : [ ] }
+            , 'platform_consts' : { 'test3' : 1 }
             } )
     def test_outermost ( self ) :
         ae = self . assertEqual
@@ -116,10 +116,13 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = skeleton . run_procs
         ae ( r (
             { 'anywhere' : { 'test1' : { 'proc' : {
-                'test2' : { } } } } } ) ,
+                'test2' : { } } } }
+            , 'platform_procs' : { 'test3' : [ ] } 
+            , 'platform_consts' : { 'test4' : 1 } } ) ,
             { 'anywhere' : { 'test1' : { 'proc' : {
-                'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] }
-            } } } } )
+                'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] } } } }
+            , 'platform_procs' : { 'test3' : [ ] } 
+            , 'platform_consts' : { 'test4' : 1 } } )
     def test_module_request ( self ) :
         ae = self . assertEqual
         r = skeleton . run_module_request
