@@ -36,8 +36,8 @@ def rewrite ( src , rewriter , path = [ ] ) :
     elif type ( res ) is list :
         return reduce (
             lambda x , y : x + y if type ( y ) is list else x + [ y ] ,
-            [ rewrite ( res [ iv ] , rewriter , path + [ iv ] )
-                for iv in xrange ( len ( res ) )
+            [ rewrite ( res [ i ] , rewriter , path + [ i ] )
+                for i in xrange ( len ( res ) )
             ] , [ ] )
     else :
         return res
