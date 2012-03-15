@@ -9,10 +9,10 @@ class merge_test_case ( unittest . TestCase ) :
         try :
             m ( { 'test1' : 1
                 , 'test2' : 1
-                , 'test3' : 1 } ,
+                , 'first' : 1 } ,
                 { 'test1' : 1
                 , 'test2' : 1
-                , 'test4' : 1 } )
+                , 'second' : 1 } )
             self . fail ( )
         except me as e :
             ae ( e . get_keys ( ) , [ 'test1' , 'test2' ] )
