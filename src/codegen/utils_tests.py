@@ -58,6 +58,19 @@ class rewrite_test_case ( unittest . TestCase ) :
             , 'test3' : { 'test4' : 'test5' } } ) ,
             { 'test1' : ( 'path' , [ 'test1' ] )
             , 'test3' : { 'test4' : ( 'path' , [ 'test3' , 'test4' ] ) } } )
+    def test_list ( self ) :
+        ae = self . assertEqual
+        r = lambda x : utils . rewrite ( x ,
+            lambda a , b : ( 'path' , b ) if type ( a ) is str else a )
+        ae ( r (
+            [ { 'test1' :
+                [ 'test2'
+                , 'test3' ] }
+            , 'test4' ] ) ,
+            [ { 'test1' :
+                [ ( 'path' , [ 0 , 'test1' , 0 ] ) 
+                , ( 'path' , [ 0 , 'test1' , 1 ] ) ] }
+            , ( 'path' , [ 1 ] ) ] )
 
 class utils_test_case ( unittest . TestCase ) :
     def test_is_text ( self ) :

@@ -28,9 +28,16 @@ def merge ( dst_ , src_ , overwrite = True ) :
 
 def rewrite ( src , rewriter , path = [ ] ) :
     src = rewriter ( src , path )
-    if isinstance ( src , dict ) :
+    if type ( src ) is dict :
         return dict ( [
             ( k , rewrite ( v , rewriter , path + [ k ] ) )
             for k , v in src . items ( ) ] )
+    elif type ( src ) is list :
+        res = list ( )
+        for iv in xrange ( len ( src ) ) :
+            v = src [ iv ]
+            a = rewrite ( v , rewriter , path + [ iv ] )
+            res . append ( a )
+        return res
     else :
         return src
