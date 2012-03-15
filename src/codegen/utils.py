@@ -27,20 +27,16 @@ def merge ( dst_ , src_ , overwrite = True ) :
         return src
 
 def rewrite ( src , rewriter , path = [ ] ) :
-    src = rewriter ( src , path )
-    if type ( src ) is dict :
+    res = rewriter ( src , path )
+    if type ( res ) is dict :
         return dict ( [
             ( k , rewrite ( v , rewriter , path + [ k ] ) )
-            for k , v in src . items ( ) ] )
-    elif type ( src ) is list :
-        res = list ( )
-        for iv in xrange ( len ( src ) ) :
-            v = src [ iv ]
-            a = rewrite ( v , rewriter , path + [ iv ] )
-            if type ( a ) is list :
-                res += a
-            else :
-                res . append ( a )
-        return res
+            for k , v in res . items ( ) ] )
+    elif type ( res ) is list :
+        return reduce (
+            lambda x , y : x + y if type ( y ) is list else x + [ y ] ,
+            [ rewrite ( res [ iv ] , rewriter , path + [ iv ] )
+                for iv in xrange ( len ( res ) )
+            ] , [ ] )
     else :
-        return src
+        return res
