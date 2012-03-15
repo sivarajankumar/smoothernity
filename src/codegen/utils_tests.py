@@ -7,10 +7,15 @@ class merge_test_case ( unittest . TestCase ) :
         me = utils . merge_exception
         m = lambda x , y : utils . merge ( x , y , overwrite = False )
         try :
-            m ( { 'test1' : 'test2' } , { 'test1' : 'test3' } )
+            m ( { 'test1' : 1
+                , 'test2' : 1
+                , 'test3' : 1 } ,
+                { 'test1' : 1
+                , 'test2' : 1
+                , 'test4' : 1 } )
             self . fail ( )
         except me as e :
-            ae ( e . get_key ( ) , 'test1' )
+            ae ( e . get_keys ( ) , [ 'test1' , 'test2' ] )
     def test_empty ( self ) :
         ae = self . assertEqual
         m = utils . merge
