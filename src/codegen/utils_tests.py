@@ -44,11 +44,20 @@ class merge_test_case ( unittest . TestCase ) :
         ae ( m ( { 1 : [ 2 ] } , { 1 : [ 3 ] } ) , { 1 : [ 2 , 3 ] } )
 
 class rewrite_test_case ( unittest . TestCase ) :
-    def test_values ( self ) :
+    def test_value ( self ) :
         ae = self . assertEqual
         r = lambda x : utils . rewrite ( x , lambda a , b : a )
         ae ( r ( 'test1' ) , 'test1' )
         ae ( r ( 123 ) , 123 )
+    def test_dict ( self ) :
+        ae = self . assertEqual
+        r = lambda x : utils . rewrite ( x ,
+            lambda a , b : ( 'path' , b ) if type ( a ) is str else a )
+        ae ( r (
+            { 'test1' : 'test2'
+            , 'test3' : { 'test4' : 'test5' } } ) ,
+            { 'test1' : ( 'path' , [ 'test1' ] )
+            , 'test3' : { 'test4' : ( 'path' , [ 'test3' , 'test4' ] ) } } )
 
 class utils_test_case ( unittest . TestCase ) :
     def test_is_text ( self ) :
