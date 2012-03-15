@@ -4,25 +4,26 @@ def is_text ( s ) :
     return type ( s ) in ( str , unicode )
 
 class merge_exception ( Exception ) :
-    def __init__ ( self , txt , key ) :
+    def __init__ ( self , txt , keys ) :
         Exception . __init__ ( self , txt )
-        self . _key = key
-    def get_key ( self ) :
-        return self . _key
+        self . _keys = keys
+    def get_keys ( self ) :
+        return self . _keys
 
 def merge ( dst_ , src_ , overwrite = True ) :
     dst = deepcopy ( dst_ )
     src = deepcopy ( src_ )
     types = ( type ( dst ) , type ( src ) )
     if types == ( dict , dict ) :
-        for k , v in src . items ( ) :
-            if not overwrite and k in dst :
-                raise merge_exception ( 'Key overwrite' , k )
-            dst [ k ] = merge ( dst [ k ] , v ) if k in dst else v
-        return dst
+        overlap = set ( src . keys ( ) ) . intersection ( dst . keys ( ) )
+        if overlap and not overwrite :
+            raise merge_exception ( 'Keys overwrite' ,
+                list ( sorted ( overlap ) ) )
+        return dict ( dst . items ( ) + [
+            ( k , merge ( dst [ k ] , v ) if k in dst else v )
+            for k , v in src . items ( ) ] )
     elif types == ( list , list ) :
-        dst += src
-        return dst
+        return dst + src
     else :
         return src
 
