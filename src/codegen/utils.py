@@ -37,7 +37,10 @@ def rewrite ( src , rewriter , path = [ ] ) :
         for iv in xrange ( len ( src ) ) :
             v = src [ iv ]
             a = rewrite ( v , rewriter , path + [ iv ] )
-            res . append ( a )
+            if type ( a ) is list :
+                res += a
+            else :
+                res . append ( a )
         return res
     else :
         return src

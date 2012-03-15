@@ -71,6 +71,19 @@ class rewrite_test_case ( unittest . TestCase ) :
                 [ ( 'path' , [ 0 , 'test1' , 0 ] ) 
                 , ( 'path' , [ 0 , 'test1' , 1 ] ) ] }
             , ( 'path' , [ 1 ] ) ] )
+    def test_list_concat ( self ) :
+        ae = self . assertEqual
+        r = lambda x : utils . rewrite ( x ,
+            lambda a , b : [ 111 , 222 ] if type ( a ) is str else a )
+        ae ( r (
+            [ { 'test1' :
+                [ 'test2'
+                , 'test3' ] }
+            , 'test4' ] ) ,
+            [ { 'test1' :
+                [ 111 , 222 
+                , 111 , 222 ] }
+            , 111 , 222 ] )
 
 class utils_test_case ( unittest . TestCase ) :
     def test_is_text ( self ) :
