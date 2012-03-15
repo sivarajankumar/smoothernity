@@ -49,6 +49,10 @@ class rewrite_test_case ( unittest . TestCase ) :
         r = lambda x : utils . rewrite ( x , lambda a , b : a )
         ae ( r ( 'test1' ) , 'test1' )
         ae ( r ( 123 ) , 123 )
+    def test_list_flatten ( self ) :
+        ae = self . assertEqual
+        r = lambda x : utils . rewrite ( x , lambda a , b : a )
+        ae ( r ( [ 1 , [ 2 , [ 3 ] ] ] ) , [ 1 , 2 , 3 ] )
     def test_dict ( self ) :
         ae = self . assertEqual
         r = lambda x : utils . rewrite ( x ,
