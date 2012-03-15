@@ -1,5 +1,8 @@
 from copy import deepcopy
 
+def is_text ( s ) :
+    return type ( s ) in ( str , unicode )
+
 class merge_exception ( Exception ) :
     def __init__ ( self , txt , key ) :
         Exception . __init__ ( self , txt )
@@ -23,5 +26,5 @@ def merge ( dst_ , src_ , overwrite = True ) :
     else :
         return src
 
-def is_text ( s ) :
-    return type ( s ) in ( str , unicode )
+def rewrite ( src , rewriter , path = [ ] ) :
+    return src

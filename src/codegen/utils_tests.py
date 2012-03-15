@@ -43,6 +43,13 @@ class merge_test_case ( unittest . TestCase ) :
         m = utils . merge
         ae ( m ( { 1 : [ 2 ] } , { 1 : [ 3 ] } ) , { 1 : [ 2 , 3 ] } )
 
+class rewrite_test_case ( unittest . TestCase ) :
+    def test_values ( self ) :
+        ae = self . assertEqual
+        r = lambda x : utils . rewrite ( x , lambda a , b : a )
+        ae ( r ( 'test1' ) , 'test1' )
+        ae ( r ( 123 ) , 123 )
+
 class utils_test_case ( unittest . TestCase ) :
     def test_is_text ( self ) :
         at = self . assertTrue
