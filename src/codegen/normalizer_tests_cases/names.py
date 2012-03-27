@@ -10,17 +10,17 @@ class names_test_case ( unittest . TestCase ) :
         r = self . n . run_names
         ne = normalizer . exception
         ar ( ne , r , rskel (
-            { 'platform_procs' : { 'func1' : [ ] , 'test1_func1' : [ ] }
+            { 'platform_procs' : { 'func1' : { } , 'test1_func1' : { } }
             , 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ 'func1' ] } } ] } } ) )
         ar ( ne , r , rskel (
-            { 'platform_procs' : { 'func1' : [ ] }
+            { 'platform_procs' : { 'func1' : { } }
             , 'anywhere' : { 'anywhere' : 
                 { 'ops' : [ 'test1' ]
                 , 'args' : [ { 'test1' : { } } ]
                 , 'vars' : [ { 'test1' : { } } ] } } } ) )
         ar ( ne , r , rskel (
-            { 'platform_procs' : { 'msg1' : [ ] }
+            { 'platform_procs' : { 'msg1' : { } }
             , 'messages' : { 'test1' : 
                 { 'receive' : { 'msg1' : [ ] } } }
             , 'anywhere' : { 'anywhere' : { 'with' :
@@ -31,7 +31,7 @@ class names_test_case ( unittest . TestCase ) :
         ne = normalizer . exception
         try :
             r ( rskel (
-                { 'platform_procs' : { 'func1' : [ ] , 'test1_func1' : [ ] }
+                { 'platform_procs' : { 'func1' : { } , 'test1_func1' : { } }
                 , 'path1' : { 'path2' : [ { 'with' :
                     { 'test1' : [ 'func1' ] } } ] } } ) )
         except ne as e :
@@ -42,10 +42,10 @@ class names_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         r = self . n . run_names
         ae ( r ( rskel (
-            { 'platform_procs' : { 'test1_func1' : [ ] }
+            { 'platform_procs' : { 'test1_func1' : { } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'func1' ] } } } } ) ) , rskel (
-            { 'platform_procs' : { 'test1_func1' : [ ] }
+            { 'platform_procs' : { 'test1_func1' : { } }
             , 'anywhere' : { 'anywhere' : { 'with' :
                 { 'test1' : [ 'test1_func1' ] } } } } ) )
     def test_sendable ( self ) :
@@ -145,10 +145,10 @@ class names_test_case ( unittest . TestCase ) :
         r = self . n . run_names
         ae ( r ( rskel (
             { 'platform_procs' :
-                { 'test1_test2_test3_func1' : [ ]
-                , 'test1_test3_func2' : [ ]
-                , 'test1_func3' : [ ]
-                , 'test2_func4' : [ ] }
+                { 'test1_test2_test3_func1' : { }
+                , 'test1_test3_func2' : { }
+                , 'test1_func3' : { }
+                , 'test2_func4' : { } }
             , 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
@@ -159,10 +159,10 @@ class names_test_case ( unittest . TestCase ) :
                             , 'func4'
                             ] } } ] } ] } } ] } ] } } ] } } ) ) , rskel (
             { 'platform_procs' :
-                { 'test1_test2_test3_func1' : [ ]
-                , 'test1_test3_func2' : [ ]
-                , 'test1_func3' : [ ]
-                , 'test2_func4' : [ ] }
+                { 'test1_test2_test3_func1' : { }
+                , 'test1_test3_func2' : { }
+                , 'test1_func3' : { }
+                , 'test2_func4' : { } }
             , 'anywhere' : { 'anywhere' : [ { 'with' :
                 { 'test1' : [ { 'anywhere' : [ { 'with' :
                     { 'test2' : [ { 'anywhere' : [ { 'with' :
