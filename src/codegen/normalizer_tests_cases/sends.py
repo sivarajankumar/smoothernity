@@ -1,31 +1,29 @@
 from normalizer . sends import run
 from normalizer . skeleton import run as rskel
-import normalizer
+from normalizer . exception import exception
 import unittest
 
 class sends_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
-        r = lambda x : run ( rskel ( x ) )
-        ne = normalizer . exception
-        ar ( ne , r , 
+        r = run
+        ne = exception
+        ar ( ne , r , rskel (
             { 'messages' : { 'test1' : { 'receive' :
                 { 'msg1' : [ { } , { } ] } } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : 
                 { 'ops' : [ { 'send' : [ 'test1_msg1' , 'a' ] } ]
-            } } } } } )
-        ar ( ne , r , 
+            } } } } } ) )
+        ar ( ne , r , rskel (
             { 'messages' : { 'test1' : { 'receive' :
                 { 'msg1' : [ { } , { } ] } } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : 
                 { 'ops' : [ { 'send' : [ 'unknown' , 'a' ] } ]
-            } } } } } )
+            } } } } } ) )
     def test_exception_path ( self ) :
         ae = self . assertEqual
         r = run
-        ne = normalizer . exception
+        ne = exception
         try :
             r ( rskel (
                 { 'messages' : { 'test1' : { 'receive' :

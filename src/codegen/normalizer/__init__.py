@@ -4,7 +4,6 @@ from normalizer . exception import exception
 from normalizer . consts import run as run_consts
 from normalizer . sends import run as run_sends
 from normalizer . skeleton import run as run_skeleton
-from utils import merge
 
 class normalizer :
     def __init__ ( self ) :
@@ -14,15 +13,11 @@ class normalizer :
         self . _src = src
         self . _src = run_skeleton ( self . _src )
         self . _src = run_consts ( self . _src )
-        self . _src = self . run_sends ( self . _src )
+        self . _src = run_sends ( self . _src )
         self . _src = self . run_calls ( self . _src )
         self . _src = self . run_assigns ( self . _src )
         self . _src = self . run_names ( self . _src )
         self . _src = self . run_withs ( self . _src )
-        return self . _src
-    def run_sends ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_sends )
         return self . _src
     def run_calls ( self , src ) :
         self . _src = src
@@ -244,5 +239,3 @@ class normalizer :
             return src
     def _norm_calls ( self , src ) :
         return self . _norm_arguable ( src , 'call' , self . _get_callable )
-    def _norm_sends ( self , src ) :
-        return self . _norm_arguable ( src , 'send' , self . _get_sendable )
