@@ -11,6 +11,7 @@ def run ( src ) :
         , run_module_request
         , run_messages
         , run_procs
+        , run_platform_procs
         , run_message_handlers
         ] , lambda a : a ) ( src )
 
@@ -62,6 +63,12 @@ def run_module_receive ( src ) :
 def run_messages ( src ) :
     return run_some_storage ( src , 'messages' , 
         { 'receive' : { } , 'reply' : { } , 'request' : { } } )
+
+def run_platform_procs ( src ) :
+    return reduce ( merge ,
+        [ { 'platform_procs' : { k : { 'args' : [ ] } } }
+            for k in src [ 'platform_procs' ] . keys ( ) ] ,
+        src )
 
 def run_procs ( src ) :
     return reduce ( merge ,

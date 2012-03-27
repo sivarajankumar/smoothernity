@@ -10,7 +10,8 @@ class skeleton_test_case ( unittest . TestCase ) :
                 { 'proc' : { 'proc1' : { } }
                 , 'request' : { 'req1' : { } }
                 , 'receive' : { 'rcv1' : { } } } }
-            , 'messages' : { 'test2' : { } } } ) ,
+            , 'messages' : { 'test2' : { } }
+            , 'platform_procs' : { 'test1' : { } } } ) ,
             { 'stateless' :
                 { 'test1' : { 'proc' : { } }
                 , 'test2' : { 'proc' : { } } }
@@ -26,7 +27,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'types' :
                 { 'test1' : { }
                 , 'test2' : { } }
-            , 'platform_procs' : { }
+            , 'platform_procs' : { 'test1' : { 'args' : [ ] } }
             , 'platform_consts' : { }
             , 'messages' :
                 { 'test1' :
@@ -56,7 +57,7 @@ class skeleton_test_case ( unittest . TestCase ) :
         r = skeleton . run_populate
         ae ( r (
             { 'somewhere' : { 'test1' : { } }
-            , 'platform_procs' : { 'test2' : [ ] }
+            , 'platform_procs' : { 'test2' : { } }
             , 'platform_consts' : { 'test3' : 1 }
             } ) ,
             { 'consts'    : { 'test1' : { } }
@@ -67,7 +68,7 @@ class skeleton_test_case ( unittest . TestCase ) :
             , 'types'     : { 'test1' : { } }
             , 'vars'      : { 'test1' : [ ] }
             , 'somewhere' : { 'test1' : { } }
-            , 'platform_procs' : { 'test2' : [ ] }
+            , 'platform_procs' : { 'test2' : { } }
             , 'platform_consts' : { 'test3' : 1 }
             } )
     def test_outermost ( self ) :
@@ -117,12 +118,22 @@ class skeleton_test_case ( unittest . TestCase ) :
         ae ( r (
             { 'anywhere' : { 'test1' : { 'proc' : {
                 'test2' : { } } } }
-            , 'platform_procs' : { 'test3' : [ ] } 
+            , 'platform_procs' : { 'test3' : { } } 
             , 'platform_consts' : { 'test4' : 1 } } ) ,
             { 'anywhere' : { 'test1' : { 'proc' : {
                 'test2' : { 'args' : [ ] , 'vars' : [ ] , 'ops' : [ ] } } } }
-            , 'platform_procs' : { 'test3' : [ ] } 
+            , 'platform_procs' : { 'test3' : { } } 
             , 'platform_consts' : { 'test4' : 1 } } )
+    def test_platform_procs ( self ) :
+        ae = self . assertEqual
+        r = skeleton . run_platform_procs
+        ae ( r (
+            { 'platform_procs' :
+                { 'test1' : { }
+                , 'test2' : { 'args' : [ { 'arg1' : { } } ] } } } ) ,
+            { 'platform_procs' :
+                { 'test1' : { 'args' : [ ] }
+                , 'test2' : { 'args' : [ { 'arg1' : { } } ] } } } )
     def test_module_request ( self ) :
         ae = self . assertEqual
         r = skeleton . run_module_request

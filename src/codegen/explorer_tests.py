@@ -49,10 +49,10 @@ class explorer_test_case ( unittest . TestCase ) :
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'platform_procs' :
-                { 'proc1' : 'test1'
-                , 'proc2' : 'test2' } } )
-        r = { 'proc1' : 'test1'
-            , 'proc2' : 'test2' }
+                { 'proc1' : { 'args' : [ 'test1' ] }
+                , 'proc2' : { 'args' : [ 'test2' ] } } } )
+        r = { 'proc1' : { 'args' : [ 'test1' ] }
+            , 'proc2' : { 'args' : [ 'test2' ] } }
         ae = self . assertEqual
         ae ( g ( s ) , r )
         ae ( gc ( s , p ) , r )
