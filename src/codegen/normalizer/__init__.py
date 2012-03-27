@@ -2,6 +2,7 @@ from utils import merge , is_text
 from itertools import combinations
 from normalizer . exception import exception
 from normalizer . consts import run as run_consts
+from normalizer . sends import run as run_sends
 from normalizer . skeleton import run as run_skeleton
 from utils import merge
 
