@@ -8,7 +8,7 @@ class sends_test_case ( unittest . TestCase ) :
         self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
-        r = self . n . run_sends
+        r = lambda x : run ( rskel ( x ) )
         ne = normalizer . exception
         ar ( ne , r , 
             { 'messages' : { 'test1' : { 'receive' :
@@ -24,14 +24,15 @@ class sends_test_case ( unittest . TestCase ) :
             } } } } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends
+        r = run
         ne = normalizer . exception
         try :
-            r ( { 'messages' : { 'test1' : { 'receive' :
+            r ( rskel (
+                { 'messages' : { 'test1' : { 'receive' :
                     { 'msg1' : [ { } , { } ] } } }
                 , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : 
                     { 'ops' : [ { 'if' : [ { 'any' : [ { 'send' :
-                        [ 'test1_msg1' , 'a' ] } ] } ] } ] } } } } } )
+                        [ 'test1_msg1' , 'a' ] } ] } ] } ] } } } } } ) )
         except ne as e :
             pass
         gp = e . get_path ( )
@@ -56,11 +57,12 @@ class sends_test_case ( unittest . TestCase ) :
             ] } } } } } ) )
     def test_no_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends
-        s = { 'messages' : { 'test1' : 
+        r = run
+        s = rskel (
+            { 'messages' : { 'test1' : 
                 { 'receive' : { 'msg1' : [ ] } } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : 
                 { 'ops' :
                     [ { 'send' : [ 'test1_msg1' ] } ]
-            } } } } } 
+            } } } } } )
         ae ( r ( s ) , s )
