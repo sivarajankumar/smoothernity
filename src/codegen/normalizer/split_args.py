@@ -16,10 +16,11 @@ def _rewriter ( what , where , src , path ) :
         if type ( src ) is dict and what in src :
             res = list ( )
             name , args = src [ what ] [ 0 ] , src [ what ] [ 1 : ]
-            if name not in where :
+            try :
+                need_args = where ( name , path )
+            except KeyError as e :
                 raise _rewriter_exception ( "Unknown %sable '%s'"
                     % ( what , name ) )
-            need_args = where [ name ]
             la , lna = len ( args ) , len ( need_args )
             if la != lna and ( not la * lna or la % lna ) :
                 raise _rewriter_exception ( "'%s' takes n*%i args, "
