@@ -1,12 +1,9 @@
 from normalizer . calls import run
 from normalizer . skeleton import run as rskel
 from normalizer . exception import exception
-import normalizer
 import unittest
 
 class calls_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
         ar = self . assertRaises
         r = lambda x : run ( rskel ( x ) )
