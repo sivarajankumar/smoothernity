@@ -1,6 +1,7 @@
 from utils import merge , is_text
 from itertools import combinations
 from normalizer . exception import exception
+from normalizer . calls import run as run_calls
 from normalizer . consts import run as run_consts
 from normalizer . sends import run as run_sends
 from normalizer . skeleton import run as run_skeleton
@@ -14,14 +15,10 @@ class normalizer :
         self . _src = run_skeleton ( self . _src )
         self . _src = run_consts ( self . _src )
         self . _src = run_sends ( self . _src )
-        self . _src = self . run_calls ( self . _src )
+        self . _src = run_calls ( self . _src )
         self . _src = self . run_assigns ( self . _src )
         self . _src = self . run_names ( self . _src )
         self . _src = self . run_withs ( self . _src )
-        return self . _src
-    def run_calls ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_calls )
         return self . _src
     def run_assigns ( self , src ) :
         self . _src = src
@@ -211,31 +208,8 @@ class normalizer :
                         , 'to' : [ tos [ i ] ] } } )
                 return res if len ( res ) > 1 else res [ 0 ]
         return src
-    def _norm_arguable ( self , src , what , how ) :
-        if isinstance ( src , dict ) :
-            if what in src :
-                res = list ( )
-                name = src [ what ] [ 0 ]
-                args = src [ what ] [ 1 : ]
-                if not how ( name ) :
-                    self . _error ( "Unknown arguable '%s'" % name )
-                assert len ( how ( name ) ) == 1 #TODO: raise here
-                need_args = how ( name ) [ 0 ]
-                la , lna = len ( args ) , len ( need_args )
-                if la != lna and ( not la * lna or la % lna ) :
-                    self . _error ( "'%s' takes n*%i args, "
-                        "but has been given %i" % ( name , lna , la ) )
-                while True :
-                    res . append ( { what : [ name ] + args [ : lna ] } )
-                    args = args [ lna : ]
-                    if not args :
-                        break
-                return res if len ( res ) > 1 else res [ 0 ]
-        return src
     def _norm_names ( self , src ) :
         if is_text ( src ) :
             return self . _use_withs ( src , self . _get_anything )
         else :
             return src
-    def _norm_calls ( self , src ) :
-        return self . _norm_arguable ( src , 'call' , self . _get_callable )
