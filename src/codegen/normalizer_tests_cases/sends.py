@@ -1,3 +1,4 @@
+from normalizer . sends import run
 import normalizer
 import unittest
 
@@ -37,7 +38,7 @@ class sends_test_case ( unittest . TestCase ) :
             'ops' , 0 , 'if' , 0 , 'any' , 0 ] )
     def test_split_args ( self ) :
         ae = self . assertEqual
-        r = self . n . run_sends
+        r = run
         ae ( r ( 
             { 'messages' : { 'test1' : 
                 { 'receive' : { 'msg1' : [ { } , { } ] } } }
