@@ -1,6 +1,5 @@
 from normalizer . calls import run
 from normalizer . skeleton import run as rskel
-from normalizer . exception import exception
 import unittest
 
 class calls_test_case ( unittest . TestCase ) :
