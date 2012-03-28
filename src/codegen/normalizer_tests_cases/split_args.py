@@ -22,38 +22,26 @@ class split_args_test_case ( unittest . TestCase ) :
             { 'anywhere' : { 'split' : [ 'unknown' , 'a' ] } } )
     def test_exception_path ( self ) :
         ae = self . assertEqual
-        r = lambda x : run ( 'call' ,
-            lambda n , p : explorer ( x ) . get_callables ( p ) [ n ] [ 'args' ] ,
-            x )
+        r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         ne = exception
         try :
-            r ( rskel (
-                { 'platform_procs' : { 'func1' : { 'args' : [ { } , { } ] } }
-                , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                    { 'ops' : [ { 'if' : [ { 'any' : [ { 'call' :
-                        [ 'func1' , 'a' ] } ] } ] } ] } } } } } ) )
+            r ( { 'func1' : [ { } , { } ] } ,
+                { 'path1' : { 'path2' :
+                    { 'split' : [ 'func1' , 'a' ] } } } )
         except ne as e :
             pass
         gp = e . get_path ( )
-        ae ( gp , [ 'stateless' , 'st1' , 'proc' , 'proc1' ,
-            'ops' , 0 , 'if' , 0 , 'any' , 0 ] )
+        ae ( gp , [ 'path1' , 'path2' ] )
     def test_split_args ( self ) :
         ae = self . assertEqual
-        r = lambda x : run ( 'call' ,
-            lambda n , p : explorer ( x ) . get_callables ( p ) [ n ] [ 'args' ] ,
-            x )
-        ae ( r ( rskel (
-            { 'platform_procs' : { 'func1' : { 'args' : [ { } , { } ] } }
-            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                { 'ops' :
-                    [ { 'call' : [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] }
-                ] } } } } } ) ) , rskel (
-            { 'platform_procs' : { 'func1' : { 'args' : [ { } , { } ] } }
-            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                { 'ops' :
-                        [ { 'call' : [ 'func1' , 'a1' , 'a2' ] }
-                        , { 'call' : [ 'func1' , 'a3' , 'a4' ] }
-                ] } } } } } ) )
+        r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
+        ae ( r (
+            { 'func1' : [ { } , { } ] } ,
+            { 'anywhere' : [ { 'split' :
+                [ 'func1' , 'a1' , 'a2' , 'a3' , 'a4' ] } ] } ) ,
+            { 'anywhere' :
+                [ { 'split' : [ 'func1' , 'a1' , 'a2' ] }
+                , { 'split' : [ 'func1' , 'a3' , 'a4' ] } ] } )
     def test_no_args ( self ) :
         ae = self . assertEqual
         r = lambda x : run ( 'call' ,
