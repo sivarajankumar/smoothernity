@@ -10,7 +10,8 @@ class calls_test_case ( unittest . TestCase ) :
         ae ( r ( rskel (
             { 'stateless' : { 'st1' : { 'proc' :
                 { 'proc1' : { 'args' : [ { } ] }
-                , 'proc2' : { 'ops' : [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
+                , 'proc2' : { 'ops' :
+                    [ { 'call' : [ 'proc1' , 'a1' , 'a2' ] }
                 ] } } } } } ) ) , rskel (
             { 'stateless' : { 'st1' : { 'proc' :
                 { 'proc1' : { 'args' : [ { } ] }
