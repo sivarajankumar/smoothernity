@@ -20,18 +20,18 @@ class split_args_test_case ( unittest . TestCase ) :
             { 'anywhere' : { 'split' : [ 'func1' , 'a' ] } } )
         ar ( ne , r , { } ,
             { 'anywhere' : { 'split' : [ 'unknown' , 'a' ] } } )
-    def test_exception_path ( self ) :
+    def test_exception_args ( self ) :
         ae = self . assertEqual
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         ne = exception
+        s = { 'path1' : { 'path2' :
+                { 'split' : [ 'func1' , 'a' ] } } }
         try :
-            r ( { 'func1' : [ { } , { } ] } ,
-                { 'path1' : { 'path2' :
-                    { 'split' : [ 'func1' , 'a' ] } } } )
+            r ( { 'func1' : [ { } , { } ] } , s )
         except ne as e :
             pass
-        gp = e . get_path ( )
-        ae ( gp , [ 'path1' , 'path2' ] )
+        ae ( e . get_path ( )  , [ 'path1' , 'path2' ] )
+        ae ( e . get_src ( )  , s )
     def test_split_args ( self ) :
         ae = self . assertEqual
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
