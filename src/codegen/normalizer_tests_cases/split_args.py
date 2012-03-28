@@ -6,9 +6,9 @@ import unittest
 
 class split_args_test_case ( unittest . TestCase ) :
     def test_raise ( self ) :
-        ar = self . assertRaises
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         ne = exception
+        ar = self . assertRaises
         ar ( ne , r ,
             { 'func1' : [ { } , { } ] } ,
             { 'anywhere' : { 'split' : [ 'func1' ] } } )
@@ -21,20 +21,19 @@ class split_args_test_case ( unittest . TestCase ) :
         ar ( ne , r , { } ,
             { 'anywhere' : { 'split' : [ 'unknown' , 'a' ] } } )
     def test_exception_args ( self ) :
-        ae = self . assertEqual
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
-        ne = exception
         s = { 'path1' : { 'path2' :
                 { 'split' : [ 'func1' , 'a' ] } } }
         try :
             r ( { 'func1' : [ { } , { } ] } , s )
-        except ne as e :
+        except exception as e :
             pass
+        ae = self . assertEqual
         ae ( e . get_path ( )  , [ 'path1' , 'path2' ] )
         ae ( e . get_src ( )  , s )
     def test_split_args ( self ) :
-        ae = self . assertEqual
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
+        ae = self . assertEqual
         ae ( r (
             { 'func1' : [ { } , { } ] } ,
             { 'anywhere' : [ { 'split' :
@@ -43,7 +42,13 @@ class split_args_test_case ( unittest . TestCase ) :
                 [ { 'split' : [ 'func1' , 'a1' , 'a2' ] }
                 , { 'split' : [ 'func1' , 'a3' , 'a4' ] } ] } )
     def test_no_args ( self ) :
-        ae = self . assertEqual
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         s = { 'anywhere' : { 'split' : [ 'func1' ] } }
+        ae = self . assertEqual
         ae ( r ( { 'func1' : [ ] } , s ) , s )
+    def test_path ( self ) :
+        r = lambda x , y : run ( 'split' ,
+                lambda n , p : x [ '-' . join ( p ) ] [ n ] , y )
+        s = { 'path1' : { 'path2' : { 'split' : [ 'func1' ] } } }
+        ae = self . assertEqual
+        ae ( r ( { 'path1-path2' : { 'func1' : [ ] } } , s ) , s )
