@@ -1,7 +1,7 @@
 from utils import rewrite
 from normalizer import exception
 
-def split_args ( what , where , src ) :
+def run ( what , where , src ) :
     try :
         return rewrite ( src ,
             lambda s , p : _rewriter ( what , where , s , p ) )
