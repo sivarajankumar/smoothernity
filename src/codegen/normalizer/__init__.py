@@ -1,6 +1,7 @@
 from utils import merge , is_text
 from itertools import combinations
 from normalizer . exception import exception
+from normalizer . assigns import run as run_assigns
 from normalizer . calls import run as run_calls
 from normalizer . consts import run as run_consts
 from normalizer . sends import run as run_sends
@@ -16,13 +17,9 @@ class normalizer :
         self . _src = run_consts ( self . _src )
         self . _src = run_sends ( self . _src )
         self . _src = run_calls ( self . _src )
-        self . _src = self . run_assigns ( self . _src )
+        self . _src = run_assigns ( self . _src )
         self . _src = self . run_names ( self . _src )
         self . _src = self . run_withs ( self . _src )
-        return self . _src
-    def run_assigns ( self , src ) :
-        self . _src = src
-        self . _src = self . _walk ( self . _src , self . _norm_assigns )
         return self . _src
     def run_names ( self , src ) :
         self . _src = src
@@ -191,22 +188,6 @@ class normalizer :
                 for k , v in src [ 'with' ] . items ( ) :
                     res += v
                 return res
-        return src
-    def _norm_assigns ( self , src ) :
-        if isinstance ( src , dict ) :
-            if 'assign' in src :
-                res = list ( )
-                froms = src [ 'assign' ] [ 'from' ]
-                tos = src [ 'assign' ] [ 'to' ]
-                lf , lt = len ( froms ) , len ( tos )
-                if lt % lf > 0 :
-                    self . _error ( 'Need %i more assign targets' %
-                        ( lf - ( lt % lf ) ) )
-                for i in xrange ( lt ) :
-                    res . append ( { 'assign' :
-                        { 'from' : [ froms [ i % lf ] ]
-                        , 'to' : [ tos [ i ] ] } } )
-                return res if len ( res ) > 1 else res [ 0 ]
         return src
     def _norm_names ( self , src ) :
         if is_text ( src ) :
