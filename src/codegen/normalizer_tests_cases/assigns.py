@@ -1,34 +1,34 @@
-import normalizer
+from normalizer . assigns import run
+from normalizer . exception import exception
 import unittest
 
 class assigns_test_case ( unittest . TestCase ) :
-    def setUp ( self ) :
-        self . n = normalizer . normalizer ( )
     def test_raise ( self ) :
+        r = run
+        ne = exception
         ar = self . assertRaises
-        r = self . n . run_assigns
-        ne = normalizer . exception
         ar ( ne , r , { 'anywhere' : { 'anywhere' :
             { 'ops' : [ { 'assign' :
                 { 'from' : [ 'a1' , 'a2' ]
                 , 'to' : [ 'a3' , 'a4' , 'a5' ]
                 } } ] } } } )
-    def test_exception_path ( self ) :
-        ae = self . assertEqual
-        r = self . n . run_assigns
-        ne = normalizer . exception
-        try :
-            r ( { 'path1' : { 'path2' :
+    def test_exception_args ( self ) :
+        r = run
+        ne = exception
+        s = { 'path1' : { 'path2' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' , 'a2' ]
-                    , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } } )
+                    , 'to' : [ 'a3' , 'a4' , 'a5' ] } } ] } } }
+        try :
+            r ( s )
         except ne as e :
             pass
-        gp = e . get_path ( )
-        ae ( gp , [ 'path1' , 'path2' , 'ops' , 0 ] )
-    def test_split ( self ) :
         ae = self . assertEqual
-        r = self . n . run_assigns
+        ae ( e . get_src ( ) , s )
+        ae ( e . get_path ( ) , [ 'path1' , 'path2' , 'ops' , 0 ] )
+    def test_split ( self ) :
+        r = run
+        ae = self . assertEqual
         ae ( r (
             { 'anywhere' : { 'anywhere' :
                 { 'ops' : [ { 'assign' :
