@@ -9,3 +9,8 @@ class withs_test_case ( unittest . TestCase ) :
                 { 'prefix' : [ 'something' ] } } } } ) ,
             { 'anywhere' : { 'anywhere' : 
                 [ 'something' ] } } ) 
+    def test_keep ( self ) :
+        ae = self . assertEqual
+        s = { 'anywhere' : { 'anywhere' : { 'something' :
+                { 'prefix' : [ 'something' ] } } } }
+        ae ( run ( s ) , s )

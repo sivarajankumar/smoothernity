@@ -1,13 +1,6 @@
 from utils import rewrite
 
-def _rewriter ( src , path ) :
-    if isinstance ( src , dict ) :
-        if 'with' in src :
-            res = list ( )
-            for k , v in src [ 'with' ] . items ( ) :
-                res += v
-            return res
-    return src
-
 def run ( src ) :
-    return rewrite ( src , _rewriter )
+    return rewrite ( src , lambda s , p :
+        [ v for v in s [ 'with' ] . values ( ) ] \
+        if type ( s ) is dict and 'with' in s else s )
