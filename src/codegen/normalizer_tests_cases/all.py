@@ -7,13 +7,15 @@ class all_test_case ( unittest . TestCase ) :
         r = run
         ae = self . assertEqual
         ae ( r (
-            { 'platform_procs' : { 'test1_func1' : { } }
+            { 'platform_procs' : { 'test1_func1' : { 'args' : [ { } ] } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-                [ { 'with' : { 'test1' : [ { 'call' : [ 'func1' ] } ] } } ]
-            } } } } } ) , rskel (
-            { 'platform_procs' : { 'test1_func1' : { } }
+                [ { 'with' : { 'test1' :
+                    [ { 'call' : [ 'func1' , 'a1' , 'a2' ] } ]
+            } } ] } } } } } ) , rskel (
+            { 'platform_procs' : { 'test1_func1' : { 'args' : [ { } ] } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-                [ { 'call' : [ 'test1_func1' ] } ]
+                [ { 'call' : [ 'test1_func1' , 'a1' ] }
+                , { 'call' : [ 'test1_func1' , 'a2' ] } ]
             } } } } } ) )
     def test_sends_after_names ( self ) :
         pass
