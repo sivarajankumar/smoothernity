@@ -10,9 +10,9 @@ def run ( src ) :
     return reduce ( lambda x , y : lambda a : y ( x ( a ) ) ,
         [ run_skeleton
         , run_consts
+        , run_names
+        , run_withs
         , run_sends
         , run_calls
         , run_assigns
-        , run_names
-        , run_withs
         ] , lambda a : a ) ( src )
