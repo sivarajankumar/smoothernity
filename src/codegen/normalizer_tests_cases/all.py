@@ -4,7 +4,17 @@ from normalizer . skeleton import run as rskel
 
 class all_test_case ( unittest . TestCase ) :
     def test_withs_after_names ( self ) :
-        pass
+        r = run
+        ae = self . assertEqual
+        ae ( r (
+            { 'platform_procs' : { 'test1_func1' : { } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+                [ { 'with' : { 'test1' : [ 'func1' ] } } ]
+            } } } } } ) , rskel (
+            { 'platform_procs' : { 'test1_func1' : { } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+                [ 'test1_func1' ]
+            } } } } } ) )
     def test_calls_after_withs ( self ) :
         pass
     def test_sends_after_withs ( self ) :
