@@ -12,12 +12,12 @@ class all_test_case ( unittest . TestCase ) :
     def test_assigns ( self ) :
         r = run
         ae = self . assertEqual
-        ae ( r ( rskel (
+        ae ( r ( 
             { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' ]
                     , 'to' : [ 'a2' , 'a3' ]
-            } } ] } } } } } ) ) , rskel (
+            } } ] } } } } } ) , rskel (
             { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'ops' :
                     [ { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a2' ] } }
