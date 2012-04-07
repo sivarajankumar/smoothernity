@@ -4,6 +4,7 @@ from normalizer import run as normalizer_run
 from normalizer . exception import exception as normalizer_exception
 from reader import reader
 from reader import exception as reader_exception
+from utils import merge
 
 def reify ( data , open_func , trace , options , os_mod ) :
     for raw_name , contents in sorted ( data . items ( ) ) :
@@ -131,114 +132,116 @@ if __name__ == '__main__' :
             return argv [ 1 ]
         
     try :
-        n = normalizer ( )
-        bc = n . bind_const
-        bf = n . bind_func
-        bc ( 'platform_consts_seconds_per_frame' , Fraction ( 1 , 60 ) )
-        bc ( 'platform_math_consts_fract_2pi' , Fraction ( 6283184 , 1000000 ) )
-        bf ( 'platform_conditions_fract_greater_than_fract' , [ { } ] * 2 )
-        bf ( 'platform_conditions_fract_less_than_fract' , [ { } ] * 2 )
-        bf ( 'platform_conditions_whole_greater_or_equal_to_whole' , [ { } ] * 2 )
-        bf ( 'platform_conditions_whole_greater_than_whole' , [ { } ] * 2 )
-        bf ( 'platform_conditions_whole_greater_than_zero' , [ { } ] * 1 )
-        bf ( 'platform_conditions_whole_is_false' , [ { } ] * 1 )
-        bf ( 'platform_conditions_whole_is_true' , [ { } ] * 1 )
-        bf ( 'platform_conditions_whole_less_or_equal_to_whole' , [ { } ] * 2 )
-        bf ( 'platform_conditions_whole_less_than_whole' , [ { } ] * 2 )
-        bf ( 'platform_conditions_whole_less_than_zero' , [ { } ] * 1 )
-        bf ( 'platform_conditions_wholes_are_equal' , [ { } ] * 2 )
-        bf ( 'platform_conditions_wholes_are_not_equal' , [ { } ] * 2 )
-        bf ( 'platform_math_add_fracts' , [ { } ] * 3 )
-        bf ( 'platform_math_add_wholes' , [ { } ] * 3 )
-        bf ( 'platform_math_add_to_fract' , [ { } ] * 2 )
-        bf ( 'platform_math_add_to_whole' , [ { } ] * 2 )
-        bf ( 'platform_math_cos' , [ { } ] * 2 )
-        bf ( 'platform_math_dec_whole' , [ { } ] * 1 )
-        bf ( 'platform_math_div_fract_by' , [ { } ] * 2 )
-        bf ( 'platform_math_div_whole_by' , [ { } ] * 2 )
-        bf ( 'platform_math_div_wholes' , [ { } ] * 3 )
-        bf ( 'platform_math_inc_whole' , [ { } ] * 1 )
-        bf ( 'platform_math_make_fract_from_whole' , [ { } ] * 2 )
-        bf ( 'platform_math_mul_fracts' , [ { } ] * 3 )
-        bf ( 'platform_math_mul_whole_by' , [ { } ] * 2 )
-        bf ( 'platform_math_mul_wholes' , [ { } ] * 3 )
-        bf ( 'platform_math_neg_fract' , [ { } ] * 2 )
-        bf ( 'platform_math_neg_whole' , [ { } ] * 2 )
-        bf ( 'platform_math_sin' , [ { } ] * 2 )
-        bf ( 'platform_math_sub_fracts' , [ { } ] * 3 )
-        bf ( 'platform_math_sub_from_fract' , [ { } ] * 2 )
-        bf ( 'platform_math_sub_from_whole' , [ { } ] * 2 )
-        bf ( 'platform_math_sub_wholes' , [ { } ] * 3 )
-        bf ( 'platform_matrix_identity' , [ { } ] * 1 )
-        bf ( 'platform_matrix_inverse_rotation_translation' , [ { } ] * 1 )
-        bf ( 'platform_matrix_set_fract_axis_x' , [ { } ] * 4 )
-        bf ( 'platform_matrix_set_fract_axis_y' , [ { } ] * 4 )
-        bf ( 'platform_matrix_set_fract_axis_z' , [ { } ] * 4 )
-        bf ( 'platform_matrix_set_fract_origin' , [ { } ] * 4 )
-        bf ( 'platform_matrix_set_vector_axis_x' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_vector_axis_y' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_vector_axis_z' , [ { } ] * 2 )
-        bf ( 'platform_matrix_set_vector_origin' , [ { } ] * 2 )
-        bf ( 'platform_render_blend_disable' , [ ] )
-        bf ( 'platform_render_blend_src_alpha_dst_one_minus_alpha' , [ ] )
-        bf ( 'platform_render_clear_screen' , [ { } ] * 3 )
-        bf ( 'platform_render_create_index_buffer' , [ { } ] * 2 )
-        bf ( 'platform_render_create_texture_id' , [ { } ] * 2 )
-        bf ( 'platform_render_create_vertex_buffer' , [ { } ] * 2 )
-        bf ( 'platform_render_delete_index_buffer' , [ { } ] * 1 )
-        bf ( 'platform_render_delete_texture_id' , [ { } ] * 1 )
-        bf ( 'platform_render_delete_vertex_buffer' , [ { } ] * 1 )
-        bf ( 'platform_render_disable_depth_test' , [ ] )
-        bf ( 'platform_render_disable_texturing' , [ ] )
-        bf ( 'platform_render_draw_triangle_fan' , [ { } ] * 3 )
-        bf ( 'platform_render_draw_triangle_strip' , [ { } ] * 3 )
-        bf ( 'platform_render_enable_depth_test' , [ ] )
-        bf ( 'platform_render_enable_face_culling' , [ ] )
-        bf ( 'platform_render_enable_texturing' , [ ] )
-        bf ( 'platform_render_fog_disable' , [ ] )
-        bf ( 'platform_render_fog_linear' , [ { } ] * 6 )
-        bf ( 'platform_render_get_aspect_height' , [ { } ] * 1 )
-        bf ( 'platform_render_get_aspect_width' , [ { } ] * 1 )
-        bf ( 'platform_render_get_frame_loss' , [ { } ] * 1 )
-        bf ( 'platform_render_load_texture_subdata' , [ { } ] * 6 )
-        bf ( 'platform_render_map_index_buffer' , [ { } ] * 2 )
-        bf ( 'platform_render_map_vertex_buffer' , [ { } ] * 2 )
-        bf ( 'platform_render_mapped_index_buffer_element' , [ { } ] * 3 )
-        bf ( 'platform_render_mapped_vertex_buffer_element' , [ { } ] * 3 )
-        bf ( 'platform_render_matrix_identity' , [ ] )
-        bf ( 'platform_render_matrix_load' , [ { } ] * 1 )
-        bf ( 'platform_render_matrix_mult' , [ { } ] * 1 )
-        bf ( 'platform_render_matrix_pop' , [ ] )
-        bf ( 'platform_render_matrix_push' , [ ] )
-        bf ( 'platform_render_projection_frustum' , [ { } ] * 6 )
-        bf ( 'platform_render_projection_ortho' , [ { } ] * 6 )
-        bf ( 'platform_render_set_index_value' , [ { } ] * 2 )
-        bf ( 'platform_render_set_texel_color' , [ { } ] * 5 )
-        bf ( 'platform_render_set_vertex_color' , [ { } ] * 5 )
-        bf ( 'platform_render_set_vertex_position' , [ { } ] * 4 )
-        bf ( 'platform_render_set_vertex_tex_coord' , [ { } ] * 3 )
-        bf ( 'platform_render_texture_loader_create_resource_id' , [ { } ] * 2 )
-        bf ( 'platform_render_texture_loader_load_resource' , [ { } ] * 3 )
-        bf ( 'platform_render_texture_loader_ready' , [ { } ] * 1 )
-        bf ( 'platform_render_texture_mode_modulate' , [ ] )
-        bf ( 'platform_render_unmap_index_buffer' , [ { } ] * 1 )
-        bf ( 'platform_render_unmap_vertex_buffer' , [ { } ] * 1 )
-        bf ( 'platform_render_use_texture' , [ { } ] * 1 )
-        bf ( 'platform_static_array_element_ptr' , [ { } ] * 3 )
-        bf ( 'platform_vector_add' , [ { } ] * 3 )
-        bf ( 'platform_vector_cross_product' , [ { } ] * 3 )
-        bf ( 'platform_vector_mul' , [ { } ] * 3 )
-        bf ( 'platform_vector_normalize' , [ { } ] * 2 )
-        bf ( 'platform_vector_sub' , [ { } ] * 3 )
-        bf ( 'platform_trace_trace_begin' , [ { } ] * 1 )
-        bf ( 'platform_trace_trace_end' , [ ] )
-        bf ( 'platform_trace_trace_num_whole' , [ { } ] * 1 )
-        bf ( 'platform_trace_trace_num_whole_error' , [ { } ] * 1 )
-        bf ( 'platform_trace_trace_string' , [ { } ] * 1 )
-        bf ( 'platform_trace_trace_string_error' , [ { } ] * 1 )
-        bf ( 'platform_vector_mul_by' , [ { } ] * 2 )
-        bf ( 'platform_vector_xyz' , [ { } ] * 4 )
-        pprint ( n . run ( reader ( ) . run ( stdin ) ) )
+        platform = \
+            { 'platform_consts' :
+                { 'platform_consts_seconds_per_frame' : Fraction ( 1 , 60 )
+                , 'platform_math_consts_fract_2pi' : Fraction ( 6283184 , 1000000 )
+                }
+            , 'platform_procs' :
+                { 'platform_conditions_fract_greater_than_fract' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_fract_less_than_fract' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_whole_greater_or_equal_to_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_whole_greater_than_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_whole_greater_than_zero' : { 'args' : [ { } ] * 1 }
+                , 'platform_conditions_whole_is_false' : { 'args' : [ { } ] * 1 }
+                , 'platform_conditions_whole_is_true' : { 'args' : [ { } ] * 1 }
+                , 'platform_conditions_whole_less_or_equal_to_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_whole_less_than_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_whole_less_than_zero' : { 'args' : [ { } ] * 1 }
+                , 'platform_conditions_wholes_are_equal' : { 'args' : [ { } ] * 2 }
+                , 'platform_conditions_wholes_are_not_equal' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_add_fracts' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_add_wholes' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_add_to_fract' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_add_to_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_cos' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_dec_whole' : { 'args' : [ { } ] * 1 }
+                , 'platform_math_div_fract_by' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_div_whole_by' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_div_wholes' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_inc_whole' : { 'args' : [ { } ] * 1 }
+                , 'platform_math_make_fract_from_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_mul_fracts' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_mul_whole_by' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_mul_wholes' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_neg_fract' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_neg_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_sin' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_sub_fracts' : { 'args' : [ { } ] * 3 }
+                , 'platform_math_sub_from_fract' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_sub_from_whole' : { 'args' : [ { } ] * 2 }
+                , 'platform_math_sub_wholes' : { 'args' : [ { } ] * 3 }
+                , 'platform_matrix_identity' : { 'args' : [ { } ] * 1 }
+                , 'platform_matrix_inverse_rotation_translation' : { 'args' : [ { } ] * 1 }
+                , 'platform_matrix_set_fract_axis_x' : { 'args' : [ { } ] * 4 }
+                , 'platform_matrix_set_fract_axis_y' : { 'args' : [ { } ] * 4 }
+                , 'platform_matrix_set_fract_axis_z' : { 'args' : [ { } ] * 4 }
+                , 'platform_matrix_set_fract_origin' : { 'args' : [ { } ] * 4 }
+                , 'platform_matrix_set_vector_axis_x' : { 'args' : [ { } ] * 2 }
+                , 'platform_matrix_set_vector_axis_y' : { 'args' : [ { } ] * 2 }
+                , 'platform_matrix_set_vector_axis_z' : { 'args' : [ { } ] * 2 }
+                , 'platform_matrix_set_vector_origin' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_blend_disable' : { 'args' : [ ] }
+                , 'platform_render_blend_src_alpha_dst_one_minus_alpha' : { 'args' : [ ] }
+                , 'platform_render_clear_screen' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_create_index_buffer' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_create_texture_id' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_create_vertex_buffer' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_delete_index_buffer' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_delete_texture_id' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_delete_vertex_buffer' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_disable_depth_test' : { 'args' : [ ] }
+                , 'platform_render_disable_texturing' : { 'args' : [ ] }
+                , 'platform_render_draw_triangle_fan' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_draw_triangle_strip' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_enable_depth_test' : { 'args' : [ ] }
+                , 'platform_render_enable_face_culling' : { 'args' : [ ] }
+                , 'platform_render_enable_texturing' : { 'args' : [ ] }
+                , 'platform_render_fog_disable' : { 'args' : [ ] }
+                , 'platform_render_fog_linear' : { 'args' : [ { } ] * 6 }
+                , 'platform_render_get_aspect_height' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_get_aspect_width' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_get_frame_loss' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_load_texture_subdata' : { 'args' : [ { } ] * 6 }
+                , 'platform_render_map_index_buffer' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_map_vertex_buffer' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_mapped_index_buffer_element' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_mapped_vertex_buffer_element' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_matrix_identity' : { 'args' : [ ] }
+                , 'platform_render_matrix_load' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_matrix_mult' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_matrix_pop' : { 'args' : [ ] }
+                , 'platform_render_matrix_push' : { 'args' : [ ] }
+                , 'platform_render_projection_frustum' : { 'args' : [ { } ] * 6 }
+                , 'platform_render_projection_ortho' : { 'args' : [ { } ] * 6 }
+                , 'platform_render_set_index_value' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_set_texel_color' : { 'args' : [ { } ] * 5 }
+                , 'platform_render_set_vertex_color' : { 'args' : [ { } ] * 5 }
+                , 'platform_render_set_vertex_position' : { 'args' : [ { } ] * 4 }
+                , 'platform_render_set_vertex_tex_coord' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_texture_loader_create_resource_id' : { 'args' : [ { } ] * 2 }
+                , 'platform_render_texture_loader_load_resource' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_texture_loader_ready' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_texture_mode_modulate' : { 'args' : [ ] }
+                , 'platform_render_unmap_index_buffer' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_unmap_vertex_buffer' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_use_texture' : { 'args' : [ { } ] * 1 }
+                , 'platform_static_array_element_ptr' : { 'args' : [ { } ] * 3 }
+                , 'platform_vector_add' : { 'args' : [ { } ] * 3 }
+                , 'platform_vector_cross_product' : { 'args' : [ { } ] * 3 }
+                , 'platform_vector_mul' : { 'args' : [ { } ] * 3 }
+                , 'platform_vector_normalize' : { 'args' : [ { } ] * 2 }
+                , 'platform_vector_sub' : { 'args' : [ { } ] * 3 }
+                , 'platform_trace_trace_begin' : { 'args' : [ { } ] * 1 }
+                , 'platform_trace_trace_end' : { 'args' : [ ] }
+                , 'platform_trace_trace_num_whole' : { 'args' : [ { } ] * 1 }
+                , 'platform_trace_trace_num_whole_error' : { 'args' : [ { } ] * 1 }
+                , 'platform_trace_trace_string' : { 'args' : [ { } ] * 1 }
+                , 'platform_trace_trace_string_error' : { 'args' : [ { } ] * 1 }
+                , 'platform_vector_mul_by' : { 'args' : [ { } ] * 2 }
+                , 'platform_vector_xyz' : { 'args' : [ { } ] * 4 }
+            } }
+        pprint ( normalizer_run ( merge ( platform , reader ( ) . run ( stdin ) ) ) )
     except reader_exception as e :
         pprint ( e . get_src ( ) )
         print 'reader exception:' , str ( e )
