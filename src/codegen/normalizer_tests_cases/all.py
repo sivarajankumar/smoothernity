@@ -24,4 +24,8 @@ class all_test_case ( unittest . TestCase ) :
                     , { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a3' ] } }
             ] } } } } } ) )
     def test_consts ( self ) :
-        pass
+        r = run
+        ae = self . assertEqual
+        ae ( r (
+            { 'consts' : { 'consts1' : { 'test1' : '[ 1 ]' } } } ) , rskel (
+            { 'consts' : { 'consts1' : { 'test1' : 1 } } } ) )
