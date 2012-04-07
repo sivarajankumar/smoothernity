@@ -18,7 +18,21 @@ class all_test_case ( unittest . TestCase ) :
                 , { 'call' : [ 'test1_func1' , 'a2' ] } ]
             } } } } } ) )
     def test_sends_after_names ( self ) :
-        pass
+        r = run
+        ae = self . assertEqual
+        ae ( r (
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ { } ] } } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+                [ { 'with' : { 'test1' :
+                    [ { 'send' : [ 'msg1' , 'a1' , 'a2' ] } ]
+            } } ] } } } } } ) , rskel (
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ { } ] } } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
+                [ { 'send' : [ 'test1_msg1' , 'a1' ] }
+                , { 'send' : [ 'test1_msg1' , 'a2' ] } ]
+            } } } } } ) )
     def test_assigns ( self ) :
         r = run
         ae = self . assertEqual
