@@ -1,5 +1,5 @@
 from utils import rewrite
-from normalizer import exception
+from normalizer . exception import exception
 
 def _rewriter ( src , path ) :
     if type ( src ) is dict and 'assign' in src :
