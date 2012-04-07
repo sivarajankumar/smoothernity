@@ -1,7 +1,7 @@
 from hashlib import md5
 from os . path import dirname
-from normalizer import normalizer
-from normalizer import exception as normalizer_exception
+from normalizer import run as normalizer_run
+from normalizer . exception import exception as normalizer_exception
 from reader import reader
 from reader import exception as reader_exception
 
