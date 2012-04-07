@@ -103,7 +103,8 @@ def _extract_local_some_procs ( storage , path , some ) :
         ] , { } )
 
 def _extract_local_procs ( storage , path ) :
-    return storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ]
+    return storage [ path [ 0 ] ] [ path [ 1 ] ] [ 'proc' ] \
+        if path [ 0 ] not in ( 'vars' , 'types' ) else { }
 
 def _extract_global_consts ( storage ) :
     return _glue ( [

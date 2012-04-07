@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 def is_text ( s ) :
     return type ( s ) in ( str , unicode )
 
@@ -10,9 +8,7 @@ class merge_exception ( Exception ) :
     def get_keys ( self ) :
         return self . _keys
 
-def merge ( dst_ , src_ , overwrite = True ) :
-    dst = deepcopy ( dst_ )
-    src = deepcopy ( src_ )
+def merge ( dst , src , overwrite = True ) :
     types = ( type ( dst ) , type ( src ) )
     if types == ( dict , dict ) :
         overlap = set ( src . keys ( ) ) . intersection ( dst . keys ( ) )
