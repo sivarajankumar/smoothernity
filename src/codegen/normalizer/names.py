@@ -14,16 +14,14 @@ def _rewriter ( where , src , path ) :
     if is_text ( src ) :
         prefixes = [ path [ i + 1 ]
             for i in xrange ( len ( path ) - 1 ) if path [ i ] == 'with' ]
-        candidates = filter ( lambda x : x in where ( path ) ,
+        valids = filter ( lambda x : x in where ( path ) ,
             [ src ] + [ '_' . join ( c ) + '_' + src
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
-        if len ( candidates ) > 1 :
+        if len ( valids ) > 1 :
             raise exception ( "Ambiguous identifiers: '%s'" %
-                ( ', ' . join ( candidates ) ) , None , path )
-        elif candidates :
-            return candidates [ 0 ]
+                ( ', ' . join ( valids ) ) , None , path )
         else :
-            return src
+            return ( valids + [ src ] ) [ 0 ]
     else :
         return src
