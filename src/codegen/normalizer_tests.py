@@ -1,4 +1,5 @@
 import unittest
+from normalizer_tests_cases . all import *
 from normalizer_tests_cases . assigns import *
 from normalizer_tests_cases . calls import *
 from normalizer_tests_cases . consts import *
