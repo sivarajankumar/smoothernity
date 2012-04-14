@@ -10,6 +10,9 @@ class explorer :
         self . _stateless_procs = _extract_stateless_procs ( storage )
         self . _trace_procs = _extract_trace_procs ( storage )
         self . _types = _extract_types ( storage )
+        self . _fields = _extract_fields ( storage )
+    def get_fields ( self ) :
+        return self . _fields
     def get_types ( self ) :
         return self . _types
     def get_global_consts ( self ) :
@@ -71,6 +74,10 @@ class explorer :
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
+        items , first )
+
+def _combine ( items , first ) :
+    return reduce ( lambda x , y : merge ( x , y , overwrite = True ) ,
         items , first )
 
 def _extract_stateless_procs ( storage ) :
@@ -139,4 +146,13 @@ def _extract_types ( storage ) :
         { '%s_type_%s' % ( k , kk ) : _glue ( vv , { } ) }
         for k , v in storage [ 'types' ] . items ( )
             for kk , vv in v . items ( )
+        ] , { } )
+
+def _extract_fields ( storage ) :
+    return _combine ( [
+        { kkkk : [ '%s_type_%s' % ( k , kk ) ] }
+        for k , v in storage [ 'types' ] . items ( )
+            for kk , vv in v . items ( )
+                for vvv in vv
+                    for kkkk in vvv . keys ( )
         ] , { } )
