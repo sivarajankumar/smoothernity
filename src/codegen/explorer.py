@@ -42,9 +42,9 @@ class explorer :
         return _extract_local_some_procs \
             ( self . _storage , path , 'trace' )
     def get_local_args ( self , path ) :
-        return _extract_local_values ( self . _storage , path , 'args' )
+        return _traverse ( self . _storage , path , 'args' )
     def get_local_vars ( self , path ) :
-        return _extract_local_values ( self . _storage , path , 'vars' )
+        return _traverse ( self . _storage , path , 'vars' )
     def get_callables ( self , path ) :
         return _glue (
             [ self . get_local_procs ( path )
@@ -65,6 +65,7 @@ class explorer :
             [ self . get_global_vars ( path )
             , self . get_local_vars ( path )
             , self . get_local_args ( path )
+            , self . get_message_receive_args ( path )
             ] , { } )
     def get_everything ( self , path ) :
         return _glue (
@@ -81,6 +82,13 @@ def _glue ( items , first ) :
 def _combine ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = True ) ,
         items , first )
+
+def _traverse ( storage , path , some ) :
+    def _walk ( s , p , x ) :
+        return _glue ( s [ x ] , { } ) \
+            if x in s else _walk ( s [ p [ 0 ] ] , p [ 1 : ] , x ) \
+                if p else { }
+    return _walk ( storage [ path [ 0 ] ] , path [ 1 : ] , some )
 
 def _extract_stateless_procs ( storage ) :
     return _extract_some_procs ( storage , 'stateless' )
@@ -136,13 +144,6 @@ def _extract_local_consts ( storage , path ) :
 def _extract_global_vars ( storage , path ) :
     return _glue ( storage [ 'vars' ] [ path [ 1 ] ] , { } )
 
-def _extract_local_values ( storage , path , some ) :
-    def _walk ( s , p , x ) :
-        return _glue ( s [ x ] , { } ) \
-            if x in s else _walk ( s [ p [ 0 ] ] , p [ 1 : ] , x ) \
-                if p else { }
-    return _walk ( storage [ path [ 0 ] ] , path [ 1 : ] , some )
-
 def _extract_types ( storage ) :
     return _glue ( [
         { '%s_type_%s' % ( k , kk ) : _glue ( vv , { } ) }
@@ -159,5 +160,6 @@ def _extract_fields ( storage ) :
                     for kkkk in vvv . keys ( )
         ] , { } )
 
-def _extract_message_receive_args ( storage , path ) :
-    pass
+def _extract_message_receive_args ( s , p ) :
+    return _traverse ( s , [ 'messages' , p [ 1 ] , 'receive' ] , p [ 3 ] ) \
+        if len ( p ) >= 4 and p [ 2 ] == 'receive' else { }
