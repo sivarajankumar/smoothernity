@@ -38,11 +38,9 @@ class explorer :
     def get_local_procs ( self , path ) :
         return _extract_local_procs ( self . _storage , path )
     def get_local_stateless_procs ( self , path ) :
-        return _extract_local_some_procs \
-            ( self . _storage , path , 'stateless' )
+        return _extract_local_stateless_procs ( self . _storage , path )
     def get_local_trace_procs ( self , path ) :
-        return _extract_local_some_procs \
-            ( self . _storage , path , 'trace' )
+        return _extract_local_trace_procs ( self . _storage , path )
     def get_local_args ( self , path ) :
         return _traverse ( self . _storage , path , 'args' )
     def get_local_vars ( self , path ) :
@@ -118,6 +116,12 @@ def _extract_messages_receives ( storage ) :
         for k , v in storage [ 'messages' ] . items ( )
             for kk , vv in v [ 'receive' ] . items ( )
         ] , { } )
+
+def _extract_local_stateless_procs ( storage , path ) :
+    return _extract_local_some_procs ( storage , path , 'stateless' )
+
+def _extract_local_trace_procs ( storage , path ) :
+    return _extract_local_some_procs ( storage , path , 'trace' )
 
 def _extract_local_some_procs ( storage , path , some ) :
     return _glue ( [
