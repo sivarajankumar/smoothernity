@@ -32,11 +32,9 @@ class explorer :
     def get_trace_procs ( self ) :
         return self . _trace_procs
     def get_message_receive_args ( self , path ) :
-        return _extract_message_some_args \
-            ( self . _storage , path , 'receive' )
+        return _extract_message_receive_args ( self . _storage , path )
     def get_message_request_args ( self , path ) :
-        return _extract_message_some_args \
-            ( self . _storage , path , 'request' )
+        return _extract_message_request_args ( self . _storage , path )
     def get_local_procs ( self , path ) :
         return _extract_local_procs ( self . _storage , path )
     def get_local_stateless_procs ( self , path ) :
@@ -168,3 +166,9 @@ def _extract_fields ( storage ) :
 def _extract_message_some_args ( s , p , x ) :
     return _traverse ( s , [ 'messages' , p [ 1 ] , x ] , p [ 3 ] ) \
         if len ( p ) >= 4 and p [ 2 ] == x else { }
+
+def _extract_message_receive_args ( storage , path ) :
+    return _extract_message_some_args ( storage , path , 'receive' )
+
+def _extract_message_request_args ( storage , path ) :
+    return _extract_message_some_args ( storage , path , 'request' )
