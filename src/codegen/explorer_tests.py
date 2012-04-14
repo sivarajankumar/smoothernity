@@ -206,6 +206,23 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( g ( s , p ) , r )
             ae ( gv ( s , p ) , r )
             ae ( ge ( s , p ) , r )
+    def test_get_types ( self ) :
+        g = lambda x : explorer ( x ) . get_types ( )
+        p = [ 'somewhere' , 'faraway' ]
+        s = mpath ( p ,
+            { 'types' :
+                { 'place1' : { 'type1' :
+                    [ { 'test1' : { } }
+                    , { 'test2' : { } } ] }
+                , 'place3' : { 'type3' :
+                    [ { 'test3' : { } } ] } } } )
+        r = { 'place1_type_type1' :
+                { 'test1' : { }
+                , 'test2' : { } }
+            , 'place3_type_type3' :
+                { 'test3' : { } } }
+        ae = self . assertEqual
+        ae ( g ( s ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )
