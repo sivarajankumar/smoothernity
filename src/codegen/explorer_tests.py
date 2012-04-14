@@ -238,10 +238,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( g ( s ) , r )
     def test_get_message_receive_args ( self ) :
-        g = lambda x : explorer ( x ) . get_message_receive_args ( )
+        g = lambda x : explorer ( x ) . get_message_receive_args ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gv = lambda x , p : explorer ( x ) . get_values ( p )
-        p = [ 'somewhere' , 'faraway' ]
+        p = [ 'module' , 'module1' , 'receive' , 'msg1' , 'ops' ]
         s = mpath ( p ,
             { 'messages' :
                 { 'module1' : { 'receive' : { 'msg1' :
