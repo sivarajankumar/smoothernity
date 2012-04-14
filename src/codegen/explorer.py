@@ -32,7 +32,11 @@ class explorer :
     def get_trace_procs ( self ) :
         return self . _trace_procs
     def get_message_receive_args ( self , path ) :
-        return _extract_message_receive_args ( self . _storage , path )
+        return _extract_message_some_args \
+            ( self . _storage , path , 'receive' )
+    def get_message_request_args ( self , path ) :
+        return _extract_message_some_args \
+            ( self . _storage , path , 'request' )
     def get_local_procs ( self , path ) :
         return _extract_local_procs ( self . _storage , path )
     def get_local_stateless_procs ( self , path ) :
@@ -66,6 +70,7 @@ class explorer :
             , self . get_local_vars ( path )
             , self . get_local_args ( path )
             , self . get_message_receive_args ( path )
+            , self . get_message_request_args ( path )
             ] , { } )
     def get_everything ( self , path ) :
         return _glue (
@@ -160,6 +165,6 @@ def _extract_fields ( storage ) :
                     for kkkk in vvv . keys ( )
         ] , { } )
 
-def _extract_message_receive_args ( s , p ) :
-    return _traverse ( s , [ 'messages' , p [ 1 ] , 'receive' ] , p [ 3 ] ) \
-        if len ( p ) >= 4 and p [ 2 ] == 'receive' else { }
+def _extract_message_some_args ( s , p , x ) :
+    return _traverse ( s , [ 'messages' , p [ 1 ] , x ] , p [ 3 ] ) \
+        if len ( p ) >= 4 and p [ 2 ] == x else { }
