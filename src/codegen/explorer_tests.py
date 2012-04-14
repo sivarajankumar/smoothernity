@@ -256,8 +256,6 @@ class explorer_test_case ( unittest . TestCase ) :
             ae = self . assertEqual
             ae ( g ( s ) , r )
             ae ( gv ( s , p ) , r )
-    def test_get_message_request_args ( self ) :
-        pass
     def test_get_message_reply_args ( self ) :
         pass
 
