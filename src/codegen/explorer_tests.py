@@ -257,7 +257,22 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( g ( s ) , r )
             ae ( gv ( s , p ) , r )
     def test_get_message_reply_args ( self ) :
-        pass
+        gv = lambda x , p : explorer ( x ) . get_values ( p )
+        g = lambda x : explorer ( x ) . get_message_reply_args ( p )
+        p = [ 'module' , 'module1' , 'request' , 'msg1' , 'ops' ]
+        s = mpath ( p ,
+            { 'messages' :
+                { 'module1' : { 'reply' : { 'msg1' :
+                    [ { 'arg1' : 'test1' }
+                    , { 'arg2' : 'test2' } ] } } }
+            , 'module' :
+                { 'module1' : { 'request' : { 'msg1' :
+                    { 'ops' : [ ] } } } } } )
+        r = { 'arg1' : 'test1'
+            , 'arg2' : 'test2' }
+        ae = self . assertEqual
+        ae ( g ( s ) , r )
+        ae ( gv ( s , p ) , r )
 
 if __name__ == '__main__' :
     unittest . main ( )

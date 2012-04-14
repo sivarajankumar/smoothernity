@@ -35,6 +35,8 @@ class explorer :
         return _extract_message_receive_args ( self . _storage , path )
     def get_message_request_args ( self , path ) :
         return _extract_message_request_args ( self . _storage , path )
+    def get_message_reply_args ( self , path ) :
+        return _extract_message_reply_args ( self . _storage , path )
     def get_local_procs ( self , path ) :
         return _extract_local_procs ( self . _storage , path )
     def get_local_stateless_procs ( self , path ) :
@@ -67,6 +69,7 @@ class explorer :
             , self . get_local_args ( path )
             , self . get_message_receive_args ( path )
             , self . get_message_request_args ( path )
+            , self . get_message_reply_args ( path )
             ] , { } )
     def get_everything ( self , path ) :
         return _glue (
@@ -173,12 +176,18 @@ def _extract_fields ( storage ) :
                     for kkkk in vvv . keys ( )
         ] , { } )
 
-def _extract_message_some_args ( s , p , x ) :
+def _extract_message_some_args ( s , p , x , y ) :
     return _traverse ( s , [ 'messages' , p [ 1 ] , x ] , p [ 3 ] ) \
-        if len ( p ) >= 4 and p [ 2 ] == x else { }
+        if len ( p ) >= 4 and p [ 2 ] == y else { }
 
 def _extract_message_receive_args ( storage , path ) :
-    return _extract_message_some_args ( storage , path , 'receive' )
+    return _extract_message_some_args \
+        ( storage , path , 'receive' , 'receive' )
 
 def _extract_message_request_args ( storage , path ) :
-    return _extract_message_some_args ( storage , path , 'request' )
+    return _extract_message_some_args \
+        ( storage , path , 'request' , 'request' )
+
+def _extract_message_reply_args ( storage , path ) :
+    return _extract_message_some_args \
+        ( storage , path , 'reply' , 'request' )
