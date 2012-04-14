@@ -237,23 +237,25 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'test2' : [ 'place1_type_type1' ] }
         ae = self . assertEqual
         ae ( g ( s ) , r )
-    def test_get_message_receive_args ( self ) :
-        g = lambda x : explorer ( x ) . get_message_receive_args ( p )
+    def test_get_message_some_args ( self ) :
         gv = lambda x , p : explorer ( x ) . get_values ( p )
-        p = [ 'module' , 'module1' , 'receive' , 'msg1' , 'ops' ]
-        s = mpath ( p ,
-            { 'messages' :
-                { 'module1' : { 'receive' : { 'msg1' :
-                    [ { 'arg1' : 'test1' }
-                    , { 'arg2' : 'test2' } ] } } }
-            , 'module' :
-                { 'module1' : { 'receive' : { 'msg1' :
-                    { 'ops' : [ ] } } } } } )
-        r = { 'arg1' : 'test1'
-            , 'arg2' : 'test2' }
-        ae = self . assertEqual
-        ae ( g ( s ) , r )
-        ae ( gv ( s , p ) , r )
+        for some in ( 'request' , 'receive' ) :
+            g = lambda x : getattr ( explorer ( x ) ,
+                'get_message_%s_args' % some ) ( p )
+            p = [ 'module' , 'module1' , some , 'msg1' , 'ops' ]
+            s = mpath ( p ,
+                { 'messages' :
+                    { 'module1' : { some : { 'msg1' :
+                        [ { 'arg1' : 'test1' }
+                        , { 'arg2' : 'test2' } ] } } }
+                , 'module' :
+                    { 'module1' : { some : { 'msg1' :
+                        { 'ops' : [ ] } } } } } )
+            r = { 'arg1' : 'test1'
+                , 'arg2' : 'test2' }
+            ae = self . assertEqual
+            ae ( g ( s ) , r )
+            ae ( gv ( s , p ) , r )
     def test_get_message_request_args ( self ) :
         pass
     def test_get_message_reply_args ( self ) :
