@@ -17,10 +17,6 @@ class explorer :
         return self . _types
     def get_global_consts ( self ) :
         return self . _global_consts
-    def get_global_vars ( self , path ) :
-        return _extract_global_vars ( self . _storage , path )
-    def get_local_consts ( self , path ) :
-        return _extract_local_consts ( self . _storage , path )
     def get_messages_receives ( self ) :
         return self . _messages_receives
     def get_platform_consts ( self ) :
@@ -31,6 +27,10 @@ class explorer :
         return self . _stateless_procs
     def get_trace_procs ( self ) :
         return self . _trace_procs
+    def get_global_vars ( self , path ) :
+        return _extract_global_vars ( self . _storage , path )
+    def get_local_consts ( self , path ) :
+        return _extract_local_consts ( self . _storage , path )
     def get_message_receive_args ( self , path ) :
         return _extract_message_receive_args ( self . _storage , path )
     def get_message_request_args ( self , path ) :
