@@ -31,6 +31,8 @@ class explorer :
         return self . _stateless_procs
     def get_trace_procs ( self ) :
         return self . _trace_procs
+    def get_message_receive_args ( self , path ) :
+        return _extract_message_receive_args ( self . _storage , path )
     def get_local_procs ( self , path ) :
         return _extract_local_procs ( self . _storage , path )
     def get_local_stateless_procs ( self , path ) :
@@ -156,3 +158,6 @@ def _extract_fields ( storage ) :
                 for vvv in vv
                     for kkkk in vvv . keys ( )
         ] , { } )
+
+def _extract_message_receive_args ( storage , path ) :
+    pass
