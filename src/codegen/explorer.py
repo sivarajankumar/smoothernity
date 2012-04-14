@@ -9,6 +9,9 @@ class explorer :
         self . _platform_procs = _extract_platform_procs ( storage )
         self . _stateless_procs = _extract_stateless_procs ( storage )
         self . _trace_procs = _extract_trace_procs ( storage )
+        self . _types = _extract_types ( storage )
+    def get_types ( self ) :
+        return self . _types
     def get_global_consts ( self ) :
         return self . _global_consts
     def get_global_vars ( self , path ) :
@@ -130,3 +133,10 @@ def _extract_local_values ( storage , path , some ) :
             if x in s else _walk ( s [ p [ 0 ] ] , p [ 1 : ] , x ) \
                 if p else { }
     return _walk ( storage [ path [ 0 ] ] , path [ 1 : ] , some )
+
+def _extract_types ( storage ) :
+    return _glue ( [
+        { '%s_type_%s' % ( k , kk ) : _glue ( vv , { } ) }
+        for k , v in storage [ 'types' ] . items ( )
+            for kk , vv in v . items ( )
+        ] , { } )
