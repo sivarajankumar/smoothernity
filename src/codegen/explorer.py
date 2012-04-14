@@ -42,9 +42,9 @@ class explorer :
     def get_local_trace_procs ( self , path ) :
         return _extract_local_trace_procs ( self . _storage , path )
     def get_local_args ( self , path ) :
-        return _traverse ( self . _storage , path , 'args' )
+        return _extract_local_args ( self . _storage , path )
     def get_local_vars ( self , path ) :
-        return _traverse ( self . _storage , path , 'vars' )
+        return _extract_local_vars ( self . _storage , path )
     def get_callables ( self , path ) :
         return _glue (
             [ self . get_local_procs ( path )
@@ -90,6 +90,12 @@ def _traverse ( storage , path , some ) :
             if x in s else _walk ( s [ p [ 0 ] ] , p [ 1 : ] , x ) \
                 if p else { }
     return _walk ( storage [ path [ 0 ] ] , path [ 1 : ] , some )
+
+def _extract_local_args ( storage , path ) :
+    return _traverse ( storage , path , 'args' )
+
+def _extract_local_vars ( storage , path ) :
+    return _traverse ( storage , path , 'vars' )
 
 def _extract_stateless_procs ( storage ) :
     return _extract_some_procs ( storage , 'stateless' )
