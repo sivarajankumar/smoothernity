@@ -78,6 +78,8 @@ class explorer :
             , self . get_messages_receives ( )
             , self . get_values ( path )
             ] , { } )
+    def is_value ( self , path , value ) :
+        return value in self . get_values ( path )
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
