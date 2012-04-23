@@ -296,6 +296,8 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( iv ( s , p , 'unknown' ) , False )
         ae ( iv ( s , p , 'var1_unknown' ) , False )
         ae ( iv ( s , p , 'var1_field1_unknown' ) , False )
+    def test_is_value_ambiguity ( self ) :
+        pass
 
 if __name__ == '__main__' :
     unittest . main ( )
