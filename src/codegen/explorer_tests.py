@@ -251,8 +251,8 @@ class explorer_test_case ( unittest . TestCase ) :
                 , 'module' :
                     { 'module1' : { some : { 'msg1' :
                         { 'ops' : [ ] } } } } } )
-            r = { 'arg1' : 'test1'
-                , 'arg2' : 'test2' }
+            r = { 'msg_arg1' : 'test1'
+                , 'msg_arg2' : 'test2' }
             ae = self . assertEqual
             ae ( g ( s ) , r )
             ae ( gv ( s , p ) , r )
@@ -268,8 +268,8 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'module' :
                 { 'module1' : { 'request' : { 'msg1' :
                     { 'ops' : [ ] } } } } } )
-        r = { 'arg1' : 'test1'
-            , 'arg2' : 'test2' }
+        r = { 'reply_arg1' : 'test1'
+            , 'reply_arg2' : 'test2' }
         ae = self . assertEqual
         ae ( g ( s ) , r )
         ae ( gv ( s , p ) , r )

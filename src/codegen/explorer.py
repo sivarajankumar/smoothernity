@@ -176,18 +176,20 @@ def _extract_fields ( storage ) :
                     for kkkk in vvv . keys ( )
         ] , { } )
 
-def _extract_message_some_args ( s , p , x , y ) :
-    return _traverse ( s , [ 'messages' , p [ 1 ] , x ] , p [ 3 ] ) \
-        if len ( p ) >= 4 and p [ 2 ] == y else { }
+def _extract_message_some_args ( s , p , x , y , prefix ) :
+    return dict ( [ ( '%s_%s' % ( prefix , k ) , v )
+        for k , v in _traverse ( s ,
+            [ 'messages' , p [ 1 ] , x ] , p [ 3 ] ) . items ( )
+    ] ) if len ( p ) >= 4 and p [ 2 ] == y else { }
 
 def _extract_message_receive_args ( storage , path ) :
     return _extract_message_some_args \
-        ( storage , path , 'receive' , 'receive' )
+        ( storage , path , 'receive' , 'receive' , 'msg' )
 
 def _extract_message_request_args ( storage , path ) :
     return _extract_message_some_args \
-        ( storage , path , 'request' , 'request' )
+        ( storage , path , 'request' , 'request' , 'msg' )
 
 def _extract_message_reply_args ( storage , path ) :
     return _extract_message_some_args \
-        ( storage , path , 'reply' , 'request' )
+        ( storage , path , 'reply' , 'request' , 'reply' )
