@@ -273,6 +273,29 @@ class explorer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( g ( s ) , r )
         ae ( gv ( s , p ) , r )
+    def test_is_value ( self ) :
+        iv = lambda x , p , v : explorer ( x ) . is_value ( p , v )
+        p = [ 'somewhere' , 'group1' ]
+        s = mpath ( p ,
+            { 'vars' : { 'group1' :
+                [ { 'var1' : 'test1' }
+                , { 'var_2' : 'test_2' } ] }
+            , 'types' : { 'group1' :
+                { 'type1' :
+                    [ { 'field1' : { } } ]
+                , 'type_2' :
+                    [ { 'field_2' : { } } ] } } } )
+        ae = self . assertEqual
+        ae ( iv ( s , p , 'var1' ) , True )
+        ae ( iv ( s , p , 'var_2' ) , True )
+        ae ( iv ( s , p , 'var1_field1' ) , True )
+        ae ( iv ( s , p , 'var_2_field_2' ) , True )
+        ae ( iv ( s , p , 'var1_field1_field1' ) , True )
+        ae ( iv ( s , p , 'var1_field1_field_2' ) , True )
+        ae ( iv ( s , p , 'var_2_field_2_field_2' ) , True )
+        ae ( iv ( s , p , 'unknown' ) , False )
+        ae ( iv ( s , p , 'var1_unknown' ) , False )
+        ae ( iv ( s , p , 'var1_field1_unknown' ) , False )
 
 if __name__ == '__main__' :
     unittest . main ( )
