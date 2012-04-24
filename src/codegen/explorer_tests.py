@@ -279,20 +279,20 @@ class explorer_test_case ( unittest . TestCase ) :
         s = mpath ( p ,
             { 'vars' : { 'group1' :
                 [ { 'var1' : 'test1' }
-                , { 'var_2' : 'test_2' } ] }
+                , { 'var1_2' : 'test1_2' } ] }
             , 'types' : { 'group1' :
                 { 'type1' :
                     [ { 'field1' : { } } ]
-                , 'type_2' :
-                    [ { 'field_2' : { } } ] } } } )
+                , 'type1_2' :
+                    [ { 'field1_2' : { } } ] } } } )
         ae = self . assertEqual
         ae ( iv ( s , p , 'var1' ) , True )
-        ae ( iv ( s , p , 'var_2' ) , True )
+        ae ( iv ( s , p , 'var1_2' ) , True )
         ae ( iv ( s , p , 'var1_field1' ) , True )
-        ae ( iv ( s , p , 'var_2_field_2' ) , True )
+        ae ( iv ( s , p , 'var1_2_field1_2' ) , True )
         ae ( iv ( s , p , 'var1_field1_field1' ) , True )
-        ae ( iv ( s , p , 'var1_field1_field_2' ) , True )
-        ae ( iv ( s , p , 'var_2_field_2_field_2' ) , True )
+        ae ( iv ( s , p , 'var1_field1_field1_2' ) , True )
+        ae ( iv ( s , p , 'var1_2_field1_2_field1_2' ) , True )
         ae ( iv ( s , p , 'unknown' ) , False )
         ae ( iv ( s , p , 'var1_unknown' ) , False )
         ae ( iv ( s , p , 'var1_field1_unknown' ) , False )
