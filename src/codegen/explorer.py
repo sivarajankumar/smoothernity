@@ -79,18 +79,20 @@ class explorer :
             , self . get_values ( path )
             ] , { } )
     def is_value ( self , path , value ) :
-        def _walk ( fs ) :
+        def _walk ( fs , acc ) :
+            res = [ ]
             for i in xrange ( len ( fs ) ) :
                 if '_' . join ( fs [ : i + 1 ] ) in self . get_fields ( ) :
-                    if _walk ( fs [ i + 1 : ] ) :
-                        return True
-            return not fs
+                    res += _walk ( fs [ i + 1 : ]
+                                 , acc + [ '_' . join ( fs [ : i + 1 ] ) ] )
+            return res if fs else [ acc ]
+        res = [ ]
         ps = value . split ( '_' )
         for i in xrange ( len ( ps ) ) :
             if '_' . join ( ps [ : i + 1 ] ) in self . get_values ( path ) :
-                if _walk ( ps [ i + 1 : ] ) :
-                    return True
-        return False
+                res += _walk ( ps [ i + 1 : ]
+                             , [ '_' . join ( ps [ : + 1 ] ) ] )
+        return len ( res ) > 0
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
