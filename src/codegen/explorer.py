@@ -80,19 +80,20 @@ class explorer :
             ] , { } )
     def is_value ( self , path , value ) :
         def _walk ( fs , acc ) :
-            res = [ ]
-            for i in xrange ( len ( fs ) ) :
-                if '_' . join ( fs [ : i + 1 ] ) in self . get_fields ( ) :
-                    res += _walk ( fs [ i + 1 : ]
-                                 , acc + [ '_' . join ( fs [ : i + 1 ] ) ] )
-            return res if fs else [ acc ]
-        res = [ ]
+            return [ x
+                for i in xrange ( len ( fs ) )
+                    for x in _walk ( fs [ i + 1 : ]
+                                   , acc + [ '_' . join ( fs [ : i + 1 ] ) ] )
+                        if '_' . join ( fs [ : i + 1 ] )
+                            in self . get_fields ( ) ] \
+                if fs else [ acc ]
         ps = value . split ( '_' )
-        for i in xrange ( len ( ps ) ) :
-            if '_' . join ( ps [ : i + 1 ] ) in self . get_values ( path ) :
-                res += _walk ( ps [ i + 1 : ]
-                             , [ '_' . join ( ps [ : + 1 ] ) ] )
-        return len ( res ) > 0
+        return bool ( [ x
+            for i in xrange ( len ( ps ) )
+                for x in _walk ( ps [ i + 1 : ]
+                               , [ '_' . join ( ps [ : + 1 ] ) ] )
+                    if '_' . join ( ps [ : i + 1 ] ) \
+                        in self . get_values ( path ) ] )
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
