@@ -279,17 +279,22 @@ class explorer_test_case ( unittest . TestCase ) :
         s = mpath ( p ,
             { 'vars' : { 'group1' :
                 [ { 'var1' : 'test1' }
-                , { 'var1_2' : 'test1_2' } ] }
+                , { 'var1_2' : 'test1_2' }
+                , { 'var3' : 'test3' }
+                , { 'var3_field3' : 'test3_field3' } ] }
             , 'types' : { 'group1' :
-                { 'type1' :
-                    [ { 'field1' : { } } ]
-                , 'type1_2' :
-                    [ { 'field1_2' : { } } ] } } } )
+                { 'type1' : [ { 'field1' : { } } ]
+                , 'type1_2' : [ { 'field1_2' : { } } ]
+                , 'type3' : [ { 'field3' : { } } ]
+            } } } )
         ae = self . assertEqual
         ae ( sv ( s , p , 'var1' ) ,
             [ [ 'var1' ] ] )
         ae ( sv ( s , p , 'var1_2' ) ,
             [ [ 'var1_2' ] ] )
+        ae ( sv ( s , p , 'var3_field3_field3' ) ,
+            [ [ 'var3' , 'field3' , 'field3' ]
+            , [ 'var3_field3' , 'field3' ] ] )
         ae ( sv ( s , p , 'var1_field1' ) ,
             [ [ 'var1' , 'field1' ] ] )
         ae ( sv ( s , p , 'var1_2_field1_2' ) ,
@@ -306,8 +311,6 @@ class explorer_test_case ( unittest . TestCase ) :
             [ ] )
         ae ( sv ( s , p , 'var1_field1_unknown' ) ,
             [ ] )
-    def test_is_value_ambiguity ( self ) :
-        pass
 
 if __name__ == '__main__' :
     unittest . main ( )
