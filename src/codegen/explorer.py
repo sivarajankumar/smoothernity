@@ -78,7 +78,7 @@ class explorer :
             , self . get_messages_receives ( )
             , self . get_values ( path )
             ] , { } )
-    def is_value ( self , path , value ) :
+    def split_value_fields ( self , path , value ) :
         def _walk ( fs , acc ) :
             return [ x
                 for i in xrange ( len ( fs ) )
@@ -88,12 +88,12 @@ class explorer :
                             in self . get_fields ( ) ] \
                 if fs else [ acc ]
         ps = value . split ( '_' )
-        return bool ( [ x
+        return [ x
             for i in xrange ( len ( ps ) )
                 for x in _walk ( ps [ i + 1 : ]
                                , [ '_' . join ( ps [ : + 1 ] ) ] )
                     if '_' . join ( ps [ : i + 1 ] ) \
-                        in self . get_values ( path ) ] )
+                        in self . get_values ( path ) ]
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
