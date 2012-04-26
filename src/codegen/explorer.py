@@ -91,7 +91,7 @@ class explorer :
         return [ x
             for i in xrange ( len ( ps ) )
                 for x in _walk ( ps [ i + 1 : ]
-                               , [ '_' . join ( ps [ : + 1 ] ) ] )
+                               , [ '_' . join ( ps [ : i + 1 ] ) ] )
                     if '_' . join ( ps [ : i + 1 ] ) \
                         in self . get_values ( path ) ]
 
