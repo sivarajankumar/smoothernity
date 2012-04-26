@@ -273,8 +273,8 @@ class explorer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( g ( s ) , r )
         ae ( gv ( s , p ) , r )
-    def test_is_value ( self ) :
-        iv = lambda x , p , v : explorer ( x ) . is_value ( p , v )
+    def test_split_value_fields ( self ) :
+        sv = lambda x , p , v : explorer ( x ) . split_value_fields ( p , v )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'vars' : { 'group1' :
@@ -286,16 +286,26 @@ class explorer_test_case ( unittest . TestCase ) :
                 , 'type1_2' :
                     [ { 'field1_2' : { } } ] } } } )
         ae = self . assertEqual
-        ae ( iv ( s , p , 'var1' ) , True )
-        ae ( iv ( s , p , 'var1_2' ) , True )
-        ae ( iv ( s , p , 'var1_field1' ) , True )
-        ae ( iv ( s , p , 'var1_2_field1_2' ) , True )
-        ae ( iv ( s , p , 'var1_field1_field1' ) , True )
-        ae ( iv ( s , p , 'var1_field1_field1_2' ) , True )
-        ae ( iv ( s , p , 'var1_2_field1_2_field1_2' ) , True )
-        ae ( iv ( s , p , 'unknown' ) , False )
-        ae ( iv ( s , p , 'var1_unknown' ) , False )
-        ae ( iv ( s , p , 'var1_field1_unknown' ) , False )
+        ae ( sv ( s , p , 'var1' ) ,
+            [ [ 'var1' ] ] )
+        ae ( sv ( s , p , 'var1_2' ) ,
+            [ [ 'var1_2' ] ] )
+        ae ( sv ( s , p , 'var1_field1' ) ,
+            [ [ 'var1' , 'field1' ] ] )
+        ae ( sv ( s , p , 'var1_2_field1_2' ) ,
+            [ [ 'var1_2' , 'field1_2' ] ] )
+        ae ( sv ( s , p , 'var1_field1_field1' ) ,
+            [ [ 'var1' , 'field1' , 'field1' ] ] )
+        ae ( sv ( s , p , 'var1_field1_field1_2' ) ,
+            [ [ 'var1' , 'field1' , 'field1_2' ] ] )
+        ae ( sv ( s , p , 'var1_2_field1_2_field1_2' ) ,
+            [ [ 'var1_2' , 'field1_2' , 'field1_2' ] ] )
+        ae ( sv ( s , p , 'unknown' ) ,
+            [ ] )
+        ae ( sv ( s , p , 'var1_unknown' ) ,
+            [ ] )
+        ae ( sv ( s , p , 'var1_field1_unknown' ) ,
+            [ ] )
     def test_is_value_ambiguity ( self ) :
         pass
 
