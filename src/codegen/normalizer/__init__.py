@@ -1,8 +1,8 @@
-from normalizer . assigns import run as run_assigns
-from normalizer . calls import run as run_calls
+from normalizer . assigns import run as run_split_assigns
+from normalizer . calls import run as run_split_calls
 from normalizer . consts import run as run_consts
 from normalizer . names import run as run_names
-from normalizer . sends import run as run_sends
+from normalizer . sends import run as run_split_sends
 from normalizer . skeleton import run as run_skeleton
 from normalizer . withs import run as run_withs
 
@@ -12,7 +12,10 @@ def run ( src ) :
         , run_consts
         , run_names
         , run_withs
-        , run_sends
-        , run_calls
-        , run_assigns
+        , run_split_sends
+        , run_split_calls
+        , run_split_assigns
+        #, run_check_sends
+        #, run_check_calls
+        #, run_check_assigns
         ] , lambda a : a ) ( src )
