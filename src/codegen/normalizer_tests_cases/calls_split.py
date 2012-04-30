@@ -1,8 +1,8 @@
-from normalizer . calls import run
+from normalizer . calls_split import run
 from normalizer . skeleton import run as rskel
 import unittest
 
-class calls_test_case ( unittest . TestCase ) :
+class calls_split_test_case ( unittest . TestCase ) :
     def test_split_args ( self ) :
         ae = self . assertEqual
         r = run

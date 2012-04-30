@@ -1,8 +1,8 @@
-from normalizer . assigns import run
+from normalizer . assigns_split import run
 from normalizer . exception import exception
 import unittest
 
-class assigns_test_case ( unittest . TestCase ) :
+class assigns_split_test_case ( unittest . TestCase ) :
     def test_raise ( self ) :
         r = run
         ne = exception
