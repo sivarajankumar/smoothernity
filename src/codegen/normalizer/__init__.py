@@ -12,10 +12,10 @@ def run ( src ) :
         , run_consts
         , run_names
         , run_withs
-        , run_sends_split
-        #, run_sends_check
-        , run_calls_split
-        #, run_calls_check
         , run_assigns_split
         #, run_assigns_check
+        , run_calls_split
+        #, run_calls_check
+        , run_sends_split
+        #, run_sends_check
         ] , lambda a : a ) ( src )
