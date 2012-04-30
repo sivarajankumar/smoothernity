@@ -14,7 +14,7 @@ def run ( src ) :
         , run_names
         , run_withs
         , run_assigns_split
-        , run_assigns_check
+        #, run_assigns_check
         , run_calls_split
         #, run_calls_check
         , run_sends_split
