@@ -34,7 +34,7 @@ class assigns_check_test_case ( unittest . TestCase ) :
                     { 'from' : [ 'var1' ]
                     , 'to' : [ 'const1' ]
                     } } ] } } } ) )
-    def test_assign_to_value ( self ) :
+    def test_assign_from_const ( self ) :
         r = run
         s = rskel (
             { 'platform_consts' : { 'const1' : 1 }
@@ -46,3 +46,40 @@ class assigns_check_test_case ( unittest . TestCase ) :
                     } } ] } } } )
         ae = self . assertEqual
         ae ( r ( s ) , s )
+    def test_assign_from_value_to_value ( self ) :
+        r = run
+        s = rskel (
+            { 'types' : { 'group1' :
+                { 'type1' : [ { 'field1' : { } } ] } }
+            , 'anywhere' : { 'group1' :
+                { 'vars' :
+                    [ { 'var1' : { } }
+                    , { 'var2' : { } } ]
+                , 'ops' : [ { 'assign' :
+                    { 'from' : [ 'var1_field1' ]
+                    , 'to' : [ 'var2_field1' ]
+                    } } ] } } } )
+        ae = self . assertEqual
+        ae ( r ( s ) , s )
+    def test_assign_from_unknown ( self ) :
+        r = run
+        ne = exception
+        ar = self . assertRaises
+        ar ( ne , r , rskel (
+            { 'anywhere' : { 'anywhere' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' : [ { 'assign' :
+                    { 'from' : [ 'unknown' ]
+                    , 'to' : [ 'var1' ]
+                    } } ] } } } ) )
+    def test_assign_to_unknown ( self ) :
+        r = run
+        ne = exception
+        ar = self . assertRaises
+        ar ( ne , r , rskel (
+            { 'anywhere' : { 'anywhere' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' : [ { 'assign' :
+                    { 'from' : [ 'var1' ]
+                    , 'to' : [ 'unknown' ]
+                    } } ] } } } ) )

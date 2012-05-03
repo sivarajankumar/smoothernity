@@ -17,4 +17,9 @@ def _rewriter ( src , path , expl ) :
             if x in expl . get_consts ( path ) :
                 raise exception ( "Assign to constant '%s'" % x
                                 , None , path )
+        for x in froms + tos :
+            if not expl . split_value_fields ( path , x ) \
+            and x not in expl . get_consts ( path ) :
+                raise exception ( "Unknown identifier in assign: '%s'" % x
+                                , None , path )
     return src
