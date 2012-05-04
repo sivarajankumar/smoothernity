@@ -1,8 +1,8 @@
 from explorer import explorer
-from normalizer . split_args import run as run_split_args
+from normalizer . args_split import run as run_args_split
 
 def run ( src ) :
     e = explorer ( src )
-    return run_split_args ( 'call'
+    return run_args_split ( 'call'
         , lambda n , p : e . get_callables ( p ) [ n ] [ 'args' ]
         , src )
