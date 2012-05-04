@@ -1,5 +1,6 @@
 import unittest
 from normalizer_tests_cases . all import *
+from normalizer_tests_cases . args_check import *
 from normalizer_tests_cases . args_split import *
 from normalizer_tests_cases . assigns_check import *
 from normalizer_tests_cases . assigns_split import *
