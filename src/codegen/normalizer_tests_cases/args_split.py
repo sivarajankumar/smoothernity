@@ -1,7 +1,6 @@
 from normalizer . args_split import run
 from normalizer . skeleton import run as rskel
 from normalizer . exception import exception
-from explorer import explorer
 import unittest
 
 class args_split_test_case ( unittest . TestCase ) :
