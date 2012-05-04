@@ -1,10 +1,10 @@
-from normalizer . split_args import run
+from normalizer . args_split import run
 from normalizer . skeleton import run as rskel
 from normalizer . exception import exception
 from explorer import explorer
 import unittest
 
-class split_args_test_case ( unittest . TestCase ) :
+class args_split_test_case ( unittest . TestCase ) :
     def test_raise ( self ) :
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         ne = exception
@@ -31,7 +31,7 @@ class split_args_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( e . get_path ( )  , [ 'path1' , 'path2' ] )
         ae ( e . get_src ( )  , s )
-    def test_split_args ( self ) :
+    def test_args_split ( self ) :
         r = lambda x , y : run ( 'split' , lambda n , p : x [ n ] , y )
         ae = self . assertEqual
         ae ( r (

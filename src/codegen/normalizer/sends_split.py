@@ -1,8 +1,8 @@
 from explorer import explorer
-from normalizer . split_args import run as run_split_args
+from normalizer . args_split import run as run_args_split
 
 def run ( src ) :
     e = explorer ( src )
-    return run_split_args ( 'send'
+    return run_args_split ( 'send'
         , lambda n , p : e . get_messages_receives ( ) [ n ]
         , src )
