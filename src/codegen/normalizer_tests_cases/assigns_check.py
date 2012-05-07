@@ -1,6 +1,7 @@
 from normalizer . assigns_check import run
 from normalizer . exception import exception
 from normalizer . skeleton import run as rskel
+from fractions import Fraction
 import unittest
 
 class assigns_check_test_case ( unittest . TestCase ) :
@@ -34,18 +35,44 @@ class assigns_check_test_case ( unittest . TestCase ) :
                     { 'from' : [ 'var1' ]
                     , 'to' : [ 'const1' ]
                     } } ] } } } ) )
-    def test_assign_from_const ( self ) :
-        r = run
-        s = rskel (
-            { 'platform_consts' : { 'const1' : 1 }
-            , 'anywhere' : { 'anywhere' :
+        ar ( ne , r , rskel (
+            { 'anywhere' : { 'anywhere' :
                 { 'vars' : [ { 'var1' : { } } ]
                 , 'ops' : [ { 'assign' :
-                    { 'from' : [ 'const1' ]
-                    , 'to' : [ 'var1' ]
-                    } } ] } } } )
+                    { 'from' : [ 1 ]
+                    , 'to' : [ 'const1' ]
+                    } } ] } } } ) )
+        ar ( ne , r , rskel (
+            { 'anywhere' : { 'anywhere' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' : [ { 'assign' :
+                    { 'from' : [ Fraction ( 1 , 2 ) ]
+                    , 'to' : [ 'const1' ]
+                    } } ] } } } ) )
+    def test_assign_from_const ( self ) :
+        r = run
         ae = self . assertEqual
-        ae ( r ( s ) , s )
+        for s in (
+                { 'platform_consts' : { 'const1' : 1 }
+                , 'anywhere' : { 'anywhere' :
+                    { 'vars' : [ { 'var1' : { } } ]
+                    , 'ops' : [ { 'assign' :
+                        { 'from' : [ 'const1' ]
+                        , 'to' : [ 'var1' ]
+                        } } ] } } } ,
+                { 'anywhere' : { 'anywhere' :
+                    { 'vars' : [ { 'var1' : { } } ]
+                    , 'ops' : [ { 'assign' :
+                        { 'from' : [ 1 ]
+                        , 'to' : [ 'var1' ]
+                        } } ] } } } ,
+                { 'anywhere' : { 'anywhere' :
+                    { 'vars' : [ { 'var1' : { } } ]
+                    , 'ops' : [ { 'assign' :
+                        { 'from' : [ Fraction ( 1 , 2 ) ]
+                        , 'to' : [ 'var1' ]
+                        } } ] } } } ) :
+            ae ( r ( rskel ( s ) ) , rskel ( s ) )
     def test_assign_from_value_to_value ( self ) :
         r = run
         s = rskel (
