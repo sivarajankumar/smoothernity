@@ -1,6 +1,7 @@
 from explorer import explorer
-from utils import rewrite
+from utils import rewrite , is_text
 from normalizer . exception import exception
+from fractions import Fraction
 
 def run ( src ) :
     x = explorer ( src )
@@ -14,11 +15,12 @@ def _rewriter ( src , path , expl ) :
         froms = src [ 'assign' ] [ 'from' ]
         tos = src [ 'assign' ] [ 'to' ]
         for x in tos :
-            if x in expl . get_consts ( path ) :
+            if type ( x ) in ( int , Fraction ) \
+            or x in expl . get_consts ( path ) :
                 raise exception ( "Assign to constant '%s'" % x
                                 , None , path )
         for x in froms + tos :
-            if not expl . split_value_fields ( path , x ) \
+            if is_text ( x ) and not expl . split_value_fields ( path , x ) \
             and x not in expl . get_consts ( path ) :
                 raise exception ( "Unknown identifier in assign: '%s'" % x
                                 , None , path )
