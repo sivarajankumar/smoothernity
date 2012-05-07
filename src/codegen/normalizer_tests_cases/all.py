@@ -1,5 +1,6 @@
 import unittest
 from normalizer import run
+from normalizer . exception import exception
 from normalizer . skeleton import run as rskel
 
 class all_test_case ( unittest . TestCase ) :
@@ -38,15 +39,27 @@ class all_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( r ( 
             { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                { 'ops' : [ { 'assign' :
+                { 'vars' : [ { 'a1' : { } } , { 'a2' : { } } , { 'a3' : { } } ]
+                , 'ops' : [ { 'assign' :
                     { 'from' : [ 'a1' ]
                     , 'to' : [ 'a2' , 'a3' ]
             } } ] } } } } } ) , rskel (
             { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
-                { 'ops' :
+                { 'vars' : [ { 'a1' : { } } , { 'a2' : { } } , { 'a3' : { } } ]
+                , 'ops' :
                     [ { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a2' ] } }
                     , { 'assign' : { 'from' : [ 'a1' ] , 'to' : [ 'a3' ] } }
             ] } } } } } ) )
+    def test_assigns_check ( self ) :
+        r = run
+        ne = exception
+        ar = self . assertRaises
+        ar ( ne , r , 
+            { 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'ops' : [ { 'assign' :
+                    { 'from' : [ 'a1' ]
+                    , 'to' : [ 'a2' ]
+            } } ] } } } } } )
     def test_consts ( self ) :
         r = run
         ae = self . assertEqual
