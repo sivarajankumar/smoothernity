@@ -1,2 +1,0 @@
-typedef so_called_lib_std_vector < so_called_loadable_fsm_content_action_do_type > shy_loadable_fsm_content_action_do_container_type ;
-

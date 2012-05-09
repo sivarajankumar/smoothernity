@@ -55,9 +55,12 @@ void instruction5 ( )
 
 void envoke ( int arg )
 {
-    g_arg = arg ;
-    g_instructions = 0 ;
-    g_instruction = instruction1 ;
+    if ( ! g_instruction )
+    {
+        g_arg = arg ;
+        g_instructions = 0 ;
+        g_instruction = instruction1 ;
+    }
 }
 
 bool continuate ( int instructions )

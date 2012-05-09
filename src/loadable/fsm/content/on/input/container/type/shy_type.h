@@ -1,1 +1,0 @@
-typedef so_called_lib_std_vector < so_called_loadable_fsm_content_on_input_type > shy_loadable_fsm_content_on_input_container_type ;
