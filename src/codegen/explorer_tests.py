@@ -176,6 +176,8 @@ class explorer_test_case ( unittest . TestCase ) :
         g = lambda x , p : explorer ( x ) . get_global_vars ( p )
         gv = lambda x , p : explorer ( x ) . get_values ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
+        gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gw = lambda x , p : explorer ( x ) . get_writables ( p )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'vars' : { 'group1' :
@@ -187,9 +189,13 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s , p ) , r )
         ae ( gv ( s , p ) , r )
         ae ( ge ( s , p ) , r )
+        ae ( gr ( s , p ) , r )
+        ae ( gw ( s , p ) , r )
     def test_get_local_values ( self ) :
         gv = lambda x , p : explorer ( x ) . get_values ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
+        gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gw = lambda x , p : explorer ( x ) . get_writables ( p )
         for some in ( 'vars' , 'args' ) :
             g = lambda x , p : getattr ( explorer ( x ) ,
                                 'get_local_%s' % some ) ( p )
@@ -206,6 +212,8 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( g ( s , p ) , r )
             ae ( gv ( s , p ) , r )
             ae ( ge ( s , p ) , r )
+            ae ( gr ( s , p ) , r )
+            ae ( gw ( s , p ) , r )
     def test_get_types ( self ) :
         g = lambda x : explorer ( x ) . get_types ( )
         p = [ 'somewhere' , 'faraway' ]
