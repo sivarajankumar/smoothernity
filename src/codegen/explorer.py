@@ -1,4 +1,6 @@
-from utils import merge
+from utils import merge , is_text
+from fractions import Fraction
+from operator import or_
 
 class explorer :
     def __init__ ( self , storage ) :
@@ -112,6 +114,16 @@ class explorer :
                                , [ '_' . join ( ps [ : i + 1 ] ) ] )
                     if '_' . join ( ps [ : i + 1 ] ) \
                         in self . get_values ( path ) ]
+    def is_readable ( self , path , v ) :
+        return type ( v ) in ( int , Fraction ) or reduce ( or_ ,
+            [ x [ 0 ] in self . get_readables ( path )
+                for x in self . split_value_fields ( path , v ) + [ [ v ] ]
+            ] , False )
+    def is_writable ( self , path , v ) :
+        return is_text ( v ) and reduce ( or_ ,
+            [ x [ 0 ] in self . get_writables ( path )
+                for x in self . split_value_fields ( path , v ) + [ [ v ] ]
+            ] , False )
 
 def _glue ( items , first ) :
     return reduce ( lambda x , y : merge ( x , y , overwrite = False ) ,
