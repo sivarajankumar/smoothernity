@@ -1,9 +1,0 @@
-const so_called_platform_math_num_fract_type shy_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_border ;
-const so_called_platform_math_num_fract_type shy_common_logic_main_menu_letters_layout_consts :: letter_size_fract_horizontal_spacing ;
-const so_called_platform_math_num_fract_type shy_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_border ;
-const so_called_platform_math_num_fract_type shy_common_logic_main_menu_letters_layout_consts :: letter_size_fract_vertical_spacing ;
-const so_called_platform_math_num_fract_type shy_common_logic_main_menu_letters_layout_consts :: menu_position_z ;
-
-void shy_common_logic_main_menu_letters_layout_consts :: binding ( )
-{
-}

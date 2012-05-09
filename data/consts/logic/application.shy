@@ -1,5 +1,0 @@
-consts logic_application
-    skip_fader 0
-    skip_salutation 0
-    skip_main_menu 0
-    skip_amusement 0
