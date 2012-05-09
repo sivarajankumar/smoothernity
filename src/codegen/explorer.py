@@ -61,12 +61,15 @@ class explorer :
             [ self . get_global_vars ( path )
             , self . get_local_vars ( path )
             , self . get_local_args ( path )
+            , self . get_message_receive_args ( path )
+            , self . get_message_request_args ( path )
             ] , { } )
     def get_writables ( self , path ) :
         return _glue (
             [ self . get_global_vars ( path )
             , self . get_local_vars ( path )
             , self . get_local_args ( path )
+            , self . get_message_reply_args ( path )
             ] , { } )
     def get_consts ( self , path ) :
         return _glue (
@@ -75,6 +78,7 @@ class explorer :
             , self . get_platform_consts ( )
             ] , { } )
     def get_values ( self , path ) :
+        # should be gone
         return _glue (
             [ self . get_global_vars ( path )
             , self . get_local_vars ( path )

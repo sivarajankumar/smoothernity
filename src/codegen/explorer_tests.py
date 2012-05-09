@@ -174,7 +174,6 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s , p ) , r )
     def test_get_global_vars ( self ) :
         g = lambda x , p : explorer ( x ) . get_global_vars ( p )
-        gv = lambda x , p : explorer ( x ) . get_values ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
         gw = lambda x , p : explorer ( x ) . get_writables ( p )
@@ -187,12 +186,10 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'var2' : 'test2' }
         ae = self . assertEqual
         ae ( g ( s , p ) , r )
-        ae ( gv ( s , p ) , r )
         ae ( ge ( s , p ) , r )
         ae ( gr ( s , p ) , r )
         ae ( gw ( s , p ) , r )
     def test_get_local_values ( self ) :
-        gv = lambda x , p : explorer ( x ) . get_values ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
         gw = lambda x , p : explorer ( x ) . get_writables ( p )
@@ -210,7 +207,6 @@ class explorer_test_case ( unittest . TestCase ) :
                 , 'var2' : 'test2' }
             ae = self . assertEqual
             ae ( g ( s , p ) , r )
-            ae ( gv ( s , p ) , r )
             ae ( ge ( s , p ) , r )
             ae ( gr ( s , p ) , r )
             ae ( gw ( s , p ) , r )
@@ -246,7 +242,7 @@ class explorer_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( g ( s ) , r )
     def test_get_message_some_args ( self ) :
-        gv = lambda x , p : explorer ( x ) . get_values ( p )
+        gr = lambda x , p : explorer ( x ) . get_readables ( p )
         for some in ( 'request' , 'receive' ) :
             g = lambda x : getattr ( explorer ( x ) ,
                 'get_message_%s_args' % some ) ( p )
@@ -263,9 +259,9 @@ class explorer_test_case ( unittest . TestCase ) :
                 , 'msg_arg2' : 'test2' }
             ae = self . assertEqual
             ae ( g ( s ) , r )
-            ae ( gv ( s , p ) , r )
+            ae ( gr ( s , p ) , r )
     def test_get_message_reply_args ( self ) :
-        gv = lambda x , p : explorer ( x ) . get_values ( p )
+        gw = lambda x , p : explorer ( x ) . get_writables ( p )
         g = lambda x : explorer ( x ) . get_message_reply_args ( p )
         p = [ 'module' , 'module1' , 'request' , 'msg1' , 'ops' ]
         s = mpath ( p ,
@@ -280,7 +276,7 @@ class explorer_test_case ( unittest . TestCase ) :
             , 'reply_arg2' : 'test2' }
         ae = self . assertEqual
         ae ( g ( s ) , r )
-        ae ( gv ( s , p ) , r )
+        ae ( gw ( s , p ) , r )
     def test_split_value_fields ( self ) :
         sv = lambda x , p , v : explorer ( x ) . split_value_fields ( p , v )
         p = [ 'somewhere' , 'group1' ]
