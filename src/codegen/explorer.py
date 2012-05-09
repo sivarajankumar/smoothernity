@@ -56,6 +56,18 @@ class explorer :
             , self . get_stateless_procs ( )
             , self . get_trace_procs ( )
             ] , { } )
+    def get_readables ( self , path ) :
+        return _glue (
+            [ self . get_global_vars ( path )
+            , self . get_local_vars ( path )
+            , self . get_local_args ( path )
+            ] , { } )
+    def get_writables ( self , path ) :
+        return _glue (
+            [ self . get_global_vars ( path )
+            , self . get_local_vars ( path )
+            , self . get_local_args ( path )
+            ] , { } )
     def get_consts ( self , path ) :
         return _glue (
             [ self . get_global_consts ( )
