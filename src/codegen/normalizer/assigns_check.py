@@ -1,7 +1,6 @@
 from explorer import explorer
 from utils import rewrite , is_text
 from normalizer . exception import exception
-from fractions import Fraction
 from operator import and_
 
 def run ( src ) :
