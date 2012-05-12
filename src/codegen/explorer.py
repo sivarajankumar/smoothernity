@@ -76,6 +76,18 @@ class explorer :
             , self . get_local_args ( path )
             , self . get_message_reply_args ( path )
             ] , { } )
+    def get_passables ( self , path ) :
+        return _glue (
+            [ self . get_global_vars ( path )
+            , self . get_local_vars ( path )
+            , self . get_local_args ( path )
+            , self . get_message_receive_args ( path )
+            , self . get_message_request_args ( path )
+            , self . get_message_reply_args ( path )
+            , self . get_global_consts ( )
+            , self . get_local_consts ( path )
+            , self . get_platform_consts ( )
+            ] , { } )
     def get_consts ( self , path ) :
         return _glue (
             [ self . get_global_consts ( )
@@ -122,6 +134,11 @@ class explorer :
     def is_writable ( self , path , v ) :
         return is_text ( v ) and reduce ( or_ ,
             [ x [ 0 ] in self . get_writables ( path )
+                for x in self . split_value_fields ( path , v ) + [ [ v ] ]
+            ] , False )
+    def is_passable ( self , path , v ) :
+        return type ( v ) in ( int , Fraction ) or reduce ( or_ ,
+            [ x [ 0 ] in self . get_passables ( path )
                 for x in self . split_value_fields ( path , v ) + [ [ v ] ]
             ] , False )
 
