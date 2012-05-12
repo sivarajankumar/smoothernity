@@ -118,6 +118,10 @@ class explorer_test_case ( unittest . TestCase ) :
         gc = lambda x , p : explorer ( x ) . get_consts ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
+        ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
+        iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'platform_consts' :
@@ -130,13 +134,19 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
         ae ( gr ( s , p ) , r )
+        ae ( gp ( s , p ) , r )
+        ae ( ir ( s , p , 'const1' ) , True )
+        ae ( iw ( s , p , 'const1' ) , False )
+        ae ( ip ( s , p , 'const1' ) , True )
     def test_get_global_consts ( self ) :
         g = lambda x : explorer ( x ) . get_global_consts ( )
         gc = lambda x , p : explorer ( x ) . get_consts ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'somewhere' , 'faraway' ]
         s = mpath ( p ,
             { 'consts' :
@@ -149,15 +159,19 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r )
         ae ( ge ( s , p ) , r )
         ae ( gr ( s , p ) , r )
+        ae ( gp ( s , p ) , r )
         ae ( ir ( s , p , 'group1_consts_const1' ) , True )
         ae ( iw ( s , p , 'group1_consts_const1' ) , False )
+        ae ( ip ( s , p , 'group1_consts_const1' ) , True )
     def test_get_local_consts ( self ) :
         g = lambda x , p : explorer ( x ) . get_local_consts ( p )
         gc = lambda x , p : explorer ( x ) . get_consts ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'consts' : { 'group1' :
@@ -174,8 +188,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( gc ( s , p ) , r2 )
         ae ( ge ( s , p ) , r2 )
         ae ( gr ( s , p ) , r2 )
+        ae ( gp ( s , p ) , r2 )
         ae ( ir ( s , p , 'consts_const1' ) , True )
         ae ( iw ( s , p , 'consts_const1' ) , False )
+        ae ( ip ( s , p , 'consts_const1' ) , True )
     def test_get_local_consts_in_consts ( self ) :
         g = lambda x , p : explorer ( x ) . get_local_consts ( p )
         p = [ 'consts' , 'group1' ]
@@ -193,8 +209,10 @@ class explorer_test_case ( unittest . TestCase ) :
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
         gw = lambda x , p : explorer ( x ) . get_writables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'vars' : { 'group1' :
@@ -208,15 +226,19 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( ge ( s , p ) , r )
         ae ( gr ( s , p ) , r )
         ae ( gw ( s , p ) , r )
+        ae ( gp ( s , p ) , r )
         ae ( ir ( s , p , 'var1' ) , True )
         ae ( iw ( s , p , 'var1' ) , True )
+        ae ( ip ( s , p , 'var1' ) , True )
     def test_get_local_values ( self ) :
         gv = lambda x , p : explorer ( x ) . get_values ( p )
         ge = lambda x , p : explorer ( x ) . get_everything ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
         gw = lambda x , p : explorer ( x ) . get_writables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         for some in ( 'vars' , 'args' ) :
             g = lambda x , p : getattr ( explorer ( x ) ,
                                 'get_local_%s' % some ) ( p )
@@ -235,8 +257,10 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( ge ( s , p ) , r )
             ae ( gr ( s , p ) , r )
             ae ( gw ( s , p ) , r )
+            ae ( gp ( s , p ) , r )
             ae ( ir ( s , p , 'var1' ) , True )
             ae ( iw ( s , p , 'var1' ) , True )
+            ae ( ip ( s , p , 'var1' ) , True )
     def test_get_types ( self ) :
         g = lambda x : explorer ( x ) . get_types ( )
         p = [ 'somewhere' , 'faraway' ]
@@ -271,8 +295,10 @@ class explorer_test_case ( unittest . TestCase ) :
     def test_get_message_some_args ( self ) :
         gv = lambda x , p : explorer ( x ) . get_values ( p )
         gr = lambda x , p : explorer ( x ) . get_readables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         for some in ( 'request' , 'receive' ) :
             g = lambda x : getattr ( explorer ( x ) ,
                 'get_message_%s_args' % some ) ( p )
@@ -291,14 +317,18 @@ class explorer_test_case ( unittest . TestCase ) :
             ae ( g ( s ) , r )
             ae ( gv ( s , p ) , r )
             ae ( gr ( s , p ) , r )
+            ae ( gp ( s , p ) , r )
             ae ( ir ( s , p , 'msg_arg1' ) , True )
             ae ( iw ( s , p , 'msg_arg1' ) , False )
+            ae ( ip ( s , p , 'msg_arg1' ) , True )
     def test_get_message_reply_args ( self ) :
         g = lambda x : explorer ( x ) . get_message_reply_args ( p )
         gv = lambda x , p : explorer ( x ) . get_values ( p )
         gw = lambda x , p : explorer ( x ) . get_writables ( p )
+        gp = lambda x , p : explorer ( x ) . get_passables ( p )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'module' , 'module1' , 'request' , 'msg1' , 'ops' ]
         s = mpath ( p ,
             { 'messages' :
@@ -314,12 +344,15 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( g ( s ) , r )
         ae ( gv ( s , p ) , r )
         ae ( gw ( s , p ) , r )
+        ae ( gp ( s , p ) , r )
         ae ( ir ( s , p , 'reply_arg1' ) , False )
         ae ( iw ( s , p , 'reply_arg1' ) , True )
+        ae ( ip ( s , p , 'reply_arg1' ) , True )
     def test_split_value_fields ( self ) :
         sv = lambda x , p , v : explorer ( x ) . split_value_fields ( p , v )
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'somewhere' , 'group1' ]
         s = mpath ( p ,
             { 'vars' : { 'group1' :
@@ -358,16 +391,20 @@ class explorer_test_case ( unittest . TestCase ) :
             [ ] )
         ae ( ir ( s , p , 'var1_field1' ) , True )
         ae ( iw ( s , p , 'var1_field1' ) , True )
+        ae ( ip ( s , p , 'var1_field1' ) , True )
     def test_numbers_are_readable ( self ) :
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
+        ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'anywhere' , 'anywhere' ]
         s = mpath ( p , { } )
         ae = self . assertEqual
         ae ( ir ( s , p , 1 ) , True )
         ae ( iw ( s , p , 1 ) , False )
+        ae ( ip ( s , p , 1 ) , True )
         ae ( ir ( s , p , Fraction ( 1 , 2 ) ) , True )
         ae ( iw ( s , p , Fraction ( 1 , 2 ) ) , False )
+        ae ( ip ( s , p , Fraction ( 1 , 2 ) ) , True )
 
 if __name__ == '__main__' :
     unittest . main ( )
