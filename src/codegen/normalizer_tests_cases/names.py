@@ -38,13 +38,13 @@ class names_test_case ( unittest . TestCase ) :
                 , 'test1_func3' : { }
                 , 'test2_func4' : { } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-                [ { 'with' : { 'test1' : [ { 'anywhere' :
-                    [ { 'with' : { 'test2' : [ { 'anywhere' :
-                        [ { 'with' : { 'test3' :
-                            [ 'func1' 
-                            , 'func2'
-                            , 'func3'
-                            , 'func4'
+                    [ { 'with' : { 'test1' : [ { 'anywhere' :
+                        [ { 'with' : { 'test2' : [ { 'anywhere' :
+                            [ { 'with' : { 'test3' :
+                                [ 'func1' 
+                                , 'func2'
+                                , 'func3'
+                                , 'func4'
             ] } } ] } ] } } ] } ] } } ] } } } } } ) ) , rskel (
             { 'platform_procs' :
                 { 'test1_test2_test3_func1' : { }
@@ -52,11 +52,31 @@ class names_test_case ( unittest . TestCase ) :
                 , 'test1_func3' : { }
                 , 'test2_func4' : { } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' : { 'ops' :
-                [ { 'with' : { 'test1' : [ { 'anywhere' :
-                    [ { 'with' : { 'test2' : [ { 'anywhere' :
-                        [ { 'with' : { 'test3' :
-                            [ 'test1_test2_test3_func1'
-                            , 'test1_test3_func2'
-                            , 'test1_func3'
-                            , 'test2_func4'
+                    [ { 'with' : { 'test1' : [ { 'anywhere' :
+                        [ { 'with' : { 'test2' : [ { 'anywhere' :
+                            [ { 'with' : { 'test3' :
+                                [ 'test1_test2_test3_func1'
+                                , 'test1_test3_func2'
+                                , 'test1_func3'
+                                , 'test2_func4'
             ] } } ] } ] } } ] } ] } } ] } } } } } ) )
+    def test_fields ( self ) :
+        r = run
+        ae = self . assertEqual
+        ae ( r ( rskel (
+            { 'types' :
+                { 'type1' : [ { 'field1' : { } } ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' :
+                    [ { 'with' : { 'var1' :
+                        [ 'field1' 
+            ] } } ] } } } } } ) ) , rskel (
+            { 'types' :
+                { 'type1' : [ { 'field1' : { } } ] }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' :
+                    [ { 'with' : { 'var1' :
+                        [ 'var1_field1' 
+            ] } } ] } } } } } ) )
