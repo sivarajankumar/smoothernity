@@ -259,11 +259,11 @@ module engine_render
         if platform_conditions_whole_less_than_whole
                         guts_next_texture_id consts_max_textures
         do
-            reply_texture_texture_id <- guts_next_texture_id
+            reply_texture_index <- guts_next_texture_id
             platform_math_inc_whole guts_next_texture_id
             trace_textures_in_use guts_next_texture_id consts_max_textures
         else
-            reply_texture_texture_id <- consts_max_textures
+            reply_texture_index <- consts_max_textures
             trace_textures_overflow_error
 
     receive texture_set_texels_rect
