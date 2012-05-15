@@ -5,11 +5,11 @@ import unittest
 
 class args_check_test_case ( unittest . TestCase ) :
     def test_raise ( self ) :
-        r = lambda x , y : run ( 'check' , lambda n , p : n in x , y )
-        s = { 'path1' : { 'path2' :
-                { 'check' : [ 'func1' , 'a' ] } } }
+        s = rskel (
+            { 'path1' : { 'path2' :
+                { 'check' : [ 'func1' , 'unknown' ] } } } )
         try :
-            r ( set ( ) , s )
+            run ( 'check' , s )
         except exception as e :
             ae = self . assertEqual
             ae ( e . get_path ( )  , [ 'path1' , 'path2' ] )
@@ -17,7 +17,12 @@ class args_check_test_case ( unittest . TestCase ) :
         else :
             self . fail ( )
     def test_success ( self ) :
-        r = lambda x , y : run ( 'check' , lambda n , p : n in x , y )
-        s = { 'anywhere' : [ { 'check' : [ 'func1' , 'a1' , 'a2' ] } ] }
+        s = rskel (
+            { 'platform_consts' : { 'const1' : 1 }
+            , 'path1' : { 'path2' :
+                { 'vars' : [ { 'var1' : { } } ]
+                , 'ops' :   
+                    [ { 'check' : [ 'func1' , 'const1' , 'var1' ] }
+                    ] } } } )
         ae = self . assertEqual
-        ae ( r ( set ( [ 'a1' , 'a2' ] ) , s ) , s )
+        ae ( run ( 'check' , s ) , s )
