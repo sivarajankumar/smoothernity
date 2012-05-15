@@ -136,6 +136,8 @@ if __name__ == '__main__' :
             { 'platform_consts' :
                 { 'platform_consts_seconds_per_frame' : Fraction ( 1 , 60 )
                 , 'platform_math_consts_fract_2pi' : Fraction ( 6283184 , 1000000 )
+                , 'true' : 1
+                , 'false' : 0
                 }
             , 'platform_procs' :
                 { 'platform_conditions_fract_greater_than_fract' : { 'args' : [ { } ] * 2 }
