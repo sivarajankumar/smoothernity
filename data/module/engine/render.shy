@@ -267,7 +267,7 @@ module engine_render
             trace_textures_overflow_error
 
     receive texture_set_texels_rect
-        vars texel_offset x y texture
+        vars texel_offset x y texture texel
         ops
             if platform_conditions_whole_less_than_whole
                                 msg_texture_texture_id consts_max_textures
