@@ -65,7 +65,7 @@ class names_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( r ( rskel (
             { 'types' :
-                { 'type1' : [ { 'field1' : { } } ] }
+                { 'group1' : { 'type1' : [ { 'field1' : { } } ] } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'vars' : [ { 'var1' : { } } ]
                 , 'ops' :
@@ -73,7 +73,7 @@ class names_test_case ( unittest . TestCase ) :
                         [ 'field1' 
             ] } } ] } } } } } ) ) , rskel (
             { 'types' :
-                { 'type1' : [ { 'field1' : { } } ] }
+                { 'group1' : { 'type1' : [ { 'field1' : { } } ] } }
             , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
                 { 'vars' : [ { 'var1' : { } } ]
                 , 'ops' :

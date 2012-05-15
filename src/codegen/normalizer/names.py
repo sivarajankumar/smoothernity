@@ -4,17 +4,19 @@ from itertools import combinations
 from normalizer . exception import exception
 
 def run ( src ) :
-    where = explorer ( src ) . get_everything
+    x = explorer ( src )
     try :
-        return rewrite ( src , lambda s , p : _rewriter ( where , s , p ) )
+        return rewrite ( src , lambda s , p : _rewriter ( s , p , x ) )
     except exception as e :
         raise exception ( str ( e ) , src , e . get_path ( ) )
 
-def _rewriter ( where , src , path ) :
+def _rewriter ( src , path , expl ) :
     if is_text ( src ) :
         prefixes = [ path [ i + 1 ]
             for i in xrange ( len ( path ) - 1 ) if path [ i ] == 'with' ]
-        valids = filter ( lambda x : x in where ( path ) ,
+        valids = filter ( lambda x :
+                            x in expl . get_everything ( path )
+                            or expl . split_value_fields ( path , x ) ,
             [ src ] + [ '_' . join ( c ) + '_' + src
                 for i in xrange ( len ( prefixes ) )
                     for c in combinations ( prefixes , i + 1 ) ] )
