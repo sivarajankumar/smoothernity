@@ -4,6 +4,7 @@ from normalizer . calls_check import run as run_calls_check
 from normalizer . calls_split import run as run_calls_split
 from normalizer . consts import run as run_consts
 from normalizer . names import run as run_names
+from normalizer . sends_check import run as run_sends_check
 from normalizer . sends_split import run as run_sends_split
 from normalizer . skeleton import run as run_skeleton
 from normalizer . withs import run as run_withs
@@ -19,5 +20,5 @@ def run ( src ) :
         , run_calls_split
         , run_calls_check
         , run_sends_split
-        #, run_sends_check
+        , run_sends_check
         ] , lambda a : a ) ( src )

@@ -78,6 +78,18 @@ class all_test_case ( unittest . TestCase ) :
                 [ { 'with' : { 'test1' :
                     [ { 'call' : [ 'func1' , 'unknown' ] } ]
             } } ] } } } } } )
+    def test_sends_check ( self ) :
+        r = run
+        ne = exception
+        ar = self . assertRaises
+        ar ( ne , r , 
+            { 'messages' : { 'test1' : 
+                { 'receive' : { 'msg1' : [ { } ] } } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'ops' :
+                    [ { 'with' : { 'test1' :
+                        [ { 'send' : [ 'msg1' , 'unknown' ] } ]
+            } } ] } } } } } )
     def test_consts ( self ) :
         r = run
         ae = self . assertEqual
