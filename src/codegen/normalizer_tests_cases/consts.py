@@ -52,3 +52,12 @@ class consts_test_case ( unittest . TestCase ) :
             rskel ( { 'consts' :
             { 'consts1' : { 'test1' : 1 }
             , 'consts2' : { 'test2' : 1 } } } ) )
+    def test_same_name ( self ) :
+        r = run
+        ae = self . assertEqual
+        ae ( r ( rskel ( { 'consts' :
+            { 'group1' : { 'test1' : 1 , 'test2' : '[ test1 ]' }
+            , 'group2' : { 'test1' : 2 , 'test2' : '[ test1 ]' } } } ) ) ,
+            rskel ( { 'consts' :
+            { 'group1' : { 'test1' : 1 , 'test2' : 1 }
+            , 'group2' : { 'test1' : 2 , 'test2' : 2 } } } ) )
