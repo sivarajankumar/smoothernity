@@ -43,12 +43,9 @@ class _const_value :
             ( a . value ( ) if isinstance ( a , _const_value ) else a
             , b . value ( ) if isinstance ( b , _const_value ) else b )
     def _ops ( op ) :
-        def fwd ( self , a ) :
-            return self . _calc ( self , a , op )
-        def back ( self , a ) :
-            return self . _calc ( a , self , op )
-        return fwd , back
-    __or__ , __ror__ = _ops ( operator . or_ )
+        return lambda self , a : self . _calc ( self , a , op ) \
+             , lambda self , a : self . _calc ( a , self , op )
+    __or__  , __ror__  = _ops ( operator . or_ )
     __add__ , __radd__ = _ops ( operator . add )
     __sub__ , __rsub__ = _ops ( operator . sub )
     __mul__ , __rmul__ = _ops ( operator . mul )
