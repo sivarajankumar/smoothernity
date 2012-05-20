@@ -9,17 +9,17 @@ def run ( src ) :
     for root_k , root_v in src . items ( ) :
         if root_k == 'consts' :
             res [ 'consts' ] = dict ( )
-            env = dict ( )
-            for module in src [ 'consts' ] . keys ( ) :
-                for k , v in exp . get_consts (
-                                    [ 'consts' , module ] ) . items ( ) :
-                    env [ k ] = _const_value ( v , env )
+            for module , consts in src [ 'consts' ] . items ( ) :
+                for k , v in consts . items ( ) :
+                    path = [ 'consts' , module , k ]
+                    src [ 'consts' ] [ module ] [ k ] = \
+                        _const_value ( v , exp , path )
             for module , consts in src [ 'consts' ] . items ( ) :
                 res [ 'consts' ] [ module ] = dict ( )
                 for k in sorted ( consts . keys ( ) ) :
                     try :
                         res [ 'consts' ] [ module ] [ k ] = \
-                            env [ k ] . value ( )
+                            src [ 'consts' ] [ module ] [ k ] . value ( )
                     except Exception as e :
                         raise exception ( str ( e ) , src ,
                                 [ 'consts' , module , k ] )
@@ -28,13 +28,14 @@ def run ( src ) :
     return res
 
 class _const_value :
-    def __init__ ( self , v , env ) :
-        self . _v , self . _env = v , env
+    def __init__ ( self , v , exp , path ) :
+        self . _v , self . _exp , self . _path = v , exp , path
     def value ( self ) :
         v = self . _v
         if is_text ( v ) :
             assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
-            ev = eval ( v [ 1 : - 1 ] , self . _env )
+            env = self . _exp . get_consts ( self . _path )
+            ev = eval ( v [ 1 : - 1 ] , env )
             return ev . value ( ) if isinstance ( ev , _const_value ) else ev
         else :
             return v
