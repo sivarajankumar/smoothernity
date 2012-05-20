@@ -61,3 +61,14 @@ class consts_test_case ( unittest . TestCase ) :
             rskel ( { 'consts' :
             { 'group1' : { 'test1' : 1 , 'test2' : 1 }
             , 'group2' : { 'test1' : 2 , 'test2' : 2 } } } ) )
+    def test_outside ( self ) :
+        r = run
+        ae = self . assertEqual
+        ae ( r ( rskel (
+            { 'consts' : { 'consts1' : { 'test1' : '[ 1 ]' } }
+            , 'somewhere' : { 'out' : { 'there' :
+                '[ consts1_consts_test1 ]' } }
+            } ) ) , rskel (
+            { 'consts' : { 'consts1' : { 'test1' : 1 } }
+            , 'somewhere' : { 'out' : { 'there' : 1 } }
+            } ) )
