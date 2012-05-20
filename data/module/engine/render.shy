@@ -77,8 +77,8 @@ stateless engine_render
     proc clamp_texture_coords
         args x y
         ops engine_math_stateless_clamp_whole_dest
-                x x 0 [ consts_texture_width - 1 ]
-                y y 0 [ consts_texture_height - 1 ]
+                x x 0 [ consts_texture_size - 1 ]
+                y y 0 [ consts_texture_size - 1 ]
 
 module engine_render
     module_queue consts_max_messages
@@ -283,7 +283,7 @@ module engine_render
                                                             x msg_right
                     do
                         platform_math_mul_wholes
-                            texel_offset consts_texture_width y
+                            texel_offset consts_texture_size y
                         platform_math_add_to_whole texel_offset x
                         platform_static_array_element_ptr
                             texel texture_texels texel_offset
@@ -372,7 +372,7 @@ module engine_render
         replace how with
             platform_render_load_texture_subdata
                 texture_render_id
-                0 0 consts_texture_width consts_texture_height
+                0 0 consts_texture_size consts_texture_size
                 texture_texels
     paste
         replace what with load_from_resource
@@ -395,7 +395,7 @@ module engine_render
                     platform_static_array_element_ptr
                         texture guts_textures_datas msg_texture_texture_id
                     platform_math_mul_wholes
-                        texel_offset consts_texture_width msg_y
+                        texel_offset consts_texture_size msg_y
                     platform_math_add_to_whole texel_offset msg_x
                     platform_static_array_element_ptr
                         texel texture_texels texel_offset
