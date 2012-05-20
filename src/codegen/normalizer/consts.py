@@ -1,40 +1,50 @@
 import operator
 from explorer import explorer
+from fractions import Fraction
 from normalizer . exception import exception
-from utils import is_text
+from utils import is_text , rewrite
 
 def run ( src ) :
-    exp = explorer ( src )
-    res = dict ( )
-    for root_k , root_v in src . items ( ) :
-        if root_k == 'consts' :
-            res [ 'consts' ] = dict ( )
-            for module , consts in src [ 'consts' ] . items ( ) :
-                for k , v in consts . items ( ) :
-                    path = [ 'consts' , module , k ]
-                    src [ 'consts' ] [ module ] [ k ] = \
-                        _const_value ( v , exp , path )
-            for module , consts in src [ 'consts' ] . items ( ) :
-                res [ 'consts' ] [ module ] = dict ( )
-                for k in sorted ( consts . keys ( ) ) :
-                    try :
-                        res [ 'consts' ] [ module ] [ k ] = \
-                            src [ 'consts' ] [ module ] [ k ] . value ( )
-                    except Exception as e :
-                        raise exception ( str ( e ) , src ,
-                                [ 'consts' , module , k ] )
-        else :
-            res [ root_k ] = root_v
-    return res
+    r = lambda x : lambda y : rewrite ( y , lambda s , p : x ( s , p , y ) )
+    return reduce ( lambda x , y : lambda a : y ( x ( a ) ) ,
+        [ r ( _ready )
+        , r ( _steady )
+        , r ( _go )
+        ] ) ( src )
+
+def _is_expr ( x ) :
+    return is_text ( x ) and ( x [ : 1 ] , x [ - 1 : ] ) == ( '[' , ']' )
+
+def _ready ( src , path , top ) :
+    if _is_expr ( src ) or type ( src ) in ( int , Fraction ) :
+        return _const_value ( src , path )
+    else :
+        return src
+
+def _steady ( src , path , top ) :
+    if isinstance ( src , _const_value ) :
+        src . set_top ( top )
+    return src
+
+def _go ( src , path , top ) :
+    if isinstance ( src , _const_value ) :
+        try :
+            return src . value ( )
+        except Exception as e :
+            raise exception ( str ( e ) , top , path )
+    else :
+        return src
 
 class _const_value :
-    def __init__ ( self , v , exp , path ) :
-        self . _v , self . _exp , self . _path = v , exp , path
+    def __init__ ( self , v , path ) :
+        self . _v , self . _path = v , path
+    def set_top ( self , top ) :
+        self . _top = top
     def value ( self ) :
         v = self . _v
         if is_text ( v ) :
             assert ( v [ 0 ] , v [ - 1 ] ) == ( '[' , ']' )
-            env = self . _exp . get_consts ( self . _path )
+            env = explorer ( self . _top ) . get_consts ( self . _path )
             ev = eval ( v [ 1 : - 1 ] , env )
             return ev . value ( ) if isinstance ( ev , _const_value ) else ev
         else :
