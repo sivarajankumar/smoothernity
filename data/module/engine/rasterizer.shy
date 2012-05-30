@@ -293,8 +293,8 @@ trace engine_rasterizer
                 string_error ', Y = '
                 num_whole_error y
                 string_error ' are out of range 0 <= X < '
-                num_whole_error engine_render_consts_texture_width
+                num_whole_error engine_render_consts_texture_size
                 string_error ', 0 <= Y < '
-                num_whole_error engine_render_consts_texture_height
+                num_whole_error engine_render_consts_texture_size
                 string_error '.'
                 end

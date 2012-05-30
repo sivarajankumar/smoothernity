@@ -270,10 +270,10 @@ module engine_render
         vars texel_offset x y texture texel
         ops
             if platform_conditions_whole_less_than_whole
-                                msg_texture_texture_id consts_max_textures
+                                msg_texture_index consts_max_textures
             do
                 platform_static_array_element_ptr
-                    texture guts_textures_datas msg_texture_texture_id
+                    texture guts_textures_datas msg_texture_index
                 y <- msg_bottom
                 while platform_conditions_whole_less_or_equal_to_whole
                                                             y msg_top
@@ -362,10 +362,10 @@ module engine_render
             vars texture
             ops
                 if platform_conditions_whole_less_than_whole
-                                msg_texture_texture_id consts_max_textures
+                                msg_texture_index consts_max_textures
                 do
                     platform_static_array_element_ptr
-                        texture guts_textures_datas msg_texture_texture_id
+                        texture guts_textures_datas msg_texture_index
                     how
     paste
         replace what with finalize
@@ -390,10 +390,10 @@ module engine_render
             vars texel_offset texture texel
             ops
                 if platform_conditions_whole_less_than_whole
-                                msg_texture_texture_id consts_max_textures
+                                msg_texture_index consts_max_textures
                 do
                     platform_static_array_element_ptr
-                        texture guts_textures_datas msg_texture_texture_id
+                        texture guts_textures_datas msg_texture_index
                     platform_math_mul_wholes
                         texel_offset consts_texture_size msg_y
                     platform_math_add_to_whole texel_offset msg_x
