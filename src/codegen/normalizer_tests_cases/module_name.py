@@ -6,4 +6,4 @@ class module_name_test_case ( unittest . TestCase ) :
         ae = self . assertEqual
         ae ( run ( 
             { 'p1' : { 'p2' : { 'p3' : [ 'module_name' ] } } } ) ,
-            { 'p1' : { 'p2' : { 'p3' : [ 'p2' ] } } } )
+            { 'p1' : { 'p2' : { 'p3' : [ "'p2'" ] } } } )

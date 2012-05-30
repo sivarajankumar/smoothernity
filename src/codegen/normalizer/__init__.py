@@ -3,6 +3,7 @@ from normalizer . assigns_split import run as run_assigns_split
 from normalizer . calls_check import run as run_calls_check
 from normalizer . calls_split import run as run_calls_split
 from normalizer . consts import run as run_consts
+from normalizer . module_name import run as run_module_name
 from normalizer . names import run as run_names
 from normalizer . sends_check import run as run_sends_check
 from normalizer . sends_split import run as run_sends_split
@@ -15,6 +16,7 @@ def run ( src ) :
         , run_consts
         , run_names
         , run_withs
+        , run_module_name
         , run_assigns_split
         , run_assigns_check
         , run_calls_split

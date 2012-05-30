@@ -96,3 +96,17 @@ class all_test_case ( unittest . TestCase ) :
         ae ( r (
             { 'consts' : { 'consts1' : { 'test1' : '[ 1 ]' } } } ) , rskel (
             { 'consts' : { 'consts1' : { 'test1' : 1 } } } ) )
+    def test_module_name ( self ) :
+        r = run
+        ae = self . assertEqual
+        ae ( r (
+            { 'platform_procs' : { 'func1' : { 'args' : [ { } ] } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'ops' :
+                    [ { 'call' : [ 'func1' , 'module_name' ] } ]
+            } } } } } ) , rskel (
+            { 'platform_procs' : { 'func1' : { 'args' : [ { } ] } }
+            , 'stateless' : { 'st1' : { 'proc' : { 'proc1' :
+                { 'ops' :
+                    [ { 'call' : [ 'func1' , "'st1'" ] } ]
+            } } } } } ) )
