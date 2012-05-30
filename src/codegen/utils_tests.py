@@ -82,6 +82,14 @@ class utils_test_case ( unittest . TestCase ) :
         at ( t ( 'test' ) )
         at ( t ( u'test' ) )
         af ( t ( 123 ) )
+    def test_is_string ( self ) :
+        at = self . assertTrue
+        af = self . assertFalse
+        t = utils . is_string
+        at ( t ( "'test'" ) )
+        at ( t ( u"'test'" ) )
+        af ( t ( "'test1" ) )
+        af ( t ( "test1'" ) )
 
 if __name__ == '__main__' :
     unittest . main ( )

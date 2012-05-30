@@ -1,4 +1,4 @@
-from utils import merge , is_text
+from utils import merge , is_text , is_string
 from fractions import Fraction
 from operator import or_
 
@@ -127,7 +127,8 @@ class explorer :
                     if '_' . join ( ps [ : i + 1 ] ) \
                         in self . get_values ( path ) ]
     def is_readable ( self , path , v ) :
-        return type ( v ) in ( int , Fraction ) or reduce ( or_ ,
+        return type ( v ) in ( int , Fraction ) or is_string ( v ) or reduce (
+            or_ ,
             [ x [ 0 ] in self . get_readables ( path )
                 for x in self . split_value_fields ( path , v ) + [ [ v ] ]
             ] , False )
@@ -137,7 +138,8 @@ class explorer :
                 for x in self . split_value_fields ( path , v ) + [ [ v ] ]
             ] , False )
     def is_passable ( self , path , v ) :
-        return type ( v ) in ( int , Fraction ) or reduce ( or_ ,
+        return type ( v ) in ( int , Fraction ) or is_string ( v ) or reduce (
+            or_ ,
             [ x [ 0 ] in self . get_passables ( path )
                 for x in self . split_value_fields ( path , v ) + [ [ v ] ]
             ] , False )

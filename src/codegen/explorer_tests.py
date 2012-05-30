@@ -392,19 +392,23 @@ class explorer_test_case ( unittest . TestCase ) :
         ae ( ir ( s , p , 'var1_field1' ) , True )
         ae ( iw ( s , p , 'var1_field1' ) , True )
         ae ( ip ( s , p , 'var1_field1' ) , True )
-    def test_numbers_are_readable ( self ) :
+    def test_simple_readables ( self ) :
         ir = lambda x , p , v : explorer ( x ) . is_readable ( p , v )
         iw = lambda x , p , v : explorer ( x ) . is_writable ( p , v )
         ip = lambda x , p , v : explorer ( x ) . is_passable ( p , v )
         p = [ 'anywhere' , 'anywhere' ]
         s = mpath ( p , { } )
-        ae = self . assertEqual
-        ae ( ir ( s , p , 1 ) , True )
-        ae ( iw ( s , p , 1 ) , False )
-        ae ( ip ( s , p , 1 ) , True )
-        ae ( ir ( s , p , Fraction ( 1 , 2 ) ) , True )
-        ae ( iw ( s , p , Fraction ( 1 , 2 ) ) , False )
-        ae ( ip ( s , p , Fraction ( 1 , 2 ) ) , True )
+        at = self . assertTrue
+        af = self . assertFalse
+        at ( ir ( s , p , 1 ) )
+        af ( iw ( s , p , 1 ) )
+        at ( ip ( s , p , 1 ) )
+        at ( ir ( s , p , Fraction ( 1 , 2 ) ) )
+        af ( iw ( s , p , Fraction ( 1 , 2 ) ) )
+        at ( ip ( s , p , Fraction ( 1 , 2 ) ) )
+        at ( ir ( s , p , "'test'" ) )
+        af ( iw ( s , p , "'test'" ) )
+        at ( ip ( s , p , "'test'" ) )
 
 if __name__ == '__main__' :
     unittest . main ( )

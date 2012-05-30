@@ -1,6 +1,9 @@
 def is_text ( s ) :
     return type ( s ) in ( str , unicode )
 
+def is_string ( s ) :
+    return is_text ( s ) and ( s [ : 1 ] , s [ - 1 : ] ) == ( "'" , "'" ) 
+
 class merge_exception ( Exception ) :
     def __init__ ( self , txt , keys ) :
         Exception . __init__ ( self , txt )
