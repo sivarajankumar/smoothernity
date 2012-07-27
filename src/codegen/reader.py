@@ -23,11 +23,12 @@ class reader :
             o . set_newline_token ( '\n' )
     def run ( self , stream ) :
         try :
+            strio = lambda x: io . StringIO ( unicode ( x ) )
             d1 = self . _i . run ( stream . readlines ( ) )
-            d2 = self . _c . run ( io . StringIO ( d1 ) )
+            d2 = self . _c . run ( strio ( d1 ) )
             d3 = self . _f . run ( d2 )
-            d4 = self . _i . run ( io . StringIO ( d3 ) . readlines ( ) )
-            return self . _r . run ( io . StringIO ( d4 ) )
+            d4 = self . _i . run ( strio ( d3 ) . readlines ( ) )
+            return self . _r . run ( strio ( d4 ) )
         except copypaster . exception as e :
             raise exception ( str ( e ) , d1 )
         except recognizer . exception as e :
