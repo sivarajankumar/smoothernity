@@ -1,4 +1,4 @@
-#include <iostream>
+#include "stdio.h"
 
 typedef void ( * instruction_type ) ( ) ;
 
@@ -15,7 +15,7 @@ void instruction5 ( ) ;
 
 void instruction1 ( )
 {
-    std :: cerr << "    cycle start" << std :: endl ;
+    printf ( "    cycle start\n" ) ;
     * g_counter = 0 ;
     g_instruction = instruction2 ;
     g_instructions += 1 ;
@@ -23,7 +23,7 @@ void instruction1 ( )
 
 void instruction2 ( )
 {
-    std :: cerr << "    cycle check" << std :: endl ;
+    printf ( "    cycle check\n" ) ;
     if ( * g_counter < * g_arg )
         g_instruction = instruction3 ;
     else
@@ -33,14 +33,14 @@ void instruction2 ( )
 
 void instruction3 ( )
 {
-    std :: cerr << "    cycle tick: " << * g_counter << std :: endl ;
+    printf ( "    cycle tick: %i\n" , * g_counter ) ;
     g_instruction = instruction4 ;
     g_instructions += 2 ;
 }
 
 void instruction4 ( )
 {
-    std :: cerr << "    cycle loop" << std :: endl ;
+    printf ( "    cycle loop\n" ) ;
     ++ * g_counter ;
     g_instruction = instruction2 ;
     g_instructions += 2 ;
@@ -48,7 +48,7 @@ void instruction4 ( )
 
 void instruction5 ( )
 {
-    std :: cerr << "    cycle finish" << std :: endl ;
+    printf ( "    cycle finish\n" ) ;
     g_instruction = 0 ;
     g_instructions += 1 ;
 }
@@ -63,40 +63,40 @@ void envoke ( int arg )
     }
 }
 
-bool continuate ( int instructions )
+int continuate ( int instructions )
 {
     int desired = g_instructions + instructions ;
     while ( g_instruction && g_instructions < desired )
         ( * g_instruction ) ( ) ;
-    return g_instruction ;
+    return g_instruction != 0 ;
 }
 
-int main ( int , char * * )
+int main ( int argc , char * * argv )
 {
     int iteration = 0 ;
 
-    std :: cerr << "first call" << std :: endl ;
+    printf ( "first call\n" ) ;
 
     iteration = 0 ;
     envoke ( 11 ) ;
     do
     {
-        std :: cerr << "iteration: " << iteration ++ << std :: endl ;
+        printf ( "iteration: %i\n" , iteration ++ ) ;
     }
     while ( continuate ( 1 ) ) ;
 
-    std :: cerr << std :: endl ;
-    std :: cerr << std :: endl ;
-    std :: cerr << "second call" << std :: endl ;
+    printf ( "\n" );
+    printf ( "\n" );
+    printf ( "second call\n" ) ;
 
     iteration = 0 ;
     envoke ( 22 ) ;
     do
     {
-        std :: cerr << "iteration: " << iteration ++ << std :: endl ;
+        printf ( "iteration: %i\n" , iteration ++ ) ;
     }
     while ( continuate ( 3 ) ) ;
 
-    std :: cerr << "hello world" << std :: endl ;
+    printf ( "hello world\n" ) ;
     return 0 ;
 }
