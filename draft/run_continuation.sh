@@ -1,2 +1,3 @@
 mkdir -p ../../build
-g++ continuation.cpp -o ../../build/continuation && ../../build/continuation
+rm ../../build/continuation
+gcc continuation.c -pedantic -o ../../build/continuation && ../../build/continuation
