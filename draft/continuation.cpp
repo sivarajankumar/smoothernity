@@ -3,7 +3,7 @@
 typedef void ( * instruction_type ) ( ) ;
 
 int g_instructions = 0 ;
-int g_arg = 0 ;
+int g_arg [ 1 ] = { 0 } ;
 int g_counter = 0 ;
 instruction_type g_instruction = 0 ;
 
@@ -24,7 +24,7 @@ void instruction1 ( )
 void instruction2 ( )
 {
     std :: cerr << "    cycle check" << std :: endl ;
-    if ( g_counter < g_arg )
+    if ( g_counter < * g_arg )
         g_instruction = instruction3 ;
     else
         g_instruction = instruction5 ;
@@ -57,7 +57,7 @@ void envoke ( int arg )
 {
     if ( ! g_instruction )
     {
-        g_arg = arg ;
+        * g_arg = arg ;
         g_instructions = 0 ;
         g_instruction = instruction1 ;
     }
