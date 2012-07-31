@@ -2,10 +2,22 @@
 
 typedef void ( * instruction_type ) ( ) ;
 
-int g_instructions = 0 ;
+struct data_inner_type
+{
+    int value [ 1 ] ;
+} ;
+
+struct data_outer_type
+{
+    struct data_inner_type d [ 1 ] ;
+} ;
+
+int g_instructions ;
 int g_arg [ 1 ] ;
 int g_counter [ 1 ] ;
-instruction_type g_instruction = 0 ;
+struct data_outer_type g_data_outer [ 1 ] ;
+struct data_inner_type g_data_inner [ 1 ] ;
+instruction_type g_instruction ;
 
 void instruction1 ( ) ;
 void instruction2 ( ) ;
@@ -16,6 +28,8 @@ void instruction5 ( ) ;
 void instruction1 ( )
 {
     printf ( "    cycle start\n" ) ;
+    ++ * g_data_outer -> d -> value ;
+    printf ( "    struct data value: %i\n" , * g_data_outer -> d -> value ) ;
     * g_counter = 0 ;
     g_instruction = instruction2 ;
     g_instructions += 1 ;
@@ -97,6 +111,6 @@ int main ( int argc , char * * argv )
     }
     while ( continuate ( 3 ) ) ;
 
-    printf ( "hello world\n" ) ;
+    printf ( "end of program\n" ) ;
     return 0 ;
 }
