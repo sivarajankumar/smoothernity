@@ -139,50 +139,149 @@ if __name__ == '__main__' :
                 , 'true' : 1
                 , 'false' : 0
                 }
+            , 'platform_types' :
+                { 'platform_math_num_whole' : [ ]
+                , 'platform_math_num_fract' : [ ]
+                , 'platform_matrix_data' : [ ]
+                , 'platform_vector_data' : [ ]
+                }
             , 'platform_procs' :
-                { 'platform_conditions_fract_greater_than_fract' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_fract_less_than_fract' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_whole_greater_or_equal_to_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_whole_greater_than_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_whole_greater_than_zero' : { 'args' : [ { } ] * 1 }
-                , 'platform_conditions_whole_is_false' : { 'args' : [ { } ] * 1 }
-                , 'platform_conditions_whole_is_true' : { 'args' : [ { } ] * 1 }
-                , 'platform_conditions_whole_less_or_equal_to_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_whole_less_than_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_whole_less_than_zero' : { 'args' : [ { } ] * 1 }
-                , 'platform_conditions_wholes_are_equal' : { 'args' : [ { } ] * 2 }
-                , 'platform_conditions_wholes_are_not_equal' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_add_fracts' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_add_wholes' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_add_to_fract' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_add_to_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_cos' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_dec_whole' : { 'args' : [ { } ] * 1 }
-                , 'platform_math_div_fract_by' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_div_whole_by' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_div_wholes' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_inc_whole' : { 'args' : [ { } ] * 1 }
-                , 'platform_math_make_fract_from_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_mul_fracts' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_mul_whole_by' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_mul_wholes' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_neg_fract' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_neg_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_sin' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_sub_fracts' : { 'args' : [ { } ] * 3 }
-                , 'platform_math_sub_from_fract' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_sub_from_whole' : { 'args' : [ { } ] * 2 }
-                , 'platform_math_sub_wholes' : { 'args' : [ { } ] * 3 }
-                , 'platform_matrix_identity' : { 'args' : [ { } ] * 1 }
-                , 'platform_matrix_inverse_rotation_translation' : { 'args' : [ { } ] * 1 }
-                , 'platform_matrix_set_fract_axis_x' : { 'args' : [ { } ] * 4 }
-                , 'platform_matrix_set_fract_axis_y' : { 'args' : [ { } ] * 4 }
-                , 'platform_matrix_set_fract_axis_z' : { 'args' : [ { } ] * 4 }
-                , 'platform_matrix_set_fract_origin' : { 'args' : [ { } ] * 4 }
-                , 'platform_matrix_set_vector_axis_x' : { 'args' : [ { } ] * 2 }
-                , 'platform_matrix_set_vector_axis_y' : { 'args' : [ { } ] * 2 }
-                , 'platform_matrix_set_vector_axis_z' : { 'args' : [ { } ] * 2 }
-                , 'platform_matrix_set_vector_origin' : { 'args' : [ { } ] * 2 }
+                { 'platform_conditions_fract_greater_than_fract' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_conditions_fract_less_than_fract' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_conditions_whole_greater_or_equal_to_whole' : 
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_greater_than_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_greater_than_zero' : 
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_is_false' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_is_true' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_less_or_equal_to_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_less_than_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_whole_less_than_zero' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_wholes_are_equal' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_conditions_wholes_are_not_equal' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_add_fracts' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_add_wholes' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_add_to_fract' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_add_to_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_cos' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_dec_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_div_fract_by' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_div_whole_by' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_div_wholes' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_inc_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_make_fract_from_whole' : 
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_mul_fracts' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_mul_whole_by' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_mul_wholes' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_neg_fract' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_neg_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_sin' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_sub_fracts' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_sub_from_fract' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_math_sub_from_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_math_sub_wholes' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } 
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_matrix_identity' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] } ] }
+                , 'platform_matrix_inverse_rotation_translation' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] } ] }
+                , 'platform_matrix_set_fract_axis_x' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_matrix_set_fract_axis_y' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_matrix_set_fract_axis_z' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_matrix_set_fract_origin' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } 
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_matrix_set_vector_axis_x' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_matrix_set_vector_axis_y' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_matrix_set_vector_axis_z' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_matrix_set_vector_origin' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
                 , 'platform_render_blend_disable' : { 'args' : [ ] }
                 , 'platform_render_blend_src_alpha_dst_one_minus_alpha' : { 'args' : [ ] }
                 , 'platform_render_clear_screen' : { 'args' : [ { } ] * 3 }
