@@ -143,6 +143,9 @@ if __name__ == '__main__' :
                 { 'platform_math_num_whole' : [ ]
                 , 'platform_math_num_fract' : [ ]
                 , 'platform_matrix_data' : [ ]
+                , 'platform_render_index_buffer_id' : [ ]
+                , 'platform_render_texture_id' : [ ]
+                , 'platform_render_vertex_buffer_id' : [ ]
                 , 'platform_vector_data' : [ ]
                 }
             , 'platform_procs' :
@@ -284,25 +287,52 @@ if __name__ == '__main__' :
                                , { 'platform_vector_data' : [ ] } ] }
                 , 'platform_render_blend_disable' : { 'args' : [ ] }
                 , 'platform_render_blend_src_alpha_dst_one_minus_alpha' : { 'args' : [ ] }
-                , 'platform_render_clear_screen' : { 'args' : [ { } ] * 3 }
-                , 'platform_render_create_index_buffer' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_create_texture_id' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_create_vertex_buffer' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_delete_index_buffer' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_delete_texture_id' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_delete_vertex_buffer' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_clear_screen' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_create_index_buffer' :
+                    { 'args' : [ { 'platform_render_index_buffer_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_create_texture_id' :
+                    { 'args' : [ { 'platform_render_texture_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_create_vertex_buffer' : 
+                    { 'args' : [ { 'platform_render_vertex_buffer_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_delete_index_buffer' :
+                    { 'args' : [ { 'platform_render_index_buffer_id' : [ ] } ] }
+                , 'platform_render_delete_texture_id' :
+                    { 'args' : [ { 'platform_render_texture_id' : [ ] } ] }
+                , 'platform_render_delete_vertex_buffer' :
+                    { 'args' : [ { 'platform_render_vertex_buffer_id' : [ ] } ] }
                 , 'platform_render_disable_depth_test' : { 'args' : [ ] }
                 , 'platform_render_disable_texturing' : { 'args' : [ ] }
-                , 'platform_render_draw_triangle_fan' : { 'args' : [ { } ] * 3 }
-                , 'platform_render_draw_triangle_strip' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_draw_triangle_fan' :
+                    { 'args' : [ { 'platform_render_vertex_buffer_id' : [ ] }
+                               , { 'platform_render_index_buffer_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_draw_triangle_strip' :
+                    { 'args' : [ { 'platform_render_vertex_buffer_id' : [ ] }
+                               , { 'platform_render_index_buffer_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
                 , 'platform_render_enable_depth_test' : { 'args' : [ ] }
                 , 'platform_render_enable_face_culling' : { 'args' : [ ] }
                 , 'platform_render_enable_texturing' : { 'args' : [ ] }
                 , 'platform_render_fog_disable' : { 'args' : [ ] }
-                , 'platform_render_fog_linear' : { 'args' : [ { } ] * 6 }
-                , 'platform_render_get_aspect_height' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_get_aspect_width' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_get_frame_loss' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_fog_linear' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_get_aspect_height' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_get_aspect_width' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_get_frame_loss' : 
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
                 , 'platform_render_load_texture_subdata' : { 'args' : [ { } ] * 6 }
                 , 'platform_render_map_index_buffer' : { 'args' : [ { } ] * 2 }
                 , 'platform_render_map_vertex_buffer' : { 'args' : [ { } ] * 2 }
