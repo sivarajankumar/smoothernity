@@ -144,8 +144,17 @@ if __name__ == '__main__' :
                 , 'platform_math_num_fract' : [ ]
                 , 'platform_matrix_data' : [ ]
                 , 'platform_render_index_buffer_id' : [ ]
+                , 'platform_render_index_buffer_mapped_data' : [ ]
+                , 'platform_render_index_data' : [ ]
+                , 'platform_render_texel_data' : [ ]
                 , 'platform_render_texture_id' : [ ]
+                , 'platform_render_texture_loader_resource_id' : [ ]
                 , 'platform_render_vertex_buffer_id' : [ ]
+                , 'platform_render_vertex_buffer_mapped_data' : [ ]
+                , 'platform_render_vertex_data' : [ ]
+                # , 'platform_static_array_data' : [ 'type' , 'num' ]
+                , 'platform_static_array_data' : [ ]
+                , 'platform_string' : [ ]
                 , 'platform_vector_data' : [ ]
                 }
             , 'platform_procs' :
@@ -286,7 +295,8 @@ if __name__ == '__main__' :
                     { 'args' : [ { 'platform_matrix_data' : [ ] }
                                , { 'platform_vector_data' : [ ] } ] }
                 , 'platform_render_blend_disable' : { 'args' : [ ] }
-                , 'platform_render_blend_src_alpha_dst_one_minus_alpha' : { 'args' : [ ] }
+                , 'platform_render_blend_src_alpha_dst_one_minus_alpha' :
+                    { 'args' : [ ] }
                 , 'platform_render_clear_screen' :
                     { 'args' : [ { 'platform_math_num_fract' : [ ] }
                                , { 'platform_math_num_fract' : [ ] }
@@ -333,44 +343,139 @@ if __name__ == '__main__' :
                     { 'args' : [ { 'platform_math_num_fract' : [ ] } ] }
                 , 'platform_render_get_frame_loss' : 
                     { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
-                , 'platform_render_load_texture_subdata' : { 'args' : [ { } ] * 6 }
-                , 'platform_render_map_index_buffer' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_map_vertex_buffer' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_mapped_index_buffer_element' : { 'args' : [ { } ] * 3 }
-                , 'platform_render_mapped_vertex_buffer_element' : { 'args' : [ { } ] * 3 }
+                , 'platform_render_load_texture_subdata' :
+                    { 'args' : [ { 'platform_render_texture_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] }
+                               , { 'platform_static_array_data' : [ ] } ] }
+                               #, { 'platform_static_array_data' :
+                               #     [ 'platform_render_texel_data'
+                               #     , '_'
+                               #     ] } ] }
+                , 'platform_render_map_index_buffer' :
+                    { 'args' : [ { 'platform_render_index_buffer_mapped_data' : [ ] }
+                               , { 'platform_render_index_buffer_id' : [ ] } ] }
+                , 'platform_render_map_vertex_buffer' :
+                    { 'args' : [ { 'platform_render_vertex_buffer_mapped_data' : [ ] }
+                               , { 'platform_render_vertex_buffer_id' : [ ] } ] }
+                , 'platform_render_mapped_index_buffer_element' :
+                    { 'args' : [ { 'platform_render_index_data' : [ ] }
+                               , { 'platform_render_index_buffer_mapped_data' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_mapped_vertex_buffer_element' :
+                    { 'args' : [ { 'platform_render_vertex_data' : [ ] }
+                               , { 'platform_render_vertex_buffer_mapped_data' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
                 , 'platform_render_matrix_identity' : { 'args' : [ ] }
-                , 'platform_render_matrix_load' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_matrix_mult' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_matrix_load' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] } ] }
+                , 'platform_render_matrix_mult' :
+                    { 'args' : [ { 'platform_matrix_data' : [ ] } ] }
                 , 'platform_render_matrix_pop' : { 'args' : [ ] }
                 , 'platform_render_matrix_push' : { 'args' : [ ] }
-                , 'platform_render_projection_frustum' : { 'args' : [ { } ] * 6 }
-                , 'platform_render_projection_ortho' : { 'args' : [ { } ] * 6 }
-                , 'platform_render_set_index_value' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_set_texel_color' : { 'args' : [ { } ] * 5 }
-                , 'platform_render_set_vertex_color' : { 'args' : [ { } ] * 5 }
-                , 'platform_render_set_vertex_position' : { 'args' : [ { } ] * 4 }
-                , 'platform_render_set_vertex_tex_coord' : { 'args' : [ { } ] * 3 }
-                , 'platform_render_texture_loader_create_resource_id' : { 'args' : [ { } ] * 2 }
-                , 'platform_render_texture_loader_load_resource' : { 'args' : [ { } ] * 3 }
-                , 'platform_render_texture_loader_ready' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_projection_frustum' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_projection_ortho' :
+                    { 'args' : [ { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_set_index_value' :
+                    { 'args' : [ { 'platform_render_index_data' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_set_texel_color' :
+                    { 'args' : [ { 'platform_render_texel_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_set_vertex_color' :
+                    { 'args' : [ { 'platform_render_vertex_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_set_vertex_position' :
+                    { 'args' : [ { 'platform_render_vertex_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_set_vertex_tex_coord' :
+                    { 'args' : [ { 'platform_render_vertex_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_render_texture_loader_create_resource_id' :
+                    { 'args' : [ { 'platform_render_texture_loader_resource_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_render_texture_loader_load_resource' :
+                    { 'args' : [ { 'platform_render_texture_loader_resource_id' : [ ] }
+                               , { 'platform_math_num_whole' : [ ] }
+                               , { 'platform_static_array_data' : [ ] } ] }
+                               #, { 'platform_static_array_data' :
+                               #     [ 'platform_render_texel_data'
+                               #     , '_'
+                               #     ] } ] }
+                , 'platform_render_texture_loader_ready' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
                 , 'platform_render_texture_mode_modulate' : { 'args' : [ ] }
-                , 'platform_render_unmap_index_buffer' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_unmap_vertex_buffer' : { 'args' : [ { } ] * 1 }
-                , 'platform_render_use_texture' : { 'args' : [ { } ] * 1 }
-                , 'platform_static_array_element_ptr' : { 'args' : [ { } ] * 3 }
-                , 'platform_vector_add' : { 'args' : [ { } ] * 3 }
-                , 'platform_vector_cross_product' : { 'args' : [ { } ] * 3 }
-                , 'platform_vector_mul' : { 'args' : [ { } ] * 3 }
-                , 'platform_vector_normalize' : { 'args' : [ { } ] * 2 }
-                , 'platform_vector_sub' : { 'args' : [ { } ] * 3 }
-                , 'platform_trace_trace_begin' : { 'args' : [ { } ] * 1 }
+                , 'platform_render_unmap_index_buffer' :
+                    { 'args' : [ { 'platform_render_index_buffer_id' : [ ] } ] }
+                , 'platform_render_unmap_vertex_buffer' :
+                    { 'args' : [ { 'platform_render_vertex_buffer_id' : [ ] } ] }
+                , 'platform_render_use_texture' :
+                    { 'args' : [ { 'platform_render_texture_id' : [ ] } ] }
+                , 'platform_static_array_element_ptr' :
+                    { 'args' : [ { '_x_' : [ ] }
+                               , { 'platform_static_array_data' : [ ] }
+                               #, { 'platform_static_array_data' : [ '_x_' , '_' ] }
+                               , { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_trace_trace_begin' :
+                    { 'args' : [ { 'platform_string' : [ ] } ] }
                 , 'platform_trace_trace_end' : { 'args' : [ ] }
-                , 'platform_trace_trace_num_whole' : { 'args' : [ { } ] * 1 }
-                , 'platform_trace_trace_num_whole_error' : { 'args' : [ { } ] * 1 }
-                , 'platform_trace_trace_string' : { 'args' : [ { } ] * 1 }
-                , 'platform_trace_trace_string_error' : { 'args' : [ { } ] * 1 }
-                , 'platform_vector_mul_by' : { 'args' : [ { } ] * 2 }
-                , 'platform_vector_xyz' : { 'args' : [ { } ] * 4 }
+                , 'platform_trace_trace_num_whole' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_trace_trace_num_whole_error' :
+                    { 'args' : [ { 'platform_math_num_whole' : [ ] } ] }
+                , 'platform_trace_trace_string' :
+                    { 'args' : [ { 'platform_string' : [ ] } ] }
+                , 'platform_trace_trace_string_error' :
+                    { 'args' : [ { 'platform_string' : [ ] } ] }
+                , 'platform_vector_add' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_vector_cross_product' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_vector_mul' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_vector_mul_by' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
+                , 'platform_vector_normalize' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_vector_sub' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] }
+                               , { 'platform_vector_data' : [ ] } ] }
+                , 'platform_vector_xyz' :
+                    { 'args' : [ { 'platform_vector_data' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] }
+                               , { 'platform_math_num_fract' : [ ] } ] }
             } }
         pprint ( normalizer_run ( merge ( platform , reader ( ) . run ( stdin ) ) ) )
     except reader_exception as e :
