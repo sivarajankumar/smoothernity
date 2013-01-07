@@ -13,12 +13,16 @@ struct mchunk_t
     size_t allocs;
     size_t frees;
     size_t vacant_len_min;
+    size_t alloc_fails;
+    size_t free_fails;
 };
 
 struct mpool_t
 {
     size_t chunks_len;
     struct mchunk_t *chunks;
+    size_t no_chunk;
+    size_t largest_size;
 };
 
 void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
@@ -29,6 +33,8 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     // inadequate request
     if (osize == 0 && nsize == 0)
         return 0;
+    if (nsize > pool->largest_size)
+        pool->largest_size = nsize;
     ochunk = nchunk = 0;
     for (i = 0; i < pool->chunks_len; ++i)
     {
@@ -48,7 +54,10 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     }
     // cannot find chunk
     if (ochunk == 0 || nchunk == 0)
+    {
+        ++pool->no_chunk;
         return 0;
+    }
     // allocate
     if (osize == 0 && nsize > 0)
     {
@@ -62,7 +71,10 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             return nchunk->data + (nchunk->size * i);
         }
         else
+        {
+            ++nchunk->alloc_fails;
             return 0;
+        }
     }
     // free
     else if (osize > 0 && nsize == 0)
@@ -74,6 +86,8 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             ochunk->vacant[ochunk->vacant_len++] = i;
             ochunk->busy[i] = 0;
         }
+        else
+            ++ochunk->free_fails;
         return 0;
     }
     // realloc
@@ -158,13 +172,17 @@ void mpool_print(struct mpool_t *pool)
 {
     int i;
     printf("Memory pool statistics:\n");
+    printf("Largest requested size: %i\n", pool->largest_size);
+    printf("Cannot find chunk: %i\n", pool->no_chunk);
     for (i = 0; i < pool->chunks_len; ++i)
     {
-        printf("Chunk size: %i, usage: %i/%i, allocs: %i, frees: %i.\n",
+        printf("Chunk size: %i, usage: %i/%i, allocs: %i (%i fails), frees: %i (%i fails).\n",
                pool->chunks[i].size,
                pool->chunks[i].data_len - pool->chunks[i].vacant_len_min,
                pool->chunks[i].data_len,
                pool->chunks[i].allocs,
-               pool->chunks[i].frees);
+               pool->chunks[i].alloc_fails,
+               pool->chunks[i].frees,
+               pool->chunks[i].free_fails);
     }
 }

@@ -25,9 +25,9 @@ Background Lua thread:
 Every API function can yield if too much time is consumed.
 */
 
-size_t POOL_SIZES[] =  {  16,   32,   64,  128,  256,  512, 1024, 2048, 4096};
-size_t POOL_COUNTS[] = {1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
-size_t POOL_LEN = 9;
+size_t POOL_SIZES[] =  {  64, 4096};
+size_t POOL_COUNTS[] = {1000, 1000};
+size_t POOL_LEN = 2;
 
 struct mpool_t *g_pool;
 
