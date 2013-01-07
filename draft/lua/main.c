@@ -30,42 +30,66 @@ int main(void)
 
     int status, result, i;
     double sum;
-    lua_State *L;
+    lua_State *L1, *L2;
     
-    L = luaL_newstate();
+    L1 = luaL_newstate();
+    L2 = luaL_newstate();
 
-    luaL_openlibs(L);
+    luaL_openlibs(L1);
+    luaL_openlibs(L2);
 
-    status = luaL_loadfile(L, "script.lua");
+    status = luaL_loadfile(L1, "script.lua");
     if (status)
     {
-        fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L, -1));
+        fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L1, -1));
         exit(1);
     }
 
-    lua_newtable(L);
-
-    for (i = 1; i <= 5; i++)
+    status = luaL_loadfile(L2, "script.lua");
+    if (status)
     {
-        lua_pushnumber(L, i);
-        lua_pushnumber(L, i*2);
-        lua_rawset(L, -3);
+        fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L2, -1));
+        exit(1);
     }
 
-    lua_setglobal(L, "foo");
-
-    result = lua_pcall(L, 0, LUA_MULTRET, 0);
-    if (result)
+    status = lua_pcall(L1, 0, LUA_MULTRET, 0);
+    if (status)
     {
-        fprintf(stderr, "Failed to run script: %s\n", lua_tostring(L, -1));
+        fprintf(stderr, "Failed to run script: %s\n", lua_tostring(L1, -1));
+        exit(1);
     }
 
-    sum = lua_tonumber(L, -1);
+    status = lua_pcall(L2, 0, LUA_MULTRET, 0);
+    if (status)
+    {
+        fprintf(stderr, "Failed to run script: %s\n", lua_tostring(L2, -1));
+        exit(1);
+    }
 
-    printf("Script returned: %.0f\n", sum);
+    lua_State *Lt1, *Lt2;
+    Lt1 = lua_newthread(L1);
+    Lt2 = lua_newthread(L2);
+    lua_getglobal(Lt1, "thread1");
+    lua_getglobal(Lt2, "thread2");
 
-    lua_pop(L, 1);
-    lua_close(L);
+    for (i = 1; i <= 10; i++)
+    {
+        result = lua_resume(Lt1, 0);
+        if (result && result != LUA_YIELD)
+        {
+            fprintf(stderr, "Failed to resume thread1: %s\n", lua_tostring(L1, -1));
+            exit(1);
+        }
+        result = lua_resume(Lt2, 0);
+        if (result && result != LUA_YIELD)
+        {
+            fprintf(stderr, "Failed to resume thread2: %s\n", lua_tostring(L2, -1));
+            exit(1);
+        }
+    }
+
+    lua_close(L1);
+    lua_close(L2);
     
     printf("Finish\n");
     return 0;
