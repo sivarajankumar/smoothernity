@@ -12,7 +12,6 @@ struct machine_t
 
     int count;
     struct timer_t *step_timer;
-    int step_timeout;
     struct timer_t *sleep_timer;
     int sleep_timeout;
 };
@@ -113,7 +112,7 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "mycount", api_mycount);
 }
 
-int machine_step(struct machine_t *machine)
+int machine_step(struct machine_t *machine, int timeout)
 {
     int status;
     state_t state;
@@ -125,13 +124,11 @@ int machine_step(struct machine_t *machine)
         status = (*state)(machine);
         if (status)
             return status;
-    } while (timer_passed(machine->step_timer) < machine->step_timeout);
-    printf("Machine step complete. Deviation is %i\n",
-            timer_passed(machine->step_timer) - machine->step_timeout);
+    } while (timer_passed(machine->step_timer) < timeout);
     return 0;
 }
 
-struct machine_t * machine_create(lua_State *lua, const char *func, int timeout)
+struct machine_t * machine_create(lua_State *lua, const char *func)
 {
     struct machine_t *machine;
     machine = calloc(1, sizeof(struct machine_t));
@@ -148,7 +145,6 @@ struct machine_t * machine_create(lua_State *lua, const char *func, int timeout)
         goto cleanup;
     lua_getglobal(machine->thread, func);
     lua_pushlightuserdata(machine->thread, machine);
-    machine->step_timeout = timeout;
     machine->next_state = state_resume;
     return machine;
 cleanup:
