@@ -1,5 +1,6 @@
 #include "machine.h"
 #include "timer.h"
+#include "input.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -82,11 +83,28 @@ int api_time(lua_State *lua)
     }
 }
 
+int api_input_key_escape(lua_State *lua)
+{
+    struct machine_t *machine;
+    if (lua_gettop(lua) == 0)
+    {
+        lua_pushinteger(lua, input_key_escape());
+        return 1;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_input_key_escape: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
 void machine_embrace(lua_State *lua)
 {
     lua_register(lua, "api_yield", api_yield);
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
+    lua_register(lua, "api_input_key_escape", api_input_key_escape);
 }
 
 int machine_step(struct machine_t *machine, int timeout)
