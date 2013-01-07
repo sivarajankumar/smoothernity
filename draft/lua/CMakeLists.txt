@@ -5,7 +5,7 @@ include(FindLua51)
 
 include_directories(${LUA_INCLUDE_DIR})
 
-add_executable(main main.c)
+add_executable(main main.c mpool.c)
 
 target_link_libraries(main ${LUA_LIBRARIES})
 
