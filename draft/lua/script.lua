@@ -1,5 +1,5 @@
 function thread1()
-    counter = 0
+    local counter = 0
     while true
     do
         io.write("First thread yields ", counter, "\n");
@@ -9,7 +9,7 @@ function thread1()
 end
 
 function thread2()
-    counter = 100
+    local counter = 100
     while true
     do
         io.write("Second thread yields ", counter, "\n");
