@@ -2,6 +2,7 @@
 #include <lauxlib.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
@@ -42,8 +43,9 @@ int main(void)
     static const size_t POOL_SIZES[] =  {  64, 4096};
     static const size_t POOL_COUNTS[] = {1000, 1000};
     static const size_t POOL_LEN = 2;
+    static const int FRAME_TIME = 100000;
 
-    int status, i;
+    int status, i, time_left;
     lua_State *lua = 0;
     struct machine_t *m1 = 0, *m2 = 0;
     struct mpool_t *pool = 0;
@@ -111,14 +113,17 @@ int main(void)
             fprintf(stderr, "Failed to run machine1\n");
             goto cleanup;
         }
-        status = machine_step(m2, 1000000 - timer_passed(frame_timer));
+        status = machine_step(m2, FRAME_TIME - timer_passed(frame_timer));
         if (status)
         {
             fprintf(stderr, "Failed to run machine2\n");
             goto cleanup;
         }
+        time_left = timer_passed(frame_timer);
+        if (time_left < FRAME_TIME)
+            usleep(FRAME_TIME - time_left);
         printf("Frame time deviation: %i microseconds\n",
-               timer_passed(frame_timer) - 1000000);
+               timer_passed(frame_timer) - FRAME_TIME);
     }
 
 cleanup:
