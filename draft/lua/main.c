@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "mpool.h"
 #include "machine.h"
+#include "timer.h"
 
 /*
 TODO:
@@ -46,8 +47,16 @@ int main(void)
     lua_State *lua = 0;
     struct machine_t *m1 = 0, *m2 = 0;
     struct mpool_t *pool = 0;
+    struct timer_t *frame_timer = 0;
 
     printf("Start\n");
+
+    frame_timer = timer_create();
+    if (frame_timer == 0)
+    {
+        fprintf(stderr, "Cannot create timer\n");
+        goto cleanup;
+    }
 
     pool = mpool_create(POOL_SIZES, POOL_COUNTS, POOL_LEN);
     if (pool == 0)
@@ -75,13 +84,13 @@ int main(void)
         goto cleanup;
     }
 
-    m1 = machine_create(lua, "thread1", 0);
+    m1 = machine_create(lua, "thread1");
     if (m1 == 0)
     {
         fprintf(stderr, "Cannot create machine1\n");
         goto cleanup;
     }
-    m2 = machine_create(lua, "thread2", 1000000);
+    m2 = machine_create(lua, "thread2");
     if (m2 == 0)
     {
         fprintf(stderr, "Cannot create machine2\n");
@@ -90,23 +99,26 @@ int main(void)
 
     for (i = 1; i <= 10; i++)
     {
+        timer_reset(frame_timer);
         printf("------------------------------------\n");
         printf("Memory before gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
         printf("GC step result: %i\n", lua_gc(lua, LUA_GCSTEP, 10));
         lua_gc(lua, LUA_GCSTOP, 0);
         printf("Memory after gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
-        status = machine_step(m1);
+        status = machine_step(m1, 0);
         if (status)
         {
             fprintf(stderr, "Failed to run machine1\n");
             goto cleanup;
         }
-        status = machine_step(m2);
+        status = machine_step(m2, 1000000 - timer_passed(frame_timer));
         if (status)
         {
             fprintf(stderr, "Failed to run machine2\n");
             goto cleanup;
         }
+        printf("Frame time deviation: %i microseconds\n",
+               timer_passed(frame_timer) - 1000000);
     }
 
 cleanup:
@@ -121,6 +133,8 @@ cleanup:
         machine_destroy(m1);
     if (m2)
         machine_destroy(m2);
+    if (frame_timer)
+        timer_destroy(frame_timer);
     printf("Finish\n");
     return 0;
 }
