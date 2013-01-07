@@ -2,7 +2,7 @@ function thread1(self)
     local counter = 0
     while true
     do
-        io.write("First thread yields ", counter, "\n");
+        -- io.write("First thread yields ", counter, "\n");
         myyield(self)
         counter = counter + 1
     end
@@ -12,8 +12,8 @@ function thread2(self)
     local counter = 100
     while true
     do
-        io.write("Second thread yields ", counter, "\n");
-        mycount(self, 3)
+        -- io.write("Second thread yields ", counter, "\n");
+        mysleep(self, 300000);
         counter = counter + 1
     end
 end
