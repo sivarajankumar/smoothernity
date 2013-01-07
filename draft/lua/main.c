@@ -44,20 +44,17 @@ int main(void)
 
     int status, i;
     lua_State *lua = 0;
-    struct machine_t *m1 = 0, m2 = 0;
+    struct machine_t *m1 = 0, *m2 = 0;
     struct mpool_t *pool = 0;
 
     printf("Start\n");
 
-    status = mpool_create(&pool, POOL_SIZES, POOL_COUNTS, POOL_LEN);
-    if (status)
+    pool = mpool_create(POOL_SIZES, POOL_COUNTS, POOL_LEN);
+    if (pool == 0)
     {
         fprintf(stderr, "Cannot create memory pool\n");
         goto cleanup;
     }
-
-    state1.counter = 0;
-    state2.counter = 0;
 
     lua = lua_newstate(myalloc, pool);
     if (lua == 0)
@@ -93,17 +90,18 @@ int main(void)
 
     for (i = 1; i <= 10; i++)
     {
+        printf("------------------------------------\n");
         printf("Memory before gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
         printf("GC step result: %i\n", lua_gc(lua, LUA_GCSTEP, 10));
         lua_gc(lua, LUA_GCSTOP, 0);
         printf("Memory after gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
-        status = machine_run(m1);
+        status = machine_step(m1);
         if (status)
         {
             fprintf(stderr, "Failed to run machine1\n");
             goto cleanup;
         }
-        status = machine_run(m2);
+        status = machine_step(m2);
         if (status)
         {
             fprintf(stderr, "Failed to run machine2\n");
