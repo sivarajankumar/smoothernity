@@ -13,7 +13,7 @@ function thread2(self)
     while true
     do
         io.write("Second thread yields ", counter, "\n");
-        myyield(self)
+        mycount(self, 3)
         counter = counter + 1
     end
 end

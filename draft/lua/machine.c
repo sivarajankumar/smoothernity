@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int (*state_t) (struct machine_t *);
+typedef int (*state_t) (struct machine_t *);
 
 struct machine_t
 {
@@ -14,7 +14,7 @@ struct machine_t
 int state_resume(struct machine_t *machine)
 {
     int status;
-    status = lua_resume(machine->thread, 1)
+    status = lua_resume(machine->thread, 1);
     if (status && status != LUA_YIELD)
     {
         fprintf(stderr, "Failed to resume thread: %s\n",
@@ -26,7 +26,7 @@ int state_resume(struct machine_t *machine)
 
 int state_count(struct machine_t *machine)
 {
-    printf("C counter is %i\n" % machine->count);
+    printf("C counter is %i\n", machine->count);
     if (--machine->count > 0)
         machine->next_state = state_count;
     else
@@ -78,19 +78,12 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "mycount", api_mycount);
 }
 
-int machine_run(struct machine_t *machine)
+int machine_step(struct machine_t *machine)
 {
     state_t state;
-    int status;
-    while (machine->next_state)
-    {
-        state = machine->next_state;
-        machine->next_state = 0;
-        status = (*state)(machine);
-        if (status)
-            return status;
-    }
-    return 0;
+    state = machine->next_state;
+    machine->next_state = 0;
+    return (*state)(machine);
 }
 
 struct machine_t * machine_create(lua_State *lua, const char *func)
@@ -103,7 +96,7 @@ struct machine_t * machine_create(lua_State *lua, const char *func)
     if (machine->thread == 0)
         goto cleanup;
     lua_getglobal(machine->thread, func);
-    lua_pushlightuserdata(machine->thread, *machine);
+    lua_pushlightuserdata(machine->thread, machine);
     machine->next_state = state_resume;
     return machine;
 cleanup:
