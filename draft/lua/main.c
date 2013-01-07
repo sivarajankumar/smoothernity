@@ -12,7 +12,7 @@ TODO:
 
 Main loop:
     - Run scene graph
-    - Run control Lua thread
+    - Run controller Lua thread
     - Run background Lua thread
     - Run Lua garbage collector
 
@@ -43,11 +43,13 @@ int main(void)
     static const size_t POOL_SIZES[] =  {  64, 4096};
     static const size_t POOL_COUNTS[] = {1000, 1000};
     static const size_t POOL_LEN = 2;
-    static const int FRAME_TIME = 100000;
+    static const int FRAME_TIME = 10000;
+    static const int GC_STEP = 10;
+    static const int MIN_DELAY = 1000;
 
-    int status, i, time_left;
+    int status, i, time_left, max_deviation;
     lua_State *lua = 0;
-    struct machine_t *m1 = 0, *m2 = 0;
+    struct machine_t *controller = 0, *worker = 0;
     struct mpool_t *pool = 0;
     struct timer_t *frame_timer = 0;
 
@@ -86,45 +88,44 @@ int main(void)
         goto cleanup;
     }
 
-    m1 = machine_create(lua, "thread1");
-    if (m1 == 0)
+    controller = machine_create(lua, "control");
+    if (controller == 0)
     {
-        fprintf(stderr, "Cannot create machine1\n");
+        fprintf(stderr, "Cannot create controller\n");
         goto cleanup;
     }
-    m2 = machine_create(lua, "thread2");
-    if (m2 == 0)
+    worker = machine_create(lua, "work");
+    if (worker == 0)
     {
-        fprintf(stderr, "Cannot create machine2\n");
+        fprintf(stderr, "Cannot create worker\n");
         goto cleanup;
     }
 
-    while (machine_running(m1) || machine_running(m2))
+    max_deviation = 0;
+    while (machine_running(controller) || machine_running(worker))
     {
         timer_reset(frame_timer);
-        printf("------------------------------------\n");
-        printf("Memory before gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
-        printf("GC step result: %i\n", lua_gc(lua, LUA_GCSTEP, 10));
+        lua_gc(lua, LUA_GCSTEP, GC_STEP);
         lua_gc(lua, LUA_GCSTOP, 0);
-        printf("Memory after gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
-        status = machine_step(m1, 0);
+        status = machine_step(controller, 0);
         if (status)
         {
-            fprintf(stderr, "Failed to run machine1\n");
+            fprintf(stderr, "Failed to run controller\n");
             goto cleanup;
         }
-        status = machine_step(m2, FRAME_TIME - timer_passed(frame_timer));
+        status = machine_step(worker, FRAME_TIME - timer_passed(frame_timer));
         if (status)
         {
-            fprintf(stderr, "Failed to run machine2\n");
+            fprintf(stderr, "Failed to run worker\n");
             goto cleanup;
         }
         time_left = timer_passed(frame_timer);
-        if (time_left < FRAME_TIME)
+        if (FRAME_TIME - time_left > MIN_DELAY)
             usleep(FRAME_TIME - time_left);
-        printf("Frame time deviation: %i microseconds\n",
-               timer_passed(frame_timer) - FRAME_TIME);
+        if (timer_passed(frame_timer) - FRAME_TIME > max_deviation)
+            max_deviation = timer_passed(frame_timer) - FRAME_TIME;
     }
+    printf("Maximum deviation: %i us\n", max_deviation);
 
 cleanup:
     if (lua)
@@ -134,10 +135,10 @@ cleanup:
         mpool_print(pool);
         mpool_destroy(pool);
     }
-    if (m1)
-        machine_destroy(m1);
-    if (m2)
-        machine_destroy(m2);
+    if (controller)
+        machine_destroy(controller);
+    if (worker)
+        machine_destroy(worker);
     if (frame_timer)
         timer_destroy(frame_timer);
     printf("Finish\n");
