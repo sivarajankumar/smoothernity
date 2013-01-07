@@ -8,6 +8,6 @@ end
 function thread2(self)
     for i = 1, 30
     do
-        api_sleep(self, 300000);
+        api_wait(self, 300000);
     end
 end
