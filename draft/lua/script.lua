@@ -1,19 +1,13 @@
 function thread1(self)
-    local counter = 0
-    while true
+    for i = 1, 5
     do
-        -- io.write("First thread yields ", counter, "\n");
-        myyield(self)
-        counter = counter + 1
+        api_yield(self)
     end
 end
 
 function thread2(self)
-    local counter = 100
-    while true
+    for i = 1, 30
     do
-        -- io.write("Second thread yields ", counter, "\n");
-        mysleep(self, 300000);
-        counter = counter + 1
+        api_sleep(self, 300000);
     end
 end

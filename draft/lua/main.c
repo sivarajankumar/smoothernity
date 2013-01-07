@@ -97,7 +97,7 @@ int main(void)
         goto cleanup;
     }
 
-    for (i = 1; i <= 10; i++)
+    while (machine_running(m1) || machine_running(m2))
     {
         timer_reset(frame_timer);
         printf("------------------------------------\n");
