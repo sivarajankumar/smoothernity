@@ -93,9 +93,9 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     // realloc
     else
     {
-        if (nchunk->vacant_len)
+        newptr = mpool_alloc(pool, 0, 0, nsize);
+        if (newptr)
         {
-            newptr = mpool_alloc(pool, 0, 0, nsize);
             if (osize <= nsize)
                 memcpy(newptr, ptr, osize);
             else
@@ -104,11 +104,11 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             return newptr;
         }
         else
-            return mpool_alloc(pool, ptr, osize, 0); // free
+            return mpool_alloc(pool, ptr, osize, 0);
     }
 }
 
-int mpool_create(struct mpool_t **pool, size_t sizes[], size_t counts[], size_t len)
+int mpool_create(struct mpool_t **pool, const size_t sizes[], const size_t counts[], size_t len)
 {
     size_t i, j;
     *pool = calloc(1, sizeof(struct mpool_t));
