@@ -10,7 +10,6 @@ struct machine_t
     lua_State *thread;
     state_t next_state;
 
-    int count;
     struct timer_t *step_timer;
     struct timer_t *sleep_timer;
     int sleep_timeout;
@@ -29,16 +28,6 @@ int state_resume(struct machine_t *machine)
     return 0;
 }
 
-int state_count(struct machine_t *machine)
-{
-    printf("C counter is %i\n", machine->count);
-    if (--machine->count > 0)
-        machine->next_state = state_count;
-    else
-        machine->next_state = state_resume;
-    return 0;
-}
-
 int state_sleep(struct machine_t *machine)
 {
     if (timer_passed(machine->sleep_timer) < machine->sleep_timeout)
@@ -48,7 +37,7 @@ int state_sleep(struct machine_t *machine)
     return 0;
 }
 
-int api_myyield(lua_State *lua)
+int api_yield(lua_State *lua)
 {
     struct machine_t *machine;
     if (lua_isuserdata(lua, -1))
@@ -66,26 +55,7 @@ int api_myyield(lua_State *lua)
     }
 }
 
-int api_mycount(lua_State *lua)
-{
-    struct machine_t *machine;
-    if (lua_islightuserdata(lua, -2) && lua_isnumber(lua, -1))
-    {
-        machine = lua_touserdata(lua, -2);
-        machine->count = lua_tointeger(lua, -1);
-        lua_pop(lua, 2);
-        machine->next_state = state_count;
-        return lua_yield(lua, 0);
-    }
-    else
-    {
-        lua_pushstring(lua, "mycount: incorrect arguments");
-        lua_error(lua);
-        return 0;
-    }
-}
-
-int api_mysleep(lua_State *lua)
+int api_sleep(lua_State *lua)
 {
     struct machine_t *machine;
     if (lua_islightuserdata(lua, -2) && lua_isnumber(lua, -1))
@@ -107,9 +77,8 @@ int api_mysleep(lua_State *lua)
 
 void machine_embrace(lua_State *lua)
 {
-    lua_register(lua, "myyield", api_myyield);
-    lua_register(lua, "mysleep", api_mysleep);
-    lua_register(lua, "mycount", api_mycount);
+    lua_register(lua, "api_yield", api_yield);
+    lua_register(lua, "api_sleep", api_sleep);
 }
 
 int machine_step(struct machine_t *machine, int timeout)
@@ -119,6 +88,8 @@ int machine_step(struct machine_t *machine, int timeout)
     timer_reset(machine->step_timer);
     do
     {
+        if (machine->next_state == 0)
+            return 0;
         state = machine->next_state;
         machine->next_state = 0;
         status = (*state)(machine);
@@ -161,4 +132,9 @@ void machine_destroy(struct machine_t *machine)
     timer_destroy(machine->step_timer);
     timer_destroy(machine->sleep_timer);
     free(machine);
+}
+
+int machine_running(struct machine_t *machine)
+{
+    return machine->next_state != 0;
 }
