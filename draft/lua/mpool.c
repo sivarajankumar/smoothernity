@@ -108,52 +108,53 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     }
 }
 
-int mpool_create(struct mpool_t **pool, const size_t sizes[], const size_t counts[], size_t len)
+struct mpool_t * mpool_create(const size_t sizes[], const size_t counts[], size_t len)
 {
+    struct mpool_t *pool;
     size_t i, j;
-    *pool = calloc(1, sizeof(struct mpool_t));
-    if (*pool == 0)
+    pool = calloc(1, sizeof(struct mpool_t));
+    if (pool == 0)
     {
-        return 1;
+        return 0;
     }
-    (*pool)->chunks_len = len;
-    (*pool)->chunks = calloc(len, sizeof(struct mchunk_t));
-    if ((*pool)->chunks == 0)
+    pool->chunks_len = len;
+    pool->chunks = calloc(len, sizeof(struct mchunk_t));
+    if (pool->chunks == 0)
     {
-        free(*pool);
-        return 1;
+        free(pool);
+        return 0;
     }
     for (i = 0; i < len; ++i)
     {
         if (i > 0 && sizes[i-1] >= sizes[i])
             goto cleanup;
-        (*pool)->chunks[i].size = sizes[i];
-        (*pool)->chunks[i].data_len = counts[i];
-        (*pool)->chunks[i].data = malloc(sizes[i] * counts[i]);
-        if ((*pool)->chunks[i].data == 0)
+        pool->chunks[i].size = sizes[i];
+        pool->chunks[i].data_len = counts[i];
+        pool->chunks[i].data = malloc(sizes[i] * counts[i]);
+        if (pool->chunks[i].data == 0)
             goto cleanup;
-        (*pool)->chunks[i].vacant_len = counts[i];
-        (*pool)->chunks[i].vacant = malloc(sizeof(size_t) * counts[i]);
-        if ((*pool)->chunks[i].vacant == 0)
+        pool->chunks[i].vacant_len = counts[i];
+        pool->chunks[i].vacant = malloc(sizeof(size_t) * counts[i]);
+        if (pool->chunks[i].vacant == 0)
             goto cleanup;
         for (j = 0; j < counts[i]; ++j)
-            (*pool)->chunks[i].vacant[j] = j;
-        (*pool)->chunks[i].busy = calloc(counts[i], sizeof(char));
-        (*pool)->chunks[i].vacant_len_min = counts[i];
+            pool->chunks[i].vacant[j] = j;
+        pool->chunks[i].busy = calloc(counts[i], sizeof(char));
+        pool->chunks[i].vacant_len_min = counts[i];
     }
-    return 0;
+    return pool;
 cleanup:
     for (i = 0; i < len; ++i)
     {
-        if ((*pool)->chunks[i].data)
-            free((*pool)->chunks[i].data);
-        if ((*pool)->chunks[i].vacant)
-            free((*pool)->chunks[i].vacant);
-        if ((*pool)->chunks[i].busy)
-            free((*pool)->chunks[i].busy);
+        if (pool->chunks[i].data)
+            free(pool->chunks[i].data);
+        if (pool->chunks[i].vacant)
+            free(pool->chunks[i].vacant);
+        if (pool->chunks[i].busy)
+            free(pool->chunks[i].busy);
     }
-    free(*pool);
-    return 1;
+    free(pool);
+    return 0;
 } 
 
 void mpool_destroy(struct mpool_t *pool)

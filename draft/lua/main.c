@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "mpool.h"
+#include "machine.h"
 
 /*
 TODO:
@@ -25,25 +26,9 @@ Background Lua thread:
 Every API function can yield if too much time is consumed.
 */
 
-struct mystate
+int mypanic(lua_State *lua)
 {
-    int counter;
-};
-
-int myyield(lua_State *L)
-{
-    struct mystate *state;
-    state = lua_touserdata(L, -1);
-    lua_pop(L, 1);
-    if (++state->counter % 2)
-        return lua_yield(L, 0);
-    else
-        return 0;
-}
-
-int mypanic(lua_State *L)
-{
-    fprintf(stderr, "Lua panic: %s\n", lua_tostring(L, -1));
+    fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
 }
 
 void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
@@ -57,10 +42,10 @@ int main(void)
     static const size_t POOL_COUNTS[] = {1000, 1000};
     static const size_t POOL_LEN = 2;
 
-    struct mpool_t *pool = 0;
     int status, i;
-    lua_State *L = 0;
-    struct mystate state1, state2;
+    lua_State *lua = 0;
+    struct machine_t *m1 = 0, m2 = 0;
+    struct mpool_t *pool = 0;
 
     printf("Start\n");
 
@@ -74,62 +59,70 @@ int main(void)
     state1.counter = 0;
     state2.counter = 0;
 
-    L = lua_newstate(myalloc, pool);
-    if (L == 0)
+    lua = lua_newstate(myalloc, pool);
+    if (lua == 0)
     {
         fprintf(stderr, "Cannot create Lua state\n");
         goto cleanup;
     }
-    lua_atpanic(L, mypanic);
-    lua_gc(L, LUA_GCSTOP, 0);
-    lua_register(L, "myyield", myyield);
+    lua_atpanic(lua, mypanic);
+    lua_gc(lua, LUA_GCSTOP, 0);
+    machine_embrace(lua);
 
-    luaL_openlibs(L);
+    luaL_openlibs(lua);
 
-    status = luaL_dofile(L, "script.lua");
+    status = luaL_dofile(lua, "script.lua");
     if (status)
     {
-        fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(L, -1));
+        fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(lua, -1));
         goto cleanup;
     }
 
-    lua_State *Lt1, *Lt2;
-    Lt1 = lua_newthread(L);
-    Lt2 = lua_newthread(L);
-    lua_getglobal(Lt1, "thread1");
-    lua_getglobal(Lt2, "thread2");
-    lua_pushlightuserdata(Lt1, &state1);
-    lua_pushlightuserdata(Lt2, &state2);
+    m1 = machine_create(lua, "thread1");
+    if (m1 == 0)
+    {
+        fprintf(stderr, "Cannot create machine1\n");
+        goto cleanup;
+    }
+    m2 = machine_create(lua, "thread2");
+    if (m2 == 0)
+    {
+        fprintf(stderr, "Cannot create machine2\n");
+        goto cleanup;
+    }
 
     for (i = 1; i <= 10; i++)
     {
-        printf("Memory before gc: %i K\n", lua_gc(L, LUA_GCCOUNT, 0));
-        printf("GC step result: %i\n", lua_gc(L, LUA_GCSTEP, 10));
-        lua_gc(L, LUA_GCSTOP, 0);
-        printf("Memory after gc: %i K\n", lua_gc(L, LUA_GCCOUNT, 0));
-        status = lua_resume(Lt1, 1);
-        if (status && status != LUA_YIELD)
+        printf("Memory before gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
+        printf("GC step result: %i\n", lua_gc(lua, LUA_GCSTEP, 10));
+        lua_gc(lua, LUA_GCSTOP, 0);
+        printf("Memory after gc: %i K\n", lua_gc(lua, LUA_GCCOUNT, 0));
+        status = machine_run(m1);
+        if (status)
         {
-            fprintf(stderr, "Failed to resume thread1: %s\n", lua_tostring(Lt1, -1));
+            fprintf(stderr, "Failed to run machine1\n");
             goto cleanup;
         }
-        status = lua_resume(Lt2, 1);
-        if (status && status != LUA_YIELD)
+        status = machine_run(m2);
+        if (status)
         {
-            fprintf(stderr, "Failed to resume thread2: %s\n", lua_tostring(Lt2, -1));
+            fprintf(stderr, "Failed to run machine2\n");
             goto cleanup;
         }
-        printf("Counter1 is %i, counter2 is %i\n", state1.counter, state2.counter);
     }
 
 cleanup:
-    if (L)
-        lua_close(L);
+    if (lua)
+        lua_close(lua);
     if (pool)
     {
         mpool_print(pool);
         mpool_destroy(pool);
     }
+    if (m1)
+        machine_destroy(m1);
+    if (m2)
+        machine_destroy(m2);
     printf("Finish\n");
     return 0;
 }
