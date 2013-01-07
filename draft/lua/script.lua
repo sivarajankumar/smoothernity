@@ -1,12 +1,17 @@
+quit = false
+
 function control(self)
-    for i = 1, 5
+    while not quit
     do
+        if api_input_key_escape() == 1 then
+            quit = true
+        end
         api_yield(self)
     end
 end
 
 function work(self)
-    for i = 1, 30
+    while not quit
     do
         local time = api_time(self)
         while api_time(self) - time < 300000

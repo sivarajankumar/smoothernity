@@ -3,31 +3,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <SDL.h>
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
-#include <SDL.h>
-
-/*
-TODO:
-
-Main loop:
-    - Run scene graph
-    - Run controller Lua thread
-    - Run background Lua thread
-    - Run Lua garbage collector
-
-Control Lua thread:
-    - Polls user input and game events
-    - Yields explicitly every frame
-
-Background Lua thread:
-    - Used for background computations
-    - Periodically calls API function which will yield
-      if too much time is consumed in the current frame
-
-Every API function can yield if too much time is consumed.
-*/
+#include "display.h"
+#include "input.h"
 
 int mypanic(lua_State *lua)
 {
@@ -47,6 +28,9 @@ int main(void)
     static const int LOGIC_TIME = 10000;
     static const int GC_STEP = 10;
     static const int MIN_DELAY = 1000;
+    static const int DISPLAY_WIDTH = 800;
+    static const int DISPLAY_HEIGHT = 600;
+    static const int DISPLAY_BPP = 32;
 
     int status, i, time_left, max_deviation;
     lua_State *lua = 0;
@@ -56,7 +40,17 @@ int main(void)
 
     printf("Start\n");
 
-    SDL_Init(SDL_INIT_EVERYTHING);
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    {
+        fprintf(stderr, "Cannot init SDL\n");
+        goto cleanup;
+    }
+
+    if (display_set_mode(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BPP) != 0)
+    {
+        fprintf(stderr, "Cannot set video mode\n"); 
+        goto cleanup;
+    } 
 
     logic_timer = timer_create();
     if (logic_timer == 0)
@@ -97,6 +91,7 @@ int main(void)
         fprintf(stderr, "Cannot create controller\n");
         goto cleanup;
     }
+
     worker = machine_create(lua, "work");
     if (worker == 0)
     {
@@ -110,6 +105,7 @@ int main(void)
         timer_reset(logic_timer);
         lua_gc(lua, LUA_GCSTEP, GC_STEP);
         lua_gc(lua, LUA_GCSTOP, 0);
+        input_update();
         status = machine_step(controller, 0);
         if (status)
         {
