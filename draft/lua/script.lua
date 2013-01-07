@@ -1,8 +1,19 @@
-io.write("The table the script received has:\n");
-x = 0
-for i = 1, #foo do
-    print(i, foo[i])
-    x = x + foo[i]
+function thread1()
+    counter = 0
+    while true
+    do
+        io.write("First thread yields ", counter, "\n");
+        coroutine.yield()
+        counter = counter + 1
+    end
 end
-io.write("Returning data back to C\n");
-return x
+
+function thread2()
+    counter = 100
+    while true
+    do
+        io.write("Second thread yields ", counter, "\n");
+        coroutine.yield()
+        counter = counter + 1
+    end
+end
