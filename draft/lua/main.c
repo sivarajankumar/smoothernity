@@ -6,6 +6,7 @@
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
+#include <SDL.h>
 
 /*
 TODO:
@@ -43,7 +44,7 @@ int main(void)
     static const size_t POOL_SIZES[] =  {  64, 4096};
     static const size_t POOL_COUNTS[] = {1000, 1000};
     static const size_t POOL_LEN = 2;
-    static const int FRAME_TIME = 10000;
+    static const int LOGIC_TIME = 10000;
     static const int GC_STEP = 10;
     static const int MIN_DELAY = 1000;
 
@@ -51,12 +52,14 @@ int main(void)
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
     struct mpool_t *pool = 0;
-    struct timer_t *frame_timer = 0;
+    struct timer_t *logic_timer = 0;
 
     printf("Start\n");
 
-    frame_timer = timer_create();
-    if (frame_timer == 0)
+    SDL_Init(SDL_INIT_EVERYTHING);
+
+    logic_timer = timer_create();
+    if (logic_timer == 0)
     {
         fprintf(stderr, "Cannot create timer\n");
         goto cleanup;
@@ -81,7 +84,7 @@ int main(void)
 
     luaL_openlibs(lua);
 
-    status = luaL_dofile(lua, "script.lua");
+    status = luaL_dofile(lua, 0);
     if (status)
     {
         fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(lua, -1));
@@ -104,7 +107,7 @@ int main(void)
     max_deviation = 0;
     while (machine_running(controller) || machine_running(worker))
     {
-        timer_reset(frame_timer);
+        timer_reset(logic_timer);
         lua_gc(lua, LUA_GCSTEP, GC_STEP);
         lua_gc(lua, LUA_GCSTOP, 0);
         status = machine_step(controller, 0);
@@ -113,21 +116,22 @@ int main(void)
             fprintf(stderr, "Failed to run controller\n");
             goto cleanup;
         }
-        status = machine_step(worker, FRAME_TIME - timer_passed(frame_timer));
+        status = machine_step(worker, LOGIC_TIME - timer_passed(logic_timer));
         if (status)
         {
             fprintf(stderr, "Failed to run worker\n");
             goto cleanup;
         }
-        time_left = timer_passed(frame_timer);
-        if (FRAME_TIME - time_left > MIN_DELAY)
-            usleep(FRAME_TIME - time_left);
-        if (timer_passed(frame_timer) - FRAME_TIME > max_deviation)
-            max_deviation = timer_passed(frame_timer) - FRAME_TIME;
+        time_left = timer_passed(logic_timer);
+        if (LOGIC_TIME - time_left > MIN_DELAY)
+            usleep(LOGIC_TIME - time_left);
+        if (timer_passed(logic_timer) - LOGIC_TIME > max_deviation)
+            max_deviation = timer_passed(logic_timer) - LOGIC_TIME;
     }
     printf("Maximum deviation: %i us\n", max_deviation);
 
 cleanup:
+    SDL_Quit();
     if (lua)
         lua_close(lua);
     if (pool)
@@ -139,8 +143,8 @@ cleanup:
         machine_destroy(controller);
     if (worker)
         machine_destroy(worker);
-    if (frame_timer)
-        timer_destroy(frame_timer);
+    if (logic_timer)
+        timer_destroy(logic_timer);
     printf("Finish\n");
     return 0;
 }
