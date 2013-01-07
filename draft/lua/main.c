@@ -25,12 +25,6 @@ Background Lua thread:
 Every API function can yield if too much time is consumed.
 */
 
-size_t POOL_SIZES[] =  {  64, 4096};
-size_t POOL_COUNTS[] = {1000, 1000};
-size_t POOL_LEN = 2;
-
-struct mpool_t *g_pool;
-
 struct mystate
 {
     int counter;
@@ -47,6 +41,11 @@ int myyield(lua_State *L)
         return 0;
 }
 
+int mypanic(lua_State *L)
+{
+    fprintf(stderr, "Lua panic: %s\n", lua_tostring(L, -1));
+}
+
 void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
 {
     return mpool_alloc(ud, ptr, osize, nsize);
@@ -54,24 +53,34 @@ void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
 
 int main(void)
 {
+    static const size_t POOL_SIZES[] =  {  64, 4096};
+    static const size_t POOL_COUNTS[] = {1000, 1000};
+    static const size_t POOL_LEN = 2;
+
+    struct mpool_t *pool = 0;
     int status, i;
-    double sum;
-    lua_State *L;
+    lua_State *L = 0;
     struct mystate state1, state2;
 
     printf("Start\n");
 
-    status = mpool_create(&g_pool, POOL_SIZES, POOL_COUNTS, POOL_LEN);
+    status = mpool_create(&pool, POOL_SIZES, POOL_COUNTS, POOL_LEN);
     if (status)
     {
-        fprintf(stderr, "Couldn't create memory pool\n");
-        exit(1);
+        fprintf(stderr, "Cannot create memory pool\n");
+        goto cleanup;
     }
 
     state1.counter = 0;
     state2.counter = 0;
 
-    L = lua_newstate(myalloc, g_pool);
+    L = lua_newstate(myalloc, pool);
+    if (L == 0)
+    {
+        fprintf(stderr, "Cannot create Lua state\n");
+        goto cleanup;
+    }
+    lua_atpanic(L, mypanic);
     lua_gc(L, LUA_GCSTOP, 0);
     lua_register(L, "myyield", myyield);
 
@@ -81,7 +90,7 @@ int main(void)
     if (status)
     {
         fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(L, -1));
-        exit(1);
+        goto cleanup;
     }
 
     lua_State *Lt1, *Lt2;
@@ -102,21 +111,25 @@ int main(void)
         if (status && status != LUA_YIELD)
         {
             fprintf(stderr, "Failed to resume thread1: %s\n", lua_tostring(Lt1, -1));
-            exit(1);
+            goto cleanup;
         }
         status = lua_resume(Lt2, 1);
         if (status && status != LUA_YIELD)
         {
             fprintf(stderr, "Failed to resume thread2: %s\n", lua_tostring(Lt2, -1));
-            exit(1);
+            goto cleanup;
         }
         printf("Counter1 is %i, counter2 is %i\n", state1.counter, state2.counter);
     }
 
-    lua_close(L);
-    mpool_print(g_pool);
-    mpool_destroy(g_pool);
-    
+cleanup:
+    if (L)
+        lua_close(L);
+    if (pool)
+    {
+        mpool_print(pool);
+        mpool_destroy(pool);
+    }
     printf("Finish\n");
     return 0;
 }
