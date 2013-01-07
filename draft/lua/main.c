@@ -3,6 +3,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+TODO:
+
+Main loop:
+    - Run scene graph
+    - Run control Lua thread
+    - Run background Lua thread
+    - Run Lua garbage collector
+
+Control Lua thread:
+    - Polls user input and game events
+    - Yields explicitly every frame
+
+Background Lua thread:
+    - Used for background computations
+    - Periodically calls API function which will yield
+      if too much time is consumed in the current frame
+
+Every API function can yield if too much time is consumed.
+*/
+
 int main(void)
 {
     printf("Start\n");
