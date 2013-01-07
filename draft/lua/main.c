@@ -75,13 +75,13 @@ int main(void)
         goto cleanup;
     }
 
-    m1 = machine_create(lua, "thread1");
+    m1 = machine_create(lua, "thread1", 0);
     if (m1 == 0)
     {
         fprintf(stderr, "Cannot create machine1\n");
         goto cleanup;
     }
-    m2 = machine_create(lua, "thread2");
+    m2 = machine_create(lua, "thread2", 1000000);
     if (m2 == 0)
     {
         fprintf(stderr, "Cannot create machine2\n");
