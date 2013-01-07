@@ -30,45 +30,22 @@ int main(void)
 
     int status, result, i;
     double sum;
-    lua_State *L1, *L2;
+    lua_State *L;
     
-    L1 = luaL_newstate();
-    L2 = luaL_newstate();
+    L = luaL_newstate();
 
-    luaL_openlibs(L1);
-    luaL_openlibs(L2);
+    luaL_openlibs(L);
 
-    status = luaL_loadfile(L1, "script.lua");
+    status = luaL_dofile(L, "script.lua");
     if (status)
     {
-        fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L1, -1));
-        exit(1);
-    }
-
-    status = luaL_loadfile(L2, "script.lua");
-    if (status)
-    {
-        fprintf(stderr, "Couldn't load file: %s\n", lua_tostring(L2, -1));
-        exit(1);
-    }
-
-    status = lua_pcall(L1, 0, LUA_MULTRET, 0);
-    if (status)
-    {
-        fprintf(stderr, "Failed to run script: %s\n", lua_tostring(L1, -1));
-        exit(1);
-    }
-
-    status = lua_pcall(L2, 0, LUA_MULTRET, 0);
-    if (status)
-    {
-        fprintf(stderr, "Failed to run script: %s\n", lua_tostring(L2, -1));
+        fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(L, -1));
         exit(1);
     }
 
     lua_State *Lt1, *Lt2;
-    Lt1 = lua_newthread(L1);
-    Lt2 = lua_newthread(L2);
+    Lt1 = lua_newthread(L);
+    Lt2 = lua_newthread(L);
     lua_getglobal(Lt1, "thread1");
     lua_getglobal(Lt2, "thread2");
 
@@ -77,19 +54,18 @@ int main(void)
         result = lua_resume(Lt1, 0);
         if (result && result != LUA_YIELD)
         {
-            fprintf(stderr, "Failed to resume thread1: %s\n", lua_tostring(L1, -1));
+            fprintf(stderr, "Failed to resume thread1: %s\n", lua_tostring(L, -1));
             exit(1);
         }
         result = lua_resume(Lt2, 0);
         if (result && result != LUA_YIELD)
         {
-            fprintf(stderr, "Failed to resume thread2: %s\n", lua_tostring(L2, -1));
+            fprintf(stderr, "Failed to resume thread2: %s\n", lua_tostring(L, -1));
             exit(1);
         }
     }
 
-    lua_close(L1);
-    lua_close(L2);
+    lua_close(L);
     
     printf("Finish\n");
     return 0;
