@@ -25,7 +25,14 @@ function work(self)
     end
     while not quit
     do
-        for i = 0, 255 do
+        for i = 0, 255, 1 do
+            api_display_set_clear_color(i / 255, i / 255, i / 255)
+            api_sleep(self)
+            if quit then
+                break
+            end
+        end
+        for i = 255, 0, -1 do
             api_display_set_clear_color(i / 255, i / 255, i / 255)
             api_sleep(self)
             if quit then
