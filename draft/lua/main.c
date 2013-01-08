@@ -1,5 +1,6 @@
 #include <lua.h>
 #include <lauxlib.h>
+#include <lualib.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -9,6 +10,7 @@
 #include "timer.h"
 #include "display.h"
 #include "input.h"
+#include "tween.h"
 
 int mypanic(lua_State *lua)
 {
@@ -129,7 +131,7 @@ int main(void)
         }
         time_left = timer_passed(logic_timer);
         if (LOGIC_TIME - time_left > MIN_DELAY)
-            usleep(LOGIC_TIME - time_left);
+            SDL_Delay((LOGIC_TIME - time_left) / 1000);
         if (timer_passed(logic_timer) - LOGIC_TIME > max_deviation)
             max_deviation = timer_passed(logic_timer) - LOGIC_TIME;
         display_show();

@@ -1,6 +1,8 @@
 #include "tween.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
+#include "consts.h"
 
 enum tween_e
 {

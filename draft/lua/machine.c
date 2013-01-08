@@ -2,6 +2,7 @@
 #include "timer.h"
 #include "input.h"
 #include "display.h"
+#include "tween.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -86,7 +87,6 @@ int api_time(lua_State *lua)
 
 int api_input_key_escape(lua_State *lua)
 {
-    struct machine_t *machine;
     if (lua_gettop(lua) == 0)
     {
         lua_pushinteger(lua, input_key_escape());
@@ -102,23 +102,104 @@ int api_input_key_escape(lua_State *lua)
 
 int api_display_set_clear_color(lua_State *lua)
 {
-    struct machine_t *machine;
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3)
+     && lua_isnumber(lua, -2)
+     && lua_isnumber(lua, -1))
+    {
+        display_set_clear_color
+            ((float)lua_tonumber(lua, -3),
+             (float)lua_tonumber(lua, -2),
+             (float)lua_tonumber(lua, -1));
+        lua_pop(lua, 3);
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+int api_display_tween_clear_color(lua_State *lua)
+{
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3)
+     && lua_isnumber(lua, -2)
+     && lua_isnumber(lua, -1))
+    {
+        display_tween_clear_color
+            (lua_tonumber(lua, -3),
+             lua_tonumber(lua, -2),
+             lua_tonumber(lua, -1));
+        lua_pop(lua, 3);
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_tween_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+int api_tween_spawn(lua_State *lua)
+{
+    if (lua_gettop(lua) == 0)
+    {
+        lua_pushinteger(lua, tween_spawn());
+        return 1;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_tween_spawn: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+int api_tween_kill(lua_State *lua)
+{
+    int tween;
+    if (lua_gettop(lua) == 1 && lua_isnumber(lua, -1))
+    {
+        tween = lua_tointeger(lua, -1);
+        lua_pop(lua, 1);
+        tween_kill(tween);
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_tween_kill: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+int api_tween_play_sine(lua_State *lua)
+{
+    int tween;
+    float shift;
+    float ampl;
+    float period;
     if (lua_gettop(lua) == 4
      && lua_isnumber(lua, -4)
      && lua_isnumber(lua, -3)
      && lua_isnumber(lua, -2)
      && lua_isnumber(lua, -1))
     {
-        display_set_clear_color
-            ((float)lua_tonumber(lua, -4),
-             (float)lua_tonumber(lua, -3),
-             (float)lua_tonumber(lua, -2),
-             (float)lua_tonumber(lua, -1));
+        tween = lua_tointeger(lua, -4);
+        shift = lua_tonumber(lua, -3);
+        ampl = lua_tonumber(lua, -2);
+        period = lua_tonumber(lua, -1);
+        lua_pop(lua, 4);
+        tween_play_sine(tween, shift, ampl, period);
         return 0;
     }
     else
     {
-        lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
+        lua_pushstring(lua, "api_tween_kill: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -131,6 +212,10 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "api_time", api_time);
     lua_register(lua, "api_input_key_escape", api_input_key_escape);
     lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
+    lua_register(lua, "api_display_tween_clear_color", api_display_tween_clear_color);
+    lua_register(lua, "api_tween_spawn", api_tween_spawn);
+    lua_register(lua, "api_tween_kill", api_tween_kill);
+    lua_register(lua, "api_tween_play_sine", api_tween_play_sine);
 }
 
 int machine_step(struct machine_t *machine, int timeout)
