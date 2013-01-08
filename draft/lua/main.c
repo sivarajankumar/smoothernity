@@ -48,6 +48,7 @@ int main(void)
         fprintf(stderr, "Cannot init SDL\n");
         goto cleanup;
     }
+    SDL_ShowCursor(SDL_DISABLE);
 
     if (display_set_mode(DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
     {
@@ -139,6 +140,7 @@ int main(void)
     printf("Maximum deviation: %i us\n", max_deviation);
 
 cleanup:
+    SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
     tween_done();
     if (lua)
