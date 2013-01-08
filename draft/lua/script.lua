@@ -11,12 +11,21 @@ function control(self)
 end
 
 function work(self)
-    while not quit
-    do
+    function wait(us)
         local time = api_time(self)
-        while api_time(self) - time < 300000
+        while api_time(self) - time < us
         do
             api_sleep(self);
+        end
+    end
+    while not quit
+    do
+        for i = 0, 255 do
+            api_display_set_clear_color(i / 255, i / 255, i / 255, i / 255)
+            wait(10000)
+            if quit then
+                break
+            end
         end
     end
 end
