@@ -5,8 +5,7 @@
 struct display_t
 {
     SDL_Surface *screen;
-    int width;
-    int height;
+    float clear_color[4];
 };
 
 static struct display_t g_display;
@@ -33,18 +32,23 @@ int display_set_mode(int width, int height)
     if (g_display.screen == 0)
         return 1;
 
-    g_display.width = width;
-    g_display.height = height;
     return 0;
-}
-
-void display_get_mode(int *width, int *height)
-{
-    *width = g_display.width;
-    *height = g_display.height;
 }
 
 void display_show(void)
 {
+    glClearColor(g_display.clear_color[0],
+                 g_display.clear_color[1],
+                 g_display.clear_color[2],
+                 g_display.clear_color[3]);
+    glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapBuffers();
+}
+
+void display_set_clear_color(float r, float g, float b, float a)
+{
+    g_display.clear_color[0] = r;
+    g_display.clear_color[1] = g;
+    g_display.clear_color[2] = b;
+    g_display.clear_color[3] = a;
 }

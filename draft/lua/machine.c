@@ -1,6 +1,7 @@
 #include "machine.h"
 #include "timer.h"
 #include "input.h"
+#include "display.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,7 +32,7 @@ int state_resume(struct machine_t *machine)
 int api_yield(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_isuserdata(lua, -1))
+    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
     {
         machine = lua_touserdata(lua, -1);
         lua_pop(lua, 1);
@@ -49,7 +50,7 @@ int api_yield(lua_State *lua)
 int api_sleep(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_isuserdata(lua, -1))
+    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
     {
         machine = lua_touserdata(lua, -1);
         lua_pop(lua, 1);
@@ -68,7 +69,7 @@ int api_sleep(lua_State *lua)
 int api_time(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_isuserdata(lua, -1))
+    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
     {
         machine = lua_touserdata(lua, -1);
         lua_pop(lua, 1);
@@ -99,12 +100,37 @@ int api_input_key_escape(lua_State *lua)
     }
 }
 
+int api_display_set_clear_color(lua_State *lua)
+{
+    struct machine_t *machine;
+    if (lua_gettop(lua) == 4
+     && lua_isnumber(lua, -4)
+     && lua_isnumber(lua, -3)
+     && lua_isnumber(lua, -2)
+     && lua_isnumber(lua, -1))
+    {
+        display_set_clear_color
+            ((float)lua_tonumber(lua, -4),
+             (float)lua_tonumber(lua, -3),
+             (float)lua_tonumber(lua, -2),
+             (float)lua_tonumber(lua, -1));
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
 void machine_embrace(lua_State *lua)
 {
     lua_register(lua, "api_yield", api_yield);
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
     lua_register(lua, "api_input_key_escape", api_input_key_escape);
+    lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
 }
 
 int machine_step(struct machine_t *machine, int timeout)

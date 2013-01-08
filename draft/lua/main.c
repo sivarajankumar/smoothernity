@@ -122,6 +122,7 @@ int main(void)
             usleep(LOGIC_TIME - time_left);
         if (timer_passed(logic_timer) - LOGIC_TIME > max_deviation)
             max_deviation = timer_passed(logic_timer) - LOGIC_TIME;
+        display_show();
     }
     printf("Maximum deviation: %i us\n", max_deviation);
 
