@@ -30,6 +30,8 @@ int main(void)
     static const int MIN_DELAY = 1000;
     static const int DISPLAY_WIDTH = 800;
     static const int DISPLAY_HEIGHT = 600;
+    static const int FPS = 60;
+    static const int TWEEN_POOL = 100;
 
     int status, i, time_left, max_deviation;
     lua_State *lua = 0;
@@ -50,6 +52,12 @@ int main(void)
         fprintf(stderr, "Cannot set video mode\n"); 
         goto cleanup;
     } 
+
+    if (tween_init(TWEEN_POOL) != 0)
+    {
+        fprintf(stderr, "Cannot set up tweens\n");
+        goto cleanup;
+    }
 
     logic_timer = timer_create();
     if (logic_timer == 0)
@@ -105,6 +113,8 @@ int main(void)
         lua_gc(lua, LUA_GCSTEP, GC_STEP);
         lua_gc(lua, LUA_GCSTOP, 0);
         input_update();
+        tween_update(1.0f / (float)FPS);
+        display_update();
         status = machine_step(controller, 0);
         if (status)
         {
@@ -128,6 +138,7 @@ int main(void)
 
 cleanup:
     SDL_Quit();
+    tween_done();
     if (lua)
         lua_close(lua);
     if (pool)
