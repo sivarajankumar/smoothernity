@@ -30,7 +30,6 @@ int main(void)
     static const int MIN_DELAY = 1000;
     static const int DISPLAY_WIDTH = 800;
     static const int DISPLAY_HEIGHT = 600;
-    static const int DISPLAY_BPP = 32;
 
     int status, i, time_left, max_deviation;
     lua_State *lua = 0;
@@ -46,7 +45,7 @@ int main(void)
         goto cleanup;
     }
 
-    if (display_set_mode(DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_BPP) != 0)
+    if (display_set_mode(DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
     {
         fprintf(stderr, "Cannot set video mode\n"); 
         goto cleanup;
