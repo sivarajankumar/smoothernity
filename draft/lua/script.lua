@@ -15,13 +15,18 @@ function work(self)
         local time = api_time(self)
         while api_time(self) - time < us
         do
-            api_sleep(self);
+            api_sleep(self)
         end
+    end
+    tween = api_tween_spawn()
+    if tween >= 0 then
+        api_tween_play_sine(tween, 0.5, 0.5, 1.0)
+        api_display_tween_clear_color(tween, tween, tween)
     end
     while not quit
     do
         for i = 0, 255 do
-            api_display_set_clear_color(i / 255, i / 255, i / 255, i / 255)
+            --api_display_set_clear_color(i / 255, i / 255, i / 255)
             api_sleep(self)
             if quit then
                 break

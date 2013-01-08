@@ -30,7 +30,7 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     struct mchunk_t *ochunk, *nchunk;
     void *newptr;
     size_t i;
-    // inadequate request
+    /* inadequate request */
     if (osize == 0 && nsize == 0)
         return 0;
     if (nsize > pool->largest_size)
@@ -52,13 +52,13 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             break;
         }
     }
-    // cannot find chunk
+    /* cannot find chunk */
     if (ochunk == 0 || nchunk == 0)
     {
         ++pool->no_chunk;
         return 0;
     }
-    // allocate
+    /* allocate */
     if (osize == 0 && nsize > 0)
     {
         if (nchunk->vacant_len)
@@ -76,7 +76,7 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             return 0;
         }
     }
-    // free
+    /* free */
     else if (osize > 0 && nsize == 0)
     {
         i = (((char*)(ptr)) - ochunk->data) / ochunk->size;
@@ -90,7 +90,7 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
             ++ochunk->free_fails;
         return 0;
     }
-    // realloc
+    /* realloc */
     else
     {
         newptr = mpool_alloc(pool, 0, 0, nsize);

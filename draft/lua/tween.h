@@ -1,3 +1,5 @@
+#pragma once
+
 int tween_init(int len);
 void tween_done(void);
 void tween_update(float dt);
