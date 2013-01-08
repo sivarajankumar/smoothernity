@@ -22,7 +22,7 @@ function work(self)
     do
         for i = 0, 255 do
             api_display_set_clear_color(i / 255, i / 255, i / 255, i / 255)
-            wait(10000)
+            api_sleep(self)
             if quit then
                 break
             end

@@ -35,13 +35,17 @@ int display_set_mode(int width, int height)
     return 0;
 }
 
-void display_show(void)
+void display_update(void)
 {
     glClearColor(g_display.clear_color[0],
                  g_display.clear_color[1],
                  g_display.clear_color[2],
                  g_display.clear_color[3]);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void display_show(void)
+{
     SDL_GL_SwapBuffers();
 }
 
