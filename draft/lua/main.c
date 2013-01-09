@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <SDL.h>
+#include <GL/glut.h>
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
@@ -28,7 +29,7 @@ static void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
     return mpool_alloc(ud, ptr, osize, nsize);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     static const size_t MPOOL_SIZES[] =  {  64, 4096, 16384};
     static const size_t MPOOL_COUNTS[] = {1000, 1000,  1000};
@@ -36,8 +37,8 @@ int main(void)
     static const int LOGIC_TIME = 10000;
     static const int GC_STEP = 10;
     static const int MIN_DELAY = 1000;
-    static const int DISPLAY_WIDTH = 800;
-    static const int DISPLAY_HEIGHT = 600;
+    static const int DISPLAY_WIDTH = 1920;
+    static const int DISPLAY_HEIGHT = 1080;
     static const int FPS = 60;
     static const int TWEEN_POOL = 100;
     static const int SPACE_POOL = 100;
@@ -56,6 +57,8 @@ int main(void)
     struct timer_t *logic_timer = 0;
 
     printf("Start\n");
+
+    glutInit(&argc, argv);
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {

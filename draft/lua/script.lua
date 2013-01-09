@@ -70,7 +70,10 @@ function work(self)
         api_space_offset(s, 0, 0, -5)
         api_space_rotation_tween(s, SPACE_AXIS_Y, t)
 
-        local m = api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
+        api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
+
+        api_text_alloc("Hello world!", TEXT_FONT_8_BY_13, 0, 13)
+        api_text_alloc("Life is good!", TEXT_FONT_8_BY_13, 0, 30)
     end
 
     tutorial()
