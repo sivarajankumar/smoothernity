@@ -16,13 +16,13 @@
 #include "space.h"
 #include "mesh.h"
 
-int mypanic(lua_State *lua)
+static int mypanic(lua_State *lua)
 {
     fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
     return 0;
 }
 
-void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
+static void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
 {
     return mpool_alloc(ud, ptr, osize, nsize);
 }
