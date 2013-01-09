@@ -2,17 +2,11 @@
 #include "scene.h"
 #include <stdlib.h>
 
-struct vbuf_data_t
-{
-    GLfloat pos[3];
-    GLfloat tex[2];
-    GLubyte color[4];
-};
-
 struct vbufs_t g_vbufs;
 
 int vbuf_init(int size, int count)
 {
+    struct vbuf_data_t data;
     int i;
     g_vbufs.pool = calloc(count, sizeof(struct vbuf_t));
     if (g_vbufs.pool == 0)
@@ -35,6 +29,9 @@ int vbuf_init(int size, int count)
     g_vbufs.size = size;
     g_vbufs.count = count;
     g_vbufs.left = count;
+    g_vbufs.offset_pos = (char*)0 + ((char*)&data.pos - (char*)&data);
+    g_vbufs.offset_tex = (char*)0 + ((char*)&data.tex - (char*)&data);
+    g_vbufs.offset_color = (char*)0 + ((char*)&data.color - (char*)&data);
     return 0;
 cleanup:
     free(g_vbufs.pool);
@@ -54,11 +51,10 @@ void vbuf_done(void)
     }
 }
 
-void vbuf_query(int *size, int *left, int *with_meshes)
+void vbuf_query(int *size, int *left)
 {
     *size = g_vbufs.size;
     *left = g_vbufs.left;
-    *with_meshes = g_vbufs.with_meshes;
 }
 
 int vbuf_alloc(void)
@@ -191,4 +187,15 @@ void vbuf_bake(int vbufi)
     vbuf->prev = 0;
     vbuf->next = g_vbufs.baked;
     g_vbufs.baked = vbuf;
+}
+
+void vbuf_select(struct vbuf_t * vbuf)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(struct vbuf_data_t), g_vbufs.offset_pos);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, sizeof(struct vbuf_data_t), g_vbufs.offset_tex);
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(struct vbuf_data_t), g_vbufs.offset_color);
 }

@@ -41,7 +41,8 @@ void mesh_query(int *left)
     *left = g_meshes.left;
 }
 
-int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei)
+int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei,
+               int ioffset, int icount)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
@@ -64,6 +65,12 @@ int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei)
     if (type < 0 || type > MESH_TYPES_TOTAL)
         return -1;
 
+    if (ioffset < 0 || ioffset >= g_ibufs.size)
+        return -1;
+
+    if (icount <= 0 || icount >= g_ibufs.size - ioffset)
+        return -1;
+
     mesh = g_meshes.vacant;
     mesh->vacant = 0;
     g_meshes.vacant = g_meshes.vacant->next;
@@ -80,6 +87,8 @@ int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei)
     mesh->vbuf = vbuf;
     mesh->space = space;
     mesh->type = type;
+    mesh->ioffset = ioffset;
+    mesh->icount = icount;
 
     if (vbuf->meshes)
         vbuf->meshes->vbuf_prev = mesh;
@@ -144,4 +153,17 @@ void mesh_kill(int meshi)
     mesh->ibuf = 0;
     mesh->vbuf = 0;
     mesh->space = 0;
+}
+
+void mesh_draw(struct mesh_t *mesh)
+{
+    GLenum type_gl;
+    if (mesh->type == MESH_TRIANGLE_STRIP)
+        type_gl = GL_TRIANGLE_STRIP;
+    else if (mesh->type == MESH_TRIANGLE_FAN)
+        type_gl = GL_TRIANGLE_FAN;
+    else
+        type_gl = GL_TRIANGLES;
+    glDrawElements(type_gl, mesh->icount, GL_UNSIGNED_SHORT,
+                   (struct ibuf_data_t*)0 + mesh->ioffset);
 }
