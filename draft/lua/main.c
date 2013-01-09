@@ -72,7 +72,6 @@ int main(int argc, char **argv)
     }
     lua_atpanic(lua, mypanic);
     lua_gc(lua, LUA_GCSTOP, 0);
-    machine_embrace(lua);
 
     luaL_openlibs(lua);
 
@@ -82,6 +81,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    machine_init(lua);
     input_init(lua);
 
     if (display_init(lua, &argc, argv, DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         goto cleanup;
     } 
 
-    if (vbuf_init(VBUF_SIZE, VBUF_COUNT) != 0)
+    if (vbuf_init(lua, VBUF_SIZE, VBUF_COUNT) != 0)
     {
         fprintf(stderr, "Cannot init vertex buffers\n");
         goto cleanup;
