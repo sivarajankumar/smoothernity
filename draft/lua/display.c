@@ -26,56 +26,47 @@ static struct display_t g_display;
 
 static int api_display_get_mode(lua_State *lua)
 {
-    if (lua_gettop(lua) == 0)
-    {
-        lua_pushinteger(lua, g_display.width);
-        lua_pushinteger(lua, g_display.height);
-        return 2;
-    }
-    else
+    if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_display_get_mode: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    lua_pushinteger(lua, g_display.width);
+    lua_pushinteger(lua, g_display.height);
+    return 2;
 }
 
 static int api_display_set_clear_color(lua_State *lua)
 {
-    if (lua_gettop(lua) == 3
-     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
-    {
-        g_display.clear_color[0] = (float)lua_tonumber(lua, -3);
-        g_display.clear_color[1] = (float)lua_tonumber(lua, -2);
-        g_display.clear_color[2] = (float)lua_tonumber(lua, -1);
-        lua_pop(lua, 3);
-        return 0;
-    }
-    else
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
     {
         lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    g_display.clear_color[0] = (float)lua_tonumber(lua, -3);
+    g_display.clear_color[1] = (float)lua_tonumber(lua, -2);
+    g_display.clear_color[2] = (float)lua_tonumber(lua, -1);
+    lua_pop(lua, 3);
+    return 0;
 }
 
 static int api_display_tween_clear_color(lua_State *lua)
 {
-    if (lua_gettop(lua) == 3
-     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
-    {
-        g_display.clear_color_tween[0] = tween_get(lua_tointeger(lua, -3));
-        g_display.clear_color_tween[1] = tween_get(lua_tointeger(lua, -2));
-        g_display.clear_color_tween[2] = tween_get(lua_tointeger(lua, -1));
-        lua_pop(lua, 3);
-        return 0;
-    }
-    else
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
     {
         lua_pushstring(lua, "api_display_tween_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    g_display.clear_color_tween[0] = tween_get(lua_tointeger(lua, -3));
+    g_display.clear_color_tween[1] = tween_get(lua_tointeger(lua, -2));
+    g_display.clear_color_tween[2] = tween_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 3);
+    return 0;
 }
 
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
