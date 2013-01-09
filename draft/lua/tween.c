@@ -67,10 +67,16 @@ int tween_spawn(void)
     if (g_tweens.sleeping)
     {
         tween = g_tweens.sleeping;
-        g_tweens.sleeping = tween->next;
-        tween->next = g_tweens.working;
+
+        if (tween->next)
+            tween->next->prev = tween->prev;
+        if (tween->prev)
+            tween->prev->next = tween->next;
+
         if (g_tweens.working)
             g_tweens.working->prev = tween;
+        tween->prev = 0;
+        tween->next = g_tweens.working;
         g_tweens.working = tween;
         return tween - g_tweens.pool;
     }
@@ -83,11 +89,14 @@ void tween_kill(int i)
     struct tween_t *tween;
     if (i < 0 || i >= g_tweens.pool_len)
         return;
+
     tween = g_tweens.pool + i;
+
     if (tween->prev)
         tween->prev->next = tween->next;
     if (tween->next)
         tween->next->prev = tween->prev;
+
     if (g_tweens.sleeping)
         g_tweens.sleeping->prev = tween;
     tween->prev = 0;
