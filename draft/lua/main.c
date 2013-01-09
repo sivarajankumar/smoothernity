@@ -114,7 +114,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (text_init(TEXT_SIZE, TEXT_COUNT) != 0)
+    if (text_init(lua, TEXT_SIZE, TEXT_COUNT) != 0)
     {
         fprintf(stderr, "Cannot init texts\n");
         goto cleanup;

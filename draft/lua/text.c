@@ -37,84 +37,56 @@ struct texts_t
 
 static struct texts_t g_texts;
 
-int text_init(int size, int count)
+static struct text_t * text_get(int texti)
 {
-    int i;
-    g_texts.pool = calloc(count, sizeof(struct text_t));
-    if (g_texts.pool == 0)
-        return 1;
-    for (i = 0; i < count; ++i)
-    {
-        if (i > 0)
-            g_texts.pool[i].prev = g_texts.pool + i - 1;
-        if (i < count - 1)
-            g_texts.pool[i].next = g_texts.pool + i + 1;
-        g_texts.pool[i].string = calloc(size, sizeof(char));
-        if (g_texts.pool[i].string == 0)
-            goto cleanup;
-        g_texts.pool[i].vacant = 1;
-    }
-    g_texts.size = size;
-    g_texts.count = count;
-    g_texts.left = count;
-    g_texts.vacant = g_texts.pool;
-    return 0;
-cleanup:
-    for (i = 0; i < count; ++i)
-    {
-        if (g_texts.pool[i].string)
-            free(g_texts.pool[i].string);
-    }
-    free(g_texts.pool);
-    g_texts.pool = 0;
-    return 1;
+    if (texti >= 0 && texti < g_texts.count)
+        return g_texts.pool + texti;
+    else
+        return 0;
 }
 
-void text_done(void)
+static int api_text_alloc(lua_State *lua)
 {
-    int i;
-    if (g_texts.pool)
-    {
-        for (i = 0; i < g_texts.count; ++i)
-            free(g_texts.pool[i].string);
-        free(g_texts.pool);
-        g_texts.pool = 0;
-    }
-}
-
-void text_query(int *size, int *left)
-{
-    *size = g_texts.size;
-    *left = g_texts.left;
-}
-
-void text_draw(void)
-{
-    int i;
-    struct text_t *text;
-    for (text = g_texts.active; text; text = text->next)
-    {
-        glRasterPos2iv(text->pos);
-        for (i = 0; i < g_texts.size; ++i)
-        {
-            if (text->string[i] == 0)
-                break;
-            glutBitmapCharacter(text->font, text->string[i]);
-        }
-    }
-}
-
-int text_alloc(const char *string, int font, int x, int y)
-{
+    const char *string;
+    int font, x, y;
     size_t size;
     struct text_t *text;
 
+    if (lua_gettop(lua) != 4 || !lua_isstring(lua, -4)
+    || !lua_isnumber(lua, -3) || !lua_isnumber(lua, -2)
+    || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_text_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    
+    string = lua_tostring(lua, -4);
+    font = lua_tointeger(lua, -3);
+    x = lua_tointeger(lua, -2);
+    y = lua_tointeger(lua, -1);
+    lua_pop(lua, 4);
+
     if (g_texts.vacant == 0)
-        return -1;
+    {
+        lua_pushstring(lua, "api_text_alloc: out of texts");
+        lua_error(lua);
+        return 0;
+    }
+
     if (font < 0 || font >= TEXT_FONTS_TOTAL)
-        return -1;
+    {
+        lua_pushstring(lua, "api_text_alloc: invalid font");
+        lua_error(lua);
+        return 0;
+    }
+
     if (*string == 0)
-        return -1;
+    {
+        lua_pushstring(lua, "api_text_alloc: string is empty");
+        lua_error(lua);
+        return 0;
+    }
 
     --g_texts.left;
 
@@ -151,17 +123,31 @@ int text_alloc(const char *string, int font, int x, int y)
     text->pos[1] = y;
     text->vacant = 0;
 
-    return text - g_texts.pool;
+    lua_pushinteger(lua, text - g_texts.pool);
+    return 1;
 }
 
-void text_free(int texti)
+static int api_text_free(lua_State *lua)
 {
     struct text_t *text;
-    if (texti < 0 || texti >= g_texts.count)
-        return;
-    text = g_texts.pool + texti;
-    if (text->vacant)
-        return;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_text_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    text = text_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (text == 0 || text->vacant)
+    {
+        lua_pushstring(lua, "api_text_free: invalid text");
+        lua_error(lua);
+        return 0;
+    }
+
     text->vacant = 1;
     ++g_texts.left;
 
@@ -177,4 +163,84 @@ void text_free(int texti)
     text->prev = 0;
     text->next = g_texts.vacant;
     g_texts.vacant = text;
+    return 0;
+}
+
+static int api_text_query(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_text_query: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, g_texts.size);
+    lua_pushinteger(lua, g_texts.left);
+    return 2;
+}
+
+int text_init(lua_State *lua, int size, int count)
+{
+    int i;
+    g_texts.pool = calloc(count, sizeof(struct text_t));
+    if (g_texts.pool == 0)
+        return 1;
+    for (i = 0; i < count; ++i)
+    {
+        if (i > 0)
+            g_texts.pool[i].prev = g_texts.pool + i - 1;
+        if (i < count - 1)
+            g_texts.pool[i].next = g_texts.pool + i + 1;
+        g_texts.pool[i].string = calloc(size, sizeof(char));
+        if (g_texts.pool[i].string == 0)
+            goto cleanup;
+        g_texts.pool[i].vacant = 1;
+    }
+    g_texts.size = size;
+    g_texts.count = count;
+    g_texts.left = count;
+    g_texts.vacant = g_texts.pool;
+
+    lua_register(lua, "api_text_alloc", api_text_alloc);
+    lua_register(lua, "api_text_free", api_text_free);
+    lua_register(lua, "api_text_query", api_text_query);
+
+    return 0;
+cleanup:
+    for (i = 0; i < count; ++i)
+    {
+        if (g_texts.pool[i].string)
+            free(g_texts.pool[i].string);
+    }
+    free(g_texts.pool);
+    g_texts.pool = 0;
+    return 1;
+}
+
+void text_done(void)
+{
+    int i;
+    if (g_texts.pool)
+    {
+        for (i = 0; i < g_texts.count; ++i)
+            free(g_texts.pool[i].string);
+        free(g_texts.pool);
+        g_texts.pool = 0;
+    }
+}
+
+void text_draw(void)
+{
+    int i;
+    struct text_t *text;
+    for (text = g_texts.active; text; text = text->next)
+    {
+        glRasterPos2iv(text->pos);
+        for (i = 0; i < g_texts.size; ++i)
+        {
+            if (text->string[i] == 0)
+                break;
+            glutBitmapCharacter(text->font, text->string[i]);
+        }
+    }
 }
