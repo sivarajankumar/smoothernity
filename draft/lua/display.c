@@ -26,12 +26,10 @@ static struct display_t g_display;
 
 static int api_display_get_mode(lua_State *lua)
 {
-    int width, height;
     if (lua_gettop(lua) == 0)
     {
-        display_get_mode(&width, &height);
-        lua_pushinteger(lua, width);
-        lua_pushinteger(lua, height);
+        lua_pushinteger(lua, g_display.width);
+        lua_pushinteger(lua, g_display.height);
         return 2;
     }
     else
@@ -47,10 +45,9 @@ static int api_display_set_clear_color(lua_State *lua)
     if (lua_gettop(lua) == 3
      && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
-        display_set_clear_color
-            ((float)lua_tonumber(lua, -3),
-             (float)lua_tonumber(lua, -2),
-             (float)lua_tonumber(lua, -1));
+        g_display.clear_color[0] = (float)lua_tonumber(lua, -3);
+        g_display.clear_color[1] = (float)lua_tonumber(lua, -2);
+        g_display.clear_color[2] = (float)lua_tonumber(lua, -1);
         lua_pop(lua, 3);
         return 0;
     }
@@ -67,10 +64,9 @@ static int api_display_tween_clear_color(lua_State *lua)
     if (lua_gettop(lua) == 3
      && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
-        display_tween_clear_color
-            (lua_tonumber(lua, -3),
-             lua_tonumber(lua, -2),
-             lua_tonumber(lua, -1));
+        g_display.clear_color_tween[0] = lua_tointeger(lua, -3);
+        g_display.clear_color_tween[1] = lua_tointeger(lua, -2);
+        g_display.clear_color_tween[2] = lua_tointeger(lua, -1);
         lua_pop(lua, 3);
         return 0;
     }
@@ -142,12 +138,6 @@ void display_done(void)
     g_display.init = 0;
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
-}
-
-void display_get_mode(int *width, int *height)
-{
-    *width = g_display.width;
-    *height = g_display.height;
 }
 
 void display_update(void)
@@ -259,18 +249,4 @@ void display_update(void)
 void display_show(void)
 {
     SDL_GL_SwapBuffers();
-}
-
-void display_set_clear_color(float r, float g, float b)
-{
-    g_display.clear_color[0] = r;
-    g_display.clear_color[1] = g;
-    g_display.clear_color[2] = b;
-}
-
-void display_tween_clear_color(int r, int g, int b)
-{
-    g_display.clear_color_tween[0] = r;
-    g_display.clear_color_tween[1] = g;
-    g_display.clear_color_tween[2] = b;
 }
