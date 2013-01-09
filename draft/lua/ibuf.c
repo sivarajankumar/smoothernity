@@ -23,7 +23,7 @@ int ibuf_init(int size, int count)
         if (i < count - 1)
             g_ibufs.pool[i].next = g_ibufs.pool + i + 1;
         glGenBuffers(1, &g_ibufs.pool[i].buf_id);
-        glBindBuffers(GL_ELEMENT_ARRAY_BUFFER, g_ibufs.pool[i].buf_id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ibufs.pool[i].buf_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(struct ibuf_data_t) * size,
                      0, GL_STATIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
@@ -80,7 +80,7 @@ int ibuf_alloc(void)
             ibuf->next->prev = ibuf->prev;
 
         if (g_ibufs.mapped)
-            g_ibufs.mapped.prev = ibuf;
+            g_ibufs.mapped->prev = ibuf;
         ibuf->prev = 0;
         ibuf->next = g_ibufs.mapped;
         g_ibufs.mapped = ibuf;
@@ -117,7 +117,7 @@ void ibuf_free(int ibufi)
         ibuf->next->prev = ibuf->prev;
 
     if (g_ibufs.vacant)
-        g_ibufs.vacant.prev = ibuf;
+        g_ibufs.vacant->prev = ibuf;
     ibuf->prev = 0;
     ibuf->next = g_ibufs.vacant;
     g_ibufs.vacant = ibuf;
@@ -164,7 +164,7 @@ void ibuf_bake(int ibufi)
         ibuf->next->prev = ibuf->prev;
 
     if (g_ibufs.baked)
-        g_ibufs.baked.prev = ibuf;
+        g_ibufs.baked->prev = ibuf;
     ibuf->prev = 0;
     ibuf->next = g_ibufs.baked;
     g_ibufs.baked = ibuf;

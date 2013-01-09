@@ -29,7 +29,7 @@ void timer_reset(struct timer_t *timer)
 
 int timer_passed(struct timer_t *timer)
 {
-    struct timeval cur, diff;
+    struct timeval cur;
     gettimeofday(&cur, 0);
     return (int)(((cur.tv_sec - timer->time.tv_sec) * 1000000) +
                  (cur.tv_usec - timer->time.tv_usec));

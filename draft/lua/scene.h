@@ -5,7 +5,7 @@
 struct vbuf_t
 {
     GLuint buf_id;
-    void * mapped;
+    GLvoid * mapped;
     int vacant;
     struct vbuf_t * prev;
     struct vbuf_t * next;
@@ -29,7 +29,7 @@ extern struct vbufs_t g_vbufs;
 struct ibuf_t
 {
     GLuint buf_id;
-    void * mapped;
+    GLvoid * mapped;
     int vacant;
     struct ibuf_t * prev;
     struct ibuf_t * next;

@@ -11,10 +11,13 @@
 #include "display.h"
 #include "input.h"
 #include "tween.h"
+#include "ibuf.h"
+#include "vbuf.h"
 
 int mypanic(lua_State *lua)
 {
     fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
+    return 0;
 }
 
 void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
@@ -24,9 +27,9 @@ void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
 
 int main(void)
 {
-    static const size_t POOL_SIZES[] =  {  64, 4096};
-    static const size_t POOL_COUNTS[] = {1000, 1000};
-    static const size_t POOL_LEN = 2;
+    static const size_t MPOOL_SIZES[] =  {  64, 4096};
+    static const size_t MPOOL_COUNTS[] = {1000, 1000};
+    static const size_t MPOOL_LEN = 2;
     static const int LOGIC_TIME = 10000;
     static const int GC_STEP = 10;
     static const int MIN_DELAY = 1000;
@@ -34,11 +37,15 @@ int main(void)
     static const int DISPLAY_HEIGHT = 600;
     static const int FPS = 60;
     static const int TWEEN_POOL = 100;
+    static const int VBUF_SIZE = 1024;
+    static const int VBUF_COUNT = 100;
+    static const int IBUF_SIZE = 1024;
+    static const int IBUF_COUNT = 100;
 
-    int status, i, time_left, max_deviation;
+    int status, time_left, max_deviation;
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
-    struct mpool_t *pool = 0;
+    struct mpool_t *mpool = 0;
     struct timer_t *logic_timer = 0;
 
     printf("Start\n");
@@ -56,6 +63,18 @@ int main(void)
         goto cleanup;
     } 
 
+    if (vbuf_init(VBUF_SIZE, VBUF_COUNT) != 0)
+    {
+        fprintf(stderr, "Cannot set up vertex buffers\n");
+        goto cleanup;
+    }
+
+    if (ibuf_init(IBUF_SIZE, IBUF_COUNT) != 0)
+    {
+        fprintf(stderr, "Cannot set up index buffers\n");
+        goto cleanup;
+    }
+
     if (tween_init(TWEEN_POOL) != 0)
     {
         fprintf(stderr, "Cannot set up tweens\n");
@@ -69,14 +88,14 @@ int main(void)
         goto cleanup;
     }
 
-    pool = mpool_create(POOL_SIZES, POOL_COUNTS, POOL_LEN);
-    if (pool == 0)
+    mpool = mpool_create(MPOOL_SIZES, MPOOL_COUNTS, MPOOL_LEN);
+    if (mpool == 0)
     {
         fprintf(stderr, "Cannot create memory pool\n");
         goto cleanup;
     }
 
-    lua = lua_newstate(myalloc, pool);
+    lua = lua_newstate(myalloc, mpool);
     if (lua == 0)
     {
         fprintf(stderr, "Cannot create Lua state\n");
@@ -140,15 +159,17 @@ int main(void)
     printf("Maximum deviation: %i us\n", max_deviation);
 
 cleanup:
+    vbuf_done();
+    ibuf_done();
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
     tween_done();
     if (lua)
         lua_close(lua);
-    if (pool)
+    if (mpool)
     {
-        mpool_print(pool);
-        mpool_destroy(pool);
+        mpool_print(mpool);
+        mpool_destroy(mpool);
     }
     if (controller)
         machine_destroy(controller);

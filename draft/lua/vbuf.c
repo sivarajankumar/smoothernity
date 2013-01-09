@@ -25,7 +25,7 @@ int vbuf_init(int size, int count)
         if (i < count - 1)
             g_vbufs.pool[i].next = g_vbufs.pool + i + 1;
         glGenBuffers(1, &g_vbufs.pool[i].buf_id);
-        glBindBuffers(GL_ARRAY_BUFFER, g_vbufs.pool[i].buf_id);
+        glBindBuffer(GL_ARRAY_BUFFER, g_vbufs.pool[i].buf_id);
         glBufferData(GL_ARRAY_BUFFER, sizeof(struct vbuf_data_t) * size,
                      0, GL_STATIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
@@ -82,7 +82,7 @@ int vbuf_alloc(void)
             vbuf->next->prev = vbuf->prev;
 
         if (g_vbufs.mapped)
-            g_vbufs.mapped.prev = vbuf;
+            g_vbufs.mapped->prev = vbuf;
         vbuf->prev = 0;
         vbuf->next = g_vbufs.mapped;
         g_vbufs.mapped = vbuf;
@@ -119,7 +119,7 @@ void vbuf_free(int vbufi)
         vbuf->next->prev = vbuf->prev;
 
     if (g_vbufs.vacant)
-        g_vbufs.vacant.prev = vbuf;
+        g_vbufs.vacant->prev = vbuf;
     vbuf->prev = 0;
     vbuf->next = g_vbufs.vacant;
     g_vbufs.vacant = vbuf;
@@ -153,10 +153,10 @@ void vbuf_write(int vbufi, int datai,
     data->tex[0] = u;
     data->tex[1] = v;
 
-    data->col[0] = (GLubyte) (r * 255.0f);
-    data->col[1] = (GLubyte) (g * 255.0f);
-    data->col[2] = (GLubyte) (b * 255.0f);
-    data->col[3] = (GLubyte) (a * 255.0f);
+    data->color[0] = (GLubyte) (r * 255.0f);
+    data->color[1] = (GLubyte) (g * 255.0f);
+    data->color[2] = (GLubyte) (b * 255.0f);
+    data->color[3] = (GLubyte) (a * 255.0f);
 }
 
 void vbuf_bake(int vbufi)
@@ -179,7 +179,7 @@ void vbuf_bake(int vbufi)
         vbuf->next->prev = vbuf->prev;
 
     if (g_vbufs.baked)
-        g_vbufs.baked.prev = vbuf;
+        g_vbufs.baked->prev = vbuf;
     vbuf->prev = 0;
     vbuf->next = g_vbufs.baked;
     g_vbufs.baked = vbuf;

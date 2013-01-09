@@ -1,6 +1,6 @@
 #pragma once
 
-int ibuf_init(int size, int count, int len);
+int ibuf_init(int size, int count);
 void ibuf_done(void);
 
 void ibuf_query(int *size, int *left, int *with_meshes);
