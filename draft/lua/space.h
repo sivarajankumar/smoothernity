@@ -7,8 +7,8 @@ void space_done(void);
 
 void space_query(int *left);
 
-int space_spawn(void);
-void space_kill(int space);
+int space_alloc(void);
+void space_free(int space);
 
 void space_compute(struct space_t *space);
 void space_select(struct space_t *space);
