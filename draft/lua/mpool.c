@@ -173,17 +173,17 @@ void mpool_print(struct mpool_t *pool)
 {
     int i;
     printf("Memory pool statistics:\n");
-    printf("Largest requested size: %i\n", pool->largest_size);
-    printf("Cannot find chunk: %i\n", pool->no_chunk);
-    for (i = 0; i < pool->chunks_len; ++i)
+    printf("Largest requested size: %i\n", (int)pool->largest_size);
+    printf("Cannot find chunk: %i\n", (int)pool->no_chunk);
+    for (i = 0; i < (int)pool->chunks_len; ++i)
     {
         printf("Chunk size: %i, usage: %i/%i, allocs: %i (%i fails), frees: %i (%i fails).\n",
-               pool->chunks[i].size,
-               pool->chunks[i].data_len - pool->chunks[i].vacant_len_min,
-               pool->chunks[i].data_len,
-               pool->chunks[i].allocs,
-               pool->chunks[i].alloc_fails,
-               pool->chunks[i].frees,
-               pool->chunks[i].free_fails);
+               (int)pool->chunks[i].size,
+               (int)pool->chunks[i].data_len - (int)pool->chunks[i].vacant_len_min,
+               (int)pool->chunks[i].data_len,
+               (int)pool->chunks[i].allocs,
+               (int)pool->chunks[i].alloc_fails,
+               (int)pool->chunks[i].frees,
+               (int)pool->chunks[i].free_fails);
     }
 }
