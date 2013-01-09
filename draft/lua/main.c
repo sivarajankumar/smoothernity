@@ -82,6 +82,8 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    input_init(lua);
+
     if (display_init(lua, &argc, argv, DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
     {
         fprintf(stderr, "Cannot set video mode\n"); 
