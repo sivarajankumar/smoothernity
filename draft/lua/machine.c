@@ -14,7 +14,6 @@ struct machine_t
     int sleep;
 };
 
-#include "machine_api_display.c"
 #include "machine_api_input.c"
 #include "machine_api_tween.c"
 #include "machine_api_ibuf.c"

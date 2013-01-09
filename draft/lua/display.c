@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 #include "display.h"
 #include "tween.h"
 #include "scene.h"
@@ -12,6 +13,7 @@
 
 struct display_t
 {
+    int init;
     int width;
     int height;
     int frame_tag;
@@ -22,15 +24,78 @@ struct display_t
 
 static struct display_t g_display;
 
-int display_set_mode(int width, int height)
+static int api_display_get_mode(lua_State *lua)
+{
+    int width, height;
+    if (lua_gettop(lua) == 0)
+    {
+        display_get_mode(&width, &height);
+        lua_pushinteger(lua, width);
+        lua_pushinteger(lua, height);
+        return 2;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_get_mode: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+static int api_display_set_clear_color(lua_State *lua)
+{
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
+    {
+        display_set_clear_color
+            ((float)lua_tonumber(lua, -3),
+             (float)lua_tonumber(lua, -2),
+             (float)lua_tonumber(lua, -1));
+        lua_pop(lua, 3);
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+static int api_display_tween_clear_color(lua_State *lua)
+{
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
+    {
+        display_tween_clear_color
+            (lua_tonumber(lua, -3),
+             lua_tonumber(lua, -2),
+             lua_tonumber(lua, -1));
+        lua_pop(lua, 3);
+        return 0;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_tween_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
 {
     int bpp;
     int flags;
     const SDL_VideoInfo *info;
 
+    glutInit(argc, argv);
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+        return 1;
+    SDL_ShowCursor(SDL_DISABLE);
+
     info = SDL_GetVideoInfo();
     if (info == 0)
-        return 1;
+        goto cleanup;
 
     bpp = info->vfmt->BitsPerPixel;
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
@@ -42,7 +107,7 @@ int display_set_mode(int width, int height)
 
     g_display.screen = SDL_SetVideoMode(width, height, bpp, flags);
     if (g_display.screen == 0)
-        return 1;
+        goto cleanup;
 
     g_display.clear_color_tween[0] = -1;
     g_display.clear_color_tween[1] = -1;
@@ -51,6 +116,7 @@ int display_set_mode(int width, int height)
     g_display.frame_tag = 1000;
     g_display.width = width;
     g_display.height = height;
+    g_display.init = 1;
 
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
@@ -58,7 +124,24 @@ int display_set_mode(int width, int height)
     glEnable(GL_CULL_FACE);
     glViewport(0, 0, width, height);
 
+    lua_register(lua, "api_display_get_mode", api_display_get_mode);
+    lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
+    lua_register(lua, "api_display_tween_clear_color", api_display_tween_clear_color);
+
     return 0;
+cleanup:
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_Quit();
+    return 1;
+}
+
+void display_done(void)
+{
+    if (g_display.init == 0)
+        return;
+    g_display.init = 0;
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_Quit();
 }
 
 void display_get_mode(int *width, int *height)
