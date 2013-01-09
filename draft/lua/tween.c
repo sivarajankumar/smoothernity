@@ -35,8 +35,9 @@ static int api_tween_alloc(lua_State *lua)
     }
     if (g_tweens.sleeping == 0)
     {
-        lua_pushinteger(lua, -1);
-        return 1;
+        lua_pushstring(lua, "api_tween_alloc: out of tweens");
+        lua_error(lua);
+        return 0;
     }
     tween = g_tweens.sleeping;
     tween->working = 1;
@@ -71,7 +72,11 @@ static int api_tween_free(lua_State *lua)
     lua_pop(lua, 1);
     
     if (tween == 0 || tween->working == 0)
+    {
+        lua_pushstring(lua, "api_tween_free: invalid tween");
+        lua_error(lua);
         return 0;
+    }
     tween->working = 0;
 
     if (g_tweens.working == tween)
@@ -109,7 +114,11 @@ static int api_tween_play_sine(lua_State *lua)
     lua_pop(lua, 4);
 
     if (tween == 0)
+    {
+        lua_pushstring(lua, "api_tween_play_sine: invalid tween");
+        lua_error(lua);
         return 0;
+    }
     tween->t = 0;
     tween->shift = shift;
     tween->ampl = ampl;

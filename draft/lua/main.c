@@ -96,7 +96,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (ibuf_init(IBUF_SIZE, IBUF_COUNT) != 0)
+    if (ibuf_init(lua, IBUF_SIZE, IBUF_COUNT) != 0)
     {
         fprintf(stderr, "Cannot init index buffers\n");
         goto cleanup;
