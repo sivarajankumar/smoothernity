@@ -11,7 +11,7 @@ include_directories(${LUA_INCLUDE_DIR}
 
 add_executable(main
                main.c mpool.c machine.c timer.c display.c
-               input.c tween.c vbuf.c ibuf.c)
+               input.c tween.c vbuf.c ibuf.c space.c)
 
 add_definitions(-std=c99 -ansi -pedantic-errors -Wall -Wextra -Werror
                 -DGL_GLEXT_PROTOTYPES=1
