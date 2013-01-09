@@ -20,6 +20,7 @@ struct machine_t
 #include "machine_api_ibuf.c"
 #include "machine_api_vbuf.c"
 #include "machine_api_space.c"
+#include "machine_api_mesh.c"
 #include "machine_api.c"
 
 int machine_step(struct machine_t *machine, int timeout)

@@ -96,4 +96,7 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "api_space_scale_tween", api_space_scale_tween);
     lua_register(lua, "api_space_rotation", api_space_rotation);
     lua_register(lua, "api_space_rotation_tween", api_space_rotation_tween);
+    lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
+    lua_register(lua, "api_mesh_free", api_mesh_free);
+    lua_register(lua, "api_mesh_query", api_mesh_query);
 }
