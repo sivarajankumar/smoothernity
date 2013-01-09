@@ -5,7 +5,7 @@ void vbuf_done(void);
 
 void vbuf_query(int *size, int *left);
 
-int vbuf_alloc();
+int vbuf_alloc(void);
 void vbuf_free(int vbuf);
 
 struct vbuf_t * vbuf_get(int vbuf);

@@ -15,6 +15,7 @@
 #include "vbuf.h"
 #include "space.h"
 #include "mesh.h"
+#include "text.h"
 
 static int mypanic(lua_State *lua)
 {
@@ -45,6 +46,8 @@ int main(void)
     static const int VBUF_COUNT = 100;
     static const int IBUF_SIZE = 1024;
     static const int IBUF_COUNT = 100;
+    static const int TEXT_SIZE = 100;
+    static const int TEXT_COUNT = 100;
 
     int status, time_left, max_deviation;
     lua_State *lua = 0;
@@ -88,6 +91,12 @@ int main(void)
     if (mesh_init(MESH_POOL) != 0)
     {
         fprintf(stderr, "Cannot init meshes\n");
+        goto cleanup;
+    }
+
+    if (text_init(TEXT_SIZE, TEXT_COUNT) != 0)
+    {
+        fprintf(stderr, "Cannot init texts\n");
         goto cleanup;
     }
 
@@ -181,6 +190,7 @@ cleanup:
     SDL_Quit();
     space_done();
     mesh_done();
+    text_done();
     tween_done();
     if (lua)
         lua_close(lua);

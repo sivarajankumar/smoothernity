@@ -1,5 +1,23 @@
 #include "display.h"
 
+static int api_display_get_mode(lua_State *lua)
+{
+    int width, height;
+    if (lua_gettop(lua) == 0)
+    {
+        display_get_mode(&width, &height);
+        lua_pushinteger(lua, width);
+        lua_pushinteger(lua, height);
+        return 2;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_display_get_mode: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
 static int api_display_set_clear_color(lua_State *lua)
 {
     if (lua_gettop(lua) == 3

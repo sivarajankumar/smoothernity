@@ -8,9 +8,12 @@
 #include "ibuf.h"
 #include "space.h"
 #include "mesh.h"
+#include "text.h"
 
 struct display_t
 {
+    int width;
+    int height;
     int frame_tag;
     SDL_Surface *screen;
     float clear_color[3];
@@ -24,7 +27,6 @@ int display_set_mode(int width, int height)
     int bpp;
     int flags;
     const SDL_VideoInfo *info;
-    float ratio;
 
     info = SDL_GetVideoInfo();
     if (info == 0)
@@ -47,6 +49,8 @@ int display_set_mode(int width, int height)
     g_display.clear_color_tween[2] = -1;
 
     g_display.frame_tag = 1000;
+    g_display.width = width;
+    g_display.height = height;
 
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
@@ -54,18 +58,13 @@ int display_set_mode(int width, int height)
     glEnable(GL_CULL_FACE);
     glViewport(0, 0, width, height);
 
-    ratio = (float)width / (float)height;
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    /*
-        TODO: Rewrite using proper mechanics
-    */
-
-    gluPerspective(60.0, ratio, 1.0, 1024.0);
-
     return 0;
+}
+
+void display_get_mode(int *width, int *height)
+{
+    *width = g_display.width;
+    *height = g_display.height;
 }
 
 void display_update(void)
@@ -77,6 +76,10 @@ void display_update(void)
     float color[3];
     int i;
 
+    ++g_display.frame_tag;
+
+    /* clear */
+
     for (i = 0; i < 3; ++i)
     {
         if (g_display.clear_color_tween[i] != -1)
@@ -87,7 +90,14 @@ void display_update(void)
     glClearColor(color[0], color[1], color[2], 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    ++g_display.frame_tag;
+    /* frustum */
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    /* TODO: rewrite using proper mechanics */
+    gluPerspective(60.0, (float)g_display.width / (float)g_display.height, 1.0, 1024.0);
+
+    /* meshes */
 
     glMatrixMode(GL_MODELVIEW);
     if (g_vbufs.with_meshes < g_ibufs.with_meshes)
@@ -152,6 +162,14 @@ void display_update(void)
             }
         }
     }
+
+    /* text */
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    text_draw();
 }
 
 void display_show(void)

@@ -99,20 +99,12 @@ struct spaces_t
 
 extern struct spaces_t g_spaces;
 
-enum mesh_type_e
-{
-    MESH_TRIANGLE_STRIP = 0,
-    MESH_TRIANGLE_FAN = 1,
-    MESH_TRIANGLES = 2,
-    MESH_TYPES_TOTAL = 3
-};
-
 struct mesh_t
 {
     struct ibuf_t *ibuf;
     struct vbuf_t *vbuf;
     struct space_t *space;
-    enum mesh_type_e type;
+    GLenum type;
     int ioffset;
     int icount;
     int vacant;
