@@ -1,27 +1,9 @@
 #pragma once
 
-struct space_t;
-struct tween_t;
+#include <lua.h>
 
-int space_init(int count);
+int space_init(lua_State *lua, int count);
 void space_done(void);
-
-void space_query(int *left);
-
-int space_alloc(void);
-void space_free(int space);
-
+struct space_t * space_get(int space);
 void space_compute(struct space_t *space);
 void space_select(struct space_t *space);
-struct space_t * space_get(int space);
-
-void space_offset(int space, float x, float y, float z);
-void space_offset_tween(int space, struct tween_t *x,
-                                   struct tween_t *y,
-                                   struct tween_t *z);
-void space_scale(int space, float x, float y, float z);
-void space_scale_tween(int space, struct tween_t *x,
-                                  struct tween_t *y,
-                                  struct tween_t *z);
-void space_rotation(int space, int axis, float angle);
-void space_rotation_tween(int space, int axis, struct tween_t *angle);

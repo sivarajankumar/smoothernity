@@ -7,7 +7,301 @@
 
 struct spaces_t g_spaces;
 
-int space_init(int count)
+static int api_space_alloc(lua_State *lua)
+{
+    struct space_t *space;
+
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_space_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (g_spaces.vacant == 0)
+    {
+        lua_pushstring(lua, "api_space_alloc: out of spaces");
+        lua_error(lua);
+        return 0;
+    }
+
+    --g_spaces.left;
+    space = g_spaces.vacant;
+    g_spaces.vacant = g_spaces.vacant->next;
+
+    if (space->prev)
+        space->prev->next = space->next;
+    if (space->next)
+        space->next->prev = space->prev;
+
+    memset(space, 0, sizeof(struct space_t));
+
+    space->scale[0] = 1.0f;
+    space->scale[1] = 1.0f;
+    space->scale[2] = 1.0f;
+
+    lua_pushinteger(lua, space - g_spaces.pool);
+    return 1;
+}
+
+static int api_space_free(lua_State *lua)
+{
+    struct space_t *space;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (space == 0 || space->vacant)
+    {
+        lua_pushstring(lua, "api_space_free: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->vacant = 1;
+    ++g_spaces.left;
+
+    if (g_spaces.vacant)
+        g_spaces.vacant->prev = space;
+    space->prev = 0;
+    space->next = g_spaces.vacant;
+    g_spaces.vacant = space;
+    return 0;
+}
+
+static int api_space_query(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_space_query: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, g_spaces.left);
+    return 1;
+}
+
+static int api_space_offset(lua_State *lua)
+{
+    struct space_t *space;
+    float x, y, z;
+
+    if (lua_gettop(lua) != 4
+    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_offset: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -4));
+    x = (float)lua_tonumber(lua, -3);
+    y = (float)lua_tonumber(lua, -2);
+    z = (float)lua_tonumber(lua, -1);
+    lua_pop(lua, 4);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_offset: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->offset[0] = x;
+    space->offset[1] = y;
+    space->offset[2] = z;
+    return 0;
+}
+
+static int api_space_offset_tween(lua_State *lua)
+{
+    struct space_t *space;
+    struct tween_t *x, *y, *z;
+
+    if (lua_gettop(lua) != 4
+    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_offset_tween: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -4));
+    x = tween_get(lua_tointeger(lua, -3));
+    y = tween_get(lua_tointeger(lua, -2));
+    z = tween_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 4);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_offset_tween: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->offset_tween[0] = x;
+    space->offset_tween[1] = y;
+    space->offset_tween[2] = z;
+    return 0;
+}
+
+static int api_space_scale(lua_State *lua)
+{
+    struct space_t *space;
+    float x, y, z;
+
+    if (lua_gettop(lua) != 4
+    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_scale: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -4));
+    x = (float)lua_tonumber(lua, -3);
+    y = (float)lua_tonumber(lua, -2);
+    z = (float)lua_tonumber(lua, -1);
+    lua_pop(lua, 4);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_scale: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->scale[0] = x;
+    space->scale[1] = y;
+    space->scale[2] = z;
+    return 0;
+}
+
+static int api_space_scale_tween(lua_State *lua)
+{
+    struct space_t *space;
+    struct tween_t *x, *y, *z;
+
+    if (lua_gettop(lua) != 4
+    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_scale_tween: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -4));
+    x = tween_get(lua_tointeger(lua, -3));
+    y = tween_get(lua_tointeger(lua, -2));
+    z = tween_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 4);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_scale_tween: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->scale_tween[0] = x;
+    space->scale_tween[1] = y;
+    space->scale_tween[2] = z;
+    return 0;
+}
+
+static int api_space_rotation(lua_State *lua)
+{
+    struct space_t *space;
+    int axis;
+    float angle;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_rotation: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    space = space_get(lua_tointeger(lua, -3));
+    axis = lua_tointeger(lua, -2);
+    angle = (float)lua_tonumber(lua, -1);
+    lua_pop(lua, 3);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_rotation: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
+    {
+        lua_pushstring(lua, "api_space_rotation: invalid axis");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->rotangle = angle;
+    space->rotaxis = (enum space_axis_e)axis;
+    return 0;
+}
+
+static int api_space_rotation_tween(lua_State *lua)
+{
+    struct space_t *space;
+    int axis;
+    struct tween_t *angle;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_rotation_tween: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -3));
+    axis = lua_tointeger(lua, -2);
+    angle = tween_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 3);
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_space_rotation_tween: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
+    {
+        lua_pushstring(lua, "api_space_rotation_tween: invalid axis");
+        lua_error(lua);
+        return 0;
+    }
+
+    space->frame_tag = 0;
+    space->rotangle_tween = angle;
+    space->rotaxis = (enum space_axis_e)axis;
+    return 0;
+}
+
+int space_init(lua_State *lua, int count)
 {
     int i;
     g_spaces.pool = calloc(count, sizeof(struct space_t));
@@ -24,6 +318,17 @@ int space_init(int count)
     g_spaces.left = count;
     g_spaces.count = count;
     g_spaces.vacant = g_spaces.pool;
+
+    lua_register(lua, "api_space_alloc", api_space_alloc);
+    lua_register(lua, "api_space_free", api_space_free);
+    lua_register(lua, "api_space_query", api_space_query);
+    lua_register(lua, "api_space_offset", api_space_offset);
+    lua_register(lua, "api_space_offset_tween", api_space_offset_tween);
+    lua_register(lua, "api_space_scale", api_space_scale);
+    lua_register(lua, "api_space_scale_tween", api_space_scale_tween);
+    lua_register(lua, "api_space_rotation", api_space_rotation);
+    lua_register(lua, "api_space_rotation_tween", api_space_rotation_tween);
+
     return 0;
 }
 
@@ -36,134 +341,12 @@ void space_done(void)
     }
 }
 
-void space_query(int *left)
-{
-    *left = g_spaces.left;
-}
-
-int space_alloc(void)
-{
-    struct space_t *space;
-    if (g_spaces.vacant == 0)
-        return -1;
-    --g_spaces.left;
-    space = g_spaces.vacant;
-    g_spaces.vacant = g_spaces.vacant->next;
-
-    if (space->prev)
-        space->prev->next = space->next;
-    if (space->next)
-        space->next->prev = space->prev;
-
-    memset(space, 0, sizeof(struct space_t));
-
-    space->scale[0] = 1.0f;
-    space->scale[1] = 1.0f;
-    space->scale[2] = 1.0f;
-
-    return space - g_spaces.pool;
-}
-
-void space_free(int spacei)
-{
-    struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
-        return;
-    space = g_spaces.pool + spacei;
-    if (space->vacant)
-        return;
-    space->vacant = 1;
-    ++g_spaces.left;
-
-    if (g_spaces.vacant)
-        g_spaces.vacant->prev = space;
-    space->prev = 0;
-    space->next = g_spaces.vacant;
-    g_spaces.vacant = space;
-}
-
 struct space_t * space_get(int spacei)
 {
     if (spacei >= 0 && spacei < g_spaces.count)
         return g_spaces.pool + spacei;
     else
         return 0;
-}
-
-void space_offset(int spacei, float x, float y, float z)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    space->frame_tag = 0;
-    space->offset[0] = x;
-    space->offset[1] = y;
-    space->offset[2] = z;
-}
-
-void space_offset_tween(int spacei, struct tween_t *x,
-                        struct tween_t *y, struct tween_t *z)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    space->frame_tag = 0;
-    space->offset_tween[0] = x;
-    space->offset_tween[1] = y;
-    space->offset_tween[2] = z;
-}
-
-void space_scale(int spacei, float x, float y, float z)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    space->frame_tag = 0;
-    space->scale[0] = x;
-    space->scale[1] = y;
-    space->scale[2] = z;
-}
-
-void space_scale_tween(int spacei, struct tween_t *x,
-                       struct tween_t *y, struct tween_t *z)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    space->frame_tag = 0;
-    space->scale_tween[0] = x;
-    space->scale_tween[1] = y;
-    space->scale_tween[2] = z;
-}
-
-void space_rotation(int spacei, int axis, float angle)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
-        return;
-    space->frame_tag = 0;
-    space->rotangle = angle;
-    space->rotaxis = (enum space_axis_e)axis;
-}
-
-void space_rotation_tween(int spacei, int axis, struct tween_t *angle)
-{
-    struct space_t *space;
-    space = space_get(spacei);
-    if (space == 0)
-        return;
-    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
-        return;
-    space->frame_tag = 0;
-    space->rotangle_tween = angle;
-    space->rotaxis = (enum space_axis_e)axis;
 }
 
 void space_compute(struct space_t *space)
