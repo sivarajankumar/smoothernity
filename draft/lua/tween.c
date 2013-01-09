@@ -62,7 +62,7 @@ void tween_done(void)
     }
 }
 
-int tween_spawn(void)
+int tween_alloc(void)
 {
     struct tween_t *tween;
     if (g_tweens.sleeping)
@@ -87,7 +87,7 @@ int tween_spawn(void)
         return -1;
 }
 
-void tween_kill(int i)
+void tween_free(int i)
 {
     struct tween_t *tween;
     if (i < 0 || i >= g_tweens.pool_len)

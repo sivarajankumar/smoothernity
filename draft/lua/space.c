@@ -39,7 +39,7 @@ void space_query(int *left)
     *left = g_spaces.left;
 }
 
-int space_spawn(void)
+int space_alloc(void)
 {
     struct space_t *space;
     if (g_spaces.vacant == 0)
@@ -79,7 +79,7 @@ int space_spawn(void)
     return space - g_spaces.pool;
 }
 
-void space_kill(int spacei)
+void space_free(int spacei)
 {
     struct space_t *space;
     if (spacei < 0 || spacei >= g_spaces.count)
