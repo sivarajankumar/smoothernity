@@ -14,7 +14,6 @@ struct machine_t
     int sleep;
 };
 
-#include "machine_api_vbuf.c"
 #include "machine_api_space.c"
 #include "machine_api_mesh.c"
 #include "machine_api_text.c"

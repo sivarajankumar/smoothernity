@@ -66,16 +66,11 @@ static int api_time(lua_State *lua)
     }
 }
 
-void machine_embrace(lua_State *lua)
+void machine_init(lua_State *lua)
 {
     lua_register(lua, "api_yield", api_yield);
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
-    lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
-    lua_register(lua, "api_vbuf_free", api_vbuf_free);
-    lua_register(lua, "api_vbuf_write", api_vbuf_write);
-    lua_register(lua, "api_vbuf_bake", api_vbuf_bake);
-    lua_register(lua, "api_vbuf_query", api_vbuf_query);
     lua_register(lua, "api_space_alloc", api_space_alloc);
     lua_register(lua, "api_space_free", api_space_free);
     lua_register(lua, "api_space_query", api_space_query);
