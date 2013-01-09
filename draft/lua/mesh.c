@@ -41,7 +41,7 @@ void mesh_query(int *left)
     *left = g_meshes.left;
 }
 
-int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei,
+int mesh_alloc(int type, int vbufi, int ibufi, int texi, int spacei,
                int ioffset, int icount)
 {
     struct vbuf_t *vbuf;
@@ -107,7 +107,7 @@ int mesh_spawn(int type, int vbufi, int ibufi, int texi, int spacei,
     return mesh - g_meshes.pool;
 }
 
-void mesh_kill(int meshi)
+void mesh_free(int meshi)
 {
     struct mesh_t *mesh;
     if (meshi < 0 || meshi >= g_meshes.count)
