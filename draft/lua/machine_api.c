@@ -71,15 +71,6 @@ void machine_init(lua_State *lua)
     lua_register(lua, "api_yield", api_yield);
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
-    lua_register(lua, "api_space_alloc", api_space_alloc);
-    lua_register(lua, "api_space_free", api_space_free);
-    lua_register(lua, "api_space_query", api_space_query);
-    lua_register(lua, "api_space_offset", api_space_offset);
-    lua_register(lua, "api_space_offset_tween", api_space_offset_tween);
-    lua_register(lua, "api_space_scale", api_space_scale);
-    lua_register(lua, "api_space_scale_tween", api_space_scale_tween);
-    lua_register(lua, "api_space_rotation", api_space_rotation);
-    lua_register(lua, "api_space_rotation_tween", api_space_rotation_tween);
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_free", api_mesh_free);
     lua_register(lua, "api_mesh_query", api_mesh_query);

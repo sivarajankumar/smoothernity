@@ -102,7 +102,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (space_init(SPACE_POOL) != 0)
+    if (space_init(lua, SPACE_POOL) != 0)
     {
         fprintf(stderr, "Cannot init spaces\n");
         goto cleanup;
