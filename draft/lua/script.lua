@@ -18,7 +18,7 @@ function work(self)
             api_sleep(self)
         end
     end
-    tween = api_tween_spawn()
+    tween = api_tween_alloc()
     if tween >= 0 then
         api_tween_play_sine(tween, 0.5, 0.5, 1.0)
         api_display_tween_clear_color(tween, -1, tween)
