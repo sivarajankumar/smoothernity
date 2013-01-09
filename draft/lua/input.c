@@ -8,6 +8,26 @@ struct input_t
 
 static struct input_t g_input;
 
+static int api_input_key_escape(lua_State *lua)
+{
+    if (lua_gettop(lua) == 0)
+    {
+        lua_pushinteger(lua, g_input.key_escape);
+        return 1;
+    }
+    else
+    {
+        lua_pushstring(lua, "api_input_key_escape: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+}
+
+void input_init(lua_State *lua)
+{
+    lua_register(lua, "api_input_key_escape", api_input_key_escape);
+}
+
 void input_update(void)
 {
     SDL_Event event;
@@ -20,9 +40,4 @@ void input_update(void)
                 g_input.key_escape = 1;
         }
     }
-}
-
-int input_key_escape(void)
-{
-    return g_input.key_escape;
 }
