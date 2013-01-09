@@ -120,7 +120,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (tween_init(TWEEN_POOL) != 0)
+    if (tween_init(lua, TWEEN_POOL) != 0)
     {
         fprintf(stderr, "Cannot init tweens\n");
         goto cleanup;
