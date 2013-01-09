@@ -72,6 +72,7 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
     lua_register(lua, "api_input_key_escape", api_input_key_escape);
+    lua_register(lua, "api_display_get_mode", api_display_get_mode);
     lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
     lua_register(lua, "api_display_tween_clear_color", api_display_tween_clear_color);
     lua_register(lua, "api_tween_alloc", api_tween_alloc);
@@ -99,4 +100,7 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_free", api_mesh_free);
     lua_register(lua, "api_mesh_query", api_mesh_query);
+    lua_register(lua, "api_text_alloc", api_text_alloc);
+    lua_register(lua, "api_text_free", api_text_free);
+    lua_register(lua, "api_text_query", api_text_query);
 }

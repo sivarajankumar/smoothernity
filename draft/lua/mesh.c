@@ -7,6 +7,14 @@
 
 struct meshes_t g_meshes;
 
+enum mesh_type_e
+{
+    MESH_TRIANGLE_STRIP = 0,
+    MESH_TRIANGLE_FAN = 1,
+    MESH_TRIANGLES = 2,
+    MESH_TYPES_TOTAL = 3
+};
+
 int mesh_init(int count)
 {
     int i;
@@ -86,9 +94,15 @@ int mesh_alloc(int type, int vbufi, int ibufi, int texi, int spacei,
     mesh->ibuf = ibuf;
     mesh->vbuf = vbuf;
     mesh->space = space;
-    mesh->type = type;
     mesh->ioffset = ioffset;
     mesh->icount = icount;
+
+    if (type == MESH_TRIANGLE_STRIP)
+        mesh->type = GL_TRIANGLE_STRIP;
+    else if (type == MESH_TRIANGLE_FAN)
+        mesh->type = GL_TRIANGLE_FAN;
+    else
+        mesh->type = GL_TRIANGLES;
 
     if (vbuf->meshes)
         vbuf->meshes->vbuf_prev = mesh;
@@ -157,13 +171,6 @@ void mesh_free(int meshi)
 
 void mesh_draw(struct mesh_t *mesh)
 {
-    GLenum type_gl;
-    if (mesh->type == MESH_TRIANGLE_STRIP)
-        type_gl = GL_TRIANGLE_STRIP;
-    else if (mesh->type == MESH_TRIANGLE_FAN)
-        type_gl = GL_TRIANGLE_FAN;
-    else
-        type_gl = GL_TRIANGLES;
-    glDrawElements(type_gl, mesh->icount, GL_UNSIGNED_SHORT,
+    glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_SHORT,
                    (struct ibuf_data_t*)0 + mesh->ioffset);
 }
