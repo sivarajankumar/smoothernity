@@ -2,6 +2,7 @@
 #include "scene.h"
 #include "tween.h"
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 struct spaces_t g_spaces;
@@ -47,7 +48,6 @@ int space_alloc(void)
         return -1;
     --g_spaces.left;
     space = g_spaces.vacant;
-    space->vacant = 0;
     g_spaces.vacant = g_spaces.vacant->next;
 
     if (space->prev)
@@ -55,25 +55,11 @@ int space_alloc(void)
     if (space->next)
         space->next->prev = space->prev;
 
-    space->prev = 0;
-    space->next = 0;
+    memset(space, 0, sizeof(struct space_t));
 
-    space->frame_tag = 0;
-    space->offset[0] = 0.0f;
-    space->offset[1] = 0.0f;
-    space->offset[2] = 0.0f;
     space->scale[0] = 1.0f;
     space->scale[1] = 1.0f;
     space->scale[2] = 1.0f;
-    space->rotangle = 0.0f;
-    space->rotaxis = SPACE_AXIS_X;
-    space->offset_tween[0] = -1;
-    space->offset_tween[1] = -1;
-    space->offset_tween[2] = -1;
-    space->scale_tween[0] = -1;
-    space->scale_tween[1] = -1;
-    space->scale_tween[2] = -1;
-    space->rotangle_tween = -1;
 
     return space - g_spaces.pool;
 }
@@ -116,7 +102,8 @@ void space_offset(int spacei, float x, float y, float z)
     space->offset[2] = z;
 }
 
-void space_offset_tween(int spacei, int x, int y, int z)
+void space_offset_tween(int spacei, struct tween_t *x,
+                        struct tween_t *y, struct tween_t *z)
 {
     struct space_t *space;
     space = space_get(spacei);
@@ -140,7 +127,8 @@ void space_scale(int spacei, float x, float y, float z)
     space->scale[2] = z;
 }
 
-void space_scale_tween(int spacei, int x, int y, int z)
+void space_scale_tween(int spacei, struct tween_t *x,
+                       struct tween_t *y, struct tween_t *z)
 {
     struct space_t *space;
     space = space_get(spacei);
@@ -165,7 +153,7 @@ void space_rotation(int spacei, int axis, float angle)
     space->rotaxis = (enum space_axis_e)axis;
 }
 
-void space_rotation_tween(int spacei, int axis, int angle)
+void space_rotation_tween(int spacei, int axis, struct tween_t *angle)
 {
     struct space_t *space;
     space = space_get(spacei);
@@ -192,38 +180,38 @@ void space_compute(struct space_t *space)
 
     /* offset */
 
-    if (space->offset_tween[0] != -1)
-        offset[0] = tween_value(space->offset_tween[0]);
+    if (space->offset_tween[0])
+        offset[0] = space->offset_tween[0]->value;
     else
         offset[0] = space->offset[0];
-    if (space->offset_tween[1] != -1)
-        offset[1] = tween_value(space->offset_tween[1]);
+    if (space->offset_tween[1])
+        offset[1] = space->offset_tween[1]->value;
     else
         offset[1] = space->offset[1];
-    if (space->offset_tween[2] != -1)
-        offset[2] = tween_value(space->offset_tween[2]);
+    if (space->offset_tween[2])
+        offset[2] = space->offset_tween[2]->value;
     else
         offset[2] = space->offset[2];
 
     /* rotation */
 
-    if (space->rotangle != -1)
-        rotangle = tween_value(space->rotangle_tween);
+    if (space->rotangle_tween)
+        rotangle = space->rotangle_tween->value;
     else
         rotangle = space->rotangle;
 
     /* scale */
 
-    if (space->scale_tween[0] != -1)
-        scale[0] = tween_value(space->scale_tween[0]);
+    if (space->scale_tween[0])
+        scale[0] = space->scale_tween[0]->value;
     else
         scale[0] = space->scale[0];
-    if (space->scale_tween[1] != -1)
-        scale[1] = tween_value(space->scale_tween[1]);
+    if (space->scale_tween[1])
+        scale[1] = space->scale_tween[1]->value;
     else
         scale[1] = space->scale[1];
-    if (space->scale_tween[2] != -1)
-        scale[2] = tween_value(space->scale_tween[2]);
+    if (space->scale_tween[2])
+        scale[2] = space->scale_tween[2]->value;
     else
         scale[2] = space->scale[2];
 

@@ -1,28 +1,9 @@
 #include "tween.h"
+#include "consts.h"
+#include "scene.h"
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
-#include "consts.h"
-
-enum tween_e
-{
-    TWEEN_SINE = 0
-};
-
-struct tween_t;
-
-struct tween_t
-{
-    enum tween_e type;
-    int working;
-    float shift;
-    float ampl;
-    float period;
-    float t;
-    float value;
-    struct tween_t *next;
-    struct tween_t *prev;
-};
 
 struct tweens_t
 {
@@ -114,12 +95,12 @@ void tween_free(int i)
     g_tweens.sleeping = tween;
 }
 
-float tween_value(int i)
+struct tween_t * tween_get(int i)
 {
     if (i >= 0 && i < g_tweens.pool_len)
-        return g_tweens.pool[i].value;
+        return g_tweens.pool + i;
     else
-        return 0.0f;
+        return 0;
 }
 
 static void calc_value(struct tween_t *tween)

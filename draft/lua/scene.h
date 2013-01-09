@@ -2,6 +2,24 @@
 
 #include <GL/gl.h>
 
+enum tween_e
+{
+    TWEEN_SINE = 0
+};
+
+struct tween_t
+{
+    enum tween_e type;
+    int working;
+    float shift;
+    float ampl;
+    float period;
+    float t;
+    float value;
+    struct tween_t *next;
+    struct tween_t *prev;
+};
+
 struct vbuf_t
 {
     GLuint buf_id;
@@ -82,9 +100,9 @@ struct space_t
     float scale[3];
     float rotangle;
     enum space_axis_e rotaxis;
-    int offset_tween[3];
-    int scale_tween[3];
-    int rotangle_tween;
+    struct tween_t *offset_tween[3];
+    struct tween_t *scale_tween[3];
+    struct tween_t *rotangle_tween;
     struct space_t *prev;
     struct space_t *next;
 };
