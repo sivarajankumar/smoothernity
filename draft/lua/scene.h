@@ -53,6 +53,7 @@ extern struct ibufs_t g_ibufs;
 struct space_t
 {
     int tag; /* when this space was last updated */
+    int vacant;
     GLfloat matrix[16];
     float offset[3];
     float scale[3];
@@ -71,7 +72,42 @@ struct spaces_t
     int count;
     struct space_t *pool;
     struct space_t *vacant;
-    struct space_t *active;
 };
 
 extern struct spaces_t g_spaces;
+
+enum mesh_type_e
+{
+    MESH_TRIANGLE_STRIP = 0,
+    MESH_TRIANGLE_FAN = 1,
+    MESH_TRIANGLES = 2,
+    MESH_TYPES_TOTAL = 3
+};
+
+struct mesh_t
+{
+    struct ibuf_t *ibuf;
+    struct vbuf_t *vbuf;
+    struct space_t *space;
+    enum mesh_type_e type;
+    int vacant;
+
+    struct mesh_t *vbuf_prev;
+    struct mesh_t *vbuf_next;
+
+    struct mesh_t *ibuf_prev;
+    struct mesh_t *ibuf_next;
+
+    struct mesh_t *prev;
+    struct mesh_t *next;
+};
+
+struct meshes_t
+{
+    int left;
+    int count;
+    struct mesh_t *pool;
+    struct mesh_t *vacant;
+};
+
+extern struct meshes_t g_meshes;

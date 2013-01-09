@@ -68,11 +68,11 @@ int ibuf_alloc(void)
         ibuf->vacant = 0;
         --g_ibufs.left;
 
-        if (ibuf->mapped == 0)
-        {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-            ibuf->mapped = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+        ibuf->mapped = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+
+        if (g_ibufs.vacant == ibuf)
+            g_ibufs.vacant = ibuf->next;
 
         if (ibuf->prev)
             ibuf->prev->next = ibuf->next;
@@ -109,7 +109,11 @@ void ibuf_free(int ibufi)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
         glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
         ibuf->mapped = 0;
+        if (g_ibufs.mapped == ibuf)
+            g_ibufs.mapped = ibuf->next;
     }
+    else if (g_ibufs.baked == ibuf)
+        g_ibufs.baked = ibuf->next;
 
     if (ibuf->prev)
         ibuf->prev->next = ibuf->next;
@@ -123,19 +127,24 @@ void ibuf_free(int ibufi)
     g_ibufs.vacant = ibuf;
 }
 
+struct ibuf_t * ibuf_get(int ibufi)
+{
+    if (ibufi >= 0 && ibufi < g_ibufs.count)
+        return g_ibufs.pool + ibufi;
+    else
+        return 0;
+}
+
 void ibuf_write(int ibufi, int datai, int index)
 {
     struct ibuf_t *ibuf;
     struct ibuf_data_t *data;
 
-    if (ibufi < 0 || ibufi >= g_ibufs.count
-     || datai < 0 || datai >= g_ibufs.size)
-    {
+    if (datai < 0 || datai >= g_ibufs.size)
         return;
-    }
 
-    ibuf = g_ibufs.pool + ibufi;
-    if (ibuf->mapped == 0)
+    ibuf = ibuf_get(ibufi);
+    if (ibuf == 0 || ibuf->mapped == 0)
         return;
 
     data = ibuf->mapped;
@@ -147,16 +156,17 @@ void ibuf_write(int ibufi, int datai, int index)
 void ibuf_bake(int ibufi)
 {
     struct ibuf_t *ibuf;
-    if (ibufi < 0 || ibufi >= g_ibufs.count)
-        return;
 
-    ibuf = g_ibufs.pool + ibufi;
-    if (ibuf->mapped == 0)
+    ibuf = ibuf_get(ibufi);
+    if (ibuf == 0 || ibuf->mapped == 0)
         return;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     ibuf->mapped = 0;
+
+    if (g_ibufs.mapped == ibuf)
+        g_ibufs.mapped = ibuf->next;
 
     if (ibuf->prev)
         ibuf->prev->next = ibuf->next;

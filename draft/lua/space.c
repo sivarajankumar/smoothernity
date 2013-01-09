@@ -16,6 +16,7 @@ int space_init(int count)
             g_spaces.pool[i].prev = g_spaces.pool + i - 1;
         if (i < count - 1)
             g_spaces.pool[i].next = g_spaces.pool + i + 1;
+        g_spaces.pool[i].vacant = 1;
     }
     g_spaces.left = count;
     g_spaces.count = count;
@@ -44,6 +45,7 @@ int space_spawn(void)
         return -1;
     --g_spaces.left;
     space = g_spaces.vacant;
+    space->vacant = 0;
     g_spaces.vacant = g_spaces.vacant->next;
 
     if (space->prev)
@@ -51,11 +53,8 @@ int space_spawn(void)
     if (space->next)
         space->next->prev = space->prev;
 
-    if (g_spaces.active)
-        g_spaces.active->prev = space;
     space->prev = 0;
-    space->next = g_spaces.active;
-    g_spaces.active = space;
+    space->next = 0;
 
     return space - g_spaces.pool;
 }
@@ -65,13 +64,11 @@ void space_kill(int spacei)
     struct space_t *space;
     if (spacei < 0 || spacei >= g_spaces.count)
         return;
-    ++g_spaces.left;
     space = g_spaces.pool + spacei;
-
-    if (space->prev)
-        space->prev->next = space->next;
-    if (space->next)
-        space->next->prev = space->prev;
+    if (space->vacant)
+        return;
+    space->vacant = 1;
+    ++g_spaces.left;
 
     if (g_spaces.vacant)
         g_spaces.vacant->prev = space;
@@ -80,12 +77,20 @@ void space_kill(int spacei)
     g_spaces.vacant = space;
 }
 
+struct space_t * space_get(int spacei)
+{
+    if (spacei >= 0 && spacei < g_spaces.count)
+        return g_spaces.pool + spacei;
+    else
+        return 0;
+}
+
 void space_identity(int spacei)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->offset[0] = 0.0f;
     space->offset[1] = 0.0f;
@@ -109,9 +114,9 @@ void space_identity(int spacei)
 void space_offset(int spacei, float x, float y, float z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->offset[0] = x;
     space->offset[1] = y;
@@ -121,9 +126,9 @@ void space_offset(int spacei, float x, float y, float z)
 void space_offset_tween(int spacei, int x, int y, int z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->offset_tween[0] = x;
     space->offset_tween[1] = y;
@@ -133,9 +138,9 @@ void space_offset_tween(int spacei, int x, int y, int z)
 void space_scale(int spacei, float x, float y, float z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->scale[0] = x;
     space->scale[1] = y;
@@ -145,9 +150,9 @@ void space_scale(int spacei, float x, float y, float z)
 void space_scale_tween(int spacei, int x, int y, int z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->scale_tween[0] = x;
     space->scale_tween[1] = y;
@@ -157,9 +162,9 @@ void space_scale_tween(int spacei, int x, int y, int z)
 void space_rotation(int spacei, float angle, float x, float y, float z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->rotaxis[0] = x;
     space->rotaxis[1] = y;
@@ -170,9 +175,9 @@ void space_rotation(int spacei, float angle, float x, float y, float z)
 void space_rotation_tween(int spacei, int angle, float x, float y, float z)
 {
     struct space_t *space;
-    if (spacei < 0 || spacei >= g_spaces.count)
+    space = space_get(spacei);
+    if (space == 0)
         return;
-    space = g_spaces.pool + spacei;
     space->tag = 0;
     space->rotaxis[0] = x;
     space->rotaxis[1] = y;

@@ -8,6 +8,7 @@ void vbuf_query(int *size, int *left, int *with_meshes);
 int vbuf_alloc();
 void vbuf_free(int vbuf);
 
+struct vbuf_t * vbuf_get(int vbuf);
 void vbuf_write(int vbuf, int data,
                 float x, float y, float z,
                 float r, float g, float b, float a,

@@ -68,13 +68,11 @@ int vbuf_alloc(void)
     {
         vbuf = g_vbufs.vacant;
         vbuf->vacant = 0;
+        g_vbufs.vacant = vbuf->next;
         --g_vbufs.left;
 
-        if (vbuf->mapped == 0)
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
-            vbuf->mapped = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        }
+        glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+        vbuf->mapped = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
         if (vbuf->prev)
             vbuf->prev->next = vbuf->next;
@@ -111,7 +109,11 @@ void vbuf_free(int vbufi)
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
         glUnmapBuffer(GL_ARRAY_BUFFER);
         vbuf->mapped = 0;
+        if (vbuf == g_vbufs.mapped)
+            g_vbufs.mapped = vbuf->next;
     }
+    else if (vbuf == g_vbufs.baked)
+        g_vbufs.baked = vbuf->next;
 
     if (vbuf->prev)
         vbuf->prev->next = vbuf->next;
@@ -125,6 +127,14 @@ void vbuf_free(int vbufi)
     g_vbufs.vacant = vbuf;
 }
 
+struct vbuf_t * vbuf_get(int vbufi)
+{
+    if (vbufi >= 0 && vbufi < g_vbufs.count)
+        return g_vbufs.pool + vbufi;
+    else
+        return 0;
+}
+
 void vbuf_write(int vbufi, int datai,
                 float x, float y, float z,
                 float r, float g, float b, float a,
@@ -133,14 +143,11 @@ void vbuf_write(int vbufi, int datai,
     struct vbuf_t *vbuf;
     struct vbuf_data_t *data;
 
-    if (vbufi < 0 || vbufi >= g_vbufs.count
-     || datai < 0 || datai >= g_vbufs.size)
-    {
+    if (datai < 0 || datai >= g_vbufs.size)
         return;
-    }
 
-    vbuf = g_vbufs.pool + vbufi;
-    if (vbuf->mapped == 0)
+    vbuf = vbuf_get(vbufi);
+    if (vbuf == 0 || vbuf->mapped == 0)
         return;
 
     data = vbuf->mapped;
@@ -162,16 +169,17 @@ void vbuf_write(int vbufi, int datai,
 void vbuf_bake(int vbufi)
 {
     struct vbuf_t *vbuf;
-    if (vbufi < 0 || vbufi >= g_vbufs.count)
-        return;
 
-    vbuf = g_vbufs.pool + vbufi;
-    if (vbuf->mapped == 0)
+    vbuf = vbuf_get(vbufi);
+    if (vbuf == 0 || vbuf->mapped == 0)
         return;
 
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     glUnmapBuffer(GL_ARRAY_BUFFER);
     vbuf->mapped = 0;
+
+    if (g_vbufs.mapped == vbuf)
+        g_vbufs.mapped = vbuf->next;
 
     if (vbuf->prev)
         vbuf->prev->next = vbuf->next;
