@@ -53,9 +53,11 @@ function work(self)
 
         local s = api_space_alloc()
         api_space_offset(s, 0, 0, -5)
+
+        local m = api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
     end
 
-    --tutorial()
+    tutorial()
 
     tween = api_tween_alloc()
     if tween >= 0 then
