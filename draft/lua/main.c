@@ -14,6 +14,7 @@
 #include "ibuf.h"
 #include "vbuf.h"
 #include "space.h"
+#include "mesh.h"
 
 int mypanic(lua_State *lua)
 {
@@ -39,6 +40,7 @@ int main(void)
     static const int FPS = 60;
     static const int TWEEN_POOL = 100;
     static const int SPACE_POOL = 100;
+    static const int MESH_POOL = 100;
     static const int VBUF_SIZE = 1024;
     static const int VBUF_COUNT = 100;
     static const int IBUF_SIZE = 1024;
@@ -80,6 +82,12 @@ int main(void)
     if (space_init(SPACE_POOL) != 0)
     {
         fprintf(stderr, "Cannot init spaces\n");
+        goto cleanup;
+    }
+
+    if (mesh_init(MESH_POOL) != 0)
+    {
+        fprintf(stderr, "Cannot init meshes\n");
         goto cleanup;
     }
 
@@ -172,6 +180,7 @@ cleanup:
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
     space_done();
+    mesh_done();
     tween_done();
     if (lua)
         lua_close(lua);

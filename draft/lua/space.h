@@ -8,6 +8,7 @@ void space_query(int *left);
 int space_spawn(void);
 void space_kill(int space);
 
+struct space_t * space_get(int space);
 void space_identity(int space);
 void space_offset(int space, float x, float y, float z);
 void space_offset_tween(int space, int x, int y, int z);

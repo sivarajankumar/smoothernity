@@ -1,9 +1,9 @@
 #pragma once
 
-int mesh_init(int len);
+int mesh_init(int count);
 void mesh_done(void);
 
-int mesh_spawn(int vb, int ib, int tx, int type, int space);
-void mesh_kill(int mesh);
+void mesh_query(int *left);
 
-void mesh_draw(void);
+int mesh_spawn(int type, int vb, int ib, int tx, int space);
+void mesh_kill(int mesh);

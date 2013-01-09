@@ -14,6 +14,7 @@ struct tween_t;
 struct tween_t
 {
     enum tween_e type;
+    int working;
     float shift;
     float ampl;
     float period;
@@ -67,6 +68,8 @@ int tween_spawn(void)
     if (g_tweens.sleeping)
     {
         tween = g_tweens.sleeping;
+        tween->working = 1;
+        g_tweens.sleeping = tween->next;
 
         if (tween->next)
             tween->next->prev = tween->prev;
@@ -91,6 +94,13 @@ void tween_kill(int i)
         return;
 
     tween = g_tweens.pool + i;
+
+    if (tween->working == 0)
+        return;
+    tween->working = 0;
+
+    if (g_tweens.working == tween)
+        g_tweens.working = tween->next;
 
     if (tween->prev)
         tween->prev->next = tween->next;
