@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <SDL.h>
-#include <GL/glut.h>
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
@@ -50,7 +49,7 @@ int main(int argc, char **argv)
     static const int TEXT_SIZE = 100;
     static const int TEXT_COUNT = 100;
 
-    int status, time_left, max_deviation;
+    int time_left, max_deviation;
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
     struct mpool_t *mpool = 0;
@@ -58,16 +57,32 @@ int main(int argc, char **argv)
 
     printf("Start\n");
 
-    glutInit(&argc, argv);
-
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    mpool = mpool_create(MPOOL_SIZES, MPOOL_COUNTS, MPOOL_LEN);
+    if (mpool == 0)
     {
-        fprintf(stderr, "Cannot init SDL\n");
+        fprintf(stderr, "Cannot create memory pool\n");
         goto cleanup;
     }
-    SDL_ShowCursor(SDL_DISABLE);
 
-    if (display_set_mode(DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
+    lua = lua_newstate(myalloc, mpool);
+    if (lua == 0)
+    {
+        fprintf(stderr, "Cannot create Lua state\n");
+        goto cleanup;
+    }
+    lua_atpanic(lua, mypanic);
+    lua_gc(lua, LUA_GCSTOP, 0);
+    machine_embrace(lua);
+
+    luaL_openlibs(lua);
+
+    if (luaL_dofile(lua, 0) != 0)
+    {
+        fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(lua, -1));
+        goto cleanup;
+    }
+
+    if (display_init(lua, &argc, argv, DISPLAY_WIDTH, DISPLAY_HEIGHT) != 0)
     {
         fprintf(stderr, "Cannot set video mode\n"); 
         goto cleanup;
@@ -116,32 +131,6 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    mpool = mpool_create(MPOOL_SIZES, MPOOL_COUNTS, MPOOL_LEN);
-    if (mpool == 0)
-    {
-        fprintf(stderr, "Cannot create memory pool\n");
-        goto cleanup;
-    }
-
-    lua = lua_newstate(myalloc, mpool);
-    if (lua == 0)
-    {
-        fprintf(stderr, "Cannot create Lua state\n");
-        goto cleanup;
-    }
-    lua_atpanic(lua, mypanic);
-    lua_gc(lua, LUA_GCSTOP, 0);
-    machine_embrace(lua);
-
-    luaL_openlibs(lua);
-
-    status = luaL_dofile(lua, 0);
-    if (status)
-    {
-        fprintf(stderr, "Couldn't run file: %s\n", lua_tostring(lua, -1));
-        goto cleanup;
-    }
-
     controller = machine_create(lua, "control");
     if (controller == 0)
     {
@@ -165,14 +154,12 @@ int main(int argc, char **argv)
         input_update();
         tween_update(1.0f / (float)FPS);
         display_update();
-        status = machine_step(controller, 0);
-        if (status)
+        if (machine_step(controller, 0) != 0)
         {
             fprintf(stderr, "Failed to run controller\n");
             goto cleanup;
         }
-        status = machine_step(worker, LOGIC_TIME - timer_passed(logic_timer));
-        if (status)
+        if (machine_step(worker, LOGIC_TIME - timer_passed(logic_timer)) != 0)
         {
             fprintf(stderr, "Failed to run worker\n");
             goto cleanup;
@@ -189,8 +176,7 @@ int main(int argc, char **argv)
 cleanup:
     vbuf_done();
     ibuf_done();
-    SDL_ShowCursor(SDL_ENABLE);
-    SDL_Quit();
+    display_done();
     space_done();
     mesh_done();
     text_done();
