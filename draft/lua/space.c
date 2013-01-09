@@ -2,6 +2,7 @@
 #include "scene.h"
 #include "tween.h"
 #include <stdlib.h>
+#include <math.h>
 
 struct spaces_t g_spaces;
 
@@ -64,10 +65,8 @@ int space_alloc(void)
     space->scale[0] = 1.0f;
     space->scale[1] = 1.0f;
     space->scale[2] = 1.0f;
-    space->rotaxis[0] = 1.0f;
-    space->rotaxis[1] = 0.0f;
-    space->rotaxis[2] = 0.0f;
     space->rotangle = 0.0f;
+    space->rotaxis = SPACE_AXIS_X;
     space->offset_tween[0] = -1;
     space->offset_tween[1] = -1;
     space->offset_tween[2] = -1;
@@ -153,68 +152,65 @@ void space_scale_tween(int spacei, int x, int y, int z)
     space->scale_tween[2] = z;
 }
 
-void space_rotation(int spacei, float angle, float x, float y, float z)
+void space_rotation(int spacei, int axis, float angle)
 {
     struct space_t *space;
     space = space_get(spacei);
     if (space == 0)
         return;
+    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
+        return;
     space->frame_tag = 0;
-    space->rotaxis[0] = x;
-    space->rotaxis[1] = y;
-    space->rotaxis[2] = z;
     space->rotangle = angle;
+    space->rotaxis = (enum space_axis_e)axis;
 }
 
-void space_rotation_tween(int spacei, int angle, float x, float y, float z)
+void space_rotation_tween(int spacei, int axis, int angle)
 {
     struct space_t *space;
     space = space_get(spacei);
     if (space == 0)
         return;
+    if (axis < 0 || axis > (int)SPACE_AXES_TOTAL)
+        return;
     space->frame_tag = 0;
-    space->rotaxis[0] = x;
-    space->rotaxis[1] = y;
-    space->rotaxis[2] = z;
     space->rotangle_tween = angle;
+    space->rotaxis = (enum space_axis_e)axis;
 }
 
 void space_compute(struct space_t *space)
 {
+    float axisx[3];
+    float axisy[3];
+    float axisz[3];
+    float offset[3];
     float scale[3];
+    float rotangle;
+    float rcos;
+    float rsin;
+    GLfloat *m;
 
     /* offset */
 
     if (space->offset_tween[0] != -1)
-        space->matrix[12] = tween_value(space->offset_tween[0]);
+        offset[0] = tween_value(space->offset_tween[0]);
     else
-        space->matrix[12] = space->offset[0];
+        offset[0] = space->offset[0];
     if (space->offset_tween[1] != -1)
-        space->matrix[13] = tween_value(space->offset_tween[1]);
+        offset[1] = tween_value(space->offset_tween[1]);
     else
-        space->matrix[13] = space->offset[1];
+        offset[1] = space->offset[1];
     if (space->offset_tween[2] != -1)
-        space->matrix[14] = tween_value(space->offset_tween[2]);
+        offset[2] = tween_value(space->offset_tween[2]);
     else
-        space->matrix[14] = space->offset[2];
-    space->matrix[15] = 1;
+        offset[2] = space->offset[2];
 
     /* rotation */
 
-    space->matrix[0] = 1; /* axis x - x */
-    space->matrix[1] = 0; /* axis x - y */
-    space->matrix[2] = 0; /* axis x - z */
-    space->matrix[3] = 0;
-
-    space->matrix[4] = 0; /* axis y - x */
-    space->matrix[5] = 1; /* axis y - y */
-    space->matrix[6] = 0; /* axis y - z */
-    space->matrix[7] = 0;
-
-    space->matrix[8]  = 0; /* axis z - x */
-    space->matrix[9]  = 0; /* axis z - y */
-    space->matrix[10] = 1; /* axis z - z */
-    space->matrix[11] = 0;
+    if (space->rotangle != -1)
+        rotangle = tween_value(space->rotangle_tween);
+    else
+        rotangle = space->rotangle;
 
     /* scale */
 
@@ -231,17 +227,40 @@ void space_compute(struct space_t *space)
     else
         scale[2] = space->scale[2];
 
-    space->matrix[0] *= scale[0];
-    space->matrix[1] *= scale[0];
-    space->matrix[2] *= scale[0];
+    /* axes */
 
-    space->matrix[4] *= scale[1];
-    space->matrix[5] *= scale[1];
-    space->matrix[6] *= scale[1];
+    rcos = cos(rotangle);
+    rsin = sin(rotangle);
+    if (space->rotaxis == SPACE_AXIS_X)
+    {
+        axisx[0] = 1; axisx[1] =     0; axisx[2] =    0; 
+        axisy[0] = 0; axisy[1] =  rcos; axisy[2] = rsin; 
+        axisz[0] = 0; axisz[1] = -rsin; axisz[2] = rcos; 
+    }
+    else if (space->rotaxis == SPACE_AXIS_Y)
+    {
+        axisx[0] = rcos; axisx[1] = 0; axisx[2] = -rsin; 
+        axisy[0] =    0; axisy[1] = 1; axisy[2] =     0; 
+        axisz[0] = rsin; axisz[1] = 0; axisz[2] =  rcos; 
+    }
+    else if (space->rotaxis == SPACE_AXIS_Z)
+    {
+        axisx[0] =  rcos; axisx[1] = rsin; axisx[2] = 0;
+        axisy[0] = -rsin; axisy[1] = rcos; axisy[2] = 0;
+        axisz[0] =     0; axisz[1] =    0; axisz[2] = 1;
+    }
 
-    space->matrix[8]  *= scale[2];
-    space->matrix[9]  *= scale[2];
-    space->matrix[10] *= scale[2];
+    axisx[0] *= scale[0]; axisx[1] *= scale[0]; axisx[2] *= scale[0];
+    axisy[0] *= scale[1]; axisy[1] *= scale[1]; axisy[2] *= scale[1];
+    axisz[0] *= scale[2]; axisz[1] *= scale[2]; axisz[2] *= scale[2];
+
+    /* build final matrix */
+
+    m = space->matrix;
+    m[ 0] =  axisx[0]; m[ 1] =  axisx[1]; m[ 2] =  axisx[2]; m[ 3] = 0;
+    m[ 4] =  axisy[0]; m[ 5] =  axisy[1]; m[ 6] =  axisy[2]; m[ 7] = 0;
+    m[ 8] =  axisz[0]; m[ 9] =  axisz[1]; m[10] =  axisz[2]; m[11] = 0;
+    m[12] = offset[0]; m[13] = offset[1]; m[14] = offset[2]; m[15] = 1;
 }
 
 void space_select(struct space_t *space)

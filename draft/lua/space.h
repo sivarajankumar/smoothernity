@@ -18,5 +18,5 @@ void space_offset(int space, float x, float y, float z);
 void space_offset_tween(int space, int x, int y, int z);
 void space_scale(int space, float x, float y, float z);
 void space_scale_tween(int space, int x, int y, int z);
-void space_rotation(int space, float angle, float x, float y, float z);
-void space_rotation_tween(int space, int angle, float x, float y, float z);
+void space_rotation(int space, int axis, float angle);
+void space_rotation_tween(int space, int axis, int angle);
