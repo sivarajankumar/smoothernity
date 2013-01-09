@@ -108,7 +108,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (mesh_init(MESH_POOL) != 0)
+    if (mesh_init(lua, MESH_POOL) != 0)
     {
         fprintf(stderr, "Cannot init meshes\n");
         goto cleanup;

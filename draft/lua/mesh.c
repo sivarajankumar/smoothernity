@@ -15,69 +15,96 @@ enum mesh_type_e
     MESH_TYPES_TOTAL = 3
 };
 
-int mesh_init(int count)
+static struct mesh_t * mesh_get(int meshi)
 {
-    int i;
-    g_meshes.pool = calloc(count, sizeof(struct mesh_t));
-    if (g_meshes.pool == 0)
-        return 1;
-    for (i = 0; i < count; ++i)
-    {
-        if (i > 0)
-            g_meshes.pool[i].prev = g_meshes.pool + i - 1;
-        if (i < count - 1)
-            g_meshes.pool[i].next = g_meshes.pool + i + 1;
-        g_meshes.pool[i].vacant = 1;
-    }
-    g_meshes.left = count;
-    g_meshes.count = count;
-    g_meshes.vacant = g_meshes.pool;
-    return 0;
+    if (meshi >= 0 && meshi < g_meshes.count)
+        return g_meshes.pool + meshi;
+    else
+        return 0;
 }
 
-void mesh_done(void)
-{
-    if (g_meshes.pool)
-    {
-        free(g_meshes.pool);
-        g_meshes.pool = 0;
-    }
-}
-
-void mesh_query(int *left)
-{
-    *left = g_meshes.left;
-}
-
-int mesh_alloc(int type, int vbufi, int ibufi, int texi, int spacei,
-               int ioffset, int icount)
+static int api_mesh_alloc(lua_State *lua)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
     struct space_t *space;
     struct mesh_t *mesh;
+    int type, texi, ioffset, icount;
 
-    /* reserved for textures */
+    if (lua_gettop(lua) != 7 || !lua_isnumber(lua, -7)
+    || !lua_isnumber(lua, -6) || !lua_isnumber(lua, -5)
+    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_mesh_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    type = lua_tointeger(lua, -7);
+    vbuf = vbuf_get(lua_tointeger(lua, -6));
+    ibuf = ibuf_get(lua_tointeger(lua, -5));
+    texi = lua_tointeger(lua, -4);
+    space = space_get(lua_tointeger(lua, -3));
+    ioffset = lua_tointeger(lua, -2);
+    icount = lua_tointeger(lua, -1);
+    lua_pop(lua, 7);
+
     if (texi != -1)
-        return -1;
+    {
+        lua_pushstring(lua, "api_mesh_alloc: no textures yet");
+        lua_error(lua);
+        return 0;
+    }
 
     if (g_meshes.vacant == 0)
-        return -1;
+    {
+        lua_pushstring(lua, "api_mesh_alloc: out of meshes");
+        lua_error(lua);
+        return 0;
+    }
 
-    vbuf = vbuf_get(vbufi);
-    ibuf = ibuf_get(ibufi);
-    space = space_get(spacei);
-    if (vbuf == 0 || ibuf == 0 || space == 0)
-        return -1;
+    if (vbuf == 0)
+    {
+        lua_pushstring(lua, "api_mesh_alloc: invalid vbuf");
+        lua_error(lua);
+        return 0;
+    }
+    
+    if (ibuf == 0)
+    {
+        lua_pushstring(lua, "api_mesh_alloc: invalid ibuf");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (space == 0)
+    {
+        lua_pushstring(lua, "api_mesh_alloc: invalid space");
+        lua_error(lua);
+        return 0;
+    }
 
     if (type < 0 || type > MESH_TYPES_TOTAL)
-        return -1;
+    {
+        lua_pushstring(lua, "api_mesh_alloc: invalid type");
+        lua_error(lua);
+        return 0;
+    }
 
     if (ioffset < 0 || ioffset >= g_ibufs.size)
-        return -1;
+    {
+        lua_pushstring(lua, "api_mesh_alloc: offset out of range");
+        lua_error(lua);
+        return 0;
+    }
 
     if (icount <= 0 || icount >= g_ibufs.size - ioffset)
-        return -1;
+    {
+        lua_pushstring(lua, "api_mesh_alloc: count out of range");
+        lua_error(lua);
+        return 0;
+    }
 
     mesh = g_meshes.vacant;
     mesh->vacant = 0;
@@ -118,18 +145,30 @@ int mesh_alloc(int type, int vbufi, int ibufi, int texi, int spacei,
     mesh->ibuf_next = ibuf->meshes;
     ibuf->meshes = mesh;
 
-    return mesh - g_meshes.pool;
+    lua_pushinteger(lua, mesh - g_meshes.pool);
+    return 1;
 }
 
-void mesh_free(int meshi)
+static int api_mesh_free(lua_State *lua)
 {
     struct mesh_t *mesh;
-    if (meshi < 0 || meshi >= g_meshes.count)
-        return;
-    mesh = g_meshes.pool + meshi;
 
-    if (mesh->vacant)
-        return;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_mesh_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    mesh = mesh_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (mesh == 0 || mesh->vacant)
+    {
+        lua_pushstring(lua, "api_mesh_free: invalid mesh");
+        lua_error(lua);
+        return 0;
+    }
 
     mesh->vacant = 1;
 
@@ -167,6 +206,53 @@ void mesh_free(int meshi)
     mesh->ibuf = 0;
     mesh->vbuf = 0;
     mesh->space = 0;
+    return 0;
+}
+
+static int api_mesh_query(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_mesh_query: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, g_meshes.left);
+    return 1;
+}
+
+int mesh_init(lua_State *lua, int count)
+{
+    int i;
+    g_meshes.pool = calloc(count, sizeof(struct mesh_t));
+    if (g_meshes.pool == 0)
+        return 1;
+    for (i = 0; i < count; ++i)
+    {
+        if (i > 0)
+            g_meshes.pool[i].prev = g_meshes.pool + i - 1;
+        if (i < count - 1)
+            g_meshes.pool[i].next = g_meshes.pool + i + 1;
+        g_meshes.pool[i].vacant = 1;
+    }
+    g_meshes.left = count;
+    g_meshes.count = count;
+    g_meshes.vacant = g_meshes.pool;
+
+    lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
+    lua_register(lua, "api_mesh_free", api_mesh_free);
+    lua_register(lua, "api_mesh_query", api_mesh_query);
+
+    return 0;
+}
+
+void mesh_done(void)
+{
+    if (g_meshes.pool)
+    {
+        free(g_meshes.pool);
+        g_meshes.pool = 0;
+    }
 }
 
 void mesh_draw(struct mesh_t *mesh)
