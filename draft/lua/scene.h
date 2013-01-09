@@ -52,7 +52,7 @@ extern struct ibufs_t g_ibufs;
 
 struct space_t
 {
-    int tag; /* when this space was last updated */
+    int frame_tag; /* when this space was last updated */
     int vacant;
     GLfloat matrix[16];
     float offset[3];
