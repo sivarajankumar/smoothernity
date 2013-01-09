@@ -11,6 +11,7 @@ int space_spawn(void);
 void space_kill(int space);
 
 void space_compute(struct space_t *space);
+void space_select(struct space_t *space);
 struct space_t * space_get(int space);
 
 void space_offset(int space, float x, float y, float z);

@@ -243,3 +243,8 @@ void space_compute(struct space_t *space)
     space->matrix[9]  *= scale[2];
     space->matrix[10] *= scale[2];
 }
+
+void space_select(struct space_t *space)
+{
+    glLoadMatrixf(space->matrix);
+}

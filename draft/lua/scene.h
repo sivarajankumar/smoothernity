@@ -12,12 +12,22 @@ struct vbuf_t
     struct mesh_t *meshes;
 };
 
+struct vbuf_data_t
+{
+    GLfloat pos[3];
+    GLfloat tex[2];
+    GLubyte color[4];
+};
+
 struct vbufs_t
 {
     int size;
     int count;
     int left;
     int with_meshes;
+    void *offset_pos;
+    void *offset_tex;
+    void *offset_color;
     struct vbuf_t *pool;
     struct vbuf_t *vacant;
     struct vbuf_t *mapped;
@@ -34,6 +44,11 @@ struct ibuf_t
     struct ibuf_t *prev;
     struct ibuf_t *next;
     struct mesh_t *meshes;
+};
+
+struct ibuf_data_t
+{
+    GLushort index;
 };
 
 struct ibufs_t
@@ -90,7 +105,10 @@ struct mesh_t
     struct vbuf_t *vbuf;
     struct space_t *space;
     enum mesh_type_e type;
+    int ioffset;
+    int icount;
     int vacant;
+    int frame_tag; /* when this mesh was last drawn */
 
     struct mesh_t *vbuf_prev;
     struct mesh_t *vbuf_next;

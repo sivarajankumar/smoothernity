@@ -2,11 +2,6 @@
 #include "scene.h"
 #include <stdlib.h>
 
-struct ibuf_data_t
-{
-    GLushort index;
-};
-
 struct ibufs_t g_ibufs;
 
 int ibuf_init(int size, int count)
@@ -52,11 +47,10 @@ void ibuf_done(void)
     }
 }
 
-void ibuf_query(int *size, int *left, int *with_meshes)
+void ibuf_query(int *size, int *left)
 {
     *size = g_ibufs.size;
     *left = g_ibufs.left;
-    *with_meshes = g_ibufs.with_meshes;
 }
 
 int ibuf_alloc(void)
@@ -180,3 +174,7 @@ void ibuf_bake(int ibufi)
     g_ibufs.baked = ibuf;
 }
 
+void ibuf_select(struct ibuf_t * ibuf)
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+}
