@@ -71,11 +71,6 @@ void machine_embrace(lua_State *lua)
     lua_register(lua, "api_yield", api_yield);
     lua_register(lua, "api_sleep", api_sleep);
     lua_register(lua, "api_time", api_time);
-    lua_register(lua, "api_ibuf_alloc", api_ibuf_alloc);
-    lua_register(lua, "api_ibuf_free", api_ibuf_free);
-    lua_register(lua, "api_ibuf_write", api_ibuf_write);
-    lua_register(lua, "api_ibuf_bake", api_ibuf_bake);
-    lua_register(lua, "api_ibuf_query", api_ibuf_query);
     lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
     lua_register(lua, "api_vbuf_free", api_vbuf_free);
     lua_register(lua, "api_vbuf_write", api_vbuf_write);
