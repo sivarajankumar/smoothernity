@@ -13,6 +13,7 @@
 #include "tween.h"
 #include "ibuf.h"
 #include "vbuf.h"
+#include "space.h"
 
 int mypanic(lua_State *lua)
 {
@@ -37,6 +38,7 @@ int main(void)
     static const int DISPLAY_HEIGHT = 600;
     static const int FPS = 60;
     static const int TWEEN_POOL = 100;
+    static const int SPACE_POOL = 100;
     static const int VBUF_SIZE = 1024;
     static const int VBUF_COUNT = 100;
     static const int IBUF_SIZE = 1024;
@@ -65,19 +67,25 @@ int main(void)
 
     if (vbuf_init(VBUF_SIZE, VBUF_COUNT) != 0)
     {
-        fprintf(stderr, "Cannot set up vertex buffers\n");
+        fprintf(stderr, "Cannot init vertex buffers\n");
         goto cleanup;
     }
 
     if (ibuf_init(IBUF_SIZE, IBUF_COUNT) != 0)
     {
-        fprintf(stderr, "Cannot set up index buffers\n");
+        fprintf(stderr, "Cannot init index buffers\n");
+        goto cleanup;
+    }
+
+    if (space_init(SPACE_POOL) != 0)
+    {
+        fprintf(stderr, "Cannot init spaces\n");
         goto cleanup;
     }
 
     if (tween_init(TWEEN_POOL) != 0)
     {
-        fprintf(stderr, "Cannot set up tweens\n");
+        fprintf(stderr, "Cannot init tweens\n");
         goto cleanup;
     }
 
@@ -163,6 +171,7 @@ cleanup:
     ibuf_done();
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
+    space_done();
     tween_done();
     if (lua)
         lua_close(lua);
