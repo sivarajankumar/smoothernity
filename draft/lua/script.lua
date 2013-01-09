@@ -4,6 +4,10 @@ MESH_TRIANGLE_STRIP = 0
 MESH_TRIANGLE_FAN = 1
 MESH_TRIANGLES = 2
 
+SPACE_AXIS_X = 0
+SPACE_AXIS_Y = 1
+SPACE_AXIS_Z = 2
+
 function control(self)
     while not quit
     do
@@ -52,11 +56,11 @@ function work(self)
         api_ibuf_bake(ib)
 
         local t = api_tween_alloc()
-        api_tween_play_sine(t, 0.5, 0.25, 1.0)
+        api_tween_play_sine(t, 0, 0.5, 1.0)
 
         local s = api_space_alloc()
         api_space_offset(s, 0, 0, -5)
-        api_space_scale_tween(s, t, t, t)
+        api_space_rotation_tween(s, SPACE_AXIS_Y, t)
 
         local m = api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
     end

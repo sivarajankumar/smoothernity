@@ -65,6 +65,14 @@ struct ibufs_t
 
 extern struct ibufs_t g_ibufs;
 
+enum space_axis_e
+{
+    SPACE_AXIS_X = 0,
+    SPACE_AXIS_Y = 1,
+    SPACE_AXIS_Z = 2,
+    SPACE_AXES_TOTAL = 3
+};
+
 struct space_t
 {
     int frame_tag; /* when this space was last updated */
@@ -72,8 +80,8 @@ struct space_t
     GLfloat matrix[16];
     float offset[3];
     float scale[3];
-    float rotaxis[3];
     float rotangle;
+    enum space_axis_e rotaxis;
     int offset_tween[3];
     int scale_tween[3];
     int rotangle_tween;

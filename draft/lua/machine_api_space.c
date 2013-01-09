@@ -134,16 +134,13 @@ static int api_space_scale_tween(lua_State *lua)
 
 static int api_space_rotation(lua_State *lua)
 {
-    if (lua_gettop(lua) == 5
-     && lua_isnumber(lua, -5) && lua_isnumber(lua, -4) && lua_isnumber(lua, -3)
-     && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
-        space_rotation(lua_tointeger(lua, -5),
-                       (float)lua_tonumber(lua, -4),
-                       (float)lua_tonumber(lua, -3),
-                       (float)lua_tonumber(lua, -2),
+        space_rotation(lua_tointeger(lua, -3),
+                       lua_tointeger(lua, -2),
                        (float)lua_tonumber(lua, -1));
-        lua_pop(lua, 5);
+        lua_pop(lua, 3);
         return 0;
     }
     else
@@ -156,16 +153,13 @@ static int api_space_rotation(lua_State *lua)
 
 static int api_space_rotation_tween(lua_State *lua)
 {
-    if (lua_gettop(lua) == 4
-     && lua_isnumber(lua, -5) && lua_isnumber(lua, -4) && lua_isnumber(lua, -3)
-     && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
+    if (lua_gettop(lua) == 3
+     && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
-        space_rotation_tween(lua_tointeger(lua, -5),
-                             lua_tointeger(lua, -4),
-                             (float)lua_tonumber(lua, -3),
-                             (float)lua_tonumber(lua, -2),
-                             (float)lua_tonumber(lua, -1));
-        lua_pop(lua, 4);
+        space_rotation_tween(lua_tointeger(lua, -3),
+                             lua_tointeger(lua, -2),
+                             lua_tointeger(lua, -1));
+        lua_pop(lua, 3);
         return 0;
     }
     else
