@@ -29,9 +29,9 @@ void * myalloc(void *ud, void *ptr, size_t osize, size_t nsize)
 
 int main(void)
 {
-    static const size_t MPOOL_SIZES[] =  {  64, 4096};
-    static const size_t MPOOL_COUNTS[] = {1000, 1000};
-    static const size_t MPOOL_LEN = 2;
+    static const size_t MPOOL_SIZES[] =  {  64, 4096, 16384};
+    static const size_t MPOOL_COUNTS[] = {1000, 1000,  1000};
+    static const size_t MPOOL_LEN = 3;
     static const int LOGIC_TIME = 10000;
     static const int GC_STEP = 10;
     static const int MIN_DELAY = 1000;
