@@ -19,7 +19,7 @@ struct display_t
     int frame_tag;
     SDL_Surface *screen;
     float clear_color[3];
-    int clear_color_tween[3];
+    struct tween_t *clear_color_tween[3];
 };
 
 static struct display_t g_display;
@@ -64,9 +64,9 @@ static int api_display_tween_clear_color(lua_State *lua)
     if (lua_gettop(lua) == 3
      && lua_isnumber(lua, -3) && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
-        g_display.clear_color_tween[0] = lua_tointeger(lua, -3);
-        g_display.clear_color_tween[1] = lua_tointeger(lua, -2);
-        g_display.clear_color_tween[2] = lua_tointeger(lua, -1);
+        g_display.clear_color_tween[0] = tween_get(lua_tointeger(lua, -3));
+        g_display.clear_color_tween[1] = tween_get(lua_tointeger(lua, -2));
+        g_display.clear_color_tween[2] = tween_get(lua_tointeger(lua, -1));
         lua_pop(lua, 3);
         return 0;
     }
@@ -104,10 +104,6 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     g_display.screen = SDL_SetVideoMode(width, height, bpp, flags);
     if (g_display.screen == 0)
         goto cleanup;
-
-    g_display.clear_color_tween[0] = -1;
-    g_display.clear_color_tween[1] = -1;
-    g_display.clear_color_tween[2] = -1;
 
     g_display.frame_tag = 1000;
     g_display.width = width;
@@ -155,8 +151,8 @@ void display_update(void)
 
     for (i = 0; i < 3; ++i)
     {
-        if (g_display.clear_color_tween[i] != -1)
-            color[i] = tween_value(g_display.clear_color_tween[i]);
+        if (g_display.clear_color_tween[i])
+            color[i] = g_display.clear_color_tween[i]->value;
         else
             color[i] = g_display.clear_color[i];
     }

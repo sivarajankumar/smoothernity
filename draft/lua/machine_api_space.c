@@ -1,4 +1,5 @@
 #include "space.h"
+#include "tween.h"
 
 static int api_space_alloc(lua_State *lua)
 {
@@ -76,9 +77,9 @@ static int api_space_offset_tween(lua_State *lua)
      && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
         space_offset_tween(lua_tointeger(lua, -4),
-                           lua_tointeger(lua, -3),
-                           lua_tointeger(lua, -2),
-                           lua_tointeger(lua, -1));
+                           tween_get(lua_tointeger(lua, -3)),
+                           tween_get(lua_tointeger(lua, -2)),
+                           tween_get(lua_tointeger(lua, -1)));
         lua_pop(lua, 4);
         return 0;
     }
@@ -118,9 +119,9 @@ static int api_space_scale_tween(lua_State *lua)
      && lua_isnumber(lua, -2) && lua_isnumber(lua, -1))
     {
         space_scale_tween(lua_tointeger(lua, -4),
-                          lua_tointeger(lua, -3),
-                          lua_tointeger(lua, -2),
-                          lua_tointeger(lua, -1));
+                          tween_get(lua_tointeger(lua, -3)),
+                          tween_get(lua_tointeger(lua, -2)),
+                          tween_get(lua_tointeger(lua, -1)));
         lua_pop(lua, 4);
         return 0;
     }
@@ -158,7 +159,7 @@ static int api_space_rotation_tween(lua_State *lua)
     {
         space_rotation_tween(lua_tointeger(lua, -3),
                              lua_tointeger(lua, -2),
-                             lua_tointeger(lua, -1));
+                             tween_get(lua_tointeger(lua, -1)));
         lua_pop(lua, 3);
         return 0;
     }
