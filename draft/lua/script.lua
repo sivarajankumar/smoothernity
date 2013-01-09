@@ -51,8 +51,12 @@ function work(self)
         api_ibuf_write(ib,33, 1) api_ibuf_write(ib,34, 4) api_ibuf_write(ib,35, 5)
         api_ibuf_bake(ib)
 
+        local t = api_tween_alloc()
+        api_tween_play_sine(t, 0.5, 0.25, 1.0)
+
         local s = api_space_alloc()
         api_space_offset(s, 0, 0, -5)
+        api_space_scale_tween(s, t, t, t)
 
         local m = api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
     end
