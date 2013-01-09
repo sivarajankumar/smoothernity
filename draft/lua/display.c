@@ -167,6 +167,7 @@ void display_update(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    gluOrtho2D(0, g_display.width, g_display.height, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     text_draw();
