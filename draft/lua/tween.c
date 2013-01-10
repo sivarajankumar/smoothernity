@@ -22,6 +22,8 @@ static void calc_value(struct tween_t *tween)
         tween->value = tween->shift +
             (tween->ampl * sin(tween->t * M_PI * 2.0f / tween->period));
     }
+    else if (tween->type == TWEEN_SAW)
+        tween->value = tween->shift + (tween->ampl * tween->t / tween->period);
 }
 
 static int api_tween_alloc(lua_State *lua)
@@ -119,6 +121,40 @@ static int api_tween_play_sine(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+    tween->type = TWEEN_SINE;
+    tween->t = 0;
+    tween->shift = shift;
+    tween->ampl = ampl;
+    tween->period = period;
+    calc_value(tween);
+    return 0;
+}
+
+static int api_tween_play_saw(lua_State *lua)
+{
+    struct tween_t *tween;
+    float shift, ampl, period;
+    if (lua_gettop(lua) != 4
+     || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
+     || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_tween_play_saw: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    tween = tween_get(lua_tointeger(lua, -4));
+    shift = lua_tonumber(lua, -3);
+    ampl = lua_tonumber(lua, -2);
+    period = lua_tonumber(lua, -1);
+    lua_pop(lua, 4);
+
+    if (tween == 0)
+    {
+        lua_pushstring(lua, "api_tween_play_saw: invalid tween");
+        lua_error(lua);
+        return 0;
+    }
+    tween->type = TWEEN_SAW;
     tween->t = 0;
     tween->shift = shift;
     tween->ampl = ampl;
@@ -146,6 +182,7 @@ int tween_init(lua_State *lua, int len)
     lua_register(lua, "api_tween_alloc", api_tween_alloc);
     lua_register(lua, "api_tween_free", api_tween_free);
     lua_register(lua, "api_tween_play_sine", api_tween_play_sine);
+    lua_register(lua, "api_tween_play_saw", api_tween_play_saw);
     
     return 0;
 }
@@ -174,6 +211,11 @@ void tween_update(float dt)
     while (tween)
     {
         tween->t += dt;
+        if (tween->period > 0.0f)
+        {
+            while (tween->t > tween->period)
+                tween->t -= tween->period;
+        }
         calc_value(tween);
         tween = tween->next;
     }

@@ -87,14 +87,15 @@ function work(self)
     api_ibuf_bake(ib)
 
     local w2 = api_tween_alloc()
-    api_tween_play_sine(w2, 0, 0.5, 1.0)
+    api_tween_play_saw(w2, 0, math.pi * 2, 4)
 
     local s1 = api_space_alloc()
-    api_space_offset(s1, -1, 0, -5)
+    api_space_offset(s1, 0, 0, -5)
     api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w2)
 
     local s2 = api_space_alloc()
-    api_space_offset(s2, 1, 0, -5)
+    api_space_offset(s2, 3, 0, -5)
+    api_space_scale(s2, 0.5, 0.5, 0.5)
     api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
 
     local m1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s1, 0, 36)
