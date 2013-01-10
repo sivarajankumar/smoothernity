@@ -56,68 +56,55 @@ function work(self)
         end
     end
 
-    function tutorial()
-        local vb = api_vbuf_alloc()
-        api_vbuf_write(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0)
-        api_vbuf_write(vb, 1,    1,-1, 1,   0, 1, 0, 1,   0, 0)
-        api_vbuf_write(vb, 2,    1, 1, 1,   0, 0, 1, 1,   0, 0)
-        api_vbuf_write(vb, 3,   -1, 1, 1,   1, 1, 1, 1,   0, 0)
-        api_vbuf_write(vb, 4,   -1,-1,-1,   0, 1, 1, 1,   0, 0)
-        api_vbuf_write(vb, 5,    1,-1,-1,   0, 0, 0, 1,   0, 0)
-        api_vbuf_write(vb, 6,    1, 1,-1,   1, 1, 0, 1,   0, 0)
-        api_vbuf_write(vb, 7,   -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        api_vbuf_bake(vb)
+    local w1 = api_tween_alloc()
+    api_tween_play_sine(w1, 0.5, 0.5, 1.0)
+    api_display_tween_clear_color(w1, -1, w1)
 
-        local ib = api_ibuf_alloc()
-        api_ibuf_write(ib, 0, 0) api_ibuf_write(ib, 1, 1) api_ibuf_write(ib, 2, 2)
-        api_ibuf_write(ib, 3, 0) api_ibuf_write(ib, 4, 2) api_ibuf_write(ib, 5, 3)
-        api_ibuf_write(ib, 6, 1) api_ibuf_write(ib, 7, 5) api_ibuf_write(ib, 8, 6)
-        api_ibuf_write(ib, 9, 1) api_ibuf_write(ib,10, 6) api_ibuf_write(ib,11, 2)
-        api_ibuf_write(ib,12, 5) api_ibuf_write(ib,13, 4) api_ibuf_write(ib,14, 7)
-        api_ibuf_write(ib,15, 5) api_ibuf_write(ib,16, 7) api_ibuf_write(ib,17, 6)
-        api_ibuf_write(ib,18, 4) api_ibuf_write(ib,19, 0) api_ibuf_write(ib,20, 3)
-        api_ibuf_write(ib,21, 4) api_ibuf_write(ib,22, 3) api_ibuf_write(ib,23, 7)
-        api_ibuf_write(ib,24, 3) api_ibuf_write(ib,25, 2) api_ibuf_write(ib,26, 6)
-        api_ibuf_write(ib,27, 3) api_ibuf_write(ib,28, 6) api_ibuf_write(ib,29, 7)
-        api_ibuf_write(ib,30, 1) api_ibuf_write(ib,31, 0) api_ibuf_write(ib,32, 4)
-        api_ibuf_write(ib,33, 1) api_ibuf_write(ib,34, 4) api_ibuf_write(ib,35, 5)
-        api_ibuf_bake(ib)
+    local vb = api_vbuf_alloc()
+    api_vbuf_write(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0)
+    api_vbuf_write(vb, 1,    1,-1, 1,   0, 1, 0, 1,   0, 0)
+    api_vbuf_write(vb, 2,    1, 1, 1,   0, 0, 1, 1,   0, 0)
+    api_vbuf_write(vb, 3,   -1, 1, 1,   1, 1, 1, 1,   0, 0)
+    api_vbuf_write(vb, 4,   -1,-1,-1,   0, 1, 1, 1,   0, 0)
+    api_vbuf_write(vb, 5,    1,-1,-1,   0, 0, 0, 1,   0, 0)
+    api_vbuf_write(vb, 6,    1, 1,-1,   1, 1, 0, 1,   0, 0)
+    api_vbuf_write(vb, 7,   -1, 1,-1,   1, 0, 1, 1,   0, 0)
+    api_vbuf_bake(vb)
 
-        local t = api_tween_alloc()
-        api_tween_play_sine(t, 0, 0.5, 1.0)
+    local ib = api_ibuf_alloc()
+    api_ibuf_write(ib, 0, 0) api_ibuf_write(ib, 1, 1) api_ibuf_write(ib, 2, 2)
+    api_ibuf_write(ib, 3, 0) api_ibuf_write(ib, 4, 2) api_ibuf_write(ib, 5, 3)
+    api_ibuf_write(ib, 6, 1) api_ibuf_write(ib, 7, 5) api_ibuf_write(ib, 8, 6)
+    api_ibuf_write(ib, 9, 1) api_ibuf_write(ib,10, 6) api_ibuf_write(ib,11, 2)
+    api_ibuf_write(ib,12, 5) api_ibuf_write(ib,13, 4) api_ibuf_write(ib,14, 7)
+    api_ibuf_write(ib,15, 5) api_ibuf_write(ib,16, 7) api_ibuf_write(ib,17, 6)
+    api_ibuf_write(ib,18, 4) api_ibuf_write(ib,19, 0) api_ibuf_write(ib,20, 3)
+    api_ibuf_write(ib,21, 4) api_ibuf_write(ib,22, 3) api_ibuf_write(ib,23, 7)
+    api_ibuf_write(ib,24, 3) api_ibuf_write(ib,25, 2) api_ibuf_write(ib,26, 6)
+    api_ibuf_write(ib,27, 3) api_ibuf_write(ib,28, 6) api_ibuf_write(ib,29, 7)
+    api_ibuf_write(ib,30, 1) api_ibuf_write(ib,31, 0) api_ibuf_write(ib,32, 4)
+    api_ibuf_write(ib,33, 1) api_ibuf_write(ib,34, 4) api_ibuf_write(ib,35, 5)
+    api_ibuf_bake(ib)
 
-        local s = api_space_alloc()
-        api_space_offset(s, 0, 0, -5)
-        api_space_rotation_tween(s, API_SPACE_AXIS_Y, t)
+    local w2 = api_tween_alloc()
+    api_tween_play_sine(w2, 0, 0.5, 1.0)
 
-        api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
+    local s1 = api_space_alloc()
+    api_space_offset(s1, -1, 0, -5)
+    api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w2)
 
-        api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
-        api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
-    end
+    local s2 = api_space_alloc()
+    api_space_offset(s2, 1, 0, -5)
+    api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
 
-    tutorial()
+    local m1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s1, 0, 36)
+    local m2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s2, 0, 36)
 
-    tween = api_tween_alloc()
-    if tween >= 0 then
-        api_tween_play_sine(tween, 0.5, 0.5, 1.0)
-        api_display_tween_clear_color(tween, -1, tween)
-    end
+    local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
+    local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
+
     while not quit
     do
-        for i = 0, 255, 1 do
-            api_display_set_clear_color(i / 255, i / 255, i / 255)
-            api_sleep(self)
-            if quit then
-                break
-            end
-        end
-        for i = 255, 0, -1 do
-            api_display_set_clear_color(i / 255, i / 255, i / 255)
-            api_sleep(self)
-            if quit then
-                break
-            end
-        end
+        api_sleep(self)
     end
 end

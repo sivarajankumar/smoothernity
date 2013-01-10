@@ -167,7 +167,7 @@ void display_update(void)
             if (vbuf->meshes == 0)
                 continue;
             vbuf_select(vbuf);
-            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->next)
+            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
             {
                 if (mesh_vbuf->frame_tag == g_display.frame_tag)
                     continue;
@@ -175,7 +175,7 @@ void display_update(void)
                 if (ibuf->mapped)
                     continue;
                 ibuf_select(ibuf);
-                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->next)
+                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
                 {
                     if (mesh_ibuf->frame_tag == g_display.frame_tag)
                         continue;
@@ -198,7 +198,7 @@ void display_update(void)
             if (ibuf->meshes == 0)
                 continue;
             ibuf_select(ibuf);
-            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->next)
+            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
             {
                 if (mesh_ibuf->frame_tag == g_display.frame_tag)
                     continue;
@@ -206,7 +206,7 @@ void display_update(void)
                 if (vbuf->mapped)
                     continue;
                 vbuf_select(vbuf);
-                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->next)
+                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
                 {
                     if (mesh_vbuf->frame_tag == g_display.frame_tag)
                         continue;
