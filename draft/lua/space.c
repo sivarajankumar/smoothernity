@@ -13,6 +13,13 @@ enum space_axis_e
     SPACE_AXES_TOTAL = 3
 };
 
+enum space_update_e
+{
+    SPACE_UPDATE_AUTO = 0,
+    SPACE_UPDATE_MANUAL = 1,
+    SPACE_UPDATES_TOTAL = 2
+};
+
 struct space_t
 {
     int frame_tag; /* when this space was last updated */
@@ -22,6 +29,7 @@ struct space_t
     float scale[3];
     float rotangle;
     enum space_axis_e rotaxis;
+    enum space_update_e update;
     struct tween_t *offset_tween[3];
     struct tween_t *scale_tween[3];
     struct tween_t *rotangle_tween;
@@ -41,13 +49,27 @@ struct spaces_t
 
 static struct spaces_t g_spaces;
 
+static void space_compute(struct space_t*);
+static void space_mult(struct space_t*, struct space_t*, struct space_t*);
+
 static int api_space_alloc(lua_State *lua)
 {
     struct space_t *space;
+    int update;
 
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
     {
         lua_pushstring(lua, "api_space_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    update = lua_tointeger(lua, -1);
+    lua_pop(lua, 1);
+
+    if (update < 0 || update >= (int)SPACE_UPDATES_TOTAL)
+    {
+        lua_pushstring(lua, "api_space_alloc: update method out of range");
         lua_error(lua);
         return 0;
     }
@@ -73,6 +95,10 @@ static int api_space_alloc(lua_State *lua)
     space->scale[0] = 1.0f;
     space->scale[1] = 1.0f;
     space->scale[2] = 1.0f;
+    space->update = (enum space_update_e)update;
+
+    if (space->update == SPACE_UPDATE_MANUAL)
+        space_compute(space);
 
     lua_pushinteger(lua, space - g_spaces.pool);
     return 1;
@@ -152,6 +178,35 @@ static int api_space_attach(lua_State *lua)
     return 0;
 }
 
+static int api_space_mult(lua_State *lua)
+{
+    struct space_t *space;
+    struct space_t *space1;
+    struct space_t *space2;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
+    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_space_mult: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space = space_get(lua_tointeger(lua, -3));
+    space1 = space_get(lua_tointeger(lua, -2));
+    space2 = space_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 3);
+
+    if (space == 0 || space1 == 0 || space2 == 0)
+    {
+        lua_pushstring(lua, "api_space_mult: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space_mult(space, space1, space2);
+    return 0;
+}
 
 static int api_space_query(lua_State *lua)
 {
@@ -196,6 +251,8 @@ static int api_space_offset(lua_State *lua)
     space->offset[0] = x;
     space->offset[1] = y;
     space->offset[2] = z;
+    if (space->update == SPACE_UPDATE_MANUAL)
+        space_compute(space);
     return 0;
 }
 
@@ -264,6 +321,8 @@ static int api_space_scale(lua_State *lua)
     space->scale[0] = x;
     space->scale[1] = y;
     space->scale[2] = z;
+    if (space->update == SPACE_UPDATE_MANUAL)
+        space_compute(space);
     return 0;
 }
 
@@ -336,6 +395,8 @@ static int api_space_rotation(lua_State *lua)
     space->frame_tag = 0;
     space->rotangle = angle;
     space->rotaxis = (enum space_axis_e)axis;
+    if (space->update == SPACE_UPDATE_MANUAL)
+        space_compute(space);
     return 0;
 }
 
@@ -400,6 +461,7 @@ int space_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_space_alloc", api_space_alloc);
     lua_register(lua, "api_space_free", api_space_free);
     lua_register(lua, "api_space_attach", api_space_attach);
+    lua_register(lua, "api_space_mult", api_space_mult);
     lua_register(lua, "api_space_query", api_space_query);
     lua_register(lua, "api_space_offset", api_space_offset);
     lua_register(lua, "api_space_offset_tween", api_space_offset_tween);
@@ -513,11 +575,44 @@ static void space_compute(struct space_t *space)
     m[12] = offset[0]; m[13] = offset[1]; m[14] = offset[2]; m[15] = 1;
 }
 
+static void space_mult(struct space_t *space,
+                       struct space_t *space1, struct space_t *space2)
+{
+    GLfloat *m1, *m2;
+    GLfloat m[16];
+
+    m1 = space1->matrix;
+    m2 = space2->matrix;
+
+    m[0] = m1[0]*m2[0] + m1[4]*m2[1] + m1[ 8]*m2[2] + m1[12]*m2[3];
+    m[1] = m1[1]*m2[0] + m1[5]*m2[1] + m1[ 9]*m2[2] + m1[13]*m2[3];
+    m[2] = m1[2]*m2[0] + m1[6]*m2[1] + m1[10]*m2[2] + m1[14]*m2[3];
+    m[3] = m1[3]*m2[0] + m1[7]*m2[1] + m1[11]*m2[2] + m1[15]*m2[3];
+
+    m[4] = m1[0]*m2[4] + m1[4]*m2[5] + m1[ 8]*m2[6] + m1[12]*m2[7];
+    m[5] = m1[1]*m2[4] + m1[5]*m2[5] + m1[ 9]*m2[6] + m1[13]*m2[7];
+    m[6] = m1[2]*m2[4] + m1[6]*m2[5] + m1[10]*m2[6] + m1[14]*m2[7];
+    m[7] = m1[3]*m2[4] + m1[7]*m2[5] + m1[11]*m2[6] + m1[15]*m2[7];
+
+    m[ 8] = m1[0]*m2[8] + m1[4]*m2[9] + m1[ 8]*m2[10] + m1[12]*m2[11];
+    m[ 9] = m1[1]*m2[8] + m1[5]*m2[9] + m1[ 9]*m2[10] + m1[13]*m2[11];
+    m[10] = m1[2]*m2[8] + m1[6]*m2[9] + m1[10]*m2[10] + m1[14]*m2[11];
+    m[11] = m1[3]*m2[8] + m1[7]*m2[9] + m1[11]*m2[10] + m1[15]*m2[11];
+
+    m[12] = m1[0]*m2[12] + m1[4]*m2[13] + m1[ 8]*m2[14] + m1[12]*m2[15];
+    m[13] = m1[1]*m2[12] + m1[5]*m2[13] + m1[ 9]*m2[14] + m1[13]*m2[15];
+    m[14] = m1[2]*m2[12] + m1[6]*m2[13] + m1[10]*m2[14] + m1[14]*m2[15];
+    m[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
+
+    memcpy(space->matrix, m, sizeof(GLfloat) * 16);
+}
+
 void space_select(struct space_t *space, int frame_tag)
 {
     if (space->frame_tag != frame_tag)
     {
-        space_compute(space);
+        if (space->update == SPACE_UPDATE_AUTO)
+            space_compute(space);
         space->frame_tag = frame_tag;
     }
     if (space->parent)
