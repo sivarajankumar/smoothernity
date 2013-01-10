@@ -1,20 +1,40 @@
 quit = false
 
-MESH_TRIANGLE_STRIP = 0
-MESH_TRIANGLE_FAN = 1
-MESH_TRIANGLES = 2
+API_MESH_TRIANGLE_STRIP = 0
+API_MESH_TRIANGLE_FAN = 1
+API_MESH_TRIANGLES = 2
 
-SPACE_AXIS_X = 0
-SPACE_AXIS_Y = 1
-SPACE_AXIS_Z = 2
+API_SPACE_AXIS_X = 0
+API_SPACE_AXIS_Y = 1
+API_SPACE_AXIS_Z = 2
 
-TEXT_FONT_8_BY_13 = 0
-TEXT_FONT_9_BY_15 = 1
-TEXT_FONT_TIMES_ROMAN_10 = 2
-TEXT_FONT_TIMES_ROMAN_24 = 3
-TEXT_FONT_HELVETICA_10 = 4
-TEXT_FONT_HELVETICA_12 = 5
-TEXT_FONT_HELVETICA_18 = 6
+API_TEXT_FONT_8_BY_13 = 0
+API_TEXT_FONT_9_BY_15 = 1
+API_TEXT_FONT_TIMES_ROMAN_10 = 2
+API_TEXT_FONT_TIMES_ROMAN_24 = 3
+API_TEXT_FONT_HELVETICA_10 = 4
+API_TEXT_FONT_HELVETICA_12 = 5
+API_TEXT_FONT_HELVETICA_18 = 6
+
+function configure()
+    return {["mpool_sizes"] = function() return 64, 4096, 16384 end,
+            ["mpool_counts"] = function() return 1000, 1000, 1000 end,
+            ["logic_time"] = 10000,
+            ["gc_step"] = 10,
+            ["min_delay"] = 1000,
+            ["display_width"] = 1920,
+            ["display_height"] = 1080,
+            ["fps"] = 60,
+            ["tween_pool"] = 100,
+            ["space_pool"] = 100,
+            ["mesh_pool"] = 100,
+            ["vbuf_size"] = 1024,
+            ["vbuf_count"] = 100,
+            ["ibuf_size"] = 1024,
+            ["ibuf_count"] = 100,
+            ["text_size"] = 100,
+            ["text_count"] = 100}
+end
 
 function control(self)
     while not quit
@@ -68,12 +88,12 @@ function work(self)
 
         local s = api_space_alloc()
         api_space_offset(s, 0, 0, -5)
-        api_space_rotation_tween(s, SPACE_AXIS_Y, t)
+        api_space_rotation_tween(s, API_SPACE_AXIS_Y, t)
 
-        api_mesh_alloc(MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
+        api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s, 0, 36)
 
-        api_text_alloc("Hello world!", TEXT_FONT_8_BY_13, 0, 13)
-        api_text_alloc("Life is good!", TEXT_FONT_8_BY_13, 0, 30)
+        api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
+        api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
     end
 
     tutorial()
