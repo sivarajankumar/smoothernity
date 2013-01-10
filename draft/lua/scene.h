@@ -84,40 +84,6 @@ struct ibufs_t
 
 extern struct ibufs_t g_ibufs;
 
-enum space_axis_e
-{
-    SPACE_AXIS_X = 0,
-    SPACE_AXIS_Y = 1,
-    SPACE_AXIS_Z = 2,
-    SPACE_AXES_TOTAL = 3
-};
-
-struct space_t
-{
-    int frame_tag; /* when this space was last updated */
-    int vacant;
-    GLfloat matrix[16];
-    float offset[3];
-    float scale[3];
-    float rotangle;
-    enum space_axis_e rotaxis;
-    struct tween_t *offset_tween[3];
-    struct tween_t *scale_tween[3];
-    struct tween_t *rotangle_tween;
-    struct space_t *prev;
-    struct space_t *next;
-};
-
-struct spaces_t
-{
-    int left;
-    int count;
-    struct space_t *pool;
-    struct space_t *vacant;
-};
-
-extern struct spaces_t g_spaces;
-
 struct mesh_t
 {
     struct ibuf_t *ibuf;

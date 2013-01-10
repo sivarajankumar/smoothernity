@@ -5,7 +5,41 @@
 #include <string.h>
 #include <math.h>
 
-struct spaces_t g_spaces;
+enum space_axis_e
+{
+    SPACE_AXIS_X = 0,
+    SPACE_AXIS_Y = 1,
+    SPACE_AXIS_Z = 2,
+    SPACE_AXES_TOTAL = 3
+};
+
+struct space_t
+{
+    int frame_tag; /* when this space was last updated */
+    int vacant;
+    GLfloat matrix[16];
+    float offset[3];
+    float scale[3];
+    float rotangle;
+    enum space_axis_e rotaxis;
+    struct tween_t *offset_tween[3];
+    struct tween_t *scale_tween[3];
+    struct tween_t *rotangle_tween;
+    struct space_t *prev;
+    struct space_t *next;
+    struct space_t *parent;
+};
+
+struct spaces_t
+{
+    int left;
+    int count;
+    int nesting;
+    struct space_t *pool;
+    struct space_t *vacant;
+};
+
+static struct spaces_t g_spaces;
 
 static int api_space_alloc(lua_State *lua)
 {
@@ -75,6 +109,49 @@ static int api_space_free(lua_State *lua)
     g_spaces.vacant = space;
     return 0;
 }
+
+static int api_space_attach(lua_State *lua)
+{
+    struct space_t *space1;
+    struct space_t *space2;
+    struct space_t *s;
+    int nesting;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -1)
+    || !lua_isnumber(lua, -2))
+    {
+        lua_pushstring(lua, "api_space_attach: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    space1 = space_get(lua_tointeger(lua, -2));
+    space2 = space_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 2);
+
+    if (space1 == 0 || space2 == 0)
+    {
+        lua_pushstring(lua, "api_space_attach: invalid space");
+        lua_error(lua);
+        return 0;
+    }
+
+    space1->parent = space2;
+
+    nesting = 0;
+    for (s = space1; s; s = s->parent)
+    {
+        if (++nesting > g_spaces.nesting)
+        {
+            lua_pushstring(lua, "api_space_attach: nesting is too deep");
+            lua_error(lua);
+            return 0;
+        }
+    }
+
+    return 0;
+}
+
 
 static int api_space_query(lua_State *lua)
 {
@@ -301,7 +378,7 @@ static int api_space_rotation_tween(lua_State *lua)
     return 0;
 }
 
-int space_init(lua_State *lua, int count)
+int space_init(lua_State *lua, int count, int nesting)
 {
     int i;
     g_spaces.pool = calloc(count, sizeof(struct space_t));
@@ -317,10 +394,12 @@ int space_init(lua_State *lua, int count)
     }
     g_spaces.left = count;
     g_spaces.count = count;
+    g_spaces.nesting = nesting;
     g_spaces.vacant = g_spaces.pool;
 
     lua_register(lua, "api_space_alloc", api_space_alloc);
     lua_register(lua, "api_space_free", api_space_free);
+    lua_register(lua, "api_space_attach", api_space_attach);
     lua_register(lua, "api_space_query", api_space_query);
     lua_register(lua, "api_space_offset", api_space_offset);
     lua_register(lua, "api_space_offset_tween", api_space_offset_tween);
@@ -349,7 +428,7 @@ struct space_t * space_get(int spacei)
         return 0;
 }
 
-void space_compute(struct space_t *space)
+static void space_compute(struct space_t *space)
 {
     float axisx[3];
     float axisy[3];
@@ -434,7 +513,14 @@ void space_compute(struct space_t *space)
     m[12] = offset[0]; m[13] = offset[1]; m[14] = offset[2]; m[15] = 1;
 }
 
-void space_select(struct space_t *space)
+void space_select(struct space_t *space, int frame_tag)
 {
-    glLoadMatrixf(space->matrix);
+    if (space->frame_tag != frame_tag)
+    {
+        space_compute(space);
+        space->frame_tag = frame_tag;
+    }
+    if (space->parent)
+        space_select(space->parent, frame_tag);
+    glMultMatrixf(space->matrix);
 }
