@@ -105,6 +105,7 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, width, height);
 
     lua_register(lua, "api_display_get_mode", api_display_get_mode);
