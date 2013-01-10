@@ -17,6 +17,32 @@
 #include "mesh.h"
 #include "text.h"
 
+/*
+
+TODO:
+
+All values are connected to the dependency graph.
+
+Value types are vectors and matrices.
+
+Value can be computed either immediately or by declaring dependency on other values.
+
+Spaces are gone completely.
+
+Mesh is constructed by ibuf, vbuf, tex and matrix.
+
+pos = vector_alloc()
+vector_set(pos, 0, 0, -5)
+scale = vector_alloc()
+vector_sine(scale, 0.5,0.5,0.5, 1,1,1, 2)
+rot = vector_alloc()
+vector_saw(rot, 0,0,0, 2*pi,0,0, 5)
+
+m = matrix_alloc()
+matrix_pos_scale_rot_x(m, pos, scale, rot, 0)  -- last 0 means "take first component of the vector"
+
+*/
+
 struct main_t
 {
     int *mpool_sizes;
