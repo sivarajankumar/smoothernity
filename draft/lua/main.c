@@ -30,6 +30,7 @@ struct main_t
     int fps;
     int tween_pool;
     int space_pool;
+    int space_nesting;
     int mesh_pool;
     int vbuf_size;
     int vbuf_count;
@@ -138,6 +139,7 @@ static int main_init(char *script)
      || main_get_int(lua, "fps", &g_main.fps) != 0
      || main_get_int(lua, "tween_pool", &g_main.tween_pool) != 0
      || main_get_int(lua, "space_pool", &g_main.space_pool) != 0
+     || main_get_int(lua, "space_nesting", &g_main.space_nesting) != 0
      || main_get_int(lua, "mesh_pool", &g_main.mesh_pool) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
@@ -253,7 +255,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (space_init(lua, g_main.space_pool) != 0)
+    if (space_init(lua, g_main.space_pool, g_main.space_nesting) != 0)
     {
         fprintf(stderr, "Cannot init spaces\n");
         goto cleanup;

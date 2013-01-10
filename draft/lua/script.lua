@@ -27,6 +27,7 @@ function configure()
             ["fps"] = 60,
             ["tween_pool"] = 100,
             ["space_pool"] = 100,
+            ["space_nesting"] = 10,
             ["mesh_pool"] = 100,
             ["vbuf_size"] = 1024,
             ["vbuf_count"] = 100,
@@ -56,9 +57,9 @@ function work(self)
         end
     end
 
-    local w1 = api_tween_alloc()
-    api_tween_play_sine(w1, 0.5, 0.5, 1.0)
-    api_display_tween_clear_color(w1, -1, w1)
+    local w = api_tween_alloc()
+    api_tween_play_sine(w, 0.5, 0.5, 1.0)
+    api_display_tween_clear_color(w, -1, w)
 
     local vb = api_vbuf_alloc()
     api_vbuf_write(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0)
@@ -86,20 +87,35 @@ function work(self)
     api_ibuf_write(ib,33, 1) api_ibuf_write(ib,34, 4) api_ibuf_write(ib,35, 5)
     api_ibuf_bake(ib)
 
+    local w1 = api_tween_alloc()
+    api_tween_play_saw(w1, 0, math.pi * 2, 10)
+
     local w2 = api_tween_alloc()
     api_tween_play_saw(w2, 0, math.pi * 2, 4)
 
+    local w3 = api_tween_alloc()
+    api_tween_play_sine(w3, 0, 1, 1)
+
+    local w4 = api_tween_alloc()
+    api_tween_play_saw(w4, 0, math.pi * 2, 10)
+
     local s1 = api_space_alloc()
     api_space_offset(s1, 0, 0, -5)
-    api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w2)
+    api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w1)
 
     local s2 = api_space_alloc()
-    api_space_offset(s2, 3, 0, -5)
+    api_space_offset(s2, 0, 0, 2)
+    api_space_offset_tween(s2, -1, w3, -1)
     api_space_scale(s2, 0.5, 0.5, 0.5)
     api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
+    api_space_attach(s2, s1)
+
+    local s3 = api_space_alloc()
+    api_space_rotation_tween(s3, API_SPACE_AXIS_X, w4)
+    api_space_attach(s3, s2)
 
     local m1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s1, 0, 36)
-    local m2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s2, 0, 36)
+    local m2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s3, 0, 36)
 
     local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
     local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)

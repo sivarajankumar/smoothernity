@@ -161,6 +161,7 @@ void display_update(void)
     /* meshes */
 
     glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     if (g_vbufs.with_meshes < g_ibufs.with_meshes)
     {
         for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
@@ -181,13 +182,10 @@ void display_update(void)
                     if (mesh_ibuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_ibuf->frame_tag = g_display.frame_tag;
-                    if (mesh_ibuf->space->frame_tag != g_display.frame_tag)
-                    {
-                        space_compute(mesh_ibuf->space);
-                        mesh_ibuf->space->frame_tag = g_display.frame_tag;
-                    }
-                    space_select(mesh_ibuf->space);
+                    glPushMatrix();
+                    space_select(mesh_ibuf->space, g_display.frame_tag);
                     mesh_draw(mesh_ibuf);
+                    glPopMatrix();
                 }
             }
         }
@@ -212,13 +210,10 @@ void display_update(void)
                     if (mesh_vbuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_vbuf->frame_tag = g_display.frame_tag;
-                    if (mesh_vbuf->space->frame_tag != g_display.frame_tag)
-                    {
-                        space_compute(mesh_vbuf->space);
-                        mesh_vbuf->space->frame_tag = g_display.frame_tag;
-                    }
-                    space_select(mesh_vbuf->space);
+                    glPushMatrix();
+                    space_select(mesh_vbuf->space, g_display.frame_tag);
                     mesh_draw(mesh_vbuf);
+                    glPopMatrix();
                 }
             }
         }
