@@ -4,7 +4,8 @@
 
 enum tween_e
 {
-    TWEEN_SINE = 0
+    TWEEN_SINE = 0,
+    TWEEN_SAW = 1
 };
 
 struct tween_t
