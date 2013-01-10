@@ -8,6 +8,9 @@ API_SPACE_AXIS_X = 0
 API_SPACE_AXIS_Y = 1
 API_SPACE_AXIS_Z = 2
 
+API_SPACE_UPDATE_AUTO = 0
+API_SPACE_UPDATE_MANUAL = 1
+
 API_TEXT_FONT_8_BY_13 = 0
 API_TEXT_FONT_9_BY_15 = 1
 API_TEXT_FONT_TIMES_ROMAN_10 = 2
@@ -99,20 +102,25 @@ function work(self)
     local w4 = api_tween_alloc()
     api_tween_play_saw(w4, 0, math.pi * 2, 10)
 
-    local s1 = api_space_alloc()
+    local s1 = api_space_alloc(API_SPACE_UPDATE_AUTO)
     api_space_offset(s1, 0, 0, -5)
     api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w1)
 
-    local s2 = api_space_alloc()
+    local s2 = api_space_alloc(API_SPACE_UPDATE_AUTO)
     api_space_offset(s2, 0, 0, 2)
     api_space_offset_tween(s2, -1, w3, -1)
     api_space_scale(s2, 0.5, 0.5, 0.5)
-    api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
+    --api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
     api_space_attach(s2, s1)
 
-    local s3 = api_space_alloc()
-    api_space_rotation_tween(s3, API_SPACE_AXIS_X, w4)
+    local s3 = api_space_alloc(API_SPACE_UPDATE_MANUAL)
     api_space_attach(s3, s2)
+
+    local sx = api_space_alloc(API_SPACE_UPDATE_MANUAL)
+    api_space_rotation(sx, API_SPACE_AXIS_X, 0.01)
+
+    local sy = api_space_alloc(API_SPACE_UPDATE_MANUAL)
+    api_space_rotation(sy, API_SPACE_AXIS_Y, 0.005)
 
     local m1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s1, 0, 36)
     local m2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s3, 0, 36)
@@ -122,6 +130,8 @@ function work(self)
 
     while not quit
     do
+        api_space_mult(s3, s3, sx)
+        api_space_mult(s3, s3, sy)
         api_sleep(self)
     end
 end
