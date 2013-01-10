@@ -108,10 +108,10 @@ void * mpool_alloc(struct mpool_t *pool, void *ptr, size_t osize, size_t nsize)
     }
 }
 
-struct mpool_t * mpool_create(const size_t sizes[], const size_t counts[], size_t len)
+struct mpool_t * mpool_create(const int sizes[], const int counts[], int len)
 {
     struct mpool_t *pool;
-    size_t i, j;
+    int i, j;
     pool = calloc(1, sizeof(struct mpool_t));
     if (pool == 0)
     {
