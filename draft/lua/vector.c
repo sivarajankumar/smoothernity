@@ -2,16 +2,18 @@
 #include "consts.h"
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 struct vectors_t
 {
+    int count;
     int left;
     int nesting;
     struct vector_t *pool;
     struct vector_t *vacant;
 };
 
-static vectors_t g_vectors;
+static struct vectors_t g_vectors;
 
 static void vector_clear_args(struct vector_t *vector)
 {
@@ -289,6 +291,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     g_vectors.pool = calloc(count, sizeof(struct vector_t));
     if (g_vectors.pool == 0)
         return 1;
+    g_vectors.count = count;
     g_vectors.left = count;
     g_vectors.nesting = nesting;
     for (i = 0; i < count; ++i)
@@ -309,7 +312,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     return 0;
 }
 
-void vector_free(void)
+void vector_done(void)
 {
     if (g_vectors.pool)
     {
