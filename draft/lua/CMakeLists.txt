@@ -12,7 +12,7 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${OPENGL_INCLUDE_DIR})
 
 add_executable(main
-               main.c mpool.c machine.c timer.c display.c text.c
+               main.c mpool.c machine.c timer.c display.c text.c vector.c
                input.c tween.c vbuf.c ibuf.c space.c mesh.c)
 
 add_definitions(-std=c99 -ansi -pedantic-errors -Wall -Wextra -Werror
