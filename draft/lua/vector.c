@@ -294,6 +294,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     g_vectors.count = count;
     g_vectors.left = count;
     g_vectors.nesting = nesting;
+    g_vectors.vacant = g_vectors.pool;
     for (i = 0; i < count; ++i)
     {
         if (i > 0)
