@@ -17,32 +17,7 @@
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
-
-/*
-
-TODO:
-
-All values are connected to the dependency graph.
-
-Value types are vectors and matrices.
-
-Value can be computed either immediately or by declaring dependency on other values.
-
-Spaces are gone completely.
-
-Mesh is constructed by ibuf, vbuf, tex and matrix.
-
-pos = vector_alloc()
-vector_set(pos, 0, 0, -5)
-scale = vector_alloc()
-vector_sine(scale, 0.5,0.5,0.5, 1,1,1, 2)
-rot = vector_alloc()
-vector_saw(rot, 0,0,0, 2*pi,0,0, 5)
-
-m = matrix_alloc()
-matrix_pos_scale_rot_x(m, pos, scale, rot, 0)  -- last 0 means "take first component of the vector"
-
-*/
+#include "matrix.h"
 
 struct main_t
 {
@@ -67,6 +42,8 @@ struct main_t
     int text_count;
     int vector_count;
     int vector_nesting;
+    int matrix_count;
+    int matrix_nesting;
 };
 
 static struct main_t g_main;
@@ -177,7 +154,9 @@ static int main_init(char *script)
      || main_get_int(lua, "text_size", &g_main.text_size) != 0
      || main_get_int(lua, "text_count", &g_main.text_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
-     || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0)
+     || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
+     || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
+     || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0)
     {
         goto cleanup;
     }
@@ -292,6 +271,12 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    if (matrix_init(lua, g_main.matrix_count, g_main.matrix_nesting) != 0)
+    {
+        fprintf(stderr, "Cannot init matrices\n");
+        goto cleanup;
+    }
+
     if (space_init(lua, g_main.space_pool, g_main.space_nesting) != 0)
     {
         fprintf(stderr, "Cannot init spaces\n");
@@ -370,6 +355,7 @@ cleanup:
     ibuf_done();
     display_done();
     vector_done();
+    matrix_done();
     space_done();
     mesh_done();
     text_done();

@@ -44,11 +44,6 @@ static int api_vector_alloc(lua_State *lua)
     vector = g_vectors.vacant;
     g_vectors.vacant = g_vectors.vacant->next;
 
-    if (vector->prev)
-        vector->prev->next = vector->next;
-    if (vector->next)
-        vector->next->prev = vector->prev;
-
     memset(vector, 0, sizeof(struct vector_t));
 
     lua_pushinteger(lua, vector - g_vectors.pool);
@@ -79,9 +74,6 @@ static int api_vector_free(lua_State *lua)
     vector->vacant = 1;
     ++g_vectors.left;
 
-    if (g_vectors.vacant)
-        g_vectors.vacant->prev = vector;
-    vector->prev = 0;
     vector->next = g_vectors.vacant;
     g_vectors.vacant = vector;
     return 0;
@@ -297,8 +289,6 @@ int vector_init(lua_State *lua, int count, int nesting)
     g_vectors.vacant = g_vectors.pool;
     for (i = 0; i < count; ++i)
     {
-        if (i > 0)
-            g_vectors.pool[i].prev = g_vectors.pool + i - 1;
         if (i < count - 1)
             g_vectors.pool[i].next = g_vectors.pool + i + 1;
         g_vectors.pool[i].vacant = 1;
@@ -350,19 +340,19 @@ int vector_nesting(struct vector_t *vector, int limit)
         return limit;
 }
 
-void vector_update(struct vector_t *vector, float dt, int frame_tag)
+void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
 {
     int i;
     GLfloat *v0, *v1;
     if (vector->type == VECTOR_CONST)
         return;
-    if (vector->frame_tag == frame_tag)
+    if (force == 0 && vector->frame_tag == frame_tag)
         return;
     vector->frame_tag = frame_tag;
     if (vector->type == VECTOR_SINE)
     {
-        vector_update(vector->argv[0], dt, frame_tag);
-        vector_update(vector->argv[1], dt, frame_tag);
+        vector_update(vector->argv[0], dt, frame_tag, force);
+        vector_update(vector->argv[1], dt, frame_tag, force);
         vector->t += dt;
         while (vector->t > vector->period)
             vector->t -= vector->period;
@@ -377,8 +367,8 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag)
     }
     else if (vector->type == VECTOR_SAW)
     {
-        vector_update(vector->argv[0], dt, frame_tag);
-        vector_update(vector->argv[1], dt, frame_tag);
+        vector_update(vector->argv[0], dt, frame_tag, force);
+        vector_update(vector->argv[1], dt, frame_tag, force);
         vector->t += dt;
         while (vector->t > vector->period)
             vector->t -= vector->period;
@@ -392,7 +382,7 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag)
     }
     else if (vector->type == VECTOR_RUBBER)
     {
-        vector_update(vector->argv[0], dt, frame_tag);
+        vector_update(vector->argv[0], dt, frame_tag, force);
         v0 = vector->argv[0]->value;
         for (i = 0; i < 4; ++i)
             vector->value[i] += (v0[i] - vector->value[i]) * vector->rubber;
