@@ -9,6 +9,7 @@
 #include "space.h"
 #include "mesh.h"
 #include "text.h"
+#include "vector.h"
 
 struct display_t
 {
@@ -17,8 +18,7 @@ struct display_t
     int height;
     int frame_tag;
     SDL_Surface *screen;
-    float clear_color[3];
-    struct tween_t *clear_color_tween[3];
+    struct vector_t *clear_color;
 };
 
 static struct display_t g_display;
@@ -38,33 +38,26 @@ static int api_display_get_mode(lua_State *lua)
 
 static int api_display_set_clear_color(lua_State *lua)
 {
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    struct vector_t *vector;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
     {
         lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    g_display.clear_color[0] = (float)lua_tonumber(lua, -3);
-    g_display.clear_color[1] = (float)lua_tonumber(lua, -2);
-    g_display.clear_color[2] = (float)lua_tonumber(lua, -1);
-    lua_pop(lua, 3);
-    return 0;
-}
 
-static int api_display_tween_clear_color(lua_State *lua)
-{
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    vector = vector_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (vector == 0)
     {
-        lua_pushstring(lua, "api_display_tween_clear_color: incorrect argument");
+        lua_pushstring(lua, "api_display_set_clear_color: invalid vector");
         lua_error(lua);
         return 0;
     }
-    g_display.clear_color_tween[0] = tween_get(lua_tointeger(lua, -3));
-    g_display.clear_color_tween[1] = tween_get(lua_tointeger(lua, -2));
-    g_display.clear_color_tween[2] = tween_get(lua_tointeger(lua, -1));
-    lua_pop(lua, 3);
+
+    g_display.clear_color = vector;
     return 0;
 }
 
@@ -109,7 +102,6 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
 
     lua_register(lua, "api_display_get_mode", api_display_get_mode);
     lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
-    lua_register(lua, "api_display_tween_clear_color", api_display_tween_clear_color);
 
     return 0;
 cleanup:
@@ -127,27 +119,27 @@ void display_done(void)
     SDL_Quit();
 }
 
-void display_update(void)
+void display_update(float dt)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
     struct mesh_t *mesh_vbuf;
     struct mesh_t *mesh_ibuf;
-    float color[3];
-    int i;
+    GLfloat *color;
 
     ++g_display.frame_tag;
 
     /* clear */
 
-    for (i = 0; i < 3; ++i)
+    if (g_display.clear_color)
     {
-        if (g_display.clear_color_tween[i])
-            color[i] = g_display.clear_color_tween[i]->value;
-        else
-            color[i] = g_display.clear_color[i];
+        vector_update(g_display.clear_color, dt, g_display.frame_tag);
+        color = g_display.clear_color->value;
+        glClearColor(color[0], color[1], color[2], color[3]);
     }
-    glClearColor(color[0], color[1], color[2], 1.0f);
+    else
+        glClearColor(0, 0, 0, 1);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     /* frustum */

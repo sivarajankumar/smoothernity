@@ -345,7 +345,7 @@ int main(int argc, char **argv)
         lua_gc(lua, LUA_GCSTOP, 0);
         input_update();
         tween_update(1.0f / (float)g_main.fps);
-        display_update();
+        display_update(1.0f / (float)g_main.fps);
         if (machine_step(controller, 0) != 0)
         {
             fprintf(stderr, "Failed to run controller\n");
