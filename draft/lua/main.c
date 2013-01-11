@@ -16,6 +16,7 @@
 #include "text.h"
 #include "vector.h"
 #include "matrix.h"
+#include "cbullet.h"
 
 struct main_t
 {
@@ -238,6 +239,12 @@ int main(int argc, char **argv)
     machine_init(lua);
     input_init(lua);
 
+    if (cbullet_init() != 0)
+    {
+        fprintf(stderr, "Cannot init cbullet\n"); 
+        goto cleanup;
+    } 
+
     if (display_init(lua, &argc, argv, g_main.display_width,
                                        g_main.display_height) != 0)
     {
@@ -338,6 +345,7 @@ cleanup:
     mesh_done();
     text_done();
     main_done();
+    cbullet_done();
     if (lua)
         lua_close(lua);
     if (mpool)
