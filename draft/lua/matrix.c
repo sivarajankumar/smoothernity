@@ -136,6 +136,35 @@ static int api_matrix_const(lua_State *lua)
     return 0;
 }
 
+static int api_matrix_stop(lua_State *lua)
+{
+    struct matrix_t *matrix;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_matrix_stop: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_matrix_stop: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_CONST;
+
+    return 0;
+}
+
 static int api_matrix_mul(lua_State *lua)
 {
     struct matrix_t *matrix, *m0, *m1;
@@ -179,7 +208,7 @@ static int api_matrix_mul(lua_State *lua)
     return 0;
 }
 
-static int api_matrix_mul_now(lua_State *lua)
+static int api_matrix_mul_stop(lua_State *lua)
 {
     struct matrix_t *matrix, *m0, *m1;
     GLfloat m[16];
@@ -187,7 +216,7 @@ static int api_matrix_mul_now(lua_State *lua)
     if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
     || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
     {
-        lua_pushstring(lua, "api_matrix_mul_now: incorrect argument");
+        lua_pushstring(lua, "api_matrix_mul_stop: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -199,7 +228,7 @@ static int api_matrix_mul_now(lua_State *lua)
 
     if (matrix == 0 || m0 == 0 || m1 == 0)
     {
-        lua_pushstring(lua, "api_matrix_mul_now: invalid matrix");
+        lua_pushstring(lua, "api_matrix_mul_stop: invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -347,9 +376,10 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_free", api_matrix_free);
     lua_register(lua, "api_matrix_query", api_matrix_query);
     lua_register(lua, "api_matrix_const", api_matrix_const);
+    lua_register(lua, "api_matrix_stop", api_matrix_stop);
     lua_register(lua, "api_matrix_inv", api_matrix_inv);
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
-    lua_register(lua, "api_matrix_mul_now", api_matrix_mul_now);
+    lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
     return 0;
 }
@@ -399,55 +429,41 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         return limit;
 }
 
-int matrix_update(struct matrix_t *matrix, float dt,
-                  int frame_tag, int force)
+void matrix_update(struct matrix_t *matrix, float dt,
+                   int frame_tag, int force)
 {
     GLfloat *v0, *v1, *v2;
     GLfloat *m0, *m1;
-    int u;
     if (matrix->type == MATRIX_CONST)
-        return 1;
+        return;
     if (force == 0 && matrix->frame_tag == frame_tag)
-        return 0;
+        return;
     matrix->frame_tag = frame_tag;
     if (matrix->type == MATRIX_MUL)
     {
-        u =  matrix_update(matrix->argm[0], dt, frame_tag, force);
-        u += matrix_update(matrix->argm[1], dt, frame_tag, force);
-        if (u)
-        {
-            m0 = matrix->argm[0]->value;
-            m1 = matrix->argm[1]->value;
-            matrix_mul(matrix->value, m0, m1);
-            return 1;
-        }
+        matrix_update(matrix->argm[0], dt, frame_tag, force);
+        matrix_update(matrix->argm[1], dt, frame_tag, force);
+        m0 = matrix->argm[0]->value;
+        m1 = matrix->argm[1]->value;
+        matrix_mul(matrix->value, m0, m1);
     }
     else if (matrix->type == MATRIX_INV)
     {
-        u = matrix_update(matrix->argm[0], dt, frame_tag, force);
-        if (u)
-        {
-            m0 = matrix->argm[0]->value;
-            matrix_inv(matrix->value, m0);
-            return 1;
-        }
+        matrix_update(matrix->argm[0], dt, frame_tag, force);
+        m0 = matrix->argm[0]->value;
+        matrix_inv(matrix->value, m0);
     }
     else if (matrix->type == MATRIX_POS_SCL_ROT)
     {
-        u =  vector_update(matrix->argv[0], dt, frame_tag, force);
-        u += vector_update(matrix->argv[1], dt, frame_tag, force);
-        u += vector_update(matrix->argv[2], dt, frame_tag, force);
-        if (u)
-        {
-            v0 = matrix->argv[0]->value;
-            v1 = matrix->argv[1]->value;
-            v2 = matrix->argv[2]->value;
-            matrix_pos_scl_rot(matrix->value, v0, v1,
-                               matrix->rotaxis, v2[matrix->rotanglei]);
-            return 1;
-        }
+        vector_update(matrix->argv[0], dt, frame_tag, force);
+        vector_update(matrix->argv[1], dt, frame_tag, force);
+        vector_update(matrix->argv[2], dt, frame_tag, force);
+        v0 = matrix->argv[0]->value;
+        v1 = matrix->argv[1]->value;
+        v2 = matrix->argv[2]->value;
+        matrix_pos_scl_rot(matrix->value, v0, v1,
+                           matrix->rotaxis, v2[matrix->rotanglei]);
     }
-    return force;
 }
 
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
