@@ -8,6 +8,7 @@
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
+#include "matrix.h"
 
 struct display_t
 {
@@ -17,15 +18,16 @@ struct display_t
     int frame_tag;
     SDL_Surface *screen;
     struct vector_t *clear_color;
+    struct matrix_t *camera;
 };
 
 static struct display_t g_display;
 
-static int api_display_get_mode(lua_State *lua)
+static int api_display_mode(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_display_get_mode: incorrect argument");
+        lua_pushstring(lua, "api_display_mode: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -34,13 +36,13 @@ static int api_display_get_mode(lua_State *lua)
     return 2;
 }
 
-static int api_display_set_clear_color(lua_State *lua)
+static int api_display_clear_color(lua_State *lua)
 {
     struct vector_t *vector;
 
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
     {
-        lua_pushstring(lua, "api_display_set_clear_color: incorrect argument");
+        lua_pushstring(lua, "api_display_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -50,12 +52,37 @@ static int api_display_set_clear_color(lua_State *lua)
 
     if (vector == 0)
     {
-        lua_pushstring(lua, "api_display_set_clear_color: invalid vector");
+        lua_pushstring(lua, "api_display_clear_color: invalid vector");
         lua_error(lua);
         return 0;
     }
 
     g_display.clear_color = vector;
+    return 0;
+}
+
+static int api_display_camera(lua_State *lua)
+{
+    struct matrix_t *matrix;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_display_camera: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_display_camera: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    g_display.camera = matrix;
     return 0;
 }
 
@@ -98,8 +125,9 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, width, height);
 
-    lua_register(lua, "api_display_get_mode", api_display_get_mode);
-    lua_register(lua, "api_display_set_clear_color", api_display_set_clear_color);
+    lua_register(lua, "api_display_mode", api_display_mode);
+    lua_register(lua, "api_display_clear_color", api_display_clear_color);
+    lua_register(lua, "api_display_camera", api_display_camera);
 
     return 0;
 cleanup:
@@ -150,7 +178,13 @@ void display_update(float dt)
     /* meshes */
 
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    if (g_display.camera)
+    {
+        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
+        glLoadMatrixf(g_display.camera->value);
+    }
+    else
+        glLoadIdentity();
     if (g_vbufs.with_meshes < g_ibufs.with_meshes)
     {
         for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
