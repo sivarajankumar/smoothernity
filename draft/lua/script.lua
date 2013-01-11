@@ -8,13 +8,6 @@ API_MATRIX_AXIS_X = 0
 API_MATRIX_AXIS_Y = 1
 API_MATRIX_AXIS_Z = 2
 
-API_SPACE_AXIS_X = 0
-API_SPACE_AXIS_Y = 1
-API_SPACE_AXIS_Z = 2
-
-API_SPACE_UPDATE_AUTO = 0
-API_SPACE_UPDATE_MANUAL = 1
-
 API_TEXT_FONT_8_BY_13 = 0
 API_TEXT_FONT_9_BY_15 = 1
 API_TEXT_FONT_TIMES_ROMAN_10 = 2
@@ -32,9 +25,6 @@ function configure()
             ["display_width"] = 1920,
             ["display_height"] = 1080,
             ["fps"] = 60,
-            ["tween_pool"] = 100,
-            ["space_pool"] = 100,
-            ["space_nesting"] = 10,
             ["mesh_count"] = 100,
             ["vbuf_size"] = 1024,
             ["vbuf_count"] = 100,
@@ -102,48 +92,47 @@ function work(self)
     api_ibuf_write(ib,33, 1) api_ibuf_write(ib,34, 4) api_ibuf_write(ib,35, 5)
     api_ibuf_bake(ib)
 
-    local w1 = api_tween_alloc()
-    api_tween_play_saw(w1, 0, math.pi * 2, 10)
+    local rot1 = api_vector_alloc()
+    local rot2 = api_vector_alloc()
+    local from = api_vector_alloc()
+    local to = api_vector_alloc()
+    api_vector_const(from, 0, 0, 0, 0)
+    api_vector_const(from, math.pi * 2, 0, 0, 0)
+    api_vector_saw(rot1, from, to, 10)
+    api_vector_saw(rot2, from, to, 4)
 
-    local w2 = api_tween_alloc()
-    api_tween_play_saw(w2, 0, math.pi * 2, 4)
+    local pos1 = api_vector_alloc()
+    local from = api_vector_alloc()
+    local to = api_vector_alloc()
+    api_vector_const(from, 0, 1, 2, 0)
+    api_vector_const(to, 0, -1, 2, 0)
+    api_vector_sine(pos1, from, to, 1)
 
-    local w3 = api_tween_alloc()
-    api_tween_play_sine(w3, 0, 1, 1)
+    local m1 = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, 0, -5, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_matrix_pos_scl_rot(m1, pos, scl, rot1, API_MATRIX_AXIS_Y, 0)
 
-    local w4 = api_tween_alloc()
-    api_tween_play_saw(w4, 0, math.pi * 2, 10)
+    local m2 = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 2, 0, 0, 0)
+    api_vector_const(scl, 0.5, 0.5, 0.5, 0)
+    api_matrix_pos_scl_rot(m2, pos, scl, rot2, API_MATRIX_AXIS_Y, 0)
 
-    local s1 = api_space_alloc(API_SPACE_UPDATE_AUTO)
-    api_space_offset(s1, 0, 0, -5)
-    api_space_rotation_tween(s1, API_SPACE_AXIS_Y, w1)
+    local m3 = api_matrix_alloc()
+    api_matrix_mul(m3, m1, m2)
 
-    local s2 = api_space_alloc(API_SPACE_UPDATE_AUTO)
-    api_space_offset(s2, 0, 0, 2)
-    api_space_offset_tween(s2, -1, w3, -1)
-    api_space_scale(s2, 0.5, 0.5, 0.5)
-    --api_space_rotation_tween(s2, API_SPACE_AXIS_Y, w2)
-    api_space_attach(s2, s1)
-
-    local s3 = api_space_alloc(API_SPACE_UPDATE_MANUAL)
-    api_space_attach(s3, s2)
-
-    local sx = api_space_alloc(API_SPACE_UPDATE_MANUAL)
-    api_space_rotation(sx, API_SPACE_AXIS_X, 0.01)
-
-    local sy = api_space_alloc(API_SPACE_UPDATE_MANUAL)
-    api_space_rotation(sy, API_SPACE_AXIS_Y, 0.005)
-
-    local m1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s1, 0, 36)
-    local m2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, s3, 0, 36)
+    local e1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, m1, 0, 36)
+    local e2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, m3, 0, 36)
 
     local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
     local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
 
     while not quit
     do
-        api_space_mult(s3, s3, sx)
-        api_space_mult(s3, s3, sy)
         api_sleep(self)
     end
 end

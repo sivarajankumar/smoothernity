@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include "vbuf.h"
 #include "ibuf.h"
-#include "space.h"
+#include "matrix.h"
 #include <stdlib.h>
 
 struct meshes_t g_meshes;
@@ -26,7 +26,7 @@ static int api_mesh_alloc(lua_State *lua)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
-    struct space_t *space;
+    struct matrix_t *matrix;
     struct mesh_t *mesh;
     int type, texi, ioffset, icount;
 
@@ -44,7 +44,7 @@ static int api_mesh_alloc(lua_State *lua)
     vbuf = vbuf_get(lua_tointeger(lua, -6));
     ibuf = ibuf_get(lua_tointeger(lua, -5));
     texi = lua_tointeger(lua, -4);
-    space = space_get(lua_tointeger(lua, -3));
+    matrix = matrix_get(lua_tointeger(lua, -3));
     ioffset = lua_tointeger(lua, -2);
     icount = lua_tointeger(lua, -1);
     lua_pop(lua, 7);
@@ -77,9 +77,9 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    if (space == 0)
+    if (matrix == 0)
     {
-        lua_pushstring(lua, "api_mesh_alloc: invalid space");
+        lua_pushstring(lua, "api_mesh_alloc: invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -119,7 +119,7 @@ static int api_mesh_alloc(lua_State *lua)
 
     mesh->ibuf = ibuf;
     mesh->vbuf = vbuf;
-    mesh->space = space;
+    mesh->matrix = matrix;
     mesh->ioffset = ioffset;
     mesh->icount = icount;
 
@@ -204,7 +204,7 @@ static int api_mesh_free(lua_State *lua)
 
     mesh->ibuf = 0;
     mesh->vbuf = 0;
-    mesh->space = 0;
+    mesh->matrix = 0;
     return 0;
 }
 
@@ -254,8 +254,12 @@ void mesh_done(void)
     }
 }
 
-void mesh_draw(struct mesh_t *mesh)
+void mesh_update(struct mesh_t *mesh, float dt, int frame_tag)
 {
+    matrix_update(mesh->matrix, dt, frame_tag, 0);
+    glPushMatrix();
+    glMultMatrixf(mesh->matrix->value);
     glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_SHORT,
                    (struct ibuf_data_t*)0 + mesh->ioffset);
+    glPopMatrix();
 }
