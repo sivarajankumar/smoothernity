@@ -2,7 +2,6 @@
 #include "vbuf.h"
 #include "ibuf.h"
 #include "space.h"
-#include "scene.h"
 #include <stdlib.h>
 
 struct meshes_t g_meshes;

@@ -1,5 +1,5 @@
 #include "ibuf.h"
-#include "scene.h"
+#include "vbuf.h"
 #include <stdlib.h>
 
 struct ibufs_t g_ibufs;

@@ -1,9 +1,9 @@
 #include "space.h"
-#include "scene.h"
 #include "tween.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <GL/gl.h>
 
 enum space_axis_e
 {
