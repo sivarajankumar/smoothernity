@@ -10,10 +10,8 @@
 #include "timer.h"
 #include "display.h"
 #include "input.h"
-#include "tween.h"
 #include "ibuf.h"
 #include "vbuf.h"
-#include "space.h"
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
@@ -30,9 +28,6 @@ struct main_t
     int display_width;
     int display_height;
     int fps;
-    int tween_pool;
-    int space_pool;
-    int space_nesting;
     int mesh_count;
     int vbuf_size;
     int vbuf_count;
@@ -143,9 +138,6 @@ static int main_init(char *script)
      || main_get_int(lua, "display_width", &g_main.display_width) != 0
      || main_get_int(lua, "display_height", &g_main.display_height) != 0
      || main_get_int(lua, "fps", &g_main.fps) != 0
-     || main_get_int(lua, "tween_pool", &g_main.tween_pool) != 0
-     || main_get_int(lua, "space_pool", &g_main.space_pool) != 0
-     || main_get_int(lua, "space_nesting", &g_main.space_nesting) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
@@ -277,12 +269,6 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (space_init(lua, g_main.space_pool, g_main.space_nesting) != 0)
-    {
-        fprintf(stderr, "Cannot init spaces\n");
-        goto cleanup;
-    }
-
     if (mesh_init(lua, g_main.mesh_count) != 0)
     {
         fprintf(stderr, "Cannot init meshes\n");
@@ -292,12 +278,6 @@ int main(int argc, char **argv)
     if (text_init(lua, g_main.text_size, g_main.text_count) != 0)
     {
         fprintf(stderr, "Cannot init texts\n");
-        goto cleanup;
-    }
-
-    if (tween_init(lua, g_main.tween_pool) != 0)
-    {
-        fprintf(stderr, "Cannot init tweens\n");
         goto cleanup;
     }
 
@@ -329,7 +309,6 @@ int main(int argc, char **argv)
         lua_gc(lua, LUA_GCSTEP, g_main.gc_step);
         lua_gc(lua, LUA_GCSTOP, 0);
         input_update();
-        tween_update(1.0f / (float)g_main.fps);
         display_update(1.0f / (float)g_main.fps);
         if (machine_step(controller, 0) != 0)
         {
@@ -356,10 +335,8 @@ cleanup:
     display_done();
     vector_done();
     matrix_done();
-    space_done();
     mesh_done();
     text_done();
-    tween_done();
     main_done();
     if (lua)
         lua_close(lua);

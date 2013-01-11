@@ -7,7 +7,7 @@ struct mesh_t
 {
     struct ibuf_t *ibuf;
     struct vbuf_t *vbuf;
-    struct space_t *space;
+    struct matrix_t *matrix;
     GLenum type;
     int ioffset;
     int icount;
@@ -36,4 +36,4 @@ extern struct meshes_t g_meshes;
 
 int mesh_init(lua_State *lua, int count);
 void mesh_done(void);
-void mesh_draw(struct mesh_t *mesh);
+void mesh_update(struct mesh_t *mesh, float dt, int frame_tag);

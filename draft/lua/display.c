@@ -3,10 +3,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include "display.h"
-#include "tween.h"
 #include "vbuf.h"
 #include "ibuf.h"
-#include "space.h"
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
@@ -173,10 +171,7 @@ void display_update(float dt)
                     if (mesh_ibuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_ibuf->frame_tag = g_display.frame_tag;
-                    glPushMatrix();
-                    space_select(mesh_ibuf->space, g_display.frame_tag);
-                    mesh_draw(mesh_ibuf);
-                    glPopMatrix();
+                    mesh_update(mesh_ibuf, dt, g_display.frame_tag);
                 }
             }
         }
@@ -201,10 +196,7 @@ void display_update(float dt)
                     if (mesh_vbuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_vbuf->frame_tag = g_display.frame_tag;
-                    glPushMatrix();
-                    space_select(mesh_vbuf->space, g_display.frame_tag);
-                    mesh_draw(mesh_vbuf);
-                    glPopMatrix();
+                    mesh_update(mesh_vbuf, dt, g_display.frame_tag);
                 }
             }
         }
