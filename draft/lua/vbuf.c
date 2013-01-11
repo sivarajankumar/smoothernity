@@ -1,5 +1,4 @@
 #include "vbuf.h"
-#include "scene.h"
 #include <stdlib.h>
 
 struct vbufs_t g_vbufs;

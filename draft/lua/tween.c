@@ -1,6 +1,5 @@
 #include "tween.h"
 #include "consts.h"
-#include "scene.h"
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>

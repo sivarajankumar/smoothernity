@@ -4,7 +4,6 @@
 #include <GL/glut.h>
 #include "display.h"
 #include "tween.h"
-#include "scene.h"
 #include "vbuf.h"
 #include "ibuf.h"
 #include "space.h"
