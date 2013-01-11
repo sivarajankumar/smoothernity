@@ -10,7 +10,8 @@ enum matrix_e
 {
     MATRIX_CONST = 0,
     MATRIX_MUL = 1,
-    MATRIX_POS_SCL_ROT = 2
+    MATRIX_INV = 2,
+    MATRIX_POS_SCL_ROT = 3
 };
 
 enum matrix_axis_e
@@ -37,6 +38,10 @@ struct matrix_t
 int matrix_init(lua_State *lua, int count, int nesting);
 void matrix_done(void);
 struct matrix_t * matrix_get(int);
-void matrix_update(struct matrix_t *matrix, float dt,
-                   int frame_tag, int force);
+int matrix_update(struct matrix_t *matrix, float dt,
+                  int frame_tag, int force);
 int matrix_nesting(struct matrix_t *matrix, int limit);
+void matrix_inv(GLfloat *out, GLfloat *m);
+void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2);
+void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
+                        enum matrix_axis_e rotaxis, GLfloat rotangle);

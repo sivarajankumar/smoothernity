@@ -340,14 +340,14 @@ int vector_nesting(struct vector_t *vector, int limit)
         return limit;
 }
 
-void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
+int vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
 {
     int i;
     GLfloat *v0, *v1;
     if (vector->type == VECTOR_CONST)
-        return;
+        return force;
     if (force == 0 && vector->frame_tag == frame_tag)
-        return;
+        return 0;
     vector->frame_tag = frame_tag;
     if (vector->type == VECTOR_SINE)
     {
@@ -364,6 +364,7 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
                                (0.5f * (v1[i] - v0[i]) * 
                                sin(2.0f*M_PI*vector->t / vector->period));
         }
+        return 1;
     }
     else if (vector->type == VECTOR_SAW)
     {
@@ -379,6 +380,7 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
             vector->value[i] = v0[i] + ((v1[i] - v0[i]) *
                                 vector->t / vector->period);
         }
+        return 1;
     }
     else if (vector->type == VECTOR_RUBBER)
     {
@@ -386,5 +388,7 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
         v0 = vector->argv[0]->value;
         for (i = 0; i < 4; ++i)
             vector->value[i] += (v0[i] - vector->value[i]) * vector->rubber;
+        return 1;
     }
+    return force;
 }
