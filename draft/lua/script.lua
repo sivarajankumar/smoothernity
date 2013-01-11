@@ -31,13 +31,15 @@ function configure()
             ["tween_pool"] = 100,
             ["space_pool"] = 100,
             ["space_nesting"] = 10,
-            ["mesh_pool"] = 100,
+            ["mesh_count"] = 100,
             ["vbuf_size"] = 1024,
             ["vbuf_count"] = 100,
             ["ibuf_size"] = 1024,
             ["ibuf_count"] = 100,
             ["text_size"] = 100,
-            ["text_count"] = 100}
+            ["text_count"] = 100,
+            ["vector_count"] = 100,
+            ["vector_nesting"] = 10}
 end
 
 function control(self)

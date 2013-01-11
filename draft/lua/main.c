@@ -16,6 +16,7 @@
 #include "space.h"
 #include "mesh.h"
 #include "text.h"
+#include "vector.h"
 
 /*
 
@@ -57,13 +58,15 @@ struct main_t
     int tween_pool;
     int space_pool;
     int space_nesting;
-    int mesh_pool;
+    int mesh_count;
     int vbuf_size;
     int vbuf_count;
     int ibuf_size;
     int ibuf_count;
     int text_size;
     int text_count;
+    int vector_count;
+    int vector_nesting;
 };
 
 static struct main_t g_main;
@@ -166,13 +169,15 @@ static int main_init(char *script)
      || main_get_int(lua, "tween_pool", &g_main.tween_pool) != 0
      || main_get_int(lua, "space_pool", &g_main.space_pool) != 0
      || main_get_int(lua, "space_nesting", &g_main.space_nesting) != 0
-     || main_get_int(lua, "mesh_pool", &g_main.mesh_pool) != 0
+     || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
      || main_get_int(lua, "ibuf_size", &g_main.ibuf_size) != 0
      || main_get_int(lua, "ibuf_count", &g_main.ibuf_count) != 0
      || main_get_int(lua, "text_size", &g_main.text_size) != 0
-     || main_get_int(lua, "text_count", &g_main.text_count) != 0)
+     || main_get_int(lua, "text_count", &g_main.text_count) != 0
+     || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
+     || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0)
     {
         goto cleanup;
     }
@@ -281,13 +286,19 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    if (vector_init(lua, g_main.vector_count, g_main.vector_nesting) != 0)
+    {
+        fprintf(stderr, "Cannot init vectors\n");
+        goto cleanup;
+    }
+
     if (space_init(lua, g_main.space_pool, g_main.space_nesting) != 0)
     {
         fprintf(stderr, "Cannot init spaces\n");
         goto cleanup;
     }
 
-    if (mesh_init(lua, g_main.mesh_pool) != 0)
+    if (mesh_init(lua, g_main.mesh_count) != 0)
     {
         fprintf(stderr, "Cannot init meshes\n");
         goto cleanup;
@@ -358,6 +369,7 @@ cleanup:
     vbuf_done();
     ibuf_done();
     display_done();
+    vector_done();
     space_done();
     mesh_done();
     text_done();
