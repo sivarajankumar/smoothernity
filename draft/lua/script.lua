@@ -112,7 +112,8 @@ function work(self)
     local to = api_vector_alloc()
     api_vector_const(from, 0, 0, 0, 0)
     api_vector_const(from, math.pi * 2, 0, 0, 0)
-    api_vector_saw(rot1, from, to, 10)
+    --api_vector_saw(rot1, from, to, 10)
+    api_vector_const(rot1, 0, 0, 0, 0)
     api_vector_saw(rot2, from, to, 4)
 
     local pos1 = api_vector_alloc()
@@ -152,7 +153,7 @@ function work(self)
     api_vector_const(scl, 1, 1, 1, 0)
     api_matrix_pos_scl_rot(cam, pos, scl, rot, API_MATRIX_AXIS_X, 0)
 
-    local delta = 0.01
+    local delta = 0.05
 
     local move_left = api_matrix_alloc()
     local pos_left = api_vector_alloc()
@@ -184,6 +185,22 @@ function work(self)
     api_vector_const(pos_back, 0, 0, delta, 0)
     api_matrix_pos_scl_rot(move_back, pos_back, scl, rot, API_MATRIX_AXIS_X, 0)
 
+    local rot_deltas = api_vector_alloc()
+    api_vector_const(rot_deltas, 0.01, -0.01, 0, 0)
+
+    local look_left = api_matrix_alloc()
+    local look_right = api_matrix_alloc()
+    local look_up = api_matrix_alloc()
+    local look_down = api_matrix_alloc()
+    local roll_left = api_matrix_alloc()
+    local roll_right = api_matrix_alloc()
+    api_matrix_pos_scl_rot(look_left, pos, scl, rot_deltas, API_MATRIX_AXIS_Y, 0)
+    api_matrix_pos_scl_rot(look_right, pos, scl, rot_deltas, API_MATRIX_AXIS_Y, 1)
+    api_matrix_pos_scl_rot(look_up, pos, scl, rot_deltas, API_MATRIX_AXIS_X, 0)
+    api_matrix_pos_scl_rot(look_down, pos, scl, rot_deltas, API_MATRIX_AXIS_X, 1)
+    api_matrix_pos_scl_rot(roll_left, pos, scl, rot_deltas, API_MATRIX_AXIS_Z, 0)
+    api_matrix_pos_scl_rot(roll_right, pos, scl, rot_deltas, API_MATRIX_AXIS_Z, 1)
+
     local invcam = api_matrix_alloc()
     api_matrix_inv(invcam, cam)
     api_display_camera(invcam)
@@ -207,6 +224,24 @@ function work(self)
         end
         if api_input_key(API_INPUT_KEY_Z) == 1 then
             api_matrix_mul_now(cam, cam, move_down)
+        end
+        if api_input_key(API_INPUT_KEY_LEFT) == 1 then
+            api_matrix_mul_now(cam, cam, look_left)
+        end
+        if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
+            api_matrix_mul_now(cam, cam, look_right)
+        end
+        if api_input_key(API_INPUT_KEY_UP) == 1 then
+            api_matrix_mul_now(cam, cam, look_up)
+        end
+        if api_input_key(API_INPUT_KEY_DOWN) == 1 then
+            api_matrix_mul_now(cam, cam, look_down)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
+            api_matrix_mul_now(cam, cam, roll_left)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
+            api_matrix_mul_now(cam, cam, roll_right)
         end
         api_sleep(self)
     end
