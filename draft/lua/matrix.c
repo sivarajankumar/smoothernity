@@ -322,6 +322,8 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
         return 0;
     }
 
+    matrix_update(matrix, 0, 0, 1);
+
     return 0;
 }
 
@@ -404,7 +406,7 @@ int matrix_update(struct matrix_t *matrix, float dt,
     GLfloat *m0, *m1;
     int u;
     if (matrix->type == MATRIX_CONST)
-        return force;
+        return 1;
     if (force == 0 && matrix->frame_tag == frame_tag)
         return 0;
     matrix->frame_tag = frame_tag;

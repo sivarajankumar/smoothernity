@@ -7,10 +7,12 @@ API_INPUT_KEY_LEFT = 3
 API_INPUT_KEY_RIGHT = 4
 API_INPUT_KEY_PAGEUP = 5
 API_INPUT_KEY_PAGEDOWN = 6
-API_INPUT_KEY_W = 7
-API_INPUT_KEY_S = 8
-API_INPUT_KEY_A = 9
-API_INPUT_KEY_D = 10
+API_INPUT_KEY_E = 7
+API_INPUT_KEY_D = 8
+API_INPUT_KEY_S = 9
+API_INPUT_KEY_F = 10
+API_INPUT_KEY_A = 11
+API_INPUT_KEY_Z = 12
 
 API_MESH_TRIANGLE_STRIP = 0
 API_MESH_TRIANGLE_FAN = 1
@@ -141,8 +143,71 @@ function work(self)
     local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
     local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
 
+    local cam = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local rot = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_matrix_pos_scl_rot(cam, pos, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local delta = 0.01
+
+    local move_left = api_matrix_alloc()
+    local pos_left = api_vector_alloc()
+    api_vector_const(pos_left, -delta, 0, 0, 0)
+    api_matrix_pos_scl_rot(move_left, pos_left, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local move_right = api_matrix_alloc()
+    local pos_right = api_vector_alloc()
+    api_vector_const(pos_right, delta, 0, 0, 0)
+    api_matrix_pos_scl_rot(move_right, pos_right, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local move_up = api_matrix_alloc()
+    local pos_up = api_vector_alloc()
+    api_vector_const(pos_up, 0, delta, 0, 0)
+    api_matrix_pos_scl_rot(move_up, pos_up, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local move_down = api_matrix_alloc()
+    local pos_down = api_vector_alloc()
+    api_vector_const(pos_down, 0, -delta, 0, 0)
+    api_matrix_pos_scl_rot(move_down, pos_down, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local move_fwd = api_matrix_alloc()
+    local pos_fwd = api_vector_alloc()
+    api_vector_const(pos_fwd, 0, 0, -delta, 0)
+    api_matrix_pos_scl_rot(move_fwd, pos_fwd, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local move_back = api_matrix_alloc()
+    local pos_back = api_vector_alloc()
+    api_vector_const(pos_back, 0, 0, delta, 0)
+    api_matrix_pos_scl_rot(move_back, pos_back, scl, rot, API_MATRIX_AXIS_X, 0)
+
+    local invcam = api_matrix_alloc()
+    api_matrix_inv(invcam, cam)
+    api_display_camera(invcam)
+
     while not quit
     do
+        if api_input_key(API_INPUT_KEY_E) == 1 then
+            api_matrix_mul_now(cam, cam, move_fwd)
+        end
+        if api_input_key(API_INPUT_KEY_D) == 1 then
+            api_matrix_mul_now(cam, cam, move_back)
+        end
+        if api_input_key(API_INPUT_KEY_S) == 1 then
+            api_matrix_mul_now(cam, cam, move_left)
+        end
+        if api_input_key(API_INPUT_KEY_F) == 1 then
+            api_matrix_mul_now(cam, cam, move_right)
+        end
+        if api_input_key(API_INPUT_KEY_A) == 1 then
+            api_matrix_mul_now(cam, cam, move_up)
+        end
+        if api_input_key(API_INPUT_KEY_Z) == 1 then
+            api_matrix_mul_now(cam, cam, move_down)
+        end
         api_sleep(self)
     end
 end
