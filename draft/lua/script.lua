@@ -4,6 +4,10 @@ API_MESH_TRIANGLE_STRIP = 0
 API_MESH_TRIANGLE_FAN = 1
 API_MESH_TRIANGLES = 2
 
+API_MATRIX_AXIS_X = 0
+API_MATRIX_AXIS_Y = 1
+API_MATRIX_AXIS_Z = 2
+
 API_SPACE_AXIS_X = 0
 API_SPACE_AXIS_Y = 1
 API_SPACE_AXIS_Z = 2
@@ -39,7 +43,9 @@ function configure()
             ["text_size"] = 100,
             ["text_count"] = 100,
             ["vector_count"] = 100,
-            ["vector_nesting"] = 10}
+            ["vector_nesting"] = 10,
+            ["matrix_count"] = 100,
+            ["matrix_nesting"] = 10}
 end
 
 function control(self)

@@ -133,7 +133,7 @@ void display_update(float dt)
 
     if (g_display.clear_color)
     {
-        vector_update(g_display.clear_color, dt, g_display.frame_tag);
+        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
         color = g_display.clear_color->value;
         glClearColor(color[0], color[1], color[2], color[3]);
     }
