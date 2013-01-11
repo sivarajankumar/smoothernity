@@ -392,3 +392,10 @@ int vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
     }
     return force;
 }
+
+void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
+{
+    out[0] = v1[1]*v2[2] - v2[1]*v1[2];
+    out[1] = v1[2]*v2[0] - v2[2]*v1[0];
+    out[2] = v1[0]*v2[1] - v2[0]*v1[1];
+}

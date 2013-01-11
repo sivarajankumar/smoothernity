@@ -1,5 +1,17 @@
 quit = false
 
+API_INPUT_KEY_ESCAPE = 0
+API_INPUT_KEY_UP = 1
+API_INPUT_KEY_DOWN = 2
+API_INPUT_KEY_LEFT = 3
+API_INPUT_KEY_RIGHT = 4
+API_INPUT_KEY_PAGEUP = 5
+API_INPUT_KEY_PAGEDOWN = 6
+API_INPUT_KEY_W = 7
+API_INPUT_KEY_S = 8
+API_INPUT_KEY_A = 9
+API_INPUT_KEY_D = 10
+
 API_MESH_TRIANGLE_STRIP = 0
 API_MESH_TRIANGLE_FAN = 1
 API_MESH_TRIANGLES = 2
@@ -41,7 +53,7 @@ end
 function control(self)
     while not quit
     do
-        if api_input_key_escape() == 1 then
+        if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
         api_yield(self)
