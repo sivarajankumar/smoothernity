@@ -64,7 +64,7 @@ function work(self)
     api_vector_const(v0, 0, 0, 0, 1)
     api_vector_const(v1, 1, 0, 1, 1)
     api_vector_sine(v, v0, v1, 1)
-    api_display_set_clear_color(v)
+    api_display_clear_color(v)
 
     local vb = api_vbuf_alloc()
     api_vbuf_write(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0)
