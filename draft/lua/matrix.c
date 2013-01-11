@@ -15,70 +15,6 @@ struct matrices_t
 
 static struct matrices_t g_matrices;
 
-static void matrix_mul(GLfloat *dest, GLfloat *m1, GLfloat *m2)
-{
-    GLfloat m[16];
-
-    m[0] = m1[0]*m2[0] + m1[4]*m2[1] + m1[ 8]*m2[2] + m1[12]*m2[3];
-    m[1] = m1[1]*m2[0] + m1[5]*m2[1] + m1[ 9]*m2[2] + m1[13]*m2[3];
-    m[2] = m1[2]*m2[0] + m1[6]*m2[1] + m1[10]*m2[2] + m1[14]*m2[3];
-    m[3] = m1[3]*m2[0] + m1[7]*m2[1] + m1[11]*m2[2] + m1[15]*m2[3];
-
-    m[4] = m1[0]*m2[4] + m1[4]*m2[5] + m1[ 8]*m2[6] + m1[12]*m2[7];
-    m[5] = m1[1]*m2[4] + m1[5]*m2[5] + m1[ 9]*m2[6] + m1[13]*m2[7];
-    m[6] = m1[2]*m2[4] + m1[6]*m2[5] + m1[10]*m2[6] + m1[14]*m2[7];
-    m[7] = m1[3]*m2[4] + m1[7]*m2[5] + m1[11]*m2[6] + m1[15]*m2[7];
-
-    m[ 8] = m1[0]*m2[8] + m1[4]*m2[9] + m1[ 8]*m2[10] + m1[12]*m2[11];
-    m[ 9] = m1[1]*m2[8] + m1[5]*m2[9] + m1[ 9]*m2[10] + m1[13]*m2[11];
-    m[10] = m1[2]*m2[8] + m1[6]*m2[9] + m1[10]*m2[10] + m1[14]*m2[11];
-    m[11] = m1[3]*m2[8] + m1[7]*m2[9] + m1[11]*m2[10] + m1[15]*m2[11];
-
-    m[12] = m1[0]*m2[12] + m1[4]*m2[13] + m1[ 8]*m2[14] + m1[12]*m2[15];
-    m[13] = m1[1]*m2[12] + m1[5]*m2[13] + m1[ 9]*m2[14] + m1[13]*m2[15];
-    m[14] = m1[2]*m2[12] + m1[6]*m2[13] + m1[10]*m2[14] + m1[14]*m2[15];
-    m[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
-
-    memcpy(dest, m, 16 * sizeof(GLfloat));
-}
-
-static void matrix_pos_scl_rot(GLfloat *m, GLfloat *pos, GLfloat *scl,
-                               enum matrix_axis_e rotaxis, GLfloat rotangle)
-{
-    GLfloat axisx[3], axisy[3], axisz[3];
-    GLfloat rcos, rsin;
-
-    rcos = cos(rotangle);
-    rsin = sin(rotangle);
-    if (rotaxis == MATRIX_AXIS_X)
-    {
-        axisx[0] = 1; axisx[1] =     0; axisx[2] =    0; 
-        axisy[0] = 0; axisy[1] =  rcos; axisy[2] = rsin; 
-        axisz[0] = 0; axisz[1] = -rsin; axisz[2] = rcos; 
-    }
-    else if (rotaxis == MATRIX_AXIS_Y)
-    {
-        axisx[0] = rcos; axisx[1] = 0; axisx[2] = -rsin; 
-        axisy[0] =    0; axisy[1] = 1; axisy[2] =     0; 
-        axisz[0] = rsin; axisz[1] = 0; axisz[2] =  rcos; 
-    }
-    else if (rotaxis == MATRIX_AXIS_Z)
-    {
-        axisx[0] =  rcos; axisx[1] = rsin; axisx[2] = 0;
-        axisy[0] = -rsin; axisy[1] = rcos; axisy[2] = 0;
-        axisz[0] =     0; axisz[1] =    0; axisz[2] = 1;
-    }
-
-    axisx[0] *= scl[0]; axisx[1] *= scl[0]; axisx[2] *= scl[0];
-    axisy[0] *= scl[1]; axisy[1] *= scl[1]; axisy[2] *= scl[1];
-    axisz[0] *= scl[2]; axisz[1] *= scl[2]; axisz[2] *= scl[2];
-
-    m[ 0] = axisx[0]; m[ 1] = axisx[1]; m[ 2] = axisx[2]; m[ 3] = 0;
-    m[ 4] = axisy[0]; m[ 5] = axisy[1]; m[ 6] = axisy[2]; m[ 7] = 0;
-    m[ 8] = axisz[0]; m[ 9] = axisz[1]; m[10] = axisz[2]; m[11] = 0;
-    m[12] =   pos[0]; m[13] =   pos[1]; m[14] =   pos[2]; m[15] = 1;
-}
-
 static void matrix_clear_args(struct matrix_t *matrix)
 {
     int i;
@@ -238,6 +174,8 @@ static int api_matrix_mul(lua_State *lua)
         return 0;
     }
 
+    matrix_update(matrix, 0, 0, 1);
+
     return 0;
 }
 
@@ -274,6 +212,47 @@ static int api_matrix_mul_now(lua_State *lua)
     matrix_update(m1, 0, 0, 1);
 
     matrix_mul(matrix->value, m0->value, m1->value);
+
+    return 0;
+}
+
+static int api_matrix_inv(lua_State *lua)
+{
+    struct matrix_t *matrix, *m0;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
+    || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_matrix_inv: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, -2));
+    m0 = matrix_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 2);
+
+    if (matrix == 0 || m0 == 0)
+    {
+        lua_pushstring(lua, "api_matrix_inv: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_INV;
+    matrix->argm[0] = m0;
+
+    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_matrix_inv: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_update(matrix, 0, 0, 1);
 
     return 0;
 }
@@ -364,6 +343,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_free", api_matrix_free);
     lua_register(lua, "api_matrix_query", api_matrix_query);
     lua_register(lua, "api_matrix_const", api_matrix_const);
+    lua_register(lua, "api_matrix_inv", api_matrix_inv);
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
     lua_register(lua, "api_matrix_mul_now", api_matrix_mul_now);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
@@ -415,33 +395,245 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         return limit;
 }
 
-void matrix_update(struct matrix_t *matrix, float dt,
-                   int frame_tag, int force)
+int matrix_update(struct matrix_t *matrix, float dt,
+                  int frame_tag, int force)
 {
     GLfloat *v0, *v1, *v2;
     GLfloat *m0, *m1;
+    int u;
     if (matrix->type == MATRIX_CONST)
-        return;
+        return force;
     if (force == 0 && matrix->frame_tag == frame_tag)
-        return;
+        return 0;
     matrix->frame_tag = frame_tag;
     if (matrix->type == MATRIX_MUL)
     {
-        matrix_update(matrix->argm[0], dt, frame_tag, force);
-        matrix_update(matrix->argm[1], dt, frame_tag, force);
-        m0 = matrix->argm[0]->value;
-        m1 = matrix->argm[1]->value;
-        matrix_mul(matrix->value, m0, m1);
+        u =  matrix_update(matrix->argm[0], dt, frame_tag, force);
+        u += matrix_update(matrix->argm[1], dt, frame_tag, force);
+        if (u)
+        {
+            m0 = matrix->argm[0]->value;
+            m1 = matrix->argm[1]->value;
+            matrix_mul(matrix->value, m0, m1);
+            return 1;
+        }
+    }
+    else if (matrix->type == MATRIX_INV)
+    {
+        u = matrix_update(matrix->argm[0], dt, frame_tag, force);
+        if (u)
+        {
+            m0 = matrix->argm[0]->value;
+            matrix_inv(matrix->value, m0);
+            return 1;
+        }
     }
     else if (matrix->type == MATRIX_POS_SCL_ROT)
     {
-        vector_update(matrix->argv[0], dt, frame_tag, force);
-        vector_update(matrix->argv[1], dt, frame_tag, force);
-        vector_update(matrix->argv[2], dt, frame_tag, force);
-        v0 = matrix->argv[0]->value;
-        v1 = matrix->argv[1]->value;
-        v2 = matrix->argv[2]->value;
-        matrix_pos_scl_rot(matrix->value, v0, v1,
-                           matrix->rotaxis, v2[matrix->rotanglei]);
+        u =  vector_update(matrix->argv[0], dt, frame_tag, force);
+        u += vector_update(matrix->argv[1], dt, frame_tag, force);
+        u += vector_update(matrix->argv[2], dt, frame_tag, force);
+        if (u)
+        {
+            v0 = matrix->argv[0]->value;
+            v1 = matrix->argv[1]->value;
+            v2 = matrix->argv[2]->value;
+            matrix_pos_scl_rot(matrix->value, v0, v1,
+                               matrix->rotaxis, v2[matrix->rotanglei]);
+            return 1;
+        }
     }
+    return force;
+}
+
+void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
+{
+    GLfloat m[16];
+
+    m[0] = m1[0]*m2[0] + m1[4]*m2[1] + m1[ 8]*m2[2] + m1[12]*m2[3];
+    m[1] = m1[1]*m2[0] + m1[5]*m2[1] + m1[ 9]*m2[2] + m1[13]*m2[3];
+    m[2] = m1[2]*m2[0] + m1[6]*m2[1] + m1[10]*m2[2] + m1[14]*m2[3];
+    m[3] = m1[3]*m2[0] + m1[7]*m2[1] + m1[11]*m2[2] + m1[15]*m2[3];
+
+    m[4] = m1[0]*m2[4] + m1[4]*m2[5] + m1[ 8]*m2[6] + m1[12]*m2[7];
+    m[5] = m1[1]*m2[4] + m1[5]*m2[5] + m1[ 9]*m2[6] + m1[13]*m2[7];
+    m[6] = m1[2]*m2[4] + m1[6]*m2[5] + m1[10]*m2[6] + m1[14]*m2[7];
+    m[7] = m1[3]*m2[4] + m1[7]*m2[5] + m1[11]*m2[6] + m1[15]*m2[7];
+
+    m[ 8] = m1[0]*m2[8] + m1[4]*m2[9] + m1[ 8]*m2[10] + m1[12]*m2[11];
+    m[ 9] = m1[1]*m2[8] + m1[5]*m2[9] + m1[ 9]*m2[10] + m1[13]*m2[11];
+    m[10] = m1[2]*m2[8] + m1[6]*m2[9] + m1[10]*m2[10] + m1[14]*m2[11];
+    m[11] = m1[3]*m2[8] + m1[7]*m2[9] + m1[11]*m2[10] + m1[15]*m2[11];
+
+    m[12] = m1[0]*m2[12] + m1[4]*m2[13] + m1[ 8]*m2[14] + m1[12]*m2[15];
+    m[13] = m1[1]*m2[12] + m1[5]*m2[13] + m1[ 9]*m2[14] + m1[13]*m2[15];
+    m[14] = m1[2]*m2[12] + m1[6]*m2[13] + m1[10]*m2[14] + m1[14]*m2[15];
+    m[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
+
+    memcpy(out, m, 16 * sizeof(GLfloat));
+}
+
+void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
+                        enum matrix_axis_e rotaxis, GLfloat rotangle)
+{
+    GLfloat axisx[3], axisy[3], axisz[3];
+    GLfloat rcos, rsin;
+
+    rcos = cos(rotangle);
+    rsin = sin(rotangle);
+    if (rotaxis == MATRIX_AXIS_X)
+    {
+        axisx[0] = 1; axisx[1] =     0; axisx[2] =    0; 
+        axisy[0] = 0; axisy[1] =  rcos; axisy[2] = rsin; 
+        axisz[0] = 0; axisz[1] = -rsin; axisz[2] = rcos; 
+    }
+    else if (rotaxis == MATRIX_AXIS_Y)
+    {
+        axisx[0] = rcos; axisx[1] = 0; axisx[2] = -rsin; 
+        axisy[0] =    0; axisy[1] = 1; axisy[2] =     0; 
+        axisz[0] = rsin; axisz[1] = 0; axisz[2] =  rcos; 
+    }
+    else if (rotaxis == MATRIX_AXIS_Z)
+    {
+        axisx[0] =  rcos; axisx[1] = rsin; axisx[2] = 0;
+        axisy[0] = -rsin; axisy[1] = rcos; axisy[2] = 0;
+        axisz[0] =     0; axisz[1] =    0; axisz[2] = 1;
+    }
+
+    axisx[0] *= scl[0]; axisx[1] *= scl[0]; axisx[2] *= scl[0];
+    axisy[0] *= scl[1]; axisy[1] *= scl[1]; axisy[2] *= scl[1];
+    axisz[0] *= scl[2]; axisz[1] *= scl[2]; axisz[2] *= scl[2];
+
+    out[ 0] = axisx[0]; out[ 1] = axisx[1]; out[ 2] = axisx[2]; out[ 3] = 0;
+    out[ 4] = axisy[0]; out[ 5] = axisy[1]; out[ 6] = axisy[2]; out[ 7] = 0;
+    out[ 8] = axisz[0]; out[ 9] = axisz[1]; out[10] = axisz[2]; out[11] = 0;
+    out[12] =   pos[0]; out[13] =   pos[1]; out[14] =   pos[2]; out[15] = 1;
+}
+
+void matrix_inv(GLfloat *out, GLfloat *m)
+{
+    double inv[16], det;
+    int i;
+
+    inv[0] = m[5]  * m[10] * m[15] - 
+             m[5]  * m[11] * m[14] - 
+             m[9]  * m[6]  * m[15] + 
+             m[9]  * m[7]  * m[14] +
+             m[13] * m[6]  * m[11] - 
+             m[13] * m[7]  * m[10];
+
+    inv[4] = -m[4]  * m[10] * m[15] + 
+              m[4]  * m[11] * m[14] + 
+              m[8]  * m[6]  * m[15] - 
+              m[8]  * m[7]  * m[14] - 
+              m[12] * m[6]  * m[11] + 
+              m[12] * m[7]  * m[10];
+
+    inv[8] = m[4]  * m[9] * m[15] - 
+             m[4]  * m[11] * m[13] - 
+             m[8]  * m[5] * m[15] + 
+             m[8]  * m[7] * m[13] + 
+             m[12] * m[5] * m[11] - 
+             m[12] * m[7] * m[9];
+
+    inv[12] = -m[4]  * m[9] * m[14] + 
+               m[4]  * m[10] * m[13] +
+               m[8]  * m[5] * m[14] - 
+               m[8]  * m[6] * m[13] - 
+               m[12] * m[5] * m[10] + 
+               m[12] * m[6] * m[9];
+
+    inv[1] = -m[1]  * m[10] * m[15] + 
+              m[1]  * m[11] * m[14] + 
+              m[9]  * m[2] * m[15] - 
+              m[9]  * m[3] * m[14] - 
+              m[13] * m[2] * m[11] + 
+              m[13] * m[3] * m[10];
+
+    inv[5] = m[0]  * m[10] * m[15] - 
+             m[0]  * m[11] * m[14] - 
+             m[8]  * m[2] * m[15] + 
+             m[8]  * m[3] * m[14] + 
+             m[12] * m[2] * m[11] - 
+             m[12] * m[3] * m[10];
+
+    inv[9] = -m[0]  * m[9] * m[15] + 
+              m[0]  * m[11] * m[13] + 
+              m[8]  * m[1] * m[15] - 
+              m[8]  * m[3] * m[13] - 
+              m[12] * m[1] * m[11] + 
+              m[12] * m[3] * m[9];
+
+    inv[13] = m[0]  * m[9] * m[14] - 
+              m[0]  * m[10] * m[13] - 
+              m[8]  * m[1] * m[14] + 
+              m[8]  * m[2] * m[13] + 
+              m[12] * m[1] * m[10] - 
+              m[12] * m[2] * m[9];
+
+    inv[2] = m[1]  * m[6] * m[15] - 
+             m[1]  * m[7] * m[14] - 
+             m[5]  * m[2] * m[15] + 
+             m[5]  * m[3] * m[14] + 
+             m[13] * m[2] * m[7] - 
+             m[13] * m[3] * m[6];
+
+    inv[6] = -m[0]  * m[6] * m[15] + 
+              m[0]  * m[7] * m[14] + 
+              m[4]  * m[2] * m[15] - 
+              m[4]  * m[3] * m[14] - 
+              m[12] * m[2] * m[7] + 
+              m[12] * m[3] * m[6];
+
+    inv[10] = m[0]  * m[5] * m[15] - 
+              m[0]  * m[7] * m[13] - 
+              m[4]  * m[1] * m[15] + 
+              m[4]  * m[3] * m[13] + 
+              m[12] * m[1] * m[7] - 
+              m[12] * m[3] * m[5];
+
+    inv[14] = -m[0]  * m[5] * m[14] + 
+               m[0]  * m[6] * m[13] + 
+               m[4]  * m[1] * m[14] - 
+               m[4]  * m[2] * m[13] - 
+               m[12] * m[1] * m[6] + 
+               m[12] * m[2] * m[5];
+
+    inv[3] = -m[1] * m[6] * m[11] + 
+              m[1] * m[7] * m[10] + 
+              m[5] * m[2] * m[11] - 
+              m[5] * m[3] * m[10] - 
+              m[9] * m[2] * m[7] + 
+              m[9] * m[3] * m[6];
+
+    inv[7] = m[0] * m[6] * m[11] - 
+             m[0] * m[7] * m[10] - 
+             m[4] * m[2] * m[11] + 
+             m[4] * m[3] * m[10] + 
+             m[8] * m[2] * m[7] - 
+             m[8] * m[3] * m[6];
+
+    inv[11] = -m[0] * m[5] * m[11] + 
+               m[0] * m[7] * m[9] + 
+               m[4] * m[1] * m[11] - 
+               m[4] * m[3] * m[9] - 
+               m[8] * m[1] * m[7] + 
+               m[8] * m[3] * m[5];
+
+    inv[15] = m[0] * m[5] * m[10] - 
+              m[0] * m[6] * m[9] - 
+              m[4] * m[1] * m[10] + 
+              m[4] * m[2] * m[9] + 
+              m[8] * m[1] * m[6] - 
+              m[8] * m[2] * m[5];
+
+    det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+
+    if (det == 0)
+        return;
+
+    det = 1.0f / det;
+
+    for (i = 0; i < 16; i++)
+        out[i] = inv[i] * det;
 }
