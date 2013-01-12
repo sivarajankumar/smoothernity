@@ -38,6 +38,8 @@ void * mpool_alloc(size_t size)
     int i;
     struct mpool_chunk_t *chunk;
     struct mpool_shelf_t *shelf;
+    if (size > (size_t)g_mpool.largest_size)
+        g_mpool.largest_size = (int)size;
     shelf = 0;
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
@@ -48,9 +50,15 @@ void * mpool_alloc(size_t size)
         }
     }
     if (shelf == 0)
+    {
+        fprintf(stderr, "mpool_alloc: cannot find shelf for size %i\n",
+                (int)size);
         return 0;
+    }
     if (shelf->vacant == 0)
     {
+        fprintf(stderr, "mpool_alloc: out of chunks in shelf %i\n",
+                shelf->size);
         ++shelf->alloc_fails;
         return 0;
     }
