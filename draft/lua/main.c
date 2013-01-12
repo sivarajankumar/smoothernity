@@ -17,7 +17,7 @@
 #include "text.h"
 #include "vector.h"
 #include "matrix.h"
-#include "physic.h"
+#include "physics.h"
 
 struct main_t
 {
@@ -258,7 +258,7 @@ int main(int argc, char **argv)
     machine_init(lua);
     input_init(lua);
 
-    if (physic_init(lua, mpool_alloc, mpool_free) != 0)
+    if (physics_init(lua, mpool_alloc, mpool_free) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
         goto cleanup;
@@ -364,7 +364,7 @@ cleanup:
     mesh_done();
     text_done();
     main_done();
-    physic_done();
+    physics_done();
     if (lua)
         lua_close(lua);
     if (controller)
