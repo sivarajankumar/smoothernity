@@ -8,4 +8,4 @@ add_library(physics physics.cpp)
 
 target_link_libraries(physics ${BULLET_LIBRARIES})
 
-add_definitions(-ansi -pedantic-errors -Wall -Wextra -Werror)
+add_definitions(-ansi -pedantic-errors -Wall -Wextra)

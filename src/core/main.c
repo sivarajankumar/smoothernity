@@ -238,6 +238,12 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    if (physics_init(lua, mpool_alloc, mpool_free) != 0)
+    {
+        fprintf(stderr, "Cannot init physics\n"); 
+        goto cleanup;
+    } 
+
     lua = lua_newstate(main_alloc, 0);
     if (lua == 0)
     {
@@ -257,12 +263,6 @@ int main(int argc, char **argv)
 
     machine_init(lua);
     input_init(lua);
-
-    if (physics_init(lua, mpool_alloc, mpool_free) != 0)
-    {
-        fprintf(stderr, "Cannot init physics\n"); 
-        goto cleanup;
-    } 
 
     if (display_init(lua, &argc, argv, g_main.display_width,
                                        g_main.display_height) != 0)
