@@ -12,13 +12,13 @@ add_executable(main
                main.c mpool.c machine.c timer.c display.c text.c
                vector.c input.c vbuf.c ibuf.c mesh.c matrix.c)
 
-add_definitions(-std=c99 -ansi -pedantic-errors -Wall -Wextra -Werror
-                -DGL_GLEXT_PROTOTYPES=1
-                -DGL_GLXEXT_PROTOTYPES=1)
-
 target_link_libraries(main
                       physics
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
                       ${GLUT_LIBRARIES}
                       ${OPENGL_LIBRARIES})
+
+add_definitions(-std=c99 -ansi -pedantic-errors -Wall -Wextra -Werror
+                -DGL_GLEXT_PROTOTYPES=1
+                -DGL_GLXEXT_PROTOTYPES=1)
