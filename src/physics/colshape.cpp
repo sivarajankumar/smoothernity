@@ -85,12 +85,14 @@ void colshape_free(int colshapei)
 
 void colshape_make_box(colshape_t *colshape, float mass, float *size)
 {
-    btVector3 inertia(0, 0, 0);
     if (colshape->shape)
         return;
     colshape->shape_box = new (colshape->data)
         btBoxShape(btVector3(size[0], size[1], size[2]));
     colshape->shape = colshape->shape_box;
+    colshape->mass = mass;
     if (mass > 0.0f)
-        colshape->shape_box->calculateLocalInertia(mass, inertia);
+        colshape->shape_box->calculateLocalInertia(mass, colshape->inertia);
+    else
+        colshape->inertia = btVector3(0,0,0);
 }
