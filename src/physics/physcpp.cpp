@@ -1,3 +1,4 @@
+#include "colshape.hpp"
 #include <lua.h>
 #include <btBulletDynamicsCommon.h>
 #include <exception>
@@ -17,14 +18,17 @@ extern "C"
 void physcpp_done(void)
 {
     int i;
-    btCollisionObject *col;
     if (g_physics.world)
     {
         for (i = 0; i < g_physics.world->getNumCollisionObjects(); --i)
         {
-            col = g_physics.world->getCollisionObjectArray()[i];
-            g_physics.world->removeCollisionObject(col);
+            g_physics.world->removeCollisionObject(
+                g_physics.world->getCollisionObjectArray()[i]);
         }
+    }
+    colshape_done();
+    if (g_physics.world)
+    {
         delete g_physics.world;
         g_physics.world = 0;
     }
@@ -51,7 +55,8 @@ void physcpp_done(void)
 }
 
 extern "C"
-int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*))
+int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
+                 int colshape_count)
 {
     btAlignedAllocSetCustom(memalloc, memfree);
     try
@@ -70,5 +75,7 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*))
         physcpp_done();
         return 1;
     }
+    if (colshape_init(colshape_count) != 0)
+        return 1;
     return 0;
 }

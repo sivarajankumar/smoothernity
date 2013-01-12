@@ -41,6 +41,7 @@ struct main_t
     int vector_nesting;
     int matrix_count;
     int matrix_nesting;
+    int colshape_count;
 };
 
 static struct main_t g_main;
@@ -170,7 +171,8 @@ static int main_init(char *script)
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
-     || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0)
+     || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0
+     || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0)
     {
         goto cleanup;
     }
@@ -238,12 +240,6 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (physics_init(lua) != 0)
-    {
-        fprintf(stderr, "Cannot init physics\n"); 
-        goto cleanup;
-    } 
-
     lua = lua_newstate(main_lua_alloc, 0);
     if (lua == 0)
     {
@@ -263,6 +259,12 @@ int main(int argc, char **argv)
 
     machine_init(lua);
     input_init(lua);
+
+    if (physics_init(lua, g_main.colshape_count) != 0)
+    {
+        fprintf(stderr, "Cannot init physics\n"); 
+        goto cleanup;
+    } 
 
     if (display_init(lua, &argc, argv, g_main.display_width,
                                        g_main.display_height) != 0)
