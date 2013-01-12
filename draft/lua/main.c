@@ -20,9 +20,9 @@
 
 struct main_t
 {
-    int *mpool_sizes;
-    int *mpool_counts;
-    int mpool_len;
+    int *lua_sizes;
+    int *lua_counts;
+    int lua_len;
     int logic_time;
     int gc_step;
     int min_delay;
@@ -154,10 +154,10 @@ static int main_init(char *script)
         goto cleanup;
     }
 
-    if (main_get_int_array(lua, "mpool_sizes", &g_main.mpool_len,
-                           &g_main.mpool_sizes) != 0
-     || main_get_int_array(lua, "mpool_counts", &g_main.mpool_len,
-                           &g_main.mpool_counts) != 0)
+    if (main_get_int_array(lua, "lua_sizes", &g_main.lua_len,
+                           &g_main.lua_sizes) != 0
+     || main_get_int_array(lua, "lua_counts", &g_main.lua_len,
+                           &g_main.lua_counts) != 0)
     {
         goto cleanup;
     }
@@ -166,15 +166,15 @@ static int main_init(char *script)
     lua_close(lua);
     return 0;
 cleanup:
-    if (g_main.mpool_sizes)
+    if (g_main.lua_sizes)
     {
-        free(g_main.mpool_sizes);
-        g_main.mpool_sizes = 0;
+        free(g_main.lua_sizes);
+        g_main.lua_sizes = 0;
     }
-    if (g_main.mpool_counts)
+    if (g_main.lua_counts)
     {
-        free(g_main.mpool_counts);
-        g_main.mpool_counts = 0;
+        free(g_main.lua_counts);
+        g_main.lua_counts = 0;
     }
     lua_close(lua);
     return 1;
@@ -182,15 +182,15 @@ cleanup:
 
 void main_done(void)
 {
-    if (g_main.mpool_sizes)
+    if (g_main.lua_sizes)
     {
-        free(g_main.mpool_sizes);
-        g_main.mpool_sizes = 0;
+        free(g_main.lua_sizes);
+        g_main.lua_sizes = 0;
     }
-    if (g_main.mpool_counts)
+    if (g_main.lua_counts)
     {
-        free(g_main.mpool_counts);
-        g_main.mpool_counts = 0;
+        free(g_main.lua_counts);
+        g_main.lua_counts = 0;
     }
 }
 
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
     int time_left, max_deviation;
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
-    struct mpool_t *mpool = 0;
+    struct mpool_t *lua_pool = 0;
     struct timer_t *logic_timer = 0;
 
     printf("Start\n");
@@ -210,16 +210,16 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    mpool = mpool_create(g_main.mpool_sizes,
-                         g_main.mpool_counts,
-                         g_main.mpool_len);
-    if (mpool == 0)
+    lua_pool = mpool_create(g_main.lua_sizes,
+                            g_main.lua_counts,
+                            g_main.lua_len);
+    if (lua_pool == 0)
     {
-        fprintf(stderr, "Cannot create memory pool\n");
+        fprintf(stderr, "Cannot create Lua memory pool\n");
         goto cleanup;
     }
 
-    lua = lua_newstate(main_alloc, mpool);
+    lua = lua_newstate(main_alloc, lua_pool);
     if (lua == 0)
     {
         fprintf(stderr, "Cannot create Lua state\n");
@@ -348,10 +348,10 @@ cleanup:
     cbullet_done();
     if (lua)
         lua_close(lua);
-    if (mpool)
+    if (lua_pool)
     {
-        mpool_print(mpool);
-        mpool_destroy(mpool);
+        mpool_print(lua_pool);
+        mpool_destroy(lua_pool);
     }
     if (controller)
         machine_destroy(controller);
