@@ -1,7 +1,0 @@
-#ifndef _shy_iphone_lib_std_cerr_injections_included
-#define _shy_iphone_lib_std_cerr_injections_included 
-
-no_cerr_for_iphone
-
-#endif
-

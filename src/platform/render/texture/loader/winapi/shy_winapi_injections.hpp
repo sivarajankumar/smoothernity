@@ -1,5 +1,0 @@
-#include "./shy_winapi_injections.h"
-#include "src/injections/lib/std/true/shy_true.h"
-#include "src/injections/platform/math/insider/shy_insider.h"
-#include "src/trace/platform/math/shy_math_injections.h"
-#include "./shy_winapi.hpp"

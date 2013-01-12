@@ -1,6 +1,0 @@
-#ifndef _shy_iphone_lib_std_isdigit_injections_included
-#define _shy_iphone_lib_std_isdigit_injections_included 
-
-no_isdigit_for_iphone
-
-#endif

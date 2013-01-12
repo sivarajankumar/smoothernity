@@ -1,8 +1,0 @@
-#include "./shy_python_injections.h"
-#include "src/injections/lib/std/bool/shy_bool.h"
-#include "src/injections/lib/std/cout/shy_cout.h"
-#include "src/injections/lib/std/true/shy_true.h"
-#include "src/injections/platform/generator/consts/shy_consts.h"
-#include "src/injections/platform/trace/consts/shy_consts.h"
-#include "src/trace/shy_trace_injections.h"
-#include "./shy_python.hpp"
