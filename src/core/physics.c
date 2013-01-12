@@ -1,6 +1,6 @@
 #include "physics.h"
-#include "../physics/physcpp.h"
 #include "mpool.h"
+#include "../physics/physcpp.h"
 
 int physics_init(lua_State *lua)
 {

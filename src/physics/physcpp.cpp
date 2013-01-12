@@ -1,5 +1,4 @@
 #include <lua.h>
-#include <iostream>
 #include <btBulletDynamicsCommon.h>
 #include <exception>
 
