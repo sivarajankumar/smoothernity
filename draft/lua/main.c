@@ -2,6 +2,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <SDL.h>
@@ -52,7 +53,27 @@ static int main_panic(lua_State *lua)
 
 static void * main_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
 {
-    return mpool_alloc(ud, ptr, osize, nsize);
+    void *newptr;
+    if (ud != 0)
+        return 0;
+    if (osize == 0 && nsize == 0)
+        return 0;
+    else if (osize == 0 && nsize > 0)
+        return mpool_alloc((int)nsize);
+    else if (osize > 0 && nsize == 0)
+    {
+        mpool_free(ptr);
+        return 0;
+    }
+    newptr = mpool_alloc((int)nsize);
+    if (newptr == 0)
+        return 0;
+    if (osize <= nsize)
+        memcpy(newptr, ptr, osize);
+    else
+        memcpy(newptr, ptr, nsize);
+    mpool_free(ptr);
+    return newptr;
 }
 
 static int main_get_int_array(lua_State *lua, const char *field,
@@ -199,7 +220,6 @@ int main(int argc, char **argv)
     int time_left, max_deviation;
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
-    struct mpool_t *mpool = 0;
     struct timer_t *logic_timer = 0;
 
     printf("Start\n");
@@ -210,16 +230,15 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    mpool = mpool_create(g_main.mpool_sizes,
-                         g_main.mpool_counts,
-                         g_main.mpool_len);
-    if (mpool == 0)
+    if (mpool_init(g_main.mpool_sizes,
+                   g_main.mpool_counts,
+                   g_main.mpool_len) == 0)
     {
-        fprintf(stderr, "Cannot create Lua memory pool\n");
+        fprintf(stderr, "Cannot create memory pool\n");
         goto cleanup;
     }
 
-    lua = lua_newstate(main_alloc, mpool);
+    lua = lua_newstate(main_alloc, 0);
     if (lua == 0)
     {
         fprintf(stderr, "Cannot create Lua state\n");
@@ -348,17 +367,13 @@ cleanup:
     physic_done();
     if (lua)
         lua_close(lua);
-    if (mpool)
-    {
-        mpool_print(mpool);
-        mpool_destroy(mpool);
-    }
     if (controller)
         machine_destroy(controller);
     if (worker)
         machine_destroy(worker);
     if (logic_timer)
         timer_destroy(logic_timer);
+    mpool_done();
     printf("Finish\n");
     return 0;
 }
