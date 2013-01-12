@@ -1,6 +1,0 @@
-#ifndef _shy_iphone_lib_std_isspace_injections_included
-#define _shy_iphone_lib_std_isspace_injections_included 
-
-no_isspace_for_iphone
-
-#endif

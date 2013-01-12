@@ -1,8 +1,0 @@
-#ifndef _shy_iphone_platform_render_index_buffer_mapped_data_type_injections_included
-#define _shy_iphone_platform_render_index_buffer_mapped_data_type_injections_included
-
-#include "src/platform/render/opengl/index/buffer/mapped/data/type/shy_type_injections.h"
-typedef so_called_platform_render_opengl_index_buffer_mapped_data_type so_called_platform_render_index_buffer_mapped_data_type ;
-
-#endif
-

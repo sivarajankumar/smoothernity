@@ -1,6 +1,0 @@
-#ifndef _shy_win_platform_static_array_insider_injections_included
-#define _shy_win_platform_static_array_insider_injections_included
-
-#include "src/platform/static/array/insider/shy_insider_injections.h"
-
-#endif

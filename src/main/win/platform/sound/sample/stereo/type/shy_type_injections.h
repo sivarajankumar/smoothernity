@@ -1,7 +1,0 @@
-#ifndef _shy_win_platform_sound_sample_stereo_type_injections_included
-#define _shy_win_platform_sound_sample_stereo_type_injections_included
-
-#include "src/platform/sound/directx/sample/stereo/type/shy_type_injections.h"
-typedef so_called_platform_sound_directx_sample_stereo_type so_called_platform_sound_sample_stereo_type ;
-
-#endif
