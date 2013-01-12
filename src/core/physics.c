@@ -2,11 +2,11 @@
 #include "mpool.h"
 #include "../physics/physcpp.h"
 
-int physics_init(lua_State *lua)
+int physics_init(lua_State *lua, int colshape_count)
 {
     if (lua == 0)
-        return 0;
-    return physcpp_init(mpool_alloc, mpool_free);
+        return 1;
+    return physcpp_init(mpool_alloc, mpool_free, colshape_count);
 }
 
 void physics_done(void)

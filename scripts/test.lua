@@ -49,7 +49,8 @@ function configure()
             ["vector_count"] = 100,
             ["vector_nesting"] = 10,
             ["matrix_count"] = 100,
-            ["matrix_nesting"] = 10}
+            ["matrix_nesting"] = 10,
+            ["colshape_count"] = 100}
 end
 
 function control(self)
