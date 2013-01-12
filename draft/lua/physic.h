@@ -2,5 +2,5 @@
 
 #include <lua.h>
 
-extern int physic_init(lua_State *lua);
-extern void physic_done(void);
+int physic_init(lua_State *lua, void *(*memalloc)(size_t), void (*memfree)(void*));
+void physic_done(void);

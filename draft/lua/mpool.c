@@ -33,7 +33,7 @@ struct mpool_t
 
 static struct mpool_t g_mpool;
 
-void * mpool_alloc(int size)
+void * mpool_alloc(size_t size)
 {
     int i;
     struct mpool_chunk_t *chunk;
@@ -41,7 +41,7 @@ void * mpool_alloc(int size)
     shelf = 0;
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
-        if (g_mpool.shelves[i].size >= size)
+        if ((size_t)g_mpool.shelves[i].size >= size)
         {
             shelf = g_mpool.shelves + i;
             break;

@@ -56,19 +56,19 @@ static void * main_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
     void *newptr;
     if (ud != 0)
         return 0;
-    if (osize == 0 && nsize == 0)
+    else if (osize == 0 && nsize == 0)
         return 0;
     else if (osize == 0 && nsize > 0)
-        return mpool_alloc((int)nsize);
+        return mpool_alloc(nsize);
     else if (osize > 0 && nsize == 0)
     {
         mpool_free(ptr);
         return 0;
     }
-    newptr = mpool_alloc((int)nsize);
+    newptr = mpool_alloc(nsize);
     if (newptr == 0)
         return 0;
-    if (osize <= nsize)
+    else if (osize <= nsize)
         memcpy(newptr, ptr, osize);
     else
         memcpy(newptr, ptr, nsize);
@@ -258,7 +258,7 @@ int main(int argc, char **argv)
     machine_init(lua);
     input_init(lua);
 
-    if (physic_init(lua) != 0)
+    if (physic_init(lua, mpool_alloc, mpool_free) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
         goto cleanup;
