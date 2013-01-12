@@ -15,7 +15,7 @@ struct physics_t
 static physics_t g_physics;
 
 extern "C"
-void physics_done(void)
+void physcpp_done(void)
 {
     int i;
     btCollisionObject *col;
@@ -52,7 +52,7 @@ void physics_done(void)
 }
 
 extern "C"
-int physics_init(lua_State *, void *(*memalloc)(size_t), void (*memfree)(void*))
+int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*))
 {
     btAlignedAllocSetCustom(memalloc, memfree);
     try
@@ -68,7 +68,7 @@ int physics_init(lua_State *, void *(*memalloc)(size_t), void (*memfree)(void*))
     }
     catch (std::exception)
     {
-        physics_done();
+        physcpp_done();
         return 1;
     }
     return 0;

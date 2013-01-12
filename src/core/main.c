@@ -51,7 +51,7 @@ static int main_panic(lua_State *lua)
     return 0;
 }
 
-static void * main_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
+static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
 {
     void *newptr;
     if (ud != 0)
@@ -238,13 +238,13 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    if (physics_init(lua, mpool_alloc, mpool_free) != 0)
+    if (physics_init(lua) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
         goto cleanup;
     } 
 
-    lua = lua_newstate(main_alloc, 0);
+    lua = lua_newstate(main_lua_alloc, 0);
     if (lua == 0)
     {
         fprintf(stderr, "Cannot create Lua state\n");
