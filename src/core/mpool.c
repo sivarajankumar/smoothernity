@@ -151,11 +151,11 @@ void mpool_done(void)
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
         shelf = g_mpool.shelves + i;
-        printf("Chunk size: %i, usage: %i/%i, allocs: %i (%i fails), "
-               "frees: %i.\n",
+        printf("Chunk size: %i, usage: %i/%i, allocs/frees: %i/%i "
+               "(%i fails)\n",
                shelf->size,
                shelf->count - shelf->left_min, shelf->count,
-               shelf->allocs, shelf->alloc_fails, shelf->frees);
+               shelf->allocs, shelf->frees, shelf->alloc_fails);
         for (j = 0; j < shelf->count; ++j)
             free(shelf->chunks[j].data);
         free(shelf->chunks);
