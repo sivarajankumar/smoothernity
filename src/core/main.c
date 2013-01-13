@@ -18,6 +18,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
+#include "buf.h"
 
 struct main_t
 {
@@ -43,6 +44,8 @@ struct main_t
     int matrix_nesting;
     int colshape_count;
     int rigidbody_count;
+    int buf_size;
+    int buf_count;
 };
 
 static struct main_t g_main;
@@ -174,7 +177,9 @@ static int main_init(char *script)
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
      || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0
      || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0
-     || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0)
+     || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
+     || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
+     || main_get_int(lua, "buf_count", &g_main.buf_count) != 0)
     {
         goto cleanup;
     }
@@ -268,22 +273,9 @@ int main(int argc, char **argv)
         goto cleanup;
     } 
 
-    if (display_init(lua, &argc, argv, g_main.display_width,
-                                       g_main.display_height) != 0)
+    if (buf_init(lua, g_main.buf_size, g_main.buf_count) != 0)
     {
-        fprintf(stderr, "Cannot set video mode\n"); 
-        goto cleanup;
-    } 
-
-    if (vbuf_init(lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init vertex buffers\n");
-        goto cleanup;
-    }
-
-    if (ibuf_init(lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init index buffers\n");
+        fprintf(stderr, "Cannot init buffers\n");
         goto cleanup;
     }
 
@@ -332,6 +324,25 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
+    if (display_init(lua, &argc, argv, g_main.display_width,
+                                       g_main.display_height) != 0)
+    {
+        fprintf(stderr, "Cannot set video mode\n"); 
+        goto cleanup;
+    } 
+
+    if (vbuf_init(lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init vertex buffers\n");
+        goto cleanup;
+    }
+
+    if (ibuf_init(lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init index buffers\n");
+        goto cleanup;
+    }
+
     max_deviation = 0;
     while (machine_running(controller) || machine_running(worker))
     {
@@ -364,6 +375,7 @@ cleanup:
     vbuf_done();
     ibuf_done();
     display_done();
+    buf_done();
     vector_done();
     matrix_done();
     mesh_done();
