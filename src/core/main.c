@@ -339,6 +339,7 @@ int main(int argc, char **argv)
         lua_gc(lua, LUA_GCSTEP, g_main.gc_step);
         lua_gc(lua, LUA_GCSTOP, 0);
         input_update();
+        physics_update(1.0f / (float)g_main.fps);
         display_update(1.0f / (float)g_main.fps);
         if (machine_step(controller, 0) != 0)
         {

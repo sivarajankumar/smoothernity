@@ -89,6 +89,7 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
 extern "C"
 void physcpp_update(float dt)
 {
+    g_physcpp.world->stepSimulation(dt);
 }
 
 extern "C"
@@ -133,8 +134,12 @@ int physcpp_rb_alloc(int *rbi, int csi, float *matrix)
 extern "C"
 int physcpp_rb_free(int rbi)
 {
-    if (rigidbody_get(rbi) == 0)
+    rigidbody_t *rb;
+    rb = rigidbody_get(rbi);
+    if (rb == 0)
         return PHYSRES_INVALID_RB;
+    if (rb->body)
+        g_physcpp.world->removeCollisionObject(rb->body);
     rigidbody_free(rbi);
     return PHYSRES_OK;
 }
@@ -152,4 +157,10 @@ int physcpp_rb_get_new_matrix(int rbi, float *matrix)
         rb->mstate->was_set = 0;
     }
     return PHYSRES_OK;
+}
+
+extern "C"
+void physcpp_set_gravity(float *v)
+{
+    g_physcpp.world->setGravity(btVector3(v[0], v[1], v[2]));
 }
