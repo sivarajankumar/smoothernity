@@ -43,13 +43,13 @@ static int api_physics_query(lua_State *lua)
 static int api_physics_set_gravity(lua_State *lua)
 {
     struct vector_t *v;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_set_gravity: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    v = vector_get(lua_tointeger(lua, -1));
+    v = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (v == 0)
     {
@@ -63,13 +63,13 @@ static int api_physics_set_gravity(lua_State *lua)
 
 static int api_physics_set_ddraw(lua_State *lua)
 {
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_set_ddraw: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_ddraw_set_mode(lua_tointeger(lua, -1));
+    physcpp_ddraw_set_mode(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     return 0;
 }
@@ -81,16 +81,16 @@ static int api_physics_cs_alloc_box(lua_State *lua)
     int csi;
     int res;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_box: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    mass = lua_tonumber(lua, -2);
-    size = vector_get(lua_tointeger(lua, -1));
+    mass = lua_tonumber(lua, 1);
+    size = vector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (mass < 0.0f)
@@ -123,13 +123,13 @@ static int api_physics_cs_alloc_box(lua_State *lua)
 static int api_physics_cs_free(lua_State *lua)
 {
     int res;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_cs_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    res = physcpp_cs_free(lua_tointeger(lua, -1));
+    res = physcpp_cs_free(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (res != PHYSRES_OK)
     {
@@ -148,16 +148,16 @@ static int api_physics_rb_alloc(lua_State *lua)
     int rbi;
     int res;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_physics_rb_alloc: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    csi = lua_tointeger(lua, -2);
-    matrix = matrix_get(lua_tointeger(lua, -1));
+    csi = lua_tointeger(lua, 1);
+    matrix = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (matrix == 0)
@@ -183,13 +183,13 @@ static int api_physics_rb_alloc(lua_State *lua)
 static int api_physics_rb_free(lua_State *lua)
 {
     int res;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_rb_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    res = physcpp_rb_free(lua_tointeger(lua, -1));
+    res = physcpp_rb_free(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (res != PHYSRES_OK)
     {
