@@ -1,16 +1,19 @@
 #pragma once
 
-#include "lua.h"
-#include "GL/gl.h"
+#include <lua.h>
+#include <GL/gl.h>
 
-#define VECTOR_ARGVS 2
+#define VECTOR_ARGVS 4
 
 enum vector_e
 {
     VECTOR_CONST = 0,
-    VECTOR_SINE = 1,
-    VECTOR_SAW = 2,
-    VECTOR_RUBBER = 3
+    VECTOR_SINE = 1, /* TODO: remove */
+    VECTOR_SAW = 2, /* TODO: remove */
+    VECTOR_RUBBER = 3,
+    VECTOR_WSUM = 4,
+    VECTOR_SEQ_LINEAR = 5,
+    VECTOR_SEQ_SPLINE = 6
 };
 
 struct vector_t
@@ -22,6 +25,10 @@ struct vector_t
     float t;
     int frame_tag;
     int vacant;
+    int seq_start;
+    int seq_len;
+    int seq_repeat;
+    struct buf_t *seq_buf;
     struct vector_t *argv[VECTOR_ARGVS];
     struct vector_t *next;
 };
