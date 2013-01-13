@@ -3,6 +3,26 @@
 #include "mpool.h"
 #include "../physics/physcpp.h"
 #include "../physics/physres.h"
+#include <stdio.h>
+
+static const char * physics_error_text(int res)
+{
+    static char UNKNOWN[] = "unknown";
+    static char OUT_OF_RB[] = "out of rigid bodies";
+    static char OUT_OF_CS[] = "out of collision shapes";
+    static char INVALID_RB[] = "invalid rigid body";
+    static char INVALID_CS[] = "invalid collision shape";
+    if (res == (int)PHYSRES_OUT_OF_RB)
+        return OUT_OF_RB;
+    else if (res == (int)PHYSRES_OUT_OF_CS)
+        return OUT_OF_CS;
+    else if (res == (int)PHYSRES_INVALID_RB)
+        return INVALID_RB;
+    else if (res == (int)PHYSRES_INVALID_CS)
+        return INVALID_CS;
+    else
+        return UNKNOWN;
+}
 
 static int api_physics_set_gravity(lua_State *lua)
 {
@@ -25,6 +45,52 @@ static int api_physics_set_gravity(lua_State *lua)
     return 0;
 }
 
+static int api_physics_cb_alloc_box(lua_State *lua)
+{
+    struct vector_t *size;
+    float mass;
+    int csi;
+    int res;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
+    || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_physics_cb_alloc_box: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    mass = lua_tonumber(lua, -2);
+    size = vector_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 2);
+
+    if (mass < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_cb_alloc_box: negative mass");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (size == 0)
+    {
+        lua_pushstring(lua, "api_physics_cb_alloc_box: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_cs_alloc_box(&csi, mass, size->value);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cb_alloc_box: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, csi);
+    return 1;
+}
+
 int physics_init(lua_State *lua, int cs_count, int rb_count)
 {
     if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count)
@@ -33,6 +99,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count)
         return 1;
     }
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
+    lua_register(lua, "api_physics_cb_alloc_box", api_physics_cb_alloc_box);
     return 0;
 }
 
