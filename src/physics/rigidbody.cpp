@@ -86,6 +86,7 @@ void rigidbody_free(int rbi)
     g_rigidbodies.vacant = rb;
     if (rb->body)
         rb->body->~btRigidBody();
+    rb->body = 0;
 }
 
 void rigidbody_make(rigidbody_t *rb, colshape_t *cs)
