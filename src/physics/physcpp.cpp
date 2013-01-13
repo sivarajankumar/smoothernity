@@ -164,3 +164,10 @@ void physcpp_set_gravity(float *v)
 {
     g_physcpp.world->setGravity(btVector3(v[0], v[1], v[2]));
 }
+
+extern "C"
+void physcpp_query(int *cs_left, int *rb_left)
+{
+    colshape_query(cs_left);
+    rigidbody_query(rb_left);
+}
