@@ -30,56 +30,47 @@ static int state_resume(struct machine_t *machine)
 static int api_yield(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
-    {
-        machine = lua_touserdata(lua, -1);
-        lua_pop(lua, 1);
-        machine->next_state = state_resume;
-        return lua_yield(lua, 0);
-    }
-    else
+    if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
     {
         lua_pushstring(lua, "api_yield: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    machine = lua_touserdata(lua, 1);
+    lua_pop(lua, 1);
+    machine->next_state = state_resume;
+    return lua_yield(lua, 0);
 }
 
 static int api_sleep(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
-    {
-        machine = lua_touserdata(lua, -1);
-        lua_pop(lua, 1);
-        machine->sleep = 1;
-        machine->next_state = state_resume;
-        return lua_yield(lua, 0);
-    }
-    else
+    if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
     {
         lua_pushstring(lua, "api_sleep: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    machine = lua_touserdata(lua, 1);
+    lua_pop(lua, 1);
+    machine->sleep = 1;
+    machine->next_state = state_resume;
+    return lua_yield(lua, 0);
 }
 
 static int api_time(lua_State *lua)
 {
     struct machine_t *machine;
-    if (lua_gettop(lua) == 1 && lua_islightuserdata(lua, -1))
-    {
-        machine = lua_touserdata(lua, -1);
-        lua_pop(lua, 1);
-        lua_pushinteger(lua, timer_passed(machine->run_timer));
-        return 1;
-    }
-    else
+    if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
     {
         lua_pushstring(lua, "api_time: incorrect argument");
         lua_error(lua);
         return 0;
     }
+    machine = lua_touserdata(lua, 1);
+    lua_pop(lua, 1);
+    lua_pushinteger(lua, timer_passed(machine->run_timer));
+    return 1;
 }
 
 void machine_init(lua_State *lua)
