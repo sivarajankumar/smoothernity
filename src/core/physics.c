@@ -61,6 +61,19 @@ static int api_physics_set_gravity(lua_State *lua)
     return 0;
 }
 
+static int api_physics_set_ddraw(lua_State *lua)
+{
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_physics_set_ddraw: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    physcpp_ddraw_set_mode(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+    return 0;
+}
+
 static int api_physics_cs_alloc_box(lua_State *lua)
 {
     struct vector_t *size;
@@ -197,6 +210,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count)
     }
     lua_register(lua, "api_physics_query", api_physics_query);
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
+    lua_register(lua, "api_physics_set_ddraw", api_physics_set_ddraw);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
     lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
@@ -212,6 +226,11 @@ void physics_done(void)
 void physics_update(float dt)
 {
     physcpp_update(dt);
+}
+
+void physics_ddraw(void)
+{
+    physcpp_ddraw();
 }
 
 int physics_rb_get_new_matrix(int rbi, float *matrix)

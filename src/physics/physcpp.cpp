@@ -1,6 +1,7 @@
 #include "colshape.hpp"
 #include "rigidbody.hpp"
 #include "physres.h"
+#include "ddraw.hpp"
 #include <lua.h>
 #include <btBulletDynamicsCommon.h>
 #include <exception>
@@ -12,6 +13,7 @@ struct physcpp_t
     btConstraintSolver *solver;
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
+    ddraw_c ddraw;
 };
 
 static physcpp_t g_physcpp;
@@ -78,6 +80,7 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
         physcpp_done();
         return PHYSRES_CANNOT_INIT;
     }
+    g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
     if (colshape_init(cs_count) != 0
      || rigidbody_init(rb_count) != 0)
     {
@@ -90,6 +93,18 @@ extern "C"
 void physcpp_update(float dt)
 {
     g_physcpp.world->stepSimulation(dt);
+}
+
+extern "C"
+void physcpp_ddraw(void)
+{
+    g_physcpp.world->debugDrawWorld();
+}
+
+extern "C"
+void physcpp_ddraw_set_mode(int mode)
+{
+    g_physcpp.ddraw.setDebugMode(mode);
 }
 
 extern "C"

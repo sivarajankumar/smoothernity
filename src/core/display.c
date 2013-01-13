@@ -9,6 +9,7 @@
 #include "text.h"
 #include "vector.h"
 #include "matrix.h"
+#include "physics.h"
 
 struct display_t
 {
@@ -235,6 +236,10 @@ void display_update(float dt)
             }
         }
     }
+
+    /* debug draw */
+
+    physics_ddraw();
 
     /* text */
 
