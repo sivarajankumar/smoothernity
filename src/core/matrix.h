@@ -11,7 +11,8 @@ enum matrix_e
     MATRIX_CONST = 0,
     MATRIX_MUL = 1,
     MATRIX_INV = 2,
-    MATRIX_POS_SCL_ROT = 3
+    MATRIX_POS_SCL_ROT = 3,
+    MATRIX_RIGID_BODY = 4
 };
 
 enum matrix_axis_e
@@ -30,6 +31,7 @@ struct matrix_t
     int vacant;
     enum matrix_axis_e rotaxis;
     int rotanglei;
+    int rigid_body;
     struct vector_t *argv[MATRIX_ARGVS];
     struct matrix_t *argm[MATRIX_ARGMS];
     struct matrix_t *next;
