@@ -57,14 +57,14 @@ static int api_matrix_free(lua_State *lua)
 {
     struct matrix_t *matrix;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_matrix_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (matrix == 0 || matrix->vacant)
@@ -106,7 +106,7 @@ static int api_matrix_const(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    for (i = -17; i < 0; ++i)
+    for (i = 1; i <= 17; ++i)
     {
         if (!lua_isnumber(lua, i))
         {
@@ -116,9 +116,9 @@ static int api_matrix_const(lua_State *lua)
         }
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -17));
+    matrix = matrix_get(lua_tointeger(lua, 1));
     for (i = 0; i < 16; ++i)
-        value[i] = lua_tonumber(lua, -16 + i);
+        value[i] = lua_tonumber(lua, i + 2);
     lua_pop(lua, 17);
 
     if (matrix == 0)
@@ -141,14 +141,14 @@ static int api_matrix_stop(lua_State *lua)
 {
     struct matrix_t *matrix;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_matrix_stop: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (matrix == 0)
@@ -170,17 +170,17 @@ static int api_matrix_mul(lua_State *lua)
 {
     struct matrix_t *matrix, *m0, *m1;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_matrix_mul: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -3));
-    m0 = matrix_get(lua_tointeger(lua, -2));
-    m1 = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    m0 = matrix_get(lua_tointeger(lua, 2));
+    m1 = matrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
     if (matrix == 0 || m0 == 0 || m1 == 0)
@@ -214,17 +214,17 @@ static int api_matrix_mul_stop(lua_State *lua)
     struct matrix_t *matrix, *m0, *m1;
     GLfloat m[16];
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_matrix_mul_stop: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -3));
-    m0 = matrix_get(lua_tointeger(lua, -2));
-    m1 = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    m0 = matrix_get(lua_tointeger(lua, 2));
+    m1 = matrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
     if (matrix == 0 || m0 == 0 || m1 == 0)
@@ -252,16 +252,16 @@ static int api_matrix_inv(lua_State *lua)
 {
     struct matrix_t *matrix, *m0;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_matrix_inv: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -2));
-    m0 = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    m0 = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (matrix == 0 || m0 == 0)
@@ -295,22 +295,22 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
     struct vector_t *v0, *v1, *v2;
     int rotaxis, rotanglei;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, -6)
-    || !lua_isnumber(lua, -5) || !lua_isnumber(lua, -4)
-    || !lua_isnumber(lua, -3) || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6))
     {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -6));
-    v0 = vector_get(lua_tointeger(lua, -5));
-    v1 = vector_get(lua_tointeger(lua, -4));
-    v2 = vector_get(lua_tointeger(lua, -3));
-    rotaxis = lua_tointeger(lua, -2);
-    rotanglei = lua_tointeger(lua, -1);
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    v2 = vector_get(lua_tointeger(lua, 4));
+    rotaxis = lua_tointeger(lua, 5);
+    rotanglei = lua_tointeger(lua, 6);
     lua_pop(lua, 6);
 
     if (matrix == 0 || v0 == 0 || v1 == 0 || v2 == 0)
@@ -362,16 +362,16 @@ static int api_matrix_rigid_body(lua_State *lua)
     struct matrix_t *matrix;
     int rbi;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_matrix_rigid_body: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -2));
-    rbi = lua_tointeger(lua, -1);
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    rbi = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
     if (matrix == 0)
