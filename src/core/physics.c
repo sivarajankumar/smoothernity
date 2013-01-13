@@ -1,5 +1,6 @@
 #include "physics.h"
 #include "vector.h"
+#include "matrix.h"
 #include "mpool.h"
 #include "../physics/physcpp.h"
 #include "../physics/physres.h"
@@ -45,7 +46,7 @@ static int api_physics_set_gravity(lua_State *lua)
     return 0;
 }
 
-static int api_physics_cb_alloc_box(lua_State *lua)
+static int api_physics_cs_alloc_box(lua_State *lua)
 {
     struct vector_t *size;
     float mass;
@@ -55,7 +56,7 @@ static int api_physics_cb_alloc_box(lua_State *lua)
     if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
     || !lua_isnumber(lua, -1))
     {
-        lua_pushstring(lua, "api_physics_cb_alloc_box: incorrect argument");
+        lua_pushstring(lua, "api_physics_cs_alloc_box: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -66,14 +67,14 @@ static int api_physics_cb_alloc_box(lua_State *lua)
 
     if (mass < 0.0f)
     {
-        lua_pushstring(lua, "api_physics_cb_alloc_box: negative mass");
+        lua_pushstring(lua, "api_physics_cs_alloc_box: negative mass");
         lua_error(lua);
         return 0;
     }
 
     if (size == 0)
     {
-        lua_pushstring(lua, "api_physics_cb_alloc_box: invalid vector");
+        lua_pushstring(lua, "api_physics_cs_alloc_box: invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -82,13 +83,94 @@ static int api_physics_cb_alloc_box(lua_State *lua)
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
-        lua_pushstring(lua, "api_physics_cb_alloc_box: error");
+        lua_pushstring(lua, "api_physics_cs_alloc_box: error");
         lua_error(lua);
         return 0;
     }
 
     lua_pushinteger(lua, csi);
     return 1;
+}
+
+static int api_physics_cs_free(lua_State *lua)
+{
+    int res;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_physics_cs_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_cs_free(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cs_free: error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
+static int api_physics_rb_alloc(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    int csi;
+    int rbi;
+    int res;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
+    || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_physics_rb_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    csi = lua_tointeger(lua, -2);
+    matrix = matrix_get(lua_tointeger(lua, -1));
+    lua_pop(lua, 2);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_physics_rb_alloc: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_rb_alloc(&rbi, csi, matrix->value);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_rb_alloc: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, rbi);
+    return 1;
+}
+
+static int api_physics_rb_free(lua_State *lua)
+{
+    int res;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_physics_rb_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_rb_free(lua_tointeger(lua, -1));
+    lua_pop(lua, 1);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_rb_free: error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
 }
 
 int physics_init(lua_State *lua, int cs_count, int rb_count)
@@ -99,7 +181,10 @@ int physics_init(lua_State *lua, int cs_count, int rb_count)
         return 1;
     }
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
-    lua_register(lua, "api_physics_cb_alloc_box", api_physics_cb_alloc_box);
+    lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
+    lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
+    lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
+    lua_register(lua, "api_physics_rb_free", api_physics_rb_free);
     return 0;
 }
 
@@ -113,7 +198,7 @@ void physics_update(float dt)
     physcpp_update(dt);
 }
 
-void physics_rb_get_new_matrix(int rbi, float *matrix)
+int physics_rb_get_new_matrix(int rbi, float *matrix)
 {
-    physcpp_rb_get_new_matrix(rbi, matrix);
+    return physcpp_rb_get_new_matrix(rbi, matrix);
 }
