@@ -214,9 +214,8 @@ static int api_vbuf_query(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, g_vbufs.size);
     lua_pushinteger(lua, g_vbufs.left);
-    return 2;
+    return 1;
 }
 
 int vbuf_init(lua_State *lua, int size, int count)

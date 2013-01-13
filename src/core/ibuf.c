@@ -195,9 +195,8 @@ static int api_ibuf_query(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, g_ibufs.size);
     lua_pushinteger(lua, g_ibufs.left);
-    return 2;
+    return 1;
 }
 
 int ibuf_init(lua_State *lua, int size, int count)

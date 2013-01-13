@@ -103,7 +103,9 @@ function configure()
             ["matrix_count"] = 100,
             ["matrix_nesting"] = 10,
             ["colshape_count"] = 100,
-            ["rigidbody_count"] = 100}
+            ["rigidbody_count"] = 100,
+            ["buf_size"] = 10000,
+            ["buf_count"] = 10}
 end
 
 function control(self)
