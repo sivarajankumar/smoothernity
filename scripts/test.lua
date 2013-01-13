@@ -150,6 +150,10 @@ function work(self)
     -- drop
     --
 
+    local grav = api_vector_alloc()
+    api_vector_const(grav, 0, -10, 0, 0)
+    api_physics_set_gravity(grav)
+
     local size = api_vector_alloc()
     api_vector_const(size, 1, 1, 1, 0)
     local cs = api_physics_cs_alloc_box(10, size)
