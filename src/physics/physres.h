@@ -1,0 +1,11 @@
+#pragma once
+
+enum physres_e
+{
+    PHYSRES_OK = 0,
+    PHYSRES_CANNOT_INIT,
+    PHYSRES_OUT_OF_RB,
+    PHYSRES_OUT_OF_CS,
+    PHYSRES_INVALID_RB,
+    PHYSRES_INVALID_CS
+};
