@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include "vector.h"
+#include "physics.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -356,6 +357,46 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
     return 0;
 }
 
+static int api_matrix_rigid_body(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    int rbi;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, -2)
+    || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_matrix_rigid_body: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, -2));
+    rbi = lua_tointeger(lua, -1);
+    lua_pop(lua, 2);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_matrix_rigid_body: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_RIGID_BODY;
+    matrix->rigid_body = rbi;
+
+    if (physics_rb_get_new_matrix(rbi, matrix->value) != 0)
+    {
+        lua_pushstring(lua, "api_matrix_rigid_body: invalid rigid body");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 int matrix_init(lua_State *lua, int count, int nesting)
 {
     int i;
@@ -381,6 +422,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
     lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
+    lua_register(lua, "api_matrix_rigid_body", api_matrix_rigid_body);
     return 0;
 }
 
@@ -464,6 +506,8 @@ void matrix_update(struct matrix_t *matrix, float dt,
         matrix_pos_scl_rot(matrix->value, v0, v1,
                            matrix->rotaxis, v2[matrix->rotanglei]);
     }
+    else if (matrix->type == MATRIX_RIGID_BODY)
+        physics_rb_get_new_matrix(matrix->rigid_body, matrix->value);
 }
 
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
