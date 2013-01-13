@@ -7,12 +7,64 @@ API_INPUT_KEY_LEFT = 3
 API_INPUT_KEY_RIGHT = 4
 API_INPUT_KEY_PAGEUP = 5
 API_INPUT_KEY_PAGEDOWN = 6
-API_INPUT_KEY_E = 7
-API_INPUT_KEY_D = 8
-API_INPUT_KEY_S = 9
-API_INPUT_KEY_F = 10
-API_INPUT_KEY_A = 11
-API_INPUT_KEY_Z = 12
+API_INPUT_KEY_MINUS = 7
+API_INPUT_KEY_EQUALS = 8
+API_INPUT_KEY_SPACE = 9
+API_INPUT_KEY_LSHIFT = 10
+API_INPUT_KEY_RSHIFT = 11
+API_INPUT_KEY_LALT = 12
+API_INPUT_KEY_RALT = 13
+API_INPUT_KEY_LCTRL = 14
+API_INPUT_KEY_RCTRL = 15
+API_INPUT_KEY_TAB = 16
+API_INPUT_KEY_F1 = 17
+API_INPUT_KEY_F2 = 18
+API_INPUT_KEY_F3 = 19
+API_INPUT_KEY_F4 = 20
+API_INPUT_KEY_F5 = 21
+API_INPUT_KEY_F6 = 22
+API_INPUT_KEY_F7 = 23
+API_INPUT_KEY_F8 = 24
+API_INPUT_KEY_F9 = 25
+API_INPUT_KEY_F10 = 26
+API_INPUT_KEY_F11 = 27
+API_INPUT_KEY_F12 = 28
+API_INPUT_KEY_1 = 29
+API_INPUT_KEY_2 = 30
+API_INPUT_KEY_3 = 31
+API_INPUT_KEY_4 = 32
+API_INPUT_KEY_5 = 33
+API_INPUT_KEY_6 = 34
+API_INPUT_KEY_7 = 35
+API_INPUT_KEY_8 = 36
+API_INPUT_KEY_9 = 37
+API_INPUT_KEY_0 = 38
+API_INPUT_KEY_A = 39
+API_INPUT_KEY_B = 40
+API_INPUT_KEY_C = 41
+API_INPUT_KEY_D = 42
+API_INPUT_KEY_E = 43
+API_INPUT_KEY_F = 44
+API_INPUT_KEY_G = 45
+API_INPUT_KEY_H = 46
+API_INPUT_KEY_I = 47
+API_INPUT_KEY_J = 48
+API_INPUT_KEY_K = 49
+API_INPUT_KEY_L = 50
+API_INPUT_KEY_M = 51
+API_INPUT_KEY_N = 52
+API_INPUT_KEY_O = 53
+API_INPUT_KEY_P = 54
+API_INPUT_KEY_Q = 55
+API_INPUT_KEY_R = 56
+API_INPUT_KEY_S = 57
+API_INPUT_KEY_T = 58
+API_INPUT_KEY_U = 59
+API_INPUT_KEY_V = 60
+API_INPUT_KEY_W = 61
+API_INPUT_KEY_X = 62
+API_INPUT_KEY_Y = 63
+API_INPUT_KEY_Z = 64
 
 API_MESH_TRIANGLE_STRIP = 0
 API_MESH_TRIANGLE_FAN = 1
@@ -55,10 +107,25 @@ function configure()
 end
 
 function control(self)
+    local debug = 0
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
+        end
+        if api_input_key(API_INPUT_KEY_F1) == 1 then
+            if debug == 0 then
+                debug = 1
+                api_physics_set_ddraw(1)
+                api_display_draw_scene(0)
+            else
+                debug = 0
+                api_physics_set_ddraw(0)
+                api_display_draw_scene(1)
+            end
+            while api_input_key(API_INPUT_KEY_F1) == 1 do
+                api_yield(self)
+            end
         end
         api_yield(self)
     end
