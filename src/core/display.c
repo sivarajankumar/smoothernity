@@ -17,6 +17,7 @@ struct display_t
     int width;
     int height;
     int frame_tag;
+    int draw_scene;
     SDL_Surface *screen;
     struct vector_t *clear_color;
     struct matrix_t *camera;
@@ -87,6 +88,20 @@ static int api_display_camera(lua_State *lua)
     return 0;
 }
 
+static int api_display_draw_scene(lua_State *lua)
+{
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    {
+        lua_pushstring(lua, "api_display_draw_scene: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    g_display.draw_scene = lua_tointeger(lua, -1);
+    lua_pop(lua, 1);
+    return 0;
+}
+
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
 {
     int bpp;
@@ -118,6 +133,7 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     g_display.width = width;
     g_display.height = height;
     g_display.init = 1;
+    g_display.draw_scene = 1;
 
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
@@ -129,6 +145,7 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     lua_register(lua, "api_display_mode", api_display_mode);
     lua_register(lua, "api_display_clear_color", api_display_clear_color);
     lua_register(lua, "api_display_camera", api_display_camera);
+    lua_register(lua, "api_display_draw_scene", api_display_draw_scene);
 
     return 0;
 cleanup:
@@ -146,46 +163,12 @@ void display_done(void)
     SDL_Quit();
 }
 
-void display_update(float dt)
+static void display_draw_meshes(float dt)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
     struct mesh_t *mesh_vbuf;
     struct mesh_t *mesh_ibuf;
-    GLfloat *color;
-
-    ++g_display.frame_tag;
-
-    /* clear */
-
-    if (g_display.clear_color)
-    {
-        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
-        color = g_display.clear_color->value;
-        glClearColor(color[0], color[1], color[2], color[3]);
-    }
-    else
-        glClearColor(0, 0, 0, 1);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    /* frustum */
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    /* TODO: rewrite using proper mechanics */
-    gluPerspective(60.0, (float)g_display.width / (float)g_display.height, 1.0, 1024.0);
-
-    /* meshes */
-
-    glMatrixMode(GL_MODELVIEW);
-    if (g_display.camera)
-    {
-        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
-        glLoadMatrixf(g_display.camera->value);
-    }
-    else
-        glLoadIdentity();
     if (g_vbufs.with_meshes < g_ibufs.with_meshes)
     {
         for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
@@ -236,6 +219,47 @@ void display_update(float dt)
             }
         }
     }
+}
+
+void display_update(float dt)
+{
+    GLfloat *color;
+
+    ++g_display.frame_tag;
+
+    /* clear */
+
+    if (g_display.draw_scene && g_display.clear_color)
+    {
+        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
+        color = g_display.clear_color->value;
+        glClearColor(color[0], color[1], color[2], color[3]);
+    }
+    else
+        glClearColor(0, 0, 0, 1);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    /* frustum */
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    /* TODO: rewrite using proper mechanics */
+    gluPerspective(60.0, (float)g_display.width / (float)g_display.height, 1.0, 1024.0);
+
+    /* meshes */
+
+    glMatrixMode(GL_MODELVIEW);
+    if (g_display.camera)
+    {
+        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
+        glLoadMatrixf(g_display.camera->value);
+    }
+    else
+        glLoadIdentity();
+
+    if (g_display.draw_scene)
+        display_draw_meshes(dt);
 
     /* debug draw */
 
