@@ -21,17 +21,17 @@ static int api_buf_set(lua_State *lua)
     int i;
     float v;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_buf_set: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    buf = buf_get(lua_tointeger(lua, -3));
-    i = lua_tointeger(lua, -2);
-    v = lua_tonumber(lua, -1);
+    buf = buf_get(lua_tointeger(lua, 1));
+    i = lua_tointeger(lua, 2);
+    v = lua_tonumber(lua, 3);
     lua_pop(lua, 3);
 
     if (buf == 0)
@@ -82,14 +82,14 @@ static int api_buf_alloc(lua_State *lua)
 static int api_buf_free(lua_State *lua)
 {
     struct buf_t *buf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_buf_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    buf = buf_get(lua_tointeger(lua, -1));
+    buf = buf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (buf == 0 || buf->vacant == 1)
