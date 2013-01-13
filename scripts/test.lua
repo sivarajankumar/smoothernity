@@ -146,14 +146,65 @@ function work(self)
     local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
     local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
 
+    --
+    -- drop
+    --
+
+    local size = api_vector_alloc()
+    api_vector_const(size, 1, 1, 1, 0)
+    local cs = api_physics_cs_alloc_box(10, size)
+    local rb = api_physics_rb_alloc(cs, m1)
+    api_matrix_rigid_body(m1, rb)
+
+    --
+    -- ground
+    --
+
+    local mposrot = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local rot = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, -15, -3, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_matrix_pos_scl_rot(mposrot, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
+
+    local mscale = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local rot = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_vector_const(scl, 20, 2, 20, 0)
+    api_matrix_pos_scl_rot(mscale, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
+
+    local mmul = api_matrix_alloc()
+    api_matrix_mul(mmul, mposrot, mscale)
+
+    api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0, 36)
+
+    local size = api_vector_alloc()
+    api_vector_const(size, 20, 2, 20, 0)
+    local cs = api_physics_cs_alloc_box(0, size)
+    local rb = api_physics_rb_alloc(cs, mposrot)
+
+    local mrb = api_matrix_alloc()
+    api_matrix_rigid_body(mrb, rb)
+    api_matrix_mul(mmul, mrb, mscale)
+
+    --
+    -- camera
+    --
+
     local cam = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
     local rot = api_vector_alloc()
-    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(pos, 0, -10, 20, 0)
     api_vector_const(scl, 1, 1, 1, 0)
     api_vector_const(rot, 0, 0, 0, 0)
     api_matrix_pos_scl_rot(cam, pos, scl, rot, API_MATRIX_AXIS_X, 0)
+    api_vector_const(pos, 0, 0, 0, 0)
     api_matrix_stop(cam)
 
     local delta = 0.05
