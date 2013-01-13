@@ -74,14 +74,14 @@ static int api_vbuf_alloc(lua_State *lua)
 static int api_vbuf_free(lua_State *lua)
 {
     struct vbuf_t *vbuf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_vbuf_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vbuf = vbuf_get(lua_tointeger(lua, -1));
+    vbuf = vbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (vbuf == 0 || vbuf->vacant == 1)
@@ -98,13 +98,13 @@ static int api_vbuf_free(lua_State *lua)
 static int api_vbuf_bake(lua_State *lua)
 {
     struct vbuf_t *vbuf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_vbuf_bake: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    vbuf = vbuf_get(lua_tointeger(lua, -1));
+    vbuf = vbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (vbuf == 0 || vbuf->mapped == 0)
@@ -141,29 +141,29 @@ static int api_vbuf_write(lua_State *lua)
     struct vbuf_t *vbuf;
     struct vbuf_data_t *data;
 
-    if (lua_gettop(lua) != 11 || !lua_isnumber(lua, -11)
-    || !lua_isnumber(lua, -10) || !lua_isnumber(lua, -9)
-    || !lua_isnumber(lua, -8) || !lua_isnumber(lua, -7)
-    || !lua_isnumber(lua, -6) || !lua_isnumber(lua, -5)
-    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 11 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
+    || !lua_isnumber(lua, 8) || !lua_isnumber(lua, 9)
+    || !lua_isnumber(lua, 10) || !lua_isnumber(lua, 11))
     {
         lua_pushstring(lua, "api_vbuf_write: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vbuf = vbuf_get(lua_tointeger(lua, -11));
-    datai = lua_tointeger(lua, -10);
-    x = (float)lua_tonumber(lua, -9);
-    y = (float)lua_tonumber(lua, -8);
-    z = (float)lua_tonumber(lua, -7);
-    r = (float)lua_tonumber(lua, -6);
-    g = (float)lua_tonumber(lua, -5);
-    b = (float)lua_tonumber(lua, -4);
-    a = (float)lua_tonumber(lua, -3);
-    u = (float)lua_tonumber(lua, -2);
-    v = (float)lua_tonumber(lua, -1);
+    vbuf = vbuf_get(lua_tointeger(lua, 1));
+    datai = lua_tointeger(lua, 2);
+    x = (float)lua_tonumber(lua, 3);
+    y = (float)lua_tonumber(lua, 4);
+    z = (float)lua_tonumber(lua, 5);
+    r = (float)lua_tonumber(lua, 6);
+    g = (float)lua_tonumber(lua, 7);
+    b = (float)lua_tonumber(lua, 8);
+    a = (float)lua_tonumber(lua, 9);
+    u = (float)lua_tonumber(lua, 10);
+    v = (float)lua_tonumber(lua, 11);
     lua_pop(lua, 11);
 
     if (datai < 0 || datai >= g_vbufs.size)

@@ -52,19 +52,19 @@ static int api_text_alloc(lua_State *lua)
     size_t size;
     struct text_t *text;
 
-    if (lua_gettop(lua) != 4 || !lua_isstring(lua, -4)
-    || !lua_isnumber(lua, -3) || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 4 || !lua_isstring(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
     {
         lua_pushstring(lua, "api_text_alloc: incorrect argument");
         lua_error(lua);
         return 0;
     }
     
-    string = lua_tostring(lua, -4);
-    font = lua_tointeger(lua, -3);
-    x = lua_tointeger(lua, -2);
-    y = lua_tointeger(lua, -1);
+    string = lua_tostring(lua, 1);
+    font = lua_tointeger(lua, 2);
+    x = lua_tointeger(lua, 3);
+    y = lua_tointeger(lua, 4);
     lua_pop(lua, 4);
 
     if (g_texts.vacant == 0)
@@ -131,14 +131,14 @@ static int api_text_free(lua_State *lua)
 {
     struct text_t *text;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_text_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    text = text_get(lua_tointeger(lua, -1));
+    text = text_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (text == 0 || text->vacant)
@@ -174,7 +174,6 @@ static int api_text_query(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, g_texts.size);
     lua_pushinteger(lua, g_texts.left);
     return 2;
 }
