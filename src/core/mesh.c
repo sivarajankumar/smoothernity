@@ -208,11 +208,11 @@ static int api_mesh_free(lua_State *lua)
     return 0;
 }
 
-static int api_mesh_query(lua_State *lua)
+static int api_mesh_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_mesh_query: incorrect argument");
+        lua_pushstring(lua, "api_mesh_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -240,7 +240,7 @@ int mesh_init(lua_State *lua, int count)
 
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_free", api_mesh_free);
-    lua_register(lua, "api_mesh_query", api_mesh_query);
+    lua_register(lua, "api_mesh_left", api_mesh_left);
 
     return 0;
 }

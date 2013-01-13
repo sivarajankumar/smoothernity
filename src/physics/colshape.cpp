@@ -41,7 +41,7 @@ void colshape_done(void)
     }
 }
 
-void colshape_query(int *left)
+void colshape_left(int *left)
 {
     *left = g_colshapes.left;
 }

@@ -48,7 +48,7 @@ void rigidbody_done(void)
     }
 }
 
-void rigidbody_query(int *left)
+void rigidbody_left(int *left)
 {
     *left = g_rigidbodies.left;
 }

@@ -166,11 +166,11 @@ static int api_text_free(lua_State *lua)
     return 0;
 }
 
-static int api_text_query(lua_State *lua)
+static int api_text_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_text_query: incorrect argument");
+        lua_pushstring(lua, "api_text_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -202,7 +202,7 @@ int text_init(lua_State *lua, int size, int count)
 
     lua_register(lua, "api_text_alloc", api_text_alloc);
     lua_register(lua, "api_text_free", api_text_free);
-    lua_register(lua, "api_text_query", api_text_query);
+    lua_register(lua, "api_text_left", api_text_left);
 
     return 0;
 cleanup:

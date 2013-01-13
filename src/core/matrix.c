@@ -82,11 +82,11 @@ static int api_matrix_free(lua_State *lua)
     return 0;
 }
 
-static int api_matrix_query(lua_State *lua)
+static int api_matrix_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_matrix_query: incorrect argument");
+        lua_pushstring(lua, "api_matrix_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -415,7 +415,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     }
     lua_register(lua, "api_matrix_alloc", api_matrix_alloc);
     lua_register(lua, "api_matrix_free", api_matrix_free);
-    lua_register(lua, "api_matrix_query", api_matrix_query);
+    lua_register(lua, "api_matrix_left", api_matrix_left);
     lua_register(lua, "api_matrix_const", api_matrix_const);
     lua_register(lua, "api_matrix_stop", api_matrix_stop);
     lua_register(lua, "api_matrix_inv", api_matrix_inv);

@@ -206,11 +206,11 @@ static int api_vbuf_write(lua_State *lua)
     return 0;
 }
 
-static int api_vbuf_query(lua_State *lua)
+static int api_vbuf_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_vbuf_query: incorrect argument");
+        lua_pushstring(lua, "api_vbuf_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -251,7 +251,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     lua_register(lua, "api_vbuf_free", api_vbuf_free);
     lua_register(lua, "api_vbuf_write", api_vbuf_write);
     lua_register(lua, "api_vbuf_bake", api_vbuf_bake);
-    lua_register(lua, "api_vbuf_query", api_vbuf_query);
+    lua_register(lua, "api_vbuf_left", api_vbuf_left);
 
     return 0;
 cleanup:

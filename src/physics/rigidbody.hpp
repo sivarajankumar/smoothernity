@@ -16,7 +16,7 @@ struct rigidbody_t
 
 int rigidbody_init(int count);
 void rigidbody_done(void);
-void rigidbody_query(int *left);
+void rigidbody_left(int *left);
 int rigidbody_alloc(void);
 void rigidbody_free(int);
 rigidbody_t * rigidbody_get(int);

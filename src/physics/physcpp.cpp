@@ -181,8 +181,8 @@ void physcpp_set_gravity(float *v)
 }
 
 extern "C"
-void physcpp_query(int *cs_left, int *rb_left)
+void physcpp_left(int *cs_left, int *rb_left)
 {
-    colshape_query(cs_left);
-    rigidbody_query(rb_left);
+    colshape_left(cs_left);
+    rigidbody_left(rb_left);
 }
