@@ -79,11 +79,11 @@ static int api_vector_free(lua_State *lua)
     return 0;
 }
 
-static int api_vector_query(lua_State *lua)
+static int api_vector_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_vector_query: incorrect argument");
+        lua_pushstring(lua, "api_vector_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -295,7 +295,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     }
     lua_register(lua, "api_vector_alloc", api_vector_alloc);
     lua_register(lua, "api_vector_free", api_vector_free);
-    lua_register(lua, "api_vector_query", api_vector_query);
+    lua_register(lua, "api_vector_left", api_vector_left);
     lua_register(lua, "api_vector_const", api_vector_const);
     lua_register(lua, "api_vector_sine", api_vector_sine);
     lua_register(lua, "api_vector_saw", api_vector_saw);

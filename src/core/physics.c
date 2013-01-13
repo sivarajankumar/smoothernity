@@ -25,16 +25,16 @@ static const char * physics_error_text(int res)
         return UNKNOWN;
 }
 
-static int api_physics_query(lua_State *lua)
+static int api_physics_left(lua_State *lua)
 {
     int cs_left, rb_left;
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_physics_query: incorrect argument");
+        lua_pushstring(lua, "api_physics_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_query(&cs_left, &rb_left);
+    physcpp_left(&cs_left, &rb_left);
     lua_pushinteger(lua, cs_left);
     lua_pushinteger(lua, rb_left);
     return 2;
@@ -208,7 +208,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count)
     {
         return 1;
     }
-    lua_register(lua, "api_physics_query", api_physics_query);
+    lua_register(lua, "api_physics_left", api_physics_left);
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
     lua_register(lua, "api_physics_set_ddraw", api_physics_set_ddraw);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);

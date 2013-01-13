@@ -17,7 +17,7 @@ struct colshape_t
 
 int colshape_init(int count);
 void colshape_done(void);
-void colshape_query(int *left);
+void colshape_left(int *left);
 int colshape_alloc(void);
 void colshape_free(int);
 colshape_t * colshape_get(int);

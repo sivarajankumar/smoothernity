@@ -3,11 +3,11 @@
 
 struct bufs_t g_bufs;
 
-static int api_buf_query(lua_State *lua)
+static int api_buf_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_buf_query: incorrect argument");
+        lua_pushstring(lua, "api_buf_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -129,7 +129,7 @@ int buf_init(lua_State *lua, int size, int count)
     }
     lua_register(lua, "api_buf_alloc", api_buf_alloc);
     lua_register(lua, "api_buf_free", api_buf_free);
-    lua_register(lua, "api_buf_query", api_buf_query);
+    lua_register(lua, "api_buf_left", api_buf_left);
     lua_register(lua, "api_buf_set", api_buf_set);
     return 0;
 cleanup:
