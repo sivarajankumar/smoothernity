@@ -22,7 +22,7 @@ void physcpp_done(void)
     int i;
     if (g_physcpp.world)
     {
-        for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); --i)
+        for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); ++i)
         {
             g_physcpp.world->removeCollisionObject(
                 g_physcpp.world->getCollisionObjectArray()[i]);
