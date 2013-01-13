@@ -32,7 +32,7 @@ API_TEXT_FONT_HELVETICA_18 = 6
 
 function configure()
     return {["mpool_sizes"] = function() return   100, 1000, 10000, 100000, 1000000, 10000000 end,
-            ["mpool_counts"] = function() return 1000,  100,   100,     10,      10,       10 end,
+            ["mpool_counts"] = function() return 1000,  100,   100,     10,       1,        1 end,
             ["logic_time"] = 10000,
             ["gc_step"] = 10,
             ["min_delay"] = 1000,
