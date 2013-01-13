@@ -81,13 +81,13 @@ static struct input_t g_input;
 static int api_input_key(lua_State *lua)
 {
     int key;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_input_key: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    key = lua_tointeger(lua, -1);
+    key = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
 
     if (key < 0 || key >= (int)INPUT_KEYS_TOTAL)
