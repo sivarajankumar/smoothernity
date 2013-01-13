@@ -42,14 +42,14 @@ static int api_display_clear_color(lua_State *lua)
 {
     struct vector_t *vector;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_display_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -1));
+    vector = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (vector == 0)
@@ -67,14 +67,14 @@ static int api_display_camera(lua_State *lua)
 {
     struct matrix_t *matrix;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_display_camera: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    matrix = matrix_get(lua_tointeger(lua, -1));
+    matrix = matrix_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (matrix == 0)
@@ -90,14 +90,14 @@ static int api_display_camera(lua_State *lua)
 
 static int api_display_draw_scene(lua_State *lua)
 {
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_display_draw_scene: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    g_display.draw_scene = lua_tointeger(lua, -1);
+    g_display.draw_scene = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
     return 0;
 }
