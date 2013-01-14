@@ -20,4 +20,4 @@ void rigidbody_left(int *left);
 int rigidbody_alloc(void);
 void rigidbody_free(int);
 rigidbody_t * rigidbody_get(int);
-void rigidbody_make(rigidbody_t*, colshape_t*);
+void rigidbody_make(rigidbody_t*, colshape_t*, float frict, float roll_frict);
