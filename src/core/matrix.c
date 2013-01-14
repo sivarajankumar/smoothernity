@@ -387,7 +387,7 @@ static int api_matrix_rigid_body(lua_State *lua)
     matrix->type = MATRIX_RIGID_BODY;
     matrix->rigid_body = rbi;
 
-    if (physics_rb_get_new_matrix(rbi, matrix->value) != 0)
+    if (physics_rb_fetch_tm(rbi, matrix->value) != 0)
     {
         lua_pushstring(lua, "api_matrix_rigid_body: invalid rigid body");
         lua_error(lua);
@@ -507,7 +507,7 @@ void matrix_update(struct matrix_t *matrix, float dt,
                            matrix->rotaxis, v2[matrix->rotanglei]);
     }
     else if (matrix->type == MATRIX_RIGID_BODY)
-        physics_rb_get_new_matrix(matrix->rigid_body, matrix->value);
+        physics_rb_fetch_tm(matrix->rigid_body, matrix->value);
 }
 
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)

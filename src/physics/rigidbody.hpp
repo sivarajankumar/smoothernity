@@ -21,4 +21,4 @@ int rigidbody_alloc(btDynamicsWorld*, colshape_t*,
                     float *matrix, float frict, float roll_frict);
 void rigidbody_free(int, btDynamicsWorld*);
 rigidbody_t * rigidbody_get(int);
-void rigidbody_get_new_matrix(rigidbody_t*, float*);
+void rigidbody_fetch_tm(rigidbody_t*, float*);

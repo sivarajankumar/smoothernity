@@ -104,7 +104,7 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
     return rb - g_rigidbodies.pool;
 }
 
-void rigidbody_get_new_matrix(rigidbody_t *rb, float *matrix)
+void rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
 {
     if (rb->mstate->was_set)
     {

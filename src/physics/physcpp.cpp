@@ -164,13 +164,13 @@ int physcpp_rb_free(int rbi)
 }
 
 extern "C"
-int physcpp_rb_get_new_matrix(int rbi, float *matrix)
+int physcpp_rb_fetch_tm(int rbi, float *matrix)
 {
     rigidbody_t *rb;
     rb = rigidbody_get(rbi);
     if (rb == 0)
         return PHYSRES_INVALID_RB;
-    rigidbody_get_new_matrix(rb, matrix);
+    rigidbody_fetch_tm(rb, matrix);
     return PHYSRES_OK;
 }
 
