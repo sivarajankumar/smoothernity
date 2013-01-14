@@ -26,7 +26,10 @@ int vehicle_alloc(btDynamicsWorld*, colshape_t*, float *matrix,
                   float sus_stif, float sus_comp, float sus_damp,
                   float sus_trav, float sus_force, float slip_frict);
 void vehicle_free(int, btDynamicsWorld*);
-int vehicle_add_wheel(vehicle_t*, float *pos, float *dir, float *axl,
-                      float sus_rest, float radius, int front);
 vehicle_t * vehicle_get(int);
-void vehicle_fetch_chassis_tm
+int vehicle_add_wheel(vehicle_t*, float *pos, float *dir, float *axl,
+                      float sus_rest, float roll, float radius, int front);
+int vehicle_set_wheel(vehicle_t*, int, float engine,
+                      float brake, float steer);
+void vehicle_fetch_chassis_tm(vehicle_t*, float*);
+void vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
