@@ -303,6 +303,13 @@ function work(self)
                          2, 1, 2,   1, 0, 0, 1,   0, 0)
     api_vbuf_bake(vb)
 
+    local ib = api_ibuf_alloc()
+    api_ibuf_set(ib, 0*6*4,   0, 5, 6, 0, 6, 1,   1, 6, 7, 1, 7, 2,   2, 7, 8, 2, 8, 3,   3, 8, 9, 3, 9, 4)
+    api_ibuf_set(ib, 1*6*4,   5,10,11, 5,11, 6,   6,11,12, 6,12, 7,   7,12,13, 7,13, 8,   8,13,14, 8,14, 9)
+    api_ibuf_set(ib, 2*6*4,  10,15,16,10,16,11,  11,16,17,11,17,12,  12,17,18,12,18,13,  13,18,19,13,19,14)
+    api_ibuf_set(ib, 3*6*4,  15,20,21,15,21,16,  16,21,22,16,22,17,  17,22,23,17,23,18,  18,23,24,18,24,19)
+    api_ibuf_bake(ib)
+
     local scale = api_vector_alloc()
     api_vector_const(scale, 8, 4, 8, 0)
     local buf = api_buf_alloc()
