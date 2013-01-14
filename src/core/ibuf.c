@@ -148,7 +148,7 @@ static int api_ibuf_set(lua_State *lua)
     int start, len, index, i;
 
     if (lua_gettop(lua) < 3 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_ibuf_set: incorrect argument");
         lua_error(lua);
@@ -158,13 +158,6 @@ static int api_ibuf_set(lua_State *lua)
     start = lua_tointeger(lua, 2);
     len = lua_gettop(lua) - 2;
 
-    if (start < 0 || start >= g_ibufs.size - len)
-    {
-        lua_pushstring(lua, "api_ibuf_set: start index out of range");
-        lua_error(lua);
-        return 0;
-    }
-
     if (ibuf == 0 || ibuf->mapped == 0)
     {
         lua_pushstring(lua, "api_ibuf_set: invalid ibuf");
@@ -172,8 +165,22 @@ static int api_ibuf_set(lua_State *lua)
         return 0;
     }
 
+    if (start < 0 || start >= g_ibufs.size - len)
+    {
+        lua_pushstring(lua, "api_ibuf_set: start index out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    data = ibuf->mapped;
     for (i = 0; i < len; ++i)
     {
+        if (!lua_isnumber(lua, 3 + i))
+        {
+            lua_pushstring(lua, "api_ibuf_set: incorrect data type");
+            lua_error(lua);
+            return 0;
+        }
         index = lua_tointeger(lua, 3 + i);
         if (index < 0 || index >= g_vbufs.size)
         {
@@ -181,7 +188,6 @@ static int api_ibuf_set(lua_State *lua)
             lua_error(lua);
             return 0;
         }
-        data = ibuf->mapped;
         data[start + i].index = index;
     }
 

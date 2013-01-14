@@ -134,75 +134,93 @@ static int api_vbuf_bake(lua_State *lua)
     return 0;
 }
 
-static int api_vbuf_write(lua_State *lua)
+static int api_vbuf_set(lua_State *lua)
 {
-    int datai;
+    int start, len, i, j, ofs;
     float x, y, z, r, g, b, a, u, v;
     struct vbuf_t *vbuf;
     struct vbuf_data_t *data;
 
-    if (lua_gettop(lua) != 11 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
-    || !lua_isnumber(lua, 8) || !lua_isnumber(lua, 9)
-    || !lua_isnumber(lua, 10) || !lua_isnumber(lua, 11))
+    if (lua_gettop(lua) < 11 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
-        lua_pushstring(lua, "api_vbuf_write: incorrect argument");
+        lua_pushstring(lua, "api_vbuf_set: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
     vbuf = vbuf_get(lua_tointeger(lua, 1));
-    datai = lua_tointeger(lua, 2);
-    x = (float)lua_tonumber(lua, 3);
-    y = (float)lua_tonumber(lua, 4);
-    z = (float)lua_tonumber(lua, 5);
-    r = (float)lua_tonumber(lua, 6);
-    g = (float)lua_tonumber(lua, 7);
-    b = (float)lua_tonumber(lua, 8);
-    a = (float)lua_tonumber(lua, 9);
-    u = (float)lua_tonumber(lua, 10);
-    v = (float)lua_tonumber(lua, 11);
-    lua_pop(lua, 11);
-
-    if (datai < 0 || datai >= g_vbufs.size)
-    {
-        lua_pushstring(lua, "api_vbuf_write: data out of range");
-        lua_error(lua);
-        return 0;
-    }
+    start = lua_tointeger(lua, 2);
+    len = (lua_gettop(lua) - 2) / 9;
 
     if (vbuf == 0 || vbuf->mapped == 0)
     {
-        lua_pushstring(lua, "api_vbuf_write: invalid vbuf");
+        lua_pushstring(lua, "api_vbuf_set: invalid vbuf");
         lua_error(lua);
         return 0;
     }
 
-    if (r < 0.0f || r > 1.0f || g < 0.0f || g > 1.0f 
-     || b < 0.0f || b > 1.0f || a < 0.0f || a > 1.0f)
+    if (start < 0 || start >= g_vbufs.size - len)
     {
-        lua_pushstring(lua, "api_vbuf_write: color out of range");
+        lua_pushstring(lua, "api_vbuf_set: data out of range");
         lua_error(lua);
         return 0;
     }
 
-    data = vbuf->mapped;
-    data += datai;
+    if ((lua_gettop(lua) - 2) % 9 != 0)
+    {
+        lua_pushstring(lua, "api_vbuf_set: incorrect data count");
+        lua_error(lua);
+        return 0;
+    }
 
-    data->pos[0] = x;
-    data->pos[1] = y;
-    data->pos[2] = z;
+    for (i = 0; i < len; ++i)
+    {
+        ofs = 3 + (i * 9);
+        for (j = 0; j < 9; ++j)
+        {
+            if (!lua_isnumber(lua, ofs + j))
+            {
+                lua_pushstring(lua, "api_vbuf_set: incorrect data type");
+                lua_error(lua);
+                return 0;
+            }
+        }
+        x = (float)lua_tonumber(lua, ofs);
+        y = (float)lua_tonumber(lua, ofs + 1);
+        z = (float)lua_tonumber(lua, ofs + 2);
+        r = (float)lua_tonumber(lua, ofs + 3);
+        g = (float)lua_tonumber(lua, ofs + 4);
+        b = (float)lua_tonumber(lua, ofs + 5);
+        a = (float)lua_tonumber(lua, ofs + 6);
+        u = (float)lua_tonumber(lua, ofs + 7);
+        v = (float)lua_tonumber(lua, ofs + 8);
 
-    data->tex[0] = u;
-    data->tex[1] = v;
+        if (r < 0.0f || r > 1.0f || g < 0.0f || g > 1.0f 
+         || b < 0.0f || b > 1.0f || a < 0.0f || a > 1.0f)
+        {
+            lua_pushstring(lua, "api_vbuf_set: color out of range");
+            lua_error(lua);
+            return 0;
+        }
 
-    data->color[0] = (GLubyte) (r * 255.0f);
-    data->color[1] = (GLubyte) (g * 255.0f);
-    data->color[2] = (GLubyte) (b * 255.0f);
-    data->color[3] = (GLubyte) (a * 255.0f);
+        data = vbuf->mapped;
+        data += start + i;
 
+        data->pos[0] = x;
+        data->pos[1] = y;
+        data->pos[2] = z;
+
+        data->tex[0] = u;
+        data->tex[1] = v;
+
+        data->color[0] = (GLubyte) (r * 255.0f);
+        data->color[1] = (GLubyte) (g * 255.0f);
+        data->color[2] = (GLubyte) (b * 255.0f);
+        data->color[3] = (GLubyte) (a * 255.0f);
+    }
+
+    lua_pop(lua, 3 + (len * 9));
     return 0;
 }
 
@@ -249,7 +267,7 @@ int vbuf_init(lua_State *lua, int size, int count)
 
     lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
     lua_register(lua, "api_vbuf_free", api_vbuf_free);
-    lua_register(lua, "api_vbuf_write", api_vbuf_write);
+    lua_register(lua, "api_vbuf_set", api_vbuf_set);
     lua_register(lua, "api_vbuf_bake", api_vbuf_bake);
     lua_register(lua, "api_vbuf_left", api_vbuf_left);
 
