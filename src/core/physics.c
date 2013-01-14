@@ -28,17 +28,18 @@ static const char * physics_error_text(int res)
 
 static int api_physics_left(lua_State *lua)
 {
-    int cs_left, rb_left;
+    int cs_left, rb_left, veh_left;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_physics_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_left(&cs_left, &rb_left);
+    physcpp_left(&cs_left, &rb_left, &veh_left);
     lua_pushinteger(lua, cs_left);
     lua_pushinteger(lua, rb_left);
-    return 2;
+    lua_pushinteger(lua, veh_left);
+    return 3;
 }
 
 static int api_physics_set_gravity(lua_State *lua)
