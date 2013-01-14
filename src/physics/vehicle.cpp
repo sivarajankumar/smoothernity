@@ -126,6 +126,7 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->veh = new (veh->veh_data)
         btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
     veh->veh->setCoordinateSystem(0, 1, 2);
+    veh->chassis->setActivationState(DISABLE_DEACTIVATION);
     world->addVehicle(veh->veh);
     return veh - g_vehicles.pool;
 }
