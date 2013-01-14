@@ -21,7 +21,7 @@ static int api_buf_set(lua_State *lua)
     int start, len, i;
 
     if (lua_gettop(lua) < 3 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_buf_set: incorrect argument");
         lua_error(lua);
@@ -39,22 +39,23 @@ static int api_buf_set(lua_State *lua)
         return 0;
     }
 
-    if (start < 0 || start >= g_bufs.size)
+    if (start < 0 || start >= g_bufs.size - len)
     {
         lua_pushstring(lua, "api_buf_set: start index out of range");
         lua_error(lua);
         return 0;
     }
 
-    if (len > g_bufs.size - start)
+    for (i = 0; i < len; ++i)
     {
-        lua_pushstring(lua, "api_buf_set: too much data");
-        lua_error(lua);
-        return 0;
-    }
-
-    for (i = 0; i < lua_gettop(lua); ++i)
+        if (!lua_isnumber(lua, i + 3))
+        {
+            lua_pushstring(lua, "api_buf_set: incorrect data type");
+            lua_error(lua);
+            return 0;
+        }
         buf->data[start + i] = lua_tonumber(lua, i + 3);
+    }
 
     lua_pop(lua, len + 2);
 
