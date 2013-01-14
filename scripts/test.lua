@@ -163,11 +163,6 @@ function work(self)
         end
     end
 
-    local v0 = api_vector_alloc()
-    local v1 = api_vector_alloc()
-    api_vector_const(v0, 0, 0.05, 0, 1)
-    api_vector_const(v1, 0, 0, 0.05, 1)
-
     local v = api_vector_alloc()
     local buf = api_buf_alloc()
     api_buf_set(buf, 0,   0,0.05,0,1,1,   0,0,0.05,1,1)
@@ -175,14 +170,14 @@ function work(self)
     api_display_clear_color(v)
 
     local vb = api_vbuf_alloc()
-    api_vbuf_set(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0,
-                           1,-1, 1,   0, 1, 0, 1,   0, 0,
-                           1, 1, 1,   0, 0, 1, 1,   0, 0,
-                          -1, 1, 1,   1, 1, 1, 1,   0, 0,
-                          -1,-1,-1,   0, 1, 1, 1,   0, 0,
-                           1,-1,-1,   0, 0, 0, 1,   0, 0,
-                           1, 1,-1,   1, 1, 0, 1,   0, 0,
-                          -1, 1,-1,   1, 0, 1, 1,   0, 0)
+    api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                         1,-1, 1,   0, 1, 0, 1,   0, 0,
+                         1, 1, 1,   0, 0, 1, 1,   0, 0,
+                        -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                        -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                         1,-1,-1,   0, 0, 0, 1,   0, 0,
+                         1, 1,-1,   1, 1, 0, 1,   0, 0,
+                        -1, 1,-1,   1, 0, 1, 1,   0, 0)
     api_vbuf_bake(vb)
 
     local ib = api_ibuf_alloc()
@@ -205,13 +200,14 @@ function work(self)
 
     local rot2 = api_vector_alloc()
     local buf = api_buf_alloc()
-    api_buf_set(buf, 0,   0,0,0,0,4,   math.pi*2,0,0,0,0)
+    api_buf_set(buf, 0,   0,0,0,0,3,   math.pi*2,0,0,0,0)
     api_vector_seq(rot2, buf, 0, 2, 1, API_VECTOR_IPL_LINEAR)
 
     local pos1 = api_vector_alloc()
     local buf = api_buf_alloc()
-    api_buf_set(buf, 0,   2,1,0,0,1,   2,-1,0,0,1)
-    api_vector_seq(pos1, buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
+    api_buf_set(buf, 0,   2,1, 2,0,1,   2,-1,-2,0,1,
+                         -2,1,-2,0,1,  -2,-1, 2,0,1)
+    api_vector_seq(pos1, buf, 0, 4, 1, API_VECTOR_IPL_SPLINE)
 
     local m1 = api_matrix_alloc()
     local pos = api_vector_alloc()
