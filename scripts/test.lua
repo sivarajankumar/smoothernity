@@ -124,6 +124,7 @@ function configure()
             ["matrix_nesting"] = 10,
             ["colshape_count"] = 100,
             ["rigidbody_count"] = 100,
+            ["vehicle_count"] = 10,
             ["buf_size"] = 10000,
             ["buf_count"] = 10}
 end

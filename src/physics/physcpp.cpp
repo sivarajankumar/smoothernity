@@ -1,5 +1,6 @@
 #include "colshape.hpp"
 #include "rigidbody.hpp"
+#include "vehicle.hpp"
 #include "physres.h"
 #include "ddraw.hpp"
 #include <lua.h>
@@ -31,6 +32,7 @@ void physcpp_done(void)
         }
     }
     rigidbody_done();
+    vehicle_done();
     colshape_done();
     if (g_physcpp.world)
     {
@@ -61,7 +63,7 @@ void physcpp_done(void)
 
 extern "C"
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
-                 int cs_count, int rb_count)
+                 int cs_count, int rb_count, int veh_count)
 {
     btAlignedAllocSetCustom(memalloc, memfree);
     try
@@ -82,7 +84,8 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
     }
     g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
     if (colshape_init(cs_count) != 0
-     || rigidbody_init(rb_count) != 0)
+     || rigidbody_init(rb_count) != 0
+     || vehicle_init(veh_count) != 0)
     {
         return PHYSRES_CANNOT_INIT;
     }
