@@ -121,13 +121,14 @@ void colshape_make_box(colshape_t *colshape, float mass, float *size)
 }
 
 void colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
-                        float hmin, float hmax)
+                        float hmin, float hmax, float *scale)
 {
     if (cs->shape)
         return;
     cs->shape_hmap = new (cs->data)
         btHeightfieldTerrainShape(width, length, hmap, 1,
                                   hmin, hmax, 1, PHY_FLOAT, false);
+    cs->shape_hmap->setLocalScaling(btVector3(scale[0], scale[1], scale[2]));
     cs->shape = cs->shape_hmap;
     cs->mass = 0;
     cs->inertia = btVector3(0,0,0);

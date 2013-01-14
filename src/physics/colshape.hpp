@@ -23,4 +23,4 @@ void colshape_free(int);
 colshape_t * colshape_get(int);
 void colshape_make_box(colshape_t *col, float mass, float *size);
 void colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
-                        float hmin, float hmax);
+                        float hmin, float hmax, float *scale);

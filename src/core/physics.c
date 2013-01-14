@@ -124,13 +124,14 @@ static int api_physics_cs_alloc_box(lua_State *lua)
 static int api_physics_cs_alloc_hmap(lua_State *lua)
 {
     struct buf_t *hmap;
+    struct vector_t *scale;
     int start, width, length, csi, res;
     float hmin, hmax;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 7 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6))
+    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: incorrect argument");
         lua_error(lua);
@@ -143,11 +144,19 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
     length = lua_tointeger(lua, 4);
     hmin = lua_tonumber(lua, 5);
     hmax = lua_tonumber(lua, 6);
-    lua_pop(lua, 6);
+    scale = vector_get(lua_tointeger(lua, 7));
+    lua_pop(lua, 7);
 
     if (hmap == 0)
     {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: invalid buf");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (scale == 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -176,7 +185,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
     }
     
     res = physcpp_cs_alloc_hmap(&csi, hmap->data + start, width,
-                                length, hmin, hmax);
+                                length, hmin, hmax, scale->value);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
