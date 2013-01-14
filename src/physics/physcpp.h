@@ -15,4 +15,4 @@ int physcpp_cs_free(int csi);
 int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
                      float frict, float roll_frict);
 int physcpp_rb_free(int rbi);
-int physcpp_rb_get_new_matrix(int rbi, float *matrix);
+int physcpp_rb_fetch_tm(int rbi, float *matrix);

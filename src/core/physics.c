@@ -321,7 +321,7 @@ void physics_ddraw(void)
     physcpp_ddraw();
 }
 
-int physics_rb_get_new_matrix(int rbi, float *matrix)
+int physics_rb_fetch_tm(int rbi, float *matrix)
 {
-    return physcpp_rb_get_new_matrix(rbi, matrix);
+    return physcpp_rb_fetch_tm(rbi, matrix);
 }
