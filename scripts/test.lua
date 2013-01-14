@@ -77,6 +77,23 @@ API_MATRIX_AXIS_X = 0
 API_MATRIX_AXIS_Y = 1
 API_MATRIX_AXIS_Z = 2
 
+API_PHYSICS_NO_DEBUG = 0
+API_PHYSICS_DRAW_WIREFRAME = math.pow(2, 0)
+API_PHYSICS_DRAW_AABB = math.pow(2, 1)
+API_PHYSICS_DRAW_FEATURES_TEXT = math.pow(2, 2)
+API_PHYSICS_DRAW_CONTACT_POINTS = math.pow(2, 3)
+API_PHYSICS_NO_DEACTIVATION = math.pow(2, 4)
+API_PHYSICS_NO_HELP_TEXT = math.pow(2, 5)
+API_PHYSICS_DRAW_TEXT = math.pow(2, 6)
+API_PHYSICS_PROFILE_TIMINGS = math.pow(2, 7)
+API_PHYSICS_ENABLE_SAT_COMPARISON = math.pow(2, 8)
+API_PHYSICS_DISABLE_BULLET_LCP = math.pow(2, 9)
+API_PHYSICS_ENABLE_CCD = math.pow(2, 10)
+API_PHYSICS_DRAW_CONSTRAINTS = math.pow(2, 11)
+API_PHYSICS_DRAW_CONSTRAINT_LIMITS = math.pow(2, 12)
+API_PHYSICS_FAST_WIREFRAME = math.pow(2, 13)
+API_PHYSICS_DRAW_NORMALS = math.pow(2, 14)
+
 API_TEXT_FONT_8_BY_13 = 0
 API_TEXT_FONT_9_BY_15 = 1
 API_TEXT_FONT_TIMES_ROMAN_10 = 2
@@ -121,11 +138,11 @@ function control(self)
         if api_input_key(API_INPUT_KEY_F1) == 1 then
             if debug == 0 then
                 debug = 1
-                api_physics_set_ddraw(1)
+                api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
                 api_display_draw_scene(0)
             else
                 debug = 0
-                api_physics_set_ddraw(0)
+                api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
                 api_display_draw_scene(1)
             end
             while api_input_key(API_INPUT_KEY_F1) == 1 do
