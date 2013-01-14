@@ -170,11 +170,7 @@ int physcpp_rb_get_new_matrix(int rbi, float *matrix)
     rb = rigidbody_get(rbi);
     if (rb == 0)
         return PHYSRES_INVALID_RB;
-    if (rb->mstate->was_set)
-    {
-        rb->mstate->set.getOpenGLMatrix(matrix);
-        rb->mstate->was_set = 0;
-    }
+    rigidbody_get_new_matrix(rb, matrix);
     return PHYSRES_OK;
 }
 
