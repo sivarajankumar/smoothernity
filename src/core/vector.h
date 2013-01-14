@@ -3,7 +3,7 @@
 #include <lua.h>
 #include <GL/gl.h>
 
-#define VECTOR_ARGVS 4
+#define VECTOR_ARGVS 5
 
 enum vector_e
 {
