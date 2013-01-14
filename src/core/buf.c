@@ -30,8 +30,7 @@ static int api_buf_set(lua_State *lua)
 
     buf = buf_get(lua_tointeger(lua, 1));
     start = lua_tointeger(lua, 2);
-    len = lua_tonumber(lua, 3);
-    lua_pop(lua, 3);
+    len = lua_gettop(lua) - 2;
 
     if (buf == 0)
     {
@@ -47,22 +46,17 @@ static int api_buf_set(lua_State *lua)
         return 0;
     }
 
-    if (len <= 0 || len > g_bufs.size - start)
+    if (len > g_bufs.size - start)
     {
-        lua_pushstring(lua, "api_buf_set: len out of range");
+        lua_pushstring(lua, "api_buf_set: too much data");
         lua_error(lua);
         return 0;
     }
 
-    if (lua_gettop(lua) != len)
-    {
-        lua_pushstring(lua, "api_buf_set: insufficient args on stack");
-        lua_error(lua);
-        return 0;
-    }
+    for (i = 0; i < lua_gettop(lua); ++i)
+        buf->data[start + i] = lua_tonumber(lua, i + 3);
 
-    for (i = 0; i < len; ++i)
-        buf->data[start + i] = lua_tointeger(lua, i + 1);
+    lua_pop(lua, len + 2);
 
     return 0;
 }
