@@ -260,6 +260,13 @@ static int api_vector_rubber(lua_State *lua)
         return 0;
     }
 
+    if (rubber < 0.0f || rubber > 1.0f)
+    {
+        lua_pushstring(lua, "api_vector_rubber: rubber is out of range");
+        lua_error(lua);
+        return 0;
+    }
+
     vector_clear_args(vector);
 
     vector->frame_tag = 0;
@@ -270,6 +277,55 @@ static int api_vector_rubber(lua_State *lua)
     if (vector_nesting(vector, g_vectors.nesting) == 0)
     {
         lua_pushstring(lua, "api_vector_rubber: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
+static int api_vector_wsum(lua_State *lua)
+{
+    struct vector_t *vector, *v0, *v1, *v2, *v3, *v4;
+
+    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6))
+    {
+        lua_pushstring(lua, "api_vector_wsum: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    v2 = vector_get(lua_tointeger(lua, 4));
+    v3 = vector_get(lua_tointeger(lua, 5));
+    v4 = vector_get(lua_tointeger(lua, 6));
+    lua_pop(lua, 6);
+
+    if (vector == 0 || v0 == 0 || v1 == 0 || v2 == 0 || v3 == 0 || v4 == 0)
+    {
+        lua_pushstring(lua, "api_vector_wsum: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_clear_args(vector);
+
+    vector->frame_tag = 0;
+    vector->type = VECTOR_WSUM;
+    vector->argv[0] = v0;
+    vector->argv[1] = v1;
+    vector->argv[2] = v2;
+    vector->argv[3] = v3;
+    vector->argv[4] = v4;
+
+    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_vector_wsum: nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -300,6 +356,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_sine", api_vector_sine);
     lua_register(lua, "api_vector_saw", api_vector_saw);
     lua_register(lua, "api_vector_rubber", api_vector_rubber);
+    lua_register(lua, "api_vector_wsum", api_vector_wsum);
     return 0;
 }
 
@@ -343,7 +400,7 @@ int vector_nesting(struct vector_t *vector, int limit)
 void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
 {
     int i;
-    GLfloat *v0, *v1;
+    GLfloat *v0, *v1, *v2, *v3, *v4;
     if (vector->type == VECTOR_CONST)
         return;
     if (force == 0 && vector->frame_tag == frame_tag)
@@ -386,6 +443,24 @@ void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
         v0 = vector->argv[0]->value;
         for (i = 0; i < 4; ++i)
             vector->value[i] += (v0[i] - vector->value[i]) * vector->rubber;
+    }
+    else if (vector->type == VECTOR_WSUM)
+    {
+        vector_update(vector->argv[0], dt, frame_tag, force);
+        vector_update(vector->argv[1], dt, frame_tag, force);
+        vector_update(vector->argv[2], dt, frame_tag, force);
+        vector_update(vector->argv[3], dt, frame_tag, force);
+        vector_update(vector->argv[4], dt, frame_tag, force);
+        v0 = vector->argv[0]->value;
+        v1 = vector->argv[1]->value;
+        v2 = vector->argv[2]->value;
+        v3 = vector->argv[3]->value;
+        v4 = vector->argv[4]->value;
+        for (i = 0; i < 4; ++i)
+        {
+            vector->value[i] = (v0[0] * v1[i]) + (v0[1] * v2[i]) +
+                               (v0[2] * v3[i]) + (v0[3] * v4[i]);
+        }
     }
 }
 
