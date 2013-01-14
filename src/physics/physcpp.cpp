@@ -139,7 +139,8 @@ int physcpp_cs_free(int csi)
 }
 
 extern "C"
-int physcpp_rb_alloc(int *rbi, int csi, float *matrix)
+int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
+                     float frict, float roll_frict)
 {
     rigidbody_t *rb;
     colshape_t *cs;
@@ -153,7 +154,7 @@ int physcpp_rb_alloc(int *rbi, int csi, float *matrix)
     rb->mstate->get.setFromOpenGLMatrix(matrix);
     rb->mstate->set = rb->mstate->get;
     rb->mstate->was_set = 1;
-    rigidbody_make(rb, cs);
+    rigidbody_make(rb, cs, frict, roll_frict);
     g_physcpp.world->addRigidBody(rb->body);
     return PHYSRES_OK;
 }

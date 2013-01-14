@@ -241,7 +241,7 @@ function work(self)
     local size = api_vector_alloc()
     api_vector_const(size, 1, 1, 1, 0)
     local cs = api_physics_cs_alloc_box(10, size)
-    local rb = api_physics_rb_alloc(cs, m1)
+    local rb = api_physics_rb_alloc(cs, m1, 1, 1)
     api_matrix_rigid_body(m1, rb)
 
     --
@@ -314,7 +314,7 @@ function work(self)
                          1, 0, 0, 0, 1,
                          1, 1, 1, 1, 1)
     local cs = api_physics_cs_alloc_hmap(buf, 0, 5, 5, 0, 1, scale)
-    local rb = api_physics_rb_alloc(cs, mstart)
+    local rb = api_physics_rb_alloc(cs, mstart, 1, 1)
 
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()

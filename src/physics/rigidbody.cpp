@@ -89,11 +89,14 @@ void rigidbody_free(int rbi)
     rb->body = 0;
 }
 
-void rigidbody_make(rigidbody_t *rb, colshape_t *cs)
+void rigidbody_make(rigidbody_t *rb, colshape_t *cs, float frict, float roll_frict)
 {
     if (rb->body)
         return;
+    btRigidBody::btRigidBodyConstructionInfo info
+            (cs->mass, rb->mstate, cs->shape, cs->inertia);
+    info.m_friction = frict;
+    info.m_rollingFriction = roll_frict;
     rb->body = new (rb->body_data)
-        btRigidBody(btRigidBody::btRigidBodyConstructionInfo(
-            cs->mass, rb->mstate, cs->shape, cs->inertia));
+        btRigidBody(info);
 }

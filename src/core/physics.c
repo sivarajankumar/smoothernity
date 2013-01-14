@@ -222,12 +222,12 @@ static int api_physics_cs_free(lua_State *lua)
 static int api_physics_rb_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
-    int csi;
-    int rbi;
-    int res;
+    int csi, rbi, res;
+    float frict, roll_frict;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2))
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
     {
         lua_pushstring(lua, "api_physics_rb_alloc: incorrect argument");
         lua_error(lua);
@@ -236,7 +236,9 @@ static int api_physics_rb_alloc(lua_State *lua)
 
     csi = lua_tointeger(lua, 1);
     matrix = matrix_get(lua_tointeger(lua, 2));
-    lua_pop(lua, 2);
+    frict = lua_tonumber(lua, 3);
+    roll_frict = lua_tonumber(lua, 4);
+    lua_pop(lua, 4);
 
     if (matrix == 0)
     {
@@ -245,7 +247,14 @@ static int api_physics_rb_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_rb_alloc(&rbi, csi, matrix->value);
+    if (frict < 0.0f || roll_frict < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_rb_alloc: negative friction");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_rb_alloc(&rbi, csi, matrix->value, frict, roll_frict);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
