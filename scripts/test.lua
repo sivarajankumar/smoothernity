@@ -66,6 +66,9 @@ API_INPUT_KEY_X = 62
 API_INPUT_KEY_Y = 63
 API_INPUT_KEY_Z = 64
 
+API_VECTOR_IPL_LINEAR = 0
+API_VECTOR_IPL_SPLINE = 1
+
 API_MESH_TRIANGLE_STRIP = 0
 API_MESH_TRIANGLE_FAN = 1
 API_MESH_TRIANGLES = 2
@@ -145,10 +148,14 @@ function work(self)
 
     local v0 = api_vector_alloc()
     local v1 = api_vector_alloc()
-    local v = api_vector_alloc()
     api_vector_const(v0, 0, 0.05, 0, 1)
     api_vector_const(v1, 0, 0, 0.05, 1)
-    api_vector_sine(v, v0, v1, 1)
+
+    local v = api_vector_alloc()
+    local buf = api_buf_alloc()
+    api_buf_set(buf, 0, 0,0.05,   0,1,1,
+                        0,   0,0.05,1,1)
+    api_vector_seq(v, buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
     api_display_clear_color(v)
 
     local vb = api_vbuf_alloc()
@@ -178,21 +185,17 @@ function work(self)
     api_ibuf_bake(ib)
 
     local rot1 = api_vector_alloc()
-    local rot2 = api_vector_alloc()
-    local from = api_vector_alloc()
-    local to = api_vector_alloc()
-    api_vector_const(from, 0, 0, 0, 0)
-    api_vector_const(from, math.pi * 2, 0, 0, 0)
-    --api_vector_saw(rot1, from, to, 10)
     api_vector_const(rot1, 0, 0, 0, 0)
-    api_vector_saw(rot2, from, to, 4)
+
+    local rot2 = api_vector_alloc()
+    local buf = api_buf_alloc()
+    api_buf_set(buf, 0, 0,0,0,0,4, math.pi*2,0,0,0,0)
+    api_vector_seq(rot2, buf, 0, 2, 1, API_VECTOR_IPL_LINEAR)
 
     local pos1 = api_vector_alloc()
-    local from = api_vector_alloc()
-    local to = api_vector_alloc()
-    api_vector_const(from, 2, 1, 0, 0)
-    api_vector_const(to, 2, -1, 0, 0)
-    api_vector_sine(pos1, from, to, 1)
+    local buf = api_buf_alloc()
+    api_buf_set(buf, 0, 2,1,0,0,1, 2,-1,0,0,1)
+    api_vector_seq(pos1, buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
 
     local m1 = api_matrix_alloc()
     local pos = api_vector_alloc()

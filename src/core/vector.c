@@ -1,5 +1,5 @@
 #include "vector.h"
-#include "consts.h"
+#include "buf.h"
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -131,110 +131,6 @@ static int api_vector_const(lua_State *lua)
     return 0;
 }
 
-static int api_vector_sine(lua_State *lua)
-{
-    struct vector_t *vector, *v0, *v1;
-    float period;
-
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4))
-    {
-        lua_pushstring(lua, "api_vector_sine: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector = vector_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
-    period = lua_tonumber(lua, 4);
-    lua_pop(lua, 4);
-
-    if (vector == 0 || v0 == 0 || v1 == 0)
-    {
-        lua_pushstring(lua, "api_vector_sine: invalid vector");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (period <= 0.0f)
-    {
-        lua_pushstring(lua, "api_vector_sine: invalid period");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector_clear_args(vector);
-
-    vector->frame_tag = 0;
-    vector->type = VECTOR_SINE;
-    vector->period = period;
-    vector->argv[0] = v0;
-    vector->argv[1] = v1;
-
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
-    {
-        lua_pushstring(lua, "api_vector_sine: nesting is too deep");
-        lua_error(lua);
-        return 0;
-    }
-
-    return 0;
-}
-
-static int api_vector_saw(lua_State *lua)
-{
-    struct vector_t *vector, *v0, *v1;
-    float period;
-
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4))
-    {
-        lua_pushstring(lua, "api_vector_saw: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector = vector_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
-    period = lua_tonumber(lua, 4);
-    lua_pop(lua, 4);
-
-    if (vector == 0 || v0 == 0 || v1 == 0)
-    {
-        lua_pushstring(lua, "api_vector_saw: invalid vector");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (period <= 0.0f)
-    {
-        lua_pushstring(lua, "api_vector_saw: invalid period");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector_clear_args(vector);
-
-    vector->frame_tag = 0;
-    vector->type = VECTOR_SAW;
-    vector->period = period;
-    vector->argv[0] = v0;
-    vector->argv[1] = v1;
-
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
-    {
-        lua_pushstring(lua, "api_vector_saw: nesting is too deep");
-        lua_error(lua);
-        return 0;
-    }
-
-    return 0;
-}
-
 static int api_vector_rubber(lua_State *lua)
 {
     struct vector_t *vector, *v0;
@@ -333,6 +229,87 @@ static int api_vector_wsum(lua_State *lua)
     return 0;
 }
 
+static int api_vector_seq(lua_State *lua)
+{
+    struct vector_t *vector;
+    struct buf_t *buf;
+    int start, len, loop, ipl;
+
+    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6))
+    {
+        lua_pushstring(lua, "api_vector_seq: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    buf = buf_get(lua_tointeger(lua, 2));
+    start = lua_tointeger(lua, 3);
+    len = lua_tointeger(lua, 4);
+    loop = lua_tointeger(lua, 5);
+    ipl = lua_tointeger(lua, 6);
+    lua_pop(lua, 6);
+
+    if (vector == 0)
+    {
+        lua_pushstring(lua, "api_vector_seq: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (buf == 0)
+    {
+        lua_pushstring(lua, "api_vector_seq: invalid buffer");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (start < 0 || start >= g_bufs.size - 5)
+    {
+        lua_pushstring(lua, "api_vector_seq: start index out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (len < 2 || len > (g_bufs.size - start) / 5)
+    {
+        lua_pushstring(lua, "api_vector_seq: len out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (loop != 0 && loop != 1)
+    {
+        lua_pushstring(lua, "api_vector_seq: invalid loop value");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (ipl < 0 || ipl >= (int)VECTOR_IPLS_TOTAL)
+    {
+        lua_pushstring(lua, "api_vector_seq: interpolation type out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_clear_args(vector);
+
+    vector->frame_tag = 0;
+    vector->type = VECTOR_SEQ;
+    vector->seq_t = 0;
+    vector->seq_start = start;
+    vector->seq_cur = start;
+    vector->seq_len = len;
+    vector->seq_loop = loop;
+    vector->seq_buf = buf;
+    vector->seq_ipl = (enum vector_ipl_e)ipl;
+
+    return 0;
+}
+
 int vector_init(lua_State *lua, int count, int nesting)
 {
     int i;
@@ -353,10 +330,9 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_free", api_vector_free);
     lua_register(lua, "api_vector_left", api_vector_left);
     lua_register(lua, "api_vector_const", api_vector_const);
-    lua_register(lua, "api_vector_sine", api_vector_sine);
-    lua_register(lua, "api_vector_saw", api_vector_saw);
     lua_register(lua, "api_vector_rubber", api_vector_rubber);
     lua_register(lua, "api_vector_wsum", api_vector_wsum);
+    lua_register(lua, "api_vector_seq", api_vector_seq);
     return 0;
 }
 
@@ -397,71 +373,132 @@ int vector_nesting(struct vector_t *vector, int limit)
         return limit;
 }
 
-void vector_update(struct vector_t *vector, float dt, int frame_tag, int force)
+static float vector_seq_dt(struct vector_t *v, int i)
+{
+    return v->seq_buf->data[i + 4];
+}
+
+static float * vector_seq_value(struct vector_t *v, int i)
+{
+    return v->seq_buf->data + i;
+}
+
+static int vector_seq_next(struct vector_t *v, int i)
+{
+    if (i + 5 < v->seq_start + v->seq_len * 5)
+        return i + 5;
+    else if (v->seq_loop)
+        return v->seq_start;
+    else
+        return i;
+}
+
+static int vector_seq_prev(struct vector_t *v, int i)
+{
+    if (i - 5 >= v->seq_start)
+        return i - 5;
+    else if (v->seq_loop)
+        return v->seq_start + (v->seq_len - 1) * 5;
+    else
+        return i;
+}
+
+static void vector_update_rubber(struct vector_t *v, float dt, int force)
+{
+    int i;
+    GLfloat *v0;
+    vector_update(v->argv[0], dt, v->frame_tag, force);
+    v0 = v->argv[0]->value;
+    for (i = 0; i < 4; ++i)
+        v->value[i] += (v0[i] - v->value[i]) * v->rubber;
+}
+
+static void vector_update_wsum(struct vector_t *v, float dt, int force)
 {
     int i;
     GLfloat *v0, *v1, *v2, *v3, *v4;
-    if (vector->type == VECTOR_CONST)
+    vector_update(v->argv[0], dt, v->frame_tag, force);
+    vector_update(v->argv[1], dt, v->frame_tag, force);
+    vector_update(v->argv[2], dt, v->frame_tag, force);
+    vector_update(v->argv[3], dt, v->frame_tag, force);
+    vector_update(v->argv[4], dt, v->frame_tag, force);
+    v0 = v->argv[0]->value;
+    v1 = v->argv[1]->value;
+    v2 = v->argv[2]->value;
+    v3 = v->argv[3]->value;
+    v4 = v->argv[4]->value;
+    for (i = 0; i < 4; ++i)
+    {
+        v->value[i] = (v0[0] * v1[i]) + (v0[1] * v2[i]) +
+                      (v0[2] * v3[i]) + (v0[3] * v4[i]);
+    }
+}
+
+static void vector_update_seq(struct vector_t *v, float dt)
+{
+    static const int SEQ_SKIP_MAX = 5;
+    int i, i0, i1, i2, i3;
+    GLfloat *v0, *v1, *v2, *v3;
+    float t, tt, ttt;
+
+    v->seq_t += dt;
+    for (i = 0; i < SEQ_SKIP_MAX; ++i)
+    {
+        if (v->seq_t < vector_seq_dt(v, v->seq_cur))
+            break;
+        v->seq_t -= vector_seq_dt(v, v->seq_cur);
+        v->seq_cur = vector_seq_next(v, v->seq_cur);
+    }
+    if (v->seq_ipl == VECTOR_IPL_LINEAR)
+    {
+        v0 = vector_seq_value(v, v->seq_cur);
+        v1 = vector_seq_value(v, vector_seq_next(v, v->seq_cur));
+        for (i = 0; i < 4; ++i)
+        {
+            v->value[i] = v0[i] + ((v1[i] - v0[i]) * v->seq_t
+                                   / vector_seq_dt(v, v->seq_cur));
+        }
+    }
+    else if (v->seq_ipl == VECTOR_IPL_SPLINE)
+    {
+        i0 = vector_seq_prev(v, v->seq_cur);
+        i1 = v->seq_cur;
+        i2 = vector_seq_next(v, v->seq_cur);
+        i3 = vector_seq_next(v, i2);
+
+        v0 = vector_seq_value(v, i0);
+        v1 = vector_seq_value(v, i1);
+        v2 = vector_seq_value(v, i2);
+        v3 = vector_seq_value(v, i3);
+
+        t = v->seq_t / vector_seq_dt(v, v->seq_cur);
+        tt = t * t;
+        ttt = tt * t;
+
+        for (i = 0; i < 4; ++i)
+        {
+            v->value[i] = 2.0f * v1[i];
+            v->value[i] += t * (-v0[i] + v2[i]);
+            v->value[i] += tt * (2.0f*v0[i] - 5.0f*v1[i] + 4.0f*v2[i] - v3[i]);
+            v->value[i] += ttt * (-v0[i] + 3.0f*v1[i] - 3.0f*v2[i] + v3[i]);
+            v->value[i] *= 0.5f;
+        }
+    }
+}
+
+void vector_update(struct vector_t *v, float dt, int frame_tag, int force)
+{
+    if (v->type == VECTOR_CONST)
         return;
-    if (force == 0 && vector->frame_tag == frame_tag)
+    if (force == 0 && v->frame_tag == frame_tag)
         return;
-    vector->frame_tag = frame_tag;
-    if (vector->type == VECTOR_SINE)
-    {
-        vector_update(vector->argv[0], dt, frame_tag, force);
-        vector_update(vector->argv[1], dt, frame_tag, force);
-        vector->t += dt;
-        while (vector->t > vector->period)
-            vector->t -= vector->period;
-        v0 = vector->argv[0]->value;
-        v1 = vector->argv[1]->value;
-        for (i = 0; i < 4; ++i)
-        {
-            vector->value[i] = (0.5f * (v1[i] + v0[i])) +
-                               (0.5f * (v1[i] - v0[i]) * 
-                               sin(2.0f*M_PI*vector->t / vector->period));
-        }
-    }
-    else if (vector->type == VECTOR_SAW)
-    {
-        vector_update(vector->argv[0], dt, frame_tag, force);
-        vector_update(vector->argv[1], dt, frame_tag, force);
-        vector->t += dt;
-        while (vector->t > vector->period)
-            vector->t -= vector->period;
-        v0 = vector->argv[0]->value;
-        v1 = vector->argv[1]->value;
-        for (i = 0; i < 4; ++i)
-        {
-            vector->value[i] = v0[i] + ((v1[i] - v0[i]) *
-                                vector->t / vector->period);
-        }
-    }
-    else if (vector->type == VECTOR_RUBBER)
-    {
-        vector_update(vector->argv[0], dt, frame_tag, force);
-        v0 = vector->argv[0]->value;
-        for (i = 0; i < 4; ++i)
-            vector->value[i] += (v0[i] - vector->value[i]) * vector->rubber;
-    }
-    else if (vector->type == VECTOR_WSUM)
-    {
-        vector_update(vector->argv[0], dt, frame_tag, force);
-        vector_update(vector->argv[1], dt, frame_tag, force);
-        vector_update(vector->argv[2], dt, frame_tag, force);
-        vector_update(vector->argv[3], dt, frame_tag, force);
-        vector_update(vector->argv[4], dt, frame_tag, force);
-        v0 = vector->argv[0]->value;
-        v1 = vector->argv[1]->value;
-        v2 = vector->argv[2]->value;
-        v3 = vector->argv[3]->value;
-        v4 = vector->argv[4]->value;
-        for (i = 0; i < 4; ++i)
-        {
-            vector->value[i] = (v0[0] * v1[i]) + (v0[1] * v2[i]) +
-                               (v0[2] * v3[i]) + (v0[3] * v4[i]);
-        }
-    }
+    v->frame_tag = frame_tag;
+    if (v->type == VECTOR_RUBBER)
+        vector_update_rubber(v, dt, force);
+    else if (v->type == VECTOR_WSUM)
+        vector_update_wsum(v, dt, force);
+    else if (v->type == VECTOR_SEQ)
+        vector_update_seq(v, dt);
 }
 
 void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
