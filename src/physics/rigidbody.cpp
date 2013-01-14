@@ -40,7 +40,7 @@ void rigidbody_done(void)
     {
         for (i = 0; i < g_rigidbodies.count; ++i)
         {
-            rigidbody_free(i);
+            rigidbody_free(i, 0);
             g_rigidbodies.pool[i].mstate->~mstate_c();
         }
         free(g_rigidbodies.pool);
@@ -53,19 +53,6 @@ void rigidbody_left(int *left)
     *left = g_rigidbodies.left;
 }
 
-int rigidbody_alloc(void)
-{
-    rigidbody_t *rb;
-    if (g_rigidbodies.vacant == 0)
-        return -1;
-    --g_rigidbodies.left;
-    rb = g_rigidbodies.vacant;
-    g_rigidbodies.vacant = g_rigidbodies.vacant->next;
-    rb->vacant = 0;
-    rb->next = 0;
-    return rb - g_rigidbodies.pool;
-}
-
 rigidbody_t * rigidbody_get(int rbi)
 {
     if (rbi >= 0 && rbi < g_rigidbodies.count)
@@ -74,7 +61,7 @@ rigidbody_t * rigidbody_get(int rbi)
         return 0;
 }
 
-void rigidbody_free(int rbi)
+void rigidbody_free(int rbi, btDynamicsWorld *world)
 {
     rigidbody_t *rb;
     rb = rigidbody_get(rbi);
@@ -84,19 +71,35 @@ void rigidbody_free(int rbi)
     rb->vacant = 1;
     rb->next = g_rigidbodies.vacant;
     g_rigidbodies.vacant = rb;
+    if (rb->body && world)
+        world->removeCollisionObject(rb->body);
     if (rb->body)
         rb->body->~btRigidBody();
     rb->body = 0;
 }
 
-void rigidbody_make(rigidbody_t *rb, colshape_t *cs, float frict, float roll_frict)
+int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
+                    float *matrix, float frict, float roll_frict)
 {
-    if (rb->body)
-        return;
+    rigidbody_t *rb;
+    if (g_rigidbodies.vacant == 0)
+        return -1;
+    --g_rigidbodies.left;
+    rb = g_rigidbodies.vacant;
+    g_rigidbodies.vacant = g_rigidbodies.vacant->next;
+    rb->vacant = 0;
+    rb->next = 0;
+
+    rb->mstate->get.setFromOpenGLMatrix(matrix);
+    rb->mstate->set = rb->mstate->get;
+    rb->mstate->was_set = 1;
+
     btRigidBody::btRigidBodyConstructionInfo info
             (cs->mass, rb->mstate, cs->shape, cs->inertia);
     info.m_friction = frict;
     info.m_rollingFriction = roll_frict;
-    rb->body = new (rb->body_data)
-        btRigidBody(info);
+
+    rb->body = new (rb->body_data) btRigidBody(info);
+    world->addRigidBody(rb->body);
+    return rb - g_rigidbodies.pool;
 }
