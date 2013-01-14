@@ -118,6 +118,17 @@ int physcpp_cs_alloc_box(int *csi, float mass, float *size)
 }
 
 extern "C"
+int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
+                          float hmin, float hmax)
+{
+    *csi = colshape_alloc();
+    if (*csi == -1)
+        return PHYSRES_OUT_OF_CS;
+    colshape_make_hmap(colshape_get(*csi), hmap, width, length, hmin, hmax);
+    return PHYSRES_OK;
+}
+
+extern "C"
 int physcpp_cs_free(int csi)
 {
     if (colshape_get(csi) == 0)

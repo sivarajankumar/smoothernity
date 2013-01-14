@@ -2,6 +2,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "mpool.h"
+#include "buf.h"
 #include "../physics/physcpp.h"
 #include "../physics/physres.h"
 #include <stdio.h>
@@ -120,6 +121,74 @@ static int api_physics_cs_alloc_box(lua_State *lua)
     return 1;
 }
 
+static int api_physics_cs_alloc_hmap(lua_State *lua)
+{
+    struct buf_t *hmap;
+    int start, width, length, csi, res;
+    float hmin, hmax;
+
+    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6))
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    hmap = buf_get(lua_tointeger(lua, 1));
+    start = lua_tointeger(lua, 2);
+    width = lua_tointeger(lua, 3);
+    length = lua_tointeger(lua, 4);
+    hmin = lua_tonumber(lua, 5);
+    hmax = lua_tonumber(lua, 6);
+    lua_pop(lua, 6);
+
+    if (hmap == 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: invalid buf");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (start < 0 || start >= g_bufs.size - (width * length))
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: "
+                            "start index out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (width <= 0 || length <= 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: "
+                            "dimensions out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (hmin >= hmax)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: hmin >= hmax");
+        lua_error(lua);
+        return 0;
+    }
+    
+    res = physcpp_cs_alloc_hmap(&csi, hmap->data + start, width,
+                                length, hmin, hmax);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cs_alloc_hmap: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, csi);
+    return 1;
+}
+
 static int api_physics_cs_free(lua_State *lua)
 {
     int res;
@@ -212,6 +281,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count)
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
     lua_register(lua, "api_physics_set_ddraw", api_physics_set_ddraw);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
+    lua_register(lua, "api_physics_cs_alloc_hmap", api_physics_cs_alloc_hmap);
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
     lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
     lua_register(lua, "api_physics_rb_free", api_physics_rb_free);

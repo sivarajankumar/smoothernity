@@ -1,16 +1,16 @@
 #pragma once
 
 #include <btBulletDynamicsCommon.h>
-
-#define COLSHAPE_SIZE sizeof(btBoxShape)
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 
 struct colshape_t
 {
     btBoxShape *shape_box;
+    btHeightfieldTerrainShape *shape_hmap;
     btCollisionShape *shape;
     btVector3 inertia;
     float mass;
-    char data[COLSHAPE_SIZE];
+    void *data;
     colshape_t *next;
     int vacant;
 };
@@ -22,3 +22,5 @@ int colshape_alloc(void);
 void colshape_free(int);
 colshape_t * colshape_get(int);
 void colshape_make_box(colshape_t *col, float mass, float *size);
+void colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
+                        float hmin, float hmax);
