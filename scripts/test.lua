@@ -248,29 +248,6 @@ function work(self)
     -- ground
     --
 
-    local mposrot = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local rot = api_vector_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(pos, 0, -15, -3, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_matrix_pos_scl_rot(mposrot, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
-
-    local mscale = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local rot = api_vector_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(pos, 0, 0, 0, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_vector_const(scl, 20, 2, 20, 0)
-    api_matrix_pos_scl_rot(mscale, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
-
-    local mmul = api_matrix_alloc()
-    api_matrix_mul(mmul, mposrot, mscale)
-
-    api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0, 36)
-
     local vb = api_vbuf_alloc()
     api_vbuf_set(vb, 0, -2, 1,-2,   0, 0, 1, 1,   0, 0,
                         -1, 1,-2,   0, 1, 0, 1,   0, 0,
@@ -310,20 +287,41 @@ function work(self)
     api_ibuf_set(ib, 3*6*4,  15,20,21,15,21,16,  16,21,22,16,22,17,  17,22,23,17,23,18,  18,23,24,18,24,19)
     api_ibuf_bake(ib)
 
+    local mstart = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local rot = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, -15, -3, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_matrix_pos_scl_rot(mstart, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
+
+    local mvis = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local rot = api_vector_alloc()
+    local scl = api_vector_alloc()
+    api_vector_const(pos, 0, -1, 0, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_vector_const(scl, 10, 2, 10, 0)
+    api_matrix_pos_scl_rot(mvis, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
+
     local scale = api_vector_alloc()
-    api_vector_const(scale, 8, 4, 8, 0)
+    api_vector_const(scale, 10, 2, 10, 0)
     local buf = api_buf_alloc()
     api_buf_set(buf, 0,  1, 1, 1, 1, 1,
                          1, 0, 0, 0, 1,
                          1, 0, 1, 0, 1, 
                          1, 0, 0, 0, 1,
                          1, 1, 1, 1, 1)
-    local cs = api_physics_cs_alloc_hmap(buf, 0, 6, 6, 0, 1, scale)
-    local rb = api_physics_rb_alloc(cs, mposrot)
+    local cs = api_physics_cs_alloc_hmap(buf, 0, 5, 5, 0, 1, scale)
+    local rb = api_physics_rb_alloc(cs, mstart)
 
+    local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     api_matrix_rigid_body(mrb, rb)
-    api_matrix_mul(mmul, mrb, mscale)
+    api_matrix_mul(mmul, mrb, mvis)
+
+    api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0, 4*6*4)
 
     --
     -- camera
