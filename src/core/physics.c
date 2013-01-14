@@ -288,9 +288,9 @@ static int api_physics_rb_free(lua_State *lua)
     return 0;
 }
 
-int physics_init(lua_State *lua, int cs_count, int rb_count)
+int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 {
-    if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count)
+    if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count, veh_count)
      != PHYSRES_OK)
     {
         return 1;

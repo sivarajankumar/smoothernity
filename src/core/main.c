@@ -44,6 +44,7 @@ struct main_t
     int matrix_nesting;
     int colshape_count;
     int rigidbody_count;
+    int vehicle_count;
     int buf_size;
     int buf_count;
 };
@@ -178,6 +179,7 @@ static int main_init(char *script)
      || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0
      || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
+     || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "buf_count", &g_main.buf_count) != 0)
     {
@@ -267,7 +269,8 @@ int main(int argc, char **argv)
     machine_init(lua);
     input_init(lua);
 
-    if (physics_init(lua, g_main.colshape_count, g_main.rigidbody_count) != 0)
+    if (physics_init(lua, g_main.colshape_count,
+                     g_main.rigidbody_count, g_main.vehicle_count) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
         goto cleanup;
