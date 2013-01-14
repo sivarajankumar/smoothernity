@@ -103,3 +103,12 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
     world->addRigidBody(rb->body);
     return rb - g_rigidbodies.pool;
 }
+
+void rigidbody_get_new_matrix(rigidbody_t *rb, float *matrix)
+{
+    if (rb->mstate->was_set)
+    {
+        rb->mstate->set.getOpenGLMatrix(matrix);
+        rb->mstate->was_set = 0;
+    }
+}
