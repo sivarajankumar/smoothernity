@@ -141,49 +141,51 @@ static int api_ibuf_bake(lua_State *lua)
     return 0;
 }
 
-static int api_ibuf_write(lua_State *lua)
+static int api_ibuf_set(lua_State *lua)
 {
     struct ibuf_t *ibuf;
     struct ibuf_data_t *data;
-    int datai, index;
+    int start, len, index, i;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) < 3 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
-        lua_pushstring(lua, "api_ibuf_write: incorrect argument");
+        lua_pushstring(lua, "api_ibuf_set: incorrect argument");
         lua_error(lua);
         return 0;
     }
     ibuf = ibuf_get(lua_tointeger(lua, 1));
-    datai = lua_tointeger(lua, 2);
-    index = lua_tointeger(lua, 3);
-    lua_pop(lua, 3);
+    start = lua_tointeger(lua, 2);
+    len = lua_gettop(lua) - 2;
 
-    if (datai < 0 || datai >= g_ibufs.size)
+    if (start < 0 || start >= g_ibufs.size - len)
     {
-        lua_pushstring(lua, "api_ibuf_write: data out of range");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (index < 0 || index >= g_vbufs.size)
-    {
-        lua_pushstring(lua, "api_ibuf_write: index out of range");
+        lua_pushstring(lua, "api_ibuf_set: start index out of range");
         lua_error(lua);
         return 0;
     }
 
     if (ibuf == 0 || ibuf->mapped == 0)
     {
-        lua_pushstring(lua, "api_ibuf_write: invalid ibuf");
+        lua_pushstring(lua, "api_ibuf_set: invalid ibuf");
         lua_error(lua);
         return 0;
     }
 
-    data = ibuf->mapped;
-    data += datai;
+    for (i = 0; i < len; ++i)
+    {
+        index = lua_tointeger(lua, 3 + i);
+        if (index < 0 || index >= g_vbufs.size)
+        {
+            lua_pushstring(lua, "api_ibuf_set: index out of range");
+            lua_error(lua);
+            return 0;
+        }
+        data = ibuf->mapped;
+        data[start + i].index = index;
+    }
 
-    data->index = index;
+    lua_pop(lua, lua_gettop(lua));
     return 0;
 }
 
@@ -226,7 +228,7 @@ int ibuf_init(lua_State *lua, int size, int count)
 
     lua_register(lua, "api_ibuf_alloc", api_ibuf_alloc);
     lua_register(lua, "api_ibuf_free", api_ibuf_free);
-    lua_register(lua, "api_ibuf_write", api_ibuf_write);
+    lua_register(lua, "api_ibuf_set", api_ibuf_set);
     lua_register(lua, "api_ibuf_bake", api_ibuf_bake);
     lua_register(lua, "api_ibuf_query", api_ibuf_query);
 
