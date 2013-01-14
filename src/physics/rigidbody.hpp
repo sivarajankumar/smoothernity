@@ -17,7 +17,7 @@ struct rigidbody_t
 int rigidbody_init(int count);
 void rigidbody_done(void);
 void rigidbody_left(int *left);
-int rigidbody_alloc(void);
-void rigidbody_free(int);
+int rigidbody_alloc(btDynamicsWorld*, colshape_t*,
+                    float *matrix, float frict, float roll_frict);
+void rigidbody_free(int, btDynamicsWorld*);
 rigidbody_t * rigidbody_get(int);
-void rigidbody_make(rigidbody_t*, colshape_t*, float frict, float roll_frict);
