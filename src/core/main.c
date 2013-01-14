@@ -347,11 +347,11 @@ int main(int argc, char **argv)
     while (machine_running(controller) || machine_running(worker))
     {
         timer_reset(logic_timer);
+        display_update(1.0f / (float)g_main.fps);
+        physics_update(1.0f / (float)g_main.fps);
+        input_update();
         lua_gc(lua, LUA_GCSTEP, g_main.gc_step);
         lua_gc(lua, LUA_GCSTOP, 0);
-        input_update();
-        physics_update(1.0f / (float)g_main.fps);
-        display_update(1.0f / (float)g_main.fps);
         if (machine_step(controller, 0) != 0)
         {
             fprintf(stderr, "Failed to run controller\n");
