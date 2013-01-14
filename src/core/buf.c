@@ -18,10 +18,9 @@ static int api_buf_left(lua_State *lua)
 static int api_buf_set(lua_State *lua)
 {
     struct buf_t *buf;
-    int i;
-    float v;
+    int start, len, i;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) < 3 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_buf_set: incorrect argument");
@@ -30,8 +29,8 @@ static int api_buf_set(lua_State *lua)
     }
 
     buf = buf_get(lua_tointeger(lua, 1));
-    i = lua_tointeger(lua, 2);
-    v = lua_tonumber(lua, 3);
+    start = lua_tointeger(lua, 2);
+    len = lua_tonumber(lua, 3);
     lua_pop(lua, 3);
 
     if (buf == 0)
@@ -41,14 +40,30 @@ static int api_buf_set(lua_State *lua)
         return 0;
     }
 
-    if (i < 0 || i >= g_bufs.size)
+    if (start < 0 || start >= g_bufs.size)
     {
-        lua_pushstring(lua, "api_buf_set: index out of range");
+        lua_pushstring(lua, "api_buf_set: start index out of range");
         lua_error(lua);
         return 0;
     }
 
-    buf->data[i] = v;
+    if (len <= 0 || len > g_bufs.size - start)
+    {
+        lua_pushstring(lua, "api_buf_set: len out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (lua_gettop(lua) != len)
+    {
+        lua_pushstring(lua, "api_buf_set: insufficient args on stack");
+        lua_error(lua);
+        return 0;
+    }
+
+    for (i = 0; i < len; ++i)
+        buf->data[start + i] = lua_tointeger(lua, i + 1);
+
     return 0;
 }
 
