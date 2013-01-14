@@ -54,14 +54,14 @@ static int api_vector_free(lua_State *lua)
 {
     struct vector_t *vector;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_vector_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -1));
+    vector = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (vector == 0 || vector->vacant)
@@ -96,20 +96,20 @@ static int api_vector_const(lua_State *lua)
     struct vector_t *vector;
     float value[4];
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, -5)
-    || !lua_isnumber(lua, -4) || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
     {
         lua_pushstring(lua, "api_vector_const: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -5));
-    value[0] = lua_tonumber(lua, -4);
-    value[1] = lua_tonumber(lua, -3);
-    value[2] = lua_tonumber(lua, -2);
-    value[3] = lua_tonumber(lua, -1);
+    vector = vector_get(lua_tointeger(lua, 1));
+    value[0] = lua_tonumber(lua, 2);
+    value[1] = lua_tonumber(lua, 3);
+    value[2] = lua_tonumber(lua, 4);
+    value[3] = lua_tonumber(lua, 5);
     lua_pop(lua, 5);
 
     if (vector == 0)
@@ -136,19 +136,19 @@ static int api_vector_sine(lua_State *lua)
     struct vector_t *vector, *v0, *v1;
     float period;
 
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, -4)
-    || !lua_isnumber(lua, -3) || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
     {
         lua_pushstring(lua, "api_vector_sine: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -4));
-    v0 = vector_get(lua_tointeger(lua, -3));
-    v1 = vector_get(lua_tointeger(lua, -2));
-    period = lua_tonumber(lua, -1);
+    vector = vector_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    period = lua_tonumber(lua, 4);
     lua_pop(lua, 4);
 
     if (vector == 0 || v0 == 0 || v1 == 0)
@@ -188,19 +188,19 @@ static int api_vector_saw(lua_State *lua)
     struct vector_t *vector, *v0, *v1;
     float period;
 
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, -4)
-    || !lua_isnumber(lua, -3) || !lua_isnumber(lua, -2)
-    || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
     {
         lua_pushstring(lua, "api_vector_saw: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -4));
-    v0 = vector_get(lua_tointeger(lua, -3));
-    v1 = vector_get(lua_tointeger(lua, -2));
-    period = lua_tonumber(lua, -1);
+    vector = vector_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    period = lua_tonumber(lua, 4);
     lua_pop(lua, 4);
 
     if (vector == 0 || v0 == 0 || v1 == 0)
@@ -240,17 +240,17 @@ static int api_vector_rubber(lua_State *lua)
     struct vector_t *vector, *v0;
     float rubber;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, -3)
-    || !lua_isnumber(lua, -2) || !lua_isnumber(lua, -1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_vector_rubber: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    vector = vector_get(lua_tointeger(lua, -3));
-    v0 = vector_get(lua_tointeger(lua, -2));
-    rubber = lua_tonumber(lua, -1);
+    vector = vector_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    rubber = lua_tonumber(lua, 3);
     lua_pop(lua, 3);
 
     if (vector == 0 || v0 == 0)
