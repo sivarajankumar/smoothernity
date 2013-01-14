@@ -14,6 +14,13 @@ static colshapes_t g_colshapes;
 int colshape_init(int count)
 {
     int i;
+    size_t size;
+    struct colshape_t *cs;
+
+    size = sizeof(btBoxShape);
+    if (size < sizeof(btHeightfieldTerrainShape))
+        size = sizeof(btHeightfieldTerrainShape);
+
     g_colshapes.pool = (colshape_t*)calloc(count, sizeof(colshape_t));
     if (g_colshapes.pool == 0)
         return 1;
@@ -22,11 +29,24 @@ int colshape_init(int count)
     g_colshapes.vacant = g_colshapes.pool;
     for (i = 0; i < count; ++i)
     {
+        cs = g_colshapes.pool + i;
         if (i < count - 1)
-            g_colshapes.pool[i].next = g_colshapes.pool + i + 1;
-        g_colshapes.pool[i].vacant = 1;
+            cs->next = g_colshapes.pool + i + 1;
+        cs->vacant = 1;
+        cs->data = calloc(size, 1);
+        if (cs->data == 0)
+            goto cleanup;
     }
     return 0;
+cleanup:
+    for (i = 0; i < count; ++i)
+    {
+        cs = g_colshapes.pool + i;
+        if (cs->data)
+            free(cs->data);
+    }
+    free(g_colshapes.pool);
+    return 1;
 }
 
 void colshape_done(void)
@@ -35,7 +55,10 @@ void colshape_done(void)
     if (g_colshapes.pool)
     {
         for (i = 0; i < g_colshapes.count; ++i)
+        {
             colshape_free(i);
+            free(g_colshapes.pool[i].data);
+        }
         free(g_colshapes.pool);
         g_colshapes.pool = 0;
     }
@@ -95,4 +118,17 @@ void colshape_make_box(colshape_t *colshape, float mass, float *size)
         colshape->shape_box->calculateLocalInertia(mass, colshape->inertia);
     else
         colshape->inertia = btVector3(0,0,0);
+}
+
+void colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
+                        float hmin, float hmax)
+{
+    if (cs->shape)
+        return;
+    cs->shape_hmap = new (cs->data)
+        btHeightfieldTerrainShape(width, length, hmap, 1,
+                                  hmin, hmax, 1, PHY_FLOAT, false);
+    cs->shape = cs->shape_hmap;
+    cs->mass = 0;
+    cs->inertia = btVector3(0,0,0);
 }
