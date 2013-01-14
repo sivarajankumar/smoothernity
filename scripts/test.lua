@@ -175,29 +175,29 @@ function work(self)
     api_display_clear_color(v)
 
     local vb = api_vbuf_alloc()
-    api_vbuf_set(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0)
-    api_vbuf_set(vb, 1,    1,-1, 1,   0, 1, 0, 1,   0, 0)
-    api_vbuf_set(vb, 2,    1, 1, 1,   0, 0, 1, 1,   0, 0)
-    api_vbuf_set(vb, 3,   -1, 1, 1,   1, 1, 1, 1,   0, 0)
-    api_vbuf_set(vb, 4,   -1,-1,-1,   0, 1, 1, 1,   0, 0)
-    api_vbuf_set(vb, 5,    1,-1,-1,   0, 0, 0, 1,   0, 0)
-    api_vbuf_set(vb, 6,    1, 1,-1,   1, 1, 0, 1,   0, 0)
-    api_vbuf_set(vb, 7,   -1, 1,-1,   1, 0, 1, 1,   0, 0)
+    api_vbuf_set(vb, 0,   -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                           1,-1, 1,   0, 1, 0, 1,   0, 0,
+                           1, 1, 1,   0, 0, 1, 1,   0, 0,
+                          -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                          -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                           1,-1,-1,   0, 0, 0, 1,   0, 0,
+                           1, 1,-1,   1, 1, 0, 1,   0, 0,
+                          -1, 1,-1,   1, 0, 1, 1,   0, 0)
     api_vbuf_bake(vb)
 
     local ib = api_ibuf_alloc()
-    api_ibuf_set(ib, 0, 0) api_ibuf_set(ib, 1, 1) api_ibuf_set(ib, 2, 2)
-    api_ibuf_set(ib, 3, 0) api_ibuf_set(ib, 4, 2) api_ibuf_set(ib, 5, 3)
-    api_ibuf_set(ib, 6, 1) api_ibuf_set(ib, 7, 5) api_ibuf_set(ib, 8, 6)
-    api_ibuf_set(ib, 9, 1) api_ibuf_set(ib,10, 6) api_ibuf_set(ib,11, 2)
-    api_ibuf_set(ib,12, 5) api_ibuf_set(ib,13, 4) api_ibuf_set(ib,14, 7)
-    api_ibuf_set(ib,15, 5) api_ibuf_set(ib,16, 7) api_ibuf_set(ib,17, 6)
-    api_ibuf_set(ib,18, 4) api_ibuf_set(ib,19, 0) api_ibuf_set(ib,20, 3)
-    api_ibuf_set(ib,21, 4) api_ibuf_set(ib,22, 3) api_ibuf_set(ib,23, 7)
-    api_ibuf_set(ib,24, 3) api_ibuf_set(ib,25, 2) api_ibuf_set(ib,26, 6)
-    api_ibuf_set(ib,27, 3) api_ibuf_set(ib,28, 6) api_ibuf_set(ib,29, 7)
-    api_ibuf_set(ib,30, 1) api_ibuf_set(ib,31, 0) api_ibuf_set(ib,32, 4)
-    api_ibuf_set(ib,33, 1) api_ibuf_set(ib,34, 4) api_ibuf_set(ib,35, 5)
+    api_ibuf_set(ib, 0, 0, 1, 2,
+                        0, 2, 3,
+                        1, 5, 6,
+                        1, 6, 2,
+                        5, 4, 7,
+                        5, 7, 6,
+                        4, 0, 3,
+                        4, 3, 7,
+                        3, 2, 6,
+                        3, 6, 7,
+                        1, 0, 4,
+                        1, 4, 5)
     api_ibuf_bake(ib)
 
     local rot1 = api_vector_alloc()
