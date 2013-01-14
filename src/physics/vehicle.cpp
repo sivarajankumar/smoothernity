@@ -106,7 +106,7 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->next = 0;
 
     veh->mstate->get.setFromOpenGLMatrix(matrix);
-    veh->mstate->set = rb->mstate->get;
+    veh->mstate->set = veh->mstate->get;
     veh->mstate->was_set = 1;
 
     veh->tuning.m_suspensionStiffness = sus_stif;
@@ -125,10 +125,49 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(world);
     veh->veh = new (veh->veh_data)
         btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
-    veh->setCoordinateSystem(0, 1, 2);
+    veh->veh->setCoordinateSystem(0, 1, 2);
     world->addVehicle(veh->veh);
     return veh - g_vehicles.pool;
 }
 
-int vehicle_add_wheel(vehicle_t*, float *pos, float *dir, float *axl,
-                      float sus_rest, float roll, float radius, int front);
+int vehicle_add_wheel(vehicle_t *veh, float *pos, float *dir, float *axl,
+                      float sus_rest, float roll, float radius, int front)
+{
+    int i;
+    i = veh->veh->getNumWheels();
+    veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
+                       btVector3(dir[0], dir[1], dir[2]),
+                       btVector3(axl[0], axl[1], axl[2]),
+                       sus_rest, radius, veh->tuning, front);
+    veh->veh->getWheelInfo(i).m_rollInfluence = roll;
+    return i;
+}
+
+int vehicle_set_wheel(vehicle_t *veh, int wheel, float engine,
+                      float brake, float steer)
+{
+    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+        return 1;
+    veh->veh->applyEngineForce(engine, wheel);
+    veh->veh->setBrake(brake, wheel);
+    veh->veh->setSteeringValue(steer, wheel);
+    return 0;
+}
+
+void vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
+{
+    if (veh->mstate->was_set)
+    {
+        veh->mstate->set.getOpenGLMatrix(matrix);
+        veh->mstate->was_set = 0;
+    }
+}
+
+int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *matrix)
+{
+    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+        return 1;
+    veh->veh->updateWheelTransform(wheel, true);
+    veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
+    return 0;
+}

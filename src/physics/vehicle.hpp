@@ -32,4 +32,4 @@ int vehicle_add_wheel(vehicle_t*, float *pos, float *dir, float *axl,
 int vehicle_set_wheel(vehicle_t*, int, float engine,
                       float brake, float steer);
 void vehicle_fetch_chassis_tm(vehicle_t*, float*);
-void vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
+int vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
