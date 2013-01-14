@@ -259,9 +259,16 @@ function work(self)
 
     api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0, 36)
 
-    local size = api_vector_alloc()
-    api_vector_const(size, 20, 2, 20, 0)
-    local cs = api_physics_cs_alloc_box(0, size)
+    local scale = api_vector_alloc()
+    api_vector_const(scale, 8, 4, 8, 0)
+    local buf = api_buf_alloc()
+    api_buf_set(buf, 0,  1, 1, 1, 1, 1, 1,
+                         1, 0, 0, 0, 0, 1,
+                         1, 0, 1, 1, 0, 1, 
+                         1, 0, 1, 1, 0, 1,
+                         1, 0, 0, 0, 0, 1,
+                         1, 1, 1, 1, 1, 1)
+    local cs = api_physics_cs_alloc_hmap(buf, 0, 6, 6, 0, 1, scale)
     local rb = api_physics_rb_alloc(cs, mposrot)
 
     local mrb = api_matrix_alloc()
