@@ -327,6 +327,15 @@ API_TEXT_FONT_HELVETICA_12 = 5
 API_TEXT_FONT_HELVETICA_18 = 6
 
 demo = {}
+
+demo.wait = function(state, us)
+    local time = api_time(state)
+    while api_time(state) - time < us
+    do
+        api_sleep(state)
+    end
+end
+
 demo.ddraw_switcher_create = function ()
     local obj = {}
     obj.debug = 0
@@ -451,12 +460,4 @@ demo.free_camera_create = function(x, y, z)
         end
     end
     return obj
-end
-
-demo["wait"] = function(state, us)
-    local time = api_time(state)
-    while api_time(state) - time < us
-    do
-        api_sleep(state)
-    end
 end
