@@ -129,27 +129,151 @@ function configure()
             ["buf_count"] = 10}
 end
 
+function ddraw_switcher_create()
+    return {
+        ["debug"] = 0,
+        ["pressed"] = 0,
+        ["update"] = function(self)
+            if self["pressed"] == 0 then
+                if api_input_key(API_INPUT_KEY_F1) == 1 then
+                    self["pressed"] = 1
+                    if self["debug"] == 0 then
+                        self["debug"] = 1
+                        api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
+                        api_display_draw_scene(0)
+                    else
+                        self["debug"] = 0
+                        api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
+                        api_display_draw_scene(1)
+                    end
+                end
+            elseif self["pressed"] == 1 then
+                if api_input_key(API_INPUT_KEY_F1) == 0 then
+                    self["pressed"] = 0
+                end
+            end
+        end
+    }
+end
+
+function matrix_pos_stop(pos_xyz)
+    local m = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    local rot = api_vector_alloc()
+    api_vector_const(pos, pos_xyz, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
+    api_matrix_stop(m)
+    api_vector_free(pos)
+    api_vector_free(scl)
+    api_vector_free(rot)
+    return m
+end
+
+function matrix_rot_stop(axis, angle)
+    local m = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    local rot = api_vector_alloc()
+    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_vector_const(rot, angle, 0, 0, 0)
+    api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
+    api_matrix_stop(m)
+    api_vector_free(pos)
+    api_vector_free(scl)
+    api_vector_free(rot)
+    return m
+end
+
+function matrix_move(m, offset)
+    local dm = matrix_pos_stop(offset)
+    api_matrix_mul_stop(m, m, dm)
+    api_matrix_free(dm)
+end
+
+function matrix_rotate(m, axis, angle)
+    local dm = matrix_rot_stop(axis, angle)
+    api_matrix_mul_stop(m, m, dm)
+    api_matrix_free(dm)
+end
+
+CAMERA_MOVE_SLOW = 0.05
+CAMERA_MOVE_FAST = 0.25
+CAMERA_ROTATE_SLOW = 0.01
+CAMERA_ROTATE_FAST = 0.05
+
+function free_camera_create(start_pos)
+    local new_cam = {
+        ["matrix"] = nil,
+        ["construct"] = function(self)
+            self["matrix"] = matrix_pos_stop(start_pos)
+        end,
+        ["destruct"] = function(self)
+            api_matrix_free(self["matrix"])
+            self["matrix"] = nil
+        end,
+        ["update"] = function(self)
+            local ofs = CAMERA_MOVE_SLOW
+            local ang = CAMERA_ROTATE_SLOW
+            if api_input_key(API_INPUT_KEY_SHIFT) == 1 then
+                ofs = CAMERA_MOVE_FAST
+                ang = CAMERA_ROTATE_FAST
+            end
+        
+            if api_input_key(API_INPUT_KEY_E) == 1 then
+                matrix_move(self["matrix"], 0, 0, -ofs)
+            end
+            if api_input_key(API_INPUT_KEY_D) == 1 then
+                matrix_move(self["matrix"], 0, 0, ofs)
+            end
+            if api_input_key(API_INPUT_KEY_S) == 1 then
+                matrix_move(self["matrix"], -ofs, 0, 0)
+            end
+            if api_input_key(API_INPUT_KEY_F) == 1 then
+                matrix_move(self["matrix"], ofs, 0, 0)
+            end
+            if api_input_key(API_INPUT_KEY_A) == 1 then
+                matrix_move(self["matrix"], 0, ofs, 0)
+            end
+            if api_input_key(API_INPUT_KEY_Z) == 1 then
+                matrix_move(self["matrix"], 0, -ofs, 0)
+            end
+            if api_input_key(API_INPUT_KEY_LEFT) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Y, rot)
+            end
+            if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Y, -rot)
+            end
+            if api_input_key(API_INPUT_KEY_UP) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_X, rot)
+            end
+            if api_input_key(API_INPUT_KEY_DOWN) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_X, -rot)
+            end
+            if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Z, rot)
+            end
+            if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
+                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Z, -rot)
+            end
+        end
+    }
+    new_cam["construct"](new_cam)
+    return new_cam
+end
+
 function control(self)
     local debug = 0
+    local ds = ddraw_switcher_create()
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
-        if api_input_key(API_INPUT_KEY_F1) == 1 then
-            if debug == 0 then
-                debug = 1
-                api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
-                api_display_draw_scene(0)
-            else
-                debug = 0
-                api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                api_display_draw_scene(1)
-            end
-            while api_input_key(API_INPUT_KEY_F1) == 1 do
-                api_yield(self)
-            end
-        end
+        ds["update"](ds)
         api_yield(self)
     end
 end
