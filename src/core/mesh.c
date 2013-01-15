@@ -3,6 +3,7 @@
 #include "ibuf.h"
 #include "matrix.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct meshes_t g_meshes;
 
@@ -105,6 +106,10 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
+    ++g_meshes.allocs;
+    --g_meshes.left;
+    if (g_meshes.left < g_meshes.left_min)
+        g_meshes.left_min = g_meshes.left;
     mesh = g_meshes.vacant;
     mesh->vacant = 0;
     g_meshes.vacant = g_meshes.vacant->next;
@@ -169,6 +174,8 @@ static int api_mesh_free(lua_State *lua)
         return 0;
     }
 
+    ++g_meshes.left;
+    ++g_meshes.frees;
     mesh->vacant = 1;
 
     if (mesh->vbuf->meshes == mesh)
@@ -235,6 +242,7 @@ int mesh_init(lua_State *lua, int count)
         g_meshes.pool[i].vacant = 1;
     }
     g_meshes.left = count;
+    g_meshes.left_min = count;
     g_meshes.count = count;
     g_meshes.vacant = g_meshes.pool;
 
@@ -251,6 +259,9 @@ void mesh_done(void)
     {
         free(g_meshes.pool);
         g_meshes.pool = 0;
+        printf("Meshes usage: %i/%i, allocs/frees: %i/%i\n",
+               g_meshes.count - g_meshes.left_min, g_meshes.count,
+               g_meshes.allocs, g_meshes.frees);
     }
 }
 
