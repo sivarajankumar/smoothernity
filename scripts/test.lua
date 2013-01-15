@@ -7,7 +7,7 @@ CAMERA_ROTATE_FAST = 0.02
 
 function configure()
     return {["mpool_sizes"] = function() return  1000, 10000, 100000, 1000000, 10000000 end,
-            ["mpool_counts"] = function() return 1000,   100,     10,       1,        1 end,
+            ["mpool_counts"] = function() return 2000,   100,     10,       1,        1 end,
             ["logic_time"] = 10000,
             ["gc_step"] = 10,
             ["min_delay"] = 1000,
@@ -45,93 +45,20 @@ function control(state)
 end
 
 function work(state)
-
     local v = api_vector_alloc()
     local buf = api_buf_alloc()
     api_buf_set(buf, 0,   0,0.05,0,1,1,   0,0,0.05,1,1)
     api_vector_seq(v, buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
     api_display_clear_color(v)
 
-    local vb = api_vbuf_alloc()
-    api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
-                         1,-1, 1,   0, 1, 0, 1,   0, 0,
-                         1, 1, 1,   0, 0, 1, 1,   0, 0,
-                        -1, 1, 1,   1, 1, 1, 1,   0, 0,
-                        -1,-1,-1,   0, 1, 1, 1,   0, 0,
-                         1,-1,-1,   0, 0, 0, 1,   0, 0,
-                         1, 1,-1,   1, 1, 0, 1,   0, 0,
-                        -1, 1,-1,   1, 0, 1, 1,   0, 0)
-    api_vbuf_bake(vb)
-
-    local ib = api_ibuf_alloc()
-    api_ibuf_set(ib, 0, 0, 1, 2,
-                        0, 2, 3,
-                        1, 5, 6,
-                        1, 6, 2,
-                        5, 4, 7,
-                        5, 7, 6,
-                        4, 0, 3,
-                        4, 3, 7,
-                        3, 2, 6,
-                        3, 6, 7,
-                        1, 0, 4,
-                        1, 4, 5)
-    api_ibuf_bake(ib)
-
-    local rot1 = api_vector_alloc()
-    api_vector_const(rot1, 0, 0, 0, 0)
-
-    local rot2 = api_vector_alloc()
-    local buf = api_buf_alloc()
-    api_buf_set(buf, 0,   0,0,0,0,3,   math.pi*2,0,0,0,0)
-    api_vector_seq(rot2, buf, 0, 2, 1, API_VECTOR_IPL_LINEAR)
-
-    local pos1 = api_vector_alloc()
-    local buf = api_buf_alloc()
-    api_buf_set(buf, 0,   2,1, 2,0,1,   2,-1,-2,0,1,
-                         -2,1,-2,0,1,  -2,-1, 2,0,1)
-    api_vector_seq(pos1, buf, 0, 4, 1, API_VECTOR_IPL_SPLINE)
-
-    local m1 = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(pos, 0, 0, -5, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_matrix_pos_scl_rot(m1, pos, scl, rot1, API_MATRIX_AXIS_Y, 0)
-
-    local m2 = api_matrix_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(scl, 0.5, 0.5, 0.5, 0)
-    api_matrix_pos_scl_rot(m2, pos1, scl, rot2, API_MATRIX_AXIS_Y, 0)
-
-    local m3 = api_matrix_alloc()
-    api_matrix_mul(m3, m1, m2)
-
-    local e1 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, m1, 0, 36)
-    local e2 = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, m3, 0, 36)
-
-    local t1 = api_text_alloc("Hello world!", API_TEXT_FONT_8_BY_13, 0, 13)
-    local t2 = api_text_alloc("Life is good!", API_TEXT_FONT_8_BY_13, 0, 30)
-
-    --
-    -- drop
-    --
-
     local grav = api_vector_alloc()
     api_vector_const(grav, 0, -10, 0, 0)
     api_physics_set_gravity(grav)
-
-    local size = api_vector_alloc()
-    api_vector_const(size, 1, 1, 1, 0)
-    local cs = api_physics_cs_alloc_box(10, size)
-    local rb = api_physics_rb_alloc(cs, m1, 1, 1)
-    api_matrix_rigid_body(m1, rb)
-
-
-
+    api_vector_free(grav)
 
     local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
+    local sweet = demo.sweet_pair_create(0, 0, -5)
 
     local invcam = api_matrix_alloc()
     api_matrix_inv(invcam, freecam.matrix)
@@ -146,6 +73,7 @@ function work(state)
     api_matrix_free(invcam)
     freecam:destruct()
     land:destruct()
+    sweet:destruct()
 end
 
 demo = {}
@@ -381,6 +309,99 @@ demo.landscape_create = function(x, y, z)
         api_physics_cs_free(self.cs)
         api_buf_free(self.buf)
         api_mesh_free(self.mesh)
+    end
+
+    obj:construct(x, y, z)
+    return obj
+end
+
+demo.sweet_pair_create = function(x, y, z)
+    local obj = {}
+
+    obj.construct_vb = function(self)
+        local vb = api_vbuf_alloc()
+        api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                             1,-1, 1,   0, 1, 0, 1,   0, 0,
+                             1, 1, 1,   0, 0, 1, 1,   0, 0,
+                            -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                            -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                             1,-1,-1,   0, 0, 0, 1,   0, 0,
+                             1, 1,-1,   1, 1, 0, 1,   0, 0,
+                            -1, 1,-1,   1, 0, 1, 1,   0, 0)
+        api_vbuf_bake(vb)
+        self.vb = vb
+    end
+
+    obj.construct_ib = function(self)
+        local ib = api_ibuf_alloc()
+        api_ibuf_set(ib, 0,  0,1,2,  0,2,3,
+                             1,5,6,  1,6,2,
+                             5,4,7,  5,7,6,
+                             4,0,3,  4,3,7,
+                             3,2,6,  3,6,7,
+                             1,0,4,  1,4,5)
+        api_ibuf_bake(ib)
+        self.ib = ib
+    end
+
+    obj.construct_matrices = function(self, x, y, z)
+        self.mbig = demo.matrix_pos_stop(x, y, z)
+        self.mrb = api_matrix_alloc()
+        self.mloc = api_matrix_alloc()
+        self.msmall = api_matrix_alloc()
+        self.brot = api_buf_alloc()
+        self.bpos = api_buf_alloc()
+        self.vrot = api_vector_alloc()
+        self.vpos = api_vector_alloc()
+        self.vscl = api_vector_alloc()
+        api_buf_set(self.brot, 0,   0,0,0,0,3,   math.pi*2,0,0,0,0)
+        api_buf_set(self.bpos, 0,   2,1, 2,0,1,   2,-1,-2,0,1,
+                                   -2,1,-2,0,1,  -2,-1, 2,0,1)
+        api_vector_seq(self.vrot, self.brot, 0, 2, 1, API_VECTOR_IPL_LINEAR)
+        api_vector_seq(self.vpos, self.bpos, 0, 4, 1, API_VECTOR_IPL_SPLINE)
+        api_vector_const(self.vscl, 0.5, 0.5, 0.5, 0)
+        api_matrix_pos_scl_rot(self.mloc, self.vpos, self.vscl, self.vrot, API_MATRIX_AXIS_Y, 0)
+        api_matrix_mul(self.msmall, self.mrb, self.mloc)
+    end
+
+    obj.construct_visual = function(self)
+        self.mesh_big = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mrb, 0, 36)
+        self.mesh_small = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.msmall, 0, 36)
+    end
+
+    obj.construct_physics = function(self)
+        local size = api_vector_alloc()
+        api_vector_const(size, 1, 1, 1, 0)
+        self.cs = api_physics_cs_alloc_box(10, size)
+        self.rb = api_physics_rb_alloc(self.cs, self.mbig, 1, 1)
+        api_matrix_rigid_body(self.mrb, self.rb)
+        api_vector_free(size)
+    end
+
+    obj.construct = function(self, x, y, z)
+        self:construct_vb()
+        self:construct_ib()
+        self:construct_matrices(x, y, z)
+        self:construct_physics()
+        self:construct_visual()
+    end
+
+    obj.destruct = function(self)
+        api_vbuf_free(self.vb)
+        api_vbuf_free(self.ib)
+        api_matrix_free(self.mrb)
+        api_matrix_free(self.mbig)
+        api_matrix_free(self.mloc)
+        api_matrix_free(self.msmall)
+        api_vector_free(self.vrot)
+        api_vector_free(self.vpos)
+        api_vector_free(self.vscl)
+        api_buf_free(self.brot)
+        api_buf_free(self.bpos)
+        api_mesh_free(self.mesh_big)
+        api_mesh_free(self.mesh_small)
+        api_physics_rb_free(self.rb)
+        api_physics_cs_free(self.cs)
     end
 
     obj:construct(x, y, z)
