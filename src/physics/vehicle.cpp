@@ -1,11 +1,15 @@
 #include "vehicle.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct vehicles_t
 {
     int left;
+    int left_min;
     int count;
+    int allocs;
+    int frees;
     vehicle_t *pool;
     vehicle_t *vacant;
 };
@@ -21,6 +25,7 @@ int vehicle_init(int count)
         return 1;
     g_vehicles.vacant = g_vehicles.pool;
     g_vehicles.left = count;
+    g_vehicles.left_min = count;
     g_vehicles.count = count;
     for (i = 0; i < count; ++i)
     {
@@ -37,18 +42,20 @@ void vehicle_done(void)
 {
     int i;
     vehicle_t *veh;
-    if (g_vehicles.pool)
+    if (g_vehicles.pool == 0)
+        return;
+    printf("Vehicles usage: %i/%i, allocs/frees: %i/%i\n",
+           g_vehicles.count - g_vehicles.left_min, g_vehicles.count,
+           g_vehicles.allocs, g_vehicles.frees);
+    for (i = 0; i < g_vehicles.count; ++i)
     {
-        for (i = 0; i < g_vehicles.count; ++i)
-        {
-            veh = g_vehicles.pool + i;
-            vehicle_free(veh, 0);
-            veh->mstate->~mstate_c();
-            veh->tuning.~btVehicleTuning();
-        }
-        free(g_vehicles.pool);
-        g_vehicles.pool = 0;
+        veh = g_vehicles.pool + i;
+        vehicle_free(veh, 0);
+        veh->mstate->~mstate_c();
+        veh->tuning.~btVehicleTuning();
     }
+    free(g_vehicles.pool);
+    g_vehicles.pool = 0;
 }
 
 void vehicle_left(int *left)
@@ -69,6 +76,7 @@ void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
     if (veh->vacant == 1)
         return;
     ++g_vehicles.left;
+    ++g_vehicles.frees;
     veh->vacant = 1;
     veh->next = g_vehicles.vacant;
     g_vehicles.vacant = veh;
@@ -110,7 +118,10 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     vehicle_t *veh;
     if (g_vehicles.vacant == 0)
         return -1;
+    ++g_vehicles.allocs;
     --g_vehicles.left;
+    if (g_vehicles.left < g_vehicles.left_min)
+        g_vehicles.left_min = g_vehicles.left;
     veh = g_vehicles.vacant;
     g_vehicles.vacant = g_vehicles.vacant->next;
     veh->vacant = 0;
