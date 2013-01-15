@@ -127,90 +127,12 @@ function work(state)
     local rb = api_physics_rb_alloc(cs, m1, 1, 1)
     api_matrix_rigid_body(m1, rb)
 
-    --
-    -- ground
-    --
 
-    local vb = api_vbuf_alloc()
-    api_vbuf_set(vb, 0, -2, 1,-2,   0, 0, 1, 1,   0, 0,
-                        -1, 1,-2,   0, 1, 0, 1,   0, 0,
-                         0, 1,-2,   0, 1, 1, 1,   0, 0,
-                         1, 1,-2,   1, 0, 0, 1,   0, 0,
-                         2, 1,-2,   1, 0, 1, 1,   0, 0)
 
-    api_vbuf_set(vb, 5, -2, 1,-1,   1, 1, 0, 1,   0, 0,
-                        -1, 0,-1,   1, 1, 1, 1,   0, 0,
-                         0, 0,-1,   0, 0, 1, 1,   0, 0,
-                         1, 0,-1,   0, 1, 0, 1,   0, 0,
-                         2, 1,-1,   0, 1, 1, 1,   0, 0)
 
-    api_vbuf_set(vb, 10,-2, 1, 0,   1, 0, 0, 1,   0, 0,
-                        -1, 0, 0,   1, 0, 1, 1,   0, 0,
-                         0, 1, 0,   1, 1, 0, 1,   0, 0,
-                         1, 0, 0,   1, 1, 1, 1,   0, 0,
-                         2, 1, 0,   0, 0, 1, 1,   0, 0)
-
-    api_vbuf_set(vb, 15,-2, 1, 1,   0, 1, 0, 1,   0, 0,
-                        -1, 0, 1,   0, 1, 1, 1,   0, 0,
-                         0, 0, 1,   1, 0, 0, 1,   0, 0,
-                         1, 0, 1,   1, 0, 1, 1,   0, 0,
-                         2, 1, 1,   1, 1, 0, 1,   0, 0)
-
-    api_vbuf_set(vb, 20,-2, 1, 2,   1, 1, 1, 1,   0, 0,
-                        -1, 1, 2,   0, 0, 1, 1,   0, 0,
-                         0, 1, 2,   0, 1, 0, 1,   0, 0,
-                         1, 1, 2,   0, 1, 1, 1,   0, 0,
-                         2, 1, 2,   1, 0, 0, 1,   0, 0)
-    api_vbuf_bake(vb)
-
-    local ib = api_ibuf_alloc()
-    api_ibuf_set(ib, 0*6*4,   0, 5, 1, 1, 5, 6,   1, 6, 2, 2, 6, 7,   2, 7, 3, 3, 7, 8,   3, 8, 4, 4, 8, 9)
-    api_ibuf_set(ib, 1*6*4,   5,10, 6, 6,10,11,   6,11, 7, 7,11,12,   7,12, 8, 8,12,13,   8,13, 9, 9,13,14)
-    api_ibuf_set(ib, 2*6*4,  10,15,11,11,15,16,  11,16,12,12,16,17,  12,17,13,13,17,18,  13,18,14,14,18,19)
-    api_ibuf_set(ib, 3*6*4,  15,20,16,16,20,21,  16,21,17,17,21,22,  17,22,18,18,22,23,  18,23,19,19,23,24)
-    api_ibuf_bake(ib)
-
-    local mstart = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local rot = api_vector_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(pos, 0, -15, -3, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_matrix_pos_scl_rot(mstart, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
-
-    local mvis = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local rot = api_vector_alloc()
-    local scl = api_vector_alloc()
-    api_vector_const(pos, 0, -1, 0, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_vector_const(scl, 10, 2, 10, 0)
-    api_matrix_pos_scl_rot(mvis, pos, scl, rot, API_MATRIX_AXIS_Y, 0)
-
-    local scale = api_vector_alloc()
-    api_vector_const(scale, 10, 2, 10, 0)
-    local buf = api_buf_alloc()
-    api_buf_set(buf, 0,  1, 1, 1, 1, 1,
-                         1, 0, 0, 0, 1,
-                         1, 0, 1, 0, 1, 
-                         1, 0, 0, 0, 1,
-                         1, 1, 1, 1, 1)
-    local cs = api_physics_cs_alloc_hmap(buf, 0, 5, 5, 0, 1, scale)
-    local rb = api_physics_rb_alloc(cs, mstart, 1, 1)
-
-    local mmul = api_matrix_alloc()
-    local mrb = api_matrix_alloc()
-    api_matrix_rigid_body(mrb, rb)
-    api_matrix_mul(mmul, mrb, mvis)
-
-    api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0, 4*6*4)
-
-    --
-    -- camera
-    --
-
+    local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
+
     local invcam = api_matrix_alloc()
     api_matrix_inv(invcam, freecam.matrix)
     api_display_camera(invcam)
@@ -221,7 +143,9 @@ function work(state)
         api_sleep(state)
     end
 
+    api_matrix_free(invcam)
     freecam:destruct()
+    land:destruct()
 end
 
 demo = {}
@@ -420,11 +344,11 @@ demo.landscape_create = function(x, y, z)
         local size = api_vector_alloc()
         api_vector_const(size, 10, 2, 10, 0)
         self.buf = api_buf_alloc()
-        api_buf_set(buf, 0,  1, 1, 1, 1, 1,
-                             1, 0, 0, 0, 1,
-                             1, 0, 1, 0, 1, 
-                             1, 0, 0, 0, 1,
-                             1, 1, 1, 1, 1)
+        api_buf_set(self.buf, 0,  1, 1, 1, 1, 1,
+                                  1, 0, 0, 0, 1,
+                                  1, 0, 1, 0, 1, 
+                                  1, 0, 0, 0, 1,
+                                  1, 1, 1, 1, 1)
         self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
         self.rb = api_physics_rb_alloc(self.cs, self.mstart, 1, 1)
         api_vector_free(size)
@@ -459,7 +383,7 @@ demo.landscape_create = function(x, y, z)
         api_mesh_free(self.mesh)
     end
 
-    obj.construct(x, y, z)
+    obj:construct(x, y, z)
     return obj
 end
 
