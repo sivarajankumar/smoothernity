@@ -210,6 +210,8 @@ function work(state)
     -- camera
     --
 
+    local freecam = demo["free_camera_create"](0, -10, 20)
+
     local cam = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -468,12 +470,12 @@ demo["ddraw_switcher_create"] = function ()
     }
 end
 
-demo["matrix_pos_stop"] = function(pos_xyz)
+demo["matrix_pos_stop"] = function(x, y, z)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
     local rot = api_vector_alloc()
-    api_vector_const(pos, pos_xyz, 0)
+    api_vector_const(pos, x, y, z, 0)
     api_vector_const(scl, 1, 1, 1, 0)
     api_vector_const(rot, 0, 0, 0, 0)
     api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
@@ -500,23 +502,24 @@ demo["matrix_rot_stop"] = function(axis, angle)
     return m
 end
 
-demo["matrix_move"] = function(m, offset)
-    local dm = matrix_pos_stop(offset)
+demo["matrix_move"] = function(m, x, y, z)
+    local dm = demo["matrix_pos_stop"](x, y, z)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
 demo["matrix_rotate"] = function(m, axis, angle)
-    local dm = matrix_rot_stop(axis, angle)
+    local dm = demo["matrix_rot_stop"](axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-demo["free_camera_create"] = function(start_pos)
+demo["free_camera_create"] = function(x, y, z)
     local new_cam = {
         ["matrix"] = nil,
         ["construct"] = function(self)
-            self["matrix"] = matrix_pos_stop(start_pos)
+            self["matrix"] = demo["matrix_pos_stop"](x, y, z)
+            io.write("2\n")
         end,
         ["destruct"] = function(self)
             api_matrix_free(self["matrix"])
@@ -531,40 +534,40 @@ demo["free_camera_create"] = function(start_pos)
             end
         
             if api_input_key(API_INPUT_KEY_E) == 1 then
-                matrix_move(self["matrix"], 0, 0, -ofs)
+                demo["matrix_move"](self["matrix"], 0, 0, -ofs)
             end
             if api_input_key(API_INPUT_KEY_D) == 1 then
-                matrix_move(self["matrix"], 0, 0, ofs)
+                demo["matrix_move"](self["matrix"], 0, 0, ofs)
             end
             if api_input_key(API_INPUT_KEY_S) == 1 then
-                matrix_move(self["matrix"], -ofs, 0, 0)
+                demo["matrix_move"](self["matrix"], -ofs, 0, 0)
             end
             if api_input_key(API_INPUT_KEY_F) == 1 then
-                matrix_move(self["matrix"], ofs, 0, 0)
+                demo["matrix_move"](self["matrix"], ofs, 0, 0)
             end
             if api_input_key(API_INPUT_KEY_A) == 1 then
-                matrix_move(self["matrix"], 0, ofs, 0)
+                demo["matrix_move"](self["matrix"], 0, ofs, 0)
             end
             if api_input_key(API_INPUT_KEY_Z) == 1 then
-                matrix_move(self["matrix"], 0, -ofs, 0)
+                demo["matrix_move"](self["matrix"], 0, -ofs, 0)
             end
             if api_input_key(API_INPUT_KEY_LEFT) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Y, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, rot)
             end
             if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Y, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, -rot)
             end
             if api_input_key(API_INPUT_KEY_UP) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_X, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, rot)
             end
             if api_input_key(API_INPUT_KEY_DOWN) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_X, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, -rot)
             end
             if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Z, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, rot)
             end
             if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
-                matrix_rotate(self["matrix"], API_MATRIX_AXIS_Z, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, -rot)
             end
         end
     }
