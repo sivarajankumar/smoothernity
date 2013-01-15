@@ -462,7 +462,7 @@ CAR_SLIP_FRICT = 1000
 CAR_ROLL_INF = 0.1
 CAR_WHEEL_RADIUS = 0.5
 CAR_WHEEL_POS_X = 0.9
-CAR_WHEEL_POS_Y = 1.2
+CAR_WHEEL_POS_Y = 0.2
 CAR_WHEEL_POS_Z = 1.5
 
 function demo.vehicle_create(x, y, z)
@@ -504,10 +504,10 @@ function demo.vehicle_create(x, y, z)
                                          CAR_SUS_STIF, CAR_SUS_COMP, CAR_SUS_DAMP,
                                          CAR_SUS_TRAV, CAR_SUS_FORCE, CAR_SLIP_FRICT)
         api_matrix_free(m)
-        self.wheel_fr = self:add_wheel( CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
-        self.wheel_fl = self:add_wheel(-CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
-        self.wheel_br = self:add_wheel( CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
-        self.wheel_bl = self:add_wheel(-CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
+        self.wheel_fr = self:add_wheel( CAR_WHEEL_POS_X, CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
+        self.wheel_fl = self:add_wheel(-CAR_WHEEL_POS_X, CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
+        self.wheel_br = self:add_wheel( CAR_WHEEL_POS_X, CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
+        self.wheel_bl = self:add_wheel(-CAR_WHEEL_POS_X, CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
     end
     function obj.add_wheel(self, posx, posy, posz, front)
         local dir = api_vector_alloc()
