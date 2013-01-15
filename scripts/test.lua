@@ -1,10 +1,5 @@
 quit = false
 
-CAMERA_MOVE_SLOW = 0.05
-CAMERA_MOVE_FAST = 0.25
-CAMERA_ROTATE_SLOW = 0.01
-CAMERA_ROTATE_FAST = 0.02
-
 function configure()
     return {["mpool_sizes"] = function() return  1000, 10000, 100000, 1000000, 10000000 end,
             ["mpool_counts"] = function() return 2000,   100,     10,       1,        1 end,
@@ -191,11 +186,11 @@ function demo.free_camera_create(x, y, z)
         api_matrix_free(self.invmatrix)
     end
     function obj.update(self)
-        local ofs = CAMERA_MOVE_FAST
-        local ang = CAMERA_ROTATE_FAST
+        local ofs = 0.25
+        local ang = 0.02
         if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
-            ofs = CAMERA_MOVE_SLOW
-            ang = CAMERA_ROTATE_SLOW
+            ofs = 0.05
+            ang = 0.01
         end
     
         if api_input_key(API_INPUT_KEY_E) == 1 then
