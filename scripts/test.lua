@@ -155,11 +155,11 @@ function demo.blinker_create()
     return obj
 end
 
-demo.ddraw_switcher_create = function()
+function demo.ddraw_switcher_create()
     local obj = {}
     obj.debug = 0
     obj.pressed = 0
-    obj.update = function(self)
+    function obj.update(self)
         if self["pressed"] == 0 then
             if api_input_key(API_INPUT_KEY_F1) == 1 then
                 self["pressed"] = 1
