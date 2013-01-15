@@ -2,11 +2,15 @@
 #include "rigidbody.hpp"
 #include "vehicle.hpp"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct colshapes_t
 {
     int count;
     int left;
+    int left_min;
+    int allocs;
+    int frees;
     colshape_t *pool;
     colshape_t *vacant;
 };
@@ -28,6 +32,7 @@ int colshape_init(int count)
         return 1;
     g_colshapes.count = count;
     g_colshapes.left = count;
+    g_colshapes.left_min = count;
     g_colshapes.vacant = g_colshapes.pool;
     for (i = 0; i < count; ++i)
     {
@@ -55,17 +60,19 @@ void colshape_done(void)
 {
     int i;
     colshape_t *cs;
-    if (g_colshapes.pool)
+    if (g_colshapes.pool == 0)
+        return;
+    printf("Collision shapes usage: %i/%i, allocs/frees: %i/%i\n",
+           g_colshapes.count - g_colshapes.left_min, g_colshapes.count,
+           g_colshapes.allocs, g_colshapes.frees);
+    for (i = 0; i < g_colshapes.count; ++i)
     {
-        for (i = 0; i < g_colshapes.count; ++i)
-        {
-            cs = g_colshapes.pool + i;
-            colshape_free(cs, 0);
-            free(cs->data);
-        }
-        free(g_colshapes.pool);
-        g_colshapes.pool = 0;
+        cs = g_colshapes.pool + i;
+        colshape_free(cs, 0);
+        free(cs->data);
     }
+    free(g_colshapes.pool);
+    g_colshapes.pool = 0;
 }
 
 void colshape_left(int *left)
@@ -78,7 +85,10 @@ int colshape_alloc(void)
     colshape_t *colshape;
     if (g_colshapes.vacant == 0)
         return -1;
+    ++g_colshapes.allocs;
     --g_colshapes.left;
+    if (g_colshapes.left < g_colshapes.left_min)
+        g_colshapes.left_min = g_colshapes.left;
     colshape = g_colshapes.vacant;
     g_colshapes.vacant = g_colshapes.vacant->next;
     colshape->vacant = 0;
@@ -99,6 +109,7 @@ void colshape_free(colshape_t *cs, btDynamicsWorld *world)
     if (cs == 0 || cs->vacant == 1)
         return;
     ++g_colshapes.left;
+    ++g_colshapes.frees;
     cs->vacant = 1;
     if (cs->shape)
         cs->shape->~btCollisionShape();

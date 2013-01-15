@@ -288,15 +288,15 @@ void vbuf_done(void)
 {
     if (g_vbufs.pool == 0)
         return;
+    printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
+           g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
+           g_vbufs.allocs, g_vbufs.frees);
     while (g_vbufs.mapped)
         vbuf_free(g_vbufs.mapped);
     while (g_vbufs.baked)
         vbuf_free(g_vbufs.baked);
     free(g_vbufs.pool);
     g_vbufs.pool = 0;
-    printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
-           g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
-           g_vbufs.allocs, g_vbufs.frees);
 }
 
 struct vbuf_t * vbuf_get(int vbufi)

@@ -349,11 +349,11 @@ void vector_done(void)
 {
     if (g_vectors.pool == 0)
         return;
-    free(g_vectors.pool);
-    g_vectors.pool = 0;
     printf("Vectors usage: %i/%i, allocs/frees: %i/%i\n",
            g_vectors.count - g_vectors.left_min, g_vectors.count,
            g_vectors.allocs, g_vectors.frees);
+    free(g_vectors.pool);
+    g_vectors.pool = 0;
 }
 
 struct vector_t * vector_get(int i)
