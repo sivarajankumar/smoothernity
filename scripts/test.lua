@@ -182,15 +182,15 @@ function demo.ddraw_switcher_create()
     return obj
 end
 
-demo.free_camera_create = function(x, y, z)
+function demo.free_camera_create(x, y, z)
     local obj = {}
     obj.matrix = demo.matrix_pos_stop(x, y, z)
     obj.invmatrix = api_matrix_alloc()
-    obj.destruct = function(self)
+    function obj.destruct(self)
         api_matrix_free(self.matrix)
         api_matrix_free(self.invmatrix)
     end
-    obj.update = function(self)
+    function obj.update(self)
         local ofs = CAMERA_MOVE_FAST
         local ang = CAMERA_ROTATE_FAST
         if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
@@ -242,10 +242,10 @@ demo.free_camera_create = function(x, y, z)
     return obj
 end
 
-demo.landscape_create = function(x, y, z)
+function demo.landscape_create(x, y, z)
     local obj = {}
 
-    obj.construct_vb = function(self)
+    function obj.construct_vb(self)
         local vb = api_vbuf_alloc()
         api_vbuf_set(vb, 0, -2, 1,-2,   0, 0, 1, 1,   0, 0,
                             -1, 1,-2,   0, 1, 0, 1,   0, 0,
@@ -280,7 +280,7 @@ demo.landscape_create = function(x, y, z)
         self.vb = vb
     end
 
-    obj.construct_ib = function(self)
+    function obj.construct_ib(self)
         local ib = api_ibuf_alloc()
         api_ibuf_set(ib, 0*6*4,   0, 5, 1, 1, 5, 6,   1, 6, 2, 2, 6, 7,   2, 7, 3, 3, 7, 8,   3, 8, 4, 4, 8, 9)
         api_ibuf_set(ib, 1*6*4,   5,10, 6, 6,10,11,   6,11, 7, 7,11,12,   7,12, 8, 8,12,13,   8,13, 9, 9,13,14)
@@ -290,12 +290,12 @@ demo.landscape_create = function(x, y, z)
         self.ib = ib
     end
 
-    obj.construct_matrices = function(self, x, y, z)
+    function obj.construct_matrices(self, x, y, z)
         self.mstart = demo.matrix_pos_stop(x, y, z)
         self.mvis = demo.matrix_pos_scl_stop(0,-1,0, 10,2,10)
     end
 
-    obj.construct_physics = function(self)
+    function obj.construct_physics(self)
         local size = api_vector_alloc()
         api_vector_const(size, 10, 2, 10, 0)
         self.buf = api_buf_alloc()
@@ -309,7 +309,7 @@ demo.landscape_create = function(x, y, z)
         api_vector_free(size)
     end
 
-    obj.construct_visual = function(self)
+    function obj.construct_visual(self)
         self.mmul = api_matrix_alloc()
         self.mrb = api_matrix_alloc()
         api_matrix_rigid_body(self.mrb, self.rb)
@@ -317,7 +317,7 @@ demo.landscape_create = function(x, y, z)
         self.mesh = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mmul, 0, 4*6*4)
     end
 
-    obj.construct = function(self, x, y, z)
+    function obj.construct(self, x, y, z)
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
@@ -325,7 +325,7 @@ demo.landscape_create = function(x, y, z)
         self:construct_visual()
     end
 
-    obj.destruct = function(self)
+    function obj.destruct(self)
         api_vbuf_free(self.vb)
         api_ibuf_free(self.ib)
         api_matrix_free(self.mstart)
