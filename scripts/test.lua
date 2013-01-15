@@ -52,12 +52,15 @@ function work(state)
     local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
+    local car = demo.vehicle_create(0, -10, 5)
 
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
             sweet:destruct()
             sweet = demo.sweet_pair_create(0, 0, -5)
+            car:destruct()
+            car = demo.vehicle_create(0, -10, 5)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_sleep(state)
             end
@@ -70,11 +73,12 @@ function work(state)
     freecam:destruct()
     land:destruct()
     sweet:destruct()
+    car:destruct()
 end
 
 demo = {}
 
-demo.wait = function(state, us)
+function demo.wait(state, us)
     local time = api_time(state)
     while api_time(state) - time < us
     do
@@ -82,18 +86,18 @@ demo.wait = function(state, us)
     end
 end
 
-demo.set_gravity = function(x, y, z)
+function demo.set_gravity(x, y, z)
     local grav = api_vector_alloc()
     api_vector_const(grav, x, y, z, 0)
     api_physics_set_gravity(grav)
     api_vector_free(grav)
 end
 
-demo.matrix_pos_stop = function(x, y, z)
+function demo.matrix_pos_stop(x, y, z)
     return demo.matrix_pos_scl_stop(x, y, z, 1, 1, 1)
 end
 
-demo.matrix_pos_scl_stop = function(px, py, pz, sx, sy, sz)
+function demo.matrix_pos_scl_stop(px, py, pz, sx, sy, sz)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -109,7 +113,7 @@ demo.matrix_pos_scl_stop = function(px, py, pz, sx, sy, sz)
     return m
 end
 
-demo.matrix_rot_stop = function(axis, angle)
+function demo.matrix_rot_stop(axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -125,23 +129,23 @@ demo.matrix_rot_stop = function(axis, angle)
     return m
 end
 
-demo.matrix_move = function(m, x, y, z)
+function demo.matrix_move(m, x, y, z)
     local dm = demo.matrix_pos_stop(x, y, z)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-demo.matrix_rotate = function(m, axis, angle)
+function demo.matrix_rotate(m, axis, angle)
     local dm = demo.matrix_rot_stop(axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-demo.blinker_create = function()
+function demo.blinker_create()
     local obj = {}
     obj.v = api_vector_alloc()
     obj.buf = api_buf_alloc()
-    obj.destruct = function(self)
+    function obj.destruct(self)
         api_vector_free(self.v)
         api_buf_free(self.buf)
     end
@@ -428,6 +432,13 @@ demo.sweet_pair_create = function(x, y, z)
     end
 
     obj:construct(x, y, z)
+    return obj
+end
+
+function demo.vehicle_create(x, y, z)
+    local obj = {}
+    function obj.destruct(self)
+    end
     return obj
 end
 
