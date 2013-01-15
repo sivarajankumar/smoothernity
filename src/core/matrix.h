@@ -12,7 +12,9 @@ enum matrix_e
     MATRIX_MUL = 1,
     MATRIX_INV = 2,
     MATRIX_POS_SCL_ROT = 3,
-    MATRIX_RIGID_BODY = 4
+    MATRIX_RIGID_BODY = 4,
+    MATRIX_VEHICLE_CHASSIS = 5,
+    MATRIX_VEHICLE_WHEEL = 6
 };
 
 enum matrix_axis_e
@@ -32,6 +34,8 @@ struct matrix_t
     enum matrix_axis_e rotaxis;
     int rotanglei;
     int rigid_body;
+    int vehicle;
+    int wheel;
     struct vector_t *argv[MATRIX_ARGVS];
     struct matrix_t *argm[MATRIX_ARGMS];
     struct matrix_t *next;

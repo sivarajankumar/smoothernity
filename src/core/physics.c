@@ -298,6 +298,194 @@ static int api_physics_rb_free(lua_State *lua)
     return 0;
 }
 
+static int api_physics_veh_alloc(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    int csi, vehi, res, i;
+    float ch_frict, ch_roll_frict, sus_stif, sus_comp;
+    float sus_damp, sus_trav, sus_force, slip_frict;
+
+    if (lua_gettop(lua) != 10)
+    {
+        lua_pushstring(lua, "api_physics_veh_alloc: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    for (i = 1; i <= lua_gettop(lua); ++i)
+    {
+        if (!lua_isnumber(lua, i))
+        {
+            lua_pushstring(lua, "api_physics_veh_alloc: incorrect argument");
+            lua_error(lua);
+            return 0;
+        }
+    }
+
+    csi = lua_tointeger(lua, 1);
+    matrix = matrix_get(lua_tointeger(lua, 2));
+    ch_frict = lua_tonumber(lua, 3);
+    ch_roll_frict = lua_tonumber(lua, 4);
+    sus_stif = lua_tonumber(lua, 5);
+    sus_comp = lua_tonumber(lua, 6);
+    sus_damp = lua_tonumber(lua, 7);
+    sus_trav = lua_tonumber(lua, 8);
+    sus_force = lua_tonumber(lua, 9);
+    slip_frict = lua_tonumber(lua, 10);
+    lua_pop(lua, 10);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_physics_veh_alloc: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (ch_frict < 0.0f || ch_roll_frict < 0.0f || slip_frict < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_veh_alloc: negative friction");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_veh_alloc(&vehi, csi, matrix->value, ch_frict, ch_roll_frict,
+                            sus_stif, sus_comp, sus_damp, sus_trav,
+                            sus_force, slip_frict);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_alloc: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, vehi);
+    return 1;
+}
+
+static int api_physics_veh_free(lua_State *lua)
+{
+    int res;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_physics_veh_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_veh_free(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_free: error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
+static int api_physics_veh_add_wheel(lua_State *lua)
+{
+    struct vector_t *pos, *dir, *axl;
+    float sus_rest, roll, radius;
+    int vehi, front, wheel, res, i;
+    if (lua_gettop(lua) != 8)
+    {
+        lua_pushstring(lua, "api_physics_veh_add_wheel: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    for (i = 1; i <= lua_gettop(lua); ++i)
+    {
+        if (!lua_isnumber(lua, i))
+        {
+            lua_pushstring(lua, "api_physics_veh_add_wheel: incorrect argument");
+            lua_error(lua);
+            return 0;
+        }
+    }
+    vehi = lua_tointeger(lua, 1);
+    pos = vector_get(lua_tointeger(lua, 2));
+    dir = vector_get(lua_tointeger(lua, 3));
+    axl = vector_get(lua_tointeger(lua, 4));
+    sus_rest = lua_tonumber(lua, 5);
+    roll = lua_tonumber(lua, 6);
+    radius = lua_tonumber(lua, 7);
+    front = lua_tointeger(lua, 8);
+    lua_pop(lua, 8);
+
+    if (pos == 0 || dir == 0 || axl == 0)
+    {
+        lua_pushstring(lua, "api_physics_veh_add_wheel: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (radius <= 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_veh_add_wheel: radius not positive");
+        lua_error(lua);
+        return 0;
+    }
+    
+    if (front != 0 && front != 1)
+    {
+        lua_pushstring(lua, "api_physics_veh_add_wheel: front out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_veh_add_wheel(&wheel, vehi, pos->value, dir->value,
+                                axl->value, sus_rest, roll, radius,
+                                front);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_add_wheel: error");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, wheel);
+    return 1;
+}
+
+static int api_physics_veh_set_wheel(lua_State *lua)
+{
+    int vehi, wheel, res, i;
+    float engine, brake, steer;
+    if (lua_gettop(lua) != 5)
+    {
+        lua_pushstring(lua, "api_physics_veh_set_wheel: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    for (i = 1; i <= lua_gettop(lua); ++i)
+    {
+        if (!lua_isnumber(lua, i))
+        {
+            lua_pushstring(lua, "api_physics_veh_set_wheel: incorrect argument");
+            lua_error(lua);
+            return 0;
+        }
+    }
+    vehi = lua_tointeger(lua, 1);
+    wheel = lua_tointeger(lua, 2);
+    engine = lua_tonumber(lua, 3);
+    brake = lua_tonumber(lua, 4);
+    steer = lua_tonumber(lua, 5);
+    lua_pop(lua, 5);
+
+    res = physcpp_veh_set_wheel(vehi, wheel, engine, brake, steer);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_set_wheel: error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
 int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 {
     if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count, veh_count)
@@ -313,6 +501,10 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
     lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
     lua_register(lua, "api_physics_rb_free", api_physics_rb_free);
+    lua_register(lua, "api_physics_veh_alloc", api_physics_veh_alloc);
+    lua_register(lua, "api_physics_veh_free", api_physics_veh_free);
+    lua_register(lua, "api_physics_veh_add_wheel", api_physics_veh_add_wheel);
+    lua_register(lua, "api_physics_veh_set_wheel", api_physics_veh_set_wheel);
     return 0;
 }
 
@@ -334,4 +526,14 @@ void physics_ddraw(void)
 int physics_rb_fetch_tm(int rbi, float *matrix)
 {
     return physcpp_rb_fetch_tm(rbi, matrix);
+}
+
+int physics_veh_fetch_chassis_tm(int vehi, float *matrix)
+{
+    return physcpp_veh_fetch_chassis_tm(vehi, matrix);
+}
+
+int physics_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix)
+{
+    return physcpp_veh_fetch_wheel_tm(vehi, wheel, matrix);
 }
