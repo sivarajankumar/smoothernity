@@ -230,13 +230,13 @@ void text_done(void)
     int i;
     if (g_texts.pool == 0)
         return;
+    printf("Texts usage: %i/%i, allocs/frees: %i/%i\n",
+           g_texts.count - g_texts.left_min, g_texts.count,
+           g_texts.allocs, g_texts.frees);
     for (i = 0; i < g_texts.count; ++i)
         free(g_texts.pool[i].string);
     free(g_texts.pool);
     g_texts.pool = 0;
-    printf("Texts usage: %i/%i, allocs/frees: %i/%i\n",
-           g_texts.count - g_texts.left_min, g_texts.count,
-           g_texts.allocs, g_texts.frees);
 }
 
 void text_draw(void)

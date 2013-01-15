@@ -524,11 +524,11 @@ void matrix_done(void)
 {
     if (g_matrices.pool == 0)
         return;
-    free(g_matrices.pool);
-    g_matrices.pool = 0;
     printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
            g_matrices.count - g_matrices.left_min, g_matrices.count,
            g_matrices.allocs, g_matrices.frees);
+    free(g_matrices.pool);
+    g_matrices.pool = 0;
 }
 
 struct matrix_t * matrix_get(int i)

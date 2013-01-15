@@ -253,15 +253,15 @@ void ibuf_done(void)
 {
     if (g_ibufs.pool == 0)
         return;
+    printf("Index buffers usage: %i/%i, allocs/frees: %i/%i\n",
+           g_ibufs.count - g_ibufs.left_min, g_ibufs.count,
+           g_ibufs.allocs, g_ibufs.frees);
     while (g_ibufs.mapped)
         ibuf_free(g_ibufs.mapped);
     while (g_ibufs.baked)
         ibuf_free(g_ibufs.baked);
     free(g_ibufs.pool);
     g_ibufs.pool = 0;
-    printf("Index buffers usage: %i/%i, allocs/frees: %i/%i\n",
-           g_ibufs.count - g_ibufs.left_min, g_ibufs.count,
-           g_ibufs.allocs, g_ibufs.frees);
 }
 
 struct ibuf_t * ibuf_get(int ibufi)

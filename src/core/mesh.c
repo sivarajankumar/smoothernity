@@ -257,11 +257,11 @@ void mesh_done(void)
 {
     if (g_meshes.pool == 0)
         return;
-    free(g_meshes.pool);
-    g_meshes.pool = 0;
     printf("Meshes usage: %i/%i, allocs/frees: %i/%i\n",
            g_meshes.count - g_meshes.left_min, g_meshes.count,
            g_meshes.allocs, g_meshes.frees);
+    free(g_meshes.pool);
+    g_meshes.pool = 0;
 }
 
 void mesh_update(struct mesh_t *mesh, float dt, int frame_tag)
