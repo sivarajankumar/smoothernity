@@ -224,6 +224,245 @@ function work(state)
     freecam:destruct()
 end
 
+demo = {}
+
+demo.wait = function(state, us)
+    local time = api_time(state)
+    while api_time(state) - time < us
+    do
+        api_sleep(state)
+    end
+end
+
+demo.matrix_pos_stop = function(x, y, z)
+    return demo.matrix_pos_scl_stop(x, y, z, 1, 1, 1)
+end
+
+demo.matrix_pos_scl_stop = function(px, py, pz, sx, sy, sz)
+    local m = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    local rot = api_vector_alloc()
+    api_vector_const(pos, px, py, pz, 0)
+    api_vector_const(scl, sx, sy, sz, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
+    api_matrix_stop(m)
+    api_vector_free(pos)
+    api_vector_free(scl)
+    api_vector_free(rot)
+    return m
+end
+
+demo.matrix_rot_stop = function(axis, angle)
+    local m = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    local rot = api_vector_alloc()
+    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(scl, 1, 1, 1, 0)
+    api_vector_const(rot, angle, 0, 0, 0)
+    api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
+    api_matrix_stop(m)
+    api_vector_free(pos)
+    api_vector_free(scl)
+    api_vector_free(rot)
+    return m
+end
+
+demo.matrix_move = function(m, x, y, z)
+    local dm = demo.matrix_pos_stop(x, y, z)
+    api_matrix_mul_stop(m, m, dm)
+    api_matrix_free(dm)
+end
+
+demo.matrix_rotate = function(m, axis, angle)
+    local dm = demo.matrix_rot_stop(axis, angle)
+    api_matrix_mul_stop(m, m, dm)
+    api_matrix_free(dm)
+end
+
+demo.ddraw_switcher_create = function()
+    local obj = {}
+    obj.debug = 0
+    obj.pressed = 0
+    obj.update = function(self)
+        if self["pressed"] == 0 then
+            if api_input_key(API_INPUT_KEY_F1) == 1 then
+                self["pressed"] = 1
+                if self["debug"] == 0 then
+                    self["debug"] = 1
+                    api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
+                    api_display_draw_scene(0)
+                else
+                    self["debug"] = 0
+                    api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
+                    api_display_draw_scene(1)
+                end
+            end
+        elseif self["pressed"] == 1 then
+            if api_input_key(API_INPUT_KEY_F1) == 0 then
+                self["pressed"] = 0
+            end
+        end
+    end
+    return obj
+end
+
+demo.free_camera_create = function(x, y, z)
+    local obj = {}
+    obj.matrix = demo.matrix_pos_stop(x, y, z)
+    obj.destruct = function(self)
+        api_matrix_free(self.matrix)
+    end
+    obj.update = function(self)
+        local ofs = CAMERA_MOVE_FAST
+        local ang = CAMERA_ROTATE_FAST
+        if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
+            ofs = CAMERA_MOVE_SLOW
+            ang = CAMERA_ROTATE_SLOW
+        end
+    
+        if api_input_key(API_INPUT_KEY_E) == 1 then
+            demo.matrix_move(self.matrix, 0, 0, -ofs)
+        end
+        if api_input_key(API_INPUT_KEY_D) == 1 then
+            demo.matrix_move(self.matrix, 0, 0, ofs)
+        end
+        if api_input_key(API_INPUT_KEY_S) == 1 then
+            demo.matrix_move(self.matrix, -ofs, 0, 0)
+        end
+        if api_input_key(API_INPUT_KEY_F) == 1 then
+            demo.matrix_move(self.matrix, ofs, 0, 0)
+        end
+        if api_input_key(API_INPUT_KEY_A) == 1 then
+            demo.matrix_move(self.matrix, 0, ofs, 0)
+        end
+        if api_input_key(API_INPUT_KEY_Z) == 1 then
+            demo.matrix_move(self.matrix, 0, -ofs, 0)
+        end
+        if api_input_key(API_INPUT_KEY_LEFT) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, ang)
+        end
+        if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, -ang)
+        end
+        if api_input_key(API_INPUT_KEY_UP) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, ang)
+        end
+        if api_input_key(API_INPUT_KEY_DOWN) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, -ang)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, ang)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, -ang)
+        end
+    end
+    return obj
+end
+
+demo.landscape_create = function(x, y, z)
+    local obj = {}
+
+    obj.construct_vb = function(self)
+        local vb = api_vbuf_alloc()
+        api_vbuf_set(vb, 0, -2, 1,-2,   0, 0, 1, 1,   0, 0,
+                            -1, 1,-2,   0, 1, 0, 1,   0, 0,
+                             0, 1,-2,   0, 1, 1, 1,   0, 0,
+                             1, 1,-2,   1, 0, 0, 1,   0, 0,
+                             2, 1,-2,   1, 0, 1, 1,   0, 0)
+
+        api_vbuf_set(vb, 5, -2, 1,-1,   1, 1, 0, 1,   0, 0,
+                            -1, 0,-1,   1, 1, 1, 1,   0, 0,
+                             0, 0,-1,   0, 0, 1, 1,   0, 0,
+                             1, 0,-1,   0, 1, 0, 1,   0, 0,
+                             2, 1,-1,   0, 1, 1, 1,   0, 0)
+
+        api_vbuf_set(vb, 10,-2, 1, 0,   1, 0, 0, 1,   0, 0,
+                            -1, 0, 0,   1, 0, 1, 1,   0, 0,
+                             0, 1, 0,   1, 1, 0, 1,   0, 0,
+                             1, 0, 0,   1, 1, 1, 1,   0, 0,
+                             2, 1, 0,   0, 0, 1, 1,   0, 0)
+
+        api_vbuf_set(vb, 15,-2, 1, 1,   0, 1, 0, 1,   0, 0,
+                            -1, 0, 1,   0, 1, 1, 1,   0, 0,
+                             0, 0, 1,   1, 0, 0, 1,   0, 0,
+                             1, 0, 1,   1, 0, 1, 1,   0, 0,
+                             2, 1, 1,   1, 1, 0, 1,   0, 0)
+
+        api_vbuf_set(vb, 20,-2, 1, 2,   1, 1, 1, 1,   0, 0,
+                            -1, 1, 2,   0, 0, 1, 1,   0, 0,
+                             0, 1, 2,   0, 1, 0, 1,   0, 0,
+                             1, 1, 2,   0, 1, 1, 1,   0, 0,
+                             2, 1, 2,   1, 0, 0, 1,   0, 0)
+        api_vbuf_bake(vb)
+        self.vb = vb
+    end
+
+    obj.construct_ib = function(self)
+        local ib = api_ibuf_alloc()
+        api_ibuf_set(ib, 0*6*4,   0, 5, 1, 1, 5, 6,   1, 6, 2, 2, 6, 7,   2, 7, 3, 3, 7, 8,   3, 8, 4, 4, 8, 9)
+        api_ibuf_set(ib, 1*6*4,   5,10, 6, 6,10,11,   6,11, 7, 7,11,12,   7,12, 8, 8,12,13,   8,13, 9, 9,13,14)
+        api_ibuf_set(ib, 2*6*4,  10,15,11,11,15,16,  11,16,12,12,16,17,  12,17,13,13,17,18,  13,18,14,14,18,19)
+        api_ibuf_set(ib, 3*6*4,  15,20,16,16,20,21,  16,21,17,17,21,22,  17,22,18,18,22,23,  18,23,19,19,23,24)
+        api_ibuf_bake(ib)
+        self.ib = ib
+    end
+
+    obj.construct_matrices = function(self, x, y, z)
+        self.mstart = demo.matrix_pos_stop(x, y, z)
+        self.mvis = demo.matrix_pos_scl_stop(0,-1,0, 10,2,10)
+    end
+
+    obj.construct_physics = function(self)
+        local size = api_vector_alloc()
+        api_vector_const(size, 10, 2, 10, 0)
+        self.buf = api_buf_alloc()
+        api_buf_set(buf, 0,  1, 1, 1, 1, 1,
+                             1, 0, 0, 0, 1,
+                             1, 0, 1, 0, 1, 
+                             1, 0, 0, 0, 1,
+                             1, 1, 1, 1, 1)
+        self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
+        self.rb = api_physics_rb_alloc(self.cs, self.mstart, 1, 1)
+        api_vector_free(size)
+    end
+
+    obj.construct_visual = function(self)
+        self.mmul = api_matrix_alloc()
+        self.mrb = api_matrix_alloc()
+        api_matrix_rigid_body(self.mrb, self.rb)
+        api_matrix_mul(self.mmul, self.mrb, self.mvis)
+        self.mesh = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mmul, 0, 4*6*4)
+    end
+
+    obj.construct = function(self, x, y, z)
+        self:construct_vb()
+        self:construct_ib()
+        self:construct_matrices(x, y, z)
+        self:construct_physics()
+        self:construct_visual()
+    end
+
+    obj.destruct = function(self)
+        api_vbuf_free(self.vb)
+        api_ibuf_free(self.ib)
+        api_matrix_free(self.mstart)
+        api_matrix_free(self.mvis)
+        api_matrix_free(self.mrb)
+        api_matrix_free(self.mmul)
+        api_physics_rb_free(self.rb)
+        api_physics_cs_free(self.cs)
+        api_buf_free(self.buf)
+        api_mesh_free(self.mesh)
+    end
+
+    obj.construct(x, y, z)
+    return obj
+end
+
 API_INPUT_KEY_ESCAPE = 0
 API_INPUT_KEY_UP = 1
 API_INPUT_KEY_DOWN = 2
@@ -325,139 +564,3 @@ API_TEXT_FONT_TIMES_ROMAN_24 = 3
 API_TEXT_FONT_HELVETICA_10 = 4
 API_TEXT_FONT_HELVETICA_12 = 5
 API_TEXT_FONT_HELVETICA_18 = 6
-
-demo = {}
-
-demo.wait = function(state, us)
-    local time = api_time(state)
-    while api_time(state) - time < us
-    do
-        api_sleep(state)
-    end
-end
-
-demo.ddraw_switcher_create = function ()
-    local obj = {}
-    obj.debug = 0
-    obj.pressed = 0
-    obj.update = function(self)
-        if self["pressed"] == 0 then
-            if api_input_key(API_INPUT_KEY_F1) == 1 then
-                self["pressed"] = 1
-                if self["debug"] == 0 then
-                    self["debug"] = 1
-                    api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
-                    api_display_draw_scene(0)
-                else
-                    self["debug"] = 0
-                    api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                    api_display_draw_scene(1)
-                end
-            end
-        elseif self["pressed"] == 1 then
-            if api_input_key(API_INPUT_KEY_F1) == 0 then
-                self["pressed"] = 0
-            end
-        end
-    end
-    return obj
-end
-
-demo.matrix_pos_stop = function(x, y, z)
-    local m = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, x, y, z, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(m)
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
-    return m
-end
-
-demo.matrix_rot_stop = function(axis, angle)
-    local m = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, 0, 0, 0, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_vector_const(rot, angle, 0, 0, 0)
-    api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
-    api_matrix_stop(m)
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
-    return m
-end
-
-demo.matrix_move = function(m, x, y, z)
-    local dm = demo.matrix_pos_stop(x, y, z)
-    api_matrix_mul_stop(m, m, dm)
-    api_matrix_free(dm)
-end
-
-demo.matrix_rotate = function(m, axis, angle)
-    local dm = demo.matrix_rot_stop(axis, angle)
-    api_matrix_mul_stop(m, m, dm)
-    api_matrix_free(dm)
-end
-
-demo.free_camera_create = function(x, y, z)
-    local obj = {}
-    obj.matrix = demo.matrix_pos_stop(x, y, z)
-    obj.destruct = function(self)
-        api_matrix_free(self.matrix)
-        self.matrix = nil
-    end
-    obj.update = function(self)
-        local ofs = CAMERA_MOVE_FAST
-        local ang = CAMERA_ROTATE_FAST
-        if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
-            ofs = CAMERA_MOVE_SLOW
-            ang = CAMERA_ROTATE_SLOW
-        end
-    
-        if api_input_key(API_INPUT_KEY_E) == 1 then
-            demo.matrix_move(self.matrix, 0, 0, -ofs)
-        end
-        if api_input_key(API_INPUT_KEY_D) == 1 then
-            demo.matrix_move(self.matrix, 0, 0, ofs)
-        end
-        if api_input_key(API_INPUT_KEY_S) == 1 then
-            demo.matrix_move(self.matrix, -ofs, 0, 0)
-        end
-        if api_input_key(API_INPUT_KEY_F) == 1 then
-            demo.matrix_move(self.matrix, ofs, 0, 0)
-        end
-        if api_input_key(API_INPUT_KEY_A) == 1 then
-            demo.matrix_move(self.matrix, 0, ofs, 0)
-        end
-        if api_input_key(API_INPUT_KEY_Z) == 1 then
-            demo.matrix_move(self.matrix, 0, -ofs, 0)
-        end
-        if api_input_key(API_INPUT_KEY_LEFT) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, ang)
-        end
-        if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, -ang)
-        end
-        if api_input_key(API_INPUT_KEY_UP) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, ang)
-        end
-        if api_input_key(API_INPUT_KEY_DOWN) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, -ang)
-        end
-        if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, ang)
-        end
-        if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
-            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, -ang)
-        end
-    end
-    return obj
-end
