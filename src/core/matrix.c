@@ -4,12 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 
 struct matrices_t
 {
     int count;
     int left;
+    int left_min;
     int nesting;
+    int allocs;
+    int frees;
     struct matrix_t *pool;
     struct matrix_t *vacant;
 };
@@ -43,7 +47,10 @@ static int api_matrix_alloc(lua_State *lua)
         return 0;
     }
 
+    ++g_matrices.allocs;
     --g_matrices.left;
+    if (g_matrices.left < g_matrices.left_min)
+        g_matrices.left_min = g_matrices.left;
     matrix = g_matrices.vacant;
     g_matrices.vacant = g_matrices.vacant->next;
 
@@ -76,6 +83,7 @@ static int api_matrix_free(lua_State *lua)
 
     matrix->vacant = 1;
     ++g_matrices.left;
+    ++g_matrices.frees;
 
     matrix->next = g_matrices.vacant;
     g_matrices.vacant = matrix;
@@ -488,6 +496,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
         return 1;
     g_matrices.count = count;
     g_matrices.left = count;
+    g_matrices.left_min = g_matrices.left;
     g_matrices.nesting = nesting;
     g_matrices.vacant = g_matrices.pool;
     for (i = 0; i < count; ++i)
@@ -517,6 +526,9 @@ void matrix_done(void)
     {
         free(g_matrices.pool);
         g_matrices.pool = 0;
+        printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
+               g_matrices.count - g_matrices.left_min, g_matrices.count,
+               g_matrices.allocs, g_matrices.frees);
     }
 }
 
