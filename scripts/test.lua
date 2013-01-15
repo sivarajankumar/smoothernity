@@ -342,10 +342,10 @@ function demo.landscape_create(x, y, z)
     return obj
 end
 
-demo.sweet_pair_create = function(x, y, z)
+function demo.sweet_pair_create(x, y, z)
     local obj = {}
 
-    obj.construct_vb = function(self)
+    function obj.construct_vb(self)
         local vb = api_vbuf_alloc()
         api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
                              1,-1, 1,   0, 1, 0, 1,   0, 0,
@@ -359,7 +359,7 @@ demo.sweet_pair_create = function(x, y, z)
         self.vb = vb
     end
 
-    obj.construct_ib = function(self)
+    function obj.construct_ib(self)
         local ib = api_ibuf_alloc()
         api_ibuf_set(ib, 0,  0,1,2,  0,2,3,
                              1,5,6,  1,6,2,
@@ -371,7 +371,7 @@ demo.sweet_pair_create = function(x, y, z)
         self.ib = ib
     end
 
-    obj.construct_matrices = function(self, x, y, z)
+    function obj.construct_matrices(self, x, y, z)
         self.mbig = demo.matrix_pos_stop(x, y, z)
         self.mrb = api_matrix_alloc()
         self.mloc = api_matrix_alloc()
@@ -391,12 +391,12 @@ demo.sweet_pair_create = function(x, y, z)
         api_matrix_mul(self.msmall, self.mrb, self.mloc)
     end
 
-    obj.construct_visual = function(self)
+    function obj.construct_visual(self)
         self.mesh_big = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mrb, 0, 36)
         self.mesh_small = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.msmall, 0, 36)
     end
 
-    obj.construct_physics = function(self)
+    function obj.construct_physics(self)
         local size = api_vector_alloc()
         api_vector_const(size, 1, 1, 1, 0)
         self.cs = api_physics_cs_alloc_box(10, size)
@@ -405,7 +405,7 @@ demo.sweet_pair_create = function(x, y, z)
         api_vector_free(size)
     end
 
-    obj.construct = function(self, x, y, z)
+    function obj.construct(self, x, y, z)
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
@@ -413,7 +413,7 @@ demo.sweet_pair_create = function(x, y, z)
         self:construct_visual()
     end
 
-    obj.destruct = function(self)
+    function obj.destruct(self)
         api_vbuf_free(self.vb)
         api_ibuf_free(self.ib)
         api_matrix_free(self.mrb)
