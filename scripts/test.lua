@@ -160,22 +160,22 @@ function demo.ddraw_switcher_create()
     obj.debug = 0
     obj.pressed = 0
     function obj.update(self)
-        if self["pressed"] == 0 then
+        if self.pressed == 0 then
             if api_input_key(API_INPUT_KEY_F1) == 1 then
-                self["pressed"] = 1
-                if self["debug"] == 0 then
-                    self["debug"] = 1
+                self.pressed = 1
+                if self.debug == 0 then
+                    self.debug = 1
                     api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
                     api_display_draw_scene(0)
                 else
-                    self["debug"] = 0
+                    self.debug = 0
                     api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
                     api_display_draw_scene(1)
                 end
             end
-        elseif self["pressed"] == 1 then
+        elseif self.pressed == 1 then
             if api_input_key(API_INPUT_KEY_F1) == 0 then
-                self["pressed"] = 0
+                self.pressed = 0
             end
         end
     end
