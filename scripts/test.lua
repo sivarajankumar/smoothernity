@@ -47,7 +47,7 @@ function work(state)
     local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
-    local car = demo.vehicle_create(0, -10, 5)
+    local car = demo.vehicle_create(0, -5, 5)
 
     while not quit
     do
@@ -55,7 +55,7 @@ function work(state)
             sweet:destruct()
             sweet = demo.sweet_pair_create(0, 0, -5)
             car:destruct()
-            car = demo.vehicle_create(0, -10, 5)
+            car = demo.vehicle_create(0, -5, 5)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_sleep(state)
             end
@@ -117,6 +117,22 @@ function demo.matrix_rot_stop(axis, angle)
     api_vector_const(scl, 1, 1, 1, 0)
     api_vector_const(rot, angle, 0, 0, 0)
     api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
+    api_matrix_stop(m)
+    api_vector_free(pos)
+    api_vector_free(scl)
+    api_vector_free(rot)
+    return m
+end
+
+function demo.matrix_scl_stop(sx, sy, sz)
+    local m = api_matrix_alloc()
+    local pos = api_vector_alloc()
+    local scl = api_vector_alloc()
+    local rot = api_vector_alloc()
+    api_vector_const(pos, 0, 0, 0, 0)
+    api_vector_const(scl, sx, sy, sz, 0)
+    api_vector_const(rot, 0, 0, 0, 0)
+    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
     api_matrix_stop(m)
     api_vector_free(pos)
     api_vector_free(scl)
@@ -430,10 +446,134 @@ function demo.sweet_pair_create(x, y, z)
     return obj
 end
 
+CAR_CH_SIZE_X = 2
+CAR_CH_SIZE_Y = 1
+CAR_CH_SIZE_Z = 4
+CAR_CH_MASS = 800
+CAR_CH_FRICT = 0.5
+CAR_CH_ROLL_FRICT = 0
+CAR_SUS_STIF = 20
+CAR_SUS_COMP = 4.4
+CAR_SUS_DAMP = 2.3
+CAR_SUS_TRAV = 500
+CAR_SUS_FORCE = 6000
+CAR_SUS_REST = 0.6
+CAR_SLIP_FRICT = 1000
+CAR_ROLL_INF = 0.1
+CAR_WHEEL_RADIUS = 0.5
+CAR_WHEEL_POS_X = 0.9
+CAR_WHEEL_POS_Y = 1.2
+CAR_WHEEL_POS_Z = 1.5
+
 function demo.vehicle_create(x, y, z)
     local obj = {}
-    function obj.destruct(self)
+    function obj.construct_vb(self)
+        local vb = api_vbuf_alloc()
+        api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                             1,-1, 1,   0, 1, 0, 1,   0, 0,
+                             1, 1, 1,   0, 0, 1, 1,   0, 0,
+                            -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                            -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                             1,-1,-1,   0, 0, 0, 1,   0, 0,
+                             1, 1,-1,   1, 1, 0, 1,   0, 0,
+                            -1, 1,-1,   1, 0, 1, 1,   0, 0)
+        api_vbuf_bake(vb)
+        self.vb = vb
     end
+
+    function obj.construct_ib(self)
+        local ib = api_ibuf_alloc()
+        api_ibuf_set(ib, 0,  0,1,2,  0,2,3,
+                             1,5,6,  1,6,2,
+                             5,4,7,  5,7,6,
+                             4,0,3,  4,3,7,
+                             3,2,6,  3,6,7,
+                             1,0,4,  1,4,5)
+        api_ibuf_bake(ib)
+        self.ib = ib
+    end
+    function obj.construct_cs(self)
+        local size = api_vector_alloc()
+        api_vector_const(size, 0.5*CAR_CH_SIZE_X, 0.5*CAR_CH_SIZE_Y, 0.5*CAR_CH_SIZE_Z, 0)
+        self.cs = api_physics_cs_alloc_box(CAR_CH_MASS, size)
+        api_vector_free(size)
+    end
+    function obj.construct_veh(self, x, y, z)
+        local m = demo.matrix_pos_stop(x, y, z)
+        self.veh = api_physics_veh_alloc(self.cs, m, CAR_CH_FRICT, CAR_CH_ROLL_FRICT,
+                                         CAR_SUS_STIF, CAR_SUS_COMP, CAR_SUS_DAMP,
+                                         CAR_SUS_TRAV, CAR_SUS_FORCE, CAR_SLIP_FRICT)
+        api_matrix_free(m)
+        self.wheel_fr = self:add_wheel( CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
+        self.wheel_fl = self:add_wheel(-CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y, CAR_WHEEL_POS_Z, 1)
+        self.wheel_br = self:add_wheel( CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
+        self.wheel_bl = self:add_wheel(-CAR_WHEEL_POS_X, -CAR_WHEEL_POS_Y,-CAR_WHEEL_POS_Z, 0)
+    end
+    function obj.add_wheel(self, posx, posy, posz, front)
+        local dir = api_vector_alloc()
+        local axl = api_vector_alloc()
+        local pos = api_vector_alloc()
+        api_vector_const(pos, posx, posy, posz, 0)
+        api_vector_const(axl, -1, 0, 0, 0)
+        api_vector_const(dir, 0, -1, 0, 0)
+        local wheel = api_physics_veh_add_wheel(self.veh, pos, dir, axl, CAR_SUS_REST,
+                                                CAR_ROLL_INF, CAR_WHEEL_RADIUS, front)
+        api_vector_free(pos)
+        api_vector_free(dir)
+        api_vector_free(axl)
+        return wheel
+    end
+    function obj.construct_matrices(self)
+        self.mchassis_local = demo.matrix_scl_stop(0.5*CAR_CH_SIZE_X, 0.5*CAR_CH_SIZE_Y, 0.5*CAR_CH_SIZE_Z)
+        self.mchassis_physic = api_matrix_alloc()
+        self.mchassis = api_matrix_alloc()
+        api_matrix_vehicle_chassis(self.mchassis_physic, self.veh)
+        api_matrix_mul(self.mchassis, self.mchassis_physic, self.mchassis_local)
+        self.mwheel_local = demo.matrix_scl_stop(CAR_WHEEL_RADIUS, CAR_WHEEL_RADIUS, CAR_WHEEL_RADIUS)
+        self.mwheel_physic = {}
+        self.mwheel = {}
+        for i = 0, 3 do
+            self.mwheel_physic[i] = api_matrix_alloc()
+            self.mwheel[i] = api_matrix_alloc()
+            api_matrix_vehicle_wheel(self.mwheel_physic[i], self.veh, i)
+            api_matrix_mul(self.mwheel[i], self.mwheel_physic[i], self.mwheel_local)
+        end
+    end
+    function obj.construct_visual(self)
+        self.mesh_chassis = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mchassis, 0, 36)
+        self.mesh_wheel = {}
+        for i = 0, 3 do
+            self.mesh_wheel[i] = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mwheel[i], 0, 36)
+        end
+    end
+    function obj.construct(self, x, y, z)
+        self:construct_ib()
+        self:construct_vb()
+        self:construct_cs()
+        self:construct_veh(x, y, z)
+        self:construct_matrices()
+        self:construct_visual()
+        for i = 0, 3 do
+            api_physics_veh_set_wheel(self.veh, i, 1000, 0, 0)
+        end
+    end
+    function obj.destruct(self)
+        for i = 0, 3 do
+            api_matrix_free(self.mwheel_physic[i])
+            api_matrix_free(self.mwheel[i])
+            api_mesh_free(self.mesh_wheel[i])
+        end
+        api_mesh_free(self.mesh_chassis)
+        api_matrix_free(self.mwheel_local)
+        api_matrix_free(self.mchassis_local)
+        api_matrix_free(self.mchassis_physic)
+        api_matrix_free(self.mchassis)
+        api_vbuf_free(self.vb)
+        api_ibuf_free(self.ib)
+        api_physics_veh_free(self.veh)
+        api_physics_cs_free(self.cs)
+    end
+    obj:construct(x, y, z)
     return obj
 end
 
