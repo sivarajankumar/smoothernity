@@ -51,14 +51,12 @@ static int api_ibuf_alloc(lua_State *lua)
     }
 
     ibuf = g_ibufs.vacant;
+    g_ibufs.vacant = g_ibufs.vacant->next;
     ibuf->vacant = 0;
     --g_ibufs.left;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     ibuf->mapped = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-
-    if (g_ibufs.vacant == ibuf)
-        g_ibufs.vacant = ibuf->next;
 
     if (ibuf->prev)
         ibuf->prev->next = ibuf->next;
