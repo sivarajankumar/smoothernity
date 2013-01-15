@@ -40,7 +40,7 @@ void rigidbody_done(void)
     {
         for (i = 0; i < g_rigidbodies.count; ++i)
         {
-            rigidbody_free(i, 0);
+            rigidbody_free(g_rigidbodies.pool + i, 0);
             g_rigidbodies.pool[i].mstate->~mstate_c();
         }
         free(g_rigidbodies.pool);
@@ -61,11 +61,9 @@ rigidbody_t * rigidbody_get(int rbi)
         return 0;
 }
 
-void rigidbody_free(int rbi, btDynamicsWorld *world)
+void rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
 {
-    rigidbody_t *rb;
-    rb = rigidbody_get(rbi);
-    if (rb == 0 || rb->vacant == 1)
+    if (rb->vacant == 1)
         return;
     ++g_rigidbodies.left;
     rb->vacant = 1;
@@ -76,6 +74,15 @@ void rigidbody_free(int rbi, btDynamicsWorld *world)
     if (rb->body)
         rb->body->~btRigidBody();
     rb->body = 0;
+    if (rb->cs->rbs == rb)
+        rb->cs->rbs = rb->cs_next;
+    if (rb->cs_next)
+        rb->cs_next->cs_prev = rb->cs_prev;
+    if (rb->cs_prev)
+        rb->cs_prev->cs_next = rb->cs_next;
+    rb->cs = 0;
+    rb->cs_prev = 0;
+    rb->cs_next = 0;
 }
 
 int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
@@ -89,6 +96,13 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
     g_rigidbodies.vacant = g_rigidbodies.vacant->next;
     rb->vacant = 0;
     rb->next = 0;
+
+    rb->cs = cs;
+    if (cs->rbs)
+        cs->rbs->cs_prev = rb;
+    rb->cs_next = cs->rbs;
+    rb->cs_prev = 0;
+    cs->rbs = rb;
 
     rb->mstate->get.setFromOpenGLMatrix(matrix);
     rb->mstate->set = rb->mstate->get;

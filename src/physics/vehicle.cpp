@@ -36,13 +36,15 @@ int vehicle_init(int count)
 void vehicle_done(void)
 {
     int i;
+    vehicle_t *veh;
     if (g_vehicles.pool)
     {
         for (i = 0; i < g_vehicles.count; ++i)
         {
-            vehicle_free(i, 0);
-            g_vehicles.pool[i].mstate->~mstate_c();
-            g_vehicles.pool[i].tuning.~btVehicleTuning();
+            veh = g_vehicles.pool + i;
+            vehicle_free(veh, 0);
+            veh->mstate->~mstate_c();
+            veh->tuning.~btVehicleTuning();
         }
         free(g_vehicles.pool);
         g_vehicles.pool = 0;
@@ -62,11 +64,9 @@ vehicle_t * vehicle_get(int vehi)
         return 0;
 }
 
-void vehicle_free(int vehi, btDynamicsWorld *world)
+void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
 {
-    vehicle_t *veh;
-    veh = vehicle_get(vehi);
-    if (veh == 0 || veh->vacant == 1)
+    if (veh->vacant == 1)
         return;
     ++g_vehicles.left;
     veh->vacant = 1;
@@ -89,6 +89,15 @@ void vehicle_free(int vehi, btDynamicsWorld *world)
         veh->veh->~btRaycastVehicle();
         veh->veh = 0;
     }
+    if (veh->cs->vehs == veh)
+        veh->cs->vehs = veh->cs_next;
+    if (veh->cs_next)
+        veh->cs_next->cs_prev = veh->cs_prev;
+    if (veh->cs_prev)
+        veh->cs_prev->cs_next = veh->cs_next;
+    veh->cs = 0;
+    veh->cs_prev = 0;
+    veh->cs_next = 0;
 }
 
 int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
@@ -104,6 +113,13 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     g_vehicles.vacant = g_vehicles.vacant->next;
     veh->vacant = 0;
     veh->next = 0;
+
+    veh->cs = cs;
+    if (cs->vehs)
+        cs->vehs->cs_prev = veh;
+    veh->cs_next = cs->vehs;
+    veh->cs_prev = 0;
+    cs->vehs = veh;
 
     veh->mstate->get.setFromOpenGLMatrix(matrix);
     veh->mstate->set = veh->mstate->get;

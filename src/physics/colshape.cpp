@@ -1,4 +1,6 @@
 #include "colshape.hpp"
+#include "rigidbody.hpp"
+#include "vehicle.hpp"
 #include <stdlib.h>
 
 struct colshapes_t
@@ -52,12 +54,14 @@ cleanup:
 void colshape_done(void)
 {
     int i;
+    colshape_t *cs;
     if (g_colshapes.pool)
     {
         for (i = 0; i < g_colshapes.count; ++i)
         {
-            colshape_free(i);
-            free(g_colshapes.pool[i].data);
+            cs = g_colshapes.pool + i;
+            colshape_free(cs, 0);
+            free(cs->data);
         }
         free(g_colshapes.pool);
         g_colshapes.pool = 0;
@@ -90,20 +94,22 @@ colshape_t * colshape_get(int colshapei)
         return 0;
 }
 
-void colshape_free(int colshapei)
+void colshape_free(colshape_t *cs, btDynamicsWorld *world)
 {
-    colshape_t *colshape;
-    colshape = colshape_get(colshapei);
-    if (colshape == 0 || colshape->vacant == 1)
+    if (cs == 0 || cs->vacant == 1)
         return;
     ++g_colshapes.left;
-    colshape->vacant = 1;
-    if (colshape->shape)
-        colshape->shape->~btCollisionShape();
-    colshape->shape = 0;
-    colshape->shape_box = 0;
-    colshape->next = g_colshapes.vacant;
-    g_colshapes.vacant = colshape;
+    cs->vacant = 1;
+    if (cs->shape)
+        cs->shape->~btCollisionShape();
+    cs->shape = 0;
+    cs->shape_box = 0;
+    cs->next = g_colshapes.vacant;
+    g_colshapes.vacant = cs;
+    while (cs->vehs)
+        vehicle_free(cs->vehs, world);
+    while (cs->rbs)
+        rigidbody_free(cs->rbs, world);
 }
 
 void colshape_make_box(colshape_t *colshape, float mass, float *size)

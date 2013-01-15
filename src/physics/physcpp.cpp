@@ -135,9 +135,11 @@ int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
 extern "C"
 int physcpp_cs_free(int csi)
 {
-    if (colshape_get(csi) == 0)
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0)
         return PHYSRES_INVALID_CS;
-    colshape_free(csi);
+    colshape_free(cs, g_physcpp.world);
     return PHYSRES_OK;
 }
 
@@ -162,7 +164,7 @@ int physcpp_rb_free(int rbi)
     rb = rigidbody_get(rbi);
     if (rb == 0)
         return PHYSRES_INVALID_RB;
-    rigidbody_free(rbi, g_physcpp.world);
+    rigidbody_free(rb, g_physcpp.world);
     return PHYSRES_OK;
 }
 
