@@ -61,6 +61,7 @@ function work(state)
             end
         end
         freecam:update()
+        car:update()
         api_sleep(state)
     end
 
@@ -88,33 +89,13 @@ function demo.set_gravity(x, y, z)
     api_vector_free(grav)
 end
 
-function demo.matrix_pos_stop(x, y, z)
-    return demo.matrix_pos_scl_stop(x, y, z, 1, 1, 1)
-end
-
-function demo.matrix_pos_scl_stop(px, py, pz, sx, sy, sz)
+function demo.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
     local rot = api_vector_alloc()
     api_vector_const(pos, px, py, pz, 0)
     api_vector_const(scl, sx, sy, sz, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(m)
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
-    return m
-end
-
-function demo.matrix_rot_stop(axis, angle)
-    local m = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, 0, 0, 0, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
     api_vector_const(rot, angle, 0, 0, 0)
     api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
     api_matrix_stop(m)
@@ -122,6 +103,22 @@ function demo.matrix_rot_stop(axis, angle)
     api_vector_free(scl)
     api_vector_free(rot)
     return m
+end
+
+function demo.matrix_pos_stop(x, y, z)
+    return demo.matrix_pos_scl_rot_stop(x, y, z, 1, 1, 1, API_MATRIX_AXIS_X, 0)
+end
+
+function demo.matrix_pos_scl_stop(px, py, pz, sx, sy, sz)
+    return demo.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, API_MATRIX_AXIS_X, 0)
+end
+
+function demo.matrix_pos_rot_stop(x, y, z, axis, angle)
+    return demo.matrix_pos_scl_rot_stop(x, y, z, 1, 1, 1, axis, angle)
+end
+
+function demo.matrix_rot_stop(axis, angle)
+    return demo.matrix_pos_scl_rot_stop(0, 0, 0, 1, 1, 1, axis, angle)
 end
 
 function demo.matrix_scl_stop(sx, sy, sz)
@@ -410,7 +407,7 @@ function demo.sweet_pair_create(x, y, z)
     function obj.construct_physics(self)
         local size = api_vector_alloc()
         api_vector_const(size, 1, 1, 1, 0)
-        self.cs = api_physics_cs_alloc_box(10, size)
+        self.cs = api_physics_cs_alloc_box(1000, size)
         self.rb = api_physics_rb_alloc(self.cs, self.mbig, 1, 1)
         api_matrix_rigid_body(self.mrb, self.rb)
         api_vector_free(size)
@@ -463,7 +460,16 @@ CAR_ROLL_INF = 0.1
 CAR_WHEEL_RADIUS = 0.5
 CAR_WHEEL_POS_X = 0.9
 CAR_WHEEL_POS_Y = 0.2
-CAR_WHEEL_POS_Z = 1.5
+CAR_WHEEL_POS_Z = 1.6
+CAR_ACCEL_MAX = 1000
+CAR_ACCEL_PUSH = 100
+CAR_ACCEL_POP = 100
+CAR_BRAKE_MAX = 100
+CAR_BRAKE_PUSH = 10
+CAR_BRAKE_POP = 10
+CAR_STEER_MAX = 0.6
+CAR_STEER_PUSH = 0.05
+CAR_STEER_POP = 0.05
 
 function demo.vehicle_create(x, y, z)
     local obj = {}
@@ -480,7 +486,6 @@ function demo.vehicle_create(x, y, z)
         api_vbuf_bake(vb)
         self.vb = vb
     end
-
     function obj.construct_ib(self)
         local ib = api_ibuf_alloc()
         api_ibuf_set(ib, 0,  0,1,2,  0,2,3,
@@ -499,7 +504,7 @@ function demo.vehicle_create(x, y, z)
         api_vector_free(size)
     end
     function obj.construct_veh(self, x, y, z)
-        local m = demo.matrix_pos_stop(x, y, z)
+        local m = demo.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
         self.veh = api_physics_veh_alloc(self.cs, m, CAR_CH_FRICT, CAR_CH_ROLL_FRICT,
                                          CAR_SUS_STIF, CAR_SUS_COMP, CAR_SUS_DAMP,
                                          CAR_SUS_TRAV, CAR_SUS_FORCE, CAR_SLIP_FRICT)
@@ -553,9 +558,6 @@ function demo.vehicle_create(x, y, z)
         self:construct_veh(x, y, z)
         self:construct_matrices()
         self:construct_visual()
-        for i = 0, 3 do
-            api_physics_veh_set_wheel(self.veh, i, 1000, 0, 0)
-        end
     end
     function obj.destruct(self)
         for i = 0, 3 do
@@ -572,6 +574,68 @@ function demo.vehicle_create(x, y, z)
         api_ibuf_free(self.ib)
         api_physics_veh_free(self.veh)
         api_physics_cs_free(self.cs)
+    end
+    obj.accel = 0
+    obj.brake = 0
+    obj.steer = 0
+    function obj.update(self)
+        if api_input_key(API_INPUT_KEY_I) == 1 
+        and api_input_key(API_INPUT_KEY_K) == 0 then
+            self.accel = self.accel + CAR_ACCEL_PUSH
+            if self.accel > CAR_ACCEL_MAX then
+                self.accel = CAR_ACCEL_MAX
+            end
+        elseif api_input_key(API_INPUT_KEY_I) == 0 
+        and api_input_key(API_INPUT_KEY_K) == 1 then
+            self.accel = self.accel - CAR_ACCEL_PUSH
+            if self.accel < -CAR_ACCEL_MAX then
+                self.accel = -CAR_ACCEL_MAX
+            end
+        else
+            if self.accel < -CAR_ACCEL_POP then
+                self.accel = self.accel + CAR_ACCEL_POP
+            elseif self.accel > CAR_ACCEL_POP then
+                self.accel = self.accel - CAR_ACCEL_POP
+            else
+                self.accel = 0
+            end
+        end
+        if api_input_key(API_INPUT_KEY_J) == 1 
+        and api_input_key(API_INPUT_KEY_L) == 0 then
+            self.steer = self.steer - CAR_STEER_PUSH
+            if self.steer < -CAR_STEER_MAX then
+                self.steer = -CAR_STEER_MAX
+            end
+        elseif api_input_key(API_INPUT_KEY_J) == 0 
+        and api_input_key(API_INPUT_KEY_L) == 1 then
+            self.steer = self.steer + CAR_STEER_PUSH
+            if self.steer > CAR_STEER_MAX then
+                self.steer = CAR_STEER_MAX
+            end
+        else
+            if self.steer < -CAR_STEER_POP then
+                self.steer = self.steer + CAR_STEER_POP
+            elseif self.steer > CAR_STEER_POP then
+                self.steer = self.steer - CAR_STEER_POP
+            else
+                self.steer = 0
+            end
+        end
+        if api_input_key(API_INPUT_KEY_SPACE) == 1 then
+            self.brake = self.brake + CAR_BRAKE_PUSH
+            if self.brake > CAR_BRAKE_MAX then
+                self.brake = CAR_BRAKE_MAX
+            end
+        else
+            self.brake = self.brake - CAR_BRAKE_POP
+            if self.brake < 0 then
+                self.brake = 0
+            end
+        end
+        api_physics_veh_set_wheel(self.veh, self.wheel_fl, self.accel, self.brake, -self.steer)
+        api_physics_veh_set_wheel(self.veh, self.wheel_fr, self.accel, self.brake, -self.steer)
+        api_physics_veh_set_wheel(self.veh, self.wheel_bl, self.accel, self.brake, 0)
+        api_physics_veh_set_wheel(self.veh, self.wheel_br, self.accel, self.brake, 0)
     end
     obj:construct(x, y, z)
     return obj
