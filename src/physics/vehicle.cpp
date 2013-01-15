@@ -123,8 +123,7 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->cs_prev = 0;
     cs->vehs = veh;
 
-    veh->mstate->get.setFromOpenGLMatrix(matrix);
-    veh->mstate->set = veh->mstate->get;
+    veh->mstate->m.setFromOpenGLMatrix(matrix);
     veh->mstate->was_set = 1;
 
     veh->tuning.m_suspensionStiffness = sus_stif;
@@ -178,7 +177,7 @@ void vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
 {
     if (veh->mstate->was_set)
     {
-        veh->mstate->set.getOpenGLMatrix(matrix);
+        veh->mstate->m.getOpenGLMatrix(matrix);
         veh->mstate->was_set = 0;
     }
 }

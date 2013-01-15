@@ -10,7 +10,6 @@ public:
     virtual void getWorldTransform(btTransform &) const;
     virtual void setWorldTransform(const btTransform &);
 
-    btTransform get;
-    btTransform set;
+    btTransform m;
     int was_set;
 };

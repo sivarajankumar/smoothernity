@@ -47,7 +47,7 @@ function work(state)
     local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
-    local car = demo.vehicle_create(0, -5, 5)
+    local car = demo.vehicle_create(0, -10, 5)
 
     while not quit
     do
@@ -55,7 +55,7 @@ function work(state)
             sweet:destruct()
             sweet = demo.sweet_pair_create(0, 0, -5)
             car:destruct()
-            car = demo.vehicle_create(0, -5, 5)
+            car = demo.vehicle_create(0, -10, 5)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_sleep(state)
             end
