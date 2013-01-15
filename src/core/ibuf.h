@@ -23,7 +23,10 @@ struct ibufs_t
     int size;
     int count;
     int left;
+    int left_min;
     int with_meshes;
+    int allocs;
+    int frees;
     struct ibuf_t *pool;
     struct ibuf_t *vacant;
     struct ibuf_t *mapped;

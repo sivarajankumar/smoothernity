@@ -1,6 +1,7 @@
 #include "ibuf.h"
 #include "vbuf.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct ibufs_t g_ibufs;
 
@@ -8,6 +9,7 @@ static void ibuf_free(struct ibuf_t *ibuf)
 {
     ibuf->vacant = 1;
     ++g_ibufs.left;
+    ++g_ibufs.frees;
 
     if (ibuf->mapped)
     {
@@ -53,7 +55,10 @@ static int api_ibuf_alloc(lua_State *lua)
     ibuf = g_ibufs.vacant;
     g_ibufs.vacant = g_ibufs.vacant->next;
     ibuf->vacant = 0;
+    ++g_ibufs.allocs;
     --g_ibufs.left;
+    if (g_ibufs.left < g_ibufs.left_min)
+        g_ibufs.left_min = g_ibufs.left;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     ibuf->mapped = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -229,6 +234,7 @@ int ibuf_init(lua_State *lua, int size, int count)
     g_ibufs.size = size;
     g_ibufs.count = count;
     g_ibufs.left = count;
+    g_ibufs.left_min = count;
 
     lua_register(lua, "api_ibuf_alloc", api_ibuf_alloc);
     lua_register(lua, "api_ibuf_free", api_ibuf_free);
@@ -253,6 +259,9 @@ void ibuf_done(void)
             ibuf_free(g_ibufs.baked);
         free(g_ibufs.pool);
         g_ibufs.pool = 0;
+        printf("Index buffers usage: %i/%i, allocs/frees: %i/%i\n",
+               g_ibufs.count - g_ibufs.left_min, g_ibufs.count,
+               g_ibufs.allocs, g_ibufs.frees);
     }
 }
 
