@@ -129,7 +129,8 @@ function configure()
             ["buf_count"] = 10}
 end
 
-function ddraw_switcher_create()
+demo = {}
+demo["ddraw_switcher_create"] = function ()
     return {
         ["debug"] = 0,
         ["pressed"] = 0,
@@ -156,7 +157,7 @@ function ddraw_switcher_create()
     }
 end
 
-function matrix_pos_stop(pos_xyz)
+demo["matrix_pos_stop"] = function(pos_xyz)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -172,7 +173,7 @@ function matrix_pos_stop(pos_xyz)
     return m
 end
 
-function matrix_rot_stop(axis, angle)
+demo["matrix_rot_stop"] = function(axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -188,13 +189,13 @@ function matrix_rot_stop(axis, angle)
     return m
 end
 
-function matrix_move(m, offset)
+demo["matrix_move"] = function(m, offset)
     local dm = matrix_pos_stop(offset)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-function matrix_rotate(m, axis, angle)
+demo["matrix_rotate"] = function(m, axis, angle)
     local dm = matrix_rot_stop(axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
@@ -205,7 +206,7 @@ CAMERA_MOVE_FAST = 0.25
 CAMERA_ROTATE_SLOW = 0.01
 CAMERA_ROTATE_FAST = 0.05
 
-function free_camera_create(start_pos)
+demo["free_camera_create"] = function(start_pos)
     local new_cam = {
         ["matrix"] = nil,
         ["construct"] = function(self)
@@ -265,28 +266,27 @@ function free_camera_create(start_pos)
     return new_cam
 end
 
-function control(self)
-    local debug = 0
-    local ds = ddraw_switcher_create()
+demo["wait"] = function(state, us)
+    local time = api_time(state)
+    while api_time(state) - time < us
+    do
+        api_sleep(state)
+    end
+end
+
+function control(state)
+    local ds = demo["ddraw_switcher_create"]()
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
         ds["update"](ds)
-        api_yield(self)
+        api_yield(state)
     end
 end
 
-function work(self)
-
-    function wait(us)
-        local time = api_time(self)
-        while api_time(self) - time < us
-        do
-            api_sleep(self)
-        end
-    end
+function work(state)
 
     local v = api_vector_alloc()
     local buf = api_buf_alloc()
@@ -576,6 +576,6 @@ function work(self)
         if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
             api_matrix_mul_stop(cam, cam, roll_right)
         end
-        api_sleep(self)
+        api_sleep(state)
     end
 end
