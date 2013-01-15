@@ -12,16 +12,25 @@ static const char * physics_error_text(int res)
     static char UNKNOWN[] = "unknown";
     static char OUT_OF_RB[] = "out of rigid bodies";
     static char OUT_OF_CS[] = "out of collision shapes";
+    static char OUT_OF_VEH[] = "out of vehicles";
     static char INVALID_RB[] = "invalid rigid body";
     static char INVALID_CS[] = "invalid collision shape";
+    static char INVALID_VEH[] = "invalid vehicle";
+    static char INVALID_VEH_WHEEL[] = "invalid vehicle wheel";
     if (res == (int)PHYSRES_OUT_OF_RB)
         return OUT_OF_RB;
     else if (res == (int)PHYSRES_OUT_OF_CS)
         return OUT_OF_CS;
+    else if (res == (int)PHYSRES_OUT_OF_VEH)
+        return OUT_OF_VEH;
     else if (res == (int)PHYSRES_INVALID_RB)
         return INVALID_RB;
     else if (res == (int)PHYSRES_INVALID_CS)
         return INVALID_CS;
+    else if (res == (int)PHYSRES_INVALID_VEH)
+        return INVALID_VEH;
+    else if (res == (int)PHYSRES_INVALID_VEH_WHEEL)
+        return INVALID_VEH_WHEEL;
     else
         return UNKNOWN;
 }
