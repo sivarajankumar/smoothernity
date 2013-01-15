@@ -3,7 +3,7 @@ quit = false
 CAMERA_MOVE_SLOW = 0.05
 CAMERA_MOVE_FAST = 0.25
 CAMERA_ROTATE_SLOW = 0.01
-CAMERA_ROTATE_FAST = 0.05
+CAMERA_ROTATE_FAST = 0.02
 
 function configure()
     return {["mpool_sizes"] = function() return  1000, 10000, 100000, 1000000, 10000000 end,
@@ -211,133 +211,17 @@ function work(state)
     --
 
     local freecam = demo["free_camera_create"](0, -10, 20)
-
-    local cam = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, 0, -10, 20, 0)
-    api_vector_const(scl, 1, 1, 1, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_matrix_pos_scl_rot(cam, pos, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_vector_const(pos, 0, 0, 0, 0)
-    api_matrix_stop(cam)
-
-    local delta = 0.05
-
-    local move_left = api_matrix_alloc()
-    local pos_left = api_vector_alloc()
-    api_vector_const(pos_left, -delta, 0, 0, 0)
-    api_matrix_pos_scl_rot(move_left, pos_left, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_left)
-    api_vector_free(pos_left)
-
-    local move_right = api_matrix_alloc()
-    local pos_right = api_vector_alloc()
-    api_vector_const(pos_right, delta, 0, 0, 0)
-    api_matrix_pos_scl_rot(move_right, pos_right, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_right)
-    api_vector_free(pos_right)
-
-    local move_up = api_matrix_alloc()
-    local pos_up = api_vector_alloc()
-    api_vector_const(pos_up, 0, delta, 0, 0)
-    api_matrix_pos_scl_rot(move_up, pos_up, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_up)
-    api_vector_free(pos_up)
-
-    local move_down = api_matrix_alloc()
-    local pos_down = api_vector_alloc()
-    api_vector_const(pos_down, 0, -delta, 0, 0)
-    api_matrix_pos_scl_rot(move_down, pos_down, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_down)
-    api_vector_free(pos_down)
-
-    local move_fwd = api_matrix_alloc()
-    local pos_fwd = api_vector_alloc()
-    api_vector_const(pos_fwd, 0, 0, -delta, 0)
-    api_matrix_pos_scl_rot(move_fwd, pos_fwd, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_fwd)
-    api_vector_free(pos_fwd)
-
-    local move_back = api_matrix_alloc()
-    local pos_back = api_vector_alloc()
-    api_vector_const(pos_back, 0, 0, delta, 0)
-    api_matrix_pos_scl_rot(move_back, pos_back, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(move_back)
-    api_vector_free(pos_back)
-
-    local rot_deltas = api_vector_alloc()
-    api_vector_const(rot_deltas, 0.01, -0.01, 0, 0)
-
-    local look_left = api_matrix_alloc()
-    local look_right = api_matrix_alloc()
-    local look_up = api_matrix_alloc()
-    local look_down = api_matrix_alloc()
-    local roll_left = api_matrix_alloc()
-    local roll_right = api_matrix_alloc()
-    api_matrix_pos_scl_rot(look_left, pos, scl, rot_deltas, API_MATRIX_AXIS_Y, 0)
-    api_matrix_pos_scl_rot(look_right, pos, scl, rot_deltas, API_MATRIX_AXIS_Y, 1)
-    api_matrix_pos_scl_rot(look_up, pos, scl, rot_deltas, API_MATRIX_AXIS_X, 0)
-    api_matrix_pos_scl_rot(look_down, pos, scl, rot_deltas, API_MATRIX_AXIS_X, 1)
-    api_matrix_pos_scl_rot(roll_left, pos, scl, rot_deltas, API_MATRIX_AXIS_Z, 0)
-    api_matrix_pos_scl_rot(roll_right, pos, scl, rot_deltas, API_MATRIX_AXIS_Z, 1)
-    api_matrix_stop(look_left)
-    api_matrix_stop(look_right)
-    api_matrix_stop(look_up)
-    api_matrix_stop(look_down)
-    api_matrix_stop(roll_left)
-    api_matrix_stop(roll_right)
-
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
-    api_vector_free(rot_deltas)
-
     local invcam = api_matrix_alloc()
-    api_matrix_inv(invcam, cam)
+    api_matrix_inv(invcam, freecam["matrix"])
     api_display_camera(invcam)
 
     while not quit
     do
-        if api_input_key(API_INPUT_KEY_E) == 1 then
-            api_matrix_mul_stop(cam, cam, move_fwd)
-        end
-        if api_input_key(API_INPUT_KEY_D) == 1 then
-            api_matrix_mul_stop(cam, cam, move_back)
-        end
-        if api_input_key(API_INPUT_KEY_S) == 1 then
-            api_matrix_mul_stop(cam, cam, move_left)
-        end
-        if api_input_key(API_INPUT_KEY_F) == 1 then
-            api_matrix_mul_stop(cam, cam, move_right)
-        end
-        if api_input_key(API_INPUT_KEY_A) == 1 then
-            api_matrix_mul_stop(cam, cam, move_up)
-        end
-        if api_input_key(API_INPUT_KEY_Z) == 1 then
-            api_matrix_mul_stop(cam, cam, move_down)
-        end
-        if api_input_key(API_INPUT_KEY_LEFT) == 1 then
-            api_matrix_mul_stop(cam, cam, look_left)
-        end
-        if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
-            api_matrix_mul_stop(cam, cam, look_right)
-        end
-        if api_input_key(API_INPUT_KEY_UP) == 1 then
-            api_matrix_mul_stop(cam, cam, look_up)
-        end
-        if api_input_key(API_INPUT_KEY_DOWN) == 1 then
-            api_matrix_mul_stop(cam, cam, look_down)
-        end
-        if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
-            api_matrix_mul_stop(cam, cam, roll_left)
-        end
-        if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
-            api_matrix_mul_stop(cam, cam, roll_right)
-        end
+        freecam["update"](freecam)
         api_sleep(state)
     end
+
+    freecam["destruct"](freecam)
 end
 
 API_INPUT_KEY_ESCAPE = 0
@@ -519,7 +403,6 @@ demo["free_camera_create"] = function(x, y, z)
         ["matrix"] = nil,
         ["construct"] = function(self)
             self["matrix"] = demo["matrix_pos_stop"](x, y, z)
-            io.write("2\n")
         end,
         ["destruct"] = function(self)
             api_matrix_free(self["matrix"])
@@ -528,7 +411,7 @@ demo["free_camera_create"] = function(x, y, z)
         ["update"] = function(self)
             local ofs = CAMERA_MOVE_SLOW
             local ang = CAMERA_ROTATE_SLOW
-            if api_input_key(API_INPUT_KEY_SHIFT) == 1 then
+            if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
                 ofs = CAMERA_MOVE_FAST
                 ang = CAMERA_ROTATE_FAST
             end
@@ -552,22 +435,22 @@ demo["free_camera_create"] = function(x, y, z)
                 demo["matrix_move"](self["matrix"], 0, -ofs, 0)
             end
             if api_input_key(API_INPUT_KEY_LEFT) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, ang)
             end
             if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, -ang)
             end
             if api_input_key(API_INPUT_KEY_UP) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, ang)
             end
             if api_input_key(API_INPUT_KEY_DOWN) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, -ang)
             end
             if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, ang)
             end
             if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, -rot)
+                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, -ang)
             end
         end
     }
