@@ -397,6 +397,89 @@ static int api_matrix_rigid_body(lua_State *lua)
     return 0;
 }
 
+static int api_matrix_vehicle_chassis(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    int vehi;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_chassis: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    vehi = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_VEHICLE_CHASSIS;
+    matrix->vehicle = vehi;
+
+    if (physics_veh_fetch_chassis_tm(vehi, matrix->value) != 0)
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid vehicle");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
+static int api_matrix_vehicle_wheel(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    int vehi, wheel;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_wheel: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    vehi = lua_tointeger(lua, 2);
+    wheel = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_wheel: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_VEHICLE_WHEEL;
+    matrix->vehicle = vehi;
+    matrix->wheel = wheel;
+
+    if (physics_veh_fetch_wheel_tm(vehi, wheel, matrix->value) != 0)
+    {
+        lua_pushstring(lua, "api_matrix_vehicle_wheel: "
+                            "invalid vehicle or wheel");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 int matrix_init(lua_State *lua, int count, int nesting)
 {
     int i;
@@ -423,6 +506,8 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
     lua_register(lua, "api_matrix_rigid_body", api_matrix_rigid_body);
+    lua_register(lua, "api_matrix_vehicle_chassis", api_matrix_vehicle_chassis);
+    lua_register(lua, "api_matrix_vehicle_wheel", api_matrix_vehicle_wheel);
     return 0;
 }
 
@@ -471,43 +556,47 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         return limit;
 }
 
-void matrix_update(struct matrix_t *matrix, float dt,
+void matrix_update(struct matrix_t *m, float dt,
                    int frame_tag, int force)
 {
     GLfloat *v0, *v1, *v2;
     GLfloat *m0, *m1;
-    if (matrix->type == MATRIX_CONST)
+    if (m->type == MATRIX_CONST)
         return;
-    if (force == 0 && matrix->frame_tag == frame_tag)
+    if (force == 0 && m->frame_tag == frame_tag)
         return;
-    matrix->frame_tag = frame_tag;
-    if (matrix->type == MATRIX_MUL)
+    m->frame_tag = frame_tag;
+    if (m->type == MATRIX_MUL)
     {
-        matrix_update(matrix->argm[0], dt, frame_tag, force);
-        matrix_update(matrix->argm[1], dt, frame_tag, force);
-        m0 = matrix->argm[0]->value;
-        m1 = matrix->argm[1]->value;
-        matrix_mul(matrix->value, m0, m1);
+        matrix_update(m->argm[0], dt, frame_tag, force);
+        matrix_update(m->argm[1], dt, frame_tag, force);
+        m0 = m->argm[0]->value;
+        m1 = m->argm[1]->value;
+        matrix_mul(m->value, m0, m1);
     }
-    else if (matrix->type == MATRIX_INV)
+    else if (m->type == MATRIX_INV)
     {
-        matrix_update(matrix->argm[0], dt, frame_tag, force);
-        m0 = matrix->argm[0]->value;
-        matrix_inv(matrix->value, m0);
+        matrix_update(m->argm[0], dt, frame_tag, force);
+        m0 = m->argm[0]->value;
+        matrix_inv(m->value, m0);
     }
-    else if (matrix->type == MATRIX_POS_SCL_ROT)
+    else if (m->type == MATRIX_POS_SCL_ROT)
     {
-        vector_update(matrix->argv[0], dt, frame_tag, force);
-        vector_update(matrix->argv[1], dt, frame_tag, force);
-        vector_update(matrix->argv[2], dt, frame_tag, force);
-        v0 = matrix->argv[0]->value;
-        v1 = matrix->argv[1]->value;
-        v2 = matrix->argv[2]->value;
-        matrix_pos_scl_rot(matrix->value, v0, v1,
-                           matrix->rotaxis, v2[matrix->rotanglei]);
+        vector_update(m->argv[0], dt, frame_tag, force);
+        vector_update(m->argv[1], dt, frame_tag, force);
+        vector_update(m->argv[2], dt, frame_tag, force);
+        v0 = m->argv[0]->value;
+        v1 = m->argv[1]->value;
+        v2 = m->argv[2]->value;
+        matrix_pos_scl_rot(m->value, v0, v1,
+                           m->rotaxis, v2[m->rotanglei]);
     }
-    else if (matrix->type == MATRIX_RIGID_BODY)
-        physics_rb_fetch_tm(matrix->rigid_body, matrix->value);
+    else if (m->type == MATRIX_RIGID_BODY)
+        physics_rb_fetch_tm(m->rigid_body, m->value);
+    else if (m->type == MATRIX_VEHICLE_CHASSIS)
+        physics_veh_fetch_chassis_tm(m->vehicle, m->value);
+    else if (m->type == MATRIX_VEHICLE_WHEEL)
+        physics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value);
 }
 
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
