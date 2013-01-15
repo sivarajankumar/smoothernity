@@ -327,34 +327,34 @@ API_TEXT_FONT_HELVETICA_12 = 5
 API_TEXT_FONT_HELVETICA_18 = 6
 
 demo = {}
-demo["ddraw_switcher_create"] = function ()
-    return {
-        ["debug"] = 0,
-        ["pressed"] = 0,
-        ["update"] = function(self)
-            if self["pressed"] == 0 then
-                if api_input_key(API_INPUT_KEY_F1) == 1 then
-                    self["pressed"] = 1
-                    if self["debug"] == 0 then
-                        self["debug"] = 1
-                        api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
-                        api_display_draw_scene(0)
-                    else
-                        self["debug"] = 0
-                        api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                        api_display_draw_scene(1)
-                    end
-                end
-            elseif self["pressed"] == 1 then
-                if api_input_key(API_INPUT_KEY_F1) == 0 then
-                    self["pressed"] = 0
+demo.ddraw_switcher_create = function ()
+    local obj = {}
+    obj.debug = 0
+    obj.pressed = 0
+    obj.update = function(self)
+        if self["pressed"] == 0 then
+            if api_input_key(API_INPUT_KEY_F1) == 1 then
+                self["pressed"] = 1
+                if self["debug"] == 0 then
+                    self["debug"] = 1
+                    api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
+                    api_display_draw_scene(0)
+                else
+                    self["debug"] = 0
+                    api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
+                    api_display_draw_scene(1)
                 end
             end
+        elseif self["pressed"] == 1 then
+            if api_input_key(API_INPUT_KEY_F1) == 0 then
+                self["pressed"] = 0
+            end
         end
-    }
+    end
+    return obj
 end
 
-demo["matrix_pos_stop"] = function(x, y, z)
+demo.matrix_pos_stop = function(x, y, z)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -370,7 +370,7 @@ demo["matrix_pos_stop"] = function(x, y, z)
     return m
 end
 
-demo["matrix_rot_stop"] = function(axis, angle)
+demo.matrix_rot_stop = function(axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
@@ -386,14 +386,14 @@ demo["matrix_rot_stop"] = function(axis, angle)
     return m
 end
 
-demo["matrix_move"] = function(m, x, y, z)
-    local dm = demo["matrix_pos_stop"](x, y, z)
+demo.matrix_move = function(m, x, y, z)
+    local dm = demo.matrix_pos_stop(x, y, z)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-demo["matrix_rotate"] = function(m, axis, angle)
-    local dm = demo["matrix_rot_stop"](axis, angle)
+demo.matrix_rotate = function(m, axis, angle)
+    local dm = demo.matrix_rot_stop(axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
