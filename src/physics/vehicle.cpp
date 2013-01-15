@@ -73,7 +73,9 @@ void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
     veh->next = g_vehicles.vacant;
     g_vehicles.vacant = veh;
     if (veh->veh && world)
-        world->removeVehicle(veh->veh);
+        world->removeAction(veh->veh);
+    if (veh->chassis && world)
+        world->removeRigidBody(veh->chassis);
     if (veh->chassis)
     {
         veh->chassis->~btRigidBody();
@@ -143,7 +145,8 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
         btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
     veh->veh->setCoordinateSystem(0, 1, 2);
     veh->chassis->setActivationState(DISABLE_DEACTIVATION);
-    world->addVehicle(veh->veh);
+    world->addRigidBody(veh->chassis);
+    world->addAction(veh->veh);
     return veh - g_vehicles.pool;
 }
 
