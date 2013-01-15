@@ -1,5 +1,6 @@
 #include "buf.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct bufs_t g_bufs;
 
@@ -79,7 +80,10 @@ static int api_buf_alloc(lua_State *lua)
         return 0;
     }
     
+    ++g_bufs.frees;
     --g_bufs.left;
+    if (g_bufs.left < g_bufs.left_min)
+        g_bufs.left_min = g_bufs.left;
     buf = g_bufs.vacant;
     g_bufs.vacant = g_bufs.vacant->next;
     buf->next = 0;
@@ -109,6 +113,7 @@ static int api_buf_free(lua_State *lua)
         return 0;
     }
     
+    ++g_bufs.allocs;
     ++g_bufs.left;
     buf->vacant = 1;
     buf->next = g_bufs.vacant;
@@ -127,6 +132,7 @@ int buf_init(lua_State *lua, int size, int count)
     g_bufs.count = count;
     g_bufs.left = count;
     g_bufs.size = size;
+    g_bufs.left_min = count;
     for (i = 0; i < count; ++i)
     {
         buf = g_bufs.pool + i;
@@ -159,6 +165,9 @@ void buf_done(void)
         }
         free(g_bufs.pool);
         g_bufs.pool = 0;
+        printf("Buffers usage: %i/%i, allocs/frees: %i/%i\n",
+               g_bufs.count - g_bufs.left_min, g_bufs.count,
+               g_bufs.allocs, g_bufs.frees);
     }
 }
 
