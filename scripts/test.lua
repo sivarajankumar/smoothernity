@@ -55,6 +55,13 @@ function work(state)
 
     while not quit
     do
+        if api_input_key(API_INPUT_KEY_F10) == 1 then
+            sweet:destruct()
+            sweet = demo.sweet_pair_create(0, 0, -5)
+            while api_input_key(API_INPUT_KEY_F10) == 1 do
+                api_sleep(state)
+            end
+        end
         freecam:update()
         api_sleep(state)
     end
