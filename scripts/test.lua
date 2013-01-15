@@ -33,13 +33,13 @@ function configure()
 end
 
 function control(state)
-    local ds = demo["ddraw_switcher_create"]()
+    local ds = demo.ddraw_switcher_create()
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
-        ds["update"](ds)
+        ds:update()
         api_yield(state)
     end
 end
