@@ -1,8 +1,8 @@
 quit = false
 
 function configure()
-    return {["mpool_sizes"] = function() return  1000, 10000, 100000, 1000000, 10000000 end,
-            ["mpool_counts"] = function() return 2000,   100,     10,       1,        1 end,
+    return {["mpool_sizes"] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
+            ["mpool_counts"] = function() return 10000, 1000,   100,     10,       1,        1 end,
             ["logic_time"] = 10000,
             ["gc_step"] = 10,
             ["min_delay"] = 1000,
