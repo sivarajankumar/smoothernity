@@ -192,3 +192,82 @@ void physcpp_left(int *cs_left, int *rb_left, int *veh_left)
     rigidbody_left(rb_left);
     vehicle_left(veh_left);
 }
+
+extern "C"
+int physcpp_veh_alloc(int *vehi, int csi, float *matrix,
+                      float ch_frict, float ch_roll_frict,
+                      float sus_stif, float sus_comp, float sus_damp,
+                      float sus_trav, float sus_force, float slip_frict)
+{
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0 || cs->shape == 0)
+        return PHYSRES_INVALID_CS;
+    *vehi = vehicle_alloc(g_physcpp.world, cs, matrix, ch_frict, ch_roll_frict,
+                          sus_stif, sus_comp, sus_damp, sus_trav, sus_force,
+                          slip_frict);
+    if (vehicle_get(*vehi) == 0)
+        return PHYSRES_OUT_OF_VEH;
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_veh_free(int vehi)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    vehicle_free(veh, g_physcpp.world);
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_veh_add_wheel(int *wheel, int vehi, float *pos, float *dir,
+                          float *axl, float sus_rest, float roll,
+                          float radius, int front)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    *wheel = vehicle_add_wheel(veh, pos, dir, axl, sus_rest,
+                               roll, radius, front);
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_veh_set_wheel(int vehi, int wheel, float engine,
+                          float brake, float steer)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    if (0 != vehicle_set_wheel(veh, wheel, engine, brake, steer))
+        return PHYSRES_INVALID_VEH_WHEEL;
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_veh_fetch_chassis_tm(int vehi, float *matrix)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    vehicle_fetch_chassis_tm(veh, matrix);
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    if (0 != vehicle_fetch_wheel_tm(veh, wheel, matrix))
+        return PHYSRES_INVALID_VEH_WHEEL;
+    return PHYSRES_OK;
+}
