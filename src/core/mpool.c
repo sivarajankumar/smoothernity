@@ -21,7 +21,6 @@ struct mpool_shelf_t
     int allocs;
     int frees;
     int alloc_fails;
-    int free_fails;
 };
 
 struct mpool_t

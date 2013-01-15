@@ -15,9 +15,18 @@ struct physcpp_t
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
     ddraw_c ddraw;
+    void *(*memalloc)(size_t);
 };
 
 static physcpp_t g_physcpp;
+
+static void * physcpp_memalloc(size_t size)
+{
+    void *res = g_physcpp.memalloc(size);
+    if (res == 0)
+        throw std::bad_alloc();
+    return res;
+}
 
 extern "C"
 void physcpp_done(void)
@@ -65,7 +74,8 @@ extern "C"
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int cs_count, int rb_count, int veh_count)
 {
-    btAlignedAllocSetCustom(memalloc, memfree);
+    g_physcpp.memalloc = memalloc;
+    btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     try
     {
         g_physcpp.colcfg = new btDefaultCollisionConfiguration();
@@ -82,6 +92,7 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
         physcpp_done();
         return PHYSRES_CANNOT_INIT;
     }
+    btAlignedAllocSetCustom(memalloc, memfree);
     g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
     if (colshape_init(cs_count) != 0
      || rigidbody_init(rb_count) != 0
