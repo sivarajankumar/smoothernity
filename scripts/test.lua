@@ -60,10 +60,6 @@ function work(state)
     local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
 
-    local invcam = api_matrix_alloc()
-    api_matrix_inv(invcam, freecam.matrix)
-    api_display_camera(invcam)
-
     while not quit
     do
         freecam:update()
@@ -164,8 +160,10 @@ end
 demo.free_camera_create = function(x, y, z)
     local obj = {}
     obj.matrix = demo.matrix_pos_stop(x, y, z)
+    obj.invmatrix = api_matrix_alloc()
     obj.destruct = function(self)
         api_matrix_free(self.matrix)
+        api_matrix_free(self.invmatrix)
     end
     obj.update = function(self)
         local ofs = CAMERA_MOVE_FAST
@@ -212,6 +210,10 @@ demo.free_camera_create = function(x, y, z)
             demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, -ang)
         end
     end
+
+    api_matrix_inv(obj.invmatrix, obj.matrix)
+    api_display_camera(obj.invmatrix)
+
     return obj
 end
 
