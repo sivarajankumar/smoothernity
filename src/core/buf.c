@@ -156,19 +156,18 @@ cleanup:
 void buf_done(void)
 {
     int i;
-    if (g_bufs.pool)
+    if (g_bufs.pool == 0)
+        return;
+    for (i = 0; i < g_bufs.count; ++i)
     {
-        for (i = 0; i < g_bufs.count; ++i)
-        {
-            if (g_bufs.pool[i].data)
-                free(g_bufs.pool[i].data);
-        }
-        free(g_bufs.pool);
-        g_bufs.pool = 0;
-        printf("Buffers usage: %i/%i, allocs/frees: %i/%i\n",
-               g_bufs.count - g_bufs.left_min, g_bufs.count,
-               g_bufs.allocs, g_bufs.frees);
+        if (g_bufs.pool[i].data)
+            free(g_bufs.pool[i].data);
     }
+    free(g_bufs.pool);
+    g_bufs.pool = 0;
+    printf("Buffers usage: %i/%i, allocs/frees: %i/%i\n",
+           g_bufs.count - g_bufs.left_min, g_bufs.count,
+           g_bufs.allocs, g_bufs.frees);
 }
 
 struct buf_t * buf_get(int bufi)

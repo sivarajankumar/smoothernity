@@ -522,14 +522,13 @@ int matrix_init(lua_State *lua, int count, int nesting)
 
 void matrix_done(void)
 {
-    if (g_matrices.pool)
-    {
-        free(g_matrices.pool);
-        g_matrices.pool = 0;
-        printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
-               g_matrices.count - g_matrices.left_min, g_matrices.count,
-               g_matrices.allocs, g_matrices.frees);
-    }
+    if (g_matrices.pool == 0)
+        return;
+    free(g_matrices.pool);
+    g_matrices.pool = 0;
+    printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
+           g_matrices.count - g_matrices.left_min, g_matrices.count,
+           g_matrices.allocs, g_matrices.frees);
 }
 
 struct matrix_t * matrix_get(int i)

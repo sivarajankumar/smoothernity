@@ -1,5 +1,6 @@
 #include "vbuf.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct vbufs_t g_vbufs;
 
@@ -7,6 +8,7 @@ static void vbuf_free(struct vbuf_t *vbuf)
 {
     vbuf->vacant = 1;
     ++g_vbufs.left;
+    ++g_vbufs.frees;
 
     if (vbuf->mapped)
     {
@@ -51,7 +53,10 @@ static int api_vbuf_alloc(lua_State *lua)
     vbuf = g_vbufs.vacant;
     vbuf->vacant = 0;
     g_vbufs.vacant = vbuf->next;
+    ++g_vbufs.allocs;
     --g_vbufs.left;
+    if (g_vbufs.left < g_vbufs.left_min)
+        g_vbufs.left_min = g_vbufs.left;
 
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     vbuf->mapped = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -261,6 +266,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     g_vbufs.size = size;
     g_vbufs.count = count;
     g_vbufs.left = count;
+    g_vbufs.left_min = count;
     g_vbufs.offset_pos = (char*)0 + ((char*)&data.pos - (char*)&data);
     g_vbufs.offset_tex = (char*)0 + ((char*)&data.tex - (char*)&data);
     g_vbufs.offset_color = (char*)0 + ((char*)&data.color - (char*)&data);
@@ -280,15 +286,17 @@ cleanup:
 
 void vbuf_done(void)
 {
-    if (g_vbufs.pool)
-    {
-        while (g_vbufs.mapped)
-            vbuf_free(g_vbufs.mapped);
-        while (g_vbufs.baked)
-            vbuf_free(g_vbufs.baked);
-        free(g_vbufs.pool);
-        g_vbufs.pool = 0;
-    }
+    if (g_vbufs.pool == 0)
+        return;
+    while (g_vbufs.mapped)
+        vbuf_free(g_vbufs.mapped);
+    while (g_vbufs.baked)
+        vbuf_free(g_vbufs.baked);
+    free(g_vbufs.pool);
+    g_vbufs.pool = 0;
+    printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
+           g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
+           g_vbufs.allocs, g_vbufs.frees);
 }
 
 struct vbuf_t * vbuf_get(int vbufi)
