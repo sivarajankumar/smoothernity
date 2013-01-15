@@ -11,11 +11,11 @@ mstate_c::~mstate_c()
 
 void mstate_c::getWorldTransform(btTransform &t) const
 {
-    t = get;
+    t = m;
 }
 
 void mstate_c::setWorldTransform(const btTransform &t)
 {
-    set = t;
+    m = t;
     was_set = 1;
 }
