@@ -228,7 +228,7 @@ void main_done(void)
 
 int main(int argc, char **argv)
 {
-    int time_left, max_deviation;
+    int time_left;
     lua_State *lua = 0;
     struct machine_t *controller = 0, *worker = 0;
     struct timer_t *logic_timer = 0;
@@ -346,7 +346,7 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 
-    max_deviation = 0;
+    printf("Game loop start\n");
     while (machine_running(controller) || machine_running(worker))
     {
         timer_reset(logic_timer);
@@ -368,11 +368,9 @@ int main(int argc, char **argv)
         time_left = timer_passed(logic_timer);
         if (g_main.logic_time - time_left > g_main.min_delay)
             SDL_Delay((g_main.logic_time - time_left) / 1000);
-        if (timer_passed(logic_timer) - g_main.logic_time > max_deviation)
-            max_deviation = timer_passed(logic_timer) - g_main.logic_time;
         display_show();
     }
-    printf("Maximum deviation: %i us\n", max_deviation);
+    printf("Game loop finish\n");
 
 cleanup:
     vbuf_done();

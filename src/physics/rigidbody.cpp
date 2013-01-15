@@ -1,11 +1,15 @@
 #include "rigidbody.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct rigidbodies_t
 {
     int left;
+    int left_min;
     int count;
+    int allocs;
+    int frees;
     rigidbody_t *pool;
     rigidbody_t *vacant;
 };
@@ -21,6 +25,7 @@ int rigidbody_init(int count)
         return 1;
     g_rigidbodies.vacant = g_rigidbodies.pool;
     g_rigidbodies.left = count;
+    g_rigidbodies.left_min = count;
     g_rigidbodies.count = count;
     for (i = 0; i < count; ++i)
     {
@@ -36,16 +41,18 @@ int rigidbody_init(int count)
 void rigidbody_done(void)
 {
     int i;
-    if (g_rigidbodies.pool)
+    if (g_rigidbodies.pool == 0)
+        return;
+    printf("Rigid bodies usage: %i/%i, allocs/frees: %i/%i\n",
+           g_rigidbodies.count - g_rigidbodies.left_min, g_rigidbodies.count,
+           g_rigidbodies.allocs, g_rigidbodies.frees);
+    for (i = 0; i < g_rigidbodies.count; ++i)
     {
-        for (i = 0; i < g_rigidbodies.count; ++i)
-        {
-            rigidbody_free(g_rigidbodies.pool + i, 0);
-            g_rigidbodies.pool[i].mstate->~mstate_c();
-        }
-        free(g_rigidbodies.pool);
-        g_rigidbodies.pool = 0;
+        rigidbody_free(g_rigidbodies.pool + i, 0);
+        g_rigidbodies.pool[i].mstate->~mstate_c();
     }
+    free(g_rigidbodies.pool);
+    g_rigidbodies.pool = 0;
 }
 
 void rigidbody_left(int *left)
@@ -66,6 +73,7 @@ void rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     if (rb->vacant == 1)
         return;
     ++g_rigidbodies.left;
+    ++g_rigidbodies.frees;
     rb->vacant = 1;
     rb->next = g_rigidbodies.vacant;
     g_rigidbodies.vacant = rb;
@@ -91,7 +99,10 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
     rigidbody_t *rb;
     if (g_rigidbodies.vacant == 0)
         return -1;
+    ++g_rigidbodies.allocs;
     --g_rigidbodies.left;
+    if (g_rigidbodies.left < g_rigidbodies.left_min)
+        g_rigidbodies.left_min = g_rigidbodies.left;
     rb = g_rigidbodies.vacant;
     g_rigidbodies.vacant = g_rigidbodies.vacant->next;
     rb->vacant = 0;
