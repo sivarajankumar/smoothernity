@@ -398,64 +398,59 @@ demo.matrix_rotate = function(m, axis, angle)
     api_matrix_free(dm)
 end
 
-demo["free_camera_create"] = function(x, y, z)
-    local new_cam = {
-        ["matrix"] = nil,
-        ["construct"] = function(self)
-            self["matrix"] = demo["matrix_pos_stop"](x, y, z)
-        end,
-        ["destruct"] = function(self)
-            api_matrix_free(self["matrix"])
-            self["matrix"] = nil
-        end,
-        ["update"] = function(self)
-            local ofs = CAMERA_MOVE_SLOW
-            local ang = CAMERA_ROTATE_SLOW
-            if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
-                ofs = CAMERA_MOVE_FAST
-                ang = CAMERA_ROTATE_FAST
-            end
-        
-            if api_input_key(API_INPUT_KEY_E) == 1 then
-                demo["matrix_move"](self["matrix"], 0, 0, -ofs)
-            end
-            if api_input_key(API_INPUT_KEY_D) == 1 then
-                demo["matrix_move"](self["matrix"], 0, 0, ofs)
-            end
-            if api_input_key(API_INPUT_KEY_S) == 1 then
-                demo["matrix_move"](self["matrix"], -ofs, 0, 0)
-            end
-            if api_input_key(API_INPUT_KEY_F) == 1 then
-                demo["matrix_move"](self["matrix"], ofs, 0, 0)
-            end
-            if api_input_key(API_INPUT_KEY_A) == 1 then
-                demo["matrix_move"](self["matrix"], 0, ofs, 0)
-            end
-            if api_input_key(API_INPUT_KEY_Z) == 1 then
-                demo["matrix_move"](self["matrix"], 0, -ofs, 0)
-            end
-            if api_input_key(API_INPUT_KEY_LEFT) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, ang)
-            end
-            if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Y, -ang)
-            end
-            if api_input_key(API_INPUT_KEY_UP) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, ang)
-            end
-            if api_input_key(API_INPUT_KEY_DOWN) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_X, -ang)
-            end
-            if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, ang)
-            end
-            if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
-                demo["matrix_rotate"](self["matrix"], API_MATRIX_AXIS_Z, -ang)
-            end
+demo.free_camera_create = function(x, y, z)
+    local obj = {}
+    obj.matrix = demo.matrix_pos_stop(x, y, z)
+    obj.destruct = function(self)
+        api_matrix_free(self.matrix)
+        self.matrix = nil
+    end
+    obj.update = function(self)
+        local ofs = CAMERA_MOVE_FAST
+        local ang = CAMERA_ROTATE_FAST
+        if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
+            ofs = CAMERA_MOVE_SLOW
+            ang = CAMERA_ROTATE_SLOW
         end
-    }
-    new_cam["construct"](new_cam)
-    return new_cam
+    
+        if api_input_key(API_INPUT_KEY_E) == 1 then
+            demo.matrix_move(self.matrix, 0, 0, -ofs)
+        end
+        if api_input_key(API_INPUT_KEY_D) == 1 then
+            demo.matrix_move(self.matrix, 0, 0, ofs)
+        end
+        if api_input_key(API_INPUT_KEY_S) == 1 then
+            demo.matrix_move(self.matrix, -ofs, 0, 0)
+        end
+        if api_input_key(API_INPUT_KEY_F) == 1 then
+            demo.matrix_move(self.matrix, ofs, 0, 0)
+        end
+        if api_input_key(API_INPUT_KEY_A) == 1 then
+            demo.matrix_move(self.matrix, 0, ofs, 0)
+        end
+        if api_input_key(API_INPUT_KEY_Z) == 1 then
+            demo.matrix_move(self.matrix, 0, -ofs, 0)
+        end
+        if api_input_key(API_INPUT_KEY_LEFT) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, ang)
+        end
+        if api_input_key(API_INPUT_KEY_RIGHT) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Y, -ang)
+        end
+        if api_input_key(API_INPUT_KEY_UP) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, ang)
+        end
+        if api_input_key(API_INPUT_KEY_DOWN) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_X, -ang)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEUP) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, ang)
+        end
+        if api_input_key(API_INPUT_KEY_PAGEDOWN) == 1 then
+            demo.matrix_rotate(self.matrix, API_MATRIX_AXIS_Z, -ang)
+        end
+    end
+    return obj
 end
 
 demo["wait"] = function(state, us)
