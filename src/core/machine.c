@@ -16,11 +16,15 @@ struct machine_t
 
 static int state_resume(struct machine_t *machine)
 {
+    lua_Debug dbg;
     int status;
     status = lua_resume(machine->thread, 1);
     if (status && status != LUA_YIELD)
     {
-        fprintf(stderr, "Failed to resume thread: %s\n",
+        lua_getstack(machine->thread, 1, &dbg);
+        lua_getinfo(machine->thread, "Sl", &dbg);
+        fprintf(stderr, "%s:%i: %s\n",
+                dbg.short_src, dbg.currentline,
                 lua_tostring(machine->thread, -1));
         return 1;
     }
