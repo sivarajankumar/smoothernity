@@ -3,11 +3,15 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
 
 struct vectors_t
 {
     int count;
     int left;
+    int left_min;
+    int allocs;
+    int frees;
     int nesting;
     struct vector_t *pool;
     struct vector_t *vacant;
@@ -40,7 +44,10 @@ static int api_vector_alloc(lua_State *lua)
         return 0;
     }
 
+    ++g_vectors.allocs;
     --g_vectors.left;
+    if (g_vectors.left < g_vectors.left_min)
+        g_vectors.left_min = g_vectors.left;
     vector = g_vectors.vacant;
     g_vectors.vacant = g_vectors.vacant->next;
 
@@ -72,6 +79,7 @@ static int api_vector_free(lua_State *lua)
     }
 
     vector->vacant = 1;
+    ++g_vectors.frees;
     ++g_vectors.left;
 
     vector->next = g_vectors.vacant;
@@ -318,6 +326,7 @@ int vector_init(lua_State *lua, int count, int nesting)
         return 1;
     g_vectors.count = count;
     g_vectors.left = count;
+    g_vectors.left_min = count;
     g_vectors.nesting = nesting;
     g_vectors.vacant = g_vectors.pool;
     for (i = 0; i < count; ++i)
@@ -338,11 +347,13 @@ int vector_init(lua_State *lua, int count, int nesting)
 
 void vector_done(void)
 {
-    if (g_vectors.pool)
-    {
-        free(g_vectors.pool);
-        g_vectors.pool = 0;
-    }
+    if (g_vectors.pool == 0)
+        return;
+    free(g_vectors.pool);
+    g_vectors.pool = 0;
+    printf("Vectors usage: %i/%i, allocs/frees: %i/%i\n",
+           g_vectors.count - g_vectors.left_min, g_vectors.count,
+           g_vectors.allocs, g_vectors.frees);
 }
 
 struct vector_t * vector_get(int i)

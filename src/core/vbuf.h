@@ -25,6 +25,9 @@ struct vbufs_t
     int size;
     int count;
     int left;
+    int left_min;
+    int allocs;
+    int frees;
     int with_meshes;
     void *offset_pos;
     void *offset_tex;

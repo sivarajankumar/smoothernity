@@ -145,12 +145,11 @@ void mpool_done(void)
     struct mpool_shelf_t *shelf;
     if (g_mpool.shelves == 0)
         return;
-    printf("Memory pool statistics:\n");
-    printf("Largest requested size: %i\n", g_mpool.largest_size);
+    printf("Largest requested memory chunk: %i B\n", g_mpool.largest_size);
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
         shelf = g_mpool.shelves + i;
-        printf("Chunk size: %i, usage: %i/%i, allocs/frees: %i/%i "
+        printf("Memory pool %i B chunks usage: %i/%i, allocs/frees: %i/%i "
                "(%i fails)\n",
                shelf->size,
                shelf->count - shelf->left_min, shelf->count,

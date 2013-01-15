@@ -1,5 +1,6 @@
 #include "text.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <GL/glut.h>
 
@@ -30,6 +31,9 @@ struct texts_t
     int size;
     int count;
     int left;
+    int left_min;
+    int allocs;
+    int frees;
     struct text_t *pool;
     struct text_t *vacant;
     struct text_t *active;
@@ -88,7 +92,10 @@ static int api_text_alloc(lua_State *lua)
         return 0;
     }
 
+    ++g_texts.allocs;
     --g_texts.left;
+    if (g_texts.left < g_texts.left_min)
+        g_texts.left_min = g_texts.left;
 
     text = g_texts.vacant;
     g_texts.vacant = g_texts.vacant->next;
@@ -150,6 +157,7 @@ static int api_text_free(lua_State *lua)
 
     text->vacant = 1;
     ++g_texts.left;
+    ++g_texts.frees;
 
     if (g_texts.active == text)
         g_texts.active = text->next;
@@ -198,6 +206,7 @@ int text_init(lua_State *lua, int size, int count)
     g_texts.size = size;
     g_texts.count = count;
     g_texts.left = count;
+    g_texts.left_min = count;
     g_texts.vacant = g_texts.pool;
 
     lua_register(lua, "api_text_alloc", api_text_alloc);
@@ -219,13 +228,15 @@ cleanup:
 void text_done(void)
 {
     int i;
-    if (g_texts.pool)
-    {
-        for (i = 0; i < g_texts.count; ++i)
-            free(g_texts.pool[i].string);
-        free(g_texts.pool);
-        g_texts.pool = 0;
-    }
+    if (g_texts.pool == 0)
+        return;
+    for (i = 0; i < g_texts.count; ++i)
+        free(g_texts.pool[i].string);
+    free(g_texts.pool);
+    g_texts.pool = 0;
+    printf("Texts usage: %i/%i, allocs/frees: %i/%i\n",
+           g_texts.count - g_texts.left_min, g_texts.count,
+           g_texts.allocs, g_texts.frees);
 }
 
 void text_draw(void)
