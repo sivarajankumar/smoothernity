@@ -210,18 +210,18 @@ function work(state)
     -- camera
     --
 
-    local freecam = demo["free_camera_create"](0, -10, 20)
+    local freecam = demo.free_camera_create(0, -10, 20)
     local invcam = api_matrix_alloc()
-    api_matrix_inv(invcam, freecam["matrix"])
+    api_matrix_inv(invcam, freecam.matrix)
     api_display_camera(invcam)
 
     while not quit
     do
-        freecam["update"](freecam)
+        freecam:update()
         api_sleep(state)
     end
 
-    freecam["destruct"](freecam)
+    freecam:destruct()
 end
 
 API_INPUT_KEY_ESCAPE = 0
