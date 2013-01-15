@@ -45,17 +45,10 @@ function control(state)
 end
 
 function work(state)
-    local v = api_vector_alloc()
-    local buf = api_buf_alloc()
-    api_buf_set(buf, 0,   0,0.05,0,1,1,   0,0,0.05,1,1)
-    api_vector_seq(v, buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
-    api_display_clear_color(v)
 
-    local grav = api_vector_alloc()
-    api_vector_const(grav, 0, -10, 0, 0)
-    api_physics_set_gravity(grav)
-    api_vector_free(grav)
+    demo.set_gravity(0, -10, 0)
 
+    local blink = demo.blinker_create()
     local land = demo.landscape_create(0, -15, -3)
     local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
@@ -66,7 +59,7 @@ function work(state)
         api_sleep(state)
     end
 
-    api_matrix_free(invcam)
+    blink:destruct()
     freecam:destruct()
     land:destruct()
     sweet:destruct()
@@ -80,6 +73,13 @@ demo.wait = function(state, us)
     do
         api_sleep(state)
     end
+end
+
+demo.set_gravity = function(x, y, z)
+    local grav = api_vector_alloc()
+    api_vector_const(grav, x, y, z, 0)
+    api_physics_set_gravity(grav)
+    api_vector_free(grav)
 end
 
 demo.matrix_pos_stop = function(x, y, z)
@@ -128,6 +128,20 @@ demo.matrix_rotate = function(m, axis, angle)
     local dm = demo.matrix_rot_stop(axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
+end
+
+demo.blinker_create = function()
+    local obj = {}
+    obj.v = api_vector_alloc()
+    obj.buf = api_buf_alloc()
+    obj.destruct = function(self)
+        api_vector_free(self.v)
+        api_buf_free(self.buf)
+    end
+    api_buf_set(obj.buf, 0,   0,0.05,0,1,1,   0,0,0.05,1,1)
+    api_vector_seq(obj.v, obj.buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
+    api_display_clear_color(obj.v)
+    return obj
 end
 
 demo.ddraw_switcher_create = function()
@@ -390,7 +404,7 @@ demo.sweet_pair_create = function(x, y, z)
 
     obj.destruct = function(self)
         api_vbuf_free(self.vb)
-        api_vbuf_free(self.ib)
+        api_ibuf_free(self.ib)
         api_matrix_free(self.mrb)
         api_matrix_free(self.mbig)
         api_matrix_free(self.mloc)
