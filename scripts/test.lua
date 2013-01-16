@@ -391,10 +391,10 @@ function demo.landscape_create(x, y, z)
         local vb = api_vbuf_alloc()
         for x = 1, self.width do
             for z = 1, self.length do
-                local i = x + (z - 1) * self.width
-                api_vbuf_set(vb, i - 1,
+                local i = x - 1 + (z - 1) * self.width
+                api_vbuf_set(vb, i,
                              x - 1 - 0.5 * (self.width - 1),
-                             self.hmap[i],
+                             self.hmap[z][x],
                              z - 1 - 0.5 * (self.length - 1),
                              math.random(), math.random(), math.random(), 1,
                              0, 0)
@@ -431,8 +431,8 @@ function demo.landscape_create(x, y, z)
         self.buf = api_buf_alloc()
         for x = 1, self.width do
             for z = 1, self.length do
-                local i = x + (z - 1) * self.width
-                api_buf_set(self.buf, i - 1, self.hmap[i])
+                local i = x - 1 + (z - 1) * self.width
+                api_buf_set(self.buf, i, self.hmap[z][x])
             end
         end
         self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
@@ -457,11 +457,11 @@ function demo.landscape_create(x, y, z)
         self.scalex = sizex / (self.width - 1)
         self.scaley = sizey
         self.scalez = sizez / (self.length - 1)
-        self.hmap = {1, 1, 1, 1, 1,
-                     1, 0, 0, 0, 1,
-                     1, 0, 1, 0, 1, 
-                     1, 0, 0, 0, 1,
-                     1, 1, 1, 1, 1}
+        self.hmap = {{1, 1, 1, 1, 1},
+                     {1, 0, 0, 0, 1},
+                     {1, 0, 1, 0, 1},
+                     {1, 0, 0, 0, 1},
+                     {1, 1, 1, 1, 1}}
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
