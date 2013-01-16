@@ -327,30 +327,103 @@ end
 
 CAR_CAMERA_CORD_MIN = 10
 CAR_CAMERA_CORD_MAX = 20
+CAR_CAMERA_FROM_OFFSET_Y = 5
+CAR_CAMERA_FROM_RUBBER_Y = 0.1
+CAR_CAMERA_FROM_RUBBER_XZ = 0.1
+CAR_CAMERA_TO_OFFSET_Y = 1
+CAR_CAMERA_TO_RUBBER_Y = 0.1
+CAR_CAMERA_TO_RUBBER_XZ = 0.1
 
 function demo.car_camera_create(x, y, z, car)
     local obj = {}
     function obj.construct(self, x, y, z, car)
-        self.car = car
-        self.vcar = api_vector_alloc()
-        self.veye = api_vector_alloc()
-        self.up = api_vector_alloc()
-        self.m = api_matrix_alloc()
-        self.minv = api_matrix_alloc()
-        api_vector_const(self.up, 0, 1, 0, 0)
-        api_vector_mpos(self.vcar, car.mchassis)
-        api_vector_const(self.veye, x, y, z, 0)
-        api_vector_cord(self.veye, self.vcar, CAR_CAMERA_CORD_MIN, CAR_CAMERA_CORD_MAX)
-        api_matrix_from_to_up(self.m, self.veye, self.vcar, self.up)
-        api_matrix_inv(self.minv, self.m)
-        api_display_camera(self.minv)
+        local mcam = api_matrix_alloc()
+        local mcaminv = api_matrix_alloc()
+        local vcar_center = api_vector_alloc()
+        local vcar_center_xz = api_vector_alloc()
+        local vcam_to = api_vector_alloc()
+        local vcam_to_smooth = api_vector_alloc()
+        local vcam_to_rubber = api_vector_alloc()
+        local vcam_to_y = api_vector_alloc()
+        local vcam_to_ofs = api_vector_alloc()
+        local vcam_from = api_vector_alloc()
+        local vcam_from_smooth = api_vector_alloc()
+        local vcam_from_rubber = api_vector_alloc()
+        local vcam_from_xz = api_vector_alloc()
+        local vcam_from_y = api_vector_alloc()
+        local vcam_from_ofs = api_vector_alloc()
+        local vcam_ofs_weights = api_vector_alloc()
+        local vzero = api_vector_alloc()
+        local vup = api_vector_alloc()
+
+        api_vector_const(vzero, 0, 0, 0, 0)
+        api_vector_const(vup, 0, 1, 0, 0)
+        api_vector_const(vcam_from_ofs, 0, CAR_CAMERA_FROM_OFFSET_Y, 0, 0)
+        api_vector_const(vcam_to_ofs, 0, CAR_CAMERA_TO_OFFSET_Y, 0, 0)
+        api_vector_const(vcam_ofs_weights, 1, 1, 0, 0)
+        api_vector_const(vcam_from_rubber, CAR_CAMERA_FROM_RUBBER_XZ,
+                                           CAR_CAMERA_FROM_RUBBER_Y,
+                                           CAR_CAMERA_FROM_RUBBER_XZ, 0)
+        api_vector_const(vcam_to_rubber, CAR_CAMERA_TO_RUBBER_XZ,
+                                         CAR_CAMERA_TO_RUBBER_Y,
+                                         CAR_CAMERA_TO_RUBBER_XZ, 0)
+
+        api_vector_mpos(vcar_center, car.mchassis)
+        api_vector_pick(vcar_center_xz, vcar_center, vzero, vcar_center, vzero)
+
+        api_vector_const(vcam_from_xz, x, 0, z, 0)
+        api_vector_cord(vcam_from_xz, vcar_center_xz, CAR_CAMERA_CORD_MIN, CAR_CAMERA_CORD_MAX)
+        api_vector_wsum(vcam_from_y, vcam_ofs_weights, vcar_center, vcam_from_ofs, vzero, vzero)
+        api_vector_pick(vcam_from, vcam_from_xz, vcam_from_y, vcam_from_xz, vzero)
+        api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
+
+        api_vector_wsum(vcam_to_y, vcam_ofs_weights, vcar_center, vcam_to_ofs, vzero, vzero)
+        api_vector_pick(vcam_to, vcar_center_xz, vcam_to_y, vcar_center_xz, vzero)
+        api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
+
+        api_matrix_from_to_up(mcam, vcam_from_smooth, vcam_to_smooth, vup)
+
+        api_matrix_inv(mcaminv, mcam)
+        api_display_camera(mcaminv)
+
+        self.mcam = mcam
+        self.mcaminv = mcaminv
+        self.vcar_center = vcar_center
+        self.vcar_center_xz = vcar_center_xz
+        self.vcam_to = vcam_to
+        self.vcam_to_smooth = vcam_to_smooth
+        self.vcam_to_rubber = vcam_to_rubber
+        self.vcam_to_y = vcam_to_y
+        self.vcam_to_ofs = vcam_to_ofs
+        self.vcam_from = vcam_from
+        self.vcam_from_smooth = vcam_from_smooth
+        self.vcam_from_rubber = vcam_from_rubber
+        self.vcam_from_xz = vcam_from_xz
+        self.vcam_from_y = vcam_from_y
+        self.vcam_from_ofs = vcam_from_ofs
+        self.vcam_ofs_weights = vcam_ofs_weights
+        self.vzero = vzero
+        self.vup = vup
     end
     function obj.destruct(self)
-        api_vector_free(self.vcar)
-        api_vector_free(self.veye)
-        api_vector_free(self.up)
-        api_matrix_free(self.m)
-        api_matrix_free(self.minv)
+        api_matrix_free(self.mcam)
+        api_matrix_free(self.mcaminv)
+        api_vector_free(self.vcar_center)
+        api_vector_free(self.vcar_center_xz)
+        api_vector_free(self.vcam_to)
+        api_vector_free(self.vcam_to_smooth)
+        api_vector_free(self.vcam_to_rubber)
+        api_vector_free(self.vcam_to_y)
+        api_vector_free(self.vcam_to_ofs)
+        api_vector_free(self.vcam_from)
+        api_vector_free(self.vcam_from_smooth)
+        api_vector_free(self.vcam_from_rubber)
+        api_vector_free(self.vcam_from_xz)
+        api_vector_free(self.vcam_from_y)
+        api_vector_free(self.vcam_from_ofs)
+        api_vector_free(self.vcam_ofs_weights)
+        api_vector_free(self.vzero)
+        api_vector_free(self.vup)
     end
     obj:construct(x, y, z, car)
     return obj
