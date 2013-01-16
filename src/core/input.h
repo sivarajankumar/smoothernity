@@ -2,5 +2,6 @@
 
 #include <lua.h>
 
-void input_init(lua_State *lua);
+int input_init(lua_State *lua);
+void input_done(void);
 void input_update(void);

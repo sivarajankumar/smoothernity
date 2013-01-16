@@ -239,25 +239,10 @@ cleanup:
 
 static void main_done(void)
 {
-    if (g_main.mpool_sizes)
-    {
-        free(g_main.mpool_sizes);
-        g_main.mpool_sizes = 0;
-    }
-    if (g_main.mpool_counts)
-    {
-        free(g_main.mpool_counts);
-        g_main.mpool_counts = 0;
-    }
     vbuf_done();
     ibuf_done();
     display_done();
-    buf_done();
-    vector_done();
-    matrix_done();
-    mesh_done();
-    text_done();
-    physics_done();
+
     if (g_main.lua)
         lua_close(g_main.lua);
     if (g_main.controller)
@@ -268,6 +253,24 @@ static void main_done(void)
         timer_destroy(g_main.logic_timer);
     if (g_main.gc_timer)
         timer_destroy(g_main.gc_timer);
+    if (g_main.mpool_sizes)
+    {
+        free(g_main.mpool_sizes);
+        g_main.mpool_sizes = 0;
+    }
+    if (g_main.mpool_counts)
+    {
+        free(g_main.mpool_counts);
+        g_main.mpool_counts = 0;
+    }
+
+    input_done();
+    buf_done();
+    vector_done();
+    matrix_done();
+    mesh_done();
+    text_done();
+    physics_done();
     mpool_done();
 }
 
@@ -305,13 +308,18 @@ static int main_init(int argc, char **argv)
     }
 
     machine_init(g_main.lua);
-    input_init(g_main.lua);
 
     g_main.logic_timer = timer_create();
     g_main.gc_timer = timer_create();
     if (g_main.logic_timer == 0 || g_main.gc_timer == 0)
     {
         fprintf(stderr, "Cannot create timers\n");
+        return 1;
+    }
+
+    if (input_init(g_main.lua) != 0)
+    {
+        fprintf(stderr, "Cannot init input\n");
         return 1;
     }
 

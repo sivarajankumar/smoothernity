@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include "input.h"
+#include "timer.h"
 
 enum input_key_e
 {
@@ -74,6 +75,8 @@ enum input_key_e
 struct input_t
 {
     char keys[INPUT_KEYS_TOTAL];
+    struct timer_t *timer;
+    float last_update_time;
 };
 
 static struct input_t g_input;
@@ -101,15 +104,42 @@ static int api_input_key(lua_State *lua)
     return 1;
 }
 
-void input_init(lua_State *lua)
+static int api_input_timing(lua_State *lua)
 {
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_input_timing: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushnumber(lua, g_input.last_update_time);
+    return 1;
+}
+
+int input_init(lua_State *lua)
+{
+    g_input.timer = timer_create();
+    if (g_input.timer == 0)
+        return 1;
     lua_register(lua, "api_input_key", api_input_key);
+    lua_register(lua, "api_input_timing", api_input_timing);
+    return 0;
+}
+
+void input_done(void)
+{
+    if (g_input.timer)
+    {
+        timer_destroy(g_input.timer);
+        g_input.timer = 0;
+    }
 }
 
 void input_update(void)
 {
     char value;
     SDL_Event event;
+    timer_reset(g_input.timer);
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_KEYDOWN)
@@ -190,4 +220,5 @@ void input_update(void)
         HANDLE_KEY(SDLK_y, INPUT_KEY_Y);
         HANDLE_KEY(SDLK_z, INPUT_KEY_Z);
     }
+    g_input.last_update_time = timer_passed(g_input.timer);
 }
