@@ -34,7 +34,7 @@ function control(state)
             quit = true
         end
         ds:update()
-        api_yield(state)
+        api_machine_yield(state)
     end
 end
 
@@ -56,12 +56,12 @@ function work(state)
             car:destruct()
             car = demo.vehicle_create(0, -10, 5)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
-                api_sleep(state)
+                api_machine_sleep(state)
             end
         end
         freecam:update()
         car:update()
-        api_sleep(state)
+        api_machine_sleep(state)
     end
 
     blink:destruct()
@@ -77,7 +77,7 @@ function demo.wait(state, us)
     local time = api_time(state)
     while api_time(state) - time < us
     do
-        api_sleep(state)
+        api_machine_sleep(state)
     end
 end
 
