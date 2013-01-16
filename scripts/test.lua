@@ -447,6 +447,16 @@ function demo.landscape_create(x, y, z)
                                    6 * (self.width - 1) * (self.length - 1))
     end
 
+    function obj.construct_hmap(self)
+        self.hmap = {}
+        for z = 1, self.length do
+            self.hmap[z] = {}
+            for x = 1, self.width do
+                self.hmap[z][x] = 0
+            end
+        end
+    end
+
     function obj.construct(self, x, y, z)
         sizex = 40
         sizey = 2
@@ -456,12 +466,7 @@ function demo.landscape_create(x, y, z)
         self.scalex = sizex / (self.width - 1)
         self.scaley = sizey
         self.scalez = sizez / (self.length - 1)
-        self.hmap = {{1, 1, 1, 1, 1, 1},
-                     {1, 0, 0, 0, 0, 1},
-                     {1, 0, 1, 1, 0, 1},
-                     {1, 0, 1, 1, 0, 1},
-                     {1, 0, 0, 0, 0, 1},
-                     {1, 1, 1, 1, 1, 1}}
+        self:construct_hmap()
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
