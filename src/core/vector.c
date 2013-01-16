@@ -545,7 +545,7 @@ static void vector_update_rubber(struct vector_t *v, float dt, int force)
 
 static void vector_update_cord(struct vector_t *v, float dt, int force)
 {
-    const float THRESHOLD = 0.1;
+    static const float THRESHOLD = 0.1f;
     float dist, scale;
     GLfloat diff[4];
     GLfloat *v0;
