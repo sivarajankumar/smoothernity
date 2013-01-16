@@ -25,12 +25,12 @@ struct main_t
     int *mpool_sizes;
     int *mpool_counts;
     int mpool_len;
+    float frame_time;
     float logic_time;
     float min_delay;
     int gc_step;
     int display_width;
     int display_height;
-    int fps;
     int mesh_count;
     int vbuf_size;
     int vbuf_count;
@@ -173,12 +173,12 @@ static int main_configure(char *script)
         goto cleanup;
     }
 
-    if (main_get_float(lua, "logic_time", &g_main.logic_time) != 0
+    if (main_get_float(lua, "frame_time", &g_main.frame_time) != 0
+     || main_get_float(lua, "logic_time", &g_main.logic_time) != 0
      || main_get_float(lua, "min_delay", &g_main.min_delay) != 0
      || main_get_int(lua, "gc_step", &g_main.gc_step) != 0
      || main_get_int(lua, "display_width", &g_main.display_width) != 0
      || main_get_int(lua, "display_height", &g_main.display_height) != 0
-     || main_get_int(lua, "fps", &g_main.fps) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
@@ -379,8 +379,8 @@ static void main_loop(void)
     while (machine_running(g_main.controller) || machine_running(g_main.worker))
     {
         timer_reset(g_main.logic_timer);
-        display_update(1.0f / (float)g_main.fps);
-        physics_update(1.0f / (float)g_main.fps);
+        display_update(g_main.frame_time);
+        physics_update(g_main.frame_time);
         input_update();
         lua_gc(g_main.lua, LUA_GCSTEP, g_main.gc_step);
         lua_gc(g_main.lua, LUA_GCSTOP, 0);
