@@ -10,6 +10,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
+#include "timer.h"
 
 struct display_t
 {
@@ -21,6 +22,9 @@ struct display_t
     SDL_Surface *screen;
     struct vector_t *clear_color;
     struct matrix_t *camera;
+    struct timer_t *timer;
+    float last_update_time;
+    float last_show_time;
 };
 
 static struct display_t g_display;
@@ -102,11 +106,29 @@ static int api_display_draw_scene(lua_State *lua)
     return 0;
 }
 
+static int api_display_timing(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_display_timing: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushnumber(lua, g_display.last_update_time);
+    lua_pushnumber(lua, g_display.last_show_time);
+    return 0;
+}
+
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
 {
     int bpp;
     int flags;
     const SDL_VideoInfo *info;
+
+    g_display.timer = timer_create();
+    if (g_display.timer == 0)
+        return 1;
 
     glutInit(argc, argv);
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -146,11 +168,17 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     lua_register(lua, "api_display_clear_color", api_display_clear_color);
     lua_register(lua, "api_display_camera", api_display_camera);
     lua_register(lua, "api_display_draw_scene", api_display_draw_scene);
+    lua_register(lua, "api_display_timing", api_display_timing);
 
     return 0;
 cleanup:
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
+    if (g_display.timer)
+    {
+        timer_destroy(g_display.timer);
+        g_display.timer = 0;
+    }
     return 1;
 }
 
@@ -158,6 +186,11 @@ void display_done(void)
 {
     if (g_display.init == 0)
         return;
+    if (g_display.timer)
+    {
+        timer_destroy(g_display.timer);
+        g_display.timer = 0;
+    }
     g_display.init = 0;
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
@@ -225,6 +258,8 @@ void display_update(float dt)
 {
     GLfloat *color;
 
+    timer_reset(g_display.timer);
+
     ++g_display.frame_tag;
 
     /* clear */
@@ -273,9 +308,13 @@ void display_update(float dt)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     text_draw();
+
+    g_display.last_update_time = timer_passed(g_display.timer);
 }
 
 void display_show(void)
 {
+    timer_reset(g_display.timer);
     SDL_GL_SwapBuffers();
+    g_display.last_show_time = timer_passed(g_display.timer);
 }
