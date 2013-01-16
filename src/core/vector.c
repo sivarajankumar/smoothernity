@@ -1,4 +1,5 @@
 #include "vector.h"
+#include "matrix.h"
 #include "buf.h"
 #include <stdlib.h>
 #include <math.h>
@@ -24,6 +25,8 @@ static void vector_clear_args(struct vector_t *vector)
     int i;
     for (i = 0; i < VECTOR_ARGVS; ++i)
         vector->argv[i] = 0;
+    for (i = 0; i < VECTOR_ARGMS; ++i)
+        vector->argm[i] = 0;
 }
 
 static int api_vector_alloc(lua_State *lua)
@@ -188,6 +191,53 @@ static int api_vector_rubber(lua_State *lua)
     return 0;
 }
 
+static int api_vector_mpos(lua_State *lua)
+{
+    struct vector_t *vector;
+    struct matrix_t *m0;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_vector_mpos: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    m0 = matrix_get(lua_tointeger(lua, 2));
+    lua_pop(lua, 2);
+
+    if (vector == 0)
+    {
+        lua_pushstring(lua, "api_vector_mpos: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (m0 == 0)
+    {
+        lua_pushstring(lua, "api_vector_mpos: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_clear_args(vector);
+
+    vector->frame_tag = 0;
+    vector->type = VECTOR_MPOS;
+    vector->argm[0] = m0;
+
+    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_vector_mpos: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 static int api_vector_wsum(lua_State *lua)
 {
     struct vector_t *vector, *v0, *v1, *v2, *v3, *v4;
@@ -342,6 +392,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_rubber", api_vector_rubber);
     lua_register(lua, "api_vector_wsum", api_vector_wsum);
     lua_register(lua, "api_vector_seq", api_vector_seq);
+    lua_register(lua, "api_vector_mpos", api_vector_mpos);
     return 0;
 }
 
@@ -375,6 +426,14 @@ int vector_nesting(struct vector_t *vector, int limit)
             if (vector->argv[i] == 0)
                 continue;
             cur = vector_nesting(vector->argv[i], limit - 1);
+            if (cur < min)
+                min = cur;
+        }
+        for (i = 0; i < VECTOR_ARGMS; ++i)
+        {
+            if (vector->argm[i] == 0)
+                continue;
+            cur = matrix_nesting(vector->argm[i], limit - 1);
             if (cur < min)
                 min = cur;
         }
@@ -422,6 +481,17 @@ static void vector_update_rubber(struct vector_t *v, float dt, int force)
     v0 = v->argv[0]->value;
     for (i = 0; i < 4; ++i)
         v->value[i] += (v0[i] - v->value[i]) * v->rubber;
+}
+
+static void vector_update_mpos(struct vector_t *v, float dt, int force)
+{
+    GLfloat *m0;
+    matrix_update(v->argm[0], dt, v->frame_tag, force);
+    m0 = v->argm[0]->value;
+    v->value[0] = m0[12];
+    v->value[1] = m0[13];
+    v->value[2] = m0[14];
+    v->value[3] = 0;
 }
 
 static void vector_update_wsum(struct vector_t *v, float dt, int force)
@@ -510,6 +580,8 @@ void vector_update(struct vector_t *v, float dt, int frame_tag, int force)
         vector_update_wsum(v, dt, force);
     else if (v->type == VECTOR_SEQ)
         vector_update_seq(v, dt);
+    else if (v->type == VECTOR_MPOS)
+        vector_update_mpos(v, dt, force);
 }
 
 void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
