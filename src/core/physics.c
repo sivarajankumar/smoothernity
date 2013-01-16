@@ -3,9 +3,18 @@
 #include "matrix.h"
 #include "mpool.h"
 #include "buf.h"
+#include "timer.h"
 #include "../physics/physcpp.h"
 #include "../physics/physres.h"
 #include <stdio.h>
+
+struct physics_t
+{
+    struct timer_t *timer;
+    float last_update_time;
+};
+
+static struct physics_t g_physics;
 
 static const char * physics_error_text(int res)
 {
@@ -49,6 +58,18 @@ static int api_physics_left(lua_State *lua)
     lua_pushinteger(lua, rb_left);
     lua_pushinteger(lua, veh_left);
     return 3;
+}
+
+static int api_physics_timing(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_physics_timing: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushnumber(lua, g_physics.last_update_time);
+    return 1;
 }
 
 static int api_physics_set_gravity(lua_State *lua)
@@ -488,12 +509,16 @@ static int api_physics_veh_set_wheel(lua_State *lua)
 
 int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 {
+    g_physics.timer = timer_create();
+    if (g_physics.timer == 0)
+        return 1;
     if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count, veh_count)
      != PHYSRES_OK)
     {
         return 1;
     }
     lua_register(lua, "api_physics_left", api_physics_left);
+    lua_register(lua, "api_physics_timing", api_physics_timing);
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
     lua_register(lua, "api_physics_set_ddraw", api_physics_set_ddraw);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
@@ -510,12 +535,19 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 
 void physics_done(void)
 {
+    if (g_physics.timer)
+    {
+        timer_destroy(g_physics.timer);
+        g_physics.timer = 0;
+    }
     physcpp_done();
 }
 
 void physics_update(float dt)
 {
+    timer_reset(g_physics.timer);
     physcpp_update(dt);
+    g_physics.last_update_time = timer_passed(g_physics.timer);
 }
 
 void physics_ddraw(void)

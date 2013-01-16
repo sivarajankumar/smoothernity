@@ -117,7 +117,7 @@ static int api_display_timing(lua_State *lua)
 
     lua_pushnumber(lua, g_display.last_update_time);
     lua_pushnumber(lua, g_display.last_show_time);
-    return 0;
+    return 2;
 }
 
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
