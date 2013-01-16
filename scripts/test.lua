@@ -389,35 +389,17 @@ function demo.landscape_create(x, y, z)
 
     function obj.construct_vb(self)
         local vb = api_vbuf_alloc()
-        api_vbuf_set(vb, 0, -2, 1,-2,   0, 0, 1, 1,   0, 0,
-                            -1, 1,-2,   0, 1, 0, 1,   0, 0,
-                             0, 1,-2,   0, 1, 1, 1,   0, 0,
-                             1, 1,-2,   1, 0, 0, 1,   0, 0,
-                             2, 1,-2,   1, 0, 1, 1,   0, 0)
-
-        api_vbuf_set(vb, 5, -2, 1,-1,   1, 1, 0, 1,   0, 0,
-                            -1, 0,-1,   1, 1, 1, 1,   0, 0,
-                             0, 0,-1,   0, 0, 1, 1,   0, 0,
-                             1, 0,-1,   0, 1, 0, 1,   0, 0,
-                             2, 1,-1,   0, 1, 1, 1,   0, 0)
-
-        api_vbuf_set(vb, 10,-2, 1, 0,   1, 0, 0, 1,   0, 0,
-                            -1, 0, 0,   1, 0, 1, 1,   0, 0,
-                             0, 1, 0,   1, 1, 0, 1,   0, 0,
-                             1, 0, 0,   1, 1, 1, 1,   0, 0,
-                             2, 1, 0,   0, 0, 1, 1,   0, 0)
-
-        api_vbuf_set(vb, 15,-2, 1, 1,   0, 1, 0, 1,   0, 0,
-                            -1, 0, 1,   0, 1, 1, 1,   0, 0,
-                             0, 0, 1,   1, 0, 0, 1,   0, 0,
-                             1, 0, 1,   1, 0, 1, 1,   0, 0,
-                             2, 1, 1,   1, 1, 0, 1,   0, 0)
-
-        api_vbuf_set(vb, 20,-2, 1, 2,   1, 1, 1, 1,   0, 0,
-                            -1, 1, 2,   0, 0, 1, 1,   0, 0,
-                             0, 1, 2,   0, 1, 0, 1,   0, 0,
-                             1, 1, 2,   0, 1, 1, 1,   0, 0,
-                             2, 1, 2,   1, 0, 0, 1,   0, 0)
+        for x = 1, self.width do
+            for z = 1, self.length do
+                local i = x + (z - 1) * self.width
+                api_vbuf_set(vb, i - 1,
+                             x - 1 - 0.5 * (self.width - 1),
+                             self.hmap[i],
+                             z - 1 - 0.5 * (self.length - 1),
+                             math.random(), math.random(), math.random(), 1,
+                             0, 0)
+            end
+        end
         api_vbuf_bake(vb)
         self.vb = vb
     end
@@ -441,11 +423,12 @@ function demo.landscape_create(x, y, z)
         local size = api_vector_alloc()
         api_vector_const(size, self.scalex, self.scaley, self.scalez, 0)
         self.buf = api_buf_alloc()
-        api_buf_set(self.buf, 0,  1, 1, 1, 1, 1,
-                                  1, 0, 0, 0, 1,
-                                  1, 0, 1, 0, 1, 
-                                  1, 0, 0, 0, 1,
-                                  1, 1, 1, 1, 1)
+        for x = 1, self.width do
+            for z = 1, self.length do
+                local i = x + (z - 1) * self.width
+                api_buf_set(self.buf, i - 1, self.hmap[i])
+            end
+        end
         self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
         self.rb = api_physics_rb_alloc(self.cs, self.mstart, 1, 1)
         api_vector_free(size)
@@ -468,6 +451,11 @@ function demo.landscape_create(x, y, z)
         self.scalex = sizex / (self.width - 1)
         self.scaley = sizey
         self.scalez = sizez / (self.length - 1)
+        self.hmap = {1, 1, 1, 1, 1,
+                     1, 0, 0, 0, 1,
+                     1, 0, 1, 0, 1, 
+                     1, 0, 0, 0, 1,
+                     1, 1, 1, 1, 1}
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
