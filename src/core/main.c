@@ -47,6 +47,10 @@ struct main_t
     int vehicle_count;
     int buf_size;
     int buf_count;
+    lua_State *lua;
+    struct machine_t *controller;
+    struct machine_t *worker;
+    struct timer_t *logic_timer;
 };
 
 static struct main_t g_main;
@@ -135,7 +139,7 @@ static int main_get_int(lua_State *lua, const char *field, int *dest)
     return 0;
 }
 
-static int main_init(char *script)
+static int main_configure(char *script)
 {
     lua_State *lua;
     lua = luaL_newstate();
@@ -212,7 +216,7 @@ cleanup:
     return 1;
 }
 
-void main_done(void)
+static void main_done(void)
 {
     if (g_main.mpool_sizes)
     {
@@ -224,155 +228,6 @@ void main_done(void)
         free(g_main.mpool_counts);
         g_main.mpool_counts = 0;
     }
-}
-
-int main(int argc, char **argv)
-{
-    int time_left;
-    lua_State *lua = 0;
-    struct machine_t *controller = 0, *worker = 0;
-    struct timer_t *logic_timer = 0;
-
-    printf("Start\n");
-
-    if (main_init(argv[argc-1]) != 0)
-    {
-        fprintf(stderr, "Cannot init main\n");
-        goto cleanup;
-    }
-
-    if (mpool_init(g_main.mpool_sizes,
-                   g_main.mpool_counts,
-                   g_main.mpool_len) == 0)
-    {
-        fprintf(stderr, "Cannot create memory pool\n");
-        goto cleanup;
-    }
-
-    lua = lua_newstate(main_lua_alloc, 0);
-    if (lua == 0)
-    {
-        fprintf(stderr, "Cannot create Lua state\n");
-        goto cleanup;
-    }
-    lua_atpanic(lua, main_panic);
-    lua_gc(lua, LUA_GCSTOP, 0);
-
-    luaL_openlibs(lua);
-
-    if (luaL_dofile(lua, argv[argc-1]) != 0)
-    {
-        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(lua, -1));
-        goto cleanup;
-    }
-
-    machine_init(lua);
-    input_init(lua);
-
-    if (physics_init(lua, g_main.colshape_count,
-                     g_main.rigidbody_count, g_main.vehicle_count) != 0)
-    {
-        fprintf(stderr, "Cannot init physics\n"); 
-        goto cleanup;
-    } 
-
-    if (buf_init(lua, g_main.buf_size, g_main.buf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init buffers\n");
-        goto cleanup;
-    }
-
-    if (vector_init(lua, g_main.vector_count, g_main.vector_nesting) != 0)
-    {
-        fprintf(stderr, "Cannot init vectors\n");
-        goto cleanup;
-    }
-
-    if (matrix_init(lua, g_main.matrix_count, g_main.matrix_nesting) != 0)
-    {
-        fprintf(stderr, "Cannot init matrices\n");
-        goto cleanup;
-    }
-
-    if (mesh_init(lua, g_main.mesh_count) != 0)
-    {
-        fprintf(stderr, "Cannot init meshes\n");
-        goto cleanup;
-    }
-
-    if (text_init(lua, g_main.text_size, g_main.text_count) != 0)
-    {
-        fprintf(stderr, "Cannot init texts\n");
-        goto cleanup;
-    }
-
-    logic_timer = timer_create();
-    if (logic_timer == 0)
-    {
-        fprintf(stderr, "Cannot create timer\n");
-        goto cleanup;
-    }
-
-    controller = machine_create(lua, "control");
-    if (controller == 0)
-    {
-        fprintf(stderr, "Cannot create controller\n");
-        goto cleanup;
-    }
-
-    worker = machine_create(lua, "work");
-    if (worker == 0)
-    {
-        fprintf(stderr, "Cannot create worker\n");
-        goto cleanup;
-    }
-
-    if (display_init(lua, &argc, argv, g_main.display_width,
-                                       g_main.display_height) != 0)
-    {
-        fprintf(stderr, "Cannot set video mode\n"); 
-        goto cleanup;
-    } 
-
-    if (vbuf_init(lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init vertex buffers\n");
-        goto cleanup;
-    }
-
-    if (ibuf_init(lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init index buffers\n");
-        goto cleanup;
-    }
-
-    printf("Game loop start\n");
-    while (machine_running(controller) || machine_running(worker))
-    {
-        timer_reset(logic_timer);
-        display_update(1.0f / (float)g_main.fps);
-        physics_update(1.0f / (float)g_main.fps);
-        input_update();
-        lua_gc(lua, LUA_GCSTEP, g_main.gc_step);
-        lua_gc(lua, LUA_GCSTOP, 0);
-        if (machine_step(controller, 0) != 0)
-        {
-            fprintf(stderr, "Failed to run controller\n");
-            goto cleanup;
-        }
-        if (machine_step(worker, g_main.logic_time - timer_passed(logic_timer)) != 0)
-        {
-            fprintf(stderr, "Failed to run worker\n");
-            goto cleanup;
-        }
-        time_left = timer_passed(logic_timer);
-        if (g_main.logic_time - time_left > g_main.min_delay)
-            SDL_Delay((g_main.logic_time - time_left) / 1000);
-        display_show();
-    }
-    printf("Game loop finish\n");
-
-cleanup:
     vbuf_done();
     ibuf_done();
     display_done();
@@ -381,17 +236,169 @@ cleanup:
     matrix_done();
     mesh_done();
     text_done();
-    main_done();
     physics_done();
-    if (lua)
-        lua_close(lua);
-    if (controller)
-        machine_destroy(controller);
-    if (worker)
-        machine_destroy(worker);
-    if (logic_timer)
-        timer_destroy(logic_timer);
+    if (g_main.lua)
+        lua_close(g_main.lua);
+    if (g_main.controller)
+        machine_destroy(g_main.controller);
+    if (g_main.worker)
+        machine_destroy(g_main.worker);
+    if (g_main.logic_timer)
+        timer_destroy(g_main.logic_timer);
     mpool_done();
-    printf("Finish\n");
+}
+
+static int main_init(int argc, char **argv)
+{
+    if (main_configure(argv[argc-1]) != 0)
+    {
+        fprintf(stderr, "Cannot init main\n");
+        return 1;
+    }
+
+    if (mpool_init(g_main.mpool_sizes,
+                   g_main.mpool_counts,
+                   g_main.mpool_len) == 0)
+    {
+        fprintf(stderr, "Cannot create memory pool\n");
+        return 1;
+    }
+
+    g_main.lua = lua_newstate(main_lua_alloc, 0);
+    if (g_main.lua == 0)
+    {
+        fprintf(stderr, "Cannot create Lua state\n");
+        return 1;
+    }
+    lua_atpanic(g_main.lua, main_panic);
+    lua_gc(g_main.lua, LUA_GCSTOP, 0);
+
+    luaL_openlibs(g_main.lua);
+
+    if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
+    {
+        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_main.lua, -1));
+        return 1;
+    }
+
+    machine_init(g_main.lua);
+    input_init(g_main.lua);
+
+    g_main.logic_timer = timer_create();
+    if (g_main.logic_timer == 0)
+    {
+        fprintf(stderr, "Cannot create timer\n");
+        return 1;
+    }
+
+    if (physics_init(g_main.lua, g_main.colshape_count,
+                     g_main.rigidbody_count, g_main.vehicle_count) != 0)
+    {
+        fprintf(stderr, "Cannot init physics\n"); 
+        return 1;
+    } 
+
+    if (buf_init(g_main.lua, g_main.buf_size, g_main.buf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init buffers\n");
+        return 1;
+    }
+
+    if (vector_init(g_main.lua, g_main.vector_count, g_main.vector_nesting) != 0)
+    {
+        fprintf(stderr, "Cannot init vectors\n");
+        return 1;
+    }
+
+    if (matrix_init(g_main.lua, g_main.matrix_count, g_main.matrix_nesting) != 0)
+    {
+        fprintf(stderr, "Cannot init matrices\n");
+        return 1;
+    }
+
+    if (mesh_init(g_main.lua, g_main.mesh_count) != 0)
+    {
+        fprintf(stderr, "Cannot init meshes\n");
+        return 1;
+    }
+
+    if (text_init(g_main.lua, g_main.text_size, g_main.text_count) != 0)
+    {
+        fprintf(stderr, "Cannot init texts\n");
+        return 1;
+    }
+
+    g_main.controller = machine_create(g_main.lua, "control");
+    if (g_main.controller == 0)
+    {
+        fprintf(stderr, "Cannot create controller\n");
+        return 1;
+    }
+
+    g_main.worker = machine_create(g_main.lua, "work");
+    if (g_main.worker == 0)
+    {
+        fprintf(stderr, "Cannot create worker\n");
+        return 1;
+    }
+
+    if (display_init(g_main.lua, &argc, argv, g_main.display_width,
+                                       g_main.display_height) != 0)
+    {
+        fprintf(stderr, "Cannot set video mode\n"); 
+        return 1;
+    } 
+
+    if (vbuf_init(g_main.lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init vertex buffers\n");
+        return 1;
+    }
+
+    if (ibuf_init(g_main.lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init index buffers\n");
+        return 1;
+    }
+    return 0;
+}
+
+static void main_loop(void)
+{
+    int time_left;
+    printf("Game loop start\n");
+    while (machine_running(g_main.controller) || machine_running(g_main.worker))
+    {
+        timer_reset(g_main.logic_timer);
+        display_update(1.0f / (float)g_main.fps);
+        physics_update(1.0f / (float)g_main.fps);
+        input_update();
+        lua_gc(g_main.lua, LUA_GCSTEP, g_main.gc_step);
+        lua_gc(g_main.lua, LUA_GCSTOP, 0);
+        if (machine_step(g_main.controller, 0) != 0)
+        {
+            fprintf(stderr, "Failed to run controller\n");
+            return;
+        }
+        if (machine_step(g_main.worker, g_main.logic_time - timer_passed(g_main.logic_timer)) != 0)
+        {
+            fprintf(stderr, "Failed to run worker\n");
+            return;
+        }
+        time_left = timer_passed(g_main.logic_timer);
+        if (g_main.logic_time - time_left > g_main.min_delay)
+            SDL_Delay((g_main.logic_time - time_left) / 1000);
+        display_show();
+    }
+    printf("Game loop finish\n");
+}
+
+int main(int argc, char **argv)
+{
+    printf("Engine start\n");
+    if (main_init(argc, argv) == 0)
+        main_loop();
+    main_done();
+    printf("Engine finish\n");
     return 0;
 }
