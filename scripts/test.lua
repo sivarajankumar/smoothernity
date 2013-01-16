@@ -406,10 +406,16 @@ function demo.landscape_create(x, y, z)
 
     function obj.construct_ib(self)
         local ib = api_ibuf_alloc()
-        api_ibuf_set(ib, 0*6*4,   0, 5, 1, 1, 5, 6,   1, 6, 2, 2, 6, 7,   2, 7, 3, 3, 7, 8,   3, 8, 4, 4, 8, 9)
-        api_ibuf_set(ib, 1*6*4,   5,10, 6, 6,10,11,   6,11, 7, 7,11,12,   7,12, 8, 8,12,13,   8,13, 9, 9,13,14)
-        api_ibuf_set(ib, 2*6*4,  10,15,11,11,15,16,  11,16,12,12,16,17,  12,17,13,13,17,18,  13,18,14,14,18,19)
-        api_ibuf_set(ib, 3*6*4,  15,20,16,16,20,21,  16,21,17,17,21,22,  17,22,18,18,22,23,  18,23,19,19,23,24)
+        for x = 0, self.width - 2 do
+            for z = 0, self.length - 2 do
+                local i00 = x + z * self.width
+                local i01 = x + (z + 1) * self.width
+                local i10 = (x + 1) + z * self.width
+                local i11 = (x + 1) + (z + 1) * self.width
+                local i = (x + z * (self.width - 1)) * 6
+                api_ibuf_set(ib, i,  i00,i01,i10,  i10,i01,i11)
+            end
+        end
         api_ibuf_bake(ib)
         self.ib = ib
     end
