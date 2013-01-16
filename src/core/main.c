@@ -50,9 +50,23 @@ struct main_t
     struct machine_t *controller;
     struct machine_t *worker;
     struct timer_t *logic_timer;
+    struct timer_t *gc_timer;
+    float last_gc_time;
 };
 
 static struct main_t g_main;
+
+static int api_gc_time(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_gc_time: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushnumber(lua, g_main.last_gc_time);
+    return 1;
+}
 
 static int main_panic(lua_State *lua)
 {
@@ -252,6 +266,8 @@ static void main_done(void)
         machine_destroy(g_main.worker);
     if (g_main.logic_timer)
         timer_destroy(g_main.logic_timer);
+    if (g_main.gc_timer)
+        timer_destroy(g_main.gc_timer);
     mpool_done();
 }
 
@@ -292,9 +308,10 @@ static int main_init(int argc, char **argv)
     input_init(g_main.lua);
 
     g_main.logic_timer = timer_create();
-    if (g_main.logic_timer == 0)
+    g_main.gc_timer = timer_create();
+    if (g_main.logic_timer == 0 || g_main.gc_timer == 0)
     {
-        fprintf(stderr, "Cannot create timer\n");
+        fprintf(stderr, "Cannot create timers\n");
         return 1;
     }
 
@@ -367,6 +384,7 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;
     }
+    lua_register(g_main.lua, "api_gc_time", api_gc_time);
     return 0;
 }
 
@@ -379,8 +397,12 @@ static void main_loop(void)
         display_update(g_main.frame_time);
         physics_update(g_main.frame_time);
         input_update();
+
+        timer_reset(g_main.gc_timer);
         lua_gc(g_main.lua, LUA_GCSTEP, g_main.gc_step);
         lua_gc(g_main.lua, LUA_GCSTOP, 0);
+        g_main.last_gc_time = timer_passed(g_main.gc_timer);
+
         if (machine_step(g_main.controller, 0) != 0)
         {
             fprintf(stderr, "Failed to run controller\n");
