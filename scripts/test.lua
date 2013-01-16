@@ -389,13 +389,12 @@ function demo.landscape_create(x, y, z)
 
     function obj.construct_vb(self)
         local vb = api_vbuf_alloc()
-        for x = 1, self.width do
-            for z = 1, self.length do
-                local i = x - 1 + (z - 1) * self.width
-                api_vbuf_set(vb, i,
-                             x - 1 - 0.5 * (self.width - 1),
-                             self.hmap[z][x],
-                             z - 1 - 0.5 * (self.length - 1),
+        for x = 0, self.width - 1 do
+            for z = 0, self.length - 1 do
+                api_vbuf_set(vb, x + z * self.width,
+                             x - 0.5 * (self.width - 1),
+                             self.hmap[z + 1][x + 1],
+                             z - 0.5 * (self.length - 1),
                              math.random(), math.random(), math.random(), 1,
                              0, 0)
             end
@@ -429,10 +428,9 @@ function demo.landscape_create(x, y, z)
         local size = api_vector_alloc()
         api_vector_const(size, self.scalex, self.scaley, self.scalez, 0)
         self.buf = api_buf_alloc()
-        for x = 1, self.width do
-            for z = 1, self.length do
-                local i = x - 1 + (z - 1) * self.width
-                api_buf_set(self.buf, i, self.hmap[z][x])
+        for x = 0, self.width - 1 do
+            for z = 0, self.length - 1 do
+                api_buf_set(self.buf, x + z * self.width, self.hmap[z + 1][x + 1])
             end
         end
         self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
