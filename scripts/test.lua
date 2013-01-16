@@ -74,8 +74,8 @@ end
 demo = {}
 
 function demo.wait(machine, us)
-    local time = api_time(machine)
-    while api_time(machine) - time < us
+    local time = api_machine_time(machine)
+    while api_machine_time(machine) - time < us
     do
         api_machine_sleep(machine)
     end
