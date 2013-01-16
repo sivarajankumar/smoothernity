@@ -434,12 +434,12 @@ function demo.landscape_create(x, y, z)
 
     function obj.construct_matrices(self, x, y, z)
         self.mstart = demo.matrix_pos_stop(x, y, z)
-        self.mvis = demo.matrix_pos_scl_stop(0,-1,0, 10,2,10)
+        self.mvis = demo.matrix_pos_scl_stop(0,-1,0, self.scalex,self.scaley,self.scalez)
     end
 
     function obj.construct_physics(self)
         local size = api_vector_alloc()
-        api_vector_const(size, 10, 2, 10, 0)
+        api_vector_const(size, self.scalex, self.scaley, self.scalez, 0)
         self.buf = api_buf_alloc()
         api_buf_set(self.buf, 0,  1, 1, 1, 1, 1,
                                   1, 0, 0, 0, 1,
@@ -460,6 +460,14 @@ function demo.landscape_create(x, y, z)
     end
 
     function obj.construct(self, x, y, z)
+        sizex = 40
+        sizey = 2
+        sizez = 40
+        self.width = 5
+        self.length = 5
+        self.scalex = sizex / (self.width - 1)
+        self.scaley = sizey
+        self.scalez = sizez / (self.length - 1)
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
