@@ -19,7 +19,8 @@ enum vector_e
     VECTOR_RUBBER = 1,
     VECTOR_WSUM = 2,
     VECTOR_SEQ = 3,
-    VECTOR_MPOS = 4
+    VECTOR_MPOS = 4,
+    VECTOR_CORD = 5
 };
 
 struct vector_t
@@ -33,6 +34,8 @@ struct vector_t
     struct matrix_t *argm[VECTOR_ARGMS];
 
     float rubber;
+    float cord_min;
+    float cord_max;
     float seq_t;
     int seq_cur;
     int seq_start;
@@ -48,3 +51,5 @@ struct vector_t * vector_get(int);
 void vector_update(struct vector_t *vector, float dt, int frame_tag, int force);
 int vector_nesting(struct vector_t *vector, int limit);
 void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2);
+float vector_len(GLfloat *v);
+void vector_wsum(GLfloat *out, float w1, GLfloat *v1, float w2, GLfloat *v2);
