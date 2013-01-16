@@ -433,7 +433,7 @@ function demo.landscape_create(x, y, z)
                 api_buf_set(self.buf, x + z * self.width, self.hmap[z + 1][x + 1])
             end
         end
-        self.cs = api_physics_cs_alloc_hmap(self.buf, 0, 5, 5, 0, 1, size)
+        self.cs = api_physics_cs_alloc_hmap(self.buf, 0, self.width, self.length, 0, 1, size)
         self.rb = api_physics_rb_alloc(self.cs, self.mstart, 1, 1)
         api_vector_free(size)
     end
@@ -443,23 +443,25 @@ function demo.landscape_create(x, y, z)
         self.mrb = api_matrix_alloc()
         api_matrix_rigid_body(self.mrb, self.rb)
         api_matrix_mul(self.mmul, self.mrb, self.mvis)
-        self.mesh = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mmul, 0, 4*6*4)
+        self.mesh = api_mesh_alloc(API_MESH_TRIANGLES, self.vb, self.ib, -1, self.mmul, 0,
+                                   6 * (self.width - 1) * (self.length - 1))
     end
 
     function obj.construct(self, x, y, z)
         sizex = 40
         sizey = 2
         sizez = 40
-        self.width = 5
-        self.length = 5
+        self.width = 6
+        self.length = 6
         self.scalex = sizex / (self.width - 1)
         self.scaley = sizey
         self.scalez = sizez / (self.length - 1)
-        self.hmap = {{1, 1, 1, 1, 1},
-                     {1, 0, 0, 0, 1},
-                     {1, 0, 1, 0, 1},
-                     {1, 0, 0, 0, 1},
-                     {1, 1, 1, 1, 1}}
+        self.hmap = {{1, 1, 1, 1, 1, 1},
+                     {1, 0, 0, 0, 0, 1},
+                     {1, 0, 1, 1, 0, 1},
+                     {1, 0, 1, 1, 0, 1},
+                     {1, 0, 0, 0, 0, 1},
+                     {1, 1, 1, 1, 1, 1}}
         self:construct_vb()
         self:construct_ib()
         self:construct_matrices(x, y, z)
