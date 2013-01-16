@@ -5,7 +5,6 @@ function configure()
             ["mpool_counts"] = function() return 10000, 1000,   100,     10,       1,        1 end,
             ["frame_time"] = 1 / 60,
             ["logic_time"] = 0.01,
-            ["min_delay"] = 0.001,
             ["gc_step"] = 10,
             ["display_width"] = 1920,
             ["display_height"] = 1080,
