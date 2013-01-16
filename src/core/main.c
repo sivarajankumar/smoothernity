@@ -27,7 +27,6 @@ struct main_t
     int mpool_len;
     float frame_time;
     float logic_time;
-    float min_delay;
     int gc_step;
     int display_width;
     int display_height;
@@ -175,7 +174,6 @@ static int main_configure(char *script)
 
     if (main_get_float(lua, "frame_time", &g_main.frame_time) != 0
      || main_get_float(lua, "logic_time", &g_main.logic_time) != 0
-     || main_get_float(lua, "min_delay", &g_main.min_delay) != 0
      || main_get_int(lua, "gc_step", &g_main.gc_step) != 0
      || main_get_int(lua, "display_width", &g_main.display_width) != 0
      || main_get_int(lua, "display_height", &g_main.display_height) != 0
@@ -374,7 +372,6 @@ static int main_init(int argc, char **argv)
 
 static void main_loop(void)
 {
-    float time_left;
     printf("Game loop start\n");
     while (machine_running(g_main.controller) || machine_running(g_main.worker))
     {
@@ -395,9 +392,6 @@ static void main_loop(void)
             fprintf(stderr, "Failed to run worker\n");
             return;
         }
-        time_left = timer_passed(g_main.logic_timer);
-        if (g_main.logic_time - time_left > g_main.min_delay)
-            SDL_Delay((g_main.logic_time - time_left) * 1000.0f);
         display_show();
     }
     printf("Game loop finish\n");
