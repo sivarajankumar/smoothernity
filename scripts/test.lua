@@ -9,9 +9,9 @@ function configure()
             ["display_width"] = 1920,
             ["display_height"] = 1080,
             ["mesh_count"] = 100,
-            ["vbuf_size"] = 1024,
+            ["vbuf_size"] = 10000,
             ["vbuf_count"] = 100,
-            ["ibuf_size"] = 1024,
+            ["ibuf_size"] = 10000,
             ["ibuf_count"] = 100,
             ["text_size"] = 100,
             ["text_count"] = 100,
@@ -395,7 +395,7 @@ function demo.landscape_create(x, y, z)
             for z = 0, self.length - 1 do
                 api_vbuf_set(vb, x + z * self.width,
                              x - 0.5 * (self.width - 1),
-                             self.hmap[z + 1][x + 1],
+                             self.hmap[z + 1][x + 1] - 0.5,
                              z - 0.5 * (self.length - 1),
                              math.random(), math.random(), math.random(), 1,
                              0, 0)
@@ -423,7 +423,7 @@ function demo.landscape_create(x, y, z)
 
     function obj.construct_matrices(self, x, y, z)
         self.mstart = demo.matrix_pos_stop(x, y, z)
-        self.mvis = demo.matrix_pos_scl_stop(0,-1,0, self.scalex,self.scaley,self.scalez)
+        self.mvis = demo.matrix_pos_scl_stop(0,0,0, self.scalex,self.scaley,self.scalez)
     end
 
     function obj.construct_physics(self)
@@ -521,11 +521,11 @@ function demo.landscape_create(x, y, z)
     end
 
     function obj.construct(self, x, y, z)
-        sizex = 40
-        sizey = 2
-        sizez = 40
-        self.width = 6
-        self.length = 6
+        sizex = 100
+        sizey = 5
+        sizez = 100
+        self.width = 20
+        self.length = 20
         self.scalex = sizex / (self.width - 1)
         self.scaley = sizey
         self.scalez = sizez / (self.length - 1)
