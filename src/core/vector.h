@@ -20,7 +20,8 @@ enum vector_e
     VECTOR_WSUM = 2,
     VECTOR_SEQ = 3,
     VECTOR_MPOS = 4,
-    VECTOR_CORD = 5
+    VECTOR_CORD = 5,
+    VECTOR_PICK = 6
 };
 
 struct vector_t
@@ -33,7 +34,6 @@ struct vector_t
     struct vector_t *argv[VECTOR_ARGVS];
     struct matrix_t *argm[VECTOR_ARGMS];
 
-    float rubber;
     float cord_min;
     float cord_max;
     float seq_t;
