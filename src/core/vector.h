@@ -4,6 +4,7 @@
 #include <GL/gl.h>
 
 #define VECTOR_ARGVS 5
+#define VECTOR_ARGMS 1
 
 enum vector_ipl_e
 {
@@ -17,7 +18,8 @@ enum vector_e
     VECTOR_CONST = 0,
     VECTOR_RUBBER = 1,
     VECTOR_WSUM = 2,
-    VECTOR_SEQ = 3
+    VECTOR_SEQ = 3,
+    VECTOR_MPOS = 4
 };
 
 struct vector_t
@@ -28,6 +30,7 @@ struct vector_t
     int vacant;
     struct vector_t *next;
     struct vector_t *argv[VECTOR_ARGVS];
+    struct matrix_t *argm[VECTOR_ARGMS];
 
     float rubber;
     float seq_t;
