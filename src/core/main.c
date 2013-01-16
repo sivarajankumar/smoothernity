@@ -56,11 +56,11 @@ struct main_t
 
 static struct main_t g_main;
 
-static int api_gc_time(lua_State *lua)
+static int api_main_timing(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_gc_time: incorrect argument");
+        lua_pushstring(lua, "api_main_timing: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -384,7 +384,7 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;
     }
-    lua_register(g_main.lua, "api_gc_time", api_gc_time);
+    lua_register(g_main.lua, "api_main_timing", api_main_timing);
     return 0;
 }
 
