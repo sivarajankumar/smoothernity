@@ -244,6 +244,7 @@ void text_draw(void)
 {
     int i;
     struct text_t *text;
+    glColor4f(1, 1, 1, 1);
     for (text = g_texts.active; text; text = text->next)
     {
         glRasterPos2iv(text->pos);
