@@ -107,9 +107,10 @@ static int api_text_alloc(lua_State *lua)
     g_texts.active = text;
 
     size = strlen(string);
-    if (size > (size_t)g_texts.size)
-        size = (size_t)g_texts.size;
+    if (size >= (size_t)g_texts.size)
+        size = (size_t)(g_texts.size - 1);
     memcpy(text->string, string, size);
+    text->string[size] = 0;
 
     if (font == (int)TEXT_FONT_8_BY_13)
         text->font = GLUT_BITMAP_8_BY_13;
