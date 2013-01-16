@@ -191,6 +191,65 @@ static int api_vector_rubber(lua_State *lua)
     return 0;
 }
 
+static int api_vector_cord(lua_State *lua)
+{
+    struct vector_t *vector, *v0;
+    float min, max;
+
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
+    {
+        lua_pushstring(lua, "api_vector_cord: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    min = lua_tonumber(lua, 3);
+    max = lua_tonumber(lua, 4);
+    lua_pop(lua, 4);
+
+    if (vector == 0 || v0 == 0)
+    {
+        lua_pushstring(lua, "api_vector_cord: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (min < 0.0f || max < 0.0f)
+    {
+        lua_pushstring(lua, "api_vector_cord: limits are out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (min >= max)
+    {
+        lua_pushstring(lua, "api_vector_cord: min >= max");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_clear_args(vector);
+
+    vector->frame_tag = 0;
+    vector->type = VECTOR_CORD;
+    vector->cord_min = min;
+    vector->cord_max = max;
+    vector->argv[0] = v0;
+
+    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_vector_cord: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 static int api_vector_mpos(lua_State *lua)
 {
     struct vector_t *vector;
@@ -393,6 +452,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_wsum", api_vector_wsum);
     lua_register(lua, "api_vector_seq", api_vector_seq);
     lua_register(lua, "api_vector_mpos", api_vector_mpos);
+    lua_register(lua, "api_vector_cord", api_vector_cord);
     return 0;
 }
 
@@ -481,6 +541,27 @@ static void vector_update_rubber(struct vector_t *v, float dt, int force)
     v0 = v->argv[0]->value;
     for (i = 0; i < 4; ++i)
         v->value[i] += (v0[i] - v->value[i]) * v->rubber;
+}
+
+static void vector_update_cord(struct vector_t *v, float dt, int force)
+{
+    const float THRESHOLD = 0.1;
+    float dist, scale;
+    GLfloat diff[4];
+    GLfloat *v0;
+
+    vector_update(v->argv[0], dt, v->frame_tag, force);
+    v0 = v->argv[0]->value;
+
+    vector_wsum(diff, 1, v->value, -1, v0);
+    dist = vector_len(diff);
+    if (dist < THRESHOLD)
+        return;
+    if (dist < v->cord_min)
+        scale = v->cord_min / dist;
+    else if (dist > v->cord_max)
+        scale = v->cord_max / dist;
+    vector_wsum(v->value, 1, v0, scale, diff);
 }
 
 static void vector_update_mpos(struct vector_t *v, float dt, int force)
@@ -582,6 +663,8 @@ void vector_update(struct vector_t *v, float dt, int frame_tag, int force)
         vector_update_seq(v, dt);
     else if (v->type == VECTOR_MPOS)
         vector_update_mpos(v, dt, force);
+    else if (v->type == VECTOR_CORD)
+        vector_update_cord(v, dt, force);
 }
 
 void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
@@ -589,4 +672,17 @@ void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
     out[0] = v1[1]*v2[2] - v2[1]*v1[2];
     out[1] = v1[2]*v2[0] - v2[2]*v1[0];
     out[2] = v1[0]*v2[1] - v2[0]*v1[1];
+}
+
+float vector_len(GLfloat *v)
+{
+    return sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2] + v[3]*v[3]);
+}
+
+void vector_wsum(GLfloat *out, float w1, GLfloat *v1, float w2, GLfloat *v2)
+{
+    out[0] = w1*v1[0] + w2*v2[0];
+    out[1] = w1*v1[1] + w2*v2[1];
+    out[2] = w1*v1[2] + w2*v2[2];
+    out[3] = w1*v1[3] + w2*v2[3];
 }
