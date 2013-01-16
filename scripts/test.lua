@@ -47,9 +47,9 @@ function work(machine)
     demo.set_gravity(0, -10, 0)
     local blink = demo.blinker_create()
     local land = demo.landscape_create(0, -15, -3)
-    local freecam = demo.free_camera_create(0, -10, 20)
     local sweet = demo.sweet_pair_create(0, 0, -5)
     local car = demo.vehicle_create(0, -10, 5)
+    local camera = demo.car_camera_create(0, -10, 20, car)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
@@ -57,19 +57,20 @@ function work(machine)
             sweet = demo.sweet_pair_create(0, 0, -5)
             car:destruct()
             car = demo.vehicle_create(0, -10, 5)
+            camera:destruct()
+            camera = demo.car_camera_create(0, -10, 20, car)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_machine_sleep(machine)
             end
         end
-        freecam:update()
         car:update()
         api_machine_sleep(machine)
     end
     blink:destruct()
-    freecam:destruct()
     land:destruct()
     sweet:destruct()
     car:destruct()
+    camera:destruct()
 end
 
 demo = {}
@@ -321,6 +322,37 @@ function demo.perf_looped_create(count_max)
         end
     end
     obj:construct(count_max)
+    return obj
+end
+
+CAR_CAMERA_CORD_MIN = 10
+CAR_CAMERA_CORD_MAX = 20
+
+function demo.car_camera_create(x, y, z, car)
+    local obj = {}
+    function obj.construct(self, x, y, z, car)
+        self.car = car
+        self.vcar = api_vector_alloc()
+        self.veye = api_vector_alloc()
+        self.up = api_vector_alloc()
+        self.m = api_matrix_alloc()
+        self.minv = api_matrix_alloc()
+        api_vector_const(self.up, 0, 1, 0, 0)
+        api_vector_mpos(self.vcar, car.mchassis)
+        api_vector_const(self.veye, x, y, z, 0)
+        api_vector_cord(self.veye, self.vcar, CAR_CAMERA_CORD_MIN, CAR_CAMERA_CORD_MAX)
+        api_matrix_from_to_up(self.m, self.veye, self.vcar, self.up)
+        api_matrix_inv(self.minv, self.m)
+        api_display_camera(self.minv)
+    end
+    function obj.destruct(self)
+        api_vector_free(self.vcar)
+        api_vector_free(self.veye)
+        api_vector_free(self.up)
+        api_matrix_free(self.m)
+        api_matrix_free(self.minv)
+    end
+    obj:construct(x, y, z, car)
     return obj
 end
 

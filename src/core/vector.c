@@ -561,6 +561,8 @@ static void vector_update_cord(struct vector_t *v, float dt, int force)
         scale = v->cord_min / dist;
     else if (dist > v->cord_max)
         scale = v->cord_max / dist;
+    else
+        scale = 1;
     vector_wsum(v->value, 1, v0, scale, diff);
 }
 
