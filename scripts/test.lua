@@ -26,7 +26,7 @@ function configure()
             ["buf_count"] = 10}
 end
 
-function control(state)
+function control(machine)
     local ds = demo.ddraw_switcher_create()
     while not quit
     do
@@ -34,11 +34,11 @@ function control(state)
             quit = true
         end
         ds:update()
-        api_machine_yield(state)
+        api_machine_yield(machine)
     end
 end
 
-function work(state)
+function work(machine)
 
     demo.set_gravity(0, -10, 0)
 
@@ -56,12 +56,12 @@ function work(state)
             car:destruct()
             car = demo.vehicle_create(0, -10, 5)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
-                api_machine_sleep(state)
+                api_machine_sleep(machine)
             end
         end
         freecam:update()
         car:update()
-        api_machine_sleep(state)
+        api_machine_sleep(machine)
     end
 
     blink:destruct()
@@ -73,11 +73,11 @@ end
 
 demo = {}
 
-function demo.wait(state, us)
-    local time = api_time(state)
-    while api_time(state) - time < us
+function demo.wait(machine, us)
+    local time = api_time(machine)
+    while api_time(machine) - time < us
     do
-        api_machine_sleep(state)
+        api_machine_sleep(machine)
     end
 end
 
