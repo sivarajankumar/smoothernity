@@ -24,7 +24,6 @@ struct display_t
     struct matrix_t *camera;
     struct timer_t *timer;
     float last_update_time;
-    float last_show_time;
 };
 
 static struct display_t g_display;
@@ -116,8 +115,7 @@ static int api_display_timing(lua_State *lua)
     }
 
     lua_pushnumber(lua, g_display.last_update_time);
-    lua_pushnumber(lua, g_display.last_show_time);
-    return 2;
+    return 1;
 }
 
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
@@ -309,12 +307,9 @@ void display_update(float dt)
     glLoadIdentity();
     text_draw();
 
-    g_display.last_update_time = timer_passed(g_display.timer);
-}
+    /* show */
 
-void display_show(void)
-{
-    timer_reset(g_display.timer);
     SDL_GL_SwapBuffers();
-    g_display.last_show_time = timer_passed(g_display.timer);
+
+    g_display.last_update_time = timer_passed(g_display.timer);
 }

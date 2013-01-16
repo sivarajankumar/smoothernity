@@ -5,4 +5,3 @@
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height);
 void display_done(void);
 void display_update(float dt);
-void display_show(void);
