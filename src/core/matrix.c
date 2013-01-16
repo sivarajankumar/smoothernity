@@ -365,6 +365,53 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
     return 0;
 }
 
+static int api_matrix_from_to_up(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    struct vector_t *v0, *v1, *v2;
+
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
+    {
+        lua_pushstring(lua, "api_matrix_from_to_up: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    v2 = vector_get(lua_tointeger(lua, 4));
+    lua_pop(lua, 4);
+
+    if (matrix == 0 || v0 == 0 || v1 == 0 || v2 == 0)
+    {
+        lua_pushstring(lua, "api_matrix_from_to_up: invalid objects");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_FROM_TO_UP;
+    matrix->argv[0] = v0;
+    matrix->argv[1] = v1;
+    matrix->argv[2] = v2;
+
+    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_matrix_from_to_up: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_update(matrix, 0, 0, 1);
+
+    return 0;
+}
+
 static int api_matrix_rigid_body(lua_State *lua)
 {
     struct matrix_t *matrix;
@@ -514,6 +561,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
     lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
+    lua_register(lua, "api_matrix_from_to_up", api_matrix_from_to_up);
     lua_register(lua, "api_matrix_rigid_body", api_matrix_rigid_body);
     lua_register(lua, "api_matrix_vehicle_chassis", api_matrix_vehicle_chassis);
     lua_register(lua, "api_matrix_vehicle_wheel", api_matrix_vehicle_wheel);
@@ -602,6 +650,16 @@ void matrix_update(struct matrix_t *m, float dt,
         matrix_pos_scl_rot(m->value, v0, v1,
                            m->rotaxis, v2[m->rotanglei]);
     }
+    else if (m->type == MATRIX_FROM_TO_UP)
+    {
+        vector_update(m->argv[0], dt, frame_tag, force);
+        vector_update(m->argv[1], dt, frame_tag, force);
+        vector_update(m->argv[2], dt, frame_tag, force);
+        v0 = m->argv[0]->value;
+        v1 = m->argv[1]->value;
+        v2 = m->argv[2]->value;
+        matrix_from_to_up(m->value, v0, v1, v2);
+    }
     else if (m->type == MATRIX_RIGID_BODY)
         physics_rb_fetch_tm(m->rigid_body, m->value);
     else if (m->type == MATRIX_VEHICLE_CHASSIS)
@@ -631,6 +689,30 @@ void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
     out[13] = m1[1]*m2[12] + m1[5]*m2[13] + m1[ 9]*m2[14] + m1[13]*m2[15];
     out[14] = m1[2]*m2[12] + m1[6]*m2[13] + m1[10]*m2[14] + m1[14]*m2[15];
     out[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
+}
+
+void matrix_from_to_up(GLfloat *out, GLfloat *from, GLfloat *to, GLfloat *up)
+{
+    static const float THRESHOLD = 0.1f;
+    GLfloat diff[4], az[4], ax[4], ay[4];
+    float len;
+    vector_wsum(diff, 1, to, -1, from);
+    len = vector_len(diff);
+    if (len < THRESHOLD)
+        return;
+    vector_wsum(az, -1.0f / len, diff, 0, diff);
+    vector_cross(ax, up, az);
+    vector_cross(ay, az, ax);
+    matrix_pos_axes(out, from, ax, ay, az);
+}
+
+void matrix_pos_axes(GLfloat *out, GLfloat *pos, GLfloat *ax,
+                     GLfloat *ay, GLfloat *az)
+{
+    out[ 0] =  ax[0]; out[ 1] =  ax[1]; out[ 2] =  ax[2]; out[ 3] = 0;
+    out[ 4] =  ay[0]; out[ 5] =  ay[1]; out[ 6] =  ay[2]; out[ 7] = 0;
+    out[ 8] =  az[0]; out[ 9] =  az[1]; out[10] =  az[2]; out[11] = 0;
+    out[12] = pos[0]; out[13] = pos[1]; out[14] = pos[2]; out[15] = 1;
 }
 
 void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
@@ -664,10 +746,7 @@ void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
     axisy[0] *= scl[1]; axisy[1] *= scl[1]; axisy[2] *= scl[1];
     axisz[0] *= scl[2]; axisz[1] *= scl[2]; axisz[2] *= scl[2];
 
-    out[ 0] = axisx[0]; out[ 1] = axisx[1]; out[ 2] = axisx[2]; out[ 3] = 0;
-    out[ 4] = axisy[0]; out[ 5] = axisy[1]; out[ 6] = axisy[2]; out[ 7] = 0;
-    out[ 8] = axisz[0]; out[ 9] = axisz[1]; out[10] = axisz[2]; out[11] = 0;
-    out[12] =   pos[0]; out[13] =   pos[1]; out[14] =   pos[2]; out[15] = 1;
+    matrix_pos_axes(out, pos, axisx, axisy, axisz);
 }
 
 void matrix_inv(GLfloat *out, GLfloat *m)
