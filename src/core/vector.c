@@ -217,9 +217,9 @@ static int api_vector_cord(lua_State *lua)
         return 0;
     }
 
-    if (min >= max)
+    if (min > max)
     {
-        lua_pushstring(lua, "api_vector_cord: min >= max");
+        lua_pushstring(lua, "api_vector_cord: min > max");
         lua_error(lua);
         return 0;
     }
