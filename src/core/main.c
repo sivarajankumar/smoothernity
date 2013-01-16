@@ -25,9 +25,9 @@ struct main_t
     int *mpool_sizes;
     int *mpool_counts;
     int mpool_len;
-    int logic_time;
+    float logic_time;
+    float min_delay;
     int gc_step;
-    int min_delay;
     int display_width;
     int display_height;
     int fps;
@@ -125,7 +125,7 @@ static int main_get_int_array(lua_State *lua, const char *field,
     return 0;
 }
 
-static int main_get_int(lua_State *lua, const char *field, int *dest)
+static int main_get_float(lua_State *lua, const char *field, float *dest)
 {
     lua_getfield(lua, -1, field);
     if (!lua_isnumber(lua, -1))
@@ -134,8 +134,17 @@ static int main_get_int(lua_State *lua, const char *field, int *dest)
                 field);
         return 1;
     }
-    *dest = lua_tointeger(lua, -1);
+    *dest = lua_tonumber(lua, -1);
     lua_pop(lua, 1);
+    return 0;
+}
+
+static int main_get_int(lua_State *lua, const char *field, int *dest)
+{
+    float f;
+    if (main_get_float(lua, field, &f) != 0)
+        return 1;
+    *dest = (int)f;
     return 0;
 }
 
@@ -164,9 +173,9 @@ static int main_configure(char *script)
         goto cleanup;
     }
 
-    if (main_get_int(lua, "logic_time", &g_main.logic_time) != 0
+    if (main_get_float(lua, "logic_time", &g_main.logic_time) != 0
+     || main_get_float(lua, "min_delay", &g_main.min_delay) != 0
      || main_get_int(lua, "gc_step", &g_main.gc_step) != 0
-     || main_get_int(lua, "min_delay", &g_main.min_delay) != 0
      || main_get_int(lua, "display_width", &g_main.display_width) != 0
      || main_get_int(lua, "display_height", &g_main.display_height) != 0
      || main_get_int(lua, "fps", &g_main.fps) != 0
@@ -365,7 +374,7 @@ static int main_init(int argc, char **argv)
 
 static void main_loop(void)
 {
-    int time_left;
+    float time_left;
     printf("Game loop start\n");
     while (machine_running(g_main.controller) || machine_running(g_main.worker))
     {
@@ -380,14 +389,15 @@ static void main_loop(void)
             fprintf(stderr, "Failed to run controller\n");
             return;
         }
-        if (machine_step(g_main.worker, g_main.logic_time - timer_passed(g_main.logic_timer)) != 0)
+        if (machine_step(g_main.worker, g_main.logic_time -
+                         timer_passed(g_main.logic_timer)) != 0)
         {
             fprintf(stderr, "Failed to run worker\n");
             return;
         }
         time_left = timer_passed(g_main.logic_timer);
         if (g_main.logic_time - time_left > g_main.min_delay)
-            SDL_Delay((g_main.logic_time - time_left) / 1000);
+            SDL_Delay((g_main.logic_time - time_left) * 1000.0f);
         display_show();
     }
     printf("Game loop finish\n");

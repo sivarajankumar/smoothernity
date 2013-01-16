@@ -73,7 +73,7 @@ static int api_time(lua_State *lua)
     }
     machine = lua_touserdata(lua, 1);
     lua_pop(lua, 1);
-    lua_pushinteger(lua, timer_passed(machine->run_timer));
+    lua_pushnumber(lua, timer_passed(machine->run_timer));
     return 1;
 }
 
@@ -84,7 +84,7 @@ void machine_init(lua_State *lua)
     lua_register(lua, "api_time", api_time);
 }
 
-int machine_step(struct machine_t *machine, int timeout)
+int machine_step(struct machine_t *machine, float timeout)
 {
     int status;
     state_t state;
