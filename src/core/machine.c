@@ -12,6 +12,7 @@ struct machine_t
     struct timer_t *step_timer;
     struct timer_t *run_timer;
     int sleep;
+    float last_step_time;
 };
 
 static int state_resume(struct machine_t *machine)
@@ -77,11 +78,27 @@ static int api_machine_time(lua_State *lua)
     return 1;
 }
 
+static int api_machine_timing(lua_State *lua)
+{
+    struct machine_t *machine;
+    if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
+    {
+        lua_pushstring(lua, "api_machine_timing: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    machine = lua_touserdata(lua, 1);
+    lua_pop(lua, 1);
+    lua_pushnumber(lua, machine->last_step_time);
+    return 1;
+}
+
 void machine_init(lua_State *lua)
 {
     lua_register(lua, "api_machine_yield", api_machine_yield);
     lua_register(lua, "api_machine_sleep", api_machine_sleep);
     lua_register(lua, "api_machine_time", api_machine_time);
+    lua_register(lua, "api_machine_timing", api_machine_timing);
 }
 
 int machine_step(struct machine_t *machine, float timeout)
@@ -105,6 +122,7 @@ int machine_step(struct machine_t *machine, float timeout)
          || timer_passed(machine->step_timer) > timeout)
             break;
     }
+    machine->last_step_time = timer_passed(machine->step_timer);
     return 0;
 }
 
