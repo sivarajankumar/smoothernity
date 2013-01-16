@@ -384,6 +384,8 @@ function demo.free_camera_create(x, y, z)
     return obj
 end
 
+LAND_DEVIATION = 0.1
+
 function demo.landscape_create(x, y, z)
     local obj = {}
 
@@ -448,11 +450,72 @@ function demo.landscape_create(x, y, z)
     end
 
     function obj.construct_hmap(self)
+        function subdivide(hmap, x1, z1, x2, z2)
+            local zmid = math.floor(0.5 * (z1 + z2))
+            local xmid = math.floor(0.5 * (x1 + x2))
+            local hz1x1 = hmap[z1][x1]
+            local hz1x2 = hmap[z1][x2]
+            local hz2x1 = hmap[z2][x1]
+            local hz2x2 = hmap[z2][x2]
+            local hz1xmid = 0.5 * (hz1x1 + hz1x2)
+            local hz2xmid = 0.5 * (hz2x1 + hz2x2)
+            local hzmidx1 = 0.5 * (hz1x1 + hz2x1)
+            local hzmidx2 = 0.5 * (hz1x2 + hz2x2)
+            local hzmidxmid = 0.25 * (hz1xmid + hz2xmid + hzmidx1 + hzmidx2)
+            hz1xmid = hz1xmid + (math.random() - 0.5) * LAND_DEVIATION
+            hz2xmid = hz2xmid + (math.random() - 0.5) * LAND_DEVIATION
+            hzmidx1 = hzmidx1 + (math.random() - 0.5) * LAND_DEVIATION
+            hzmidx2 = hzmidx2 + (math.random() - 0.5) * LAND_DEVIATION
+            hzmidxmid = hzmidxmid + (math.random() - 0.5) * LAND_DEVIATION
+            if x2 - x1 > 1 then
+                if z2 - z1 > 1 then
+                    hmap[z1][xmid] = hz1xmid
+                    hmap[z2][xmid] = hz2xmid
+                    hmap[zmid][x1] = hzmidx1
+                    hmap[zmid][x2] = hzmidx2
+                    hmap[zmid][xmid] = hzmidxmid
+                    subdivide(hmap, x1, z1, xmid, zmid)
+                    subdivide(hmap, xmid, z1, x2, zmid)
+                    subdivide(hmap, x1, zmid, xmid, z2)
+                    subdivide(hmap, xmid, zmid, x2, z2)
+                else
+                    hmap[z1][xmid] = hz1xmid
+                    hmap[z2][xmid] = hz2xmid
+                    subdivide(hmap, x1, z1, xmid, z2)
+                    subdivide(hmap, xmid, z1, x2, z2)
+                end
+            else
+                if z2 - z1 > 1 then
+                    hmap[zmid][x1] = hzmidx1
+                    hmap[zmid][x2] = hzmidx2
+                    subdivide(hmap, x1, z1, x2, zmid)
+                    subdivide(hmap, x1, zmid, x2, z2)
+                end
+            end
+        end
         self.hmap = {}
         for z = 1, self.length do
             self.hmap[z] = {}
             for x = 1, self.width do
                 self.hmap[z][x] = 0
+            end
+        end
+        self.hmap[1][1] = math.random()
+        self.hmap[1][self.width] = math.random()
+        self.hmap[self.length][1] = math.random()
+        self.hmap[self.length][self.width] = math.random()
+        subdivide(self.hmap, 1, 1, self.width, self.length)
+        local hmin = math.huge
+        local hmax = -math.huge
+        for z = 1, self.length do
+            for x = 1, self.width do
+                hmin = math.min(hmin, self.hmap[z][x])
+                hmax = math.max(hmax, self.hmap[z][x])
+            end
+        end
+        for z = 1, self.length do
+            for x = 1, self.width do
+                self.hmap[z][x] = (self.hmap[z][x] - hmin) / (hmax - hmin)
             end
         end
     end
