@@ -31,12 +31,12 @@ static int state_resume(struct machine_t *machine)
     return 0;
 }
 
-static int api_yield(lua_State *lua)
+static int api_machine_yield(lua_State *lua)
 {
     struct machine_t *machine;
     if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
     {
-        lua_pushstring(lua, "api_yield: incorrect argument");
+        lua_pushstring(lua, "api_machine_yield: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -46,12 +46,12 @@ static int api_yield(lua_State *lua)
     return lua_yield(lua, 0);
 }
 
-static int api_sleep(lua_State *lua)
+static int api_machine_sleep(lua_State *lua)
 {
     struct machine_t *machine;
     if (lua_gettop(lua) != 1 || !lua_islightuserdata(lua, 1))
     {
-        lua_pushstring(lua, "api_sleep: incorrect argument");
+        lua_pushstring(lua, "api_machine_sleep: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -79,8 +79,8 @@ static int api_time(lua_State *lua)
 
 void machine_init(lua_State *lua)
 {
-    lua_register(lua, "api_yield", api_yield);
-    lua_register(lua, "api_sleep", api_sleep);
+    lua_register(lua, "api_machine_yield", api_machine_yield);
+    lua_register(lua, "api_machine_sleep", api_machine_sleep);
     lua_register(lua, "api_time", api_time);
 }
 
