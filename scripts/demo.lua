@@ -12,13 +12,6 @@ function demo.wait(machine, us)
     end
 end
 
-function demo.set_gravity(x, y, z)
-    local grav = api_vector_alloc()
-    api_vector_const(grav, x, y, z, 0)
-    api_physics_set_gravity(grav)
-    api_vector_free(grav)
-end
-
 function demo.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()

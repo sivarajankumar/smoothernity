@@ -3,10 +3,10 @@ dofile('api.lua')
 
 local ddraw = require 'ddraw'
 local perf = require 'perf'
+local util = require 'util'
 
-local P = {}
-P.quit = false
-P.machwork = nil
+local quit = false
+local machwork = nil
 
 function configure()
     return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
@@ -35,10 +35,10 @@ function configure()
 end
 
 function control(mach)
-    while P.machwork == nil do
+    while machwork == nil do
         api_machine_yield(mach)
     end
-    local prf = perf.alloc(mach, P.machwork)
+    local prf = perf.alloc(mach, machwork)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
@@ -52,8 +52,8 @@ function control(mach)
 end
 
 function work(mach)
-    P.machwork = mach
-    demo.set_gravity(0, -10, 0)
+    machwork = mach
+    util.set_gravity(0, -10, 0)
     local blink = demo.blinker_create()
     local land = demo.landscape_create(0, -15, -3)
     local sweet = demo.sweet_pair_create(0, 0, -5)
