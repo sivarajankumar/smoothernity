@@ -1,8 +1,11 @@
 dofile('demo.lua')
-dofile('perf.lua')
 dofile('api.lua')
 
-quit = false
+local perf = require "perf"
+
+main = {}
+
+local quit = false
 
 function configure()
     return {["mpool_sizes"] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
@@ -31,7 +34,7 @@ function configure()
 end
 
 function control(machine)
-    demo.control_machine = machine
+    main.control_machine = machine
     local ds = demo.ddraw_switcher_create()
     local prf = perf.create()
     while not quit
@@ -47,7 +50,7 @@ function control(machine)
 end
 
 function work(machine)
-    demo.work_machine = machine
+    main.work_machine = machine
     demo.set_gravity(0, -10, 0)
     local blink = demo.blinker_create()
     local land = demo.landscape_create(0, -15, -3)
