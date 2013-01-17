@@ -8,6 +8,7 @@ local blinker = require 'blinker'
 local land = require 'land'
 local cubes = require 'cubes'
 local vehicle = require 'vehicle'
+local camcord = require 'camera.cord'
 
 local quit = false
 local machwork = nil
@@ -62,7 +63,7 @@ function work(mach)
     local lnd = land.alloc(0, -15, -3)
     local cbs = cubes.alloc(0, 0, -5)
     local car = vehicle.alloc(0, -10, 5)
-    local camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
+    local camera = camcord.alloc(0, -10, 20, car.mchassis)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
@@ -70,8 +71,8 @@ function work(mach)
             cbs = cubes.alloc(0, 0, -5)
             car.free()
             car = vehicle.alloc(0, -10, 5)
-            camera:destruct()
-            camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
+            camera.free()
+            camera = camcord.alloc(0, -10, 20, car.mchassis)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_machine_sleep(mach)
             end
@@ -83,5 +84,5 @@ function work(mach)
     lnd.free()
     cbs.free()
     car.free()
-    camera:destruct()
+    camera.free()
 end
