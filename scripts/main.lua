@@ -38,7 +38,7 @@ function control(mach)
         api_machine_yield(mach)
     end
     local ds = demo.ddraw_switcher_create()
-    local prf = perf.create(mach, P.machwork)
+    local prf = perf.alloc(mach, P.machwork)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
@@ -48,7 +48,7 @@ function control(mach)
         prf.update()
         api_machine_yield(mach)
     end
-    prf.destruct()
+    prf.free()
 end
 
 function work(mach)
