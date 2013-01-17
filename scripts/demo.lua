@@ -93,33 +93,6 @@ function demo.blinker_create()
     return obj
 end
 
-function demo.ddraw_switcher_create()
-    local obj = {}
-    obj.debug = 0
-    obj.pressed = 0
-    function obj.update(self)
-        if self.pressed == 0 then
-            if api_input_key(API_INPUT_KEY_F1) == 1 then
-                self.pressed = 1
-                if self.debug == 0 then
-                    self.debug = 1
-                    api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME)
-                    api_display_draw_scene(0)
-                else
-                    self.debug = 0
-                    api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                    api_display_draw_scene(1)
-                end
-            end
-        elseif self.pressed == 1 then
-            if api_input_key(API_INPUT_KEY_F1) == 0 then
-                self.pressed = 0
-            end
-        end
-    end
-    return obj
-end
-
 CAR_CAMERA_CORD_MIN = 20
 CAR_CAMERA_CORD_MAX = 20
 CAR_CAMERA_FROM_OFFSET_Y = 5
