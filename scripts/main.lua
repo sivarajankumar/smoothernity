@@ -5,6 +5,7 @@ local perf = require 'perf'
 
 local P = {}
 P.quit = false
+P.machwork = nil
 
 function configure()
     return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
@@ -44,10 +45,10 @@ function control(mach)
             quit = true
         end
         ds:update()
-        prf:update()
+        prf.update()
         api_machine_yield(mach)
     end
-    prf:destruct()
+    prf.destruct()
 end
 
 function work(mach)
