@@ -86,6 +86,7 @@ function M.alloc(x, y, z)
 
     -- height map
     do
+        -- clear
         hmap = {}
         for z = 1, length do
             hmap[z] = {}
@@ -93,11 +94,15 @@ function M.alloc(x, y, z)
                 hmap[z][x] = 0
             end
         end
+
+        -- fill
         hmap[1][1] = math.random()
         hmap[1][width] = math.random()
         hmap[length][1] = math.random()
         hmap[length][width] = math.random()
         subdivide(1, 1, width, length)
+
+        -- normalize
         local hmin = math.huge
         local hmax = -math.huge
         for z = 1, length do
