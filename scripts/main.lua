@@ -1,6 +1,7 @@
 dofile('demo.lua')
 dofile('api.lua')
 
+local ddraw = require 'ddraw'
 local perf = require 'perf'
 
 local P = {}
@@ -37,14 +38,13 @@ function control(mach)
     while P.machwork == nil do
         api_machine_yield(mach)
     end
-    local ds = demo.ddraw_switcher_create()
     local prf = perf.alloc(mach, P.machwork)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
-        ds:update()
+        ddraw.update()
         prf.update()
         api_machine_yield(mach)
     end
