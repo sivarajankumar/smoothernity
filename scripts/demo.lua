@@ -1,17 +1,5 @@
 demo = {}
 
-if game == nil then
-    game = {}
-end
-
-function demo.wait(machine, us)
-    local time = api_machine_time(machine)
-    while api_machine_time(machine) - time < us
-    do
-        api_machine_sleep(machine)
-    end
-end
-
 function demo.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()

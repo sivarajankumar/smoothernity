@@ -7,4 +7,12 @@ function M.set_gravity(x, y, z)
     api_vector_free(grav)
 end
 
+function M.wait(mach, us)
+    local time = api_machine_time(mach)
+    while api_machine_time(mach) - time < us
+    do
+        api_machine_sleep(mach)
+    end
+end
+
 return M
