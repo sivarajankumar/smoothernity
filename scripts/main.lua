@@ -5,6 +5,7 @@ local ddraw = require 'ddraw'
 local perf = require 'perf'
 local util = require 'util'
 local blinker = require 'blinker'
+local land = require 'land'
 
 local quit = false
 local machwork = nil
@@ -56,7 +57,7 @@ function work(mach)
     machwork = mach
     util.set_gravity(0, -10, 0)
     local blink = blinker.alloc()
-    local land = demo.landscape_create(0, -15, -3)
+    local lnd = land.alloc(0, -15, -3)
     local sweet = demo.sweet_pair_create(0, 0, -5)
     local car = demo.vehicle_create(0, -10, 5)
     local camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
@@ -77,7 +78,7 @@ function work(mach)
         api_machine_sleep(mach)
     end
     blink.free()
-    land:destruct()
+    lnd.free()
     sweet:destruct()
     car:destruct()
     camera:destruct()
