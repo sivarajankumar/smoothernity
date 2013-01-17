@@ -60,20 +60,6 @@ function demo.matrix_rotate(m, axis, angle)
     api_matrix_free(dm)
 end
 
-function demo.blinker_create()
-    local obj = {}
-    obj.v = api_vector_alloc()
-    obj.buf = api_buf_alloc()
-    function obj.destruct(self)
-        api_vector_free(self.v)
-        api_buf_free(self.buf)
-    end
-    api_buf_set(obj.buf, 0,   0,0.05,0,1,1,   0,0,0.05,1,1)
-    api_vector_seq(obj.v, obj.buf, 0, 2, 1, API_VECTOR_IPL_SPLINE)
-    api_display_clear_color(obj.v)
-    return obj
-end
-
 CAR_CAMERA_CORD_MIN = 20
 CAR_CAMERA_CORD_MAX = 20
 CAR_CAMERA_FROM_OFFSET_Y = 5
