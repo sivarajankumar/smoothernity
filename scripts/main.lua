@@ -4,6 +4,7 @@ dofile('api.lua')
 local ddraw = require 'ddraw'
 local perf = require 'perf'
 local util = require 'util'
+local blinker = require 'blinker'
 
 local quit = false
 local machwork = nil
@@ -54,7 +55,7 @@ end
 function work(mach)
     machwork = mach
     util.set_gravity(0, -10, 0)
-    local blink = demo.blinker_create()
+    local blink = blinker.alloc()
     local land = demo.landscape_create(0, -15, -3)
     local sweet = demo.sweet_pair_create(0, 0, -5)
     local car = demo.vehicle_create(0, -10, 5)
@@ -75,7 +76,7 @@ function work(mach)
         car:update()
         api_machine_sleep(mach)
     end
-    blink:destruct()
+    blink.free()
     land:destruct()
     sweet:destruct()
     car:destruct()
