@@ -163,52 +163,51 @@ function demo.perf_create()
     return obj
 end
 
-function demo.stats_create(count_max)
-    local obj = {}
-    obj.min = math.huge
-    obj.max = 0
-    obj.sum = 0
-    obj.count = 0
-    obj.count_max = count_max
-    obj.str = "computing..."
-    function obj.sample(self, value)
-        if value < self.min then
-            self.min = value
-        end
-        if value > self.max then
-            self.max = value
-        end
-        self.sum = self.sum + value
-        self.count = self.count + 1
-        if self.count >= self.count_max then
-            self.str = string.format("%.3f / %.3f / %.3f", self.min, self.max, self:avg())
-            self.min = math.huge
-            self.max = 0
-            self.sum = 0
-            self.count = 0
-        end
-    end
-    function obj.avg(self)
-        if self.count > 0 then
-            return self.sum / self.count
-        else
-            return 0
-        end
-    end
-    return obj
-end
-
 function demo.perf_looped_create(count_max)
     local obj = {}
     function obj.construct(self, count_max)
+        function counter_create(count_max)
+            local obj = {}
+            obj.min = math.huge
+            obj.max = 0
+            obj.sum = 0
+            obj.count = 0
+            obj.count_max = count_max
+            obj.str = "computing..."
+            function obj.sample(self, value)
+                if value < self.min then
+                    self.min = value
+                end
+                if value > self.max then
+                    self.max = value
+                end
+                self.sum = self.sum + value
+                self.count = self.count + 1
+                if self.count >= self.count_max then
+                    self.str = string.format("%.3f / %.3f / %.3f", self.min, self.max, self:avg())
+                    self.min = math.huge
+                    self.max = 0
+                    self.sum = 0
+                    self.count = 0
+                end
+            end
+            function obj.avg(self)
+                if self.count > 0 then
+                    return self.sum / self.count
+                else
+                    return 0
+                end
+            end
+            return obj
+        end
         self.prev_time = api_machine_time(demo.control_machine)
-        self.stats_physics = demo.stats_create(count_max)
-        self.stats_input = demo.stats_create(count_max)
-        self.stats_gc = demo.stats_create(count_max)
-        self.stats_control = demo.stats_create(count_max)
-        self.stats_work = demo.stats_create(count_max)
-        self.stats_display = demo.stats_create(count_max)
-        self.stats_frame = demo.stats_create(count_max)
+        self.stats_physics = counter_create(count_max)
+        self.stats_input = counter_create(count_max)
+        self.stats_gc = counter_create(count_max)
+        self.stats_control = counter_create(count_max)
+        self.stats_work = counter_create(count_max)
+        self.stats_display = counter_create(count_max)
+        self.stats_frame = counter_create(count_max)
         self.samples = 0
         self.count_max = count_max
         self:create_text()
@@ -259,9 +258,9 @@ CAR_CAMERA_TO_OFFSET_Y = 1
 CAR_CAMERA_TO_RUBBER_Y = 0.1
 CAR_CAMERA_TO_RUBBER_XZ = 0.1
 
-function demo.car_camera_create(x, y, z, car)
+function demo.cord_camera_create(x, y, z, mtarget)
     local obj = {}
-    function obj.construct(self, x, y, z, car)
+    function obj.construct(self, x, y, z, mtarget)
         local mcam = api_matrix_alloc()
         local mcaminv = api_matrix_alloc()
         local vcar_center = api_vector_alloc()
@@ -293,7 +292,7 @@ function demo.car_camera_create(x, y, z, car)
                                          CAR_CAMERA_TO_RUBBER_Y,
                                          CAR_CAMERA_TO_RUBBER_XZ, 0)
 
-        api_vector_mpos(vcar_center, car.mchassis)
+        api_vector_mpos(vcar_center, mtarget)
         api_vector_pick(vcar_center_xz, vcar_center, vzero, vcar_center, vzero)
 
         api_vector_const(vcam_from_xz, x, 0, z, 0)
@@ -350,7 +349,7 @@ function demo.car_camera_create(x, y, z, car)
         api_vector_free(self.vzero)
         api_vector_free(self.vup)
     end
-    obj:construct(x, y, z, car)
+    obj:construct(x, y, z, mtarget)
     return obj
 end
 

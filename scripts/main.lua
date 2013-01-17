@@ -52,7 +52,7 @@ function work(machine)
     local land = demo.landscape_create(0, -15, -3)
     local sweet = demo.sweet_pair_create(0, 0, -5)
     local car = demo.vehicle_create(0, -10, 5)
-    local camera = demo.car_camera_create(0, -10, 20, car)
+    local camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
@@ -61,7 +61,7 @@ function work(machine)
             car:destruct()
             car = demo.vehicle_create(0, -10, 5)
             camera:destruct()
-            camera = demo.car_camera_create(0, -10, 20, car)
+            camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_machine_sleep(machine)
             end
