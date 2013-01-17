@@ -9,6 +9,7 @@ local land = require 'land'
 local cubes = require 'cubes'
 local vehicle = require 'vehicle'
 local camcord = require 'camera.cord'
+local camdev = require 'camera.dev'
 
 local quit = false
 local machwork = nil
@@ -63,7 +64,10 @@ function work(mach)
     local lnd = land.alloc(0, -15, -3)
     local cbs = cubes.alloc(0, 0, -5)
     local car = vehicle.alloc(0, -10, 5)
-    local camera = camcord.alloc(0, -10, 20, car.mchassis)
+    local camc = camcord.alloc(0, -10, 20, car.mchassis)
+    local camd = camdev.alloc(0, -10, 20)
+    local camera = camc
+    api_display_camera(camera.invmatrix)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
@@ -71,18 +75,31 @@ function work(mach)
             cbs = cubes.alloc(0, 0, -5)
             car.free()
             car = vehicle.alloc(0, -10, 5)
-            camera.free()
-            camera = camcord.alloc(0, -10, 20, car.mchassis)
+            camc.free()
+            camc = camcord.alloc(0, -10, 20, car.mchassis)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_machine_sleep(mach)
             end
         end
+        if api_input_key(API_INPUT_KEY_F3) == 1 then
+            if camera == camc then
+                camera = camd
+            else
+                camera = camc
+            end
+            api_display_camera(camera.invmatrix)
+            while api_input_key(API_INPUT_KEY_F3) == 1 do
+                api_machine_sleep(mach)
+            end
+        end
         car.update()
+        camd.update()
         api_machine_sleep(mach)
     end
     blink.free()
     lnd.free()
     cbs.free()
     car.free()
-    camera.free()
+    camc.free()
+    camd.free()
 end
