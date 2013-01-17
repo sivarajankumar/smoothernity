@@ -1,5 +1,9 @@
 demo = {}
 
+if game == nil then
+    game = {}
+end
+
 function demo.wait(machine, us)
     local time = api_machine_time(machine)
     while api_machine_time(machine) - time < us
@@ -113,139 +117,6 @@ function demo.ddraw_switcher_create()
             end
         end
     end
-    return obj
-end
-
-PERF_SHORT_FRAMES = 60
-PERF_LONG_FRAMES = 600
-
-function demo.perf_create()
-    local obj = {}
-    function obj.construct(self)
-        self.pressed = 0
-    end
-    function obj.destruct(self)
-        if self.short ~= nil then
-            self.short:destruct()
-        end
-        if self.long ~= nil then
-            self.long:destruct()
-        end
-    end
-    function obj.update(self)
-        if self.short ~= nil then
-            self.short:update()
-        end
-        if self.long ~= nil then
-            self.long:update()
-        end
-        if self.pressed == 0 then
-            if api_input_key(API_INPUT_KEY_F2) == 1 then
-                self.pressed = 1
-                if self.short == nil and self.long == nil then
-                    self.short = demo.perf_looped_create(PERF_SHORT_FRAMES)
-                elseif self.short ~= nil then
-                    self.short:destruct()
-                    self.short = nil
-                    self.long = demo.perf_looped_create(PERF_LONG_FRAMES)
-                elseif self.long ~= nil then
-                    self.long:destruct()
-                    self.long = nil
-                end
-            end
-        elseif self.pressed == 1 then
-            if api_input_key(API_INPUT_KEY_F2) == 0 then
-                self.pressed = 0
-            end
-        end
-    end
-    obj:construct()
-    return obj
-end
-
-function demo.perf_looped_create(count_max)
-    local obj = {}
-    function obj.construct(self, count_max)
-        function counter_create(count_max)
-            local obj = {}
-            obj.min = math.huge
-            obj.max = 0
-            obj.sum = 0
-            obj.count = 0
-            obj.count_max = count_max
-            obj.str = "computing..."
-            function obj.sample(self, value)
-                if value < self.min then
-                    self.min = value
-                end
-                if value > self.max then
-                    self.max = value
-                end
-                self.sum = self.sum + value
-                self.count = self.count + 1
-                if self.count >= self.count_max then
-                    self.str = string.format("%.3f / %.3f / %.3f", self.min, self.max, self:avg())
-                    self.min = math.huge
-                    self.max = 0
-                    self.sum = 0
-                    self.count = 0
-                end
-            end
-            function obj.avg(self)
-                if self.count > 0 then
-                    return self.sum / self.count
-                else
-                    return 0
-                end
-            end
-            return obj
-        end
-        self.prev_time = api_machine_time(demo.control_machine)
-        self.stats_physics = counter_create(count_max)
-        self.stats_input = counter_create(count_max)
-        self.stats_gc = counter_create(count_max)
-        self.stats_control = counter_create(count_max)
-        self.stats_work = counter_create(count_max)
-        self.stats_display = counter_create(count_max)
-        self.stats_frame = counter_create(count_max)
-        self.samples = 0
-        self.count_max = count_max
-        self:create_text()
-        io.write("Started recording performance every "..tostring(count_max).." frames\n")
-    end
-    function obj.destruct(self)
-        io.write("Finished recording performance\n")
-        api_text_free(self.text)
-    end
-    function obj.create_text(self)
-        local str = string.format("Recorded %i samples every %i frames", self.samples, self.count_max)
-        self.text = api_text_alloc(str, API_TEXT_FONT_8_BY_13, 20, 20)
-    end
-    function obj.update(self)
-        local time = api_machine_time(demo.control_machine)
-        self.stats_physics:sample(api_physics_timing())
-        self.stats_input:sample(api_input_timing())
-        self.stats_gc:sample(api_main_timing())
-        self.stats_control:sample(api_machine_timing(demo.control_machine))
-        self.stats_work:sample(api_machine_timing(demo.work_machine))
-        self.stats_display:sample(api_display_timing())
-        self.stats_frame:sample(time - self.prev_time)
-        self.prev_time = time
-        if self.stats_frame.count == 0 then
-            self.samples = self.samples + 1
-            api_text_free(self.text)
-            self:create_text()
-            io.write("Physics update:  "..self.stats_physics.str.."\n")
-            io.write("Input update:    "..self.stats_input.str.."\n")
-            io.write("Garbage collect: "..self.stats_gc.str.."\n")
-            io.write("Control step:    "..self.stats_control.str.."\n")
-            io.write("Work step:       "..self.stats_work.str.."\n")
-            io.write("Display update:  "..self.stats_display.str.."\n")
-            io.write("Frame time:      "..self.stats_frame.str.."\n")
-            io.write("-------------------------------------\n")
-        end
-    end
-    obj:construct(count_max)
     return obj
 end
 

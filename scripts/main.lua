@@ -1,4 +1,5 @@
 dofile('demo.lua')
+dofile('perf.lua')
 dofile('api.lua')
 
 quit = false
@@ -32,17 +33,17 @@ end
 function control(machine)
     demo.control_machine = machine
     local ds = demo.ddraw_switcher_create()
-    local perf = demo.perf_create()
+    local prf = perf.create()
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
         ds:update()
-        perf:update()
+        prf:update()
         api_machine_yield(machine)
     end
-    perf:destruct()
+    prf:destruct()
 end
 
 function work(machine)
