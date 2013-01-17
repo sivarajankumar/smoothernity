@@ -4,7 +4,7 @@ local SHORT_FRAMES = 60
 local LONG_FRAMES = 600
 local KEY = API_INPUT_KEY_F2
 
-local function counter_create(count_max)
+local function counter_alloc(count_max)
     local self = {}
 
     local min = math.huge
@@ -42,17 +42,17 @@ local function counter_create(count_max)
     return self
 end
 
-local function looper_create(count_max, machctl, machwork)
+local function looper_alloc(count_max, machctl, machwork)
     local self = {}
 
     local prev_time = api_machine_time(machctl)
-    local stats_physics = counter_create(count_max)
-    local stats_input = counter_create(count_max)
-    local stats_gc = counter_create(count_max)
-    local stats_control = counter_create(count_max)
-    local stats_work = counter_create(count_max)
-    local stats_display = counter_create(count_max)
-    local stats_frame = counter_create(count_max)
+    local stats_physics = counter_alloc(count_max)
+    local stats_input = counter_alloc(count_max)
+    local stats_gc = counter_alloc(count_max)
+    local stats_control = counter_alloc(count_max)
+    local stats_work = counter_alloc(count_max)
+    local stats_display = counter_alloc(count_max)
+    local stats_frame = counter_alloc(count_max)
     local samples = 0
     local text = nil
 
@@ -61,7 +61,7 @@ local function looper_create(count_max, machctl, machwork)
         text = api_text_alloc(str, API_TEXT_FONT_8_BY_13, 20, 20)
     end
 
-    function self.destruct()
+    function self.free()
         io.write("Finished recording performance\n")
         api_text_free(text)
     end
@@ -96,19 +96,22 @@ local function looper_create(count_max, machctl, machwork)
     return self
 end
 
-function M.create(machctl, machwork)
+function M.alloc(machctl, machwork)
     local self = {}
+
     local pressed = 0
     local short = nil
     local long = nil
-    function self.destruct()
+
+    function self.free()
         if short ~= nil then
-            short.destruct()
+            short.free()
         end
         if long ~= nil then
-            long.destruct()
+            long.free()
         end
     end
+
     function self.update()
         if short ~= nil then
             short.update()
@@ -120,13 +123,13 @@ function M.create(machctl, machwork)
             if api_input_key(KEY) == 1 then
                 pressed = 1
                 if short == nil and long == nil then
-                    short = looper_create(SHORT_FRAMES, machctl, machwork)
+                    short = looper_alloc(SHORT_FRAMES, machctl, machwork)
                 elseif short ~= nil then
-                    short.destruct()
+                    short.free()
                     short = nil
-                    long = looper_create(LONG_FRAMES, machctl, machwork)
+                    long = looper_alloc(LONG_FRAMES, machctl, machwork)
                 elseif long ~= nil then
-                    long.destruct()
+                    long.free()
                     long = nil
                 end
             end
@@ -136,6 +139,7 @@ function M.create(machctl, machwork)
             end
         end
     end
+
     return self
 end
 
