@@ -6,6 +6,7 @@ local perf = require 'perf'
 local util = require 'util'
 local blinker = require 'blinker'
 local land = require 'land'
+local cubes = require 'cubes'
 
 local quit = false
 local machwork = nil
@@ -58,14 +59,14 @@ function work(mach)
     util.set_gravity(0, -10, 0)
     local blink = blinker.alloc()
     local lnd = land.alloc(0, -15, -3)
-    local sweet = demo.sweet_pair_create(0, 0, -5)
+    local cbs = cubes.alloc(0, 0, -5)
     local car = demo.vehicle_create(0, -10, 5)
     local camera = demo.cord_camera_create(0, -10, 20, car.mchassis)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
-            sweet:destruct()
-            sweet = demo.sweet_pair_create(0, 0, -5)
+            cbs.free()
+            cbs = cubes.alloc(0, 0, -5)
             car:destruct()
             car = demo.vehicle_create(0, -10, 5)
             camera:destruct()
@@ -79,7 +80,7 @@ function work(mach)
     end
     blink.free()
     lnd.free()
-    sweet:destruct()
+    cbs.free()
     car:destruct()
     camera:destruct()
 end
