@@ -12,8 +12,8 @@ TO_RUBBER_XZ = 0.1
 function M.alloc(x, y, z, mtarget)
     local self = {}
 
+    self.invmatrix = api_matrix_alloc()
     local mcam = api_matrix_alloc()
-    local mcaminv = api_matrix_alloc()
     local vcar_center = api_vector_alloc()
     local vcar_center_xz = api_vector_alloc()
     local vcam_to = api_vector_alloc()
@@ -33,7 +33,7 @@ function M.alloc(x, y, z, mtarget)
 
     function self.free()
         api_matrix_free(mcam)
-        api_matrix_free(mcaminv)
+        api_matrix_free(self.invmatrix)
         api_vector_free(vcar_center)
         api_vector_free(vcar_center_xz)
         api_vector_free(vcam_to)
@@ -79,8 +79,7 @@ function M.alloc(x, y, z, mtarget)
 
     api_matrix_from_to_up(mcam, vcam_from_smooth, vcam_to_smooth, vup)
 
-    api_matrix_inv(mcaminv, mcam)
-    api_display_camera(mcaminv)
+    api_matrix_inv(self.invmatrix, mcam)
 
     return self
 end
