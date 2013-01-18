@@ -1,11 +1,13 @@
 local M = {}
 
+local util = require 'util'
+
 function M.alloc(x, y, z)
     local self = {}
 
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local mbig = demo.matrix_pos_stop(x, y, z)
+    local mbig = util.matrix_pos_stop(x, y, z)
     local mrb = api_matrix_alloc()
     local mloc = api_matrix_alloc()
     local msmall = api_matrix_alloc()
