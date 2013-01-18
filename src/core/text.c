@@ -214,6 +214,18 @@ int text_init(lua_State *lua, int size, int count)
     lua_register(lua, "api_text_free", api_text_free);
     lua_register(lua, "api_text_left", api_text_left);
 
+    #define LUA_PUBLISH(x) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, "API_"#x);
+
+    LUA_PUBLISH(TEXT_FONT_8_BY_13);
+    LUA_PUBLISH(TEXT_FONT_9_BY_15);
+    LUA_PUBLISH(TEXT_FONT_TIMES_ROMAN_10);
+    LUA_PUBLISH(TEXT_FONT_TIMES_ROMAN_24);
+    LUA_PUBLISH(TEXT_FONT_HELVETICA_10);
+    LUA_PUBLISH(TEXT_FONT_HELVETICA_12);
+    LUA_PUBLISH(TEXT_FONT_HELVETICA_18);
+
     return 0;
 cleanup:
     for (i = 0; i < count; ++i)

@@ -250,6 +250,14 @@ int mesh_init(lua_State *lua, int count)
     lua_register(lua, "api_mesh_free", api_mesh_free);
     lua_register(lua, "api_mesh_left", api_mesh_left);
 
+    #define LUA_PUBLISH(x) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, "API_"#x);
+
+    LUA_PUBLISH(MESH_TRIANGLE_STRIP);
+    LUA_PUBLISH(MESH_TRIANGLE_FAN);
+    LUA_PUBLISH(MESH_TRIANGLES);
+
     return 0;
 }
 
