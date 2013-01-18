@@ -492,6 +492,13 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_seq", api_vector_seq);
     lua_register(lua, "api_vector_mpos", api_vector_mpos);
     lua_register(lua, "api_vector_cord", api_vector_cord);
+
+    #define LUA_PUBLISH(x) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, "API_"#x);
+
+    LUA_PUBLISH(VECTOR_IPL_LINEAR);
+    LUA_PUBLISH(VECTOR_IPL_SPLINE);
     return 0;
 }
 
