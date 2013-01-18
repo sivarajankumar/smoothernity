@@ -1,5 +1,7 @@
 local M = {}
 
+local util = require 'util'
+
 local LAND_DEVIATION = 0.1
 local LAND_SIZE_X = 100
 local LAND_SIZE_Y = 5
@@ -21,8 +23,8 @@ function M.alloc(x, y, z)
     local scalez = LAND_SIZE_Z / (length - 1)
     local hmap
     local buf = api_buf_alloc()
-    local mstart = demo.matrix_pos_stop(x, y, z)
-    local mvis = demo.matrix_pos_scl_stop(0,0,0, scalex,scaley,scalez)
+    local mstart = util.matrix_pos_stop(x, y, z)
+    local mvis = util.matrix_pos_scl_stop(0,0,0, scalex,scaley,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local mesh

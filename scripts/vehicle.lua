@@ -1,5 +1,7 @@
 local M = {}
 
+local util = require 'util'
+
 local CH_SIZE_X = 2
 local CH_SIZE_Y = 1
 local CH_SIZE_Z = 4
@@ -40,9 +42,9 @@ function M.alloc(x, y, z)
     local wheel_fl
     local wheel_br
     local wheel_bl
-    local mchassis_local = demo.matrix_scl_stop(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
+    local mchassis_local = util.matrix_scl_stop(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
     local mchassis_physic = api_matrix_alloc()
-    local mwheel_local = demo.matrix_scl_stop(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_RADIUS)
+    local mwheel_local = util.matrix_scl_stop(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_RADIUS)
     local mwheel_physic = {}
     local mwheel = {}
     local mesh_chassis
@@ -177,7 +179,7 @@ function M.alloc(x, y, z)
 
     -- vehicle
     do
-        local m = demo.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
+        local m = util.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
         veh = api_physics_veh_alloc(cs, m, CH_FRICT, CH_ROLL_FRICT,
                                     SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)

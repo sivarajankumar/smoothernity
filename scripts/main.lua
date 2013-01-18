@@ -1,4 +1,3 @@
-dofile('demo.lua')
 dofile('api.lua')
 
 local ddraw = require 'ddraw'
