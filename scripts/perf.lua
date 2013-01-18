@@ -2,7 +2,7 @@ local M = {}
 
 local SHORT_FRAMES = 60
 local LONG_FRAMES = 600
-local KEY = API_INPUT_KEY_F2
+local KEY = function() return API_INPUT_KEY_F2 end
 
 local function counter_alloc(count_max)
     local self = {}
@@ -120,7 +120,7 @@ function M.alloc(machctl, machwork)
             long.update()
         end
         if pressed == 0 then
-            if api_input_key(KEY) == 1 then
+            if api_input_key(KEY()) == 1 then
                 pressed = 1
                 if short == nil and long == nil then
                     short = looper_alloc(SHORT_FRAMES, machctl, machwork)
@@ -134,7 +134,7 @@ function M.alloc(machctl, machwork)
                 end
             end
         elseif pressed == 1 then
-            if api_input_key(KEY) == 0 then
+            if api_input_key(KEY()) == 0 then
                 pressed = 0
             end
         end
