@@ -530,6 +530,27 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_veh_free", api_physics_veh_free);
     lua_register(lua, "api_physics_veh_add_wheel", api_physics_veh_add_wheel);
     lua_register(lua, "api_physics_veh_set_wheel", api_physics_veh_set_wheel);
+
+    #define LUA_PUBLISH(x, y) \
+        lua_pushinteger(lua, y); \
+        lua_setglobal(lua, x);
+
+    LUA_PUBLISH("API_PHYSICS_NO_DEBUG", 0);
+    LUA_PUBLISH("API_PHYSICS_DRAW_WIREFRAME", 1 << 0);
+    LUA_PUBLISH("API_PHYSICS_DRAW_AABB", 1 << 1);
+    LUA_PUBLISH("API_PHYSICS_DRAW_FEATURES_TEXT", 1 << 2);
+    LUA_PUBLISH("API_PHYSICS_DRAW_CONTACT_POINTS", 1 << 3);
+    LUA_PUBLISH("API_PHYSICS_NO_DEACTIVATION", 1 << 4);
+    LUA_PUBLISH("API_PHYSICS_NO_HELP_TEXT", 1 << 5);
+    LUA_PUBLISH("API_PHYSICS_DRAW_TEXT", 1 << 6);
+    LUA_PUBLISH("API_PHYSICS_PROFILE_TIMINGS", 1 << 7);
+    LUA_PUBLISH("API_PHYSICS_ENABLE_SAT_COMPARISON", 1 << 8);
+    LUA_PUBLISH("API_PHYSICS_DISABLE_BULLET_LCP", 1 << 9);
+    LUA_PUBLISH("API_PHYSICS_ENABLE_CCD", 1 << 10);
+    LUA_PUBLISH("API_PHYSICS_DRAW_CONSTRAINTS", 1 << 11);
+    LUA_PUBLISH("API_PHYSICS_DRAW_CONSTRAINT_LIMITS", 1 << 12);
+    LUA_PUBLISH("API_PHYSICS_FAST_WIREFRAME", 1 << 13);
+    LUA_PUBLISH("API_PHYSICS_DRAW_NORMALS", 1 << 14);
     return 0;
 }
 

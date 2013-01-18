@@ -1,5 +1,3 @@
-dofile('api.lua')
-
 local ddraw = require 'ddraw'
 local perf = require 'perf'
 local util = require 'util'

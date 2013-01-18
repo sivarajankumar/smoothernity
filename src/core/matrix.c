@@ -565,6 +565,15 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_rigid_body", api_matrix_rigid_body);
     lua_register(lua, "api_matrix_vehicle_chassis", api_matrix_vehicle_chassis);
     lua_register(lua, "api_matrix_vehicle_wheel", api_matrix_vehicle_wheel);
+
+    #define LUA_PUBLISH(x) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, "API_"#x);
+
+    LUA_PUBLISH(MATRIX_AXIS_X);
+    LUA_PUBLISH(MATRIX_AXIS_Y);
+    LUA_PUBLISH(MATRIX_AXIS_Z);
+
     return 0;
 }
 
