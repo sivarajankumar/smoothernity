@@ -30,7 +30,7 @@ local STEER_MAX = 0.6
 local STEER_PUSH = 0.05
 local STEER_POP = 0.05
 local RECOVERY_FRAMES = 10
-local RECOVERY_OFS_Y = 2
+local RECOVERY_OFS_Y = 1
 
 function M.alloc(x, y, z)
     local self = {}
@@ -139,6 +139,7 @@ function M.alloc(x, y, z)
             api_physics_veh_set_wheel(veh, wheel_bl, accel, brake, 0)
             api_physics_veh_set_wheel(veh, wheel_br, accel, brake, 0)
         end
+
         -- recovery
         do
             local wheels = 0
