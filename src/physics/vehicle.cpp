@@ -201,3 +201,11 @@ int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *matrix)
     veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
     return 0;
 }
+
+void vehicle_transform(vehicle_t *veh, float *matrix)
+{
+    btTransform tm;
+    tm.setFromOpenGLMatrix(matrix);
+    veh->chassis->proceedToTransform(tm);
+    veh->veh->resetSuspension();
+}
