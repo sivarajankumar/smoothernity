@@ -9,7 +9,7 @@ local LAND_SIZE_Z = 100
 local LAND_WIDTH = 20
 local LAND_HEIGHT = 20
 
-function M.alloc(x, y, z)
+local function land_alloc(x, y, z, left, right, front, back)
     local self = {}
 
     local vb = api_vbuf_alloc()
@@ -42,6 +42,18 @@ function M.alloc(x, y, z)
         api_mesh_free(mesh)
     end
 
+    local function deviation()
+        return (math.random() - 0.5) * LAND_DEVIATION
+    end
+
+    local function corner()
+        return math.random()
+    end
+
+    local function color()
+        return math.random(), math.random(), math.random(), 1
+    end
+
     local function subdivide(x1, z1, x2, z2)
         local zmid = math.floor(0.5 * (z1 + z2))
         local xmid = math.floor(0.5 * (x1 + x2))
@@ -54,11 +66,11 @@ function M.alloc(x, y, z)
         local hzmidx1 = 0.5 * (hz1x1 + hz2x1)
         local hzmidx2 = 0.5 * (hz1x2 + hz2x2)
         local hzmidxmid = 0.25 * (hz1xmid + hz2xmid + hzmidx1 + hzmidx2)
-        hz1xmid = hz1xmid + (math.random() - 0.5) * LAND_DEVIATION
-        hz2xmid = hz2xmid + (math.random() - 0.5) * LAND_DEVIATION
-        hzmidx1 = hzmidx1 + (math.random() - 0.5) * LAND_DEVIATION
-        hzmidx2 = hzmidx2 + (math.random() - 0.5) * LAND_DEVIATION
-        hzmidxmid = hzmidxmid + (math.random() - 0.5) * LAND_DEVIATION
+        hz1xmid = hz1xmid + deviation()
+        hz2xmid = hz2xmid + deviation()
+        hzmidx1 = hzmidx1 + deviation()
+        hzmidx2 = hzmidx2 + deviation()
+        hzmidxmid = hzmidxmid + deviation()
         if x2 - x1 > 1 then
             if z2 - z1 > 1 then
                 hmap[z1][xmid] = hz1xmid
@@ -98,10 +110,10 @@ function M.alloc(x, y, z)
         end
 
         -- fill
-        hmap[1][1] = math.random()
-        hmap[1][width] = math.random()
-        hmap[length][1] = math.random()
-        hmap[length][width] = math.random()
+        hmap[1][1] = corner()
+        hmap[1][width] = corner()
+        hmap[length][1] = corner()
+        hmap[length][width] = corner()
         subdivide(1, 1, width, length)
 
         -- normalize
@@ -124,11 +136,12 @@ function M.alloc(x, y, z)
     do
         for x = 0, width - 1 do
             for z = 0, length - 1 do
+                local r, g, b, a = color()
                 api_vbuf_set(vb, x + z * width,
                              x - 0.5 * (width - 1),
                              hmap[z + 1][x + 1] - 0.5,
                              z - 0.5 * (length - 1),
-                             math.random(), math.random(), math.random(), 1,
+                             r, g, b, a,
                              0, 0)
             end
         end
@@ -173,6 +186,14 @@ function M.alloc(x, y, z)
     end
 
     return self
+end
+
+function M.alloc_root(x, y, z)
+    return land_alloc(x, y, z)
+end    
+
+function M.alloc_join(left, right, front, back)
+    return land_alloc(0, 0, 0, left, right, front, back)
 end
 
 return M
