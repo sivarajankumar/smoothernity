@@ -28,3 +28,4 @@ int physcpp_veh_set_wheel(int vehi, int wheel, float engine,
                           float brake, float steer);
 int physcpp_veh_fetch_chassis_tm(int vehi, float *matrix);
 int physcpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix);
+int physcpp_veh_transform(int vehi, float *matrix);

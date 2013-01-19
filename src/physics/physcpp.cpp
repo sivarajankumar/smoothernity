@@ -282,3 +282,14 @@ int physcpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix)
         return PHYSRES_INVALID_VEH_WHEEL;
     return PHYSRES_OK;
 }
+
+extern "C"
+int physcpp_veh_transform(int vehi, float *matrix)
+{
+    vehicle_t *veh;
+    veh = vehicle_get(vehi);
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    vehicle_transform(veh, matrix);
+    return PHYSRES_OK;
+}

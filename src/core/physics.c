@@ -507,6 +507,36 @@ static int api_physics_veh_set_wheel(lua_State *lua)
     return 0;
 }
 
+static int api_physics_veh_transform(lua_State *lua)
+{
+    int vehi, res;
+    struct matrix_t *matrix;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_physics_veh_transform: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    vehi = lua_tointeger(lua, 1);
+    matrix = matrix_get(lua_tointeger(lua, 2));
+    lua_pop(lua, 2);
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_physics_veh_transform: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_veh_transform(vehi, matrix->value);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_transform: error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
 int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 {
     g_physics.timer = timer_create();
@@ -530,6 +560,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_veh_free", api_physics_veh_free);
     lua_register(lua, "api_physics_veh_add_wheel", api_physics_veh_add_wheel);
     lua_register(lua, "api_physics_veh_set_wheel", api_physics_veh_set_wheel);
+    lua_register(lua, "api_physics_veh_transform", api_physics_veh_transform);
 
     #define LUA_PUBLISH(x, y) \
         lua_pushinteger(lua, y); \
