@@ -116,7 +116,6 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
     cs->rbs = rb;
 
     rb->mstate->m.setFromOpenGLMatrix(matrix);
-    rb->mstate->was_set = 1;
 
     btRigidBody::btRigidBodyConstructionInfo info
             (cs->mass, rb->mstate, cs->shape, cs->inertia);
@@ -130,9 +129,5 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
 
 void rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
 {
-    if (rb->mstate->was_set)
-    {
-        rb->mstate->m.getOpenGLMatrix(matrix);
-        rb->mstate->was_set = 0;
-    }
+    rb->mstate->m.getOpenGLMatrix(matrix);
 }

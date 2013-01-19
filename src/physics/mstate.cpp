@@ -1,7 +1,6 @@
 #include "mstate.hpp"
 
 mstate_c::mstate_c()
-: was_set(0)
 {
 }
 
@@ -17,5 +16,4 @@ void mstate_c::getWorldTransform(btTransform &t) const
 void mstate_c::setWorldTransform(const btTransform &t)
 {
     m = t;
-    was_set = 1;
 }

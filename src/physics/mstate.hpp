@@ -11,5 +11,4 @@ public:
     virtual void setWorldTransform(const btTransform &);
 
     btTransform m;
-    int was_set;
 };
