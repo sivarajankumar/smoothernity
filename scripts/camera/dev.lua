@@ -13,6 +13,11 @@ function M.alloc(x, y, z)
         api_matrix_free(self.invmatrix)
     end
 
+    function self.moveto(where)
+        api_matrix_copy(matrix, where)
+        api_matrix_stop(matrix)
+    end
+
     function self.update()
         local ofs = 0.25
         local ang = 0.02
