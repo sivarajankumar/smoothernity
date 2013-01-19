@@ -13,7 +13,7 @@ function M.alloc(x, y, z, mtarget)
     local self = {}
 
     self.invmatrix = api_matrix_alloc()
-    local mcam = api_matrix_alloc()
+    self.matrix = api_matrix_alloc()
     local vcar_center = api_vector_alloc()
     local vcar_center_xz = api_vector_alloc()
     local vcam_to = api_vector_alloc()
@@ -32,7 +32,7 @@ function M.alloc(x, y, z, mtarget)
     local vup = api_vector_alloc()
 
     function self.free()
-        api_matrix_free(mcam)
+        api_matrix_free(self.matrix)
         api_matrix_free(self.invmatrix)
         api_vector_free(vcar_center)
         api_vector_free(vcar_center_xz)
@@ -77,9 +77,9 @@ function M.alloc(x, y, z, mtarget)
     api_vector_pick(vcam_to, vcar_center_xz, vcam_to_y, vcar_center_xz, vzero)
     api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
 
-    api_matrix_from_to_up(mcam, vcam_from_smooth, vcam_to_smooth, vup)
+    api_matrix_from_to_up(self.matrix, vcam_from_smooth, vcam_to_smooth, vup)
 
-    api_matrix_inv(self.invmatrix, mcam)
+    api_matrix_inv(self.invmatrix, self.matrix)
 
     return self
 end
