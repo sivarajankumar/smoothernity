@@ -9,7 +9,7 @@ TO_OFFSET_Y = 1
 TO_RUBBER_Y = 0.1
 TO_RUBBER_XZ = 0.1
 
-function M.alloc(x, y, z, mtarget)
+function M.alloc(x, y, z)
     local self = {}
 
     self.invmatrix = api_matrix_alloc()
