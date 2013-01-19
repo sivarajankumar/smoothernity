@@ -38,3 +38,4 @@ int vehicle_set_wheel(vehicle_t*, int, float engine,
 void vehicle_fetch_chassis_tm(vehicle_t*, float*);
 int vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
 void vehicle_transform(vehicle_t*, float*);
+int vehicle_wheel_contact(vehicle_t*, int, int* in_contact);

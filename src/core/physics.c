@@ -537,6 +537,30 @@ static int api_physics_veh_transform(lua_State *lua)
     return 0;
 }
 
+static int api_physics_veh_wheel_contact(lua_State *lua)
+{
+    int in_contact, res;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_physics_veh_wheel_contact: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_veh_wheel_contact(lua_tointeger(lua, 1),
+                                    lua_tointeger(lua, 2), &in_contact);
+    lua_pop(lua, 2);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_veh_wheel_contact: error");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, in_contact);
+    return 1;
+}
+
 int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
 {
     g_physics.timer = timer_create();
@@ -561,6 +585,8 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_veh_add_wheel", api_physics_veh_add_wheel);
     lua_register(lua, "api_physics_veh_set_wheel", api_physics_veh_set_wheel);
     lua_register(lua, "api_physics_veh_transform", api_physics_veh_transform);
+    lua_register(lua, "api_physics_veh_wheel_contact",
+                       api_physics_veh_wheel_contact);
 
     #define LUA_PUBLISH(x, y) \
         lua_pushinteger(lua, y); \
