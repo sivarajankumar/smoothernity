@@ -209,3 +209,11 @@ void vehicle_transform(vehicle_t *veh, float *matrix)
     veh->chassis->proceedToTransform(tm);
     veh->veh->resetSuspension();
 }
+
+int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
+{
+    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+        return 1;
+    *in_contact = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
+    return 0;
+}
