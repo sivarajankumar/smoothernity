@@ -511,7 +511,8 @@ static int api_physics_veh_transform(lua_State *lua)
 {
     int vehi, res;
     struct matrix_t *matrix;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_physics_veh_transform: incorrect argument");
         lua_error(lua);

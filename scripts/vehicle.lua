@@ -29,6 +29,8 @@ local BRAKE_POP = 10
 local STEER_MAX = 0.6
 local STEER_PUSH = 0.05
 local STEER_POP = 0.05
+local RECOVERY_FRAMES = 10
+local RECOVERY_OFS_Y = 2
 
 function M.alloc(x, y, z)
     local self = {}
@@ -43,15 +45,19 @@ function M.alloc(x, y, z)
     local wheel_br
     local wheel_bl
     local mchassis_local = util.matrix_scl_stop(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
-    local mchassis_physic = api_matrix_alloc()
+    local mchassis_phys = api_matrix_alloc()
     local mwheel_local = util.matrix_scl_stop(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_RADIUS)
     local mwheel_physic = {}
     local mwheel = {}
+    local mrecov_next = api_matrix_alloc()
+    local mrecov = api_matrix_alloc()
     local mesh_chassis
     local mesh_wheel = {}
     local accel = 0
     local brake = 0
     local steer = 0
+    local recov_frames = 0
+    local recov_pressed = 0
 
     function self.free()
         for i = 0, 3 do
@@ -62,8 +68,10 @@ function M.alloc(x, y, z)
         api_mesh_free(mesh_chassis)
         api_matrix_free(mwheel_local)
         api_matrix_free(mchassis_local)
-        api_matrix_free(mchassis_physic)
+        api_matrix_free(mchassis_phys)
         api_matrix_free(self.mchassis)
+        api_matrix_free(mrecov_next)
+        api_matrix_free(mrecov)
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_physics_veh_free(veh)
@@ -71,63 +79,94 @@ function M.alloc(x, y, z)
     end
 
     function self.update()
-        if api_input_key(API_INPUT_KEY_I) == 1 
-        and api_input_key(API_INPUT_KEY_K) == 0 then
-            accel = accel + ACCEL_PUSH
-            if accel > ACCEL_MAX then
-                accel = ACCEL_MAX
-            end
-        elseif api_input_key(API_INPUT_KEY_I) == 0 
-        and api_input_key(API_INPUT_KEY_K) == 1 then
-            accel = accel - ACCEL_PUSH
-            if accel < -ACCEL_MAX then
-                accel = -ACCEL_MAX
-            end
-        else
-            if accel < -ACCEL_POP then
-                accel = accel + ACCEL_POP
-            elseif accel > ACCEL_POP then
-                accel = accel - ACCEL_POP
+        -- controls
+        do
+            if api_input_key(API_INPUT_KEY_I) == 1 
+            and api_input_key(API_INPUT_KEY_K) == 0 then
+                accel = accel + ACCEL_PUSH
+                if accel > ACCEL_MAX then
+                    accel = ACCEL_MAX
+                end
+            elseif api_input_key(API_INPUT_KEY_I) == 0 
+            and api_input_key(API_INPUT_KEY_K) == 1 then
+                accel = accel - ACCEL_PUSH
+                if accel < -ACCEL_MAX then
+                    accel = -ACCEL_MAX
+                end
             else
-                accel = 0
+                if accel < -ACCEL_POP then
+                    accel = accel + ACCEL_POP
+                elseif accel > ACCEL_POP then
+                    accel = accel - ACCEL_POP
+                else
+                    accel = 0
+                end
             end
-        end
-        if api_input_key(API_INPUT_KEY_J) == 1 
-        and api_input_key(API_INPUT_KEY_L) == 0 then
-            steer = steer - STEER_PUSH
-            if steer < -STEER_MAX then
-                steer = -STEER_MAX
-            end
-        elseif api_input_key(API_INPUT_KEY_J) == 0 
-        and api_input_key(API_INPUT_KEY_L) == 1 then
-            steer = steer + STEER_PUSH
-            if steer > STEER_MAX then
-                steer = STEER_MAX
-            end
-        else
-            if steer < -STEER_POP then
-                steer = steer + STEER_POP
-            elseif steer > STEER_POP then
-                steer = steer - STEER_POP
+            if api_input_key(API_INPUT_KEY_J) == 1 
+            and api_input_key(API_INPUT_KEY_L) == 0 then
+                steer = steer - STEER_PUSH
+                if steer < -STEER_MAX then
+                    steer = -STEER_MAX
+                end
+            elseif api_input_key(API_INPUT_KEY_J) == 0 
+            and api_input_key(API_INPUT_KEY_L) == 1 then
+                steer = steer + STEER_PUSH
+                if steer > STEER_MAX then
+                    steer = STEER_MAX
+                end
             else
-                steer = 0
+                if steer < -STEER_POP then
+                    steer = steer + STEER_POP
+                elseif steer > STEER_POP then
+                    steer = steer - STEER_POP
+                else
+                    steer = 0
+                end
+            end
+            if api_input_key(API_INPUT_KEY_SPACE) == 1 then
+                brake = brake + BRAKE_PUSH
+                if brake > BRAKE_MAX then
+                    brake = BRAKE_MAX
+                end
+            else
+                brake = brake - BRAKE_POP
+                if brake < 0 then
+                    brake = 0
+                end
+            end
+            api_physics_veh_set_wheel(veh, wheel_fl, accel, brake, -steer)
+            api_physics_veh_set_wheel(veh, wheel_fr, accel, brake, -steer)
+            api_physics_veh_set_wheel(veh, wheel_bl, accel, brake, 0)
+            api_physics_veh_set_wheel(veh, wheel_br, accel, brake, 0)
+        end
+        -- recovery
+        do
+            local wheels = 0
+            for i = 0, 3 do
+                wheels = wheels + api_physics_veh_wheel_contact(veh, i)
+            end
+            if wheels == 4 then
+                recov_frames = recov_frames + 1
+            else
+                recov_frames = 0
+            end
+            if recov_frames >= RECOVERY_FRAMES then
+                recov_frames = 0
+                api_matrix_copy(mrecov, mrecov_next)
+                api_matrix_copy(mrecov_next, mchassis_phys)
+                util.matrix_move(mrecov_next, 0, RECOVERY_OFS_Y, 0)
+            end
+            if recov_pressed == 0 then
+                if api_input_key(API_INPUT_KEY_R) == 1 then
+                    recov_pressed = 1
+                    api_physics_veh_transform(veh, mrecov)
+                end
+            elseif recov_pressed == 1 then
+                if api_input_key(API_INPUT_KEY_R) == 0 then
+                    recov_pressed = 0
+                end
             end
         end
-        if api_input_key(API_INPUT_KEY_SPACE) == 1 then
-            brake = brake + BRAKE_PUSH
-            if brake > BRAKE_MAX then
-                brake = BRAKE_MAX
-            end
-        else
-            brake = brake - BRAKE_POP
-            if brake < 0 then
-                brake = 0
-            end
-        end
-        api_physics_veh_set_wheel(veh, wheel_fl, accel, brake, -steer)
-        api_physics_veh_set_wheel(veh, wheel_fr, accel, brake, -steer)
-        api_physics_veh_set_wheel(veh, wheel_bl, accel, brake, 0)
-        api_physics_veh_set_wheel(veh, wheel_br, accel, brake, 0)
     end
 
     local function add_wheel(posx, posy, posz, front)
@@ -192,14 +231,16 @@ function M.alloc(x, y, z)
 
     -- matrices
     do
-        api_matrix_vehicle_chassis(mchassis_physic, veh)
-        api_matrix_mul(self.mchassis, mchassis_physic, mchassis_local)
+        api_matrix_vehicle_chassis(mchassis_phys, veh)
+        api_matrix_mul(self.mchassis, mchassis_phys, mchassis_local)
         for i = 0, 3 do
             mwheel_physic[i] = api_matrix_alloc()
             mwheel[i] = api_matrix_alloc()
             api_matrix_vehicle_wheel(mwheel_physic[i], veh, i)
             api_matrix_mul(mwheel[i], mwheel_physic[i], mwheel_local)
         end
+        api_matrix_copy(mrecov, mchassis_phys)
+        api_matrix_stop(mrecov)
     end
 
     -- visual
