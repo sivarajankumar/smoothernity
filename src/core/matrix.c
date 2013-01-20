@@ -171,7 +171,6 @@ static int api_matrix_copy(lua_State *lua)
     mnext = matrix->next;
     memcpy(matrix, msrc, sizeof(struct matrix_t));
     matrix->next = mnext;
-    matrix_update(matrix, 0, 0, 1);
     return 0;
 }
 
@@ -196,8 +195,9 @@ static int api_matrix_stop(lua_State *lua)
         return 0;
     }
 
-    matrix_clear_args(matrix);
+    matrix_update(matrix, 0, 0, 1);
 
+    matrix_clear_args(matrix);
     matrix->frame_tag = 0;
     matrix->type = MATRIX_CONST;
 
@@ -242,8 +242,6 @@ static int api_matrix_mul(lua_State *lua)
         return 0;
     }
 
-    matrix_update(matrix, 0, 0, 1);
-
     return 0;
 }
 
@@ -272,15 +270,13 @@ static int api_matrix_mul_stop(lua_State *lua)
         return 0;
     }
 
-    matrix_clear_args(matrix);
-
-    matrix->frame_tag = 0;
-    matrix->type = MATRIX_CONST;
-
     matrix_update(m0, 0, 0, 1);
     matrix_update(m1, 0, 0, 1);
-
     matrix_mul(m, m0->value, m1->value);
+
+    matrix_clear_args(matrix);
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_CONST;
     memcpy(matrix->value, m, 16 * sizeof(GLfloat));
 
     return 0;
@@ -321,8 +317,6 @@ static int api_matrix_inv(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    matrix_update(matrix, 0, 0, 1);
 
     return 0;
 }
@@ -390,8 +384,6 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
         return 0;
     }
 
-    matrix_update(matrix, 0, 0, 1);
-
     return 0;
 }
 
@@ -436,8 +428,6 @@ static int api_matrix_from_to_up(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    matrix_update(matrix, 0, 0, 1);
 
     return 0;
 }
