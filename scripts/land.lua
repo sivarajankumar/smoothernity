@@ -2,35 +2,31 @@ local M = {}
 
 local util = require 'util'
 
-local LAND_DEVIATION = 0.1
+local LAND_DEVIATION = 1
+local LAND_HEIGHT = 5
 local LAND_SIZE_X = 100
-local LAND_SIZE_Y = 5
 local LAND_SIZE_Z = 100
 local LAND_WIDTH = 20
-local LAND_HEIGHT = 20
+local LAND_LENGTH = 20
 
 local function land_alloc(x, y, z, left, right, front, back)
     local self = {}
 
+    local x, y, z = x, y, z
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
     local width = LAND_WIDTH
-    local length = LAND_HEIGHT
-    local scalex = LAND_SIZE_X / (width - 1)
-    local scaley = LAND_SIZE_Y
-    local scalez = LAND_SIZE_Z / (length - 1)
+    local length = LAND_LENGTH
+    local sizex = LAND_SIZE_X / (width - 1)
+    local sizez = LAND_SIZE_Z / (length - 1)
     local buf = api_buf_alloc()
     local mstart = util.matrix_pos_stop(x, y, z)
-    local mvis = util.matrix_pos_scl_stop(0,0,0, scalex,scaley,scalez)
+    local mvis = util.matrix_pos_scl_stop(0,0,0, sizex,1,sizez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local hmin, hmax = math.huge, -math.huge
     local cs, rb, hmap, mesh
-    local col_r, col_g, col_b = math.random(), math.random(), math.random()
-    col_len = math.max(0.01, math.sqrt(col_r*col_r + col_g*col_g + col_b*col_b))
-    col_r = col_r / col_len
-    col_g = col_g / col_len
-    col_b = col_b / col_len
+    local col_r, col_g, col_b
 
     function self.free()
         api_vbuf_free(vb)
@@ -50,7 +46,7 @@ local function land_alloc(x, y, z, left, right, front, back)
     end
 
     local function corner()
-        return math.random()
+        return math.random() * LAND_HEIGHT
     end
 
     local function color()
@@ -108,9 +104,6 @@ local function land_alloc(x, y, z, left, right, front, back)
         hmap = {}
         for z = 1, length do
             hmap[z] = {}
-            for x = 1, width do
-                hmap[z][x] = 0
-            end
         end
 
         -- fill
@@ -120,18 +113,30 @@ local function land_alloc(x, y, z, left, right, front, back)
         hmap[length][width] = corner()
         subdivide(1, 1, width, length)
 
-        -- normalize
+        -- shift
         for z = 1, length do
             for x = 1, width do
                 hmin = math.min(hmin, hmap[z][x])
                 hmax = math.max(hmax, hmap[z][x])
             end
         end
+        local center = 0.5 * (hmax + hmin)
         for z = 1, length do
             for x = 1, width do
-                hmap[z][x] = (hmap[z][x] - hmin) / (hmax - hmin)
+                hmap[z][x] = hmap[z][x] - center
             end
         end
+        hmin = -center
+        hmax = center
+    end
+
+    -- color
+    do
+        col_r, col_g, col_b = math.random(), math.random(), math.random()
+        local col_len = math.max(0.01, math.sqrt(col_r*col_r + col_g*col_g + col_b*col_b))
+        col_r = col_r / col_len
+        col_g = col_g / col_len
+        col_b = col_b / col_len
     end
 
     -- vertex buffer
@@ -141,7 +146,7 @@ local function land_alloc(x, y, z, left, right, front, back)
                 local r, g, b, a = color()
                 api_vbuf_set(vb, x + z * width,
                              x - 0.5 * (width - 1),
-                             hmap[z + 1][x + 1] - 0.5,
+                             hmap[z + 1][x + 1],
                              z - 0.5 * (length - 1),
                              r, g, b, a,
                              0, 0)
@@ -168,13 +173,13 @@ local function land_alloc(x, y, z, left, right, front, back)
     -- physics
     do
         local size = api_vector_alloc()
-        api_vector_const(size, scalex, scaley, scalez, 0)
+        api_vector_const(size, sizex, 1, sizez, 0)
         for x = 0, width - 1 do
             for z = 0, length - 1 do
                 api_buf_set(buf, x + z * width, hmap[z + 1][x + 1])
             end
         end
-        cs = api_physics_cs_alloc_hmap(buf, 0, width, length, 0, 1, size)
+        cs = api_physics_cs_alloc_hmap(buf, 0, width, length, hmin, hmax, size)
         rb = api_physics_rb_alloc(cs, mstart, 1, 1)
         api_vector_free(size)
     end
