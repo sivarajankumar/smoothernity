@@ -41,12 +41,14 @@ function M.alloc(x, y, z)
 
     function self.attach(mplayer)
         api_vector_mpos(vplayer, mplayer)
-        local x, y, z, w = api_vector_get(vplayer)
-        x, y, z = to_grid(x, y, z)
-        bound_back = z + 1
-        bound_front = z
-        bound_left = x
-        bound_right = x + 1
+        if bound_back == nil or bound_front == nil or bound_left == nil or bound_right == nil then
+            local x, y, z, w = api_vector_get(vplayer)
+            x, y, z = to_grid(x, y, z)
+            bound_back = z + 1
+            bound_front = z
+            bound_left = x
+            bound_right = x + 1
+        end
     end
 
     local function get_land(z, x)
@@ -65,7 +67,7 @@ function M.alloc(x, y, z)
     end
 
     function self.generate(mach)
-        if wanna_move then
+        if move_dz ~= 0 or move_dx ~= 0 then
             return
         end
         generating = true
