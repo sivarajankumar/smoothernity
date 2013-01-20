@@ -2,32 +2,25 @@ local M = {}
 
 local util = require 'util'
 
-M.SIZE_X = 50
-M.SIZE_Z = 50
-
 local HEIGHT = 10
 local WIDTH = 20
 local LENGTH = 20
-local NOISE_SCALE = 0.1
-local NOISE_STEPS = 5
-local NOISE_PROGRESS = 5
 
-function M.alloc(world, mach, wz, wx)
+function M.alloc(world, mach, cell_z, cell_x)
     local self = {}
 
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local scalex = M.SIZE_X / (WIDTH - 1)
-    local scalez = M.SIZE_Z / (LENGTH - 1)
+    local scalex = world.cell_size_x / (WIDTH - 1)
+    local scalez = world.cell_size_z / (LENGTH - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
-    local mstart = util.matrix_pos_stop(world.centx + wx * M.SIZE_X,
+    local mstart = util.matrix_pos_stop(world.centx + cell_x * world.cell_size_x,
                                         world.centy,
-                                        world.centz + wz * M.SIZE_Z)
+                                        world.centz + cell_z * world.cell_size_z)
     local cs, rb, hmap, mesh
-    local col_r, col_g, col_b
 
     function self.free()
         api_vbuf_free(vb)
@@ -42,12 +35,24 @@ function M.alloc(world, mach, wz, wx)
         api_mesh_free(mesh)
     end
 
+    local function to_world(z, x)
+        return world.centz + (cell_z * (LENGTH - 1) + z) * scalez,
+               world.centx + (cell_x * (WIDTH - 1) + x) * scalex
+    end
+
     local function color_noise(z, x)
-        local nz = (wz * (LENGTH - 1)) + z
-        local nx = (wx * (WIDTH - 1)) + x
+        local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.9*world.noise.get(nz * 0.1, nx * 0.1)
-        n = n + 0.1*world.noise.get(nz * 1, nx * 1)
+        n = n + 0.9*world.noise.get(wz * 0.04, wx * 0.04)
+        n = n + 0.1*world.noise.get(wz * 0.4, wx * 0.4)
+        return n
+    end
+
+    local function height_noise(z, x)
+        local wz, wx = to_world(z, x)
+        local n = 0
+        n = n + 0.9*world.noise.get(wz * 0.02, wx * 0.02)
+        n = n + 0.1*world.noise.get(wz * 0.08, wx * 0.08)
         return n
     end
 
@@ -72,26 +77,10 @@ function M.alloc(world, mach, wz, wx)
         for z = 0, LENGTH - 1 do
             hmap[z] = {}
             for x = 0, WIDTH - 1 do
-                local nz = (wz * (LENGTH - 1)) + z
-                local nx = (wx * (WIDTH - 1)) + x
-                local n = 0
-                n = n + 0.9*world.noise.get(nz * 0.05, nx * 0.05)
-                n = n + 0.1*world.noise.get(nz * 0.2, nx * 0.2)
-                hmap[z][x] = util.lerp(n, 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
+                hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
                 api_machine_yield(mach)
             end
         end
-    end
-
-    -- color
-    do
-        col_r = world.noise.get(wz, wx)
-        col_g = world.noise.get(wz + 50, wx + 50)
-        col_b = world.noise.get(wz - 30, wx - 30)
-        local col_len = math.max(0.01, math.sqrt(col_r*col_r + col_g*col_g + col_b*col_b))
-        col_r = col_r / col_len
-        col_g = col_g / col_len
-        col_b = col_b / col_len
     end
 
     -- vertex buffer
