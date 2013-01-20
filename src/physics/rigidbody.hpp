@@ -25,3 +25,4 @@ int rigidbody_alloc(btDynamicsWorld*, colshape_t*,
 void rigidbody_free(rigidbody_t*, btDynamicsWorld*);
 rigidbody_t * rigidbody_get(int);
 void rigidbody_fetch_tm(rigidbody_t*, float*);
+void rigidbody_transform(rigidbody_t*, float*);

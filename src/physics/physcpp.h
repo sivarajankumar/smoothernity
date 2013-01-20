@@ -16,6 +16,7 @@ int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
                      float frict, float roll_frict);
 int physcpp_rb_free(int rbi);
 int physcpp_rb_fetch_tm(int rbi, float *matrix);
+int physcpp_rb_transform(int rbi, float *matrix);
 int physcpp_veh_alloc(int *vehi, int csi, float *matrix,
                       float ch_frict, float ch_roll_frict,
                       float sus_stif, float sus_comp, float sus_damp,
