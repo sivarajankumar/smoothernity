@@ -22,8 +22,8 @@ function M.alloc(x, y, z)
         local ofs = 0.25
         local ang = 0.02
         if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
-            ofs = 0.05
-            ang = 0.01
+            ofs = 2.5
+            ang = 0.02
         end
     
         if api_input_key(API_INPUT_KEY_E) == 1 then

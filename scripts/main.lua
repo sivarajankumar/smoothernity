@@ -29,7 +29,7 @@ function configure()
             ['text_count'] = 100,
             ['vector_count'] = 100,
             ['vector_nesting'] = 10,
-            ['matrix_count'] = 100,
+            ['matrix_count'] = 200,
             ['matrix_nesting'] = 10,
             ['colshape_count'] = 100,
             ['rigidbody_count'] = 100,
@@ -66,6 +66,7 @@ function work(mach)
     local camd = camdev.alloc(0, -10, 20)
     local camsw = camswitch.alloc(camc, camd)
     camc.attach(car.mchassis)
+    wld.attach(car.mchassis)
     while not quit
     do
         if api_input_key(API_INPUT_KEY_F10) == 1 then
@@ -74,6 +75,7 @@ function work(mach)
             car.free()
             car = vehicle.alloc(0, -10, 5)
             camc.attach(car.mchassis)
+            wld.attach(car.mchassis)
             while api_input_key(API_INPUT_KEY_F10) == 1 do
                 api_machine_sleep(mach)
             end
@@ -81,6 +83,7 @@ function work(mach)
         car.update()
         camd.update()
         camsw.update()
+        wld.update()
         api_machine_sleep(mach)
     end
     blink.free()

@@ -2,10 +2,11 @@ local M = {}
 
 local util = require 'util'
 
+M.LAND_SIZE_X = 50
+M.LAND_SIZE_Z = 50
+
 local LAND_DEVIATION = 0.1
 local LAND_HEIGHT = 5
-local LAND_SIZE_X = 50
-local LAND_SIZE_Z = 50
 local LAND_WIDTH = 10
 local LAND_LENGTH = 10
 
@@ -16,8 +17,8 @@ local function land_alloc(x, y, z, left, right, front, back)
     local ib = api_ibuf_alloc()
     local width = LAND_WIDTH
     local length = LAND_LENGTH
-    local scalex = LAND_SIZE_X / (width - 1)
-    local scalez = LAND_SIZE_Z / (length - 1)
+    local scalex = M.LAND_SIZE_X / (width - 1)
+    local scalez = M.LAND_SIZE_Z / (length - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
@@ -191,13 +192,13 @@ local function land_alloc(x, y, z, left, right, front, back)
         if left == nil and right == nil and front == nil and back == nil then
             self.land_x, self.land_y, self.land_z = x, y + hcenter, z
         elseif left ~= nil then
-            self.land_x, self.land_y, self.land_z = left.land_x + LAND_SIZE_X, hcenter, left.land_z
+            self.land_x, self.land_y, self.land_z = left.land_x + M.LAND_SIZE_X, hcenter, left.land_z
         elseif right ~= nil then
-            self.land_x, self.land_y, self.land_z = right.land_x - LAND_SIZE_X, hcenter, right.land_z
+            self.land_x, self.land_y, self.land_z = right.land_x - M.LAND_SIZE_X, hcenter, right.land_z
         elseif front ~= nil then
-            self.land_x, self.land_y, self.land_z = front.land_x, hcenter, front.land_z + LAND_SIZE_Z
+            self.land_x, self.land_y, self.land_z = front.land_x, hcenter, front.land_z + M.LAND_SIZE_Z
         elseif back ~= nil then
-            self.land_x, self.land_y, self.land_z = back.land_x, hcenter, back.land_z - LAND_SIZE_Z
+            self.land_x, self.land_y, self.land_z = back.land_x, hcenter, back.land_z - M.LAND_SIZE_Z
         end
         mstart = util.matrix_pos_stop(self.land_x, self.land_y, self.land_z)
     end
