@@ -14,7 +14,7 @@ local machwork = nil
 
 function configure()
     return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
-            ['mpool_counts'] = function() return 10000, 1000,   100,     10,       1,        1 end,
+            ['mpool_counts'] = function() return 10000, 1000,  1000,     10,       1,        1 end,
             ['frame_time'] = 1 / 60,
             ['logic_time'] = 0.01,
             ['gc_step'] = 10,
