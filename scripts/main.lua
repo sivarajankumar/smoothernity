@@ -23,7 +23,7 @@ function configure()
             ['mesh_count'] = 100,
             ['vbuf_size'] = 10000,
             ['vbuf_count'] = 100,
-            ['ibuf_size'] = 10000,
+            ['ibuf_size'] = 100000,
             ['ibuf_count'] = 100,
             ['text_size'] = 100,
             ['text_count'] = 100,
@@ -38,58 +38,68 @@ function configure()
             ['buf_count'] = 100}
 end
 
+local game = {}
+
 function control(mach)
     while machwork == nil do
         api_machine_yield(mach)
     end
     local prf = perf.alloc(mach, machwork)
+    util.set_gravity(0, -10, 0)
+    game.blink = blinker.alloc()
+    game.wld = world.alloc(machwork, 0, -15, -3)
+    game.cbs = cubes.alloc(0, 0, -5)
+    game.car = vehicle.alloc(0, -5, 5)
+    game.camc = camcord.alloc(0, -5, 20)
+    game.camd = camdev.alloc(0, -5, 20)
+    game.camsw = camswitch.alloc(game.camc, game.camd)
+
+    game.camc.attach(game.car.mchassis)
+    game.wld.attach(game.car.mchassis)
+    local pressed = 0
     while not quit
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
         end
+        if pressed == 0 then
+            if api_input_key(API_INPUT_KEY_F10) == 1 then
+                pressed = 1
+                game.cbs.free()
+                game.cbs = cubes.alloc(0, 0, -5)
+                game.car.free()
+                game.car = vehicle.alloc(0, -5, 5)
+                game.camc.attach(game.car.mchassis)
+                game.wld.attach(game.car.mchassis)
+            end
+        elseif pressed == 1 then
+            if api_input_key(API_INPUT_KEY_F10) == 0 then
+                pressed = 0
+            end
+        end
+        game.car.update()
+        game.camd.update()
+        game.camsw.update()
         ddraw.update()
         prf.update()
         api_machine_yield(mach)
     end
     prf.free()
+    game.blink.free()
+    game.wld.free()
+    game.cbs.free()
+    game.car.free()
+    game.camc.free()
+    game.camd.free()
 end
 
 function work(mach)
     machwork = mach
-    util.set_gravity(0, -10, 0)
-    local blink = blinker.alloc()
-    local wld = world.alloc(mach, 0, -15, -3)
-    local cbs = cubes.alloc(0, 0, -5)
-    local car = vehicle.alloc(0, -10, 5)
-    local camc = camcord.alloc(0, -10, 20)
-    local camd = camdev.alloc(0, -10, 20)
-    local camsw = camswitch.alloc(camc, camd)
-    camc.attach(car.mchassis)
-    wld.attach(car.mchassis)
     while not quit
     do
-        if api_input_key(API_INPUT_KEY_F10) == 1 then
-            cbs.free()
-            cbs = cubes.alloc(0, 0, -5)
-            car.free()
-            car = vehicle.alloc(0, -10, 5)
-            camc.attach(car.mchassis)
-            wld.attach(car.mchassis)
-            while api_input_key(API_INPUT_KEY_F10) == 1 do
-                api_machine_sleep(mach)
-            end
+        if game.wld ~= nil then
+            game.wld.update()
         end
-        car.update()
-        camd.update()
-        camsw.update()
-        wld.update()
         api_machine_sleep(mach)
     end
-    blink.free()
-    wld.free()
-    cbs.free()
-    car.free()
-    camc.free()
-    camd.free()
 end

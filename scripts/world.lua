@@ -108,8 +108,6 @@ function M.alloc(mach, x, y, z)
         end
     end
 
-    set_land(0, 0, land.alloc(self, 0, 0))
-
     return self
 end
 
