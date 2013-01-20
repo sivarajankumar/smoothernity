@@ -42,14 +42,28 @@ function M.alloc(world, wz, wx)
         api_mesh_free(mesh)
     end
 
-    local function color(z, x)
+    local function color_noise(z, x)
         local nz = (wz * (LENGTH - 1)) + z
         local nx = (wx * (WIDTH - 1)) + x
         local n = 0
         n = n + 0.9*world.noise.get(nz * 0.1, nx * 0.1)
         n = n + 0.1*world.noise.get(nz * 1, nx * 1)
-        n = util.lerp(n, 0, 1, 0.25, 0.99)
-        return col_r * n, col_g * n, col_b * n, 1
+        return n
+    end
+
+    local function color(z, x)
+        local r = color_noise(z, x)
+        local g = color_noise(z + 30, x + 40)
+        local b = color_noise(z + 100, x - 50)
+        local len = math.sqrt(r*r + g*g + b*b)
+        if len > 0.1 then
+            r = r / len
+            g = g / len
+            b = b / len
+        else
+            r, g, b = 0.1, 0.1, 0.1
+        end
+        return r, g, b, 1
     end
 
     -- height map
