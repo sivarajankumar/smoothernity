@@ -202,7 +202,6 @@ void vehicle_transform(vehicle_t *veh, float *matrix)
     btTransform tm;
     tm.setFromOpenGLMatrix(matrix);
     veh->chassis->proceedToTransform(tm);
-    veh->veh->resetSuspension();
 }
 
 int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
