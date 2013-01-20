@@ -56,6 +56,10 @@ function M.alloc(x, y, z)
 
     function self.attach(mtarget)
         api_vector_mpos(vtgt_center, mtarget)
+        util.vector_copy(vcam_from_smooth, vcam_from)
+        api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
+        util.vector_copy(vcam_to_smooth, vcam_to)
+        api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
     end
 
     api_vector_const(vzero, 0, 0, 0, 0)
