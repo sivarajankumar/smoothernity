@@ -11,6 +11,11 @@ local world = require 'world'
 
 local quit = false
 local machwork = nil
+local game = {}
+
+local START_X = 0
+local START_Y = -15
+local START_Z = 0
 
 function configure()
     return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
@@ -38,8 +43,6 @@ function configure()
             ['buf_count'] = 100}
 end
 
-local game = {}
-
 function control(mach)
     while machwork == nil do
         api_machine_yield(mach)
@@ -55,9 +58,9 @@ function control(mach)
             if api_input_key(API_INPUT_KEY_F10) == 1 then
                 pressed = 1
                 game.cbs.free()
-                game.cbs = cubes.alloc(0, 0, -5)
+                game.cbs = cubes.alloc(START_X, START_Y + 15, START_Z - 5)
                 game.car.free()
-                game.car = vehicle.alloc(0, -5, 5)
+                game.car = vehicle.alloc(START_X, START_Y + 10, START_Z + 5)
                 game.camc.attach(game.car.mchassis)
                 game.wld.attach(game.car.mchassis)
             end
@@ -79,11 +82,11 @@ end
 function work(mach)
     util.set_gravity(0, -10, 0)
     game.blink = blinker.alloc()
-    game.wld = world.alloc(mach, 0, -15, -3)
-    game.cbs = cubes.alloc(0, 0, -5)
-    game.car = vehicle.alloc(0, -5, 5)
-    game.camc = camcord.alloc(0, -5, 20)
-    game.camd = camdev.alloc(0, -5, 20)
+    game.wld = world.alloc(mach, START_X, START_Y, START_Z)
+    game.cbs = cubes.alloc(START_X, START_Y + 15, START_Z - 5)
+    game.car = vehicle.alloc(START_X, START_Y + 10, START_Z + 5)
+    game.camc = camcord.alloc(START_X, START_Y + 10, START_Z + 10)
+    game.camd = camdev.alloc(START_X, START_Y, START_Z)
     game.camsw = camswitch.alloc(game.camc, game.camd)
     game.camc.attach(game.car.mchassis)
     game.wld.attach(game.car.mchassis)

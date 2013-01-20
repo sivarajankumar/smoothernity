@@ -1,5 +1,10 @@
 local M = {}
 
+function M.vector_copy(v, src)
+    local x, y, z, w = api_vector_get(src)
+    api_vector_const(v, x, y, z, w)
+end
+
 function M.spline(t, t1, t2, v0, v1, v2, v3)
     t = (t - t1) / (t2 - t1)
     assert (t >= 0 and t <= 1)

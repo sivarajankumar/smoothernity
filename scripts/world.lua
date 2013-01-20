@@ -14,9 +14,13 @@ function M.alloc(mach, x, y, z)
     self.centx, self.centy, self.centz = x, y, z
     local vplayer = api_vector_alloc()
     local frames = 0
+    local text
     local bound_front, bound_back, bound_left, bound_right
 
     function self.free()
+        if text ~= nil then
+            api_text_free(text)
+        end
         api_vector_free(vplayer)
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
@@ -58,6 +62,10 @@ function M.alloc(mach, x, y, z)
         if frames >= FRAMES then
             frames = 0
             local x, y, z, w = api_vector_get(vplayer)
+            if text ~= nil then
+                api_text_free(text)
+            end
+            text = api_text_alloc(string.format('%.2f, %.2f, %.2f', x, y, z), API_TEXT_FONT_8_BY_13, 20, 20)
             x, y, z = to_grid(x, y, z)
             while x < bound_left do
                 bound_left = bound_left - 1
