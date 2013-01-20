@@ -2,7 +2,7 @@ local M = {}
 
 local util = require 'util'
 
-local LAND_DEVIATION = 1
+local LAND_DEVIATION = 0.1
 local LAND_HEIGHT = 5
 local LAND_SIZE_X = 100
 local LAND_SIZE_Z = 100
@@ -42,10 +42,6 @@ local function land_alloc(x, y, z, left, right, front, back)
 
     local function deviation()
         return (math.random() - 0.5) * LAND_DEVIATION
-    end
-
-    local function corner()
-        return math.random() * LAND_HEIGHT
     end
 
     local function color()
@@ -115,12 +111,6 @@ local function land_alloc(x, y, z, left, right, front, back)
             hmap[z] = {}
         end
 
-        -- init
-        hmap[1][1] = corner()
-        hmap[1][width] = corner()
-        hmap[length][1] = corner()
-        hmap[length][width] = corner()
-
         -- join
         if left then
             for z = 1, length do
@@ -141,6 +131,39 @@ local function land_alloc(x, y, z, left, right, front, back)
             for x = 1, width do
                 hmap[length][x] = back.height_world(1, x)
             end
+        end
+
+        -- corners
+        do
+            local corn_count = 0
+            local corn_sum = 0
+            local function corn_offset()
+                if corn_count > 0 then
+                    return corn_sum / corn_count
+                else
+                    return 0
+                end
+            end
+            local function count_corner(z, x)
+                if hmap[z][x] ~= nil then
+                    corn_count = corn_count + 1
+                    corn_sum = corn_sum + hmap[z][x]
+                end
+            end
+            local function put_corner(z, x)
+                if hmap[z][x] == nil then
+                    hmap[z][x] = corn_offset() + math.random() * LAND_HEIGHT
+                end
+            end
+            count_corner(1, 1)
+            count_corner(1, width)
+            count_corner(length, 1)
+            count_corner(length, width)
+
+            put_corner(1, 1)
+            put_corner(1, width)
+            put_corner(length, 1)
+            put_corner(length, width)
         end
 
         -- fill
