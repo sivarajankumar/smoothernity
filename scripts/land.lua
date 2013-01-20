@@ -35,9 +35,6 @@ function M.alloc(world, mach, cell_z, cell_x)
         api_mesh_free(mesh)
     end
 
-    function self.move(dz, dx)
-    end
-
     local function to_world(z, x)
         return world.centz + (cell_z * (LENGTH - 1) + z) * scalez,
                world.centx + (cell_x * (WIDTH - 1) + x) * scalex

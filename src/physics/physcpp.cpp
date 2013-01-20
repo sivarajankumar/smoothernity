@@ -191,17 +191,6 @@ int physcpp_rb_fetch_tm(int rbi, float *matrix)
 }
 
 extern "C"
-int physcpp_rb_transform(int rbi, float *matrix)
-{
-    rigidbody_t *rb;
-    rb = rigidbody_get(rbi);
-    if (rb == 0)
-        return PHYSRES_INVALID_RB;
-    rigidbody_transform(rb, matrix);
-    return PHYSRES_OK;
-}
-
-extern "C"
 void physcpp_set_gravity(float *v)
 {
     g_physcpp.world->setGravity(btVector3(v[0], v[1], v[2]));

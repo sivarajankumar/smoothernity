@@ -319,37 +319,6 @@ static int api_physics_rb_free(lua_State *lua)
     return 0;
 }
 
-static int api_physics_rb_transform(lua_State *lua)
-{
-    int rbi, res;
-    struct matrix_t *matrix;
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2))
-    {
-        lua_pushstring(lua, "api_physics_rb_transform: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    rbi = lua_tointeger(lua, 1);
-    matrix = matrix_get(lua_tointeger(lua, 2));
-    lua_pop(lua, 2);
-    if (matrix == 0)
-    {
-        lua_pushstring(lua, "api_physics_rb_transform: invalid matrix");
-        lua_error(lua);
-        return 0;
-    }
-    res = physcpp_rb_transform(rbi, matrix->value);
-    if (res != PHYSRES_OK)
-    {
-        fprintf(stderr, physics_error_text(res));
-        lua_pushstring(lua, "api_physics_rb_transform: error");
-        lua_error(lua);
-        return 0;
-    }
-    return 0;
-}
-
 static int api_physics_veh_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
@@ -612,7 +581,6 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
     lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
     lua_register(lua, "api_physics_rb_free", api_physics_rb_free);
-    lua_register(lua, "api_physics_rb_transform", api_physics_rb_transform);
     lua_register(lua, "api_physics_veh_alloc", api_physics_veh_alloc);
     lua_register(lua, "api_physics_veh_free", api_physics_veh_free);
     lua_register(lua, "api_physics_veh_add_wheel", api_physics_veh_add_wheel);

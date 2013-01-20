@@ -35,16 +35,16 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - self.centx) / self.cell_size_x) + 0.5),
-               y - self.centy,
-               math.floor(((z - self.centz) / self.cell_size_z) + 0.5)
+        return math.floor(((x - self.centx - self.movex) / self.cell_size_x) + 0.5),
+               y - self.centy - self.movey,
+               math.floor(((z - self.centz - self.movez) / self.cell_size_z) + 0.5)
     end
 
     function self.attach(mplayer)
         api_vector_mpos(vplayer, mplayer)
         if bound_back == nil or bound_front == nil or bound_left == nil or bound_right == nil then
             local x, y, z, w = api_vector_get(vplayer)
-            x, y, z = to_grid(x + self.movex, y + self.movey, z + self.movez)
+            x, y, z = to_grid(x, y, z)
             bound_back = z + 1
             bound_front = z
             bound_left = x
@@ -152,15 +152,33 @@ function M.alloc(x, y, z)
 
     function self.move(car)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
-            io.write(string.format('moving world by %i, %i\n', move_dz, move_dx))
-            car.move(move_dz * CELL_SIZE_Z, move_dx * CELL_SIZE_X)
-            for z, xs in pairs(lands) do
-                for x, lnd in pairs(xs) do
-                    lnd.move(move_dz * CELL_SIZE_Z, move_dx * CELL_SIZE_X)
-                end
+            io.write(string.format('moving world by %i, %i, %i\n', move_dx, 0, move_dz))
+            move_dz, move_dx = 0, 0
+
+            do
+                local px, py, pz, pw = api_vector_get(vplayer)
+                local gx, gy, gz = to_grid(px, py, pz)
+                io.write(string.format('car before move: (%i, %i, %i), (%i, %i, %i)\n',
+                         px, py, pz, gx, gy, gz))
             end
-            --self.movez = self.movez + move_dz
-            --self.movex = self.movex + move_dx
+
+            do
+                local v = api_vector_alloc()
+                api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
+                --api_physics_move(v)
+                api_vector_free(v)
+            end
+
+            self.movez = self.movez + (move_dz * self.cell_size_z)
+            self.movex = self.movex + (move_dx * self.cell_size_x)
+
+            do
+                local px, py, pz, pw = api_vector_get(vplayer)
+                local gx, gy, gz = to_grid(px, py, pz)
+                io.write(string.format('car after move: (%i, %i, %i), (%i, %i, %i)\n',
+                         px, py, pz, gx, gy, gz))
+            end
+
             move_dz, move_dx = 0, 0
         end
     end
