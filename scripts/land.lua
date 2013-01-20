@@ -16,17 +16,16 @@ local function land_alloc(x, y, z, left, right, front, back)
     local ib = api_ibuf_alloc()
     local width = LAND_WIDTH
     local length = LAND_LENGTH
-    local sizex = LAND_SIZE_X / (width - 1)
-    local sizez = LAND_SIZE_Z / (length - 1)
+    local scalex = LAND_SIZE_X / (width - 1)
+    local scalez = LAND_SIZE_Z / (length - 1)
     local buf = api_buf_alloc()
-    local mstart = util.matrix_pos_stop(x, y, z)
-    local mvis = util.matrix_scl_stop(sizex,1,sizez)
+    local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local hmin, hmax = math.huge, -math.huge
-    local cs, rb, hmap, mesh
+    local cs, rb, hmap, mesh, mstart
     local col_r, col_g, col_b
-    local cell_x, cell_y, cell_z
+    local land_x, land_y, land_z
 
     function self.free()
         api_vbuf_free(vb)
@@ -104,6 +103,12 @@ local function land_alloc(x, y, z, left, right, front, back)
         end
     end
 
+    -- position
+    do
+        land_x, land_y, land_z = x, y, z
+        mstart = util.matrix_pos_stop(land_x, land_y, land_z)
+    end
+
     -- height map
     do
         -- clear
@@ -179,7 +184,7 @@ local function land_alloc(x, y, z, left, right, front, back)
     -- physics
     do
         local size = api_vector_alloc()
-        api_vector_const(size, sizex, 1, sizez, 0)
+        api_vector_const(size, scalex, 1, scalez, 0)
         for x = 0, width - 1 do
             for z = 0, length - 1 do
                 api_buf_set(buf, x + z * width, hmap[z + 1][x + 1])
