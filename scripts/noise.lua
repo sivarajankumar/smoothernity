@@ -21,7 +21,7 @@ function M.alloc()
         local d0x = util.lerp(x - math.floor(x), 0, 1, d00, d01)
         local d1x = util.lerp(x - math.floor(x), 0, 1, d10, d11)
         local dzx = util.lerp(z - math.floor(z), 0, 1, d0x, d1x)
-        return dzx
+        return math.min(1, math.max(0, dzx))
     end
 
     local function get_spline(z, x)
@@ -46,7 +46,7 @@ function M.alloc()
         local d2x = util.spline(x - math.floor(x), 0, 1, d20, d21, d22, d23)
         local d3x = util.spline(x - math.floor(x), 0, 1, d30, d31, d32, d33)
         local dzx = util.spline(z - math.floor(z), 0, 1, d0x, d1x, d2x, d3x)
-        return dzx
+        return math.min(1, math.max(0, dzx))
     end
 
     function self.get(z, x)

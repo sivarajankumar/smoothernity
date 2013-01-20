@@ -59,7 +59,7 @@ function work(mach)
     machwork = mach
     util.set_gravity(0, -10, 0)
     local blink = blinker.alloc()
-    local wld = world.alloc(0, -15, -3)
+    local wld = world.alloc(mach, 0, -15, -3)
     local cbs = cubes.alloc(0, 0, -5)
     local car = vehicle.alloc(0, -10, 5)
     local camc = camcord.alloc(0, -10, 20)
