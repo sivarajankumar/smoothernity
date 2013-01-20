@@ -12,7 +12,6 @@ local LAND_LENGTH = 20
 local function land_alloc(x, y, z, left, right, front, back)
     local self = {}
 
-    local x, y, z = x, y, z
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
     local width = LAND_WIDTH
@@ -27,6 +26,7 @@ local function land_alloc(x, y, z, left, right, front, back)
     local hmin, hmax = math.huge, -math.huge
     local cs, rb, hmap, mesh
     local col_r, col_g, col_b
+    local cell_x, cell_y, cell_z
 
     function self.free()
         api_vbuf_free(vb)
@@ -54,6 +54,12 @@ local function land_alloc(x, y, z, left, right, front, back)
         return col_r * shade, col_g * shade, col_b * shade, 1
     end
 
+    local function refine(z, x, height)
+        if hmap[z][x] == nil then
+            hmap[z][x] = height
+        end
+    end
+
     local function subdivide(x1, z1, x2, z2)
         local zmid = math.floor(0.5 * (z1 + z2))
         local xmid = math.floor(0.5 * (x1 + x2))
@@ -73,25 +79,25 @@ local function land_alloc(x, y, z, left, right, front, back)
         hzmidxmid = hzmidxmid + deviation()
         if x2 - x1 > 1 then
             if z2 - z1 > 1 then
-                hmap[z1][xmid] = hz1xmid
-                hmap[z2][xmid] = hz2xmid
-                hmap[zmid][x1] = hzmidx1
-                hmap[zmid][x2] = hzmidx2
-                hmap[zmid][xmid] = hzmidxmid
+                refine(z1, xmid, hz1xmid)
+                refine(z2, xmid, hz2xmid)
+                refine(zmid, x1, hzmidx1)
+                refine(zmid, x2, hzmidx2)
+                refine(zmid, xmid, hzmidxmid)
                 subdivide(x1, z1, xmid, zmid)
                 subdivide(xmid, z1, x2, zmid)
                 subdivide(x1, zmid, xmid, z2)
                 subdivide(xmid, zmid, x2, z2)
             else
-                hmap[z1][xmid] = hz1xmid
-                hmap[z2][xmid] = hz2xmid
+                refine(z1, xmid, hz1xmid)
+                refine(z2, xmid, hz2xmid)
                 subdivide(x1, z1, xmid, z2)
                 subdivide(xmid, z1, x2, z2)
             end
         else
             if z2 - z1 > 1 then
-                hmap[zmid][x1] = hzmidx1
-                hmap[zmid][x2] = hzmidx2
+                refine(zmid, x1, hzmidx1)
+                refine(zmid, x2, hzmidx2)
                 subdivide(x1, z1, x2, zmid)
                 subdivide(x1, zmid, x2, z2)
             end
