@@ -57,10 +57,11 @@ function M.control(mach)
     car.update()
     camd.update()
     camsw.update()
+    wld.move()
 end
 
 function M.work(mach)
-    wld.update(mach)
+    wld.generate(mach)
 end
 
 return M
