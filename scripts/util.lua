@@ -1,5 +1,18 @@
 local M = {}
 
+function M.spline(t, t1, t2, v0, v1, v2, v3)
+    t = (t - t1) / (t2 - t1)
+    assert (t >= 0 and t <= 1)
+    local tt = t * t
+    local ttt = tt * t
+    local v = 2 * v1
+    v = v + t * (-v0 + v2)
+    v = v + tt * (2*v0 - 5*v1 + 4*v2 - v3)
+    v = v + ttt * (-v0 + 3*v1 - 3*v2 + v3)
+    v = v * 0.5
+    return v
+end
+
 function M.lerp(t, t0, t1, v0, v1)
     return v0 + ((v1 - v0) * (t - t0) / (t1 - t0))
 end
