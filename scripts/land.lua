@@ -134,12 +134,12 @@ local function land_alloc(x, y, z, left, right, front, back)
         end
         if front then
             for x = 1, width do
-                hmap[length][x] = front.height_world(1, x)
+                hmap[1][x] = front.height_world(length, x)
             end
         end
         if back then
             for x = 1, width do
-                hmap[1][x] = back.height_world(length, x)
+                hmap[length][x] = back.height_world(1, x)
             end
         end
 
@@ -172,7 +172,7 @@ local function land_alloc(x, y, z, left, right, front, back)
         elseif right ~= nil then
             self.land_x, self.land_y, self.land_z = right.land_x - LAND_SIZE_X, hcenter, right.land_z
         elseif front ~= nil then
-            self,land_x, self.land_y, self.land_z = front.land_x, hcenter, front.land_z + LAND_SIZE_Z
+            self.land_x, self.land_y, self.land_z = front.land_x, hcenter, front.land_z + LAND_SIZE_Z
         elseif back ~= nil then
             self.land_x, self.land_y, self.land_z = back.land_x, hcenter, back.land_z - LAND_SIZE_Z
         end

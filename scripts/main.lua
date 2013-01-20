@@ -2,12 +2,12 @@ local ddraw = require 'ddraw'
 local perf = require 'perf'
 local util = require 'util'
 local blinker = require 'blinker'
-local land = require 'land'
 local cubes = require 'cubes'
 local vehicle = require 'vehicle'
 local camcord = require 'camera.cord'
 local camdev = require 'camera.dev'
 local camswitch = require 'camera.switcher'
+local world = require 'world'
 
 local quit = false
 local machwork = nil
@@ -35,7 +35,7 @@ function configure()
             ['rigidbody_count'] = 100,
             ['vehicle_count'] = 10,
             ['buf_size'] = 10000,
-            ['buf_count'] = 10}
+            ['buf_count'] = 100}
 end
 
 function control(mach)
@@ -59,7 +59,7 @@ function work(mach)
     machwork = mach
     util.set_gravity(0, -10, 0)
     local blink = blinker.alloc()
-    local lnd = land.alloc_root(0, -15, -3)
+    local wld = world.alloc(0, -15, -3)
     local cbs = cubes.alloc(0, 0, -5)
     local car = vehicle.alloc(0, -10, 5)
     local camc = camcord.alloc(0, -10, 20)
@@ -84,7 +84,7 @@ function work(mach)
         api_machine_sleep(mach)
     end
     blink.free()
-    lnd.free()
+    wld.free()
     cbs.free()
     car.free()
     camc.free()
