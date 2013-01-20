@@ -4,10 +4,10 @@ local util = require 'util'
 
 local LAND_DEVIATION = 0.1
 local LAND_HEIGHT = 5
-local LAND_SIZE_X = 100
-local LAND_SIZE_Z = 100
-local LAND_WIDTH = 20
-local LAND_LENGTH = 20
+local LAND_SIZE_X = 50
+local LAND_SIZE_Z = 50
+local LAND_WIDTH = 10
+local LAND_LENGTH = 10
 
 local function land_alloc(x, y, z, left, right, front, back)
     local self = {}
