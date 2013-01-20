@@ -2,12 +2,12 @@ local M = {}
 
 local util = require 'util'
 
-M.SIZE_X = 200
-M.SIZE_Z = 200
+M.SIZE_X = 50
+M.SIZE_Z = 50
 
 local HEIGHT = 10
-local WIDTH = 80
-local LENGTH = 80
+local WIDTH = 20
+local LENGTH = 20
 local NOISE_SCALE = 0.1
 local NOISE_STEPS = 5
 local NOISE_PROGRESS = 5

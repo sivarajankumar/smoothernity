@@ -45,17 +45,6 @@ function control(mach)
         api_machine_yield(mach)
     end
     local prf = perf.alloc(mach, machwork)
-    util.set_gravity(0, -10, 0)
-    game.blink = blinker.alloc()
-    game.wld = world.alloc(machwork, 0, -15, -3)
-    game.cbs = cubes.alloc(0, 0, -5)
-    game.car = vehicle.alloc(0, -5, 5)
-    game.camc = camcord.alloc(0, -5, 20)
-    game.camd = camdev.alloc(0, -5, 20)
-    game.camsw = camswitch.alloc(game.camc, game.camd)
-
-    game.camc.attach(game.car.mchassis)
-    game.wld.attach(game.car.mchassis)
     local pressed = 0
     while not quit
     do
@@ -85,21 +74,29 @@ function control(mach)
         api_machine_yield(mach)
     end
     prf.free()
+end
+
+function work(mach)
+    util.set_gravity(0, -10, 0)
+    game.blink = blinker.alloc()
+    game.wld = world.alloc(mach, 0, -15, -3)
+    game.cbs = cubes.alloc(0, 0, -5)
+    game.car = vehicle.alloc(0, -5, 5)
+    game.camc = camcord.alloc(0, -5, 20)
+    game.camd = camdev.alloc(0, -5, 20)
+    game.camsw = camswitch.alloc(game.camc, game.camd)
+    game.camc.attach(game.car.mchassis)
+    game.wld.attach(game.car.mchassis)
+    machwork = mach
+    while not quit
+    do
+        game.wld.update()
+        api_machine_sleep(mach)
+    end
     game.blink.free()
     game.wld.free()
     game.cbs.free()
     game.car.free()
     game.camc.free()
     game.camd.free()
-end
-
-function work(mach)
-    machwork = mach
-    while not quit
-    do
-        if game.wld ~= nil then
-            game.wld.update()
-        end
-        api_machine_sleep(mach)
-    end
 end
