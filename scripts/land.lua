@@ -5,9 +5,9 @@ local util = require 'util'
 M.SIZE_X = 50
 M.SIZE_Z = 50
 
-local HEIGHT = 5
-local WIDTH = 40
-local LENGTH = 40
+local HEIGHT = 10
+local WIDTH = 20
+local LENGTH = 20
 local NOISE_SCALE = 0.1
 local NOISE_STEPS = 5
 local NOISE_PROGRESS = 5
@@ -43,9 +43,12 @@ function M.alloc(world, wz, wx)
     end
 
     local function color(z, x)
-        local n = world.noise.get(((wz * LENGTH) + z),
-                                  ((wx * WIDTH) + x),
-                                  1)
+        local nz = (wz * (LENGTH - 1)) + z
+        local nx = (wx * (WIDTH - 1)) + x
+        local n = 0
+        n = n + 0.8*world.noise.get(nz * 0.1, nx * 0.1)
+        n = n + 0.2*world.noise.get(nz * 1, nx * 1)
+        n = util.lerp(n, 0, 1, 0.25, 0.99)
         return col_r * n, col_g * n, col_b * n, 1
     end
 
@@ -58,17 +61,18 @@ function M.alloc(world, wz, wx)
                 local nz = (wz * (LENGTH - 1)) + z
                 local nx = (wx * (WIDTH - 1)) + x
                 local n = 0
-                n = n + world.noise.get(nz * 0.05, nx * 0.05, 1)
-                hmap[z][x] = HEIGHT * (n - 0.5)
+                n = n + 0.9*world.noise.get(nz * 0.05, nx * 0.05)
+                n = n + 0.1*world.noise.get(nz * 0.2, nx * 0.2)
+                hmap[z][x] = util.lerp(n, 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
             end
         end
     end
 
     -- color
     do
-        col_r = world.noise.get(wz, wx, 1)
-        col_g = world.noise.get(wz + 50, wx + 50, 1)
-        col_b = world.noise.get(wz - 30, wx - 30, 1)
+        col_r = world.noise.get(wz, wx)
+        col_g = world.noise.get(wz + 50, wx + 50)
+        col_b = world.noise.get(wz - 30, wx - 30)
         local col_len = math.max(0.01, math.sqrt(col_r*col_r + col_g*col_g + col_b*col_b))
         col_r = col_r / col_len
         col_g = col_g / col_len
