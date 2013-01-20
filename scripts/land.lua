@@ -23,9 +23,9 @@ local function land_alloc(x, y, z, left, right, front, back)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local hmin, hmax = math.huge, -math.huge
-    local cs, rb, hmap, mesh, mstart
+    local cs, rb, hmap, hcenter, mesh, mstart
     local col_r, col_g, col_b
-    local land_x, land_y, land_z
+    self.land_x, self.land_y, self.land_z = 0, 0, 0
 
     function self.free()
         api_vbuf_free(vb)
@@ -59,7 +59,7 @@ local function land_alloc(x, y, z, left, right, front, back)
         end
     end
 
-    local function subdivide(x1, z1, x2, z2)
+    local function subdivide(z1, x1, z2, x2)
         local zmid = math.floor(0.5 * (z1 + z2))
         local xmid = math.floor(0.5 * (x1 + x2))
         local hz1x1 = hmap[z1][x1]
@@ -83,30 +83,28 @@ local function land_alloc(x, y, z, left, right, front, back)
                 refine(zmid, x1, hzmidx1)
                 refine(zmid, x2, hzmidx2)
                 refine(zmid, xmid, hzmidxmid)
-                subdivide(x1, z1, xmid, zmid)
-                subdivide(xmid, z1, x2, zmid)
-                subdivide(x1, zmid, xmid, z2)
-                subdivide(xmid, zmid, x2, z2)
+                subdivide(z1, x1, zmid, xmid)
+                subdivide(z1, xmid, zmid, x2)
+                subdivide(zmid, x1, z2, xmid)
+                subdivide(zmid, xmid, z2, x2)
             else
                 refine(z1, xmid, hz1xmid)
                 refine(z2, xmid, hz2xmid)
-                subdivide(x1, z1, xmid, z2)
-                subdivide(xmid, z1, x2, z2)
+                subdivide(z1, x1, z2, xmid)
+                subdivide(z1, xmid, z2, x2)
             end
         else
             if z2 - z1 > 1 then
                 refine(zmid, x1, hzmidx1)
                 refine(zmid, x2, hzmidx2)
-                subdivide(x1, z1, x2, zmid)
-                subdivide(x1, zmid, x2, z2)
+                subdivide(z1, x1, zmid, x2)
+                subdivide(zmid, x1, z2, x2)
             end
         end
     end
 
-    -- position
-    do
-        land_x, land_y, land_z = x, y, z
-        mstart = util.matrix_pos_stop(land_x, land_y, land_z)
+    function self.height_world(z, x)
+        return hmap[z][x] + self.land_y
     end
 
     -- height map
@@ -117,12 +115,36 @@ local function land_alloc(x, y, z, left, right, front, back)
             hmap[z] = {}
         end
 
-        -- fill
+        -- init
         hmap[1][1] = corner()
         hmap[1][width] = corner()
         hmap[length][1] = corner()
         hmap[length][width] = corner()
-        subdivide(1, 1, width, length)
+
+        -- join
+        if left then
+            for z = 1, length do
+                hmap[z][1] = left.height_world(z, width)
+            end
+        end
+        if right then
+            for z = 1, length do
+                hmap[z][width] = right.height_world(z, 1)
+            end
+        end
+        if front then
+            for x = 1, width do
+                hmap[length][x] = front.height_world(1, x)
+            end
+        end
+        if back then
+            for x = 1, width do
+                hmap[1][x] = back.height_world(length, x)
+            end
+        end
+
+        -- fill
+        subdivide(1, 1, length, width)
 
         -- shift
         for z = 1, length do
@@ -131,14 +153,30 @@ local function land_alloc(x, y, z, left, right, front, back)
                 hmax = math.max(hmax, hmap[z][x])
             end
         end
-        local center = 0.5 * (hmax + hmin)
+        hcenter = 0.5 * (hmax + hmin)
         for z = 1, length do
             for x = 1, width do
-                hmap[z][x] = hmap[z][x] - center
+                hmap[z][x] = hmap[z][x] - hcenter
             end
         end
-        hmin = -center
-        hmax = center
+        hmin = hmin - hcenter
+        hmax = hmax - hcenter
+    end
+
+    -- position
+    do
+        if left == nil and right == nil and front == nil and back == nil then
+            self.land_x, self.land_y, self.land_z = x, y + hcenter, z
+        elseif left ~= nil then
+            self.land_x, self.land_y, self.land_z = left.land_x + LAND_SIZE_X, hcenter, left.land_z
+        elseif right ~= nil then
+            self.land_x, self.land_y, self.land_z = right.land_x - LAND_SIZE_X, hcenter, right.land_z
+        elseif front ~= nil then
+            self,land_x, self.land_y, self.land_z = front.land_x, hcenter, front.land_z + LAND_SIZE_Z
+        elseif back ~= nil then
+            self.land_x, self.land_y, self.land_z = back.land_x, hcenter, back.land_z - LAND_SIZE_Z
+        end
+        mstart = util.matrix_pos_stop(self.land_x, self.land_y, self.land_z)
     end
 
     -- color
