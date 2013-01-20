@@ -12,6 +12,7 @@ function M.alloc(x, y, z)
 
     self.noise = noise.alloc()
     self.centx, self.centy, self.centz = x, y, z
+    self.movex, self.movey, self.movez = 0, 0, 0
     self.cell_size_x = CELL_SIZE_X
     self.cell_size_z = CELL_SIZE_Z
     local vplayer = api_vector_alloc()
@@ -43,7 +44,7 @@ function M.alloc(x, y, z)
         api_vector_mpos(vplayer, mplayer)
         if bound_back == nil or bound_front == nil or bound_left == nil or bound_right == nil then
             local x, y, z, w = api_vector_get(vplayer)
-            x, y, z = to_grid(x, y, z)
+            x, y, z = to_grid(x + self.movex, y + self.movey, z + self.movez)
             bound_back = z + 1
             bound_front = z
             bound_left = x
@@ -67,76 +68,99 @@ function M.alloc(x, y, z)
     end
 
     function self.generate(mach)
+        local gx, gy, gz
+
         if move_dz ~= 0 or move_dx ~= 0 then
             return
         end
         generating = true
-        local px, py, pz, pw = api_vector_get(vplayer)
-        if text ~= nil then
-            api_text_free(text)
-        end
-        local gx, gy, gz = to_grid(px, py, pz)
-        text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)',
-                                            px, py, pz, gx, gy, gz),
-                              API_TEXT_FONT_8_BY_13, 20, 40)
-        while gx < bound_left do
-            move_dx = move_dx - 1
-            bound_left = bound_left - 1
-            bound_right = bound_right - 1
-        end
-        while gx > bound_right do
-            move_dx = move_dx + 1
-            bound_left = bound_left + 1
-            bound_right = bound_right + 1
-        end
-        while gz < bound_front do
-            move_dz = move_dz - 1
-            bound_back = bound_back - 1
-            bound_front = bound_front - 1
-        end
-        while gz > bound_back do
-            move_dz = move_dz + 1
-            bound_back = bound_back + 1
-            bound_front = bound_front + 1
-        end
-        add_land(mach, gz, gx)
-        for z = bound_front, bound_back do
-            for x = bound_left, bound_right do
-                add_land(mach, z, x)
+
+        -- align
+        do
+            local px, py, pz, pw = api_vector_get(vplayer)
+            if text ~= nil then
+                api_text_free(text)
+            end
+            gx, gy, gz = to_grid(px, py, pz)
+            text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)',
+                                                px, py, pz, gx, gy, gz),
+                                  API_TEXT_FONT_8_BY_13, 20, 40)
+            while gx < bound_left do
+                move_dx = move_dx + 1
+                bound_left = bound_left - 1
+                bound_right = bound_right - 1
+            end
+            while gx > bound_right do
+                move_dx = move_dx - 1
+                bound_left = bound_left + 1
+                bound_right = bound_right + 1
+            end
+            while gz < bound_front do
+                move_dz = move_dz + 1
+                bound_back = bound_back - 1
+                bound_front = bound_front - 1
+            end
+            while gz > bound_back do
+                move_dz = move_dz - 1
+                bound_back = bound_back + 1
+                bound_front = bound_front + 1
             end
         end
-        for z = bound_front - 1, bound_back + 1 do
-            for x = bound_left - 1, bound_right + 1 do
-                add_land(mach, z, x)
-            end
-        end
-        for z, xs in pairs(lands) do
-            if (z < bound_front - 1) or (z > bound_back + 1) then
-                for x, lnd in pairs(xs) do
-                    lnd.free()
-                end
-                lands[z] = nil
-            else
-                local empty = true
-                for x, lnd in pairs(xs) do
-                    if (x < bound_left - 1) or (x > bound_right + 1) then
+
+        -- clear
+        do
+            for z, xs in pairs(lands) do
+                if (z < bound_front - 1) or (z > bound_back + 1) then
+                    for x, lnd in pairs(xs) do
                         lnd.free()
-                        xs[x] = nil
-                    else
-                        empty = false
+                    end
+                    lands[z] = nil
+                else
+                    local empty = true
+                    for x, lnd in pairs(xs) do
+                        if (x < bound_left - 1) or (x > bound_right + 1) then
+                            lnd.free()
+                            xs[x] = nil
+                        else
+                            empty = false
+                        end
+                    end
+                    if empty == true then
+                        lands[z] = nil
                     end
                 end
-                if empty == true then
-                    lands[z] = nil
+            end
+        end
+
+        -- generate
+        do
+            add_land(mach, gz, gx)
+            for z = bound_front, bound_back do
+                for x = bound_left, bound_right do
+                    add_land(mach, z, x)
+                end
+            end
+            for z = bound_front - 1, bound_back + 1 do
+                for x = bound_left - 1, bound_right + 1 do
+                    add_land(mach, z, x)
                 end
             end
         end
+
         generating = false
     end
 
-    function self.move()
+    function self.move(car)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
             io.write(string.format('moving world by %i, %i\n', move_dz, move_dx))
+            car.move(move_dz * CELL_SIZE_Z, move_dx * CELL_SIZE_X)
+            for z, xs in pairs(lands) do
+                for x, lnd in pairs(xs) do
+                    lnd.move(move_dz * CELL_SIZE_Z, move_dx * CELL_SIZE_X)
+                end
+            end
+            --self.movez = self.movez + move_dz
+            --self.movex = self.movex + move_dx
             move_dz, move_dx = 0, 0
         end
     end

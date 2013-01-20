@@ -17,9 +17,9 @@ function M.alloc(world, mach, cell_z, cell_x)
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
-    local mstart = util.matrix_pos_stop(world.centx + cell_x * world.cell_size_x,
-                                        world.centy,
-                                        world.centz + cell_z * world.cell_size_z)
+    local mstart = util.matrix_pos_stop(world.centx + world.movex + cell_x * world.cell_size_x,
+                                        world.centy + world.movey,
+                                        world.centz + world.movez + cell_z * world.cell_size_z)
     local cs, rb, hmap, mesh
 
     function self.free()
@@ -33,6 +33,9 @@ function M.alloc(world, mach, cell_z, cell_x)
         api_physics_cs_free(cs)
         api_buf_free(buf)
         api_mesh_free(mesh)
+    end
+
+    function self.move(dz, dx)
     end
 
     local function to_world(z, x)

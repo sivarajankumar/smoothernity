@@ -57,7 +57,7 @@ function M.control(mach)
     car.update()
     camd.update()
     camsw.update()
-    wld.move()
+    wld.move(car)
 end
 
 function M.work(mach)
