@@ -3,12 +3,17 @@ local M = {}
 local land = require 'land' 
 local noise = require 'noise'
 
+local CELL_SIZE_X = 50
+local CELL_SIZE_Z = 50
+
 function M.alloc(x, y, z)
     local self = {}
     local lands = {}
 
     self.noise = noise.alloc()
     self.centx, self.centy, self.centz = x, y, z
+    self.cell_size_x = CELL_SIZE_X
+    self.cell_size_z = CELL_SIZE_Z
     local vplayer = api_vector_alloc()
     local frames = 0
     local text
@@ -27,9 +32,9 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - self.centx) / land.SIZE_X) + 0.5),
+        return math.floor(((x - self.centx) / self.cell_size_x) + 0.5),
                y - self.centy,
-               math.floor(((z - self.centz) / land.SIZE_Z) + 0.5)
+               math.floor(((z - self.centz) / self.cell_size_z) + 0.5)
     end
 
     function self.attach(mplayer)

@@ -10,7 +10,7 @@ function M.alloc()
     local data = {}
 
     local function pick(z, x)
-        return data[math.floor(z % LENGTH)][math.floor(x % WIDTH)]
+        return data[math.floor(z) % LENGTH][math.floor(x) % WIDTH]
     end
 
     local function get_lerp(z, x)
