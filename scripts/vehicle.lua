@@ -78,6 +78,9 @@ function M.alloc(x, y, z)
         api_physics_cs_free(cs)
     end
 
+    function self.move(dz, dx)
+    end
+
     function self.update()
         -- controls
         do
