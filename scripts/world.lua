@@ -3,11 +3,10 @@ local M = {}
 local land = require 'land' 
 local noise = require 'noise'
 
-function M.alloc(mach, x, y, z)
+function M.alloc(x, y, z)
     local self = {}
     local lands = {}
 
-    self.mach = mach
     self.noise = noise.alloc()
     self.centx, self.centy, self.centz = x, y, z
     local vplayer = api_vector_alloc()
@@ -49,22 +48,24 @@ function M.alloc(mach, x, y, z)
         end
     end
 
-    local function add_land(z, x)
+    local function add_land(mach, z, x)
         if lands[z] == nil then
             lands[z] = {}
         end
         if lands[z][x] == nil then
-            lands[z][x] = land.alloc(self, z, x)
+            lands[z][x] = land.alloc(self, mach, z, x)
         end
     end
 
-    function self.update()
+    function self.update(mach)
         local px, py, pz, pw = api_vector_get(vplayer)
         if text ~= nil then
             api_text_free(text)
         end
         local gx, gy, gz = to_grid(px, py, pz)
-        text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)', px, py, pz, gx, gy, gz), API_TEXT_FONT_8_BY_13, 20, 40)
+        text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)',
+                                            px, py, pz, gx, gy, gz),
+                              API_TEXT_FONT_8_BY_13, 20, 40)
         while gx < bound_left do
             bound_left = bound_left - 1
             bound_right = bound_right - 1
@@ -81,15 +82,15 @@ function M.alloc(mach, x, y, z)
             bound_back = bound_back - 1
             bound_front = bound_front - 1
         end
-        add_land(gz, gx)
+        add_land(mach, gz, gx)
         for z = bound_front, bound_back do
             for x = bound_left, bound_right do
-                add_land(z, x)
+                add_land(mach, z, x)
             end
         end
         for z = bound_front - 1, bound_back + 1 do
             for x = bound_left - 1, bound_right + 1 do
-                add_land(z, x)
+                add_land(mach, z, x)
             end
         end
         for z, xs in pairs(lands) do
