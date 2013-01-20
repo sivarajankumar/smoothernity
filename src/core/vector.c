@@ -102,6 +102,36 @@ static int api_vector_left(lua_State *lua)
     return 1;
 }
 
+static int api_vector_get(lua_State *lua)
+{
+    struct vector_t *vector;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_vector_get: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
+    if (vector == 0)
+    {
+        lua_pushstring(lua, "api_vector_get: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_update(vector, 0, 0, 1);
+
+    lua_pushnumber(lua, vector->value[0]);
+    lua_pushnumber(lua, vector->value[1]);
+    lua_pushnumber(lua, vector->value[2]);
+    lua_pushnumber(lua, vector->value[3]);
+    return 4;
+}
+
 static int api_vector_const(lua_State *lua)
 {
     struct vector_t *vector;
@@ -485,6 +515,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_alloc", api_vector_alloc);
     lua_register(lua, "api_vector_free", api_vector_free);
     lua_register(lua, "api_vector_left", api_vector_left);
+    lua_register(lua, "api_vector_get", api_vector_get);
     lua_register(lua, "api_vector_const", api_vector_const);
     lua_register(lua, "api_vector_rubber", api_vector_rubber);
     lua_register(lua, "api_vector_wsum", api_vector_wsum);
