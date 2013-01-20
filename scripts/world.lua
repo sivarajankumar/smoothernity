@@ -18,6 +18,8 @@ function M.alloc(x, y, z)
     local frames = 0
     local text
     local bound_front, bound_back, bound_left, bound_right
+    local generating = false
+    local move_dz, move_dx = 0, 0
 
     function self.free()
         if text ~= nil then
@@ -62,7 +64,11 @@ function M.alloc(x, y, z)
         end
     end
 
-    function self.update(mach)
+    function self.generate(mach)
+        if wanna_move then
+            return
+        end
+        generating = true
         local px, py, pz, pw = api_vector_get(vplayer)
         if text ~= nil then
             api_text_free(text)
@@ -72,20 +78,24 @@ function M.alloc(x, y, z)
                                             px, py, pz, gx, gy, gz),
                               API_TEXT_FONT_8_BY_13, 20, 40)
         while gx < bound_left do
+            move_dx = move_dx - 1
             bound_left = bound_left - 1
             bound_right = bound_right - 1
         end
         while gx > bound_right do
+            move_dx = move_dx + 1
             bound_left = bound_left + 1
             bound_right = bound_right + 1
         end
-        while gz > bound_back do
-            bound_back = bound_back + 1
-            bound_front = bound_front + 1
-        end
         while gz < bound_front do
+            move_dz = move_dz - 1
             bound_back = bound_back - 1
             bound_front = bound_front - 1
+        end
+        while gz > bound_back do
+            move_dz = move_dz + 1
+            bound_back = bound_back + 1
+            bound_front = bound_front + 1
         end
         add_land(mach, gz, gx)
         for z = bound_front, bound_back do
@@ -118,6 +128,14 @@ function M.alloc(x, y, z)
                     lands[z] = nil
                 end
             end
+        end
+        generating = false
+    end
+
+    function self.move()
+        if (move_dz ~= 0 or move_dx ~= 0) and not generating then
+            io.write(string.format('moving world by %i, %i\n', move_dz, move_dx))
+            move_dz, move_dx = 0, 0
         end
     end
 
