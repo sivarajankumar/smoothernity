@@ -12,7 +12,7 @@ local NOISE_SCALE = 0.1
 local NOISE_STEPS = 5
 local NOISE_PROGRESS = 5
 
-function M.alloc(world, wz, wx)
+function M.alloc(world, mach, wz, wx)
     local self = {}
 
     local vb = api_vbuf_alloc()
@@ -78,7 +78,7 @@ function M.alloc(world, wz, wx)
                 n = n + 0.9*world.noise.get(nz * 0.05, nx * 0.05)
                 n = n + 0.1*world.noise.get(nz * 0.2, nx * 0.2)
                 hmap[z][x] = util.lerp(n, 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
-                api_machine_yield(world.mach)
+                api_machine_yield(mach)
             end
         end
     end
@@ -105,7 +105,7 @@ function M.alloc(world, wz, wx)
                              z - 0.5 * (LENGTH - 1),
                              r, g, b, a,
                              0, 0)
-                api_machine_yield(world.mach)
+                api_machine_yield(mach)
             end
         end
         api_vbuf_bake(vb)
@@ -121,7 +121,7 @@ function M.alloc(world, wz, wx)
                 local i11 = (x + 1) + (z + 1) * WIDTH
                 local i = (x + z * (WIDTH - 1)) * 6
                 api_ibuf_set(ib, i,  i00,i01,i10,  i10,i01,i11)
-                api_machine_yield(world.mach)
+                api_machine_yield(mach)
             end
         end
         api_ibuf_bake(ib)
@@ -134,7 +134,7 @@ function M.alloc(world, wz, wx)
         for z = 0, LENGTH - 1 do
             for x = 0, WIDTH - 1 do
                 api_buf_set(buf, x + z * WIDTH, hmap[z][x])
-                api_machine_yield(world.mach)
+                api_machine_yield(mach)
             end
         end
         cs = api_physics_cs_alloc_hmap(buf, 0, WIDTH, LENGTH, -0.5 * HEIGHT, 0.5 * HEIGHT, size)
