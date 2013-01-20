@@ -2,12 +2,12 @@ local M = {}
 
 local util = require 'util'
 
-M.SIZE_X = 50
-M.SIZE_Z = 50
+M.SIZE_X = 200
+M.SIZE_Z = 200
 
 local HEIGHT = 10
-local WIDTH = 20
-local LENGTH = 20
+local WIDTH = 80
+local LENGTH = 80
 local NOISE_SCALE = 0.1
 local NOISE_STEPS = 5
 local NOISE_PROGRESS = 5
@@ -46,8 +46,8 @@ function M.alloc(world, wz, wx)
         local nz = (wz * (LENGTH - 1)) + z
         local nx = (wx * (WIDTH - 1)) + x
         local n = 0
-        n = n + 0.8*world.noise.get(nz * 0.1, nx * 0.1)
-        n = n + 0.2*world.noise.get(nz * 1, nx * 1)
+        n = n + 0.9*world.noise.get(nz * 0.1, nx * 0.1)
+        n = n + 0.1*world.noise.get(nz * 1, nx * 1)
         n = util.lerp(n, 0, 1, 0.25, 0.99)
         return col_r * n, col_g * n, col_b * n, 1
     end
