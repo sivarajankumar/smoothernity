@@ -1,5 +1,9 @@
 local M = {}
 
+function M.lerp(t, t0, t1, v0, v1)
+    return v0 + ((v1 - v0) * (t - t0) / (t1 - t0))
+end
+
 function M.set_gravity(x, y, z)
     local grav = api_vector_alloc()
     api_vector_const(grav, x, y, z, 0)

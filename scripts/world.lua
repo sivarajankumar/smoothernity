@@ -1,6 +1,7 @@
 local M = {}
 
-local land = require('land')
+local land = require 'land' 
+local noise = require 'noise'
 
 local FRAMES = 10
 
@@ -8,8 +9,9 @@ function M.alloc(x, y, z)
     local self = {}
     local lands = {}
 
+    self.noise = noise.alloc()
+    self.centx, self.centy, self.centz = x, y, z
     local vplayer = api_vector_alloc()
-    local centx, centy, centz = x, y, z
     local frames = 0
     local bound_front, bound_back, bound_left, bound_right
 
@@ -23,9 +25,9 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - centx) / land.LAND_SIZE_X) - 0.5),
-               y - centy,
-               math.floor(((z - centz) / land.LAND_SIZE_Z) - 0.5)
+        return math.floor(((x - self.centx) / land.SIZE_X) + 0.5),
+               y - self.centy,
+               math.floor(((z - self.centz) / land.SIZE_Z) + 0.5)
     end
 
     function self.attach(mplayer)
@@ -49,16 +51,6 @@ function M.alloc(x, y, z)
             lands[z] = {}
         end
         lands[z][x] = lnd
-    end
-
-    local function add_land(z, x)
-        local left = get_land(z, x - 1)
-        local right = get_land(z, x + 1)
-        local front = get_land(z - 1, x)
-        local back = get_land(z + 1, x)
-        if left ~= nil or right ~= nil or front ~= nil or back ~= nil then
-            set_land(z, x, land.alloc_join(left, right, front, back))
-        end
     end
 
     function self.update()
@@ -85,7 +77,7 @@ function M.alloc(x, y, z)
             for z = bound_front - 1, bound_back + 1 do
                 for x = bound_left - 1, bound_right + 1 do
                     if get_land(z, x) == nil then
-                        add_land(z, x)
+                        set_land(z, x, land.alloc(self, z, x))
                     end
                 end
             end
@@ -115,7 +107,7 @@ function M.alloc(x, y, z)
         end
     end
 
-    set_land(-1, -1, land.alloc_root(centx, centy, centz))
+    set_land(0, 0, land.alloc(self, 0, 0))
 
     return self
 end
