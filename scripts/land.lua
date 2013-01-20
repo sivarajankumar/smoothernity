@@ -14,20 +14,23 @@ local function land_alloc(x, y, z, left, right, front, back)
 
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local cs
-    local rb
     local width = LAND_WIDTH
     local length = LAND_HEIGHT
     local scalex = LAND_SIZE_X / (width - 1)
     local scaley = LAND_SIZE_Y
     local scalez = LAND_SIZE_Z / (length - 1)
-    local hmap
     local buf = api_buf_alloc()
     local mstart = util.matrix_pos_stop(x, y, z)
     local mvis = util.matrix_pos_scl_stop(0,0,0, scalex,scaley,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
-    local mesh
+    local hmin, hmax = math.huge, -math.huge
+    local cs, rb, hmap, mesh
+    local col_r, col_g, col_b = math.random(), math.random(), math.random()
+    col_len = math.max(0.01, math.sqrt(col_r*col_r + col_g*col_g + col_b*col_b))
+    col_r = col_r / col_len
+    col_g = col_g / col_len
+    col_b = col_b / col_len
 
     function self.free()
         api_vbuf_free(vb)
@@ -51,7 +54,8 @@ local function land_alloc(x, y, z, left, right, front, back)
     end
 
     local function color()
-        return math.random(), math.random(), math.random(), 1
+        local shade = math.random()
+        return col_r * shade, col_g * shade, col_b * shade, 1
     end
 
     local function subdivide(x1, z1, x2, z2)
@@ -117,8 +121,6 @@ local function land_alloc(x, y, z, left, right, front, back)
         subdivide(1, 1, width, length)
 
         -- normalize
-        local hmin = math.huge
-        local hmax = -math.huge
         for z = 1, length do
             for x = 1, width do
                 hmin = math.min(hmin, hmap[z][x])
