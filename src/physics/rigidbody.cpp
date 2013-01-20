@@ -131,10 +131,3 @@ void rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
 {
     rb->mstate->m.getOpenGLMatrix(matrix);
 }
-
-void rigidbody_transform(rigidbody_t *rb, float *matrix)
-{
-    btTransform tm;
-    tm.setFromOpenGLMatrix(matrix);
-    rb->body->proceedToTransform(tm);
-}

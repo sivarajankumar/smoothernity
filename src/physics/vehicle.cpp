@@ -201,7 +201,8 @@ void vehicle_transform(vehicle_t *veh, float *matrix)
 {
     btTransform tm;
     tm.setFromOpenGLMatrix(matrix);
-    veh->chassis->proceedToTransform(tm);
+    veh->chassis->setWorldTransform(tm);
+    veh->mstate->m.setFromOpenGLMatrix(matrix);
 }
 
 int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
