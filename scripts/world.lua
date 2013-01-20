@@ -5,10 +5,11 @@ local noise = require 'noise'
 
 local FRAMES = 10
 
-function M.alloc(x, y, z)
+function M.alloc(mach, x, y, z)
     local self = {}
     local lands = {}
 
+    self.mach = mach
     self.noise = noise.alloc()
     self.centx, self.centy, self.centz = x, y, z
     local vplayer = api_vector_alloc()
