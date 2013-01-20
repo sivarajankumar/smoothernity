@@ -14,7 +14,7 @@ local machwork = nil
 local game = {}
 
 local START_X = 0
-local START_Y = -15
+local START_Y = 0
 local START_Z = 0
 
 function configure()
