@@ -1,5 +1,7 @@
 local M = {}
 
+local util = require 'util'
+
 CORD_MIN = 20
 CORD_MAX = 20
 FROM_OFFSET_Y = 5
@@ -75,10 +77,12 @@ function M.alloc(x, y, z)
     api_vector_cord(vcam_from_xz, vtgt_center_xz, CORD_MIN, CORD_MAX)
     api_vector_wsum(vcam_from_y, vcam_ofs_weights, vtgt_center, vcam_from_ofs, vzero, vzero)
     api_vector_pick(vcam_from, vcam_from_xz, vcam_from_y, vcam_from_xz, vzero)
+    util.vector_copy(vcam_from_smooth, vcam_from)
     api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
 
     api_vector_wsum(vcam_to_y, vcam_ofs_weights, vtgt_center, vcam_to_ofs, vzero, vzero)
     api_vector_pick(vcam_to, vtgt_center_xz, vcam_to_y, vtgt_center_xz, vzero)
+    util.vector_copy(vcam_to_smooth, vcam_to)
     api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
 
     api_matrix_from_to_up(self.matrix, vcam_from_smooth, vcam_to_smooth, vup)
