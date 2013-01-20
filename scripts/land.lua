@@ -21,7 +21,7 @@ local function land_alloc(x, y, z, left, right, front, back)
     local sizez = LAND_SIZE_Z / (length - 1)
     local buf = api_buf_alloc()
     local mstart = util.matrix_pos_stop(x, y, z)
-    local mvis = util.matrix_pos_scl_stop(0,0,0, sizex,1,sizez)
+    local mvis = util.matrix_scl_stop(sizex,1,sizez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local hmin, hmax = math.huge, -math.huge
