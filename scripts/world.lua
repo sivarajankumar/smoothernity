@@ -43,6 +43,7 @@ function M.alloc(x, y, z)
     function self.attach(mplayer)
         api_vector_mpos(vplayer, mplayer)
         if bound_back == nil or bound_front == nil or bound_left == nil or bound_right == nil then
+            api_vector_update(vplayer)
             local x, y, z, w = api_vector_get(vplayer)
             x, y, z = to_grid(x, y, z)
             bound_back = z + 1
@@ -77,6 +78,7 @@ function M.alloc(x, y, z)
 
         -- align
         do
+            api_vector_update(vplayer)
             local px, py, pz, pw = api_vector_get(vplayer)
             if text ~= nil then
                 api_text_free(text)
@@ -150,33 +152,17 @@ function M.alloc(x, y, z)
         generating = false
     end
 
-    function self.move(car)
+    function self.move(car, camc)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
-            io.write(string.format('moving world by %i, %i, %i\n', move_dx, 0, move_dz))
-
-            do
-                local px, py, pz, pw = api_vector_get(vplayer)
-                local gx, gy, gz = to_grid(px, py, pz)
-                io.write(string.format('car before move: (%i, %i, %i), (%i, %i, %i)\n',
-                         px, py, pz, gx, gy, gz))
-            end
-
-            do
-                local v = api_vector_alloc()
-                api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
-                api_physics_move(v)
-                api_vector_free(v)
-            end
+            local v = api_vector_alloc()
+            api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
+            api_physics_move(v)
+            car.move(v)
+            camc.move(v)
+            api_vector_free(v)
 
             self.movez = self.movez + (move_dz * self.cell_size_z)
             self.movex = self.movex + (move_dx * self.cell_size_x)
-
-            do
-                local px, py, pz, pw = api_vector_get(vplayer)
-                local gx, gy, gz = to_grid(px, py, pz)
-                io.write(string.format('car after move: (%i, %i, %i), (%i, %i, %i)\n',
-                         px, py, pz, gx, gy, gz))
-            end
 
             move_dz, move_dx = 0, 0
         end

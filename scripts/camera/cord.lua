@@ -55,8 +55,11 @@ function M.alloc(x, y, z)
     end
 
     local function reset_rubber()
+        api_vector_update(vcam_from)
         util.vector_copy(vcam_from_smooth, vcam_from)
         api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
+
+        api_vector_update(vcam_to)
         util.vector_copy(vcam_to_smooth, vcam_to)
         api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
     end
@@ -64,6 +67,15 @@ function M.alloc(x, y, z)
     function self.attach(mtarget)
         api_vector_mpos(vtgt_center, mtarget)
         reset_rubber()
+    end
+
+    function self.move(vofs)
+        util.vector_move(vcam_from_smooth, vofs)
+        util.vector_move(vcam_to_smooth, vofs)
+        util.vector_move(vcam_from_xz, vofs)
+        api_vector_cord(vcam_from_xz, vtgt_center_xz, CORD_MIN, CORD_MAX)
+        api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
+        api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
     end
 
     api_vector_const(vzero, 0, 0, 0, 0)

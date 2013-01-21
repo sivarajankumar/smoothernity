@@ -195,12 +195,35 @@ static int api_matrix_stop(lua_State *lua)
         return 0;
     }
 
-    matrix_update(matrix, 0, 0, 1);
-
     matrix_clear_args(matrix);
     matrix->frame_tag = 0;
     matrix->type = MATRIX_CONST;
 
+    return 0;
+}
+
+static int api_matrix_update(lua_State *lua)
+{
+    struct matrix_t *matrix;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_matrix_update: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_matrix_stop: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_update(matrix, 0, 0, 1);
     return 0;
 }
 
@@ -270,8 +293,6 @@ static int api_matrix_mul_stop(lua_State *lua)
         return 0;
     }
 
-    matrix_update(m0, 0, 0, 1);
-    matrix_update(m1, 0, 0, 1);
     matrix_mul(m, m0->value, m1->value);
 
     matrix_clear_args(matrix);
@@ -578,6 +599,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_const", api_matrix_const);
     lua_register(lua, "api_matrix_copy", api_matrix_copy);
     lua_register(lua, "api_matrix_stop", api_matrix_stop);
+    lua_register(lua, "api_matrix_update", api_matrix_update);
     lua_register(lua, "api_matrix_inv", api_matrix_inv);
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
     lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
