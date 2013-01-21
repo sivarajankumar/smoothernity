@@ -165,7 +165,7 @@ function M.alloc(x, y, z)
             do
                 local v = api_vector_alloc()
                 api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
-                --api_physics_move(v)
+                api_physics_move(v)
                 api_vector_free(v)
             end
 

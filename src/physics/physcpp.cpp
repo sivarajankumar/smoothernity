@@ -122,6 +122,11 @@ void physcpp_ddraw_set_mode(int mode)
 }
 
 extern "C"
+void physcpp_move(float *offset)
+{
+}
+
+extern "C"
 int physcpp_cs_alloc_box(int *csi, float mass, float *size)
 {
     *csi = colshape_alloc();
