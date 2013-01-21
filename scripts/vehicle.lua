@@ -78,6 +78,12 @@ function M.alloc(x, y, z)
         api_physics_cs_free(cs)
     end
 
+    function self.move(vofs)
+        local x, y, z, w = api_vector_get(vofs)
+        util.matrix_move(mrecov, x, y, z)
+        util.matrix_move(mrecov_next, x, y, z)
+    end
+
     function self.update()
         -- controls
         do
@@ -155,6 +161,7 @@ function M.alloc(x, y, z)
                 recov_frames = 0
                 api_matrix_copy(mrecov, mrecov_next)
                 api_matrix_copy(mrecov_next, mchassis_phys)
+                api_matrix_update(mrecov_next)
                 util.matrix_move(mrecov_next, 0, RECOVERY_OFS_Y, 0)
             end
             if recov_pressed == 0 then
@@ -241,6 +248,7 @@ function M.alloc(x, y, z)
             api_matrix_mul(mwheel[i], mwheel_physic[i], mwheel_local)
         end
         api_matrix_copy(mrecov, mchassis_phys)
+        api_matrix_update(mrecov)
         api_matrix_stop(mrecov)
     end
 

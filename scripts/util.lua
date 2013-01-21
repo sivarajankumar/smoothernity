@@ -5,6 +5,12 @@ function M.vector_copy(v, src)
     api_vector_const(v, x, y, z, w)
 end
 
+function M.vector_move(v, vofs)
+    local x, y, z, w = api_vector_get(v)
+    local dx, dy, dz, dw = api_vector_get(vofs)
+    api_vector_const(v, x + dx, y + dy, z + dz, w + dw)
+end
+
 function M.spline(t, t1, t2, v0, v1, v2, v3)
     t = (t - t1) / (t2 - t1)
     assert (t >= 0 and t <= 1)
@@ -46,6 +52,7 @@ function M.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     api_vector_const(scl, sx, sy, sz, 0)
     api_vector_const(rot, angle, 0, 0, 0)
     api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
+    api_matrix_update(m)
     api_matrix_stop(m)
     api_vector_free(pos)
     api_vector_free(scl)
@@ -70,19 +77,7 @@ function M.matrix_rot_stop(axis, angle)
 end
 
 function M.matrix_scl_stop(sx, sy, sz)
-    local m = api_matrix_alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, 0, 0, 0, 0)
-    api_vector_const(scl, sx, sy, sz, 0)
-    api_vector_const(rot, 0, 0, 0, 0)
-    api_matrix_pos_scl_rot(m, pos, scl, rot, API_MATRIX_AXIS_X, 0)
-    api_matrix_stop(m)
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
-    return m
+    return M.matrix_pos_scl_rot_stop(0, 0, 0, sx, sy, sz, API_MATRIX_AXIS_X, 0)
 end
 
 function M.matrix_move(m, x, y, z)
