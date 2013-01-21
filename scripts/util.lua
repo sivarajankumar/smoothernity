@@ -80,13 +80,19 @@ function M.matrix_scl_stop(sx, sy, sz)
     return M.matrix_pos_scl_rot_stop(0, 0, 0, sx, sy, sz, API_MATRIX_AXIS_X, 0)
 end
 
-function M.matrix_move(m, x, y, z)
+function M.matrix_move_global(m, x, y, z)
+    local dm = M.matrix_pos_stop(x, y, z)
+    api_matrix_mul_stop(m, dm, m)
+    api_matrix_free(dm)
+end
+
+function M.matrix_move_local(m, x, y, z)
     local dm = M.matrix_pos_stop(x, y, z)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)
 end
 
-function M.matrix_rotate(m, axis, angle)
+function M.matrix_rotate_local(m, axis, angle)
     local dm = M.matrix_rot_stop(axis, angle)
     api_matrix_mul_stop(m, m, dm)
     api_matrix_free(dm)

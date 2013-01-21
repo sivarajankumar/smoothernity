@@ -80,8 +80,8 @@ function M.alloc(x, y, z)
 
     function self.move(vofs)
         local x, y, z, w = api_vector_get(vofs)
-        util.matrix_move(mrecov, x, y, z)
-        util.matrix_move(mrecov_next, x, y, z)
+        util.matrix_move_global(mrecov, x, y, z)
+        util.matrix_move_global(mrecov_next, x, y, z)
     end
 
     function self.update()
@@ -162,7 +162,7 @@ function M.alloc(x, y, z)
                 api_matrix_copy(mrecov, mrecov_next)
                 api_matrix_copy(mrecov_next, mchassis_phys)
                 api_matrix_update(mrecov_next)
-                util.matrix_move(mrecov_next, 0, RECOVERY_OFS_Y, 0)
+                util.matrix_move_global(mrecov_next, 0, RECOVERY_OFS_Y, 0)
             end
             if recov_pressed == 0 then
                 if api_input_key(API_INPUT_KEY_R) == 1 then
