@@ -93,6 +93,27 @@ static int api_physics_set_gravity(lua_State *lua)
     return 0;
 }
 
+static int api_physics_move(lua_State *lua)
+{
+    struct vector_t *v;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_physics_move: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    v = vector_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (v == 0)
+    {
+        lua_pushstring(lua, "api_physics_move: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+    physcpp_move(v->value);
+    return 0;
+}
+
 static int api_physics_set_ddraw(lua_State *lua)
 {
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
@@ -576,6 +597,7 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_timing", api_physics_timing);
     lua_register(lua, "api_physics_set_gravity", api_physics_set_gravity);
     lua_register(lua, "api_physics_set_ddraw", api_physics_set_ddraw);
+    lua_register(lua, "api_physics_move", api_physics_move);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
     lua_register(lua, "api_physics_cs_alloc_hmap", api_physics_cs_alloc_hmap);
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
