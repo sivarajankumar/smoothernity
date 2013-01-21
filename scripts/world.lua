@@ -153,7 +153,6 @@ function M.alloc(x, y, z)
     function self.move(car)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
             io.write(string.format('moving world by %i, %i, %i\n', move_dx, 0, move_dz))
-            move_dz, move_dx = 0, 0
 
             do
                 local px, py, pz, pw = api_vector_get(vplayer)

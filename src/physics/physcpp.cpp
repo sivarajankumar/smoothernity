@@ -124,6 +124,31 @@ void physcpp_ddraw_set_mode(int mode)
 extern "C"
 void physcpp_move(float *offset)
 {
+    int i;
+    btCollisionObject *obj;
+    btRigidBody *rb;
+    btTransform tm;
+    btVector3 ofs(offset[0], offset[1], offset[2]);
+    for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); ++i)
+    {
+        obj = g_physcpp.world->getCollisionObjectArray()[i];
+
+        tm = obj->getWorldTransform();
+        tm.setOrigin(tm.getOrigin() + ofs);
+        obj->setWorldTransform(tm);
+
+        tm = obj->getInterpolationWorldTransform();
+        tm.setOrigin(tm.getOrigin() + ofs);
+        obj->setInterpolationWorldTransform(tm);
+
+        rb = btRigidBody::upcast(obj);
+        if (rb && rb->getMotionState())
+        {
+            rb->getMotionState()->getWorldTransform(tm);
+            tm.setOrigin(tm.getOrigin() + ofs);
+            rb->getMotionState()->setWorldTransform(tm);
+        }
+    }
 }
 
 extern "C"
