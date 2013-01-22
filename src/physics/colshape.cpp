@@ -173,7 +173,8 @@ int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
 
     child->comp = parent;
     child->comp_next = parent->comp_children;
-    parent->comp_children->comp_prev = child;
+    if (parent->comp_children)
+        parent->comp_children->comp_prev = child;
     parent->comp_children = child;
 
     tm.setFromOpenGLMatrix(matrix);
