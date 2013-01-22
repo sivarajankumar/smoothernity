@@ -38,7 +38,7 @@ function M.alloc(x, y, z)
     self.mchassis = api_matrix_alloc()
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local cs_inert, cs_shape, veh
+    local cs_inert, cs_inert_box, cs_shape, veh
     local wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_scl_stop(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
     local mchassis_phys = api_matrix_alloc()
@@ -69,6 +69,7 @@ function M.alloc(x, y, z)
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_physics_veh_free(veh)
+        api_physics_cs_free(cs_inert_box)
         api_physics_cs_free(cs_inert)
         api_physics_cs_free(cs_shape)
     end
@@ -214,10 +215,14 @@ function M.alloc(x, y, z)
     -- collision shape
     do
         local size = api_vector_alloc()
+        local ofs = util.matrix_pos_stop(0, 0, 0)
         api_vector_const(size, 0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
         cs_shape = api_physics_cs_alloc_box(size)
-        cs_inert = api_physics_cs_alloc_box(size)
+        cs_inert_box = api_physics_cs_alloc_box(size)
+        cs_inert = api_physics_cs_alloc_comp()
+        api_physics_cs_comp_add(cs_inert, ofs, cs_inert_box)
         api_vector_free(size)
+        api_matrix_free(ofs)
     end
 
     -- vehicle
