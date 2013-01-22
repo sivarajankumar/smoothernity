@@ -12,6 +12,8 @@ void physcpp_move(float*);
 int physcpp_cs_alloc_box(int *csi, float *size);
 int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale);
+int physcpp_cs_alloc_comp(int *csi);
+int physcpp_cs_comp_add(int parenti, float *matrix, int childi);
 int physcpp_cs_free(int csi);
 int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
                      float mass, float frict, float roll_frict);

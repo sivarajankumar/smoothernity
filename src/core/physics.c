@@ -130,8 +130,7 @@ static int api_physics_set_ddraw(lua_State *lua)
 static int api_physics_cs_alloc_box(lua_State *lua)
 {
     struct vector_t *size;
-    int csi;
-    int res;
+    int csi, res;
 
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -238,6 +237,67 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
 
     lua_pushinteger(lua, csi);
     return 1;
+}
+
+static int api_physics_cs_alloc_comp(lua_State *lua)
+{
+    int csi, res;
+
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_comp: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_cs_alloc_comp(&csi);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cs_alloc_comp: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, csi);
+    return 1;
+}
+
+static int api_physics_cs_comp_add(lua_State *lua)
+{
+    int parenti, childi, res;
+    struct matrix_t *matrix;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    {
+        lua_pushstring(lua, "api_physics_cs_comp_add: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    parenti = lua_tointeger(lua, 1);
+    matrix = matrix_get(lua_tointeger(lua, 2));
+    childi = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_comp_add: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_cs_comp_add(parenti, matrix->value, childi);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cs_comp_add: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
 }
 
 static int api_physics_cs_free(lua_State *lua)
@@ -607,6 +667,8 @@ int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
     lua_register(lua, "api_physics_move", api_physics_move);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
     lua_register(lua, "api_physics_cs_alloc_hmap", api_physics_cs_alloc_hmap);
+    lua_register(lua, "api_physics_cs_alloc_comp", api_physics_cs_alloc_comp);
+    lua_register(lua, "api_physics_cs_comp_add", api_physics_cs_comp_add);
     lua_register(lua, "api_physics_cs_free", api_physics_cs_free);
     lua_register(lua, "api_physics_rb_alloc", api_physics_rb_alloc);
     lua_register(lua, "api_physics_rb_free", api_physics_rb_free);

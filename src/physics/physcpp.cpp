@@ -174,6 +174,29 @@ int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
 }
 
 extern "C"
+int physcpp_cs_alloc_comp(int *csi)
+{
+    *csi = colshape_alloc();
+    if (*csi == -1)
+        return PHYSRES_OUT_OF_CS;
+    colshape_make_comp(colshape_get(*csi));
+    return PHYSRES_OK;
+}
+
+extern "C"
+int physcpp_cs_comp_add(int parenti, float *matrix, int childi)
+{
+    colshape_t *parent, *child;
+    parent = colshape_get(parenti);
+    child = colshape_get(childi);
+    if (parent == 0 || child == 0 || child->shape == 0)
+        return PHYSRES_INVALID_CS;
+    if (colshape_comp_add(parent, matrix, child) != 0)
+        return PHYSRES_INVALID_CS;
+    return PHYSRES_OK;
+}
+
+extern "C"
 int physcpp_cs_free(int csi)
 {
     colshape_t *cs;

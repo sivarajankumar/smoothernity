@@ -178,7 +178,7 @@ void colshape_make_comp(colshape_t *colshape)
 int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
 {
     btTransform tm;
-    if (child->shape_comp != 0 || child->comp != 0)
+    if (parent->shape_comp == 0 || child->shape_comp != 0 || child->comp != 0)
         return 1;
 
     child->comp = parent;
