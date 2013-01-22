@@ -28,11 +28,12 @@ struct vehicle_t
 int vehicle_init(int count);
 void vehicle_done(void);
 int vehicle_left(void);
-int vehicle_alloc(btDynamicsWorld*, colshape_t *shape, colshape_t *inert,
-                  float *matrix, float mass, float ch_frict, float ch_rfrict,
-                  float sus_stif, float sus_comp, float sus_damp,
-                  float sus_trav, float sus_force, float slip_frict);
-void vehicle_free(vehicle_t*, btDynamicsWorld*);
+int vehicle_alloc(int *vehi, btDynamicsWorld*, colshape_t *shape,
+                  colshape_t *inert, float *matrix, float mass,
+                  float ch_frict, float ch_rfrict, float sus_stif,
+                  float sus_comp, float sus_damp, float sus_trav,
+                  float sus_force, float slip_frict);
+int vehicle_free(vehicle_t*, btDynamicsWorld*);
 vehicle_t * vehicle_get(int);
 int vehicle_add_wheel(vehicle_t*, float *pos, float *dir, float *axl,
                       float sus_rest, float roll, float radius, int front);

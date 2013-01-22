@@ -26,6 +26,7 @@ static const char * physics_error_text(int res)
     static char INVALID_CS[] = "invalid collision shape";
     static char INVALID_VEH[] = "invalid vehicle";
     static char INVALID_VEH_WHEEL[] = "invalid vehicle wheel";
+    static char CS_HAS_REFS[] = "collision shape has references";
     if (res == (int)PHYSRES_OUT_OF_RB)
         return OUT_OF_RB;
     else if (res == (int)PHYSRES_OUT_OF_CS)
@@ -40,6 +41,8 @@ static const char * physics_error_text(int res)
         return INVALID_VEH;
     else if (res == (int)PHYSRES_INVALID_VEH_WHEEL)
         return INVALID_VEH_WHEEL;
+    else if (res == (int)PHYSRES_CS_HAS_REFS)
+        return CS_HAS_REFS;
     else
         return UNKNOWN;
 }

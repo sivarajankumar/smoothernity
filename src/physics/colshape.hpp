@@ -26,8 +26,8 @@ struct colshape_t
 int colshape_init(int count);
 void colshape_done(void);
 int colshape_left(void);
-int colshape_alloc(void);
-void colshape_free(colshape_t*, btDynamicsWorld*);
+int colshape_alloc(int*);
+int colshape_free(colshape_t*, btDynamicsWorld*);
 colshape_t * colshape_get(int);
 void colshape_make_box(colshape_t *col, float *size);
 void colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,

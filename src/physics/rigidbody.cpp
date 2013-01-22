@@ -1,3 +1,4 @@
+#include "physres.h"
 #include "rigidbody.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
@@ -22,7 +23,7 @@ int rigidbody_init(int count)
     rigidbody_t *rb;
     g_rigidbodies.pool = (rigidbody_t*)calloc(count, sizeof(rigidbody_t));
     if (g_rigidbodies.pool == 0)
-        return 1;
+        return PHYSRES_CANNOT_INIT;
     g_rigidbodies.vacant = g_rigidbodies.pool;
     g_rigidbodies.left = count;
     g_rigidbodies.left_min = count;
@@ -35,7 +36,7 @@ int rigidbody_init(int count)
         rb->vacant = 1;
         rb->mstate = new (rb->mstate_data) mstate_c();
     }
-    return 0;
+    return PHYSRES_OK;
 }
 
 void rigidbody_done(void)
@@ -68,10 +69,10 @@ rigidbody_t * rigidbody_get(int rbi)
         return 0;
 }
 
-void rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
+int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
 {
     if (rb->vacant == 1)
-        return;
+        return PHYSRES_INVALID_RB;
     ++g_rigidbodies.left;
     ++g_rigidbodies.frees;
     rb->vacant = 1;
@@ -91,15 +92,18 @@ void rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     rb->cs = 0;
     rb->cs_prev = 0;
     rb->cs_next = 0;
+    return PHYSRES_OK;
 }
 
-int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
+int rigidbody_alloc(int *rbi, btDynamicsWorld *world, colshape_t *cs, float *matrix,
                     float mass, float frict, float roll_frict)
 {
     rigidbody_t *rb;
     btVector3 inertia;
     if (g_rigidbodies.vacant == 0)
-        return -1;
+        return PHYSRES_OUT_OF_RB;
+    if (cs->shape == 0)
+        return PHYSRES_INVALID_CS;
     ++g_rigidbodies.allocs;
     --g_rigidbodies.left;
     if (g_rigidbodies.left < g_rigidbodies.left_min)
@@ -130,7 +134,8 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
 
     rb->body = new (rb->body_data) btRigidBody(info);
     world->addRigidBody(rb->body);
-    return rb - g_rigidbodies.pool;
+    *rbi = rb - g_rigidbodies.pool;
+    return PHYSRES_OK;
 }
 
 void rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
