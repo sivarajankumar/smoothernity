@@ -343,11 +343,11 @@ static int api_physics_rb_free(lua_State *lua)
 static int api_physics_veh_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
-    int csi, vehi, res, i;
+    int shapei, inerti, vehi, res, i;
     float ch_frict, ch_roll_frict, sus_stif, sus_comp;
     float sus_damp, sus_trav, sus_force, slip_frict;
 
-    if (lua_gettop(lua) != 10)
+    if (lua_gettop(lua) != 11)
     {
         lua_pushstring(lua, "api_physics_veh_alloc: incorrect argument");
         lua_error(lua);
@@ -364,17 +364,18 @@ static int api_physics_veh_alloc(lua_State *lua)
         }
     }
 
-    csi = lua_tointeger(lua, 1);
-    matrix = matrix_get(lua_tointeger(lua, 2));
-    ch_frict = lua_tonumber(lua, 3);
-    ch_roll_frict = lua_tonumber(lua, 4);
-    sus_stif = lua_tonumber(lua, 5);
-    sus_comp = lua_tonumber(lua, 6);
-    sus_damp = lua_tonumber(lua, 7);
-    sus_trav = lua_tonumber(lua, 8);
-    sus_force = lua_tonumber(lua, 9);
-    slip_frict = lua_tonumber(lua, 10);
-    lua_pop(lua, 10);
+    shapei = lua_tointeger(lua, 1);
+    inerti = lua_tointeger(lua, 2);
+    matrix = matrix_get(lua_tointeger(lua, 3));
+    ch_frict = lua_tonumber(lua, 4);
+    ch_roll_frict = lua_tonumber(lua, 5);
+    sus_stif = lua_tonumber(lua, 6);
+    sus_comp = lua_tonumber(lua, 7);
+    sus_damp = lua_tonumber(lua, 8);
+    sus_trav = lua_tonumber(lua, 9);
+    sus_force = lua_tonumber(lua, 10);
+    slip_frict = lua_tonumber(lua, 11);
+    lua_pop(lua, 11);
 
     if (matrix == 0)
     {
@@ -390,9 +391,9 @@ static int api_physics_veh_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_veh_alloc(&vehi, csi, matrix->value, ch_frict, ch_roll_frict,
-                            sus_stif, sus_comp, sus_damp, sus_trav,
-                            sus_force, slip_frict);
+    res = physcpp_veh_alloc(&vehi, shapei, inerti, matrix->value, ch_frict,
+                            ch_roll_frict, sus_stif, sus_comp, sus_damp,
+                            sus_trav, sus_force, slip_frict);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));

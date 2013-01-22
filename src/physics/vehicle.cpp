@@ -58,9 +58,9 @@ void vehicle_done(void)
     g_vehicles.pool = 0;
 }
 
-void vehicle_left(int *left)
+int vehicle_left(void)
 {
-    *left = g_vehicles.left;
+    return g_vehicles.left;
 }
 
 vehicle_t * vehicle_get(int vehi)
@@ -99,19 +99,30 @@ void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
         veh->veh->~btRaycastVehicle();
         veh->veh = 0;
     }
-    if (veh->cs->vehs == veh)
-        veh->cs->vehs = veh->cs_next;
-    if (veh->cs_next)
-        veh->cs_next->cs_prev = veh->cs_prev;
-    if (veh->cs_prev)
-        veh->cs_prev->cs_next = veh->cs_next;
-    veh->cs = 0;
-    veh->cs_prev = 0;
-    veh->cs_next = 0;
+
+    if (veh->shape->vehs == veh)
+        veh->shape->vehs = veh->shape_next;
+    if (veh->shape_next)
+        veh->shape_next->shape_prev = veh->shape_prev;
+    if (veh->shape_prev)
+        veh->shape_prev->shape_next = veh->shape_next;
+    veh->shape = 0;
+    veh->shape_prev = 0;
+    veh->shape_next = 0;
+
+    if (veh->inert->vehs == veh)
+        veh->inert->vehs = veh->inert_next;
+    if (veh->inert_next)
+        veh->inert_next->inert_prev = veh->inert_prev;
+    if (veh->inert_prev)
+        veh->inert_prev->inert_next = veh->inert_next;
+    veh->inert = 0;
+    veh->inert_prev = 0;
+    veh->inert_next = 0;
 }
 
-int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
-                  float ch_frict, float ch_roll_frict,
+int vehicle_alloc(btDynamicsWorld *world, colshape_t *shape, colshape_t *inert,
+                  float *matrix, float ch_frict, float ch_roll_frict,
                   float sus_stif, float sus_comp, float sus_damp,
                   float sus_trav, float sus_force, float slip_frict)
 {
@@ -127,12 +138,19 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->vacant = 0;
     veh->next = 0;
 
-    veh->cs = cs;
-    if (cs->vehs)
-        cs->vehs->cs_prev = veh;
-    veh->cs_next = cs->vehs;
-    veh->cs_prev = 0;
-    cs->vehs = veh;
+    veh->shape = shape;
+    if (shape->vehs)
+        shape->vehs->shape_prev = veh;
+    veh->shape_next = shape->vehs;
+    veh->shape_prev = 0;
+    shape->vehs = veh;
+
+    veh->inert = inert;
+    if (inert->vehs)
+        inert->vehs->inert_prev = veh;
+    veh->inert_next = inert->vehs;
+    veh->inert_prev = 0;
+    inert->vehs = veh;
 
     veh->mstate->m.setFromOpenGLMatrix(matrix);
 
@@ -144,7 +162,7 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
     veh->tuning.m_frictionSlip = slip_frict;
 
     btRigidBody::btRigidBodyConstructionInfo info
-            (cs->mass, veh->mstate, cs->shape, cs->inertia);
+            (shape->mass, veh->mstate, shape->shape, inert->inertia);
     info.m_friction = ch_frict;
     info.m_rollingFriction = ch_roll_frict;
 

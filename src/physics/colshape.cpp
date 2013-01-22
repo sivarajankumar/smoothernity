@@ -75,9 +75,9 @@ void colshape_done(void)
     g_colshapes.pool = 0;
 }
 
-void colshape_left(int *left)
+int colshape_left(void)
 {
-    *left = g_colshapes.left;
+    return g_colshapes.left;
 }
 
 int colshape_alloc(void)

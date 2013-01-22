@@ -22,7 +22,7 @@ struct colshape_t
 
 int colshape_init(int count);
 void colshape_done(void);
-void colshape_left(int *left);
+int colshape_left(void);
 int colshape_alloc(void);
 void colshape_free(colshape_t*, btDynamicsWorld*);
 colshape_t * colshape_get(int);
