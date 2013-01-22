@@ -17,16 +17,19 @@ struct vehicle_t
     char veh_data[sizeof(btRaycastVehicle)];
     vehicle_t *next;
     int vacant;
-    colshape_t *cs;
-    vehicle_t *cs_prev;
-    vehicle_t *cs_next;
+    colshape_t *shape;
+    colshape_t *inert;
+    vehicle_t *shape_prev;
+    vehicle_t *shape_next;
+    vehicle_t *inert_prev;
+    vehicle_t *inert_next;
 };
 
 int vehicle_init(int count);
 void vehicle_done(void);
-void vehicle_left(int *left); /* TODO: make "int vehicle_left(void);" */
-int vehicle_alloc(btDynamicsWorld*, colshape_t*, float *matrix,
-                  float ch_frict, float ch_roll_frict,
+int vehicle_left(void);
+int vehicle_alloc(btDynamicsWorld*, colshape_t *shape, colshape_t *inert,
+                  float *matrix, float ch_frict, float ch_roll_frict,
                   float sus_stif, float sus_comp, float sus_damp,
                   float sus_trav, float sus_force, float slip_frict);
 void vehicle_free(vehicle_t*, btDynamicsWorld*);

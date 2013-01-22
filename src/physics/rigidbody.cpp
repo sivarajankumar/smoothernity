@@ -55,9 +55,9 @@ void rigidbody_done(void)
     g_rigidbodies.pool = 0;
 }
 
-void rigidbody_left(int *left)
+int rigidbody_left(void)
 {
-    *left = g_rigidbodies.left;
+    return g_rigidbodies.left;
 }
 
 rigidbody_t * rigidbody_get(int rbi)
