@@ -26,6 +26,8 @@ int colshape_init(int count)
     size = sizeof(btBoxShape);
     if (size < sizeof(btHeightfieldTerrainShape))
         size = sizeof(btHeightfieldTerrainShape);
+    if (size < sizeof(btCompoundShape))
+        size = sizeof(btCompoundShape);
 
     g_colshapes.pool = (colshape_t*)calloc(count, sizeof(colshape_t));
     if (g_colshapes.pool == 0)
@@ -111,16 +113,43 @@ void colshape_free(colshape_t *cs, btDynamicsWorld *world)
     ++g_colshapes.left;
     ++g_colshapes.frees;
     cs->vacant = 1;
-    if (cs->shape)
-        cs->shape->~btCollisionShape();
-    cs->shape = 0;
-    cs->shape_box = 0;
-    cs->next = g_colshapes.vacant;
-    g_colshapes.vacant = cs;
+    if (cs->shape_comp)
+    {
+        while (cs->comp_children)
+        {
+            cs->shape_comp->removeChildShape(cs->comp_children->shape);
+            cs->comp_children = cs->comp_children->comp_next;
+            cs->comp_children->comp_prev->comp_next = 0;
+            cs->comp_children->comp_prev->comp_prev = 0;
+            cs->comp_children->comp_prev->comp = 0;
+            cs->comp_children->comp_prev = 0;
+        }
+    }
+    if (cs->comp)
+    {
+        cs->comp->shape_comp->removeChildShape(cs->shape);
+        if (cs->comp->comp_children == cs)
+            cs->comp->comp_children = cs->comp_next;
+        if (cs->comp_prev)
+            cs->comp_prev->comp_next = cs->comp_next;
+        if (cs->comp_next)
+            cs->comp_next->comp_prev = cs->comp_prev;
+        cs->comp = 0;
+        cs->comp_prev = 0;
+        cs->comp_next = 0;
+    }
     while (cs->vehs)
         vehicle_free(cs->vehs, world);
     while (cs->rbs)
         rigidbody_free(cs->rbs, world);
+    if (cs->shape)
+        cs->shape->~btCollisionShape();
+    cs->shape = 0;
+    cs->shape_box = 0;
+    cs->shape_hmap = 0;
+    cs->shape_comp = 0;
+    cs->next = g_colshapes.vacant;
+    g_colshapes.vacant = cs;
 }
 
 void colshape_make_box(colshape_t *colshape, float *size)
@@ -138,4 +167,27 @@ void colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
                                   hmin, hmax, 1, PHY_FLOAT, false);
     cs->shape_hmap->setLocalScaling(btVector3(scale[0], scale[1], scale[2]));
     cs->shape = cs->shape_hmap;
+}
+
+void colshape_make_comp(colshape_t *colshape)
+{
+    colshape->shape_comp = new (colshape->data) btCompoundShape();
+    colshape->shape = colshape->shape_comp;
+}
+
+int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
+{
+    btTransform tm;
+    if (child->shape_comp != 0 || child->comp != 0)
+        return 1;
+
+    child->comp = parent;
+    child->comp_next = parent->comp_children;
+    parent->comp_children->comp_prev = child;
+    parent->comp_children = child;
+
+    tm.setFromOpenGLMatrix(matrix);
+    parent->shape_comp->addChildShape(tm, child->shape);
+
+    return 0;
 }
