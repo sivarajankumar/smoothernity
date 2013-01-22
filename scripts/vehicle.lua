@@ -7,26 +7,26 @@ local CH_SIZE_X = 2
 local CH_SIZE_Y = 1
 local CH_SIZE_Z = 4
 local CH_MASS = 800
-local CH_FRICT = 0.5
-local CH_ROLL_FRICT = 0
+local CH_FRICT = 1
+local CH_ROLL_FRICT = 1
 local SUS_STIF = 20
 local SUS_COMP = 4.4
 local SUS_DAMP = 2.3
 local SUS_TRAV = 500
 local SUS_FORCE = 100000
 local SUS_REST = 0.6
-local SLIP_FRICT = 1000
+local SLIP_FRICT = 2
 local ROLL_INF = 0.1
 local WHEEL_RADIUS = 0.5
 local WHEEL_POS_X = 1
 local WHEEL_POS_Y = 1
 local WHEEL_POS_Z = 2
-local ACCEL_MAX = 1000
+local ACCEL_MAX = 5000
 local ACCEL_PUSH = 100
 local ACCEL_POP = 100
-local BRAKE_MAX = 100
-local BRAKE_PUSH = 10
-local BRAKE_POP = 10
+local BRAKE_MAX = 1000
+local BRAKE_PUSH = 100
+local BRAKE_POP = 100
 local STEER_MAX = 0.6
 local STEER_PUSH = 0.05
 local STEER_POP = 0.05
@@ -138,10 +138,10 @@ function M.alloc(x, y, z)
                     brake = 0
                 end
             end
-            api_physics_veh_set_wheel(veh, wheel_fl, accel, brake, -steer)
-            api_physics_veh_set_wheel(veh, wheel_fr, accel, brake, -steer)
-            api_physics_veh_set_wheel(veh, wheel_bl, accel, brake, 0)
-            api_physics_veh_set_wheel(veh, wheel_br, accel, brake, 0)
+            api_physics_veh_set_wheel(veh, wheel_fl, accel, 0, -steer)
+            api_physics_veh_set_wheel(veh, wheel_fr, accel, 0, -steer)
+            api_physics_veh_set_wheel(veh, wheel_bl, 0, brake, 0)
+            api_physics_veh_set_wheel(veh, wheel_br, 0, brake, 0)
         end
 
         -- recovery
