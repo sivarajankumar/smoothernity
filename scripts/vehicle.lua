@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'util'
 
+local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
 local CH_SIZE_Y = 1
 local CH_SIZE_Z = 4
@@ -12,14 +13,14 @@ local SUS_STIF = 20
 local SUS_COMP = 4.4
 local SUS_DAMP = 2.3
 local SUS_TRAV = 500
-local SUS_FORCE = 6000
+local SUS_FORCE = 100000
 local SUS_REST = 0.6
 local SLIP_FRICT = 1000
 local ROLL_INF = 0.1
 local WHEEL_RADIUS = 0.5
-local WHEEL_POS_X = 0.9
-local WHEEL_POS_Y = 0.2
-local WHEEL_POS_Z = 1.6
+local WHEEL_POS_X = 1
+local WHEEL_POS_Y = 1
+local WHEEL_POS_Z = 2
 local ACCEL_MAX = 1000
 local ACCEL_PUSH = 100
 local ACCEL_POP = 100
@@ -38,9 +39,10 @@ function M.alloc(x, y, z)
     self.mchassis = api_matrix_alloc()
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local cs_inert, cs_inert_box, cs_shape, veh
+    local cs_inert, cs_shape_box, cs_shape, veh
     local wheel_fr, wheel_fl, wheel_br, wheel_bl
-    local mchassis_local = util.matrix_scl_stop(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
+    local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
+                                      0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
     local mchassis_phys = api_matrix_alloc()
     local mwheel_local = util.matrix_scl_stop(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_RADIUS)
     local mwheel_physic = {}
@@ -69,9 +71,9 @@ function M.alloc(x, y, z)
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_physics_veh_free(veh)
-        api_physics_cs_free(cs_inert_box)
-        api_physics_cs_free(cs_inert)
+        api_physics_cs_free(cs_shape_box)
         api_physics_cs_free(cs_shape)
+        api_physics_cs_free(cs_inert)
     end
 
     function self.move(vofs)
@@ -215,12 +217,12 @@ function M.alloc(x, y, z)
     -- collision shape
     do
         local size = api_vector_alloc()
-        local ofs = util.matrix_pos_stop(0, 0, 0)
+        local ofs = util.matrix_pos_stop(0, CH_OFFSET_Y, 0)
         api_vector_const(size, 0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
-        cs_shape = api_physics_cs_alloc_box(size)
-        cs_inert_box = api_physics_cs_alloc_box(size)
-        cs_inert = api_physics_cs_alloc_comp()
-        api_physics_cs_comp_add(cs_inert, ofs, cs_inert_box)
+        cs_inert = api_physics_cs_alloc_box(size)
+        cs_shape_box = api_physics_cs_alloc_box(size)
+        cs_shape = api_physics_cs_alloc_comp()
+        api_physics_cs_comp_add(cs_shape, ofs, cs_shape_box)
         api_vector_free(size)
         api_matrix_free(ofs)
     end
