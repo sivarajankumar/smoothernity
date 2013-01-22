@@ -152,12 +152,12 @@ void physcpp_move(float *offset)
 }
 
 extern "C"
-int physcpp_cs_alloc_box(int *csi, float mass, float *size)
+int physcpp_cs_alloc_box(int *csi, float *size)
 {
     *csi = colshape_alloc();
     if (*csi == -1)
         return PHYSRES_OUT_OF_CS;
-    colshape_make_box(colshape_get(*csi), mass, size);
+    colshape_make_box(colshape_get(*csi), size);
     return PHYSRES_OK;
 }
 
@@ -186,13 +186,14 @@ int physcpp_cs_free(int csi)
 
 extern "C"
 int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
-                     float frict, float roll_frict)
+                     float mass, float frict, float roll_frict)
 {
     colshape_t *cs;
     cs = colshape_get(csi);
     if (cs == 0 || cs->shape == 0)
         return PHYSRES_INVALID_CS;
-    *rbi = rigidbody_alloc(g_physcpp.world, cs, matrix, frict, roll_frict);
+    *rbi = rigidbody_alloc(g_physcpp.world, cs, matrix,
+                           mass, frict, roll_frict);
     if (rigidbody_get(*rbi) == 0)
         return PHYSRES_OUT_OF_RB;
     return PHYSRES_OK;
@@ -236,7 +237,7 @@ void physcpp_left(int *cs_left, int *rb_left, int *veh_left)
 
 extern "C"
 int physcpp_veh_alloc(int *vehi, int shapei, int inerti, float *matrix,
-                      float ch_frict, float ch_roll_frict,
+                      float mass, float ch_frict, float ch_roll_frict,
                       float sus_stif, float sus_comp, float sus_damp,
                       float sus_trav, float sus_force, float slip_frict)
 {
@@ -245,9 +246,9 @@ int physcpp_veh_alloc(int *vehi, int shapei, int inerti, float *matrix,
     inert = colshape_get(inerti);
     if (shape == 0 || shape->shape == 0 || inert == 0 || inert->shape == 0)
         return PHYSRES_INVALID_CS;
-    *vehi = vehicle_alloc(g_physcpp.world, shape, inert, matrix, ch_frict,
-                          ch_roll_frict, sus_stif, sus_comp, sus_damp,
-                          sus_trav, sus_force, slip_frict);
+    *vehi = vehicle_alloc(g_physcpp.world, shape, inert, matrix, mass,
+                          ch_frict, ch_roll_frict, sus_stif, sus_comp,
+                          sus_damp, sus_trav, sus_force, slip_frict);
     if (vehicle_get(*vehi) == 0)
         return PHYSRES_OUT_OF_VEH;
     return PHYSRES_OK;

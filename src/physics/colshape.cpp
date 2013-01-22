@@ -106,7 +106,7 @@ colshape_t * colshape_get(int colshapei)
 
 void colshape_free(colshape_t *cs, btDynamicsWorld *world)
 {
-    if (cs == 0 || cs->vacant == 1)
+    if (cs->vacant == 1)
         return;
     ++g_colshapes.left;
     ++g_colshapes.frees;
@@ -123,30 +123,19 @@ void colshape_free(colshape_t *cs, btDynamicsWorld *world)
         rigidbody_free(cs->rbs, world);
 }
 
-void colshape_make_box(colshape_t *colshape, float mass, float *size)
+void colshape_make_box(colshape_t *colshape, float *size)
 {
-    if (colshape->shape)
-        return;
     colshape->shape_box = new (colshape->data)
         btBoxShape(btVector3(size[0], size[1], size[2]));
     colshape->shape = colshape->shape_box;
-    colshape->mass = mass;
-    if (mass > 0.0f)
-        colshape->shape_box->calculateLocalInertia(mass, colshape->inertia);
-    else
-        colshape->inertia = btVector3(0,0,0);
 }
 
 void colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
                         float hmin, float hmax, float *scale)
 {
-    if (cs->shape)
-        return;
     cs->shape_hmap = new (cs->data)
         btHeightfieldTerrainShape(width, length, hmap, 1,
                                   hmin, hmax, 1, PHY_FLOAT, false);
     cs->shape_hmap->setLocalScaling(btVector3(scale[0], scale[1], scale[2]));
     cs->shape = cs->shape_hmap;
-    cs->mass = 0;
-    cs->inertia = btVector3(0,0,0);
 }

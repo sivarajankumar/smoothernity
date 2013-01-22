@@ -215,16 +215,16 @@ function M.alloc(x, y, z)
     do
         local size = api_vector_alloc()
         api_vector_const(size, 0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
-        cs_shape = api_physics_cs_alloc_box(CH_MASS, size)
-        cs_inert = api_physics_cs_alloc_box(CH_MASS, size)
+        cs_shape = api_physics_cs_alloc_box(size)
+        cs_inert = api_physics_cs_alloc_box(size)
         api_vector_free(size)
     end
 
     -- vehicle
     do
         local m = util.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
-        veh = api_physics_veh_alloc(cs_shape, cs_inert, m, CH_FRICT, CH_ROLL_FRICT,
-                                    SUS_STIF, SUS_COMP, SUS_DAMP,
+        veh = api_physics_veh_alloc(cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
+                                    CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)
         api_matrix_free(m)
         wheel_fr = add_wheel( WHEEL_POS_X, WHEEL_POS_Y, WHEEL_POS_Z, 1)

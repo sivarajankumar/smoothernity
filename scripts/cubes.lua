@@ -79,8 +79,8 @@ function M.alloc(x, y, z)
     do
         local size = api_vector_alloc()
         api_vector_const(size, 1, 1, 1, 0)
-        cs = api_physics_cs_alloc_box(1000, size)
-        rb = api_physics_rb_alloc(cs, mbig, 1, 1)
+        cs = api_physics_cs_alloc_box(size)
+        rb = api_physics_rb_alloc(cs, mbig, 1000, 1, 1)
         api_matrix_rigid_body(mrb, rb)
         api_vector_free(size)
     end

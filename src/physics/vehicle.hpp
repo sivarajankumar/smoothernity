@@ -29,7 +29,7 @@ int vehicle_init(int count);
 void vehicle_done(void);
 int vehicle_left(void);
 int vehicle_alloc(btDynamicsWorld*, colshape_t *shape, colshape_t *inert,
-                  float *matrix, float ch_frict, float ch_roll_frict,
+                  float *matrix, float mass, float ch_frict, float ch_rfrict,
                   float sus_stif, float sus_comp, float sus_damp,
                   float sus_trav, float sus_force, float slip_frict);
 void vehicle_free(vehicle_t*, btDynamicsWorld*);
