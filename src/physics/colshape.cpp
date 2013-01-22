@@ -1,6 +1,5 @@
+#include "physres.h"
 #include "colshape.hpp"
-#include "rigidbody.hpp"
-#include "vehicle.hpp"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -31,7 +30,7 @@ int colshape_init(int count)
 
     g_colshapes.pool = (colshape_t*)calloc(count, sizeof(colshape_t));
     if (g_colshapes.pool == 0)
-        return 1;
+        return PHYSRES_CANNOT_INIT;
     g_colshapes.count = count;
     g_colshapes.left = count;
     g_colshapes.left_min = count;
@@ -46,7 +45,7 @@ int colshape_init(int count)
         if (cs->data == 0)
             goto cleanup;
     }
-    return 0;
+    return PHYSRES_OK;
 cleanup:
     for (i = 0; i < count; ++i)
     {
@@ -55,7 +54,7 @@ cleanup:
             free(cs->data);
     }
     free(g_colshapes.pool);
-    return 1;
+    return PHYSRES_CANNOT_INIT;
 }
 
 void colshape_done(void)
@@ -82,11 +81,11 @@ int colshape_left(void)
     return g_colshapes.left;
 }
 
-int colshape_alloc(void)
+int colshape_alloc(int *csi)
 {
     colshape_t *colshape;
     if (g_colshapes.vacant == 0)
-        return -1;
+        return PHYSRES_OUT_OF_CS;
     ++g_colshapes.allocs;
     --g_colshapes.left;
     if (g_colshapes.left < g_colshapes.left_min)
@@ -95,7 +94,8 @@ int colshape_alloc(void)
     g_colshapes.vacant = g_colshapes.vacant->next;
     colshape->vacant = 0;
     colshape->next = 0;
-    return colshape - g_colshapes.pool;
+    *csi = colshape - g_colshapes.pool;
+    return PHYSRES_OK;
 }
 
 colshape_t * colshape_get(int colshapei)
@@ -106,25 +106,15 @@ colshape_t * colshape_get(int colshapei)
         return 0;
 }
 
-void colshape_free(colshape_t *cs, btDynamicsWorld *world)
+int colshape_free(colshape_t *cs, btDynamicsWorld *world)
 {
     if (cs->vacant == 1)
-        return;
+        return PHYSRES_INVALID_CS;
+    if (cs->comp_children || cs->vehs || cs->rbs)
+        return PHYSRES_CS_HAS_REFS;
     ++g_colshapes.left;
     ++g_colshapes.frees;
     cs->vacant = 1;
-    if (cs->shape_comp)
-    {
-        while (cs->comp_children)
-        {
-            cs->shape_comp->removeChildShape(cs->comp_children->shape);
-            cs->comp_children = cs->comp_children->comp_next;
-            cs->comp_children->comp_prev->comp_next = 0;
-            cs->comp_children->comp_prev->comp_prev = 0;
-            cs->comp_children->comp_prev->comp = 0;
-            cs->comp_children->comp_prev = 0;
-        }
-    }
     if (cs->comp)
     {
         cs->comp->shape_comp->removeChildShape(cs->shape);
@@ -138,10 +128,6 @@ void colshape_free(colshape_t *cs, btDynamicsWorld *world)
         cs->comp_prev = 0;
         cs->comp_next = 0;
     }
-    while (cs->vehs)
-        vehicle_free(cs->vehs, world);
-    while (cs->rbs)
-        rigidbody_free(cs->rbs, world);
     if (cs->shape)
         cs->shape->~btCollisionShape();
     cs->shape = 0;
@@ -150,6 +136,7 @@ void colshape_free(colshape_t *cs, btDynamicsWorld *world)
     cs->shape_comp = 0;
     cs->next = g_colshapes.vacant;
     g_colshapes.vacant = cs;
+    return PHYSRES_OK;
 }
 
 void colshape_make_box(colshape_t *colshape, float *size)
@@ -178,8 +165,11 @@ void colshape_make_comp(colshape_t *colshape)
 int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
 {
     btTransform tm;
-    if (parent->shape_comp == 0 || child->shape_comp != 0 || child->comp != 0)
-        return 1;
+    if (parent->shape_comp == 0 || child->shape == 0
+     || child->shape_comp != 0 || child->comp != 0)
+    {
+        return PHYSRES_INVALID_CS;
+    }
 
     child->comp = parent;
     child->comp_next = parent->comp_children;
@@ -189,5 +179,5 @@ int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
     tm.setFromOpenGLMatrix(matrix);
     parent->shape_comp->addChildShape(tm, child->shape);
 
-    return 0;
+    return PHYSRES_OK;
 }

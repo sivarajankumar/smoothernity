@@ -74,6 +74,7 @@ extern "C"
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int cs_count, int rb_count, int veh_count)
 {
+    int res;
     g_physcpp.memalloc = memalloc;
     btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     try
@@ -94,13 +95,13 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
     }
     btAlignedAllocSetCustom(memalloc, memfree);
     g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
-    if (colshape_init(cs_count) != 0
-     || rigidbody_init(rb_count) != 0
-     || vehicle_init(veh_count) != 0)
-    {
-        return PHYSRES_CANNOT_INIT;
-    }
-    return PHYSRES_OK;
+    res = colshape_init(cs_count);
+    if (res != PHYSRES_OK)
+        return res;
+    res = rigidbody_init(rb_count);
+    if (res != PHYSRES_OK)
+        return res;
+    return vehicle_init(veh_count);
 }
 
 extern "C"
@@ -154,9 +155,10 @@ void physcpp_move(float *offset)
 extern "C"
 int physcpp_cs_alloc_box(int *csi, float *size)
 {
-    *csi = colshape_alloc();
-    if (*csi == -1)
-        return PHYSRES_OUT_OF_CS;
+    int res;
+    res = colshape_alloc(csi);
+    if (res != PHYSRES_OK)
+        return res;
     colshape_make_box(colshape_get(*csi), size);
     return PHYSRES_OK;
 }
@@ -165,9 +167,10 @@ extern "C"
 int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale)
 {
-    *csi = colshape_alloc();
-    if (*csi == -1)
-        return PHYSRES_OUT_OF_CS;
+    int res;
+    res = colshape_alloc(csi);
+    if (res != PHYSRES_OK)
+        return res;
     colshape_make_hmap(colshape_get(*csi), hmap, width,
                        length, hmin, hmax, scale);
     return PHYSRES_OK;
@@ -176,9 +179,10 @@ int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
 extern "C"
 int physcpp_cs_alloc_comp(int *csi)
 {
-    *csi = colshape_alloc();
-    if (*csi == -1)
-        return PHYSRES_OUT_OF_CS;
+    int res;
+    res = colshape_alloc(csi);
+    if (res != PHYSRES_OK)
+        return res;
     colshape_make_comp(colshape_get(*csi));
     return PHYSRES_OK;
 }
@@ -189,11 +193,9 @@ int physcpp_cs_comp_add(int parenti, float *matrix, int childi)
     colshape_t *parent, *child;
     parent = colshape_get(parenti);
     child = colshape_get(childi);
-    if (parent == 0 || child == 0 || child->shape == 0)
+    if (parent == 0 || child == 0)
         return PHYSRES_INVALID_CS;
-    if (colshape_comp_add(parent, matrix, child) != 0)
-        return PHYSRES_INVALID_CS;
-    return PHYSRES_OK;
+    return colshape_comp_add(parent, matrix, child);
 }
 
 extern "C"
@@ -203,8 +205,7 @@ int physcpp_cs_free(int csi)
     cs = colshape_get(csi);
     if (cs == 0)
         return PHYSRES_INVALID_CS;
-    colshape_free(cs, g_physcpp.world);
-    return PHYSRES_OK;
+    return colshape_free(cs, g_physcpp.world);
 }
 
 extern "C"
@@ -213,13 +214,10 @@ int physcpp_rb_alloc(int *rbi, int csi, float *matrix,
 {
     colshape_t *cs;
     cs = colshape_get(csi);
-    if (cs == 0 || cs->shape == 0)
+    if (cs == 0)
         return PHYSRES_INVALID_CS;
-    *rbi = rigidbody_alloc(g_physcpp.world, cs, matrix,
+    return rigidbody_alloc(rbi, g_physcpp.world, cs, matrix,
                            mass, frict, roll_frict);
-    if (rigidbody_get(*rbi) == 0)
-        return PHYSRES_OUT_OF_RB;
-    return PHYSRES_OK;
 }
 
 extern "C"
@@ -229,8 +227,7 @@ int physcpp_rb_free(int rbi)
     rb = rigidbody_get(rbi);
     if (rb == 0)
         return PHYSRES_INVALID_RB;
-    rigidbody_free(rb, g_physcpp.world);
-    return PHYSRES_OK;
+    return rigidbody_free(rb, g_physcpp.world);
 }
 
 extern "C"
@@ -267,14 +264,11 @@ int physcpp_veh_alloc(int *vehi, int shapei, int inerti, float *matrix,
     colshape_t *shape, *inert;
     shape = colshape_get(shapei);
     inert = colshape_get(inerti);
-    if (shape == 0 || shape->shape == 0 || inert == 0 || inert->shape == 0)
+    if (shape == 0 || inert == 0)
         return PHYSRES_INVALID_CS;
-    *vehi = vehicle_alloc(g_physcpp.world, shape, inert, matrix, mass,
-                          ch_frict, ch_roll_frict, sus_stif, sus_comp,
-                          sus_damp, sus_trav, sus_force, slip_frict);
-    if (vehicle_get(*vehi) == 0)
-        return PHYSRES_OUT_OF_VEH;
-    return PHYSRES_OK;
+    return vehicle_alloc(vehi, g_physcpp.world, shape, inert, matrix, mass,
+                         ch_frict, ch_roll_frict, sus_stif, sus_comp,
+                         sus_damp, sus_trav, sus_force, slip_frict);
 }
 
 extern "C"
@@ -284,8 +278,7 @@ int physcpp_veh_free(int vehi)
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    vehicle_free(veh, g_physcpp.world);
-    return PHYSRES_OK;
+    return vehicle_free(veh, g_physcpp.world);
 }
 
 extern "C"
@@ -310,9 +303,7 @@ int physcpp_veh_set_wheel(int vehi, int wheel, float engine,
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    if (0 != vehicle_set_wheel(veh, wheel, engine, brake, steer))
-        return PHYSRES_INVALID_VEH_WHEEL;
-    return PHYSRES_OK;
+    return vehicle_set_wheel(veh, wheel, engine, brake, steer);
 }
 
 extern "C"
@@ -333,9 +324,7 @@ int physcpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix)
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    if (0 != vehicle_fetch_wheel_tm(veh, wheel, matrix))
-        return PHYSRES_INVALID_VEH_WHEEL;
-    return PHYSRES_OK;
+    return vehicle_fetch_wheel_tm(veh, wheel, matrix);
 }
 
 extern "C"
@@ -356,7 +345,5 @@ int physcpp_veh_wheel_contact(int vehi, int wheel, int *in_contact)
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    if (0 != vehicle_wheel_contact(veh, wheel, in_contact))
-        return PHYSRES_INVALID_VEH_WHEEL;
-    return PHYSRES_OK;
+    return vehicle_wheel_contact(veh, wheel, in_contact);
 }

@@ -1,3 +1,4 @@
+#include "physres.h"
 #include "vehicle.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
@@ -22,7 +23,7 @@ int vehicle_init(int count)
     vehicle_t *veh;
     g_vehicles.pool = (vehicle_t*)calloc(count, sizeof(vehicle_t));
     if (g_vehicles.pool == 0)
-        return 1;
+        return PHYSRES_CANNOT_INIT;
     g_vehicles.vacant = g_vehicles.pool;
     g_vehicles.left = count;
     g_vehicles.left_min = count;
@@ -35,7 +36,7 @@ int vehicle_init(int count)
         veh->vacant = 1;
         veh->mstate = new (veh->mstate_data) mstate_c();
     }
-    return 0;
+    return PHYSRES_OK;
 }
 
 void vehicle_done(void)
@@ -71,10 +72,10 @@ vehicle_t * vehicle_get(int vehi)
         return 0;
 }
 
-void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
+int vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
 {
     if (veh->vacant == 1)
-        return;
+        return PHYSRES_INVALID_VEH;
     ++g_vehicles.left;
     ++g_vehicles.frees;
     veh->vacant = 1;
@@ -119,17 +120,21 @@ void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
     veh->inert = 0;
     veh->inert_prev = 0;
     veh->inert_next = 0;
+    return PHYSRES_OK;
 }
 
-int vehicle_alloc(btDynamicsWorld *world, colshape_t *shape, colshape_t *inert,
-                  float *matrix, float mass, float ch_frict, float ch_roll_frict,
-                  float sus_stif, float sus_comp, float sus_damp,
-                  float sus_trav, float sus_force, float slip_frict)
+int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
+                  colshape_t *inert, float *matrix, float mass, float ch_frict,
+                  float ch_roll_frict, float sus_stif, float sus_comp,
+                  float sus_damp, float sus_trav, float sus_force,
+                  float slip_frict)
 {
     vehicle_t *veh;
     btVector3 vinert;
     if (g_vehicles.vacant == 0)
-        return -1;
+        return PHYSRES_OUT_OF_VEH;
+    if (shape->shape == 0 || inert->shape == 0)
+        return PHYSRES_INVALID_CS;
     ++g_vehicles.allocs;
     --g_vehicles.left;
     if (g_vehicles.left < g_vehicles.left_min)
@@ -177,7 +182,8 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *shape, colshape_t *inert,
     veh->chassis->setActivationState(DISABLE_DEACTIVATION);
     world->addRigidBody(veh->chassis);
     world->addAction(veh->veh);
-    return veh - g_vehicles.pool;
+    *vehi = veh - g_vehicles.pool;
+    return PHYSRES_OK;
 }
 
 int vehicle_add_wheel(vehicle_t *veh, float *pos, float *dir, float *axl,
@@ -197,11 +203,11 @@ int vehicle_set_wheel(vehicle_t *veh, int wheel, float engine,
                       float brake, float steer)
 {
     if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return 1;
+        return PHYSRES_INVALID_VEH_WHEEL;
     veh->veh->applyEngineForce(engine, wheel);
     veh->veh->setBrake(brake, wheel);
     veh->veh->setSteeringValue(steer, wheel);
-    return 0;
+    return PHYSRES_OK;
 }
 
 void vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
@@ -212,10 +218,10 @@ void vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
 int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *matrix)
 {
     if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return 1;
+        return PHYSRES_INVALID_VEH_WHEEL;
     veh->veh->updateWheelTransform(wheel, true);
     veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
-    return 0;
+    return PHYSRES_OK;
 }
 
 void vehicle_transform(vehicle_t *veh, float *matrix)
@@ -230,7 +236,7 @@ void vehicle_transform(vehicle_t *veh, float *matrix)
 int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
 {
     if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return 1;
+        return PHYSRES_INVALID_VEH_WHEEL;
     *in_contact = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
-    return 0;
+    return PHYSRES_OK;
 }
