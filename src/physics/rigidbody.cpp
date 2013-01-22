@@ -93,10 +93,11 @@ void rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     rb->cs_next = 0;
 }
 
-int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
-                    float *matrix, float frict, float roll_frict)
+int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs, float *matrix,
+                    float mass, float frict, float roll_frict)
 {
     rigidbody_t *rb;
+    btVector3 inertia;
     if (g_rigidbodies.vacant == 0)
         return -1;
     ++g_rigidbodies.allocs;
@@ -117,8 +118,13 @@ int rigidbody_alloc(btDynamicsWorld *world, colshape_t *cs,
 
     rb->mstate->m.setFromOpenGLMatrix(matrix);
 
+    if (mass > 0.0f)
+        cs->shape->calculateLocalInertia(mass, inertia);
+    else
+        inertia = btVector3(0,0,0);
+
     btRigidBody::btRigidBodyConstructionInfo info
-            (cs->mass, rb->mstate, cs->shape, cs->inertia);
+            (mass, rb->mstate, cs->shape, inertia);
     info.m_friction = frict;
     info.m_rollingFriction = roll_frict;
 

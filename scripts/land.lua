@@ -127,7 +127,7 @@ function M.alloc(world, mach, cell_z, cell_x)
             end
         end
         cs = api_physics_cs_alloc_hmap(buf, 0, WIDTH, LENGTH, -0.5 * HEIGHT, 0.5 * HEIGHT, size)
-        rb = api_physics_rb_alloc(cs, mstart, 1, 1)
+        rb = api_physics_rb_alloc(cs, mstart, 0, 1, 1)
         api_vector_free(size)
     end
 

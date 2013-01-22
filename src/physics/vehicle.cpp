@@ -122,11 +122,12 @@ void vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
 }
 
 int vehicle_alloc(btDynamicsWorld *world, colshape_t *shape, colshape_t *inert,
-                  float *matrix, float ch_frict, float ch_roll_frict,
+                  float *matrix, float mass, float ch_frict, float ch_roll_frict,
                   float sus_stif, float sus_comp, float sus_damp,
                   float sus_trav, float sus_force, float slip_frict)
 {
     vehicle_t *veh;
+    btVector3 vinert;
     if (g_vehicles.vacant == 0)
         return -1;
     ++g_vehicles.allocs;
@@ -161,8 +162,10 @@ int vehicle_alloc(btDynamicsWorld *world, colshape_t *shape, colshape_t *inert,
     veh->tuning.m_maxSuspensionForce = sus_force;
     veh->tuning.m_frictionSlip = slip_frict;
 
+    inert->shape->calculateLocalInertia(mass, vinert);
+
     btRigidBody::btRigidBodyConstructionInfo info
-            (shape->mass, veh->mstate, shape->shape, inert->inertia);
+            (mass, veh->mstate, shape->shape, vinert);
     info.m_friction = ch_frict;
     info.m_rollingFriction = ch_roll_frict;
 

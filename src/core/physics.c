@@ -130,28 +130,18 @@ static int api_physics_set_ddraw(lua_State *lua)
 static int api_physics_cs_alloc_box(lua_State *lua)
 {
     struct vector_t *size;
-    float mass;
     int csi;
     int res;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2))
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_box: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    mass = lua_tonumber(lua, 1);
-    size = vector_get(lua_tointeger(lua, 2));
-    lua_pop(lua, 2);
-
-    if (mass < 0.0f)
-    {
-        lua_pushstring(lua, "api_physics_cs_alloc_box: negative mass");
-        lua_error(lua);
-        return 0;
-    }
+    size = vector_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
 
     if (size == 0)
     {
@@ -160,7 +150,7 @@ static int api_physics_cs_alloc_box(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_cs_alloc_box(&csi, mass, size->value);
+    res = physcpp_cs_alloc_box(&csi, size->value);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
@@ -275,11 +265,11 @@ static int api_physics_rb_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
     int csi, rbi, res;
-    float frict, roll_frict;
+    float mass, frict, roll_frict;
 
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4))
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
     {
         lua_pushstring(lua, "api_physics_rb_alloc: incorrect argument");
         lua_error(lua);
@@ -288,13 +278,21 @@ static int api_physics_rb_alloc(lua_State *lua)
 
     csi = lua_tointeger(lua, 1);
     matrix = matrix_get(lua_tointeger(lua, 2));
-    frict = lua_tonumber(lua, 3);
-    roll_frict = lua_tonumber(lua, 4);
-    lua_pop(lua, 4);
+    mass = lua_tonumber(lua, 3);
+    frict = lua_tonumber(lua, 4);
+    roll_frict = lua_tonumber(lua, 5);
+    lua_pop(lua, 5);
 
     if (matrix == 0)
     {
         lua_pushstring(lua, "api_physics_rb_alloc: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (mass < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_rb_alloc: negative mass");
         lua_error(lua);
         return 0;
     }
@@ -306,7 +304,7 @@ static int api_physics_rb_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_rb_alloc(&rbi, csi, matrix->value, frict, roll_frict);
+    res = physcpp_rb_alloc(&rbi, csi, matrix->value, mass, frict, roll_frict);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
@@ -344,10 +342,10 @@ static int api_physics_veh_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
     int shapei, inerti, vehi, res, i;
-    float ch_frict, ch_roll_frict, sus_stif, sus_comp;
+    float mass, ch_frict, ch_roll_frict, sus_stif, sus_comp;
     float sus_damp, sus_trav, sus_force, slip_frict;
 
-    if (lua_gettop(lua) != 11)
+    if (lua_gettop(lua) != 12)
     {
         lua_pushstring(lua, "api_physics_veh_alloc: incorrect argument");
         lua_error(lua);
@@ -367,19 +365,27 @@ static int api_physics_veh_alloc(lua_State *lua)
     shapei = lua_tointeger(lua, 1);
     inerti = lua_tointeger(lua, 2);
     matrix = matrix_get(lua_tointeger(lua, 3));
-    ch_frict = lua_tonumber(lua, 4);
-    ch_roll_frict = lua_tonumber(lua, 5);
-    sus_stif = lua_tonumber(lua, 6);
-    sus_comp = lua_tonumber(lua, 7);
-    sus_damp = lua_tonumber(lua, 8);
-    sus_trav = lua_tonumber(lua, 9);
-    sus_force = lua_tonumber(lua, 10);
-    slip_frict = lua_tonumber(lua, 11);
-    lua_pop(lua, 11);
+    mass = lua_tonumber(lua, 4);
+    ch_frict = lua_tonumber(lua, 5);
+    ch_roll_frict = lua_tonumber(lua, 6);
+    sus_stif = lua_tonumber(lua, 7);
+    sus_comp = lua_tonumber(lua, 8);
+    sus_damp = lua_tonumber(lua, 9);
+    sus_trav = lua_tonumber(lua, 10);
+    sus_force = lua_tonumber(lua, 11);
+    slip_frict = lua_tonumber(lua, 12);
+    lua_pop(lua, 12);
 
     if (matrix == 0)
     {
         lua_pushstring(lua, "api_physics_veh_alloc: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (mass < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_veh_alloc: negative mass");
         lua_error(lua);
         return 0;
     }
@@ -391,9 +397,9 @@ static int api_physics_veh_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_veh_alloc(&vehi, shapei, inerti, matrix->value, ch_frict,
-                            ch_roll_frict, sus_stif, sus_comp, sus_damp,
-                            sus_trav, sus_force, slip_frict);
+    res = physcpp_veh_alloc(&vehi, shapei, inerti, matrix->value, mass,
+                            ch_frict, ch_roll_frict, sus_stif, sus_comp,
+                            sus_damp, sus_trav, sus_force, slip_frict);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, physics_error_text(res));
