@@ -11,11 +11,12 @@ enum matrix_e
     MATRIX_CONST = 0,
     MATRIX_MUL = 1,
     MATRIX_INV = 2,
-    MATRIX_POS_SCL_ROT = 3,
-    MATRIX_FROM_TO_UP = 4,
-    MATRIX_RIGID_BODY = 5,
-    MATRIX_VEHICLE_CHASSIS = 6,
-    MATRIX_VEHICLE_WHEEL = 7
+    MATRIX_FRUSTUM = 3,
+    MATRIX_POS_SCL_ROT = 4,
+    MATRIX_FROM_TO_UP = 5,
+    MATRIX_RIGID_BODY = 6,
+    MATRIX_VEHICLE_CHASSIS = 7,
+    MATRIX_VEHICLE_WHEEL = 8
 };
 
 enum matrix_axis_e
@@ -34,6 +35,8 @@ struct matrix_t
     int vacant;
     enum matrix_axis_e rotaxis;
     int rotanglei;
+    int zneari;
+    int zfari;
     int rigid_body;
     int vehicle;
     int wheel;
@@ -55,3 +58,5 @@ void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
 void matrix_pos_axes(GLfloat *out, GLfloat *pos, GLfloat *ax,
                      GLfloat *ay, GLfloat *az);
 void matrix_from_to_up(GLfloat *out, GLfloat *from, GLfloat *to, GLfloat *up);
+void matrix_frustum(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
+                    GLfloat top, GLfloat znear, GLfloat zfar);
