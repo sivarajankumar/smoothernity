@@ -272,9 +272,8 @@ void mesh_done(void)
     g_meshes.pool = 0;
 }
 
-void mesh_update(struct mesh_t *mesh, float dt, int frame_tag)
+void mesh_draw(struct mesh_t *mesh)
 {
-    matrix_update(mesh->matrix, dt, frame_tag, 0);
     glPushMatrix();
     glMultMatrixf(mesh->matrix->value);
     glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_SHORT,
