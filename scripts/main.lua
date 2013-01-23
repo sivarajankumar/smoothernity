@@ -1,6 +1,7 @@
 local ddraw = require 'ddraw'
 local perf = require 'perf'
 local game = require 'game'
+local cfg = require 'config'
 
 local quit = false
 local machwork = nil
@@ -13,8 +14,8 @@ function configure()
             ['frame_time'] = 1 / 60,
             ['logic_time'] = 0.01,
             ['gc_step'] = 10,
-            ['display_width'] = 1920,
-            ['display_height'] = 1080,
+            ['display_width'] = cfg.DISPLAY_WIDTH,
+            ['display_height'] = cfg.DISPLAY_HEIGHT,
             ['mesh_count'] = 100,
             ['vbuf_size'] = 10000,
             ['vbuf_count'] = 100,

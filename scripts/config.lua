@@ -1,0 +1,6 @@
+local M = {}
+
+M.DISPLAY_WIDTH = 1920
+M.DISPLAY_HEIGHT = 1080
+
+return M
