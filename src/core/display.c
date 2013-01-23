@@ -22,6 +22,7 @@ struct display_t
     SDL_Surface *screen;
     struct vector_t *clear_color;
     struct matrix_t *camera;
+    struct matrix_t *proj;
     struct timer_t *timer;
     float last_update_time;
     float last_draw_time;
@@ -76,6 +77,31 @@ static int api_display_camera(lua_State *lua)
     }
 
     g_display.camera = matrix;
+    return 0;
+}
+
+static int api_display_proj(lua_State *lua)
+{
+    struct matrix_t *matrix;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_display_proj: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
+    if (matrix == 0)
+    {
+        lua_pushstring(lua, "api_display_proj: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+
+    g_display.proj = matrix;
     return 0;
 }
 
@@ -153,6 +179,7 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
 
     lua_register(lua, "api_display_clear_color", api_display_clear_color);
     lua_register(lua, "api_display_camera", api_display_camera);
+    lua_register(lua, "api_display_proj", api_display_proj);
     lua_register(lua, "api_display_draw_scene", api_display_draw_scene);
     lua_register(lua, "api_display_timing", api_display_timing);
 
@@ -264,6 +291,8 @@ void display_update(float dt)
         vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
     if (g_display.camera)
         matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
+    if (g_display.proj)
+        matrix_update(g_display.proj, dt, g_display.frame_tag, 0);
     display_update_meshes(dt);
 
     g_display.last_update_time = timer_passed(g_display.timer);
@@ -290,9 +319,10 @@ void display_draw(void)
     /* frustum */
 
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    /* TODO: rewrite using proper mechanics */
-    gluPerspective(60.0, (float)g_display.width / (float)g_display.height, 1.0, 1024.0);
+    if (g_display.proj)
+        glLoadMatrixf(g_display.proj->value);
+    else
+        glLoadIdentity();
 
     /* meshes */
 
