@@ -355,6 +355,62 @@ static int api_matrix_frustum(lua_State *lua)
     return 0;
 }
 
+static int api_matrix_ortho(lua_State *lua)
+{
+    struct matrix_t *matrix;
+    struct vector_t *v0, *v1;
+    int zneari, zfari;
+
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
+    {
+        lua_pushstring(lua, "api_matrix_ortho: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix = matrix_get(lua_tointeger(lua, 1));
+    v0 = vector_get(lua_tointeger(lua, 2));
+    v1 = vector_get(lua_tointeger(lua, 3));
+    zneari = lua_tointeger(lua, 4);
+    zfari = lua_tointeger(lua, 5);
+    lua_pop(lua, 5);
+
+    if (matrix == 0 || v0 == 0 || v1 == 0)
+    {
+        lua_pushstring(lua, "api_matrix_ortho: invalid objects");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (zneari < 0 || zneari >= 4 || zfari < 0 || zfari >= 4)
+    {
+        lua_pushstring(lua, "api_matrix_ortho: "
+                            "znear/zfar indices out of range");
+        lua_error(lua);
+        return 0;
+    }
+
+    matrix_clear_args(matrix);
+
+    matrix->frame_tag = 0;
+    matrix->type = MATRIX_ORTHO;
+    matrix->argv[0] = v0;
+    matrix->argv[1] = v1;
+    matrix->zneari = zneari;
+    matrix->zfari = zfari;
+
+    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_matrix_ortho: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 static int api_matrix_pos_scl_rot(lua_State *lua)
 {
     struct matrix_t *matrix;
@@ -616,6 +672,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_mul", api_matrix_mul);
     lua_register(lua, "api_matrix_mul_stop", api_matrix_mul_stop);
     lua_register(lua, "api_matrix_frustum", api_matrix_frustum);
+    lua_register(lua, "api_matrix_ortho", api_matrix_ortho);
     lua_register(lua, "api_matrix_pos_scl_rot", api_matrix_pos_scl_rot);
     lua_register(lua, "api_matrix_from_to_up", api_matrix_from_to_up);
     lua_register(lua, "api_matrix_rigid_body", api_matrix_rigid_body);
@@ -712,6 +769,15 @@ void matrix_update(struct matrix_t *m, float dt,
         v1 = m->argv[1]->value;
         matrix_frustum(m->value, v0[0], v0[1], v0[2], v0[3],
                        v1[m->zneari], v1[m->zfari]);
+    }
+    else if (m->type == MATRIX_ORTHO)
+    {
+        vector_update(m->argv[0], dt, frame_tag, force);
+        vector_update(m->argv[1], dt, frame_tag, force);
+        v0 = m->argv[0]->value;
+        v1 = m->argv[1]->value;
+        matrix_ortho(m->value, v0[0], v0[1], v0[2], v0[3],
+                     v1[m->zneari], v1[m->zfari]);
     }
     else if (m->type == MATRIX_POS_SCL_ROT)
     {
@@ -959,20 +1025,48 @@ void matrix_frustum(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
     temp2 = right - left;
     temp3 = top - bottom;
     temp4 = zfar - znear;
+
     out[0] = temp / temp2;
     out[1] = 0;
     out[2] = 0;
     out[3] = 0;
+
     out[4] = 0;
     out[5] = temp / temp3;
     out[6] = 0;
     out[7] = 0;
+
     out[8] = (right + left) / temp2;
     out[9] = (top + bottom) / temp3;
     out[10] = (-zfar - znear) / temp4;
     out[11] = -1;
+
     out[12] = 0;
     out[13] = 0;
     out[14] = (-temp * zfar) / temp4;
     out[15] = 0;
+}
+
+void matrix_ortho(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
+                  GLfloat top, GLfloat znear, GLfloat zfar)
+{
+    out[0] = 2.0f / (right - left);
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+
+    out[4] = 0;
+    out[5] = 2.0f / (top - bottom);
+    out[6] = 0;
+    out[7] = 0;
+
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = -2.0f / (zfar - znear);
+    out[11] = 0;
+
+    out[12] = -(right + left) / (right - left);
+    out[13] = -(top + bottom) / (top - bottom);
+    out[14] = -(zfar + znear) / (zfar - znear);
+    out[15] = 1;
 }
