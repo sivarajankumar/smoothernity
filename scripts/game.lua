@@ -35,7 +35,7 @@ local function make_mproj()
     api_matrix_frustum(mproj, vbounds, vz, 0, 1)
     api_matrix_update(mproj)
     api_matrix_stop(mproj)
-    api_display_proj(mproj)
+    api_render_proj(mproj)
     api_vector_free(vbounds)
     api_vector_free(vz)
 end

@@ -15,7 +15,7 @@ function M.alloc(camc, camd)
                 else
                     camera = camc
                 end
-                api_display_camera(camera.invmatrix)
+                api_render_camera(camera.invmatrix)
             end
         elseif pressed == 1 then
             if api_input_key(API_INPUT_KEY_F3) == 0 then
@@ -24,7 +24,7 @@ function M.alloc(camc, camd)
         end
     end
 
-    api_display_camera(camera.invmatrix)
+    api_render_camera(camera.invmatrix)
     return self
 end
 

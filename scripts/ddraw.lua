@@ -10,11 +10,11 @@ function M.update()
             if debug == 0 then
                 debug = 1
                 api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
-                api_display_draw_scene(0)
+                api_render_draw_scene(0)
             else
                 debug = 0
                 api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                api_display_draw_scene(1)
+                api_render_draw_scene(1)
             end
         end
     elseif pressed == 1 then
