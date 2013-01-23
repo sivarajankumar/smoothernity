@@ -27,7 +27,7 @@ local function make_mproj()
     local vz = api_vector_alloc()
 
     local ymax = PROJ_Z_NEAR * math.tan(PROJ_FOV)
-    local xmax = ymax * cfg.DISPLAY_WIDTH / cfg.DISPLAY_HEIGHT
+    local xmax = ymax * cfg.SCREEN_WIDTH / cfg.SCREEN_HEIGHT
 
     api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
     api_vector_const(vz, PROJ_Z_NEAR, PROJ_Z_FAR, 0, 0)
