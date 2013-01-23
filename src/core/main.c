@@ -9,7 +9,7 @@
 #include "mpool.h"
 #include "machine.h"
 #include "timer.h"
-#include "display.h"
+#include "render.h"
 #include "input.h"
 #include "ibuf.h"
 #include "vbuf.h"
@@ -241,7 +241,7 @@ static void main_done(void)
 {
     vbuf_done();
     ibuf_done();
-    display_done();
+    render_done();
 
     if (g_main.lua)
         lua_close(g_main.lua);
@@ -374,7 +374,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (display_init(g_main.lua, &argc, argv, g_main.screen_width,
+    if (render_init(g_main.lua, &argc, argv, g_main.screen_width,
                                        g_main.screen_height) != 0)
     {
         fprintf(stderr, "Cannot set video mode\n"); 
@@ -421,8 +421,8 @@ static void main_loop(void)
             fprintf(stderr, "Failed to run worker\n");
             return;
         }
-        display_update(g_main.frame_time);
-        display_draw();
+        render_update(g_main.frame_time);
+        render_draw();
     }
     printf("Game loop finish\n");
 }

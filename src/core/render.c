@@ -2,7 +2,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-#include "display.h"
+#include "render.h"
 #include "vbuf.h"
 #include "ibuf.h"
 #include "mesh.h"
@@ -12,7 +12,7 @@
 #include "physics.h"
 #include "timer.h"
 
-struct display_t
+struct render_t
 {
     int init;
     int width;
@@ -28,15 +28,15 @@ struct display_t
     float last_draw_time;
 };
 
-static struct display_t g_display;
+static struct render_t g_render;
 
-static int api_display_clear_color(lua_State *lua)
+static int api_render_clear_color(lua_State *lua)
 {
     struct vector_t *vector;
 
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
-        lua_pushstring(lua, "api_display_clear_color: incorrect argument");
+        lua_pushstring(lua, "api_render_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -46,22 +46,22 @@ static int api_display_clear_color(lua_State *lua)
 
     if (vector == 0)
     {
-        lua_pushstring(lua, "api_display_clear_color: invalid vector");
+        lua_pushstring(lua, "api_render_clear_color: invalid vector");
         lua_error(lua);
         return 0;
     }
 
-    g_display.clear_color = vector;
+    g_render.clear_color = vector;
     return 0;
 }
 
-static int api_display_camera(lua_State *lua)
+static int api_render_camera(lua_State *lua)
 {
     struct matrix_t *matrix;
 
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
-        lua_pushstring(lua, "api_display_camera: incorrect argument");
+        lua_pushstring(lua, "api_render_camera: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -71,22 +71,22 @@ static int api_display_camera(lua_State *lua)
 
     if (matrix == 0)
     {
-        lua_pushstring(lua, "api_display_camera: invalid matrix");
+        lua_pushstring(lua, "api_render_camera: invalid matrix");
         lua_error(lua);
         return 0;
     }
 
-    g_display.camera = matrix;
+    g_render.camera = matrix;
     return 0;
 }
 
-static int api_display_proj(lua_State *lua)
+static int api_render_proj(lua_State *lua)
 {
     struct matrix_t *matrix;
 
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
-        lua_pushstring(lua, "api_display_proj: incorrect argument");
+        lua_pushstring(lua, "api_render_proj: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -96,51 +96,51 @@ static int api_display_proj(lua_State *lua)
 
     if (matrix == 0)
     {
-        lua_pushstring(lua, "api_display_proj: invalid matrix");
+        lua_pushstring(lua, "api_render_proj: invalid matrix");
         lua_error(lua);
         return 0;
     }
 
-    g_display.proj = matrix;
+    g_render.proj = matrix;
     return 0;
 }
 
-static int api_display_draw_scene(lua_State *lua)
+static int api_render_draw_scene(lua_State *lua)
 {
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
-        lua_pushstring(lua, "api_display_draw_scene: incorrect argument");
+        lua_pushstring(lua, "api_render_draw_scene: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    g_display.draw_scene = lua_tointeger(lua, 1);
+    g_render.draw_scene = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
     return 0;
 }
 
-static int api_display_timing(lua_State *lua)
+static int api_render_timing(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_display_timing: incorrect argument");
+        lua_pushstring(lua, "api_render_timing: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    lua_pushnumber(lua, g_display.last_update_time);
-    lua_pushnumber(lua, g_display.last_draw_time);
+    lua_pushnumber(lua, g_render.last_update_time);
+    lua_pushnumber(lua, g_render.last_draw_time);
     return 2;
 }
 
-int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
+int render_init(lua_State *lua, int *argc, char **argv, int width, int height)
 {
     int bpp;
     int flags;
     const SDL_VideoInfo *info;
 
-    g_display.timer = timer_create();
-    if (g_display.timer == 0)
+    g_render.timer = timer_create();
+    if (g_render.timer == 0)
         return 1;
 
     glutInit(argc, argv);
@@ -160,15 +160,15 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     flags = SDL_OPENGL | SDL_FULLSCREEN;
 
-    g_display.screen = SDL_SetVideoMode(width, height, bpp, flags);
-    if (g_display.screen == 0)
+    g_render.screen = SDL_SetVideoMode(width, height, bpp, flags);
+    if (g_render.screen == 0)
         goto cleanup;
 
-    g_display.frame_tag = 1000;
-    g_display.width = width;
-    g_display.height = height;
-    g_display.init = 1;
-    g_display.draw_scene = 1;
+    g_render.frame_tag = 1000;
+    g_render.width = width;
+    g_render.height = height;
+    g_render.init = 1;
+    g_render.draw_scene = 1;
 
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
@@ -177,39 +177,39 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, width, height);
 
-    lua_register(lua, "api_display_clear_color", api_display_clear_color);
-    lua_register(lua, "api_display_camera", api_display_camera);
-    lua_register(lua, "api_display_proj", api_display_proj);
-    lua_register(lua, "api_display_draw_scene", api_display_draw_scene);
-    lua_register(lua, "api_display_timing", api_display_timing);
+    lua_register(lua, "api_render_clear_color", api_render_clear_color);
+    lua_register(lua, "api_render_camera", api_render_camera);
+    lua_register(lua, "api_render_proj", api_render_proj);
+    lua_register(lua, "api_render_draw_scene", api_render_draw_scene);
+    lua_register(lua, "api_render_timing", api_render_timing);
 
     return 0;
 cleanup:
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
-    if (g_display.timer)
+    if (g_render.timer)
     {
-        timer_destroy(g_display.timer);
-        g_display.timer = 0;
+        timer_destroy(g_render.timer);
+        g_render.timer = 0;
     }
     return 1;
 }
 
-void display_done(void)
+void render_done(void)
 {
-    if (g_display.init == 0)
+    if (g_render.init == 0)
         return;
-    if (g_display.timer)
+    if (g_render.timer)
     {
-        timer_destroy(g_display.timer);
-        g_display.timer = 0;
+        timer_destroy(g_render.timer);
+        g_render.timer = 0;
     }
-    g_display.init = 0;
+    g_render.init = 0;
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
 }
 
-static void display_draw_meshes(void)
+static void render_draw_meshes(void)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
@@ -224,7 +224,7 @@ static void display_draw_meshes(void)
             vbuf_select(vbuf);
             for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
             {
-                if (mesh_vbuf->frame_tag == g_display.frame_tag)
+                if (mesh_vbuf->frame_tag == g_render.frame_tag)
                     continue;
                 ibuf = mesh_vbuf->ibuf;
                 if (ibuf->mapped)
@@ -232,9 +232,9 @@ static void display_draw_meshes(void)
                 ibuf_select(ibuf);
                 for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
                 {
-                    if (mesh_ibuf->frame_tag == g_display.frame_tag)
+                    if (mesh_ibuf->frame_tag == g_render.frame_tag)
                         continue;
-                    mesh_ibuf->frame_tag = g_display.frame_tag;
+                    mesh_ibuf->frame_tag = g_render.frame_tag;
                     mesh_draw(mesh_ibuf);
                 }
             }
@@ -249,7 +249,7 @@ static void display_draw_meshes(void)
             ibuf_select(ibuf);
             for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
             {
-                if (mesh_ibuf->frame_tag == g_display.frame_tag)
+                if (mesh_ibuf->frame_tag == g_render.frame_tag)
                     continue;
                 vbuf = mesh_ibuf->vbuf;
                 if (vbuf->mapped)
@@ -257,9 +257,9 @@ static void display_draw_meshes(void)
                 vbuf_select(vbuf);
                 for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
                 {
-                    if (mesh_vbuf->frame_tag == g_display.frame_tag)
+                    if (mesh_vbuf->frame_tag == g_render.frame_tag)
                         continue;
-                    mesh_vbuf->frame_tag = g_display.frame_tag;
+                    mesh_vbuf->frame_tag = g_render.frame_tag;
                     mesh_draw(mesh_vbuf);
                 }
             }
@@ -267,7 +267,7 @@ static void display_draw_meshes(void)
     }
 }
 
-static void display_update_meshes(float dt)
+static void render_update_meshes(float dt)
 {
     struct vbuf_t *vbuf;
     struct mesh_t *mesh_vbuf;
@@ -277,38 +277,38 @@ static void display_update_meshes(float dt)
         {
             if (mesh_vbuf->ibuf->mapped)
                 continue;
-            matrix_update(mesh_vbuf->matrix, dt, g_display.frame_tag, 0);
+            matrix_update(mesh_vbuf->matrix, dt, g_render.frame_tag, 0);
         }
     }
 }
 
-void display_update(float dt)
+void render_update(float dt)
 {
-    timer_reset(g_display.timer);
+    timer_reset(g_render.timer);
 
-    ++g_display.frame_tag;
-    if (g_display.clear_color)
-        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
-    if (g_display.camera)
-        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
-    if (g_display.proj)
-        matrix_update(g_display.proj, dt, g_display.frame_tag, 0);
-    display_update_meshes(dt);
+    ++g_render.frame_tag;
+    if (g_render.clear_color)
+        vector_update(g_render.clear_color, dt, g_render.frame_tag, 0);
+    if (g_render.camera)
+        matrix_update(g_render.camera, dt, g_render.frame_tag, 0);
+    if (g_render.proj)
+        matrix_update(g_render.proj, dt, g_render.frame_tag, 0);
+    render_update_meshes(dt);
 
-    g_display.last_update_time = timer_passed(g_display.timer);
+    g_render.last_update_time = timer_passed(g_render.timer);
 }
 
-void display_draw(void)
+void render_draw(void)
 {
     GLfloat *color;
 
-    timer_reset(g_display.timer);
+    timer_reset(g_render.timer);
 
     /* clear */
 
-    if (g_display.draw_scene && g_display.clear_color)
+    if (g_render.draw_scene && g_render.clear_color)
     {
-        color = g_display.clear_color->value;
+        color = g_render.clear_color->value;
         glClearColor(color[0], color[1], color[2], color[3]);
     }
     else
@@ -319,21 +319,21 @@ void display_draw(void)
     /* frustum */
 
     glMatrixMode(GL_PROJECTION);
-    if (g_display.proj)
-        glLoadMatrixf(g_display.proj->value);
+    if (g_render.proj)
+        glLoadMatrixf(g_render.proj->value);
     else
         glLoadIdentity();
 
     /* meshes */
 
     glMatrixMode(GL_MODELVIEW);
-    if (g_display.camera)
-        glLoadMatrixf(g_display.camera->value);
+    if (g_render.camera)
+        glLoadMatrixf(g_render.camera->value);
     else
         glLoadIdentity();
 
-    if (g_display.draw_scene)
-        display_draw_meshes();
+    if (g_render.draw_scene)
+        render_draw_meshes();
 
     /* debug draw */
 
@@ -343,7 +343,7 @@ void display_draw(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, g_display.width, g_display.height, 0);
+    gluOrtho2D(0, g_render.width, g_render.height, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     text_draw();
@@ -352,5 +352,5 @@ void display_draw(void)
 
     SDL_GL_SwapBuffers();
 
-    g_display.last_draw_time = timer_passed(g_display.timer);
+    g_render.last_draw_time = timer_passed(g_render.timer);
 }
