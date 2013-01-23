@@ -102,49 +102,6 @@ static int api_matrix_left(lua_State *lua)
     return 1;
 }
 
-static int api_matrix_const(lua_State *lua)
-{
-    struct matrix_t *matrix;
-    float value[16];
-    int i;
-
-    if (lua_gettop(lua) != 17)
-    {
-        lua_pushstring(lua, "api_matrix_const: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    for (i = 1; i <= 17; ++i)
-    {
-        if (!lua_isnumber(lua, i))
-        {
-            lua_pushstring(lua, "api_matrix_const: incorrect argument");
-            lua_error(lua);
-            return 0;
-        }
-    }
-
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    for (i = 0; i < 16; ++i)
-        value[i] = lua_tonumber(lua, i + 2);
-    lua_pop(lua, 17);
-
-    if (matrix == 0)
-    {
-        lua_pushstring(lua, "api_matrix_const: invalid matrix");
-        lua_error(lua);
-        return 0;
-    }
-
-    matrix_clear_args(matrix);
-
-    matrix->frame_tag = 0;
-    matrix->type = MATRIX_CONST;
-    memcpy(matrix->value, value, 16 * sizeof(GLfloat));
-
-    return 0;
-}
-
 static int api_matrix_copy(lua_State *lua)
 {
     struct matrix_t *matrix, *msrc, *mnext;
@@ -652,7 +609,6 @@ int matrix_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_matrix_alloc", api_matrix_alloc);
     lua_register(lua, "api_matrix_free", api_matrix_free);
     lua_register(lua, "api_matrix_left", api_matrix_left);
-    lua_register(lua, "api_matrix_const", api_matrix_const);
     lua_register(lua, "api_matrix_copy", api_matrix_copy);
     lua_register(lua, "api_matrix_stop", api_matrix_stop);
     lua_register(lua, "api_matrix_update", api_matrix_update);
