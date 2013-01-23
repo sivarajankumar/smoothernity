@@ -24,22 +24,10 @@ struct display_t
     struct matrix_t *camera;
     struct timer_t *timer;
     float last_update_time;
+    float last_draw_time;
 };
 
 static struct display_t g_display;
-
-static int api_display_mode(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_display_mode: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_display.width);
-    lua_pushinteger(lua, g_display.height);
-    return 2;
-}
 
 static int api_display_clear_color(lua_State *lua)
 {
@@ -115,7 +103,8 @@ static int api_display_timing(lua_State *lua)
     }
 
     lua_pushnumber(lua, g_display.last_update_time);
-    return 1;
+    lua_pushnumber(lua, g_display.last_draw_time);
+    return 2;
 }
 
 int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
@@ -162,7 +151,6 @@ int display_init(lua_State *lua, int *argc, char **argv, int width, int height)
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, width, height);
 
-    lua_register(lua, "api_display_mode", api_display_mode);
     lua_register(lua, "api_display_clear_color", api_display_clear_color);
     lua_register(lua, "api_display_camera", api_display_camera);
     lua_register(lua, "api_display_draw_scene", api_display_draw_scene);
@@ -194,7 +182,7 @@ void display_done(void)
     SDL_Quit();
 }
 
-static void display_draw_meshes(float dt)
+static void display_draw_meshes(void)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
@@ -220,7 +208,7 @@ static void display_draw_meshes(float dt)
                     if (mesh_ibuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_ibuf->frame_tag = g_display.frame_tag;
-                    mesh_update(mesh_ibuf, dt, g_display.frame_tag);
+                    mesh_draw(mesh_ibuf);
                 }
             }
         }
@@ -245,26 +233,52 @@ static void display_draw_meshes(float dt)
                     if (mesh_vbuf->frame_tag == g_display.frame_tag)
                         continue;
                     mesh_vbuf->frame_tag = g_display.frame_tag;
-                    mesh_update(mesh_vbuf, dt, g_display.frame_tag);
+                    mesh_draw(mesh_vbuf);
                 }
             }
         }
     }
 }
 
+static void display_update_meshes(float dt)
+{
+    struct vbuf_t *vbuf;
+    struct mesh_t *mesh_vbuf;
+    for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+    {
+        for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+        {
+            if (mesh_vbuf->ibuf->mapped)
+                continue;
+            matrix_update(mesh_vbuf->matrix, dt, g_display.frame_tag, 0);
+        }
+    }
+}
+
 void display_update(float dt)
+{
+    timer_reset(g_display.timer);
+
+    ++g_display.frame_tag;
+    if (g_display.clear_color)
+        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
+    if (g_display.camera)
+        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
+    display_update_meshes(dt);
+
+    g_display.last_update_time = timer_passed(g_display.timer);
+}
+
+void display_draw(void)
 {
     GLfloat *color;
 
     timer_reset(g_display.timer);
 
-    ++g_display.frame_tag;
-
     /* clear */
 
     if (g_display.draw_scene && g_display.clear_color)
     {
-        vector_update(g_display.clear_color, dt, g_display.frame_tag, 0);
         color = g_display.clear_color->value;
         glClearColor(color[0], color[1], color[2], color[3]);
     }
@@ -284,15 +298,12 @@ void display_update(float dt)
 
     glMatrixMode(GL_MODELVIEW);
     if (g_display.camera)
-    {
-        matrix_update(g_display.camera, dt, g_display.frame_tag, 0);
         glLoadMatrixf(g_display.camera->value);
-    }
     else
         glLoadIdentity();
 
     if (g_display.draw_scene)
-        display_draw_meshes(dt);
+        display_draw_meshes();
 
     /* debug draw */
 
@@ -311,5 +322,5 @@ void display_update(float dt)
 
     SDL_GL_SwapBuffers();
 
-    g_display.last_update_time = timer_passed(g_display.timer);
+    g_display.last_draw_time = timer_passed(g_display.timer);
 }

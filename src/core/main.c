@@ -403,6 +403,7 @@ static void main_loop(void)
     {
         timer_reset(g_main.logic_timer);
         physics_update(g_main.frame_time);
+        display_update(g_main.frame_time);
         input_update();
 
         timer_reset(g_main.gc_timer);
@@ -421,7 +422,7 @@ static void main_loop(void)
             fprintf(stderr, "Failed to run worker\n");
             return;
         }
-        display_update(g_main.frame_time);
+        display_draw();
     }
     printf("Game loop finish\n");
 }

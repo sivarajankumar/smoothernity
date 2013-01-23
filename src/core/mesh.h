@@ -39,4 +39,4 @@ extern struct meshes_t g_meshes;
 
 int mesh_init(lua_State *lua, int count);
 void mesh_done(void);
-void mesh_update(struct mesh_t *mesh, float dt, int frame_tag);
+void mesh_draw(struct mesh_t *mesh);
