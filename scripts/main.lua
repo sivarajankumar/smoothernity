@@ -31,7 +31,8 @@ function configure()
             ['rigidbody_count'] = 100,
             ['vehicle_count'] = 10,
             ['buf_size'] = 10000,
-            ['buf_count'] = 100}
+            ['buf_count'] = 100,
+            ['rop_count'] = 100}
 end
 
 function control(mach)

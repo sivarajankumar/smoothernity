@@ -19,6 +19,7 @@
 #include "matrix.h"
 #include "physics.h"
 #include "buf.h"
+#include "rop.h"
 
 struct main_t
 {
@@ -46,6 +47,7 @@ struct main_t
     int vehicle_count;
     int buf_size;
     int buf_count;
+    int rop_count;
     lua_State *lua;
     struct machine_t *controller;
     struct machine_t *worker;
@@ -206,7 +208,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
-     || main_get_int(lua, "buf_count", &g_main.buf_count) != 0)
+     || main_get_int(lua, "buf_count", &g_main.buf_count) != 0
+     || main_get_int(lua, "rop_count", &g_main.rop_count) != 0)
     {
         goto cleanup;
     }
@@ -266,6 +269,7 @@ static void main_done(void)
 
     input_done();
     buf_done();
+    rop_done();
     vector_done();
     matrix_done();
     mesh_done();
@@ -286,7 +290,7 @@ static int main_init(int argc, char **argv)
                    g_main.mpool_counts,
                    g_main.mpool_len) == 0)
     {
-        fprintf(stderr, "Cannot create memory pool\n");
+        fprintf(stderr, "Cannot init memory pool\n");
         return 1;
     }
 
@@ -329,6 +333,12 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init physics\n"); 
         return 1;
     } 
+
+    if (rop_init(g_main.lua, g_main.rop_count) != 0)
+    {
+        fprintf(stderr, "Cannot init render operations\n");
+        return 1;
+    }
 
     if (buf_init(g_main.lua, g_main.buf_size, g_main.buf_count) != 0)
     {
@@ -377,7 +387,7 @@ static int main_init(int argc, char **argv)
     if (render_init(g_main.lua, &argc, argv, g_main.screen_width,
                                        g_main.screen_height) != 0)
     {
-        fprintf(stderr, "Cannot set video mode\n"); 
+        fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
 
