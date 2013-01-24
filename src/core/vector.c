@@ -151,8 +151,13 @@ static int api_vector_update(lua_State *lua)
         return 0;
     }
 
-    vector_update(vector, 0, 0, 1);
-    return 4;
+    if (vector_update(vector, 0, 0, 1) != 0)
+    {
+        lua_pushstring(lua, "api_vector_update: update error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
 }
 
 static int api_vector_const(lua_State *lua)
@@ -634,32 +639,36 @@ static int vector_seq_prev(struct vector_t *v, int i)
         return i;
 }
 
-static void vector_update_rubber(struct vector_t *v, float dt, int force)
+static int vector_update_rubber(struct vector_t *v, float dt, int force)
 {
     int i;
     GLfloat *v0, *v1;
-    vector_update(v->argv[0], dt, v->frame_tag, force);
-    vector_update(v->argv[1], dt, v->frame_tag, force);
+    if (vector_update(v->argv[0], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[1], dt, v->frame_tag, force) != 0)
+        return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
     for (i = 0; i < 4; ++i)
         v->value[i] += (v0[i] - v->value[i]) * v1[i];
+    return 0;
 }
 
-static void vector_update_cord(struct vector_t *v, float dt, int force)
+static int vector_update_cord(struct vector_t *v, float dt, int force)
 {
     static const float THRESHOLD = 0.1f;
     float dist, scale;
     GLfloat diff[4];
     GLfloat *v0;
 
-    vector_update(v->argv[0], dt, v->frame_tag, force);
+    if (vector_update(v->argv[0], dt, v->frame_tag, force) != 0)
+        return 1;
     v0 = v->argv[0]->value;
 
     vector_wsum(diff, 1, v->value, -1, v0);
     dist = vector_len(diff);
     if (dist < THRESHOLD)
-        return;
+        return 0;
     if (dist < v->cord_min)
         scale = v->cord_min / dist;
     else if (dist > v->cord_max)
@@ -667,28 +676,36 @@ static void vector_update_cord(struct vector_t *v, float dt, int force)
     else
         scale = 1;
     vector_wsum(v->value, 1, v0, scale, diff);
+    return 0;
 }
 
-static void vector_update_mpos(struct vector_t *v, float dt, int force)
+static int vector_update_mpos(struct vector_t *v, float dt, int force)
 {
     GLfloat *m0;
-    matrix_update(v->argm[0], dt, v->frame_tag, force);
+    if (matrix_update(v->argm[0], dt, v->frame_tag, force) != 0)
+        return 1;
     m0 = v->argm[0]->value;
     v->value[0] = m0[12];
     v->value[1] = m0[13];
     v->value[2] = m0[14];
     v->value[3] = 0;
+    return 0;
 }
 
-static void vector_update_wsum(struct vector_t *v, float dt, int force)
+static int vector_update_wsum(struct vector_t *v, float dt, int force)
 {
     int i;
     GLfloat *v0, *v1, *v2, *v3, *v4;
-    vector_update(v->argv[0], dt, v->frame_tag, force);
-    vector_update(v->argv[1], dt, v->frame_tag, force);
-    vector_update(v->argv[2], dt, v->frame_tag, force);
-    vector_update(v->argv[3], dt, v->frame_tag, force);
-    vector_update(v->argv[4], dt, v->frame_tag, force);
+    if (vector_update(v->argv[0], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[1], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[2], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[3], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[4], dt, v->frame_tag, force) != 0)
+        return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
     v2 = v->argv[2]->value;
@@ -699,15 +716,20 @@ static void vector_update_wsum(struct vector_t *v, float dt, int force)
         v->value[i] = (v0[0] * v1[i]) + (v0[1] * v2[i]) +
                       (v0[2] * v3[i]) + (v0[3] * v4[i]);
     }
+    return 0;
 }
 
-static void vector_update_pick(struct vector_t *v, float dt, int force)
+static int vector_update_pick(struct vector_t *v, float dt, int force)
 {
     GLfloat *v0, *v1, *v2, *v3;
-    vector_update(v->argv[0], dt, v->frame_tag, force);
-    vector_update(v->argv[1], dt, v->frame_tag, force);
-    vector_update(v->argv[2], dt, v->frame_tag, force);
-    vector_update(v->argv[3], dt, v->frame_tag, force);
+    if (vector_update(v->argv[0], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[1], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[2], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (vector_update(v->argv[3], dt, v->frame_tag, force) != 0)
+        return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
     v2 = v->argv[2]->value;
@@ -716,6 +738,7 @@ static void vector_update_pick(struct vector_t *v, float dt, int force)
     v->value[1] = v1[1];
     v->value[2] = v2[2];
     v->value[3] = v3[3];
+    return 0;
 }
 
 static void vector_update_seq(struct vector_t *v, float dt)
@@ -770,25 +793,26 @@ static void vector_update_seq(struct vector_t *v, float dt)
     }
 }
 
-void vector_update(struct vector_t *v, float dt, int frame_tag, int force)
+int vector_update(struct vector_t *v, float dt, int frame_tag, int force)
 {
     if (v->type == VECTOR_CONST)
-        return;
+        return 0;
     if (force == 0 && v->frame_tag == frame_tag)
-        return;
+        return 0;
     v->frame_tag = frame_tag;
     if (v->type == VECTOR_RUBBER)
-        vector_update_rubber(v, dt, force);
+        return vector_update_rubber(v, dt, force);
     else if (v->type == VECTOR_WSUM)
-        vector_update_wsum(v, dt, force);
+        return vector_update_wsum(v, dt, force);
     else if (v->type == VECTOR_SEQ)
         vector_update_seq(v, dt);
     else if (v->type == VECTOR_MPOS)
-        vector_update_mpos(v, dt, force);
+        return vector_update_mpos(v, dt, force);
     else if (v->type == VECTOR_CORD)
-        vector_update_cord(v, dt, force);
+        return vector_update_cord(v, dt, force);
     else if (v->type == VECTOR_PICK)
-        vector_update_pick(v, dt, force);
+        return vector_update_pick(v, dt, force);
+    return 0;
 }
 
 void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)

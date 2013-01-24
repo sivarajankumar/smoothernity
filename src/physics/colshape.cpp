@@ -69,7 +69,7 @@ void colshape_done(void)
     for (i = 0; i < g_colshapes.count; ++i)
     {
         cs = g_colshapes.pool + i;
-        colshape_free(cs, 0);
+        colshape_free(cs);
         free(cs->data);
     }
     free(g_colshapes.pool);
@@ -106,7 +106,7 @@ colshape_t * colshape_get(int colshapei)
         return 0;
 }
 
-int colshape_free(colshape_t *cs, btDynamicsWorld *world)
+int colshape_free(colshape_t *cs)
 {
     if (cs->vacant == 1)
         return PHYSRES_INVALID_CS;

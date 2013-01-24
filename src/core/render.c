@@ -131,13 +131,17 @@ void render_done(void)
     SDL_Quit();
 }
 
-void render_update(float dt)
+int render_update(float dt)
 {
     timer_reset(g_render.timer);
     ++g_render.frame_tag;
     if (g_render.rop)
-        rop_update(g_render.rop, dt, g_render.frame_tag);
+    {
+        if (rop_update(g_render.rop, dt, g_render.frame_tag) != 0)
+            return 1;
+    }
     g_render.last_update_time = timer_passed(g_render.timer);
+    return 0;
 }
 
 int render_draw(void)

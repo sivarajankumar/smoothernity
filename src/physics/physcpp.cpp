@@ -237,7 +237,7 @@ int physcpp_cs_free(int csi)
     cs = colshape_get(csi);
     if (cs == 0)
         return PHYSRES_INVALID_CS;
-    return colshape_free(cs, g_physcpp.world);
+    return colshape_free(cs);
 }
 
 extern "C"
