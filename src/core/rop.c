@@ -423,7 +423,7 @@ static int api_rop_alloc_dbg_physics(lua_State *lua)
         return 0;
     }
 
-    rop->type = ROP_DRAW_MESHES;
+    rop->type = ROP_DBG_PHYSICS;
     prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
@@ -460,7 +460,7 @@ static int api_rop_alloc_dbg_text(lua_State *lua)
         return 0;
     }
 
-    rop->type = ROP_DRAW_MESHES;
+    rop->type = ROP_DBG_TEXT;
     prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
