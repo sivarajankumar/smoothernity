@@ -638,7 +638,7 @@ static void rop_draw_meshes(int frame_tag)
     }
 }
 
-void rop_draw(struct rop_t *root, int frame_tag)
+int rop_draw(struct rop_t *root, int frame_tag)
 {
     struct rop_t *rop;
     for (rop = root; rop; rop = rop->chain_next)
@@ -656,9 +656,13 @@ void rop_draw(struct rop_t *root, int frame_tag)
         else if (rop->type == ROP_DRAW_MESHES)
             rop_draw_meshes(frame_tag);
         else if (rop->type == ROP_DBG_PHYSICS)
-            physics_ddraw();
+        {
+            if (physics_ddraw() != 0)
+                return 1;
+        }
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
     }
+    return 0;
 }
 

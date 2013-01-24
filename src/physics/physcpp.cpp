@@ -36,42 +36,42 @@ static void * physcpp_memalloc(size_t size)
 extern "C"
 void physcpp_done(void)
 {
-    int i;
-    if (g_physcpp.world)
-    {
-        for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); ++i)
-        {
-            g_physcpp.world->removeCollisionObject(
-                g_physcpp.world->getCollisionObjectArray()[i]);
-        }
-    }
     rigidbody_done();
     vehicle_done();
     colshape_done();
-    if (g_physcpp.world)
+    try
     {
-        g_physcpp.world->~btDiscreteDynamicsWorld();
-        g_physcpp.world = 0;
+        if (g_physcpp.world)
+        {
+            if (g_physcpp.world->getNumCollisionObjects() > 0)
+                fprintf(stderr, "Physical world is not empty\n");
+            g_physcpp.world->~btDiscreteDynamicsWorld();
+            g_physcpp.world = 0;
+        }
+        if (g_physcpp.solver)
+        {
+            g_physcpp.solver->~btSequentialImpulseConstraintSolver();
+            g_physcpp.solver = 0;
+        }
+        if (g_physcpp.broadphase)
+        {
+            g_physcpp.broadphase->~btDbvtBroadphase();
+            g_physcpp.broadphase = 0;
+        }
+        if (g_physcpp.dispatcher)
+        {
+            g_physcpp.dispatcher->~btCollisionDispatcher();
+            g_physcpp.dispatcher = 0;
+        }
+        if (g_physcpp.colcfg)
+        {
+            g_physcpp.colcfg->~btDefaultCollisionConfiguration();
+            g_physcpp.colcfg = 0;
+        }
     }
-    if (g_physcpp.solver)
+    catch (...)
     {
-        g_physcpp.solver->~btSequentialImpulseConstraintSolver();
-        g_physcpp.solver = 0;
-    }
-    if (g_physcpp.broadphase)
-    {
-        g_physcpp.broadphase->~btDbvtBroadphase();
-        g_physcpp.broadphase = 0;
-    }
-    if (g_physcpp.dispatcher)
-    {
-        g_physcpp.dispatcher->~btCollisionDispatcher();
-        g_physcpp.dispatcher = 0;
-    }
-    if (g_physcpp.colcfg)
-    {
-        g_physcpp.colcfg->~btDefaultCollisionConfiguration();
-        g_physcpp.colcfg = 0;
+        fprintf(stderr, "physcpp_done: exception\n");
     }
 }
 
@@ -97,14 +97,13 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                                     g_physcpp.broadphase,
                                     g_physcpp.solver,
                                     g_physcpp.colcfg);
+        g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
     }
-    catch (std::exception)
+    catch (...)
     {
         physcpp_done();
         return PHYSRES_CANNOT_INIT;
     }
-    btAlignedAllocSetCustom(memalloc, memfree);
-    g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
     res = colshape_init(cs_count);
     if (res != PHYSRES_OK)
         return res;
@@ -115,51 +114,74 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
 }
 
 extern "C"
-void physcpp_update(float dt)
+int physcpp_update(float dt)
 {
-    g_physcpp.world->stepSimulation(dt);
+    try {
+        g_physcpp.world->stepSimulation(dt);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 extern "C"
-void physcpp_ddraw(void)
+int physcpp_ddraw(void)
 {
-    g_physcpp.world->debugDrawWorld();
+    try {
+        g_physcpp.world->debugDrawWorld();
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 extern "C"
-void physcpp_ddraw_set_mode(int mode)
+int physcpp_ddraw_set_mode(int mode)
 {
-    g_physcpp.ddraw.setDebugMode(mode);
+    try {
+        g_physcpp.ddraw.setDebugMode(mode);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 extern "C"
-void physcpp_move(float *offset)
+int physcpp_move(float *offset)
 {
-    int i;
-    btCollisionObject *obj;
-    btRigidBody *rb;
-    btTransform tm;
-    btVector3 ofs(offset[0], offset[1], offset[2]);
-    for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); ++i)
+    try
     {
-        obj = g_physcpp.world->getCollisionObjectArray()[i];
-
-        tm = obj->getWorldTransform();
-        tm.setOrigin(tm.getOrigin() + ofs);
-        obj->setWorldTransform(tm);
-
-        tm = obj->getInterpolationWorldTransform();
-        tm.setOrigin(tm.getOrigin() + ofs);
-        obj->setInterpolationWorldTransform(tm);
-
-        rb = btRigidBody::upcast(obj);
-        if (rb && rb->getMotionState())
+        int i;
+        btCollisionObject *obj;
+        btRigidBody *rb;
+        btTransform tm;
+        btVector3 ofs(offset[0], offset[1], offset[2]);
+        for (i = 0; i < g_physcpp.world->getNumCollisionObjects(); ++i)
         {
-            rb->getMotionState()->getWorldTransform(tm);
+            obj = g_physcpp.world->getCollisionObjectArray()[i];
+
+            tm = obj->getWorldTransform();
             tm.setOrigin(tm.getOrigin() + ofs);
-            rb->getMotionState()->setWorldTransform(tm);
+            obj->setWorldTransform(tm);
+
+            tm = obj->getInterpolationWorldTransform();
+            tm.setOrigin(tm.getOrigin() + ofs);
+            obj->setInterpolationWorldTransform(tm);
+
+            rb = btRigidBody::upcast(obj);
+            if (rb && rb->getMotionState())
+            {
+                rb->getMotionState()->getWorldTransform(tm);
+                tm.setOrigin(tm.getOrigin() + ofs);
+                rb->getMotionState()->setWorldTransform(tm);
+            }
         }
     }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 extern "C"
@@ -252,9 +274,14 @@ int physcpp_rb_fetch_tm(int rbi, float *matrix)
 }
 
 extern "C"
-void physcpp_set_gravity(float *v)
+int physcpp_set_gravity(float *v)
 {
-    g_physcpp.world->setGravity(btVector3(v[0], v[1], v[2]));
+    try {
+        g_physcpp.world->setGravity(btVector3(v[0], v[1], v[2]));
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 extern "C"
