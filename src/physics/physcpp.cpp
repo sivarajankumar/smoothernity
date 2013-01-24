@@ -14,12 +14,13 @@ struct physcpp_t
     btSequentialImpulseConstraintSolver *solver;
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
+    ddraw_c *ddraw;
     char broadphase_data[sizeof(btDbvtBroadphase)];
     char dispatcher_data[sizeof(btCollisionDispatcher)];
     char solver_data[sizeof(btSequentialImpulseConstraintSolver)];
     char colcfg_data[sizeof(btDefaultCollisionConfiguration)];
     char world_data[sizeof(btDiscreteDynamicsWorld)];
-    ddraw_c ddraw;
+    char ddraw_data[sizeof(ddraw_c)];
     void *(*memalloc)(size_t);
 };
 
@@ -68,6 +69,11 @@ void physcpp_done(void)
             g_physcpp.colcfg->~btDefaultCollisionConfiguration();
             g_physcpp.colcfg = 0;
         }
+        if (g_physcpp.ddraw)
+        {
+            g_physcpp.ddraw->~ddraw_c();
+            g_physcpp.ddraw = 0;
+        }
     }
     catch (...)
     {
@@ -97,7 +103,8 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                                     g_physcpp.broadphase,
                                     g_physcpp.solver,
                                     g_physcpp.colcfg);
-        g_physcpp.world->setDebugDrawer(&g_physcpp.ddraw);
+        g_physcpp.ddraw = new (g_physcpp.ddraw_data) ddraw_c();
+        g_physcpp.world->setDebugDrawer(g_physcpp.ddraw);
     }
     catch (...)
     {
@@ -139,7 +146,7 @@ extern "C"
 int physcpp_ddraw_set_mode(int mode)
 {
     try {
-        g_physcpp.ddraw.setDebugMode(mode);
+        g_physcpp.ddraw->setDebugMode(mode);
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
