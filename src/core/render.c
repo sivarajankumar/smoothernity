@@ -136,7 +136,7 @@ void render_update(float dt)
     timer_reset(g_render.timer);
     ++g_render.frame_tag;
     if (g_render.rop)
-        rop_update(g_render.rop, dt, g_render.frame_tag, 0);
+        rop_update(g_render.rop, dt, g_render.frame_tag);
     g_render.last_update_time = timer_passed(g_render.timer);
 }
 
