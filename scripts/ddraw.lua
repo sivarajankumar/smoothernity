@@ -1,5 +1,7 @@
 local M = {}
 
+local render = require 'render'
+
 local debug = 0
 local pressed = 0
 
@@ -9,12 +11,11 @@ function M.update()
             pressed = 1
             if debug == 0 then
                 debug = 1
+                render.debug.engage()
                 api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
-                api_render_draw_scene(0)
             else
                 debug = 0
-                api_physics_set_ddraw(API_PHYSICS_NO_DEBUG)
-                api_render_draw_scene(1)
+                render.visual.engage()
             end
         end
     elseif pressed == 1 then

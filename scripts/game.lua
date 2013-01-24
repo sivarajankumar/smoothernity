@@ -9,38 +9,17 @@ local camcord = require 'camera.cord'
 local camdev = require 'camera.dev'
 local camswitch = require 'camera.switcher'
 local world = require 'world'
+local render = require 'render'
 
-local blink, wld, cbs, car, camc, camd, camsw, mproj
+local blink, wld, cbs, car, camc, camd, camsw
 local pressed = 0
 
 local START_X = 0
 local START_Y = 0
 local START_Z = 0
 
-local PROJ_Z_NEAR = 1
-local PROJ_Z_FAR = 1024
-local PROJ_FOV = 60 * math.pi / 360
-
-local function make_mproj()
-    mproj = api_matrix_alloc()
-    local vbounds = api_vector_alloc()
-    local vz = api_vector_alloc()
-
-    local ymax = PROJ_Z_NEAR * math.tan(PROJ_FOV)
-    local xmax = ymax * cfg.SCREEN_WIDTH / cfg.SCREEN_HEIGHT
-
-    api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
-    api_vector_const(vz, PROJ_Z_NEAR, PROJ_Z_FAR, 0, 0)
-
-    api_matrix_frustum(mproj, vbounds, vz, 0, 1)
-    api_matrix_update(mproj)
-    api_matrix_stop(mproj)
-    api_render_proj(mproj)
-    api_vector_free(vbounds)
-    api_vector_free(vz)
-end
-
 function M.init()
+    render.init()
     util.set_gravity(0, -10, 0)
     blink = blinker.alloc()
     wld = world.alloc(START_X, START_Y, START_Z)
@@ -51,7 +30,6 @@ function M.init()
     camsw = camswitch.alloc(camc, camd)
     camc.attach(car.mchassis)
     wld.attach(car.mchassis)
-    make_mproj()
 end
 
 function M.done()
@@ -61,7 +39,7 @@ function M.done()
     car.free()
     camc.free()
     camd.free()
-    api_matrix_free(mproj)
+    render.done()
 end
 
 function M.control(mach)

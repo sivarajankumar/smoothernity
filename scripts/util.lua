@@ -1,5 +1,11 @@
 local M = {}
 
+function M.vector_const(x, y, z, w)
+    local v = api_vector_alloc()
+    api_vector_const(v, x, y, z, w)
+    return v
+end
+
 function M.vector_copy(v, src)
     local x, y, z, w = api_vector_get(src)
     api_vector_const(v, x, y, z, w)
