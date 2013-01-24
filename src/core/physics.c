@@ -27,6 +27,7 @@ static const char * physics_error_text(int res)
     static char INVALID_VEH[] = "invalid vehicle";
     static char INVALID_VEH_WHEEL[] = "invalid vehicle wheel";
     static char CS_HAS_REFS[] = "collision shape has references";
+    static char INTERNAL[] = "internal error";
     if (res == (int)PHYSRES_OUT_OF_RB)
         return OUT_OF_RB;
     else if (res == (int)PHYSRES_OUT_OF_CS)
@@ -43,6 +44,8 @@ static const char * physics_error_text(int res)
         return INVALID_VEH_WHEEL;
     else if (res == (int)PHYSRES_CS_HAS_REFS)
         return CS_HAS_REFS;
+    else if (res == (int)PHYSRES_INTERNAL)
+        return INTERNAL;
     else
         return UNKNOWN;
 }
@@ -77,6 +80,7 @@ static int api_physics_timing(lua_State *lua)
 
 static int api_physics_set_gravity(lua_State *lua)
 {
+    int res;
     struct vector_t *v;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -92,12 +96,20 @@ static int api_physics_set_gravity(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    physcpp_set_gravity(v->value);
+    res = physcpp_set_gravity(v->value);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_set_gravity: error");
+        lua_error(lua);
+        return 0;
+    }
     return 0;
 }
 
 static int api_physics_move(lua_State *lua)
 {
+    int res;
     struct vector_t *v;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -113,20 +125,35 @@ static int api_physics_move(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    physcpp_move(v->value);
+    res = physcpp_move(v->value);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_move: error");
+        lua_error(lua);
+        return 0;
+    }
     return 0;
 }
 
 static int api_physics_set_ddraw(lua_State *lua)
 {
+    int res;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_set_ddraw: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_ddraw_set_mode(lua_tointeger(lua, 1));
+    res = physcpp_ddraw_set_mode(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_set_ddraw: error");
+        lua_error(lua);
+        return 0;
+    }
     return 0;
 }
 
@@ -716,16 +743,30 @@ void physics_done(void)
     physcpp_done();
 }
 
-void physics_update(float dt)
+int physics_update(float dt)
 {
+    int res;
     timer_reset(g_physics.timer);
-    physcpp_update(dt);
+    res = physcpp_update(dt);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, "physics_update: %s\n", physics_error_text(res));
+        return 1;
+    }
     g_physics.last_update_time = timer_passed(g_physics.timer);
+    return 0;
 }
 
-void physics_ddraw(void)
+int physics_ddraw(void)
 {
-    physcpp_ddraw();
+    int res;
+    res = physcpp_ddraw();
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, "physics_ddraw: %s\n", physics_error_text(res));
+        return 1;
+    }
+    return 0;
 }
 
 int physics_rb_fetch_tm(int rbi, float *matrix)

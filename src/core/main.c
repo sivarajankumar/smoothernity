@@ -412,7 +412,11 @@ static void main_loop(void)
     while (machine_running(g_main.controller) || machine_running(g_main.worker))
     {
         timer_reset(g_main.logic_timer);
-        physics_update(g_main.frame_time);
+        if (physics_update(g_main.frame_time) != 0)
+        {
+            fprintf(stderr, "Failed to update physics\n");
+            return;
+        }
         input_update();
 
         timer_reset(g_main.gc_timer);
@@ -432,7 +436,11 @@ static void main_loop(void)
             return;
         }
         render_update(g_main.frame_time);
-        render_draw();
+        if (render_draw() != 0)
+        {
+            fprintf(stderr, "Failed to draw\n");
+            return;
+        }
     }
     printf("Game loop finish\n");
 }
