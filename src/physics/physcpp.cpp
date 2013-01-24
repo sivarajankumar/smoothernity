@@ -81,9 +81,9 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
 {
     int res;
     g_physcpp.memalloc = memalloc;
-    btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     try
     {
+        btAlignedAllocSetCustom(physcpp_memalloc, memfree);
         g_physcpp.colcfg = new (g_physcpp.colcfg_data)
             btDefaultCollisionConfiguration();
         g_physcpp.dispatcher = new (g_physcpp.dispatcher_data)
@@ -191,8 +191,7 @@ int physcpp_cs_alloc_box(int *csi, float *size)
     res = colshape_alloc(csi);
     if (res != PHYSRES_OK)
         return res;
-    colshape_make_box(colshape_get(*csi), size);
-    return PHYSRES_OK;
+    return colshape_make_box(colshape_get(*csi), size);
 }
 
 extern "C"
@@ -203,9 +202,8 @@ int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
     res = colshape_alloc(csi);
     if (res != PHYSRES_OK)
         return res;
-    colshape_make_hmap(colshape_get(*csi), hmap, width,
-                       length, hmin, hmax, scale);
-    return PHYSRES_OK;
+    return colshape_make_hmap(colshape_get(*csi), hmap, width,
+                              length, hmin, hmax, scale);
 }
 
 extern "C"
@@ -215,8 +213,7 @@ int physcpp_cs_alloc_comp(int *csi)
     res = colshape_alloc(csi);
     if (res != PHYSRES_OK)
         return res;
-    colshape_make_comp(colshape_get(*csi));
-    return PHYSRES_OK;
+    return colshape_make_comp(colshape_get(*csi));
 }
 
 extern "C"
@@ -269,8 +266,7 @@ int physcpp_rb_fetch_tm(int rbi, float *matrix)
     rb = rigidbody_get(rbi);
     if (rb == 0)
         return PHYSRES_INVALID_RB;
-    rigidbody_fetch_tm(rb, matrix);
-    return PHYSRES_OK;
+    return rigidbody_fetch_tm(rb, matrix);
 }
 
 extern "C"
@@ -327,9 +323,8 @@ int physcpp_veh_add_wheel(int *wheel, int vehi, float *pos, float *dir,
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    *wheel = vehicle_add_wheel(veh, pos, dir, axl, sus_rest,
-                               roll, radius, front);
-    return PHYSRES_OK;
+    return vehicle_add_wheel(veh, wheel, pos, dir, axl, sus_rest,
+                             roll, radius, front);
 }
 
 extern "C"
@@ -350,8 +345,7 @@ int physcpp_veh_fetch_chassis_tm(int vehi, float *matrix)
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    vehicle_fetch_chassis_tm(veh, matrix);
-    return PHYSRES_OK;
+    return vehicle_fetch_chassis_tm(veh, matrix);
 }
 
 extern "C"
@@ -371,8 +365,7 @@ int physcpp_veh_transform(int vehi, float *matrix)
     veh = vehicle_get(vehi);
     if (veh == 0)
         return PHYSRES_INVALID_VEH;
-    vehicle_transform(veh, matrix);
-    return PHYSRES_OK;
+    return vehicle_transform(veh, matrix);
 }
 
 extern "C"

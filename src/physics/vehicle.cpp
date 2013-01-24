@@ -34,9 +34,17 @@ int vehicle_init(int count)
         if (i < count - 1)
             veh->next = g_vehicles.pool + i + 1;
         veh->vacant = 1;
-        veh->mstate = new (veh->mstate_data) mstate_c();
+        try {
+            veh->mstate = new (veh->mstate_data) mstate_c();
+        } catch (...) {
+            goto cleanup;
+        }
     }
     return PHYSRES_OK;
+cleanup:
+    free(g_vehicles.pool);
+    g_vehicles.pool = 0;
+    return PHYSRES_CANNOT_INIT;
 }
 
 void vehicle_done(void)
@@ -52,8 +60,12 @@ void vehicle_done(void)
     {
         veh = g_vehicles.pool + i;
         vehicle_free(veh, 0);
-        veh->mstate->~mstate_c();
-        veh->tuning.~btVehicleTuning();
+        try {
+            veh->mstate->~mstate_c();
+            veh->tuning.~btVehicleTuning();
+        } catch (...) {
+            fprintf(stderr, "vehicle_done: exception\n");
+        }
     }
     free(g_vehicles.pool);
     g_vehicles.pool = 0;
@@ -81,25 +93,6 @@ int vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
     veh->vacant = 1;
     veh->next = g_vehicles.vacant;
     g_vehicles.vacant = veh;
-    if (veh->veh && world)
-        world->removeAction(veh->veh);
-    if (veh->chassis && world)
-        world->removeRigidBody(veh->chassis);
-    if (veh->chassis)
-    {
-        veh->chassis->~btRigidBody();
-        veh->chassis = 0;
-    }
-    if (veh->ray)
-    {
-        veh->ray->~btDefaultVehicleRaycaster();
-        veh->ray = 0;
-    }
-    if (veh->veh)
-    {
-        veh->veh->~btRaycastVehicle();
-        veh->veh = 0;
-    }
 
     if (veh->shape->vehs == veh)
         veh->shape->vehs = veh->shape_next;
@@ -120,6 +113,34 @@ int vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
     veh->inert = 0;
     veh->inert_prev = 0;
     veh->inert_next = 0;
+
+    try
+    {
+        if (veh->veh && world)
+            world->removeAction(veh->veh);
+        if (veh->chassis && world)
+            world->removeRigidBody(veh->chassis);
+        if (veh->chassis)
+        {
+            veh->chassis->~btRigidBody();
+            veh->chassis = 0;
+        }
+        if (veh->ray)
+        {
+            veh->ray->~btDefaultVehicleRaycaster();
+            veh->ray = 0;
+        }
+        if (veh->veh)
+        {
+            veh->veh->~btRaycastVehicle();
+            veh->veh = 0;
+        }
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+
     return PHYSRES_OK;
 }
 
@@ -130,7 +151,6 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
                   float slip_frict)
 {
     vehicle_t *veh;
-    btVector3 vinert;
     if (g_vehicles.vacant == 0)
         return PHYSRES_OUT_OF_VEH;
     if (shape->shape == 0 || inert->shape == 0)
@@ -158,8 +178,6 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
     veh->inert_prev = 0;
     inert->vehs = veh;
 
-    veh->mstate->m.setFromOpenGLMatrix(matrix);
-
     veh->tuning.m_suspensionStiffness = sus_stif;
     veh->tuning.m_suspensionCompression = sus_comp;
     veh->tuning.m_suspensionDamping = sus_damp;
@@ -167,76 +185,127 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
     veh->tuning.m_maxSuspensionForce = sus_force;
     veh->tuning.m_frictionSlip = slip_frict;
 
-    inert->shape->calculateLocalInertia(mass, vinert);
+    try
+    {
+        btVector3 vinert;
+        veh->mstate->m.setFromOpenGLMatrix(matrix);
+        inert->shape->calculateLocalInertia(mass, vinert);
 
-    btRigidBody::btRigidBodyConstructionInfo info
-            (mass, veh->mstate, shape->shape, vinert);
-    info.m_friction = ch_frict;
-    info.m_rollingFriction = ch_roll_frict;
+        btRigidBody::btRigidBodyConstructionInfo info
+                (mass, veh->mstate, shape->shape, vinert);
+        info.m_friction = ch_frict;
+        info.m_rollingFriction = ch_roll_frict;
 
-    veh->chassis = new (veh->chassis_data) btRigidBody(info);
-    veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(world);
-    veh->veh = new (veh->veh_data)
-        btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
-    veh->veh->setCoordinateSystem(0, 1, 2);
-    veh->chassis->setActivationState(DISABLE_DEACTIVATION);
-    world->addRigidBody(veh->chassis);
-    world->addAction(veh->veh);
+        veh->chassis = new (veh->chassis_data) btRigidBody(info);
+        veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(world);
+        veh->veh = new (veh->veh_data)
+            btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
+        veh->veh->setCoordinateSystem(0, 1, 2);
+        veh->chassis->setActivationState(DISABLE_DEACTIVATION);
+        world->addRigidBody(veh->chassis);
+        world->addAction(veh->veh);
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+
     *vehi = veh - g_vehicles.pool;
     return PHYSRES_OK;
 }
 
-int vehicle_add_wheel(vehicle_t *veh, float *pos, float *dir, float *axl,
-                      float sus_rest, float roll, float radius, int front)
+int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
+                      float *axl, float sus_rest, float roll, float radius,
+                      int front)
 {
-    int i;
-    i = veh->veh->getNumWheels();
-    veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
-                       btVector3(dir[0], dir[1], dir[2]),
-                       btVector3(axl[0], axl[1], axl[2]),
-                       sus_rest, radius, veh->tuning, front);
-    veh->veh->getWheelInfo(i).m_rollInfluence = roll;
-    return i;
+    try
+    {
+        *wheeli = veh->veh->getNumWheels();
+        veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
+                           btVector3(dir[0], dir[1], dir[2]),
+                           btVector3(axl[0], axl[1], axl[2]),
+                           sus_rest, radius, veh->tuning, front);
+        veh->veh->getWheelInfo(*wheeli).m_rollInfluence = roll;
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 int vehicle_set_wheel(vehicle_t *veh, int wheel, float engine,
                       float brake, float steer)
 {
-    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return PHYSRES_INVALID_VEH_WHEEL;
-    veh->veh->applyEngineForce(engine, wheel);
-    veh->veh->setBrake(brake, wheel);
-    veh->veh->setSteeringValue(steer, wheel);
+    try
+    {
+        if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+            return PHYSRES_INVALID_VEH_WHEEL;
+        veh->veh->applyEngineForce(engine, wheel);
+        veh->veh->setBrake(brake, wheel);
+        veh->veh->setSteeringValue(steer, wheel);
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
     return PHYSRES_OK;
 }
 
-void vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
+int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
 {
-    veh->mstate->m.getOpenGLMatrix(matrix);
+    try {
+        veh->mstate->m.getOpenGLMatrix(matrix);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *matrix)
 {
-    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return PHYSRES_INVALID_VEH_WHEEL;
-    veh->veh->updateWheelTransform(wheel, true);
-    veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
+    try
+    {
+        if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+            return PHYSRES_INVALID_VEH_WHEEL;
+        veh->veh->updateWheelTransform(wheel, true);
+        veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
     return PHYSRES_OK;
 }
 
-void vehicle_transform(vehicle_t *veh, float *matrix)
+int vehicle_transform(vehicle_t *veh, float *matrix)
 {
-    btTransform tm;
-    tm.setFromOpenGLMatrix(matrix);
-    veh->chassis->setWorldTransform(tm);
-    veh->chassis->setInterpolationWorldTransform(tm);
-    veh->mstate->m = tm;
+    try
+    {
+        btTransform tm;
+        tm.setFromOpenGLMatrix(matrix);
+        veh->chassis->setWorldTransform(tm);
+        veh->chassis->setInterpolationWorldTransform(tm);
+        veh->mstate->m = tm;
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }
 
 int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
 {
-    if (wheel < 0 || wheel >= veh->veh->getNumWheels())
-        return PHYSRES_INVALID_VEH_WHEEL;
-    *in_contact = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
+    try
+    {
+        if (wheel < 0 || wheel >= veh->veh->getNumWheels())
+            return PHYSRES_INVALID_VEH_WHEEL;
+        *in_contact = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
     return PHYSRES_OK;
 }

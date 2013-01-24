@@ -34,9 +34,17 @@ int rigidbody_init(int count)
         if (i < count - 1)
             rb->next = g_rigidbodies.pool + i + 1;
         rb->vacant = 1;
-        rb->mstate = new (rb->mstate_data) mstate_c();
+        try {
+            rb->mstate = new (rb->mstate_data) mstate_c();
+        } catch (...) {
+            goto cleanup;
+        }
     }
     return PHYSRES_OK;
+cleanup:
+    free(g_rigidbodies.pool);
+    g_rigidbodies.pool = 0;
+    return PHYSRES_CANNOT_INIT;
 }
 
 void rigidbody_done(void)
@@ -50,7 +58,11 @@ void rigidbody_done(void)
     for (i = 0; i < g_rigidbodies.count; ++i)
     {
         rigidbody_free(g_rigidbodies.pool + i, 0);
-        g_rigidbodies.pool[i].mstate->~mstate_c();
+        try {
+            g_rigidbodies.pool[i].mstate->~mstate_c();
+        } catch (...) {
+            fprintf(stderr, "rigidbody_done: exception\n");
+        }
     }
     free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
@@ -78,11 +90,6 @@ int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     rb->vacant = 1;
     rb->next = g_rigidbodies.vacant;
     g_rigidbodies.vacant = rb;
-    if (rb->body && world)
-        world->removeCollisionObject(rb->body);
-    if (rb->body)
-        rb->body->~btRigidBody();
-    rb->body = 0;
     if (rb->cs->rbs == rb)
         rb->cs->rbs = rb->cs_next;
     if (rb->cs_next)
@@ -92,6 +99,19 @@ int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     rb->cs = 0;
     rb->cs_prev = 0;
     rb->cs_next = 0;
+    try
+    {
+        if (rb->body && world)
+            world->removeCollisionObject(rb->body);
+        if (rb->body)
+            rb->body->~btRigidBody();
+    }
+    catch (...)
+    {
+        rb->body = 0;
+        return PHYSRES_INTERNAL;
+    }
+    rb->body = 0;
     return PHYSRES_OK;
 }
 
@@ -99,7 +119,6 @@ int rigidbody_alloc(int *rbi, btDynamicsWorld *world, colshape_t *cs, float *mat
                     float mass, float frict, float roll_frict)
 {
     rigidbody_t *rb;
-    btVector3 inertia;
     if (g_rigidbodies.vacant == 0)
         return PHYSRES_OUT_OF_RB;
     if (cs->shape == 0)
@@ -120,25 +139,39 @@ int rigidbody_alloc(int *rbi, btDynamicsWorld *world, colshape_t *cs, float *mat
     rb->cs_prev = 0;
     cs->rbs = rb;
 
-    rb->mstate->m.setFromOpenGLMatrix(matrix);
+    try
+    {
+        btVector3 inertia;
+        rb->mstate->m.setFromOpenGLMatrix(matrix);
 
-    if (mass > 0.0f)
-        cs->shape->calculateLocalInertia(mass, inertia);
-    else
-        inertia = btVector3(0,0,0);
+        if (mass > 0.0f)
+            cs->shape->calculateLocalInertia(mass, inertia);
+        else
+            inertia = btVector3(0,0,0);
 
-    btRigidBody::btRigidBodyConstructionInfo info
-            (mass, rb->mstate, cs->shape, inertia);
-    info.m_friction = frict;
-    info.m_rollingFriction = roll_frict;
+        btRigidBody::btRigidBodyConstructionInfo info
+                (mass, rb->mstate, cs->shape, inertia);
+        info.m_friction = frict;
+        info.m_rollingFriction = roll_frict;
 
-    rb->body = new (rb->body_data) btRigidBody(info);
-    world->addRigidBody(rb->body);
+        rb->body = new (rb->body_data) btRigidBody(info);
+        world->addRigidBody(rb->body);
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+
     *rbi = rb - g_rigidbodies.pool;
     return PHYSRES_OK;
 }
 
-void rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
+int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
 {
-    rb->mstate->m.getOpenGLMatrix(matrix);
+    try {
+        rb->mstate->m.getOpenGLMatrix(matrix);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
 }

@@ -117,7 +117,11 @@ int colshape_free(colshape_t *cs)
     cs->vacant = 1;
     if (cs->comp)
     {
-        cs->comp->shape_comp->removeChildShape(cs->shape);
+        try {
+            cs->comp->shape_comp->removeChildShape(cs->shape);
+        } catch (...) {
+            return PHYSRES_INTERNAL;
+        }
         if (cs->comp->comp_children == cs)
             cs->comp->comp_children = cs->comp_next;
         if (cs->comp_prev)
@@ -129,7 +133,13 @@ int colshape_free(colshape_t *cs)
         cs->comp_next = 0;
     }
     if (cs->shape)
-        cs->shape->~btCollisionShape();
+    {
+        try {
+            cs->shape->~btCollisionShape();
+        } catch (...) {
+            return PHYSRES_INTERNAL;
+        }
+    }
     cs->shape = 0;
     cs->shape_box = 0;
     cs->shape_hmap = 0;
@@ -139,32 +149,46 @@ int colshape_free(colshape_t *cs)
     return PHYSRES_OK;
 }
 
-void colshape_make_box(colshape_t *colshape, float *size)
+int colshape_make_box(colshape_t *colshape, float *size)
 {
-    colshape->shape_box = new (colshape->data)
-        btBoxShape(btVector3(size[0], size[1], size[2]));
+    try {
+        colshape->shape_box = new (colshape->data)
+            btBoxShape(btVector3(size[0], size[1], size[2]));
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
     colshape->shape = colshape->shape_box;
+    return PHYSRES_OK;
 }
 
-void colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
-                        float hmin, float hmax, float *scale)
+int colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
+                       float hmin, float hmax, float *scale)
 {
-    cs->shape_hmap = new (cs->data)
-        btHeightfieldTerrainShape(width, length, hmap, 1,
-                                  hmin, hmax, 1, PHY_FLOAT, false);
+    try {
+        cs->shape_hmap = new (cs->data)
+            btHeightfieldTerrainShape(width, length, hmap, 1,
+                                      hmin, hmax, 1, PHY_FLOAT, false);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
     cs->shape_hmap->setLocalScaling(btVector3(scale[0], scale[1], scale[2]));
     cs->shape = cs->shape_hmap;
+    return PHYSRES_OK;
 }
 
-void colshape_make_comp(colshape_t *colshape)
+int colshape_make_comp(colshape_t *colshape)
 {
-    colshape->shape_comp = new (colshape->data) btCompoundShape();
+    try {
+        colshape->shape_comp = new (colshape->data) btCompoundShape();
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
     colshape->shape = colshape->shape_comp;
+    return PHYSRES_OK;
 }
 
 int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
 {
-    btTransform tm;
     if (parent->shape_comp == 0 || child->shape == 0
      || child->shape_comp != 0 || child->comp != 0)
     {
@@ -177,8 +201,13 @@ int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
         parent->comp_children->comp_prev = child;
     parent->comp_children = child;
 
-    tm.setFromOpenGLMatrix(matrix);
-    parent->shape_comp->addChildShape(tm, child->shape);
+    try {
+        btTransform tm;
+        tm.setFromOpenGLMatrix(matrix);
+        parent->shape_comp->addChildShape(tm, child->shape);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
 
     return PHYSRES_OK;
 }

@@ -29,8 +29,8 @@ int colshape_left(void);
 int colshape_alloc(int*);
 int colshape_free(colshape_t*);
 colshape_t * colshape_get(int);
-void colshape_make_box(colshape_t *col, float *size);
-void colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
-                        float hmin, float hmax, float *scale);
-void colshape_make_comp(colshape_t *col);
+int colshape_make_box(colshape_t *col, float *size);
+int colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
+                       float hmin, float hmax, float *scale);
+int colshape_make_comp(colshape_t *col);
 int colshape_comp_add(colshape_t*, float *matrix, colshape_t *child);
