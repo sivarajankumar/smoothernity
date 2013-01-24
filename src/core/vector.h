@@ -15,13 +15,13 @@ enum vector_ipl_e
 
 enum vector_e
 {
-    VECTOR_CONST = 0,
-    VECTOR_RUBBER = 1,
-    VECTOR_WSUM = 2,
-    VECTOR_SEQ = 3,
-    VECTOR_MPOS = 4,
-    VECTOR_CORD = 5,
-    VECTOR_PICK = 6
+    VECTOR_CONST,
+    VECTOR_RUBBER,
+    VECTOR_WSUM,
+    VECTOR_SEQ,
+    VECTOR_MPOS,
+    VECTOR_CORD,
+    VECTOR_PICK
 };
 
 struct vector_t
