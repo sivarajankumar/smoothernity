@@ -9,11 +9,16 @@
 
 struct physcpp_t
 {
-    btBroadphaseInterface *broadphase;
+    btDbvtBroadphase *broadphase;
     btCollisionDispatcher *dispatcher;
-    btConstraintSolver *solver;
+    btSequentialImpulseConstraintSolver *solver;
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
+    char broadphase_data[sizeof(btDbvtBroadphase)];
+    char dispatcher_data[sizeof(btCollisionDispatcher)];
+    char solver_data[sizeof(btSequentialImpulseConstraintSolver)];
+    char colcfg_data[sizeof(btDefaultCollisionConfiguration)];
+    char world_data[sizeof(btDiscreteDynamicsWorld)];
     ddraw_c ddraw;
     void *(*memalloc)(size_t);
 };
