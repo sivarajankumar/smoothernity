@@ -8,7 +8,7 @@ local PROJ_Z_FAR = 1024
 local PROJ_FOV = 60 * math.pi / 360
 
 local function make_frustum()
-    local mproj = api_matrix_init()
+    local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
 
@@ -27,7 +27,7 @@ local function make_frustum()
 end
 
 local function make_ortho()
-    local mproj = api_matrix_init()
+    local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
 
@@ -55,10 +55,10 @@ local function visual_alloc()
     local rclrcol = api_rop_alloc_clear_color(rroot, self.vclrcol)
     local rclrdep = api_rop_alloc_clear_depth(rclrcol, vclrdep, 0)
     local rclr = api_rop_alloc_clear(rclrdep, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-    local rproj3d = api_rop_alloc_proj(rclr, mfrust)
+    local rproj3d = api_rop_alloc_proj(rclr, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
     local rmesh = api_rop_alloc_draw_meshes(rmview3d)
-    local rproj2d = api_rop_alloc_proj(rmesh, mortho)
+    local rproj2d = api_rop_alloc_proj(rmesh, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
 
@@ -101,10 +101,10 @@ local function debug_alloc()
     local rclrcol = api_rop_alloc_clear_color(rroot, vclrcol)
     local rclrdep = api_rop_alloc_clear_depth(rclrcol, vclrdep, 0)
     local rclr = api_rop_alloc_clear(rclrdep, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-    local rproj3d = api_rop_alloc_proj(rclr, mfrust)
+    local rproj3d = api_rop_alloc_proj(rclr, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
     local rphys = api_rop_alloc_dbg_physics(rmview3d)
-    local rproj2d = api_rop_alloc_proj(rphys, mortho)
+    local rproj2d = api_rop_alloc_proj(rphys, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
 

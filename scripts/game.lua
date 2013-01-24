@@ -30,6 +30,7 @@ function M.init()
     camsw = camswitch.alloc(camc, camd)
     camc.attach(car.mchassis)
     wld.attach(car.mchassis)
+    render.visual.engage()
 end
 
 function M.done()
