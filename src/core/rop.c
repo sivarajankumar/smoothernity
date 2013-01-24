@@ -1,8 +1,14 @@
 #include "rop.h"
 #include "vector.h"
 #include "matrix.h"
+#include "vbuf.h"
+#include "ibuf.h"
+#include "mesh.h"
+#include "physics.h"
+#include "text.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <GL/gl.h>
 
 #define ROP_ARGVS 1
 #define ROP_ARGMS 1
@@ -534,12 +540,113 @@ struct rop_t * rop_get(int ropi)
         return 0;
 }
 
+static void rop_update_meshes(float dt, int frame_tag)
+{
+    struct vbuf_t *vbuf;
+    struct mesh_t *mesh_vbuf;
+    for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+    {
+        for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+        {
+            if (mesh_vbuf->ibuf->mapped)
+                continue;
+            matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0);
+        }
+    }
+}
+
 void rop_update(struct rop_t *root, float dt, int frame_tag)
 {
     struct rop_t *rop;
     for (rop = root; rop; rop = rop->chain_next)
     {
-        /* do update stuff here */
+        if (rop->type == ROP_CLEAR_COLOR)
+            vector_update(rop->argv[0], dt, frame_tag, 0);
+        else if (rop->type == ROP_CLEAR_DEPTH)
+            vector_update(rop->argv[0], dt, frame_tag, 0);
+        else if (rop->type == ROP_PROJ)
+            matrix_update(rop->argm[0], dt, frame_tag, 0);
+        else if (rop->type == ROP_MVIEW)
+            matrix_update(rop->argm[0], dt, frame_tag, 0);
+        else if (rop->type == ROP_DRAW_MESHES)
+            rop_update_meshes(dt, frame_tag);
+    }
+}
+
+static void rop_clear_color(struct rop_t *rop)
+{
+    GLfloat *v;
+    v = rop->argv[0]->value;
+    glClearColor(v[0], v[1], v[2], v[3]);
+}
+
+static void rop_proj(struct rop_t *rop)
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrix(rop->argm[0]->value);
+}
+
+static void rop_mview(struct rop_t *rop)
+{
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrix(rop->argm[0]->value);
+}
+
+static void rop_draw_meshes(int frame_tag)
+{
+    struct vbuf_t *vbuf;
+    struct ibuf_t *ibuf;
+    struct mesh_t *mesh_vbuf;
+    struct mesh_t *mesh_ibuf;
+    if (g_vbufs.with_meshes < g_ibufs.with_meshes)
+    {
+        for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+        {
+            if (vbuf->meshes == 0)
+                continue;
+            vbuf_select(vbuf);
+            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+            {
+                if (mesh_vbuf->frame_tag == frame_tag)
+                    continue;
+                ibuf = mesh_vbuf->ibuf;
+                if (ibuf->mapped)
+                    continue;
+                ibuf_select(ibuf);
+                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
+                {
+                    if (mesh_ibuf->frame_tag == frame_tag)
+                        continue;
+                    mesh_ibuf->frame_tag = frame_tag;
+                    mesh_draw(mesh_ibuf);
+                }
+            }
+        }
+    }
+    else
+    {
+        for (ibuf = g_ibufs.baked; ibuf; ibuf = ibuf->next)
+        {
+            if (ibuf->meshes == 0)
+                continue;
+            ibuf_select(ibuf);
+            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
+            {
+                if (mesh_ibuf->frame_tag == frame_tag)
+                    continue;
+                vbuf = mesh_ibuf->vbuf;
+                if (vbuf->mapped)
+                    continue;
+                vbuf_select(vbuf);
+                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+                {
+                    if (mesh_vbuf->frame_tag == frame_tag)
+                        continue;
+                    mesh_vbuf->frame_tag = frame_tag;
+                    mesh_draw(mesh_vbuf);
+                }
+            }
+        }
     }
 }
 
@@ -548,7 +655,22 @@ void rop_draw(struct rop_t *root, int frame_tag)
     struct rop_t *rop;
     for (rop = root; rop; rop = rop->chain_next)
     {
-        /* do draw stuff here */
+        if (rop->type == ROP_CLEAR_COLOR)
+            rop_clear_color(rop);
+        else if (rop->type == ROP_CLEAR_DEPTH)
+            glClearDepthf(rop->argv[0]->value[rop->depthi]);
+        else if (rop->type == ROP_CLEAR)
+            glClear(rop->flags);
+        else if (rop->type == ROP_PROJ)
+            rop_proj(rop);
+        else if (rop->type == ROP_MVIEW)
+            rop_mview(rop);
+        else if (rop->type == ROP_DRAW_MESHES)
+            rop_draw_meshes(frame_tag);
+        else if (rop->type == ROP_DBG_PHYSYCS)
+            physics_ddraw();
+        else if (rop->type == ROP_DBG_TEXT)
+            text_draw();
     }
 }
 
