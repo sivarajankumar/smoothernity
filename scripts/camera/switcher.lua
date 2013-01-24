@@ -1,5 +1,7 @@
 local M = {}
 
+local render = require 'render'
+
 function M.alloc(camc, camd)
     local self = {}
     local camera = camc
@@ -15,7 +17,7 @@ function M.alloc(camc, camd)
                 else
                     camera = camc
                 end
-                api_render_camera(camera.invmatrix)
+                render.camera(camera.matrix)
             end
         elseif pressed == 1 then
             if api_input_key(API_INPUT_KEY_F3) == 0 then
@@ -24,7 +26,7 @@ function M.alloc(camc, camd)
         end
     end
 
-    api_render_camera(camera.invmatrix)
+    render.camera(camera.matrix)
     return self
 end
 

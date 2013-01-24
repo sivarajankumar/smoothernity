@@ -14,7 +14,6 @@ TO_RUBBER_XZ = 0.1
 function M.alloc(x, y, z)
     local self = {}
 
-    self.invmatrix = api_matrix_alloc()
     self.matrix = api_matrix_alloc()
     local vtgt_center = api_vector_alloc()
     local vtgt_center_xz = api_vector_alloc()
@@ -35,7 +34,6 @@ function M.alloc(x, y, z)
 
     function self.free()
         api_matrix_free(self.matrix)
-        api_matrix_free(self.invmatrix)
         api_vector_free(vtgt_center)
         api_vector_free(vtgt_center_xz)
         api_vector_free(vcam_to)
@@ -106,8 +104,6 @@ function M.alloc(x, y, z)
     api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
 
     api_matrix_from_to_up(self.matrix, vcam_from_smooth, vcam_to_smooth, vup)
-
-    api_matrix_inv(self.invmatrix, self.matrix)
 
     return self
 end
