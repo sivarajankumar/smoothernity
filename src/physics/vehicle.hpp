@@ -43,4 +43,4 @@ int vehicle_set_wheel(vehicle_t*, int, float engine,
 int vehicle_fetch_chassis_tm(vehicle_t*, float*);
 int vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
 int vehicle_transform(vehicle_t*, float*);
-int vehicle_wheel_contact(vehicle_t*, int, int* in_contact);
+int vehicle_wheel_contact(vehicle_t*, int, int *in_contact);
