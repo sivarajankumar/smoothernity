@@ -50,27 +50,27 @@ void physcpp_done(void)
     colshape_done();
     if (g_physcpp.world)
     {
-        delete g_physcpp.world;
+        g_physcpp.world->~btDiscreteDynamicsWorld();
         g_physcpp.world = 0;
     }
     if (g_physcpp.solver)
     {
-        delete g_physcpp.solver;
+        g_physcpp.solver->~btSequentialImpulseConstraintSolver();
         g_physcpp.solver = 0;
     }
     if (g_physcpp.broadphase)
     {
-        delete g_physcpp.broadphase;
+        g_physcpp.broadphase->~btDbvtBroadphase();
         g_physcpp.broadphase = 0;
     }
     if (g_physcpp.dispatcher)
     {
-        delete g_physcpp.dispatcher;
+        g_physcpp.dispatcher->~btCollisionDispatcher();
         g_physcpp.dispatcher = 0;
     }
     if (g_physcpp.colcfg)
     {
-        delete g_physcpp.colcfg;
+        g_physcpp.colcfg->~btDefaultCollisionConfiguration();
         g_physcpp.colcfg = 0;
     }
 }
@@ -84,14 +84,19 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
     btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     try
     {
-        g_physcpp.colcfg = new btDefaultCollisionConfiguration();
-        g_physcpp.dispatcher = new btCollisionDispatcher(g_physcpp.colcfg);
-        g_physcpp.broadphase = new btDbvtBroadphase();
-        g_physcpp.solver = new btSequentialImpulseConstraintSolver();
-        g_physcpp.world = new btDiscreteDynamicsWorld(g_physcpp.dispatcher,
-                                                      g_physcpp.broadphase,
-                                                      g_physcpp.solver,
-                                                      g_physcpp.colcfg);
+        g_physcpp.colcfg = new (g_physcpp.colcfg_data)
+            btDefaultCollisionConfiguration();
+        g_physcpp.dispatcher = new (g_physcpp.dispatcher_data)
+            btCollisionDispatcher(g_physcpp.colcfg);
+        g_physcpp.broadphase = new (g_physcpp.broadphase_data)
+            btDbvtBroadphase();
+        g_physcpp.solver = new (g_physcpp.solver_data)
+            btSequentialImpulseConstraintSolver();
+        g_physcpp.world = new (g_physcpp.world_data)
+            btDiscreteDynamicsWorld(g_physcpp.dispatcher,
+                                    g_physcpp.broadphase,
+                                    g_physcpp.solver,
+                                    g_physcpp.colcfg);
     }
     catch (std::exception)
     {
