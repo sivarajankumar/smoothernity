@@ -36,6 +36,7 @@ int vehicle_init(int count)
         veh->vacant = 1;
         try {
             veh->mstate = new (veh->mstate_data) mstate_c();
+            veh->tuning = new (veh->tuning_data) btRaycastVehicle::btVehicleTuning();
         } catch (...) {
             goto cleanup;
         }
@@ -62,7 +63,7 @@ void vehicle_done(void)
         vehicle_free(veh, 0);
         try {
             veh->mstate->~mstate_c();
-            veh->tuning.~btVehicleTuning();
+            veh->tuning->~btVehicleTuning();
         } catch (...) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
@@ -178,12 +179,12 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
     veh->inert_prev = 0;
     inert->vehs = veh;
 
-    veh->tuning.m_suspensionStiffness = sus_stif;
-    veh->tuning.m_suspensionCompression = sus_comp;
-    veh->tuning.m_suspensionDamping = sus_damp;
-    veh->tuning.m_maxSuspensionTravelCm = sus_trav;
-    veh->tuning.m_maxSuspensionForce = sus_force;
-    veh->tuning.m_frictionSlip = slip_frict;
+    veh->tuning->m_suspensionStiffness = sus_stif;
+    veh->tuning->m_suspensionCompression = sus_comp;
+    veh->tuning->m_suspensionDamping = sus_damp;
+    veh->tuning->m_maxSuspensionTravelCm = sus_trav;
+    veh->tuning->m_maxSuspensionForce = sus_force;
+    veh->tuning->m_frictionSlip = slip_frict;
 
     try
     {
@@ -199,7 +200,7 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
         veh->chassis = new (veh->chassis_data) btRigidBody(info);
         veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(world);
         veh->veh = new (veh->veh_data)
-            btRaycastVehicle(veh->tuning, veh->chassis, veh->ray);
+            btRaycastVehicle(*veh->tuning, veh->chassis, veh->ray);
         veh->veh->setCoordinateSystem(0, 1, 2);
         veh->chassis->setActivationState(DISABLE_DEACTIVATION);
         world->addRigidBody(veh->chassis);
@@ -224,7 +225,7 @@ int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
         veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
                            btVector3(dir[0], dir[1], dir[2]),
                            btVector3(axl[0], axl[1], axl[2]),
-                           sus_rest, radius, veh->tuning, front);
+                           sus_rest, radius, *veh->tuning, front);
         veh->veh->getWheelInfo(*wheeli).m_rollInfluence = roll;
     }
     catch (...)
