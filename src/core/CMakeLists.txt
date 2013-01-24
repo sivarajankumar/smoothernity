@@ -10,7 +10,7 @@ include_directories(${LUA_INCLUDE_DIR}
 
 add_executable(main
                main.c mpool.c machine.c timer.c render.c text.c physics.c
-               vector.c input.c vbuf.c ibuf.c mesh.c matrix.c buf.c)
+               vector.c input.c vbuf.c ibuf.c mesh.c matrix.c buf.c rop.c)
 
 target_link_libraries(main
                       physics

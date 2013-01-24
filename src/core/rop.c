@@ -41,7 +41,6 @@ struct rop_t
 struct rops_t
 {
     int count;
-    int nesting;
     int left;
     int left_min;
     int allocs;
@@ -51,16 +50,6 @@ struct rops_t
 };
 
 static struct rops_t g_rops;
-
-static int rop_nesting(struct rop_t *rop, int limit)
-{
-    while (rop && limit > 0)
-    {
-        --limit;
-        rop = rop->chain_next;
-    }
-    return limit;
-}
 
 static int rop_alloc(void)
 {
@@ -171,18 +160,18 @@ static int api_rop_alloc_clear_color(lua_State *lua)
     color = vector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (prev == 0 || color == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_color: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_clear_color: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || color == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_clear_color: invalid object");
         lua_error(lua);
         return 0;
     }
@@ -213,13 +202,6 @@ static int api_rop_alloc_clear_depth(lua_State *lua)
     depthi = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (prev == 0 || depth == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_depth: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
     if (depthi < 0 || depthi > 3)
     {
         lua_pushstring(lua, "api_rop_alloc_clear_depth: invalid depth index");
@@ -232,6 +214,13 @@ static int api_rop_alloc_clear_depth(lua_State *lua)
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_clear_depth: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || depth == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_clear_depth: invalid object");
         lua_error(lua);
         return 0;
     }
@@ -261,18 +250,18 @@ static int api_rop_alloc_clear(lua_State *lua)
     flags = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
-    if (prev == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear: invalid rop");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_clear: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_clear: invalid rop");
         lua_error(lua);
         return 0;
     }
@@ -302,18 +291,18 @@ static int api_rop_alloc_proj(lua_State *lua)
     proj = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (prev == 0 || proj == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_proj: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_proj: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || proj == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_proj: invalid object");
         lua_error(lua);
         return 0;
     }
@@ -343,18 +332,18 @@ static int api_rop_alloc_mview(lua_State *lua)
     mview = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (prev == 0 || mview == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_mview: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_mview: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || mview == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_mview: invalid object");
         lua_error(lua);
         return 0;
     }
@@ -381,18 +370,18 @@ static int api_rop_alloc_draw_meshes(lua_State *lua)
     prev = rop_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (prev == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_draw_meshes: invalid rop");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_draw_meshes: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_draw_meshes: invalid rop");
         lua_error(lua);
         return 0;
     }
@@ -418,18 +407,18 @@ static int api_rop_alloc_dbg_physics(lua_State *lua)
     prev = rop_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (prev == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_dbg_physics: invalid rop");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_dbg_physics: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_dbg_physics: invalid rop");
         lua_error(lua);
         return 0;
     }
@@ -455,18 +444,18 @@ static int api_rop_alloc_dbg_text(lua_State *lua)
     prev = rop_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (prev == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_dbg_text: invalid rop");
-        lua_error(lua);
-        return 0;
-    }
-
     ropi = rop_alloc();
     rop = rop_get(ropi);
     if (rop == 0)
     {
         lua_pushstring(lua, "api_rop_alloc_dbg_text: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_dbg_text: invalid rop");
         lua_error(lua);
         return 0;
     }
@@ -478,7 +467,7 @@ static int api_rop_alloc_dbg_text(lua_State *lua)
     return 1;
 }
 
-int rop_init(lua_State *lua, int count, int nesting)
+int rop_init(lua_State *lua, int count)
 {
     int i;
     struct rop_t *rop;
@@ -487,7 +476,6 @@ int rop_init(lua_State *lua, int count, int nesting)
     if (g_rops.pool == 0)
         return 1;
     g_rops.vacant = g_rops.pool;
-    g_rops.nesting = nesting;
     g_rops.count = count;
     g_rops.left = count;
     g_rops.left_min = count;
@@ -583,13 +571,13 @@ static void rop_clear_color(struct rop_t *rop)
 static void rop_proj(struct rop_t *rop)
 {
     glMatrixMode(GL_PROJECTION);
-    glLoadMatrix(rop->argm[0]->value);
+    glLoadMatrixf(rop->argm[0]->value);
 }
 
 static void rop_mview(struct rop_t *rop)
 {
     glMatrixMode(GL_MODELVIEW);
-    glLoadMatrix(rop->argm[0]->value);
+    glLoadMatrixf(rop->argm[0]->value);
 }
 
 static void rop_draw_meshes(int frame_tag)
@@ -667,7 +655,7 @@ void rop_draw(struct rop_t *root, int frame_tag)
             rop_mview(rop);
         else if (rop->type == ROP_DRAW_MESHES)
             rop_draw_meshes(frame_tag);
-        else if (rop->type == ROP_DBG_PHYSYCS)
+        else if (rop->type == ROP_DBG_PHYSICS)
             physics_ddraw();
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
