@@ -435,10 +435,14 @@ static void main_loop(void)
             fprintf(stderr, "Failed to run worker\n");
             return;
         }
-        render_update(g_main.frame_time);
+        if (render_update(g_main.frame_time) != 0)
+        {
+            fprintf(stderr, "Failed to update render\n");
+            return;
+        }
         if (render_draw() != 0)
         {
-            fprintf(stderr, "Failed to draw\n");
+            fprintf(stderr, "Failed to draw render\n");
             return;
         }
     }

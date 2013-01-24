@@ -49,8 +49,8 @@ struct matrix_t
 int matrix_init(lua_State *lua, int count, int nesting);
 void matrix_done(void);
 struct matrix_t * matrix_get(int);
-void matrix_update(struct matrix_t *matrix, float dt,
-                   int frame_tag, int force);
+int matrix_update(struct matrix_t *matrix, float dt,
+                  int frame_tag, int force);
 int matrix_nesting(struct matrix_t *matrix, int limit);
 void matrix_inv(GLfloat *out, GLfloat *m);
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2);

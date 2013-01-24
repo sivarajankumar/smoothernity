@@ -528,7 +528,7 @@ struct rop_t * rop_get(int ropi)
         return 0;
 }
 
-static void rop_update_meshes(float dt, int frame_tag)
+static int rop_update_meshes(float dt, int frame_tag)
 {
     struct vbuf_t *vbuf;
     struct mesh_t *mesh_vbuf;
@@ -538,27 +538,45 @@ static void rop_update_meshes(float dt, int frame_tag)
         {
             if (mesh_vbuf->ibuf->mapped)
                 continue;
-            matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0);
+            if (matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0) != 0)
+                return 1;
         }
     }
+    return 0;
 }
 
-void rop_update(struct rop_t *root, float dt, int frame_tag)
+int rop_update(struct rop_t *root, float dt, int frame_tag)
 {
     struct rop_t *rop;
     for (rop = root; rop; rop = rop->chain_next)
     {
         if (rop->type == ROP_CLEAR_COLOR)
-            vector_update(rop->argv[0], dt, frame_tag, 0);
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                return 1;
+        }
         else if (rop->type == ROP_CLEAR_DEPTH)
-            vector_update(rop->argv[0], dt, frame_tag, 0);
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                return 1;
+        }
         else if (rop->type == ROP_PROJ)
-            matrix_update(rop->argm[0], dt, frame_tag, 0);
+        {
+            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+                return 1;
+        }
         else if (rop->type == ROP_MVIEW)
-            matrix_update(rop->argm[0], dt, frame_tag, 0);
+        {
+            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+                return 1;
+        }
         else if (rop->type == ROP_DRAW_MESHES)
-            rop_update_meshes(dt, frame_tag);
+        {
+            if (rop_update_meshes(dt, frame_tag) != 0)
+                return 1;
+        }
     }
+    return 0;
 }
 
 static void rop_clear_color(struct rop_t *rop)
