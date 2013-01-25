@@ -31,6 +31,7 @@ struct rop_t
     enum rop_e type;
     int flags;
     int depthi;
+    int wldi;
     int vacant;
     struct rop_t *vacant_next;
     struct rop_t *chain_next;
@@ -396,8 +397,9 @@ static int api_rop_alloc_draw_meshes(lua_State *lua)
 static int api_rop_alloc_dbg_physics(lua_State *lua)
 {
     struct rop_t *rop, *prev;
-    int ropi;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    int ropi, wldi;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_rop_alloc_dbg_physics: incorrect argument");
         lua_error(lua);
@@ -405,7 +407,8 @@ static int api_rop_alloc_dbg_physics(lua_State *lua)
     }
 
     prev = rop_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    wldi = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
 
     ropi = rop_alloc();
     rop = rop_get(ropi);
@@ -424,6 +427,7 @@ static int api_rop_alloc_dbg_physics(lua_State *lua)
     }
 
     rop->type = ROP_DBG_PHYSICS;
+    rop->wldi = wldi;
     prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
@@ -675,7 +679,7 @@ int rop_draw(struct rop_t *root, int frame_tag)
             rop_draw_meshes(frame_tag);
         else if (rop->type == ROP_DBG_PHYSICS)
         {
-            if (physics_ddraw() != 0)
+            if (physics_wld_ddraw(rop->wldi) != 0)
                 return 1;
         }
         else if (rop->type == ROP_DBG_TEXT)

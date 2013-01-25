@@ -2,6 +2,7 @@
 
 #include "mstate.hpp"
 
+struct world_t;
 struct colshape_t;
 
 struct vehicle_t
@@ -18,6 +19,7 @@ struct vehicle_t
     char tuning_data[sizeof(btRaycastVehicle::btVehicleTuning)];
     vehicle_t *next;
     int vacant;
+    world_t *wld;
     colshape_t *shape;
     colshape_t *inert;
     vehicle_t *shape_prev;
@@ -29,12 +31,12 @@ struct vehicle_t
 int vehicle_init(int count);
 void vehicle_done(void);
 int vehicle_left(void);
-int vehicle_alloc(int *vehi, btDynamicsWorld*, colshape_t *shape,
+int vehicle_alloc(int *vehi, world_t*, colshape_t *shape,
                   colshape_t *inert, float *matrix, float mass,
                   float ch_frict, float ch_rfrict, float sus_stif,
                   float sus_comp, float sus_damp, float sus_trav,
                   float sus_force, float slip_frict);
-int vehicle_free(vehicle_t*, btDynamicsWorld*);
+int vehicle_free(vehicle_t*);
 vehicle_t * vehicle_get(int);
 int vehicle_add_wheel(vehicle_t*, int*, float *pos, float *dir, float *axl,
                       float sus_rest, float roll, float radius, int front);
