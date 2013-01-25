@@ -3,6 +3,7 @@
 #include "vehicle.hpp"
 #include "physres.h"
 #include "ddraw.hpp"
+#include "world.hpp"
 #include <lua.h>
 #include <btBulletDynamicsCommon.h>
 #include <exception>
@@ -40,6 +41,7 @@ void physcpp_done(void)
     rigidbody_done();
     vehicle_done();
     colshape_done();
+    world_done();
     try
     {
         if (g_physcpp.world)
@@ -83,7 +85,7 @@ void physcpp_done(void)
 
 extern "C"
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
-                 int cs_count, int rb_count, int veh_count)
+                 int wld_count, int cs_count, int rb_count, int veh_count)
 {
     int res;
     g_physcpp.memalloc = memalloc;
@@ -111,6 +113,9 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
         physcpp_done();
         return PHYSRES_CANNOT_INIT;
     }
+    res = world_init(wld_count);
+    if (res != PHYSRES_OK)
+        return res;
     res = colshape_init(cs_count);
     if (res != PHYSRES_OK)
         return res;

@@ -2,7 +2,8 @@
 
 #include <lua.h>
 
-int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count);
+int physics_init(lua_State *lua, int wld_count, int cs_count,
+                 int rb_count, int veh_count);
 void physics_done(void);
 int physics_update(float dt);
 int physics_ddraw(void);
