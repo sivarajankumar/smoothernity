@@ -1,30 +1,7 @@
 #include "world.hpp"
 #include "physres.hpp"
-#include "ddraw.hpp"
-#include <btBulletDynamicsCommon.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-struct world_t
-{
-    float time_scale;
-    btDbvtBroadphase *broadphase;
-    btCollisionDispatcher *dispatcher;
-    btSequentialImpulseConstraintSolver *solver;
-    btDefaultCollisionConfiguration *colcfg;
-    btDiscreteDynamicsWorld *world;
-    ddraw_c *ddraw;
-    char broadphase_data[sizeof(btDbvtBroadphase)];
-    char dispatcher_data[sizeof(btCollisionDispatcher)];
-    char solver_data[sizeof(btSequentialImpulseConstraintSolver)];
-    char colcfg_data[sizeof(btDefaultCollisionConfiguration)];
-    char world_data[sizeof(btDiscreteDynamicsWorld)];
-    char ddraw_data[sizeof(ddraw_c)];
-
-    int vacant;
-    world_t *next;
-    world_t *prev;
-};
 
 struct worlds_t
 {
@@ -210,6 +187,53 @@ int world_ddraw(world_t *wld)
     try {
         wld->world->debugDrawWorld();
     } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
+}
+
+int world_ddraw_mode(world_t *wld, int mode)
+{
+    try {
+        wld->ddraw->setDebugMode(mode);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
+}
+
+int world_move(world_t *wld, float *offset)
+{
+    try
+    {
+        int i;
+        btCollisionObject *obj;
+        btRigidBody *rb;
+        btTransform tm;
+        btVector3 ofs(offset[0], offset[1], offset[2]);
+        for (i = 0; i < wld->world->getNumCollisionObjects(); ++i)
+        {
+            obj = wld->world->getCollisionObjectArray()[i];
+
+            tm = obj->getWorldTransform();
+            tm.setOrigin(tm.getOrigin() + ofs);
+            obj->setWorldTransform(tm);
+
+            tm = obj->getInterpolationWorldTransform();
+            tm.setOrigin(tm.getOrigin() + ofs);
+            obj->setInterpolationWorldTransform(tm);
+
+            rb = btRigidBody::upcast(obj);
+            if (rb && rb->getMotionState())
+            {
+                rb->getMotionState()->getWorldTransform(tm);
+                tm.setOrigin(tm.getOrigin() + ofs);
+                rb->getMotionState()->setWorldTransform(tm);
+            }
+        }
+    }
+    catch (...)
+    {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
