@@ -16,6 +16,7 @@
 enum rop_e
 {
     ROP_ROOT,
+    ROP_TIME_SCALE,
     ROP_CLEAR_COLOR,
     ROP_CLEAR_DEPTH,
     ROP_CLEAR,
@@ -31,6 +32,7 @@ struct rop_t
     enum rop_e type;
     int flags;
     int depthi;
+    int tscalei;
     int wldi;
     int vacant;
     struct rop_t *vacant_next;
@@ -140,6 +142,56 @@ static int api_rop_alloc_root(lua_State *lua)
     }
 
     rop->type = ROP_ROOT;
+
+    lua_pushinteger(lua, ropi);
+    return 1;
+}
+
+static int api_rop_alloc_tscale(lua_State *lua)
+{
+    struct rop_t *rop, *prev;
+    struct vector_t *tscale;
+    int ropi, tscalei;
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    {
+        lua_pushstring(lua, "api_rop_alloc_tscale: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    prev = rop_get(lua_tointeger(lua, 1));
+    tscale = vector_get(lua_tointeger(lua, 2));
+    tscalei = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
+
+    if (tscalei < 0 || tscalei > 3)
+    {
+        lua_pushstring(lua, "api_rop_alloc_tscale: invalid time scale index");
+        lua_error(lua);
+        return 0;
+    }
+
+    ropi = rop_alloc();
+    rop = rop_get(ropi);
+    if (rop == 0)
+    {
+        lua_pushstring(lua, "api_rop_alloc_tscale: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || tscale == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_tscale: invalid object");
+        lua_error(lua);
+        return 0;
+    }
+
+    rop->type = ROP_TIME_SCALE;
+    rop->argv[0] = tscale;
+    rop->tscalei = tscalei;
+    prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
     return 1;
@@ -494,6 +546,7 @@ int rop_init(lua_State *lua, int count)
     lua_register(lua, "api_rop_left", api_rop_left);
     lua_register(lua, "api_rop_free", api_rop_free);
     lua_register(lua, "api_rop_alloc_root", api_rop_alloc_root);
+    lua_register(lua, "api_rop_alloc_tscale", api_rop_alloc_tscale);
     lua_register(lua, "api_rop_alloc_clear_color", api_rop_alloc_clear_color);
     lua_register(lua, "api_rop_alloc_clear_depth", api_rop_alloc_clear_depth);
     lua_register(lua, "api_rop_alloc_clear", api_rop_alloc_clear);
@@ -554,7 +607,13 @@ int rop_update(struct rop_t *root, float dt, int frame_tag)
     struct rop_t *rop;
     for (rop = root; rop; rop = rop->chain_next)
     {
-        if (rop->type == ROP_CLEAR_COLOR)
+        if (rop->type == ROP_TIME_SCALE)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                return 1;
+            dt *= rop->argv[0]->value[rop->tscalei];
+        }
+        else if (rop->type == ROP_CLEAR_COLOR)
         {
             if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
                 return 1;
