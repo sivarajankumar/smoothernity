@@ -680,13 +680,14 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
     return 1;
 }
 
-int physics_init(lua_State *lua, int cs_count, int rb_count, int veh_count)
+int physics_init(lua_State *lua, int wld_count, int cs_count,
+                 int rb_count, int veh_count)
 {
     g_physics.timer = timer_create();
     if (g_physics.timer == 0)
         return 1;
-    if (physcpp_init(mpool_alloc, mpool_free, cs_count, rb_count, veh_count)
-     != PHYSRES_OK)
+    if (physcpp_init(mpool_alloc, mpool_free, wld_count,
+                     cs_count, rb_count, veh_count) != PHYSRES_OK)
     {
         return 1;
     }

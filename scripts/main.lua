@@ -9,8 +9,8 @@ local work_finished = false
 local game_started = false
 
 function configure()
-    return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 10000000 end,
-            ['mpool_counts'] = function() return 10000, 1000,  1000,      1,       1,        1 end,
+    return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 5000000 end,
+            ['mpool_counts'] = function() return 10000, 1000,  1000,      1,       3,       3 end,
             ['frame_time'] = 1 / 60,
             ['logic_time'] = 0.01,
             ['gc_step'] = 10,
@@ -27,6 +27,7 @@ function configure()
             ['vector_nesting'] = 10,
             ['matrix_count'] = 200,
             ['matrix_nesting'] = 10,
+            ['world_count'] = 2,
             ['colshape_count'] = 100,
             ['rigidbody_count'] = 100,
             ['vehicle_count'] = 10,

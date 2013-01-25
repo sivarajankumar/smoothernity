@@ -42,6 +42,7 @@ struct main_t
     int vector_nesting;
     int matrix_count;
     int matrix_nesting;
+    int world_count;
     int colshape_count;
     int rigidbody_count;
     int vehicle_count;
@@ -204,6 +205,7 @@ static int main_configure(char *script)
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
      || main_get_int(lua, "matrix_nesting", &g_main.matrix_nesting) != 0
+     || main_get_int(lua, "world_count", &g_main.world_count) != 0
      || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
@@ -327,7 +329,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (physics_init(g_main.lua, g_main.colshape_count,
+    if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
                      g_main.rigidbody_count, g_main.vehicle_count) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
