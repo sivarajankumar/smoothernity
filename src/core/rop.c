@@ -34,6 +34,7 @@ struct rop_t
     int depthi;
     int tscalei;
     int wldi;
+    int group;
     int vacant;
     struct rop_t *vacant_next;
     struct rop_t *chain_next;
@@ -412,8 +413,9 @@ static int api_rop_alloc_mview(lua_State *lua)
 static int api_rop_alloc_draw_meshes(lua_State *lua)
 {
     struct rop_t *rop, *prev;
-    int ropi;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    int ropi, group;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_rop_alloc_draw_meshes: incorrect argument");
         lua_error(lua);
@@ -421,7 +423,8 @@ static int api_rop_alloc_draw_meshes(lua_State *lua)
     }
 
     prev = rop_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    group = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
 
     ropi = rop_alloc();
     rop = rop_get(ropi);
@@ -440,6 +443,7 @@ static int api_rop_alloc_draw_meshes(lua_State *lua)
     }
 
     rop->type = ROP_DRAW_MESHES;
+    rop->group = group;
     prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
@@ -661,7 +665,7 @@ static void rop_mview(struct rop_t *rop)
     glLoadMatrixf(rop->argm[0]->value);
 }
 
-static void rop_draw_meshes(int frame_tag)
+static void rop_draw_meshes(int frame_tag, int group)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
@@ -687,6 +691,8 @@ static void rop_draw_meshes(int frame_tag)
                 for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
                 {
                     if (mesh_ibuf->frame_tag == frame_tag)
+                        continue;
+                    if (mesh_ibuf->group != group)
                         continue;
                     if (vbuf_selected == 0)
                     {
@@ -723,6 +729,8 @@ static void rop_draw_meshes(int frame_tag)
                 {
                     if (mesh_vbuf->frame_tag == frame_tag)
                         continue;
+                    if (mesh_vbuf->group != group)
+                        continue;
                     if (vbuf_selected == 0)
                     {
                         vbuf_selected = 1;
@@ -757,7 +765,7 @@ int rop_draw(struct rop_t *root, int frame_tag)
         else if (rop->type == ROP_MVIEW)
             rop_mview(rop);
         else if (rop->type == ROP_DRAW_MESHES)
-            rop_draw_meshes(frame_tag);
+            rop_draw_meshes(frame_tag, rop->group);
         else if (rop->type == ROP_DBG_PHYSICS)
         {
             if (physics_wld_ddraw(rop->wldi) != 0)

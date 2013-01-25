@@ -11,6 +11,7 @@ struct mesh_t
     GLenum type;
     int ioffset;
     int icount;
+    int group;
     int vacant;
     int frame_tag; /* when this mesh was last drawn */
 

@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'util'
 local pwld = require 'physwld'
+local meshes = require 'meshes'
 
 local HEIGHT = 10
 local WIDTH = 20
@@ -136,7 +137,7 @@ function M.alloc(world, mach, cell_z, cell_x)
     do
         api_matrix_rigid_body(mrb, rb)
         api_matrix_mul(mmul, mrb, mvis)
-        mesh = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
+        mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
                               6 * (WIDTH - 1) * (LENGTH - 1))
     end
 
