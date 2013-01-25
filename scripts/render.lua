@@ -3,6 +3,7 @@ local M = {}
 local cfg = require 'config'
 local util = require 'util'
 local pwld = require 'physwld'
+local meshes = require 'meshes'
 
 local PROJ_Z_NEAR = 1
 local PROJ_Z_FAR = 1024
@@ -60,7 +61,7 @@ local function visual_alloc()
     local rtscale = api_rop_alloc_tscale(rclr, vtscale, 0)
     local rproj3d = api_rop_alloc_proj(rtscale, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
-    local rmesh = api_rop_alloc_draw_meshes(rmview3d)
+    local rmesh = api_rop_alloc_draw_meshes(rmview3d, meshes.GROUP_NEAR)
     local rproj2d = api_rop_alloc_proj(rmesh, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)

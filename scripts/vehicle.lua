@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'util'
 local pwld = require 'physwld'
+local meshes = require 'meshes'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -258,9 +259,9 @@ function M.alloc(x, y, z)
 
     -- visual
     do
-        mesh_chassis = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, self.mchassis, 0, 36)
+        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, self.mchassis, 0, 36)
         for i = 0, 3 do
-            mesh_wheel[i] = api_mesh_alloc(API_MESH_TRIANGLES, vb, ib, -1, mwheel[i], 0, 36)
+            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mwheel[i], 0, 36)
         end
     end
 
