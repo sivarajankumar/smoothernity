@@ -2,6 +2,7 @@ local M = {}
 
 local land = require 'land' 
 local noise = require 'noise'
+local pwld = require 'physwld'
 
 local CELL_SIZE_X = 50
 local CELL_SIZE_Z = 50
@@ -156,7 +157,7 @@ function M.alloc(x, y, z)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
             local v = api_vector_alloc()
             api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
-            api_physics_move(v)
+            api_physics_wld_move(pwld.wld, v)
             car.move(v)
             camc.move(v)
             api_vector_free(v)

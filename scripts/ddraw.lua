@@ -1,6 +1,7 @@
 local M = {}
 
 local render = require 'render'
+local pwld = require 'physwld'
 
 local debug = 0
 local pressed = 0
@@ -12,7 +13,7 @@ function M.update()
             if debug == 0 then
                 debug = 1
                 render.debug.engage()
-                api_physics_set_ddraw(API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
+                api_physics_wld_ddraw_mode(pwld.wld, API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
             else
                 debug = 0
                 render.visual.engage()
