@@ -1,5 +1,7 @@
 local M = {}
 
+local pwld = require 'physwld'
+
 function M.vector_const(x, y, z, w)
     local v = api_vector_alloc()
     api_vector_const(v, x, y, z, w)
@@ -37,7 +39,7 @@ end
 function M.set_gravity(x, y, z)
     local grav = api_vector_alloc()
     api_vector_const(grav, x, y, z, 0)
-    api_physics_set_gravity(grav)
+    api_physics_wld_gravity(pwld.wld, grav)
     api_vector_free(grav)
 end
 

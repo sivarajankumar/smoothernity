@@ -2,6 +2,7 @@ local M = {}
 
 local cfg = require 'config'
 local util = require 'util'
+local pwld = require 'physwld'
 
 local PROJ_Z_NEAR = 1
 local PROJ_Z_FAR = 1024
@@ -103,7 +104,7 @@ local function debug_alloc()
     local rclr = api_rop_alloc_clear(rclrdep, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
     local rproj3d = api_rop_alloc_proj(rclr, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
-    local rphys = api_rop_alloc_dbg_physics(rmview3d)
+    local rphys = api_rop_alloc_dbg_physics(rmview3d, pwld.wld)
     local rproj2d = api_rop_alloc_proj(rphys, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)

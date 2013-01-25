@@ -10,6 +10,7 @@ local camdev = require 'camera.dev'
 local camswitch = require 'camera.switcher'
 local world = require 'world'
 local render = require 'render'
+local pwld = require 'physwld'
 
 local blink, wld, cbs, car, camc, camd, camsw
 local pressed = 0
@@ -19,6 +20,7 @@ local START_Y = 0
 local START_Z = 0
 
 function M.init()
+    pwld.init()
     render.init()
     util.set_gravity(0, -10, 0)
     blink = blinker.alloc()
@@ -41,6 +43,7 @@ function M.done()
     camc.free()
     camd.free()
     render.done()
+    pwld.done()
 end
 
 function M.control(mach)

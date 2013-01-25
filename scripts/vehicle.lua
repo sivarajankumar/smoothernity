@@ -1,6 +1,7 @@
 local M = {}
 
 local util = require 'util'
+local pwld = require 'physwld'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -230,7 +231,7 @@ function M.alloc(x, y, z)
     -- vehicle
     do
         local m = util.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
-        veh = api_physics_veh_alloc(cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
+        veh = api_physics_veh_alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
                                     CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)
         api_matrix_free(m)
