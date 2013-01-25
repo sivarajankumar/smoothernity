@@ -1,5 +1,5 @@
 #include "world.hpp"
-#include "physres.hpp"
+#include "physres.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -148,7 +148,7 @@ int world_free(world_t *wld)
         return PHYSRES_INVALID_WLD;
     try {
         if (wld->world->getNumCollisionObjects() > 0)
-            return PHYSRES_INVALID_WLD;
+            return PHYSRES_WLD_HAS_REFS;
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
