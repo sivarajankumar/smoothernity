@@ -667,13 +667,15 @@ static void rop_draw_meshes(int frame_tag)
     struct ibuf_t *ibuf;
     struct mesh_t *mesh_vbuf;
     struct mesh_t *mesh_ibuf;
+    int vbuf_selected;
+    int ibuf_selected;
     if (g_vbufs.with_meshes < g_ibufs.with_meshes)
     {
         for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
         {
             if (vbuf->meshes == 0)
                 continue;
-            vbuf_select(vbuf);
+            vbuf_selected = 0;
             for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
             {
                 if (mesh_vbuf->frame_tag == frame_tag)
@@ -681,11 +683,21 @@ static void rop_draw_meshes(int frame_tag)
                 ibuf = mesh_vbuf->ibuf;
                 if (ibuf->mapped)
                     continue;
-                ibuf_select(ibuf);
+                ibuf_selected = 0;
                 for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
                 {
                     if (mesh_ibuf->frame_tag == frame_tag)
                         continue;
+                    if (vbuf_selected == 0)
+                    {
+                        vbuf_selected = 1;
+                        vbuf_select(vbuf);
+                    }
+                    if (ibuf_selected == 0)
+                    {
+                        ibuf_selected = 1;
+                        ibuf_select(ibuf);
+                    }
                     mesh_ibuf->frame_tag = frame_tag;
                     mesh_draw(mesh_ibuf);
                 }
@@ -698,7 +710,7 @@ static void rop_draw_meshes(int frame_tag)
         {
             if (ibuf->meshes == 0)
                 continue;
-            ibuf_select(ibuf);
+            ibuf_selected = 0;
             for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
             {
                 if (mesh_ibuf->frame_tag == frame_tag)
@@ -706,11 +718,21 @@ static void rop_draw_meshes(int frame_tag)
                 vbuf = mesh_ibuf->vbuf;
                 if (vbuf->mapped)
                     continue;
-                vbuf_select(vbuf);
+                vbuf_selected = 0;
                 for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
                 {
                     if (mesh_vbuf->frame_tag == frame_tag)
                         continue;
+                    if (vbuf_selected == 0)
+                    {
+                        vbuf_selected = 1;
+                        vbuf_select(vbuf);
+                    }
+                    if (ibuf_selected == 0)
+                    {
+                        ibuf_selected = 1;
+                        ibuf_select(ibuf);
+                    }
                     mesh_vbuf->frame_tag = frame_tag;
                     mesh_draw(mesh_vbuf);
                 }
