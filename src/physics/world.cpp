@@ -204,3 +204,13 @@ world_t * world_get(int worldi)
     else
         return 0;
 }
+
+int world_ddraw(world_t *wld)
+{
+    try {
+        wld->world->debugDrawWorld();
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
+}
