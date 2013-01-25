@@ -5,7 +5,7 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${BULLET_INCLUDE_DIRS})
 
 add_library(physics physcpp.cpp colshape.cpp mstate.cpp 
-            rigidbody.cpp ddraw.cpp vehicle.cpp)
+            rigidbody.cpp ddraw.cpp vehicle.cpp world.cpp)
 
 target_link_libraries(physics ${BULLET_LIBRARIES})
 
