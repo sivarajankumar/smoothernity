@@ -98,6 +98,11 @@ void world_done(void)
     g_worlds.pool = 0;
 }
 
+int world_left(void)
+{
+    return g_worlds.left;
+}
+
 int world_update(float dt)
 {
     world_t *wld;
@@ -196,6 +201,16 @@ int world_ddraw_mode(world_t *wld, int mode)
 {
     try {
         wld->ddraw->setDebugMode(mode);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
+}
+
+int world_gravity(world_t *wld, float *v)
+{
+    try {
+        wld->world->setGravity(btVector3(v[0], v[1], v[2]));
     } catch (...) {
         return PHYSRES_INTERNAL;
     }

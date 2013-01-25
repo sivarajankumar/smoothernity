@@ -1,5 +1,6 @@
 #include "physres.h"
 #include "rigidbody.hpp"
+#include "world.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
 #include <stdio.h>
@@ -57,7 +58,7 @@ void rigidbody_done(void)
            g_rigidbodies.allocs, g_rigidbodies.frees);
     for (i = 0; i < g_rigidbodies.count; ++i)
     {
-        rigidbody_free(g_rigidbodies.pool + i, 0);
+        rigidbody_free(g_rigidbodies.pool + i);
         try {
             g_rigidbodies.pool[i].mstate->~mstate_c();
         } catch (...) {
@@ -81,7 +82,7 @@ rigidbody_t * rigidbody_get(int rbi)
         return 0;
 }
 
-int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
+int rigidbody_free(rigidbody_t *rb)
 {
     if (rb->vacant == 1)
         return PHYSRES_INVALID_RB;
@@ -101,8 +102,8 @@ int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
     rb->cs_next = 0;
     try
     {
-        if (rb->body && world)
-            world->removeCollisionObject(rb->body);
+        if (rb->body && rb->wld)
+            rb->wld->world->removeCollisionObject(rb->body);
         if (rb->body)
             rb->body->~btRigidBody();
     }
@@ -112,10 +113,11 @@ int rigidbody_free(rigidbody_t *rb, btDynamicsWorld *world)
         return PHYSRES_INTERNAL;
     }
     rb->body = 0;
+    rb->wld = 0;
     return PHYSRES_OK;
 }
 
-int rigidbody_alloc(int *rbi, btDynamicsWorld *world, colshape_t *cs, float *matrix,
+int rigidbody_alloc(int *rbi, world_t *wld, colshape_t *cs, float *matrix,
                     float mass, float frict, float roll_frict)
 {
     rigidbody_t *rb;
@@ -155,7 +157,9 @@ int rigidbody_alloc(int *rbi, btDynamicsWorld *world, colshape_t *cs, float *mat
         info.m_rollingFriction = roll_frict;
 
         rb->body = new (rb->body_data) btRigidBody(info);
-        world->addRigidBody(rb->body);
+
+        wld->world->addRigidBody(rb->body);
+        rb->wld = wld;
     }
     catch (...)
     {

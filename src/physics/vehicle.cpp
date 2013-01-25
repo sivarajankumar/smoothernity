@@ -1,5 +1,6 @@
 #include "physres.h"
 #include "vehicle.hpp"
+#include "world.hpp"
 #include "colshape.hpp"
 #include <stdlib.h>
 #include <stdio.h>
@@ -60,7 +61,7 @@ void vehicle_done(void)
     for (i = 0; i < g_vehicles.count; ++i)
     {
         veh = g_vehicles.pool + i;
-        vehicle_free(veh, 0);
+        vehicle_free(veh);
         try {
             veh->mstate->~mstate_c();
             veh->tuning->~btVehicleTuning();
@@ -85,7 +86,7 @@ vehicle_t * vehicle_get(int vehi)
         return 0;
 }
 
-int vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
+int vehicle_free(vehicle_t *veh)
 {
     if (veh->vacant == 1)
         return PHYSRES_INVALID_VEH;
@@ -117,35 +118,34 @@ int vehicle_free(vehicle_t *veh, btDynamicsWorld *world)
 
     try
     {
-        if (veh->veh && world)
-            world->removeAction(veh->veh);
-        if (veh->chassis && world)
-            world->removeRigidBody(veh->chassis);
+        if (veh->wld)
+        {
+            if (veh->veh)
+                veh->wld->world->removeAction(veh->veh);
+            if (veh->chassis)
+                veh->wld->world->removeRigidBody(veh->chassis);
+        }
         if (veh->chassis)
-        {
             veh->chassis->~btRigidBody();
-            veh->chassis = 0;
-        }
         if (veh->ray)
-        {
             veh->ray->~btDefaultVehicleRaycaster();
-            veh->ray = 0;
-        }
         if (veh->veh)
-        {
             veh->veh->~btRaycastVehicle();
-            veh->veh = 0;
-        }
     }
     catch (...)
     {
         return PHYSRES_INTERNAL;
     }
 
+    veh->wld = 0;
+    veh->chassis = 0;
+    veh->ray = 0;
+    veh->veh = 0;
+
     return PHYSRES_OK;
 }
 
-int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
+int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
                   colshape_t *inert, float *matrix, float mass, float ch_frict,
                   float ch_roll_frict, float sus_stif, float sus_comp,
                   float sus_damp, float sus_trav, float sus_force,
@@ -198,13 +198,14 @@ int vehicle_alloc(int *vehi, btDynamicsWorld *world, colshape_t *shape,
         info.m_rollingFriction = ch_roll_frict;
 
         veh->chassis = new (veh->chassis_data) btRigidBody(info);
-        veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(world);
+        veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(wld->world);
         veh->veh = new (veh->veh_data)
             btRaycastVehicle(*veh->tuning, veh->chassis, veh->ray);
         veh->veh->setCoordinateSystem(0, 1, 2);
         veh->chassis->setActivationState(DISABLE_DEACTIVATION);
-        world->addRigidBody(veh->chassis);
-        world->addAction(veh->veh);
+        wld->world->addRigidBody(veh->chassis);
+        wld->world->addAction(veh->veh);
+        veh->wld = wld;
     }
     catch (...)
     {
