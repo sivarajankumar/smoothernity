@@ -5,8 +5,6 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 
 local HEIGHT = 10
-local resx = 20
-local resz = 20
 
 function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
                  sizex, sizez, resx, resz)
