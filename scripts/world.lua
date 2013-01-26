@@ -4,18 +4,20 @@ local land = require 'land'
 local noise = require 'noise'
 local pwld = require 'physwld'
 
-local CELL_SIZE_X = 50
-local CELL_SIZE_Z = 50
+local SIZE_X = 50
+local SIZE_Z = 50
+local RES_X = 20
+local RES_Z = 20
 
 function M.alloc(x, y, z)
     local self = {}
     local lands = {}
 
-    self.noise = noise.alloc()
+    local nse = noise.alloc()
     local centx, centy, centz = x, y, z
     local movex, movey, movez = 0, 0, 0
-    local cell_size_x = CELL_SIZE_X
-    local cell_size_z = CELL_SIZE_Z
+    local sizex, sizez = SIZE_X, SIZE_Z
+    local resx, resz = RES_X, RES_Z
     local vplayer = api_vector_alloc()
     local frames = 0
     local text
@@ -36,9 +38,9 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - centx - movex) / cell_size_x) + 0.5),
+        return math.floor(((x - centx - movex) / sizex) + 0.5),
                y - centy - movey,
-               math.floor(((z - centz - movez) / cell_size_z) + 0.5)
+               math.floor(((z - centz - movez) / sizez) + 0.5)
     end
 
     function self.attach(mplayer)
@@ -65,12 +67,12 @@ function M.alloc(x, y, z)
             lands[z] = {}
         end
         if lands[z][x] == nil then
-            lands[z][x] = land.alloc(self, mach,
-                                     centx + x * cell_size_x,
+            lands[z][x] = land.alloc(nse, mach,
+                                     centx + x * sizex,
                                      centy,
-                                     centz + z * cell_size_z,
+                                     centz + z * sizez,
                                      movex, movey, movez,
-                                     cell_size_x, cell_size_z)
+                                     sizex, sizez, resx, resz)
         end
     end
 
@@ -161,14 +163,14 @@ function M.alloc(x, y, z)
     function self.move(car, camc)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
             local v = api_vector_alloc()
-            api_vector_const(v, move_dx * cell_size_x, 0, move_dz * cell_size_z, 0)
+            api_vector_const(v, move_dx * sizex, 0, move_dz * sizez, 0)
             api_physics_wld_move(pwld.wld, v)
             car.move(v)
             camc.move(v)
             api_vector_free(v)
 
-            movez = movez + (move_dz * cell_size_z)
-            movex = movex + (move_dx * cell_size_x)
+            movez = movez + (move_dz * sizez)
+            movex = movex + (move_dx * sizex)
 
             move_dz, move_dx = 0, 0
         end
