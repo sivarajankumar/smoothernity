@@ -3,12 +3,12 @@ local M = {}
 local land = require 'land' 
 local noise = require 'noise'
 local pwld = require 'physwld'
+local cfg = require 'config'
 
-local SIZE_X = 50
-local SIZE_Z = 50
-local RES_X = 20
-local RES_Z = 20
-local VIS_RANGE = 50
+local SIZE_X = cfg.VIS_RANGE
+local SIZE_Z = cfg.VIS_RANGE
+local RES_X = 40
+local RES_Z = 40
 
 function M.alloc(x, y, z)
     local self = {}
@@ -186,7 +186,7 @@ function M.alloc(x, y, z)
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
                 local lx, ly, lz = grid_to_world(x, 0, z)
-                if math.abs(px - lx) <= VIS_RANGE and math.abs(pz - lz) <= VIS_RANGE then
+                if math.max(math.abs(px-lx), math.abs(pz-lz)) <= cfg.VIS_RANGE then
                     lnd.show()
                 else
                     lnd.hide()
