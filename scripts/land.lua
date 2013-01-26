@@ -8,20 +8,18 @@ local HEIGHT = 10
 local WIDTH = 20
 local LENGTH = 20
 
-function M.alloc(world, mach, base_x, base_y, base_z, cell_size_x, cell_size_z)
+function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
     local self = {}
 
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local scalex = cell_size_x / (WIDTH - 1)
-    local scalez = cell_size_z / (LENGTH - 1)
+    local scalex = sizex / (WIDTH - 1)
+    local scalez = sizez / (LENGTH - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
-    local mstart = util.matrix_pos_stop(base_x + world.movex,
-                                        base_y + world.movey,
-                                        base_z + world.movez)
+    local mstart = util.matrix_pos_stop(basx + movx, basy + movy, basz + movz)
     local cs, rb, hmap, mesh
 
     function self.free()
@@ -38,7 +36,7 @@ function M.alloc(world, mach, base_x, base_y, base_z, cell_size_x, cell_size_z)
     end
 
     local function to_world(z, x)
-        return base_z + z * scalez, base_x + x * scalex
+        return basz + z * scalez, basx + x * scalex
     end
 
     local function color_noise(z, x)
