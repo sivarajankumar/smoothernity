@@ -13,7 +13,7 @@ function M.alloc(x, y, z)
 
     self.noise = noise.alloc()
     local centx, centy, centz = x, y, z
-    self.movex, self.movey, self.movez = 0, 0, 0
+    local movex, movey, movez = 0, 0, 0
     local cell_size_x = CELL_SIZE_X
     local cell_size_z = CELL_SIZE_Z
     local vplayer = api_vector_alloc()
@@ -36,9 +36,9 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - centx - self.movex) / cell_size_x) + 0.5),
-               y - centy - self.movey,
-               math.floor(((z - centz - self.movez) / cell_size_z) + 0.5)
+        return math.floor(((x - centx - movex) / cell_size_x) + 0.5),
+               y - centy - movey,
+               math.floor(((z - centz - movez) / cell_size_z) + 0.5)
     end
 
     function self.attach(mplayer)
@@ -69,6 +69,7 @@ function M.alloc(x, y, z)
                                      centx + x * cell_size_x,
                                      centy,
                                      centz + z * cell_size_z,
+                                     movex, movey, movez,
                                      cell_size_x, cell_size_z)
         end
     end
@@ -166,8 +167,8 @@ function M.alloc(x, y, z)
             camc.move(v)
             api_vector_free(v)
 
-            self.movez = self.movez + (move_dz * cell_size_z)
-            self.movex = self.movex + (move_dx * cell_size_x)
+            movez = movez + (move_dz * cell_size_z)
+            movex = movex + (move_dx * cell_size_x)
 
             move_dz, move_dx = 0, 0
         end
