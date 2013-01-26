@@ -12,10 +12,10 @@ function M.alloc(x, y, z)
     local lands = {}
 
     self.noise = noise.alloc()
-    self.centx, self.centy, self.centz = x, y, z
+    local centx, centy, centz = x, y, z
     self.movex, self.movey, self.movez = 0, 0, 0
-    self.cell_size_x = CELL_SIZE_X
-    self.cell_size_z = CELL_SIZE_Z
+    local cell_size_x = CELL_SIZE_X
+    local cell_size_z = CELL_SIZE_Z
     local vplayer = api_vector_alloc()
     local frames = 0
     local text
@@ -36,9 +36,9 @@ function M.alloc(x, y, z)
     end
 
     local function to_grid(x, y, z)
-        return math.floor(((x - self.centx - self.movex) / self.cell_size_x) + 0.5),
-               y - self.centy - self.movey,
-               math.floor(((z - self.centz - self.movez) / self.cell_size_z) + 0.5)
+        return math.floor(((x - centx - self.movex) / cell_size_x) + 0.5),
+               y - centy - self.movey,
+               math.floor(((z - centz - self.movez) / cell_size_z) + 0.5)
     end
 
     function self.attach(mplayer)
@@ -65,7 +65,11 @@ function M.alloc(x, y, z)
             lands[z] = {}
         end
         if lands[z][x] == nil then
-            lands[z][x] = land.alloc(self, mach, z, x)
+            lands[z][x] = land.alloc(self, mach,
+                                     centx + x * cell_size_x,
+                                     centy,
+                                     centz + z * cell_size_z,
+                                     cell_size_x, cell_size_z)
         end
     end
 
@@ -156,14 +160,14 @@ function M.alloc(x, y, z)
     function self.move(car, camc)
         if (move_dz ~= 0 or move_dx ~= 0) and not generating then
             local v = api_vector_alloc()
-            api_vector_const(v, move_dx * self.cell_size_x, 0, move_dz * self.cell_size_z, 0)
+            api_vector_const(v, move_dx * cell_size_x, 0, move_dz * cell_size_z, 0)
             api_physics_wld_move(pwld.wld, v)
             car.move(v)
             camc.move(v)
             api_vector_free(v)
 
-            self.movez = self.movez + (move_dz * self.cell_size_z)
-            self.movex = self.movex + (move_dx * self.cell_size_x)
+            self.movez = self.movez + (move_dz * cell_size_z)
+            self.movex = self.movex + (move_dx * cell_size_x)
 
             move_dz, move_dx = 0, 0
         end
