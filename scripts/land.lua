@@ -17,7 +17,6 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
     local cs, rb, hmap, mesh
-    local ready = false
 
     function self.free()
         api_vbuf_free(vb)
@@ -34,14 +33,14 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
     end
 
     function self.hide()
-        if ready and mesh ~= nil then
+        if mesh ~= nil then
             api_mesh_free(mesh)
             mesh = nil
         end
     end
 
     function self.show()
-        if ready and mesh == nil then
+        if mesh == nil then
             mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
                                   6 * (res - 1) * (res - 1))
         end
@@ -149,8 +148,6 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
         api_matrix_rigid_body(mrb, rb)
         api_matrix_mul(mmul, mrb, mvis)
     end
-
-    ready = true
 
     return self
 end
