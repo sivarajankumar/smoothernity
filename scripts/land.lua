@@ -6,7 +6,7 @@ local meshes = require 'meshes'
 
 local HEIGHT = 10
 
-function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
+function M.alloc(mach, noise, move, basx, basy, basz,
                  sizex, sizez, resx, resz)
     local self = {}
 
@@ -18,14 +18,12 @@ function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
     local mrb = api_matrix_alloc()
-    local mstart = util.matrix_pos_stop(basx + movx, basy + movy, basz + movz)
     local cs, rb, hmap, mesh
     local ready = false
 
     function self.free()
         api_vbuf_free(vb)
         api_ibuf_free(ib)
-        api_matrix_free(mstart)
         api_matrix_free(mvis)
         api_matrix_free(mrb)
         api_matrix_free(mmul)
@@ -141,9 +139,11 @@ function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
                 api_machine_yield(mach)
             end
         end
+        local mpos = util.matrix_pos_stop(basx + move.x, basy + move.y, basz + move.z)
         cs = api_physics_cs_alloc_hmap(buf, 0, resx, resz, -0.5 * HEIGHT, 0.5 * HEIGHT, size)
-        rb = api_physics_rb_alloc(pwld.wld, cs, mstart, 0, 1, 1)
+        rb = api_physics_rb_alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(size)
+        api_matrix_free(mpos)
     end
 
     -- visual
