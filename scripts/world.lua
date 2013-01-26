@@ -5,10 +5,18 @@ local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+local SCENE_X = 50
+local SCENE_Z = 50
 local SIZE_X = cfg.VIS_RANGE
 local SIZE_Z = cfg.VIS_RANGE
 local RES_X = 30
 local RES_Z = 30
+
+local function move_alloc()
+    local self = {}
+    self.x, self.y, self.z = 0, 0, 0
+    return self
+end
 
 function M.alloc(x, y, z)
     local self = {}
@@ -16,15 +24,13 @@ function M.alloc(x, y, z)
 
     local nse = noise.alloc()
     local centx, centy, centz = x, y, z
-    local movex, movey, movez = 0, 0, 0
+    local move = move_alloc()
     local sizex, sizez = SIZE_X, SIZE_Z
     local resx, resz = RES_X, RES_Z
     local vplayer = api_vector_alloc()
     local frames = 0
     local text
     local bound_front, bound_back, bound_left, bound_right
-    local generating = false
-    local move_dz, move_dx = 0, 0
 
     function self.free()
         if text ~= nil then
@@ -39,7 +45,7 @@ function M.alloc(x, y, z)
     end
 
     local function scene_to_world(x, y, z)
-        return x - centx - movex, y - centy - movey, z - centz - movez
+        return x - centx - move.x, y - centy - move.y, z - centz - move.z
     end
 
     local function world_to_grid(x, y, z)
@@ -74,19 +80,13 @@ function M.alloc(x, y, z)
         end
         if lands[z][x] == nil then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = land.alloc(nse, mach, wx, wy, wz,
-                                     movex, movey, movez,
+            lands[z][x] = land.alloc(mach, nse, move, wx, wy, wz,
                                      sizex, sizez, resx, resz)
         end
     end
 
     function self.generate(mach)
         local gx, gy, gz
-
-        if move_dz ~= 0 or move_dx ~= 0 then
-            return
-        end
-        generating = true
 
         -- align
         do
@@ -100,22 +100,18 @@ function M.alloc(x, y, z)
                                                 px, py, pz, gx, gy, gz),
                                   API_TEXT_FONT_8_BY_13, 20, 40)
             while gx < bound_left do
-                move_dx = move_dx + 1
                 bound_left = bound_left - 1
                 bound_right = bound_right - 1
             end
             while gx > bound_right do
-                move_dx = move_dx - 1
                 bound_left = bound_left + 1
                 bound_right = bound_right + 1
             end
             while gz < bound_front do
-                move_dz = move_dz + 1
                 bound_back = bound_back - 1
                 bound_front = bound_front - 1
             end
             while gz > bound_back do
-                move_dz = move_dz - 1
                 bound_back = bound_back + 1
                 bound_front = bound_front + 1
             end
@@ -160,23 +156,34 @@ function M.alloc(x, y, z)
                 end
             end
         end
-
-        generating = false
     end
 
     function self.move(car, camc)
-        if (move_dz ~= 0 or move_dx ~= 0) and not generating then
-            local v = api_vector_alloc()
-            api_vector_const(v, move_dx * sizex, 0, move_dz * sizez, 0)
-            api_physics_wld_move(pwld.wld, v)
-            car.move(v)
-            camc.move(v)
-            api_vector_free(v)
+        api_vector_update(vplayer)
+        local x, y, z, w = api_vector_get(vplayer)
+        local dx, dz = 0, 0
+        while x + dx < -SCENE_X do
+            dx = dx + SCENE_X
+        end
+        while x + dx > SCENE_X do
+            dx = dx - SCENE_X
+        end
+        while z + dz < -SCENE_Z do
+            dz = dz + SCENE_Z
+        end
+        while z + dz > SCENE_Z do
+            dz = dz - SCENE_Z
+        end
+        if dx ~= 0 or dz ~= 0 then
+            local dv = api_vector_alloc()
+            api_vector_const(dv, dx, 0, dz, 0)
+            api_physics_wld_move(pwld.wld, dv)
+            car.move(dv)
+            camc.move(dv)
+            api_vector_free(dv)
 
-            movez = movez + (move_dz * sizez)
-            movex = movex + (move_dx * sizex)
-
-            move_dz, move_dx = 0, 0
+            move.x = move.x + dx
+            move.z = move.z + dz
         end
     end
 
