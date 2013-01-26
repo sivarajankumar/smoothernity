@@ -7,8 +7,8 @@ local cfg = require 'config'
 
 local SIZE_X = cfg.VIS_RANGE
 local SIZE_Z = cfg.VIS_RANGE
-local RES_X = 40
-local RES_Z = 40
+local RES_X = 30
+local RES_Z = 30
 
 function M.alloc(x, y, z)
     local self = {}
