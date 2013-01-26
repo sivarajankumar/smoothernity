@@ -5,16 +5,17 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 
 local HEIGHT = 10
-local WIDTH = 20
-local LENGTH = 20
+local resx = 20
+local resz = 20
 
-function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
+function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
+                 sizex, sizez, resx, resz)
     local self = {}
 
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local scalex = sizex / (WIDTH - 1)
-    local scalez = sizez / (LENGTH - 1)
+    local scalex = sizex / (resx - 1)
+    local scalez = sizez / (resz - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scalex,1,scalez)
     local mmul = api_matrix_alloc()
@@ -42,16 +43,16 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
     local function color_noise(z, x)
         local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.9*world.noise.get(wz * 0.04, wx * 0.04)
-        n = n + 0.1*world.noise.get(wz * 0.4, wx * 0.4)
+        n = n + 0.9*noise.get(wz * 0.04, wx * 0.04)
+        n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
         return n
     end
 
     local function height_noise(z, x)
         local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.9*world.noise.get(wz * 0.02, wx * 0.02)
-        n = n + 0.1*world.noise.get(wz * 0.08, wx * 0.08)
+        n = n + 0.9*noise.get(wz * 0.02, wx * 0.02)
+        n = n + 0.1*noise.get(wz * 0.08, wx * 0.08)
         return n
     end
 
@@ -73,9 +74,9 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
     -- height map
     do
         hmap = {}
-        for z = 0, LENGTH - 1 do
+        for z = 0, resz - 1 do
             hmap[z] = {}
-            for x = 0, WIDTH - 1 do
+            for x = 0, resx - 1 do
                 hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
                 api_machine_yield(mach)
             end
@@ -84,13 +85,13 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
 
     -- vertex buffer
     do
-        for z = 0, LENGTH - 1 do
-            for x = 0, WIDTH - 1 do
+        for z = 0, resz - 1 do
+            for x = 0, resx - 1 do
                 local r, g, b, a = color(z, x)
-                api_vbuf_set(vb, x + z * WIDTH,
-                             x - 0.5 * (WIDTH - 1),
+                api_vbuf_set(vb, x + z * resx,
+                             x - 0.5 * (resx - 1),
                              hmap[z][x],
-                             z - 0.5 * (LENGTH - 1),
+                             z - 0.5 * (resz - 1),
                              r, g, b, a,
                              0, 0)
                 api_machine_yield(mach)
@@ -101,13 +102,13 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
 
     -- index buffer
     do
-        for z = 0, LENGTH - 2 do
-            for x = 0, WIDTH - 2 do
-                local i00 = x + z * WIDTH
-                local i01 = x + (z + 1) * WIDTH
-                local i10 = (x + 1) + z * WIDTH
-                local i11 = (x + 1) + (z + 1) * WIDTH
-                local i = (x + z * (WIDTH - 1)) * 6
+        for z = 0, resz - 2 do
+            for x = 0, resx - 2 do
+                local i00 = x + z * resx
+                local i01 = x + (z + 1) * resx
+                local i10 = (x + 1) + z * resx
+                local i11 = (x + 1) + (z + 1) * resx
+                local i = (x + z * (resx - 1)) * 6
                 api_ibuf_set(ib, i,  i00,i01,i10,  i10,i01,i11)
                 api_machine_yield(mach)
             end
@@ -119,13 +120,13 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
     do
         local size = api_vector_alloc()
         api_vector_const(size, scalex, 1, scalez, 0)
-        for z = 0, LENGTH - 1 do
-            for x = 0, WIDTH - 1 do
-                api_buf_set(buf, x + z * WIDTH, hmap[z][x])
+        for z = 0, resz - 1 do
+            for x = 0, resx - 1 do
+                api_buf_set(buf, x + z * resx, hmap[z][x])
                 api_machine_yield(mach)
             end
         end
-        cs = api_physics_cs_alloc_hmap(buf, 0, WIDTH, LENGTH, -0.5 * HEIGHT, 0.5 * HEIGHT, size)
+        cs = api_physics_cs_alloc_hmap(buf, 0, resx, resz, -0.5 * HEIGHT, 0.5 * HEIGHT, size)
         rb = api_physics_rb_alloc(pwld.wld, cs, mstart, 0, 1, 1)
         api_vector_free(size)
     end
@@ -135,7 +136,7 @@ function M.alloc(world, mach, basx, basy, basz, movx, movy, movz, sizex, sizez)
         api_matrix_rigid_body(mrb, rb)
         api_matrix_mul(mmul, mrb, mvis)
         mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
-                              6 * (WIDTH - 1) * (LENGTH - 1))
+                              6 * (resx - 1) * (resz - 1))
     end
 
     return self
