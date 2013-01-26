@@ -5,12 +5,9 @@ local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
 
-local SCENE_X = 50
-local SCENE_Z = 50
-local SIZE_X = cfg.VIS_RANGE
-local SIZE_Z = cfg.VIS_RANGE
-local RES_X = 30
-local RES_Z = 30
+local SCENE = 50
+local SIZE = cfg.VIS_RANGE
+local RES = 30
 
 local function move_alloc()
     local self = {}
@@ -25,8 +22,8 @@ function M.alloc(x, y, z)
     local nse = noise.alloc()
     local centx, centy, centz = x, y, z
     local move = move_alloc()
-    local sizex, sizez = SIZE_X, SIZE_Z
-    local resx, resz = RES_X, RES_Z
+    local size = SIZE
+    local res = RES
     local vplayer = api_vector_alloc()
     local frames = 0
     local text
@@ -49,11 +46,11 @@ function M.alloc(x, y, z)
     end
 
     local function world_to_grid(x, y, z)
-        return math.floor((x / sizex) + 0.5), y, math.floor((z / sizez) + 0.5)
+        return math.floor((x / size) + 0.5), y, math.floor((z / size) + 0.5)
     end
 
     local function grid_to_world(x, y, z)
-        return centx + x * sizex, centy, centz + z * sizez
+        return centx + x * size, centy, centz + z * size
     end
 
     function self.attach(mplayer)
@@ -80,8 +77,7 @@ function M.alloc(x, y, z)
         end
         if lands[z][x] == nil then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = land.alloc(mach, nse, move, wx, wy, wz,
-                                     sizex, sizez, resx, resz)
+            lands[z][x] = land.alloc(mach, nse, move, size, res, wx, wy, wz)
         end
     end
 
@@ -162,17 +158,17 @@ function M.alloc(x, y, z)
         api_vector_update(vplayer)
         local x, y, z, w = api_vector_get(vplayer)
         local dx, dz = 0, 0
-        while x + dx < -SCENE_X do
-            dx = dx + SCENE_X
+        while x + dx < -SCENE do
+            dx = dx + SCENE
         end
-        while x + dx > SCENE_X do
-            dx = dx - SCENE_X
+        while x + dx > SCENE do
+            dx = dx - SCENE
         end
-        while z + dz < -SCENE_Z do
-            dz = dz + SCENE_Z
+        while z + dz < -SCENE do
+            dz = dz + SCENE
         end
-        while z + dz > SCENE_Z do
-            dz = dz - SCENE_Z
+        while z + dz > SCENE do
+            dz = dz - SCENE
         end
         if dx ~= 0 or dz ~= 0 then
             local dv = api_vector_alloc()
