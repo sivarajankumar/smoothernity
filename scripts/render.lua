@@ -5,20 +5,18 @@ local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 
-local PROJ_Z_NEAR = 1
-local PROJ_Z_FAR = 1024
 local PROJ_FOV = 60 * math.pi / 360
 
-local function make_frustum()
+local function make_frustum(znear, zfar)
     local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
 
-    local ymax = PROJ_Z_NEAR * math.tan(PROJ_FOV)
+    local ymax = znear * math.tan(PROJ_FOV)
     local xmax = ymax * cfg.SCREEN_WIDTH / cfg.SCREEN_HEIGHT
 
     api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
-    api_vector_const(vz, PROJ_Z_NEAR, PROJ_Z_FAR, 0, 0)
+    api_vector_const(vz, znear, zfar, 0, 0)
 
     api_matrix_frustum(mproj, vbounds, vz, 0, 1)
     api_matrix_update(mproj)
@@ -48,7 +46,7 @@ local function visual_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum()
+    local mproj3d = make_frustum(1, 0.5 * cfg.VIS_RANGE)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
@@ -98,7 +96,7 @@ local function debug_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum()
+    local mproj3d = make_frustum(1, 1024)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
