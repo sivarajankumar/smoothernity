@@ -8,6 +8,7 @@ local SIZE_X = 50
 local SIZE_Z = 50
 local RES_X = 20
 local RES_Z = 20
+local VIS_RANGE = 50
 
 function M.alloc(x, y, z)
     local self = {}
@@ -37,18 +38,23 @@ function M.alloc(x, y, z)
         end
     end
 
-    local function to_grid(x, y, z)
-        return math.floor(((x - centx - movex) / sizex) + 0.5),
-               y - centy - movey,
-               math.floor(((z - centz - movez) / sizez) + 0.5)
+    local function scene_to_world(x, y, z)
+        return x - centx - movex, y - centy - movey, z - centz - movez
+    end
+
+    local function world_to_grid(x, y, z)
+        return math.floor((x / sizex) + 0.5), y, math.floor((z / sizez) + 0.5)
+    end
+
+    local function grid_to_world(x, y, z)
+        return centx + x * sizex, centy, centz + z * sizez
     end
 
     function self.attach(mplayer)
         api_vector_mpos(vplayer, mplayer)
         if bound_back == nil or bound_front == nil or bound_left == nil or bound_right == nil then
             api_vector_update(vplayer)
-            local x, y, z, w = api_vector_get(vplayer)
-            x, y, z = to_grid(x, y, z)
+            local x, y, z = world_to_grid(scene_to_world(api_vector_get(vplayer)))
             bound_back = z + 1
             bound_front = z
             bound_left = x
@@ -67,10 +73,8 @@ function M.alloc(x, y, z)
             lands[z] = {}
         end
         if lands[z][x] == nil then
-            lands[z][x] = land.alloc(nse, mach,
-                                     centx + x * sizex,
-                                     centy,
-                                     centz + z * sizez,
+            local wx, wy, wz = grid_to_world(x, 0, z)
+            lands[z][x] = land.alloc(nse, mach, wx, wy, wz,
                                      movex, movey, movez,
                                      sizex, sizez, resx, resz)
         end
@@ -91,7 +95,7 @@ function M.alloc(x, y, z)
             if text ~= nil then
                 api_text_free(text)
             end
-            gx, gy, gz = to_grid(px, py, pz)
+            gx, gy, gz = world_to_grid(scene_to_world(px, py, pz))
             text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)',
                                                 px, py, pz, gx, gy, gz),
                                   API_TEXT_FONT_8_BY_13, 20, 40)
@@ -173,6 +177,21 @@ function M.alloc(x, y, z)
             movex = movex + (move_dx * sizex)
 
             move_dz, move_dx = 0, 0
+        end
+    end
+
+    function self.showhide()
+        api_vector_update(vplayer)
+        local px, py, pz = scene_to_world(api_vector_get(vplayer))
+        for z, xs in pairs(lands) do
+            for x, lnd in pairs(xs) do
+                local lx, ly, lz = grid_to_world(x, 0, z)
+                if math.abs(px - lx) <= VIS_RANGE and math.abs(pz - lz) <= VIS_RANGE then
+                    lnd.show()
+                else
+                    lnd.hide()
+                end
+            end
         end
     end
 

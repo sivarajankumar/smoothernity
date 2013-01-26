@@ -20,6 +20,7 @@ function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
     local mrb = api_matrix_alloc()
     local mstart = util.matrix_pos_stop(basx + movx, basy + movy, basz + movz)
     local cs, rb, hmap, mesh
+    local ready = false
 
     function self.free()
         api_vbuf_free(vb)
@@ -31,11 +32,27 @@ function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
         api_physics_rb_free(rb)
         api_physics_cs_free(cs)
         api_buf_free(buf)
-        api_mesh_free(mesh)
+        if mesh ~= nil then
+            api_mesh_free(mesh)
+        end
+    end
+
+    function self.hide()
+        if ready and mesh ~= nil then
+            api_mesh_free(mesh)
+            mesh = nil
+        end
+    end
+
+    function self.show()
+        if ready and mesh == nil then
+            mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
+                                  6 * (resx - 1) * (resz - 1))
+        end
     end
 
     local function to_world(z, x)
-        return basz + z * scalez, basx + x * scalex
+        return basz - 0.5 * sizez + z * scalez, basx - 0.5 * sizex + x * scalex
     end
 
     local function color_noise(z, x)
@@ -133,9 +150,9 @@ function M.alloc(noise, mach, basx, basy, basz, movx, movy, movz,
     do
         api_matrix_rigid_body(mrb, rb)
         api_matrix_mul(mmul, mrb, mvis)
-        mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
-                              6 * (resx - 1) * (resz - 1))
     end
+
+    ready = true
 
     return self
 end
