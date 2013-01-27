@@ -137,6 +137,16 @@ function M.alloc(centx, centy, centz)
         return sum / lod.count
     end
 
+    function self.edge_dist()
+        api_vector_update(vplayer)
+        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
+        local min_dist = 1
+        for k, v in pairs(planes) do
+            min_dist = math.min(min_dist, v.edge_dist(wx, wy, wz))
+        end
+        return min_dist
+    end
+
     for lodi = 0, lod.count - 1 do
         local landalloc
         if lodi == lod.count - 1 then

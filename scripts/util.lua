@@ -45,6 +45,7 @@ function M.spline(t, t1, t2, v0, v1, v2, v3)
 end
 
 function M.lerp(t, t0, t1, v0, v1)
+    t = math.min(t1, math.max(t0, t))
     return v0 + ((v1 - v0) * (t - t0) / (t1 - t0))
 end
 

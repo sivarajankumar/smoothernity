@@ -83,6 +83,7 @@ function M.control(mach)
     wld.showhide()
     pause.control()
     gui.gen_progress(wld.gen_progress())
+    gui.edge_dist(wld.edge_dist())
 end
 
 function M.work(mach)

@@ -119,6 +119,35 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         return count / total
     end
 
+    function self.edge_dist(wx, wy, wz)
+        local r = vis_range() + REST
+        local xmin, ymin, zmin = world_to_grid(wx - r, 0, wz - r)
+        local xmax, ymax, zmax = world_to_grid(wx + r, 0, wz + r)
+        local min_dist = r
+        for z = zmin, zmax do
+            for x = xmin, xmax do
+                if lands[z] == nil or lands[z][x] == nil then
+                    local cxmin, cymin, czmin = grid_to_world(x, 0, z)
+                    local cxmax, cymax, czmax = grid_to_world(x+1, 0, z+1)
+                    if wx >= cxmin and wx <= cxmax and wz >= czmin and wz <= czmax then
+                        return 0
+                    elseif wx >= cxmin and wx <= cxmax then
+                        local zdist = math.min(math.abs(wz - czmin), math.abs(wz - czmax))
+                        min_dist = math.min(min_dist, zdist)
+                    elseif wz >= czmin and wz <= czmax then
+                        local xdist = math.min(math.abs(wx - cxmin), math.abs(wx - cxmax))
+                        min_dist = math.min(min_dist, xdist)
+                    else
+                        local xdist = math.min(math.abs(wx - cxmin), math.abs(wx - cxmax))
+                        local zdist = math.min(math.abs(wz - czmin), math.abs(wz - czmax))
+                        min_dist = math.max(min_dist, math.max(xdist, zdist))
+                    end
+                end
+            end
+        end
+        return util.lerp(min_dist, vis_range(), vis_range() + REST, 0, 1)
+    end
+
     function self.move()
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
