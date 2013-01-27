@@ -9,7 +9,8 @@ local meshes = require 'meshes'
 
 local SCENE = 50
 local RES_NEAR = 20
-local RES_FAR = 20
+local RES_MID = 20
+local RES_FAR = 10
 
 local function move_alloc()
     local self = {}
@@ -28,6 +29,8 @@ function M.alloc(centx, centy, centz)
     local planes =
         {plane.alloc(nse, move, meshes.GROUP_NEAR, land.phys_alloc,
                      cfg.RANGE_NEAR, cfg.RANGE_NEAR, RES_NEAR, centx, centy, centz),
+         plane.alloc(nse, move, meshes.GROUP_MID, land.vis_alloc,
+                     cfg.RANGE_MID, cfg.RANGE_MID, RES_MID, centx, centy, centz),
          plane.alloc(nse, move, meshes.GROUP_FAR, land.vis_alloc,
                      cfg.RANGE_FAR, cfg.RANGE_FAR, RES_FAR, centx, centy, centz)}
 
