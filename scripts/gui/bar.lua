@@ -26,6 +26,11 @@ function M.alloc(xmin, ymin, xmax, ymax)
         api_matrix_free(mfront)
         api_matrix_free(mfront_local)
         api_vector_free(vfront_pos)
+        api_vector_free(vfront_scl)
+    end
+
+    function self.set(value)
+        api_vector_const(vfront_scl, value, 1, 1, 0)
     end
 
     -- matrices
@@ -33,9 +38,9 @@ function M.alloc(xmin, ymin, xmax, ymax)
         local centx, centy = 0.5*(xmin+xmax), 0.5*(ymin+ymax)
         local sclx, scly = 0.5*(xmax-xmin), 0.5*(ymax-ymin)
         local zero = util.vector_const(0, 0, 0, 0)
-        mback = util.matrix_pos_scl_stop(centx, centy, 0.5, sclx, scly, 1)
-        vfront_pos = util.vector_const(-1, 0, 0.1, 0)
-        vfront_scl = util.vector_const(0.7, 1, 1, 0)
+        mback = util.matrix_pos_scl_stop(centx, centy, 0, sclx, scly, 1)
+        vfront_pos = util.vector_const(-1, 0, 1, 0)
+        vfront_scl = util.vector_const(0, 1, 1, 0)
         api_matrix_pos_scl_rot(mfront_local, vfront_pos, vfront_scl, zero, API_MATRIX_AXIS_X, 0)
         api_matrix_mul(mfront, mback, mfront_local)
         api_vector_free(zero)
