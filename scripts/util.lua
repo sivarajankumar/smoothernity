@@ -19,6 +19,12 @@ function M.vector_move(v, vofs)
     api_vector_const(v, x + dx, y + dy, z + dz, w + dw)
 end
 
+function M.vector_move_xz(v, vofs)
+    local x, y, z, w = api_vector_get(v)
+    local dx, dy, dz, dw = api_vector_get(vofs)
+    api_vector_const(v, x + dx, y, z + dz, w)
+end
+
 function M.spline(t, t1, t2, v0, v1, v2, v3)
     t = (t - t1) / (t2 - t1)
     assert (t >= 0 and t <= 1)
