@@ -3,9 +3,10 @@ local M = {}
 M.lods = {}
 M.count = 0
 
-local function add_lod(clip_range, vis_range, size, res, heightfunc, colorfunc)
+local function add_lod(clip_near, clip_far, vis_range, size, res, heightfunc, colorfunc)
     local lod = {}
-    lod.clip_range = clip_range
+    lod.clip_near = clip_near
+    lod.clip_far = clip_far
     lod.vis_range = vis_range
     lod.size = size
     lod.res = res
@@ -51,8 +52,8 @@ end
 -- lods
 --
 
-add_lod( 5000, 10000, 10000, 20, height0, color0)
-add_lod( 1000,  2000,  2000, 20, height1, color1)
-add_lod(  100,   200,   200, 20, height2, color2)
+add_lod(1000, 5000, 10000, 10000, 20, height0, color0)
+add_lod( 100, 1000,  2000,  2000, 20, height1, color1)
+add_lod(   1,  100,   200,   200, 20, height2, color2)
 
 return M
