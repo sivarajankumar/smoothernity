@@ -15,10 +15,6 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
         end
     end
 
-    local function scene_to_world(x, y, z)
-        return x - centx - move.x, y - centy - move.y, z - centz - move.z
-    end
-
     local function world_to_grid(x, y, z)
         return math.floor((x / size) + 0.5), y, math.floor((z / size) + 0.5)
     end
@@ -38,12 +34,12 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
         end
     end
 
-    function self.generate(mach, px, py, pz)
-        local gx, gy, gz
+    function self.generate(mach, wx, wy, wz)
+
+        local gx, gy, gz = world_to_grid(wx, wy, wz)
 
         -- align
         do
-            gx, gy, gz = world_to_grid(scene_to_world(px, py, pz))
             while gx < bound_left do
                 bound_left = bound_left - 1
                 bound_right = bound_right - 1
@@ -111,13 +107,11 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
         end
     end
 
-    function self.showhide()
-        api_vector_update(vplayer)
-        local px, py, pz = scene_to_world(api_vector_get(vplayer))
+    function self.showhide(wx, wy, wz)
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
                 local lx, ly, lz = grid_to_world(x, 0, z)
-                if math.max(math.abs(px-lx), math.abs(pz-lz)) <= vis_range then
+                if math.max(math.abs(wx-lx), math.abs(wz-lz)) <= vis_range then
                     lnd.show()
                 else
                     lnd.hide()
