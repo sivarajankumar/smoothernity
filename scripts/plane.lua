@@ -6,7 +6,7 @@ local util = require 'util'
 local quit = require 'quit'
 
 local BUFFER = 20
-local REST = 50
+local REST = 400
 
 function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
