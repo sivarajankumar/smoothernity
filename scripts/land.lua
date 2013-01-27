@@ -45,7 +45,8 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
     local function color_noise(z, x)
         local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.9*noise.get(wz * 0.04, wx * 0.04)
+        n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+        n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
         n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
         return n
     end
@@ -53,15 +54,16 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
     local function height_noise(z, x)
         local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.9*noise.get(wz * 0.02, wx * 0.02)
+        n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+        n = n + 0.2*noise.get(wz * 0.02, wx * 0.02)
         n = n + 0.1*noise.get(wz * 0.08, wx * 0.08)
         return n
     end
 
     local function color(z, x)
         local r = color_noise(z, x)
-        local g = color_noise(z + 30, x + 40)
-        local b = color_noise(z + 100, x - 50)
+        local g = color_noise(z + 300, x + 400)
+        local b = color_noise(z + 1000, x - 500)
         local len = math.sqrt(r*r + g*g + b*b)
         if len > 0.1 then
             r = r / len
