@@ -12,6 +12,7 @@ local world = require 'world'
 local render = require 'render'
 local pwld = require 'physwld'
 local pause = require 'pause'
+local gui = require 'gui.gui'
 
 local blink, wld, cbs, car, camc, camd, camsw
 local pressed = 0
@@ -29,6 +30,7 @@ end
 function M.init()
     pwld.init()
     render.init()
+    gui.init()
     util.set_gravity(0, -10, 0)
     blink = blinker.alloc()
     wld = world.alloc(START_X, START_Y, START_Z)
@@ -52,6 +54,7 @@ function M.done()
     car.free()
     camc.free()
     camd.free()
+    gui.done()
     render.done()
     pwld.done()
 end
