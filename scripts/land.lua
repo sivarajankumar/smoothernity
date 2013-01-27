@@ -5,6 +5,7 @@ local pwld = require 'physwld'
 local cfg = require 'config'
 local lod = require 'lod'
 local meshes = require 'meshes'
+local quit = require 'quit'
 
 local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -49,12 +50,20 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
         local wz, wx = to_world(z, x)
         wz = wz + ofsz
         wx = wx + ofsx
-        return lod.lods[lodi].colorfunc(noise, wz, wx)
+        if quit.requested() then
+            return 0
+        else
+            return lod.lods[lodi].colorfunc(noise, wz, wx)
+        end
     end
 
     local function height_noise(z, x)
         local wz, wx = to_world(z, x)
-        return lod.lods[lodi].heightfunc(noise, wz, wx)
+        if quit.requested() then
+            return 0
+        else
+            return lod.lods[lodi].heightfunc(noise, wz, wx)
+        end
     end
 
     local function color(z, x)

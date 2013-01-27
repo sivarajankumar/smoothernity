@@ -4,8 +4,8 @@ local game = require 'game'
 local cfg = require 'config'
 local render = require 'render'
 local pwld = require 'physwld'
+local quit = require 'quit'
 
-local quit = false
 local machwork = nil
 local work_finished = false
 local game_started = false
@@ -45,14 +45,10 @@ function control(mach)
     game.init()
     game_started = true
     local prf = perf.alloc(mach, machwork)
-    while not quit
+    while not quit.requested()
     do
-        if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
-            quit = true
-            render.empty.engage()
-            api_physics_wld_tscale(pwld.wld, 0)
-        end
         game.control(mach)
+        quit.control()
         ddraw.update()
         prf.update()
         api_machine_yield(mach)
@@ -66,7 +62,7 @@ end
 
 function work(mach)
     machwork = mach
-    while not quit
+    while not quit.requested()
     do
         if game_started then
             game.work(mach)

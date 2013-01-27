@@ -3,6 +3,7 @@ local M = {}
 local lod = require 'lod'
 local cfg = require 'config'
 local util = require 'util'
+local quit = require 'quit'
 
 local BUFFER = 20
 local REST = 50
@@ -43,7 +44,7 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         if lands[z] == nil then
             lands[z] = {}
         end
-        if lands[z][x] == nil then
+        if lands[z][x] == nil and not quit.requested() then
             local wx, wy, wz = grid_to_world(x, 0, z)
             lands[z][x] = landalloc(mach, noise, move, lodi, wx, wy, wz)
         end
