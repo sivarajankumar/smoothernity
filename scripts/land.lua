@@ -77,8 +77,7 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
         for z = 0, self.res - 1 do
             self.hmap[z] = {}
             for x = 0, self.res - 1 do
-                self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1,
-                                            -0.5*cfg.LAND_HEIGHT, 0.5*cfg.LAND_HEIGHT)
+                self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
                 api_machine_yield(mach)
             end
         end
