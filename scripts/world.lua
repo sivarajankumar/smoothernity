@@ -4,6 +4,7 @@ local land = require 'land'
 local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
+local meshes = require 'meshes'
 
 local SCENE = 50
 local SIZE = cfg.VIS_RANGE
@@ -77,7 +78,8 @@ function M.alloc(x, y, z)
         end
         if lands[z][x] == nil then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = land.phys_alloc(mach, nse, move, size, res, wx, wy, wz)
+            lands[z][x] = land.phys_alloc(mach, nse, move, meshes.GROUP_NEAR,
+                                          size, res, wx, wy, wz)
         end
     end
 
