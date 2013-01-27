@@ -13,8 +13,10 @@ local function make_frustum(znear, zfar, dist)
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
 
-    local ymax = znear * math.tan(util.camera_fov(dist))
-    local xmax = ymax * cfg.SCREEN_WIDTH / cfg.SCREEN_HEIGHT
+    local sx, sy = util.camera_dims()
+
+    local ymax = sy * znear / dist
+    local xmax = sx * znear / dist
 
     api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
     api_vector_const(vz, znear, zfar, 0, 0)
