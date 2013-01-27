@@ -2,18 +2,16 @@ local M = {}
 
 local util = require 'util'
 local pwld = require 'physwld'
-local meshes = require 'meshes'
 
 local HEIGHT = 10
 
-local function common_alloc(mach, noise, move, size, res, basx, basy, basz)
+local function common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     local self = {}
 
     self.mmesh = api_matrix_alloc()
     self.hmap = {}
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
-    local scale = size / (res - 1)
     local mesh
 
     function self.free()
@@ -34,12 +32,13 @@ local function common_alloc(mach, noise, move, size, res, basx, basy, basz)
 
     function self.show()
         if mesh == nil then
-            mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1,
+            mesh = api_mesh_alloc(group, API_MESH_TRIANGLES, vb, ib, -1,
                                   self.mmesh, 0, 6 * (res - 1) * (res - 1))
         end
     end
 
     local function to_world(z, x)
+        local scale = size / (res - 1)
         return basz - 0.5 * size + z * scale, basx - 0.5 * size + x * scale
     end
 
@@ -121,10 +120,10 @@ local function common_alloc(mach, noise, move, size, res, basx, basy, basz)
     return self
 end
 
-function M.phys_alloc(mach, noise, move, size, res, basx, basy, basz)
+function M.phys_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     local self = {}
 
-    local common = common_alloc(mach, noise, move, size, res, basx, basy, basz)
+    local common = common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     local scale = size / (res - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scale, 1, scale)
@@ -177,9 +176,9 @@ function M.phys_alloc(mach, noise, move, size, res, basx, basy, basz)
     return self
 end
 
-function M.vis_alloc(mach, noise, move, size, res, basx, basy, basz)
+function M.vis_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     local self = {}
-    local common = common_alloc(mach, noise, move, size, res, basx, basy, basz)
+    local common = common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
 
     function self.free()
         common.free()
