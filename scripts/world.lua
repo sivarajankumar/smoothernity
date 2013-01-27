@@ -25,6 +25,7 @@ function M.alloc(centx, centy, centz)
     local nse = noise.alloc()
     local move = move_alloc()
     local vplayer = api_vector_alloc()
+    local generating = false
     local text
 
     local planes =
@@ -58,11 +59,13 @@ function M.alloc(centx, centy, centz)
     end
 
     function self.generate(mach)
+        generating = true
         api_vector_update(vplayer)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         for k, v in pairs(planes) do
             v.generate(mach, wx, wy, wz)
         end
+        generating = false
     end
 
     function self.height(z, x)
@@ -74,12 +77,20 @@ function M.alloc(centx, centy, centz)
         local x, y, z = api_vector_get(vplayer)
         local wx, wy, wz = self.scene_to_world(x, y, z)
 
-        if text ~= nil then
-            api_text_free(text)
+        do
+            if text ~= nil then
+                api_text_free(text)
+            end
+            local str = ''
+            if generating then
+                str = str .. 'G ' 
+            else
+                str = str .. '  ' 
+            end
+            str = str .. string.format('(% 3i, % 3i, % 3i) (%i, %i, %i)',
+                                       x, y, z, wx, wy, wz)
+            text = api_text_alloc(str, API_TEXT_FONT_8_BY_13, 20, 40)
         end
-        text = api_text_alloc(string.format('(%i, %i, %i) (%i, %i, %i)',
-                                            x, y, z, wx, wy, wz),
-                              API_TEXT_FONT_8_BY_13, 20, 40)
 
         local dx, dy, dz = 0, 0, 0
         while x + dx < -SCENE do
