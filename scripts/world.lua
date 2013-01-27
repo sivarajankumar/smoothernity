@@ -59,7 +59,9 @@ function M.alloc(centx, centy, centz)
     end
 
     function self.height(z, x)
-        return util.lerp(lod.lods[lod.count - 1].heightfunc(nse, 10, z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
+        local y = lod.lods[lod.count - 1].heightfunc(nse, z, x)
+        y = util.lerp(y, 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
+        return y
     end
 
     function self.move(car, camc)
