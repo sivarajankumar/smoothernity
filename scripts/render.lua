@@ -7,14 +7,14 @@ local meshes = require 'meshes'
 local lod = require 'lod'
 
 local DEBUG_ZFAR = 20000
+local ORTHO_ZNEAR = -1
+local ORTHO_ZFAR = 1
 
 local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
-
     local sx, sy = util.camera_dims()
-
     local ymax = sy * znear / dist
     local xmax = sx * znear / dist
 
@@ -30,6 +30,23 @@ local function make_frustum(znear, zfar, dist)
 end
 
 local function make_ortho()
+    local mproj = api_matrix_alloc()
+    local vbounds = api_vector_alloc()
+    local vz = api_vector_alloc()
+    local sx, sy = util.camera_dims()
+
+    api_vector_const(vbounds, -sx, sx, -sy, sy)
+    api_vector_const(vz, ORTHO_ZNEAR, ORTHO_ZFAR, 0, 0)
+
+    api_matrix_ortho(mproj, vbounds, vz, 0, 1)
+    api_matrix_update(mproj)
+    api_matrix_stop(mproj)
+    api_vector_free(vbounds)
+    api_vector_free(vz)
+    return mproj
+end
+
+local function make_screen()
     local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
@@ -75,9 +92,11 @@ local function visual_alloc()
         lods[lodi] = ld
     end
 
-    local rproj2d = api_rop_alloc_proj(lods[lod.count - 1].rmesh, mproj2d)
+    local rclr2d = api_rop_alloc_clear(lods[lod.count - 1].rmesh, API_ROP_CLEAR_DEPTH)
+    local rproj2d = api_rop_alloc_proj(rclr2d, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
-    local rswap = api_rop_alloc_swap(rmview2d)
+    local rmeshgui = api_rop_alloc_draw_meshes(rmview2d, meshes.GROUP_GUI)
+    local rswap = api_rop_alloc_swap(rmeshgui)
 
     function self.free()
         for k, v in pairs(lods) do
@@ -100,8 +119,10 @@ local function visual_alloc()
         api_rop_free(rclrcol)
         api_rop_free(rtscale)
 
+        api_rop_free(rclr2d)
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
+        api_rop_free(rmeshgui)
         api_rop_free(rswap)
     end
 
@@ -115,7 +136,7 @@ end
 local function eagle_alloc()
     local self = {}
 
-    local mproj2d = make_ortho()
+    local mproj2d = make_screen()
     local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
@@ -184,7 +205,7 @@ end
 local function debug_alloc()
     local self = {}
 
-    local mproj2d = make_ortho()
+    local mproj2d = make_screen()
     local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)

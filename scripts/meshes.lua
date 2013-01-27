@@ -2,7 +2,8 @@ local M = {}
 
 local lod = require 'lod'
 
-M.GROUP_NEAR = 0
+M.GROUP_GUI = 0
+M.GROUP_NEAR = 1
 M.GROUP_LODS = M.GROUP_NEAR
 
 function M.lod_group(lodi)
