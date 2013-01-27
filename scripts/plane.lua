@@ -50,6 +50,13 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         end
     end
 
+    local function gen_bounds()
+        local r = vis_range() + BUFFER + REST
+        local xmin, ymin, zmin = world_to_grid(genx - r, 0, genz - r)
+        local xmax, ymax, zmax = world_to_grid(genx + r, 0, genz + r)
+        return zmin, xmin, zmax, xmax
+    end
+
     function self.generate(mach, wx, wy, wz)
 
         -- align
@@ -66,9 +73,7 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
             genz = genz - BUFFER
         end
 
-        local r = vis_range() + BUFFER + REST
-        local xmin, ymin, zmin = world_to_grid(genx - r, 0, genz - r)
-        local xmax, ymax, zmax = world_to_grid(genx + r, 0, genz + r)
+        local zmin, xmin, zmax, xmax = gen_bounds()
 
         -- clear
         do
@@ -98,6 +103,20 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
                 end
             end
         end
+    end
+
+    function self.gen_progress()
+        local zmin, xmin, zmax, xmax = gen_bounds()
+        local count = 0
+        for z = zmin, zmax do
+            for x = xmin, xmax do
+                if lands[z] ~= nil and lands[z][x] ~= nil then
+                    count = count + 1
+                end
+            end
+        end
+        local total = (zmax - zmin + 1) * (xmax - xmin + 1)
+        return count / total
     end
 
     function self.move()

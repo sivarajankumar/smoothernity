@@ -129,6 +129,14 @@ function M.alloc(centx, centy, centz)
         end
     end
 
+    function self.gen_progress()
+        local sum = 0
+        for k, v in pairs(planes) do
+            sum = sum + v.gen_progress()
+        end
+        return sum / lod.count
+    end
+
     for lodi = 0, lod.count - 1 do
         local landalloc
         if lodi == lod.count - 1 then
