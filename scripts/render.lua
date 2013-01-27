@@ -75,8 +75,7 @@ local function visual_alloc()
 
     local rproj2d = api_rop_alloc_proj(lods[lod.count - 1].rmesh, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
-    local rtext = api_rop_alloc_dbg_text(rmview2d)
-    local rswap = api_rop_alloc_swap(rtext)
+    local rswap = api_rop_alloc_swap(rmview2d)
 
     function self.free()
         for k, v in pairs(lods) do
@@ -101,7 +100,6 @@ local function visual_alloc()
 
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
-        api_rop_free(rtext)
         api_rop_free(rswap)
     end
 

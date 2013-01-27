@@ -20,11 +20,11 @@ end
 --
 
 local function height0(n, z, x)
-    return 0.995*n.get(z * 0.001, x * 0.001)
+    return 0.900*n.get(z * 0.001, x * 0.001)
 end
 
 local function height1(n, z, x)
-    return height0(n, z, x) + 0.004*n.get(z * 0.01, x * 0.01)
+    return height0(n, z, x) + 0.099*n.get(z * 0.01, x * 0.01)
 end
 
 local function height2(n, z, x)
@@ -51,10 +51,10 @@ end
 -- lods
 --
 
-add_lod(6000, 12800, 3200, 20, height0, color0)
-add_lod(3000,  6400, 1600, 20, height0, color0)
-add_lod( 700,  3200,  800, 20, height1, color1)
-add_lod( 150,   800,  400, 20, height1, color1)
-add_lod(   1,   200,  200, 20, height2, color2)
+add_lod(6000, 12800, 6400, 20, height0, color0)
+add_lod(3000,  6400, 3200, 20, height0, color1)
+add_lod( 700,  3200, 1600, 20, height1, color1)
+add_lod( 150,   800,  800, 40, height2, color2)
+add_lod(   1,   200,  400, 40, height2, color2)
 
 return M

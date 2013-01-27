@@ -176,6 +176,8 @@ function M.phys_alloc(mach, noise, move, lodi, basx, basy, basz)
         api_matrix_mul(common.mmesh, mrb, mvis)
     end
 
+    common.hmap = nil
+
     return self
 end
 
@@ -204,6 +206,8 @@ function M.vis_alloc(mach, noise, move, lodi, basx, basy, basz)
         api_matrix_copy(common.mmesh, m)
         api_matrix_free(m)
     end
+
+    common.hmap = nil
 
     self.move()
     return self
