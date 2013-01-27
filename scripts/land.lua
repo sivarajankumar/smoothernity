@@ -148,6 +148,9 @@ function M.phys_alloc(mach, noise, move, size, res, basx, basy, basz)
         common.show()
     end
 
+    function self.move()
+    end
+
     -- physics
     do
         local vsize = api_vector_alloc()
@@ -171,6 +174,34 @@ function M.phys_alloc(mach, noise, move, size, res, basx, basy, basz)
         api_matrix_mul(common.mmesh, mrb, mvis)
     end
 
+    return self
+end
+
+function M.vis_alloc(mach, noise, move, size, res, basx, basy, basz)
+    local self = {}
+    local common = common_alloc(mach, noise, move, size, res, basx, basy, basz)
+
+    function self.free()
+        common.free()
+    end
+
+    function self.hide()
+        common.hide()
+    end
+
+    function self.show()
+        common.show()
+    end
+
+    function self.move()
+        local scale = size / (res - 1)
+        local m = util.matrix_pos_scl_stop(basx + move.x, basy + move.y, basz + move.z,
+                                           scale, 1, scale)
+        api_matrix_copy(common.mmesh, m)
+        api_matrix_free(m)
+    end
+
+    self.move()
     return self
 end
 
