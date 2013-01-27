@@ -44,17 +44,17 @@ local function color1(n, z, x)
 end
 
 local function color2(n, z, x)
-    return 0.8*color1(n, z, x) + 0.2*n.get(z * 0.500, x * 0.500)
+    return 0.8*color1(n, z, x) + 0.2*n.get(z * 0.100, x * 0.100)
 end
 
 --
 -- lods
 --
 
-add_lod(6000, 12800, 6400, 20, height0, color0)
-add_lod(3000,  6400, 3200, 20, height0, color1)
-add_lod( 700,  3200, 1600, 20, height1, color1)
+add_lod(6000, 12800, 6400, 40, height0, color0)
+add_lod(3000,  6400, 3200, 40, height0, color1)
+add_lod( 700,  3200, 1600, 40, height1, color1)
 add_lod( 150,   800,  800, 40, height2, color2)
-add_lod(   1,   200,  400, 40, height2, color2)
+add_lod(   1,   200,  400, 80, height2, color2)
 
 return M
