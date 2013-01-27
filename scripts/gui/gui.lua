@@ -5,6 +5,10 @@ local util = require 'util'
 
 local genbar
 
+function M.gen_progress(value)
+    genbar.set(value)
+end
+
 function M.init()
     bar.init()
 
