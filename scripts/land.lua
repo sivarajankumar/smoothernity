@@ -4,7 +4,22 @@ local util = require 'util'
 local pwld = require 'physwld'
 local cfg = require 'config'
 
-local function common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
+function M.world_height(noise, lod, z, x)
+    local n = 0
+    if lod <= 0 then
+        n = noise.get(z * 0.001, x * 0.001)
+    elseif lod <= 1 then
+        n = n + 0.995*noise.get(z * 0.001, x * 0.001)
+        n = n + 0.005*noise.get(z * 0.01, x * 0.01)
+    else
+        n = n + 0.995*noise.get(z * 0.001, x * 0.001)
+        n = n + 0.004*noise.get(z * 0.01, x * 0.01)
+        n = n + 0.001*noise.get(z * 0.05, x * 0.05)
+    end
+    return n
+end
+
+local function common_alloc(mach, noise, move, group, lod, size, res, basx, basy, basz)
     local self = {}
 
     self.mmesh = api_matrix_alloc()
@@ -46,19 +61,22 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
         wz = wz + ofsz
         wx = wx + ofsx
         local n = 0
-        n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
-        n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
-        n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
+        if lod <= 0 then
+            n = noise.get(wz * 0.005, wx * 0.005)
+        elseif lod <= 1 then
+            n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+            n = n + 0.3*noise.get(wz * 0.04, wx * 0.04)
+        else
+            n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+            n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
+            n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
+        end
         return n
     end
 
     local function height_noise(z, x)
         local wz, wx = to_world(z, x)
-        local n = 0
-        n = n + 0.95*noise.get(wz * 0.005, wx * 0.005)
-        n = n + 0.05*noise.get(wz * 0.02, wx * 0.02)
-        n = n + 0.01*noise.get(wz * 0.08, wx * 0.08)
-        return n
+        return M.world_height(noise, lod, wz, wx)
     end
 
     local function color(z, x)
@@ -124,10 +142,10 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
     return self
 end
 
-function M.phys_alloc(mach, noise, move, group, size, res, basx, basy, basz)
+function M.phys_alloc(mach, noise, move, group, lod, size, res, basx, basy, basz)
     local self = {}
 
-    local common = common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
+    local common = common_alloc(mach, noise, move, group, lod, size, res, basx, basy, basz)
     local scale = size / (res - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scale, 1, scale)
@@ -183,9 +201,9 @@ function M.phys_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     return self
 end
 
-function M.vis_alloc(mach, noise, move, group, size, res, basx, basy, basz)
+function M.vis_alloc(mach, noise, move, group, lod, size, res, basx, basy, basz)
     local self = {}
-    local common = common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
+    local common = common_alloc(mach, noise, move, group, lod, size, res, basx, basy, basz)
 
     function self.free()
         common.free()

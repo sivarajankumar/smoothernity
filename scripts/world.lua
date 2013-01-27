@@ -6,11 +6,12 @@ local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
 local meshes = require 'meshes'
+local util = require 'util'
 
 local SCENE = 50
 local RES_NEAR = 20
 local RES_MID = 20
-local RES_FAR = 10
+local RES_FAR = 20
 
 local function move_alloc()
     local self = {}
@@ -27,11 +28,11 @@ function M.alloc(centx, centy, centz)
     local text
 
     local planes =
-        {plane.alloc(nse, move, meshes.GROUP_NEAR, land.phys_alloc,
+        {plane.alloc(nse, move, meshes.GROUP_NEAR, 2, land.phys_alloc,
                      cfg.RANGE_NEAR, cfg.RANGE_NEAR, RES_NEAR, centx, centy, centz),
-         plane.alloc(nse, move, meshes.GROUP_MID, land.vis_alloc,
+         plane.alloc(nse, move, meshes.GROUP_MID, 1, land.vis_alloc,
                      cfg.RANGE_MID, cfg.RANGE_MID, RES_MID, centx, centy, centz),
-         plane.alloc(nse, move, meshes.GROUP_FAR, land.vis_alloc,
+         plane.alloc(nse, move, meshes.GROUP_FAR, 0, land.vis_alloc,
                      cfg.RANGE_FAR, cfg.RANGE_FAR, RES_FAR, centx, centy, centz)}
 
     function self.free()
@@ -58,6 +59,11 @@ function M.alloc(centx, centy, centz)
         for k, v in pairs(planes) do
             v.generate(mach, wx, wy, wz)
         end
+    end
+
+    function self.height(sz, sx)
+        local wx, wy, wz = scene_to_world(sx, 0, sz)
+        return util.lerp(land.world_height(nse, 10, wz, wx), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
     end
 
     function self.move(car, camc)
