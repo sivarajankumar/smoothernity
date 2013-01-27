@@ -8,7 +8,8 @@ local meshes = require 'meshes'
 local PROJ_FOV = 60 * math.pi / 360
 local VIS_Z_1 = 1
 local VIS_Z_2 = 0.5 * cfg.RANGE_NEAR
-local VIS_Z_3 = 0.5 * cfg.RANGE_FAR
+local VIS_Z_3 = 0.5 * cfg.RANGE_NEAR
+local VIS_Z_4 = 0.5 * cfg.RANGE_FAR
 local DEBUG_ZNEAR = 1
 local DEBUG_ZFAR = 1024
 
@@ -52,7 +53,7 @@ local function visual_alloc()
 
     local mproj2d = make_ortho()
     local mproj3dnear = make_frustum(VIS_Z_1, VIS_Z_2)
-    local mproj3dfar = make_frustum(VIS_Z_2, VIS_Z_3)
+    local mproj3dfar = make_frustum(VIS_Z_3, VIS_Z_4)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
@@ -125,15 +126,21 @@ local function eagle_alloc()
     local vclrcol = util.vector_const(0, 0, 0, 0)
     local vclrdep = util.vector_const(1, 0, 0 ,0)
     local vtscale = util.vector_const(1, 0, 0, 0)
+
     local rroot = api_rop_alloc_root()
-    local rclrcol = api_rop_alloc_clear_color(rroot, vclrcol)
-    local rclrdep = api_rop_alloc_clear_depth(rclrcol, vclrdep, 0)
-    local rclr = api_rop_alloc_clear(rclrdep, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-    local rtscale = api_rop_alloc_tscale(rclr, vtscale, 0)
-    local rproj3d = api_rop_alloc_proj(rtscale, mproj3d)
+    local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
+    local rclrcol = api_rop_alloc_clear_color(rclrdep, vclrcol)
+    local rtscale = api_rop_alloc_tscale(rclrcol, vtscale, 0)
+
+    local rclrfar = api_rop_alloc_clear(rtscale, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
+    local rproj3d = api_rop_alloc_proj(rclrfar, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
-    local rmesh = api_rop_alloc_draw_meshes(rmview3d, meshes.GROUP_NEAR)
-    local rproj2d = api_rop_alloc_proj(rmesh, mproj2d)
+    local rmeshfar = api_rop_alloc_draw_meshes(rmview3d, meshes.GROUP_FAR)
+
+    local rclrnear = api_rop_alloc_clear(rmeshfar, API_ROP_CLEAR_DEPTH)
+    local rmeshnear = api_rop_alloc_draw_meshes(rclrnear, meshes.GROUP_NEAR)
+
+    local rproj2d = api_rop_alloc_proj(rmeshnear, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
 
@@ -145,14 +152,20 @@ local function eagle_alloc()
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
         api_vector_free(vtscale)
+
         api_rop_free(rroot)
-        api_rop_free(rclrcol)
         api_rop_free(rclrdep)
-        api_rop_free(rclr)
+        api_rop_free(rclrcol)
         api_rop_free(rtscale)
+
+        api_rop_free(rclrfar)
         api_rop_free(rproj3d)
         api_rop_free(rmview3d)
-        api_rop_free(rmesh)
+        api_rop_free(rmeshfar)
+
+        api_rop_free(rclrnear)
+        api_rop_free(rmeshnear)
+
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
         api_rop_free(rtext)
