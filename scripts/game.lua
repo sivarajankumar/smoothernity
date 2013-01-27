@@ -50,10 +50,11 @@ function M.control(mach)
     if pressed == 0 then
         if api_input_key(API_INPUT_KEY_F10) == 1 then
             pressed = 1
+            local y = wld.height(START_Z, START_X) + 10
             cbs.free()
-            cbs = cubes.alloc(START_X, START_Y + cfg.LAND_HEIGHT, START_Z - 5)
+            cbs = cubes.alloc(START_X, y, START_Z - 5)
             car.free()
-            car = vehicle.alloc(START_X, START_Y + cfg.LAND_HEIGHT, START_Z + 5)
+            car = vehicle.alloc(START_X, y, START_Z + 5)
             camc.attach(car.mchassis)
             wld.attach(car.mchassis)
         end

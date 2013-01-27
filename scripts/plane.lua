@@ -1,6 +1,6 @@
 local M = {}
 
-function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, centy, centz)
+function M.alloc(noise, move, group, lod, landalloc, vis_range, size, res, centx, centy, centz)
     local self = {}
 
     local lands = {}
@@ -30,7 +30,7 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
         if lands[z][x] == nil then
             local wx, wy, wz = grid_to_world(x, 0, z)
             lands[z][x] = landalloc(mach, noise, move, group,
-                                    size, res, wx, wy, wz)
+                                    lod, size, res, wx, wy, wz)
         end
     end
 
