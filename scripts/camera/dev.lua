@@ -17,10 +17,10 @@ function M.alloc(x, y, z)
     end
 
     function self.update()
-        local ofs = 0.25
+        local ofs = 2
         local ang = 0.02
         if api_input_key(API_INPUT_KEY_LSHIFT) == 1 then
-            ofs = 2.5
+            ofs = 20
             ang = 0.02
         end
     
