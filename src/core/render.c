@@ -152,7 +152,6 @@ int render_draw(void)
         if (rop_draw(g_render.rop, g_render.frame_tag) != 0)
             return 1;
     }
-    SDL_GL_SwapBuffers();
     g_render.last_draw_time = timer_passed(g_render.timer);
     return 0;
 }
