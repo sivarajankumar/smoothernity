@@ -8,8 +8,7 @@ local cfg = require 'config'
 local meshes = require 'meshes'
 
 local SCENE = 50
-local SIZE = cfg.VIS_RANGE
-local RES = 30
+local RES_NEAR = 30
 
 local function move_alloc()
     local self = {}
@@ -27,7 +26,7 @@ function M.alloc(centx, centy, centz)
 
     local planes =
         {plane.alloc(nse, move, meshes.GROUP_NEAR, land.phys_alloc,
-                     cfg.VIS_RANGE, SIZE, RES, centx, centy, centz)}
+                     cfg.RANGE_NEAR, cfg.RANGE_NEAR, RES_NEAR, centx, centy, centz)}
 
     function self.free()
         if text ~= nil then
