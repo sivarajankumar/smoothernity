@@ -4,8 +4,8 @@ local pwld = require 'physwld'
 local cfg = require 'config'
 
 function M.camera_dims()
-    local maxdim = math.max(cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT)
-    return cfg.SCREEN_WIDTH / maxdim, cfg.SCREEN_HEIGHT / maxdim
+    local mindim = math.min(cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT)
+    return cfg.SCREEN_WIDTH / mindim, cfg.SCREEN_HEIGHT / mindim
 end
 
 function M.vector_const(x, y, z, w)
