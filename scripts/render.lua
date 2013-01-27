@@ -61,13 +61,7 @@ local function visual_alloc()
     local lods = {}
     for lodi = 0, lod.count - 1 do
         local ld = {}
-        local znear
-        if lodi == lod.count - 1 then
-            znear = cfg.CAMERA_DIST
-        else
-            znear = lod.lods[lodi + 1].clip_range
-        end
-        ld.mproj3d = make_frustum(znear, lod.lods[lodi].clip_range, cfg.CAMERA_DIST)
+        ld.mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
         if lodi == 0 then
             ld.rclr = api_rop_alloc_clear(rtscale, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
         else
