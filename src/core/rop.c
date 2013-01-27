@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <GL/gl.h>
+#include <SDL.h>
 
 #define ROP_ARGVS 1
 #define ROP_ARGMS 1
@@ -24,7 +25,8 @@ enum rop_e
     ROP_MVIEW,
     ROP_DRAW_MESHES,
     ROP_DBG_PHYSICS,
-    ROP_DBG_TEXT
+    ROP_DBG_TEXT,
+    ROP_SWAP
 };
 
 struct rop_t
@@ -527,6 +529,43 @@ static int api_rop_alloc_dbg_text(lua_State *lua)
     return 1;
 }
 
+static int api_rop_alloc_swap(lua_State *lua)
+{
+    struct rop_t *rop, *prev;
+    int ropi;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_rop_alloc_swap: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    prev = rop_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
+    ropi = rop_alloc();
+    rop = rop_get(ropi);
+    if (rop == 0)
+    {
+        lua_pushstring(lua, "api_rop_alloc_swap: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_swap: invalid rop");
+        lua_error(lua);
+        return 0;
+    }
+
+    rop->type = ROP_SWAP;
+    prev->chain_next = rop;
+
+    lua_pushinteger(lua, ropi);
+    return 1;
+}
+
 int rop_init(lua_State *lua, int count)
 {
     int i;
@@ -559,6 +598,7 @@ int rop_init(lua_State *lua, int count)
     lua_register(lua, "api_rop_alloc_draw_meshes", api_rop_alloc_draw_meshes);
     lua_register(lua, "api_rop_alloc_dbg_physics", api_rop_alloc_dbg_physics);
     lua_register(lua, "api_rop_alloc_dbg_text", api_rop_alloc_dbg_text);
+    lua_register(lua, "api_rop_alloc_swap", api_rop_alloc_swap);
 
     #define LUA_PUBLISH(x, y) \
         lua_pushinteger(lua, x); \
@@ -773,6 +813,8 @@ int rop_draw(struct rop_t *root, int frame_tag)
         }
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
+        else if (rop->type == ROP_SWAP)
+            SDL_GL_SwapBuffers();
     }
     return 0;
 }
