@@ -6,27 +6,20 @@ local meshes = require 'meshes'
 
 local HEIGHT = 10
 
-function M.alloc(mach, noise, move, size, res, basx, basy, basz)
+local function common_alloc(mach, noise, move, size, res, basx, basy, basz)
     local self = {}
 
+    self.mmesh = api_matrix_alloc()
+    self.hmap = {}
     local vb = api_vbuf_alloc()
     local ib = api_ibuf_alloc()
     local scale = size / (res - 1)
-    local buf = api_buf_alloc()
-    local mvis = util.matrix_scl_stop(scale, 1, scale)
-    local mmul = api_matrix_alloc()
-    local mrb = api_matrix_alloc()
-    local cs, rb, hmap, mesh
+    local mesh
 
     function self.free()
         api_vbuf_free(vb)
         api_ibuf_free(ib)
-        api_matrix_free(mvis)
-        api_matrix_free(mrb)
-        api_matrix_free(mmul)
-        api_physics_rb_free(rb)
-        api_physics_cs_free(cs)
-        api_buf_free(buf)
+        api_matrix_free(self.mmesh)
         if mesh ~= nil then
             api_mesh_free(mesh)
         end
@@ -41,8 +34,8 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
 
     function self.show()
         if mesh == nil then
-            mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mmul, 0,
-                                  6 * (res - 1) * (res - 1))
+            mesh = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1,
+                                  self.mmesh, 0, 6 * (res - 1) * (res - 1))
         end
     end
 
@@ -83,11 +76,10 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
 
     -- height map
     do
-        hmap = {}
         for z = 0, res - 1 do
-            hmap[z] = {}
+            self.hmap[z] = {}
             for x = 0, res - 1 do
-                hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
+                self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
                 api_machine_yield(mach)
             end
         end
@@ -100,7 +92,7 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
                 local r, g, b, a = color(z, x)
                 api_vbuf_set(vb, x + z * res,
                              x - 0.5 * (res - 1),
-                             hmap[z][x],
+                             self.hmap[z][x],
                              z - 0.5 * (res - 1),
                              r, g, b, a,
                              0, 0)
@@ -126,13 +118,43 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
         api_ibuf_bake(ib)
     end
 
+    return self
+end
+
+function M.phys_alloc(mach, noise, move, size, res, basx, basy, basz)
+    local self = {}
+
+    local common = common_alloc(mach, noise, move, size, res, basx, basy, basz)
+    local scale = size / (res - 1)
+    local buf = api_buf_alloc()
+    local mvis = util.matrix_scl_stop(scale, 1, scale)
+    local mrb = api_matrix_alloc()
+    local cs, rb
+
+    function self.free()
+        api_matrix_free(mvis)
+        api_matrix_free(mrb)
+        api_physics_rb_free(rb)
+        api_physics_cs_free(cs)
+        api_buf_free(buf)
+        common.free()
+    end
+
+    function self.hide()
+        common.hide()
+    end
+
+    function self.show()
+        common.show()
+    end
+
     -- physics
     do
         local vsize = api_vector_alloc()
         api_vector_const(vsize, scale, 1, scale, 0)
         for z = 0, res - 1 do
             for x = 0, res - 1 do
-                api_buf_set(buf, x + z * res, hmap[z][x])
+                api_buf_set(buf, x + z * res, common.hmap[z][x])
                 api_machine_yield(mach)
             end
         end
@@ -146,7 +168,7 @@ function M.alloc(mach, noise, move, size, res, basx, basy, basz)
     -- visual
     do
         api_matrix_rigid_body(mrb, rb)
-        api_matrix_mul(mmul, mrb, mvis)
+        api_matrix_mul(common.mmesh, mrb, mvis)
     end
 
     return self
