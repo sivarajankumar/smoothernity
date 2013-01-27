@@ -31,9 +31,12 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     end
 
     local function vis_range()
-        local clip = lod.lods[lodi].clip_far
-        local fov = util.camera_fov(cfg.CAMERA_DIST)
-        return clip / math.cos(0.5*fov)
+        local sx, sy = util.camera_dims()
+        local cd = lod.lods[lodi].clip_far
+        local cx = sx * cd / cfg.CAMERA_DIST
+        local cy = sy * cd / cfg.CAMERA_DIST
+        local c = math.sqrt(cx*cx + cy*cy)
+        return math.sqrt(c*c + cd*cd)
     end
 
     local function add_land(mach, z, x)
