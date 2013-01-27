@@ -2,8 +2,7 @@ local M = {}
 
 local util = require 'util'
 local pwld = require 'physwld'
-
-local HEIGHT = 10
+local cfg = require 'config'
 
 local function common_alloc(mach, noise, move, group, size, res, basx, basy, basz)
     local self = {}
@@ -82,7 +81,8 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
         for z = 0, res - 1 do
             self.hmap[z] = {}
             for x = 0, res - 1 do
-                self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5*HEIGHT, 0.5*HEIGHT)
+                self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1,
+                                            -0.5*cfg.LAND_HEIGHT, 0.5*cfg.LAND_HEIGHT)
                 api_machine_yield(mach)
             end
         end
@@ -167,7 +167,8 @@ function M.phys_alloc(mach, noise, move, group, size, res, basx, basy, basz)
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*size,
                                           basy + move.y,
                                           basz + move.z + 0.5*size)
-        cs = api_physics_cs_alloc_hmap(buf, 0, res, res, -0.5 * HEIGHT, 0.5 * HEIGHT, vsize)
+        cs = api_physics_cs_alloc_hmap(buf, 0, res, res,
+                                       -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = api_physics_rb_alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
         api_matrix_free(mpos)

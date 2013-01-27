@@ -8,8 +8,8 @@ local cfg = require 'config'
 local meshes = require 'meshes'
 
 local SCENE = 50
-local RES_NEAR = 30
-local RES_FAR = 30
+local RES_NEAR = 20
+local RES_FAR = 10
 
 local function move_alloc()
     local self = {}
