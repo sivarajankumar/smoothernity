@@ -16,7 +16,7 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
     end
 
     local function world_to_grid(x, y, z)
-        return math.floor((x / size) + 0.5), y, math.floor((z / size) + 0.5)
+        return math.floor(x / size), y, math.floor(z / size)
     end
 
     local function grid_to_world(x, y, z)
@@ -111,6 +111,8 @@ function M.alloc(noise, move, group, landalloc, vis_range, size, res, centx, cen
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
                 local lx, ly, lz = grid_to_world(x, 0, z)
+                lx = lx + 0.5 * size
+                lz = lz + 0.5 * size
                 if math.max(math.abs(wx-lx), math.abs(wz-lz)) <= vis_range then
                     lnd.show()
                 else

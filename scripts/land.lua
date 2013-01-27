@@ -38,32 +38,36 @@ local function common_alloc(mach, noise, move, group, size, res, basx, basy, bas
     end
 
     local function to_world(z, x)
-        local scale = size / (res - 1)
-        return basz - 0.5 * size + z * scale, basx - 0.5 * size + x * scale
+        return basz + (z * size / (res-1)),
+               basx + (x * size / (res-1))
     end
 
-    local function color_noise(z, x)
+    local function color_noise(z, x, ofsz, ofsx)
         local wz, wx = to_world(z, x)
+        wz = wz + ofsz
+        wx = wx + ofsx
         local n = 0
-        n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
-        n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
-        n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
+        --n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+        --n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
+        --n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
+        n = noise.get(wz * 0.005, wx * 0.005)
         return n
     end
 
     local function height_noise(z, x)
         local wz, wx = to_world(z, x)
         local n = 0
-        n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
-        n = n + 0.2*noise.get(wz * 0.02, wx * 0.02)
-        n = n + 0.1*noise.get(wz * 0.08, wx * 0.08)
+        --n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
+        --n = n + 0.2*noise.get(wz * 0.02, wx * 0.02)
+        --n = n + 0.1*noise.get(wz * 0.08, wx * 0.08)
+        n = noise.get(wz * 0.005, wx * 0.005)
         return n
     end
 
     local function color(z, x)
-        local r = color_noise(z, x)
-        local g = color_noise(z + 300, x + 400)
-        local b = color_noise(z + 1000, x - 500)
+        local r = color_noise(z, x, 0, 0)
+        local g = color_noise(z, x, 300, 400)
+        local b = color_noise(z, x, 1000, -500)
         local len = math.sqrt(r*r + g*g + b*b)
         if len > 0.1 then
             r = r / len
@@ -162,7 +166,9 @@ function M.phys_alloc(mach, noise, move, group, size, res, basx, basy, basz)
                 api_machine_yield(mach)
             end
         end
-        local mpos = util.matrix_pos_stop(basx + move.x, basy + move.y, basz + move.z)
+        local mpos = util.matrix_pos_stop(basx + move.x + 0.5*size,
+                                          basy + move.y,
+                                          basz + move.z + 0.5*size)
         cs = api_physics_cs_alloc_hmap(buf, 0, res, res, -0.5 * HEIGHT, 0.5 * HEIGHT, vsize)
         rb = api_physics_rb_alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
@@ -196,7 +202,9 @@ function M.vis_alloc(mach, noise, move, group, size, res, basx, basy, basz)
 
     function self.move()
         local scale = size / (res - 1)
-        local m = util.matrix_pos_scl_stop(basx + move.x, basy + move.y, basz + move.z,
+        local m = util.matrix_pos_scl_stop(basx + move.x + 0.5*size,
+                                           basy + move.y,
+                                           basz + move.z + 0.5*size,
                                            scale, 1, scale)
         api_matrix_copy(common.mmesh, m)
         api_matrix_free(m)
