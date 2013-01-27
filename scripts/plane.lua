@@ -4,13 +4,15 @@ local lod = require 'lod'
 local cfg = require 'config'
 local util = require 'util'
 
+local BUFFER = 20
+local REST = 50
+
 function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
 
     local lands = {}
     local size = lod.lods[lodi].size
-    local bound_front, bound_back = 0, 1
-    local bound_left, bound_right = 0, 1
+    local genx, genz = 0, 0
 
     function self.free()
         for z, xs in pairs(lands) do
@@ -28,6 +30,12 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         return centx + x * size, centy, centz + z * size
     end
 
+    local function vis_range()
+        local clip = lod.lods[lodi].clip_far
+        local fov = util.camera_fov(cfg.CAMERA_DIST)
+        return clip / math.cos(0.5*fov)
+    end
+
     local function add_land(mach, z, x)
         if lands[z] == nil then
             lands[z] = {}
@@ -40,63 +48,48 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
 
     function self.generate(mach, wx, wy, wz)
 
-        local gx, gy, gz = world_to_grid(wx, wy, wz)
-
         -- align
-        do
-            while gx < bound_left do
-                bound_left = bound_left - 1
-                bound_right = bound_right - 1
-            end
-            while gx > bound_right do
-                bound_left = bound_left + 1
-                bound_right = bound_right + 1
-            end
-            while gz < bound_front do
-                bound_back = bound_back - 1
-                bound_front = bound_front - 1
-            end
-            while gz > bound_back do
-                bound_back = bound_back + 1
-                bound_front = bound_front + 1
-            end
+        while genx < wx - BUFFER do
+            genx = genx + BUFFER
         end
+        while genx > wx + BUFFER do
+            genx = genx - BUFFER
+        end
+        while genz < wz - BUFFER do
+            genz = genz + BUFFER
+        end
+        while genz > wz + BUFFER do
+            genz = genz - BUFFER
+        end
+
+        local r = vis_range() + BUFFER + REST
+        local xmin, ymin, zmin = world_to_grid(genx - r, 0, genz - r)
+        local xmax, ymax, zmax = world_to_grid(genx + r, 0, genz + r)
 
         -- clear
         do
             for z, xs in pairs(lands) do
-                if (z < bound_front - 1) or (z > bound_back + 1) then
-                    for x, lnd in pairs(xs) do
+                local empty = true
+                for x, lnd in pairs(xs) do
+                    if x < xmin or x > xmax or z < zmin or z > zmax then
                         lnd.free()
+                        xs[x] = nil
+                    else
+                        empty = false
                     end
+                end
+                if empty == true then
                     lands[z] = nil
-                else
-                    local empty = true
-                    for x, lnd in pairs(xs) do
-                        if (x < bound_left - 1) or (x > bound_right + 1) then
-                            lnd.free()
-                            xs[x] = nil
-                        else
-                            empty = false
-                        end
-                    end
-                    if empty == true then
-                        lands[z] = nil
-                    end
                 end
             end
         end
 
         -- generate
         do
+            local gx, gy, gz = world_to_grid(genx, 0, genz)
             add_land(mach, gz, gx)
-            for z = bound_front, bound_back do
-                for x = bound_left, bound_right do
-                    add_land(mach, z, x)
-                end
-            end
-            for z = bound_front - 1, bound_back + 1 do
-                for x = bound_left - 1, bound_right + 1 do
+            for z = zmin, zmax do
+                for x = xmin, xmax do
                     add_land(mach, z, x)
                 end
             end
@@ -112,17 +105,15 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     end
 
     function self.showhide(wx, wy, wz)
-        local clip = lod.lods[lodi].clip_far
-        local fov = util.camera_fov(cfg.CAMERA_DIST)
-        local r = clip / math.cos(0.5*fov)
-        local xmin, ymin, zmin = world_to_grid(wx - r, wy - r, wz - r)
-        local xmax, ymax, zmax = world_to_grid(wx + r, wy + r, wz + r)
+        local r = vis_range()
+        local xmin, ymin, zmin = world_to_grid(wx - r, 0, wz - r)
+        local xmax, ymax, zmax = world_to_grid(wx + r, 0, wz + r)
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
-                if z >= zmin and z <= zmax and x >= xmin and x <= xmax then
-                    lnd.show()
-                else
+                if z < zmin or z > zmax or x < xmin or x > xmax then
                     lnd.hide()
+                else
+                    lnd.show()
                 end
             end
         end
