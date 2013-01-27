@@ -44,7 +44,7 @@ local function color1(n, z, x)
 end
 
 local function color2(n, z, x)
-    return 0.8*color1(n, z, x) + 0.2*n.get(z * 0.100, x * 0.100)
+    return 0.9*color1(n, z, x) + 0.1*n.get(z * 0.100, x * 0.100)
 end
 
 --
