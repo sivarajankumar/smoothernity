@@ -62,14 +62,14 @@ local function common_alloc(mach, noise, move, group, lod, size, res, basx, basy
         wx = wx + ofsx
         local n = 0
         if lod <= 0 then
-            n = noise.get(wz * 0.005, wx * 0.005)
+            n = noise.get(wz * 0.002, wx * 0.002)
         elseif lod <= 1 then
-            n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
-            n = n + 0.3*noise.get(wz * 0.04, wx * 0.04)
+            n = n + 0.9*noise.get(wz * 0.002, wx * 0.002)
+            n = n + 0.1*noise.get(wz * 0.02, wx * 0.02)
         else
-            n = n + 0.7*noise.get(wz * 0.005, wx * 0.005)
-            n = n + 0.2*noise.get(wz * 0.04, wx * 0.04)
-            n = n + 0.1*noise.get(wz * 0.4, wx * 0.4)
+            n = n + 0.90*noise.get(wz * 0.002, wx * 0.002)
+            n = n + 0.07*noise.get(wz * 0.02, wx * 0.02)
+            n = n + 0.03*noise.get(wz * 0.2, wx * 0.2)
         end
         return n
     end
