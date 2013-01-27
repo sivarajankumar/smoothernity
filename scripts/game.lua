@@ -11,6 +11,7 @@ local camswitch = require 'camera.switcher'
 local world = require 'world'
 local render = require 'render'
 local pwld = require 'physwld'
+local pause = require 'pause'
 
 local blink, wld, cbs, car, camc, camd, camsw
 local pressed = 0
@@ -77,6 +78,7 @@ function M.control(mach)
     camsw.update()
     wld.move(car, camc)
     wld.showhide()
+    pause.control()
 end
 
 function M.work(mach)

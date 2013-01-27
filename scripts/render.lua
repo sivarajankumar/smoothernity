@@ -53,12 +53,12 @@ local function visual_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
     local vclrdep = util.vector_const(1, 0, 0 ,0)
-    local vtscale = util.vector_const(1, 0, 0, 0)
+    self.vtscale = util.vector_const(1, 0, 0, 0)
 
     local rroot = api_rop_alloc_root()
     local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
     local rclrcol = api_rop_alloc_clear_color(rclrdep, self.vclrcol)
-    local rtscale = api_rop_alloc_tscale(rclrcol, vtscale, 0)
+    local rtscale = api_rop_alloc_tscale(rclrcol, self.vtscale, 0)
 
     local lods = {}
     for lodi = 0, lod.count - 1 do
@@ -93,7 +93,7 @@ local function visual_alloc()
         api_matrix_free(self.mview3d)
         api_vector_free(self.vclrcol)
         api_vector_free(vclrdep)
-        api_vector_free(vtscale)
+        api_vector_free(self.vtscale)
 
         api_rop_free(rroot)
         api_rop_free(rclrdep)
@@ -121,12 +121,12 @@ local function eagle_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
     local vclrdep = util.vector_const(1, 0, 0 ,0)
-    local vtscale = util.vector_const(1, 0, 0, 0)
+    self.vtscale = util.vector_const(1, 0, 0, 0)
 
     local rroot = api_rop_alloc_root()
     local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
     local rclrcol = api_rop_alloc_clear_color(rclrdep, vclrcol)
-    local rtscale = api_rop_alloc_tscale(rclrcol, vtscale, 0)
+    local rtscale = api_rop_alloc_tscale(rclrcol, self.vtscale, 0)
     local rproj3d = api_rop_alloc_proj(rtscale, mproj3d)
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
 
@@ -154,7 +154,7 @@ local function eagle_alloc()
         api_matrix_free(self.mview3d)
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
-        api_vector_free(vtscale)
+        api_vector_free(self.vtscale)
 
         api_rop_free(rroot)
         api_rop_free(rclrdep)
@@ -248,6 +248,11 @@ function M.camera(m)
     api_matrix_inv(M.visual.mview3d, m)
     api_matrix_inv(M.debug.mview3d, m)
     api_matrix_inv(M.eagle.mview3d, m)
+end
+
+function M.timescale(t)
+    api_vector_const(M.visual.vtscale, t, 0, 0, 0)
+    api_vector_const(M.eagle.vtscale, t, 0, 0, 0)
 end
 
 function M.init()
