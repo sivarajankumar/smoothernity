@@ -13,7 +13,7 @@ function M.init()
         local sx, sy = util.camera_dims()
         local posx, posy = -sx + 0.1, -sy + 0.1
         local sizex, sizey = 0.5, 0.1
-        genbar = bar.alloc(posx, posy, posx + sizex, posy + sizey, 0)
+        genbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
     end
 end
 
