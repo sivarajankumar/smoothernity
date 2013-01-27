@@ -52,8 +52,8 @@ function M.alloc(centx, centy, centz)
         generating = true
         api_vector_update(vplayer)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
-        for k, v in pairs(planes) do
-            v.generate(mach, wx, wy, wz)
+        for lodi = lod.count - 1, 0, -1 do
+            planes[lodi].generate(mach, wx, wy, wz)
         end
         generating = false
     end

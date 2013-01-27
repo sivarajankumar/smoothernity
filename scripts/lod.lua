@@ -51,7 +51,7 @@ end
 -- lods
 --
 
-add_lod(10000, 20000, 20000, 20, height0, color0)
+add_lod( 5000, 10000, 10000, 20, height0, color0)
 add_lod( 1000,  2000,  2000, 20, height1, color1)
 add_lod(  100,   200,   200, 20, height2, color2)
 
