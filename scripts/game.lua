@@ -82,6 +82,7 @@ function M.control(mach)
     wld.move(car, camc)
     wld.showhide()
     pause.control()
+    gui.gen_progress(wld.gen_progress())
 end
 
 function M.work(mach)
