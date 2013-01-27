@@ -5,13 +5,10 @@ local land = require 'land'
 local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
-local meshes = require 'meshes'
 local util = require 'util'
+local lod = require 'lod'
 
 local SCENE = 50
-local RES_NEAR = 20
-local RES_MID = 20
-local RES_FAR = 20
 
 local function move_alloc()
     local self = {}
@@ -22,19 +19,12 @@ end
 function M.alloc(centx, centy, centz)
     local self = {}
 
+    local planes = {}
     local nse = noise.alloc()
     local move = move_alloc()
     local vplayer = api_vector_alloc()
     local generating = false
     local text
-
-    local planes =
-        {plane.alloc(nse, move, meshes.GROUP_NEAR, 2, land.phys_alloc,
-                     cfg.RANGE_NEAR, cfg.RANGE_NEAR, RES_NEAR, centx, centy, centz),
-         plane.alloc(nse, move, meshes.GROUP_MID, 1, land.vis_alloc,
-                     cfg.RANGE_MID, cfg.RANGE_MID, RES_MID, centx, centy, centz),
-         plane.alloc(nse, move, meshes.GROUP_FAR, 0, land.vis_alloc,
-                     cfg.RANGE_FAR, cfg.RANGE_FAR, RES_FAR, centx, centy, centz)}
 
     function self.free()
         if text ~= nil then
@@ -69,7 +59,7 @@ function M.alloc(centx, centy, centz)
     end
 
     function self.height(z, x)
-        return util.lerp(land.world_height(nse, 10, z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
+        return util.lerp(lod.lods[lod.count - 1].heightfunc(nse, 10, z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
     end
 
     function self.move(car, camc)
@@ -135,6 +125,16 @@ function M.alloc(centx, centy, centz)
         for k, v in pairs(planes) do
             v.showhide(wx, wy, wz)
         end
+    end
+
+    for lodi = 0, lod.count - 1 do
+        local landalloc
+        if lodi == lod.count - 1 then
+            landalloc = land.phys_alloc
+        else
+            landalloc = land.vis_alloc
+        end
+        planes[lodi] = plane.alloc(nse, move, lodi, landalloc, centx, centy, centz)
     end
 
     return self

@@ -1,9 +1,12 @@
 local M = {}
 
-function M.alloc(noise, move, group, lod, landalloc, vis_range, size, res, centx, centy, centz)
+local lod = require 'lod'
+
+function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
 
     local lands = {}
+    local size = lod.lods[lodi].size
     local bound_front, bound_back = 0, 1
     local bound_left, bound_right = 0, 1
 
@@ -29,8 +32,7 @@ function M.alloc(noise, move, group, lod, landalloc, vis_range, size, res, centx
         end
         if lands[z][x] == nil then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = landalloc(mach, noise, move, group,
-                                    lod, size, res, wx, wy, wz)
+            lands[z][x] = landalloc(mach, noise, move, lodi, wx, wy, wz)
         end
     end
 
@@ -108,6 +110,7 @@ function M.alloc(noise, move, group, lod, landalloc, vis_range, size, res, centx
     end
 
     function self.showhide(wx, wy, wz)
+        local vis_range = lod.lods[lodi].vis_range
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
                 local lx, ly, lz = grid_to_world(x, 0, z)
