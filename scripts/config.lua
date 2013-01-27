@@ -2,6 +2,6 @@ local M = {}
 
 M.SCREEN_WIDTH = 1920
 M.SCREEN_HEIGHT = 1080
-M.VIS_RANGE = 200
+M.RANGE_NEAR = 200
 
 return M
