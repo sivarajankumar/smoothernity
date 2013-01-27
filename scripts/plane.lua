@@ -1,6 +1,8 @@
 local M = {}
 
 local lod = require 'lod'
+local cfg = require 'config'
+local util = require 'util'
 
 function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
@@ -110,13 +112,14 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
     end
 
     function self.showhide(wx, wy, wz)
-        local vis_range = lod.lods[lodi].vis_range
+        local clip = lod.lods[lodi].clip_far
+        local fov = util.camera_fov(cfg.CAMERA_DIST)
+        local r = clip / math.cos(0.5*fov)
+        local xmin, ymin, zmin = world_to_grid(wx - r, wy - r, wz - r)
+        local xmax, ymax, zmax = world_to_grid(wx + r, wy + r, wz + r)
         for z, xs in pairs(lands) do
             for x, lnd in pairs(xs) do
-                local lx, ly, lz = grid_to_world(x, 0, z)
-                lx = lx + 0.5 * size
-                lz = lz + 0.5 * size
-                if math.max(math.abs(wx-lx), math.abs(wz-lz)) <= vis_range then
+                if z >= zmin and z <= zmax and x >= xmin and x <= xmax then
                     lnd.show()
                 else
                     lnd.hide()
