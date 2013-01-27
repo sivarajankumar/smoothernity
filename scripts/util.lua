@@ -1,6 +1,18 @@
 local M = {}
 
 local pwld = require 'physwld'
+local cfg = require 'config'
+
+function M.camera_dims()
+    local maxdim = math.max(cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT)
+    return cfg.SCREEN_WIDTH / maxdim, cfg.SCREEN_HEIGHT / maxdim
+end
+
+function M.camera_fov(dist)
+    local sx, sy = M.camera_dims()
+    local r = math.sqrt(sx*sx + sy*sy)
+    return math.atan(r / dist)
+end
 
 function M.vector_const(x, y, z, w)
     local v = api_vector_alloc()

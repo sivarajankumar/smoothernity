@@ -6,17 +6,14 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local lod = require 'lod'
 
-local PROJ_FOV = 60 * math.pi / 360
-local VIS_NEAR_ZMIN = 1
-local DEBUG_ZNEAR = 1
 local DEBUG_ZFAR = 20000
 
-local function make_frustum(znear, zfar)
+local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
 
-    local ymax = znear * math.tan(PROJ_FOV)
+    local ymax = znear * math.tan(util.camera_fov(dist))
     local xmax = ymax * cfg.SCREEN_WIDTH / cfg.SCREEN_HEIGHT
 
     api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
@@ -66,11 +63,11 @@ local function visual_alloc()
         local ld = {}
         local znear
         if lodi == lod.count - 1 then
-            znear = VIS_NEAR_ZMIN
+            znear = cfg.CAMERA_DIST
         else
             znear = lod.lods[lodi + 1].clip_range
         end
-        ld.mproj3d = make_frustum(znear, lod.lods[lodi].clip_range)
+        ld.mproj3d = make_frustum(znear, lod.lods[lodi].clip_range, cfg.CAMERA_DIST)
         if lodi == 0 then
             ld.rclr = api_rop_alloc_clear(rtscale, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
         else
@@ -123,7 +120,7 @@ local function eagle_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum(DEBUG_ZNEAR, DEBUG_ZFAR)
+    local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
@@ -190,7 +187,7 @@ local function debug_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum(DEBUG_ZNEAR, DEBUG_ZFAR)
+    local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
