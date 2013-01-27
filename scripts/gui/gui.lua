@@ -3,13 +3,14 @@ local M = {}
 local bar = require 'gui.bar'
 local util = require 'util'
 
-local genbar, exbar
+local genbar, edgebar
 
 function M.gen_progress(value)
     genbar.set(value)
 end
 
-function M.existence(value)
+function M.edge_dist(value)
+    edgebar.set(value)
 end
 
 function M.init()
@@ -23,18 +24,18 @@ function M.init()
         genbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
     end
 
-    -- existence bar
+    -- edge distance bar
     do
         local sx, sy = util.camera_dims()
         local sizex, sizey = 0.5, 0.05
         local posx, posy = -sx + 0.1, -sy + 0.1 + sizey + 0.05
-        exbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+        edgebar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
     end
 end
 
 function M.done()
     genbar.free()
-    exbar.free()
+    edgebar.free()
     bar.done()
 end
 
