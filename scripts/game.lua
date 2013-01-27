@@ -19,16 +19,25 @@ local START_X = 0
 local START_Y = 0
 local START_Z = 0
 
+local function start_pos()
+    local wx, wy, wz = wld.scene_to_world(START_X, 0, START_Z)
+    wy = wld.height(wz, wx) + 10
+    return wld.world_to_scene(wx, wy, wz)
+end
+
 function M.init()
     pwld.init()
     render.init()
     util.set_gravity(0, -10, 0)
     blink = blinker.alloc()
     wld = world.alloc(START_X, START_Y, START_Z)
-    cbs = cubes.alloc(START_X, START_Y + cfg.LAND_HEIGHT, START_Z - 5)
-    car = vehicle.alloc(START_X, START_Y + cfg.LAND_HEIGHT, START_Z + 5)
-    camc = camcord.alloc(START_X, START_Y + cfg.LAND_HEIGHT, START_Z + 10)
-    camd = camdev.alloc(START_X, START_Y, START_Z)
+
+    local sx, sy, sz = start_pos()
+    cbs = cubes.alloc(sx, sy, sz - 5)
+    car = vehicle.alloc(sx, sy, sz + 5)
+    camc = camcord.alloc(sx, sy, sz + 10)
+    camd = camdev.alloc(sx, sy, sz)
+
     camsw = camswitch.alloc(camc, camd)
     camc.attach(car.mchassis)
     wld.attach(car.mchassis)
@@ -50,11 +59,11 @@ function M.control(mach)
     if pressed == 0 then
         if api_input_key(API_INPUT_KEY_F10) == 1 then
             pressed = 1
-            local y = wld.height(START_Z, START_X) + 10
+            local sx, sy, sz = start_pos()
             cbs.free()
-            cbs = cubes.alloc(START_X, y, START_Z - 5)
+            cbs = cubes.alloc(sx, sy, sz - 5)
             car.free()
-            car = vehicle.alloc(START_X, y, START_Z + 5)
+            car = vehicle.alloc(sx, sy, sz + 5)
             camc.attach(car.mchassis)
             wld.attach(car.mchassis)
         end
