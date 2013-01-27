@@ -9,7 +9,7 @@ local meshes = require 'meshes'
 
 local SCENE = 50
 local RES_NEAR = 20
-local RES_FAR = 10
+local RES_FAR = 20
 
 local function move_alloc()
     local self = {}
