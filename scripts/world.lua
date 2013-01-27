@@ -9,7 +9,7 @@ local meshes = require 'meshes'
 
 local SCENE = 50
 local RES_NEAR = 30
-local RES_FAR = 20
+local RES_FAR = 30
 
 local function move_alloc()
     local self = {}
@@ -90,12 +90,12 @@ function M.alloc(centx, centy, centz)
             camc.move(dv)
             api_vector_free(dv)
 
+            move.x = move.x + dx
+            move.z = move.z + dz
+
             for k, v in pairs(planes) do
                 v.move()
             end
-
-            move.x = move.x + dx
-            move.z = move.z + dz
         end
     end
 
