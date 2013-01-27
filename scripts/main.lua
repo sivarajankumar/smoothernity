@@ -10,7 +10,7 @@ local game_started = false
 
 function configure()
     return {['mpool_sizes'] = function() return    100, 1000, 10000, 100000, 1000000, 5000000 end,
-            ['mpool_counts'] = function() return 10000, 1000,  1000,      1,       3,       3 end,
+            ['mpool_counts'] = function() return 10000, 2000,  1000,      1,       3,       3 end,
             ['frame_time'] = 1 / 60,
             ['logic_time'] = 0.005,
             ['gc_step'] = 10,

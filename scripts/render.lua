@@ -6,6 +6,11 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 
 local PROJ_FOV = 60 * math.pi / 360
+local VIS_Z_1 = 1
+local VIS_Z_2 = 0.5 * cfg.RANGE_NEAR
+local VIS_Z_3 = 0.5 * cfg.RANGE_FAR
+local DEBUG_ZNEAR = 1
+local DEBUG_ZFAR = 1024
 
 local function make_frustum(znear, zfar)
     local mproj = api_matrix_alloc()
@@ -46,8 +51,8 @@ local function visual_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3dnear = make_frustum(1, 0.5 * cfg.RANGE_NEAR)
-    local mproj3dfar = make_frustum(0.5 * cfg.RANGE_NEAR, 0.5 * cfg.RANGE_FAR)
+    local mproj3dnear = make_frustum(VIS_Z_1, VIS_Z_2)
+    local mproj3dfar = make_frustum(VIS_Z_2, VIS_Z_3)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
@@ -114,7 +119,7 @@ local function eagle_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum(1, 1024)
+    local mproj3d = make_frustum(DEBUG_ZNEAR, DEBUG_ZFAR)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
@@ -164,7 +169,7 @@ local function debug_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3d = make_frustum(1, 1024)
+    local mproj3d = make_frustum(DEBUG_ZNEAR, DEBUG_ZFAR)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
