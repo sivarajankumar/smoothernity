@@ -2,6 +2,8 @@ local ddraw = require 'ddraw'
 local perf = require 'perf'
 local game = require 'game'
 local cfg = require 'config'
+local render = require 'render'
+local pwld = require 'physwld'
 
 local quit = false
 local machwork = nil
@@ -47,6 +49,8 @@ function control(mach)
     do
         if api_input_key(API_INPUT_KEY_ESCAPE) == 1 then
             quit = true
+            render.empty.engage()
+            api_physics_wld_tscale(pwld.wld, 0)
         end
         game.control(mach)
         ddraw.update()

@@ -76,6 +76,7 @@ local function visual_alloc()
     local rproj2d = api_rop_alloc_proj(lods[lod.count - 1].rmesh, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
+    local rswap = api_rop_alloc_swap(rtext)
 
     function self.free()
         for k, v in pairs(lods) do
@@ -101,6 +102,7 @@ local function visual_alloc()
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
         api_rop_free(rtext)
+        api_rop_free(rswap)
     end
 
     function self.engage()
@@ -143,6 +145,7 @@ local function eagle_alloc()
     local rproj2d = api_rop_alloc_proj(lods[lod.count - 1].rmesh, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
+    local rswap = api_rop_alloc_swap(rtext)
 
     function self.free()
         api_matrix_free(mproj2d)
@@ -168,6 +171,7 @@ local function eagle_alloc()
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
         api_rop_free(rtext)
+        api_rop_free(rswap)
     end
 
     function self.engage()
@@ -196,6 +200,7 @@ local function debug_alloc()
     local rproj2d = api_rop_alloc_proj(rphys, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rtext = api_rop_alloc_dbg_text(rmview2d)
+    local rswap = api_rop_alloc_swap(rtext)
 
     function self.free()
         api_matrix_free(mproj2d)
@@ -214,6 +219,22 @@ local function debug_alloc()
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
         api_rop_free(rtext)
+        api_rop_free(rswap)
+    end
+
+    function self.engage()
+        api_render_engage(rroot)
+    end
+
+    return self
+end
+
+local function empty_alloc()
+    local self = {}
+    local rroot = api_rop_alloc_root()
+
+    function self.free()
+        api_rop_free(rroot)
     end
 
     function self.engage()
@@ -233,12 +254,14 @@ function M.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
+    M.empty = empty_alloc()
 end
 
 function M.done()
     M.visual.free()
     M.debug.free()
     M.eagle.free()
+    M.empty.free()
 end
 
 return M
