@@ -6,12 +6,14 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 
 local PROJ_FOV = 60 * math.pi / 360
-local VIS_Z_1 = 1
-local VIS_Z_2 = 0.5 * cfg.RANGE_NEAR
-local VIS_Z_3 = 0.2 * cfg.RANGE_NEAR
-local VIS_Z_4 = 0.5 * cfg.RANGE_FAR
+local VIS_NEAR_ZMIN = 1
+local VIS_NEAR_ZMAX = 0.5 * cfg.RANGE_NEAR
+local VIS_MID_ZMIN = 0.2 * cfg.RANGE_NEAR
+local VIS_MID_ZMAX = 0.5 * cfg.RANGE_MID
+local VIS_FAR_ZMIN = 0.2 * cfg.RANGE_MID
+local VIS_FAR_ZMAX = 0.5 * cfg.RANGE_FAR
 local DEBUG_ZNEAR = 1
-local DEBUG_ZFAR = 1024
+local DEBUG_ZFAR = cfg.RANGE_FAR
 
 local function make_frustum(znear, zfar)
     local mproj = api_matrix_alloc()
@@ -52,8 +54,9 @@ local function visual_alloc()
     local self = {}
 
     local mproj2d = make_ortho()
-    local mproj3dnear = make_frustum(VIS_Z_1, VIS_Z_2)
-    local mproj3dfar = make_frustum(VIS_Z_3, VIS_Z_4)
+    local mproj3dnear = make_frustum(VIS_NEAR_ZMIN, VIS_NEAR_ZMAX)
+    local mproj3dmid = make_frustum(VIS_MID_ZMIN, VIS_MID_ZMAX)
+    local mproj3dfar = make_frustum(VIS_FAR_ZMIN, VIS_FAR_ZMAX)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
@@ -70,7 +73,12 @@ local function visual_alloc()
     local rmview3dfar = api_rop_alloc_mview(rproj3dfar, self.mview3d)
     local rmeshfar = api_rop_alloc_draw_meshes(rmview3dfar, meshes.GROUP_FAR)
 
-    local rclrnear = api_rop_alloc_clear(rmeshfar, API_ROP_CLEAR_DEPTH)
+    local rclrmid = api_rop_alloc_clear(rmeshfar, API_ROP_CLEAR_DEPTH)
+    local rproj3dmid = api_rop_alloc_proj(rclrmid, mproj3dmid)
+    local rmview3dmid = api_rop_alloc_mview(rproj3dmid, self.mview3d)
+    local rmeshmid = api_rop_alloc_draw_meshes(rmview3dmid, meshes.GROUP_MID)
+
+    local rclrnear = api_rop_alloc_clear(rmeshmid, API_ROP_CLEAR_DEPTH)
     local rproj3dnear = api_rop_alloc_proj(rclrnear, mproj3dnear)
     local rmview3dnear = api_rop_alloc_mview(rproj3dnear, self.mview3d)
     local rmeshnear = api_rop_alloc_draw_meshes(rmview3dnear, meshes.GROUP_NEAR)
@@ -82,6 +90,7 @@ local function visual_alloc()
     function self.free()
         api_matrix_free(mproj2d)
         api_matrix_free(mproj3dnear)
+        api_matrix_free(mproj3dmid)
         api_matrix_free(mproj3dfar)
         api_matrix_free(mview2d)
         api_matrix_free(self.mview3d)
@@ -98,6 +107,11 @@ local function visual_alloc()
         api_rop_free(rproj3dfar)
         api_rop_free(rmview3dfar)
         api_rop_free(rmeshfar)
+
+        api_rop_free(rclrmid)
+        api_rop_free(rproj3dmid)
+        api_rop_free(rmview3dmid)
+        api_rop_free(rmeshmid)
 
         api_rop_free(rclrnear)
         api_rop_free(rproj3dnear)
@@ -137,7 +151,10 @@ local function eagle_alloc()
     local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
     local rmeshfar = api_rop_alloc_draw_meshes(rmview3d, meshes.GROUP_FAR)
 
-    local rclrnear = api_rop_alloc_clear(rmeshfar, API_ROP_CLEAR_DEPTH)
+    local rclrmid = api_rop_alloc_clear(rmeshfar, API_ROP_CLEAR_DEPTH)
+    local rmeshmid = api_rop_alloc_draw_meshes(rclrmid, meshes.GROUP_MID)
+
+    local rclrnear = api_rop_alloc_clear(rmeshmid, API_ROP_CLEAR_DEPTH)
     local rmeshnear = api_rop_alloc_draw_meshes(rclrnear, meshes.GROUP_NEAR)
 
     local rproj2d = api_rop_alloc_proj(rmeshnear, mproj2d)
@@ -162,6 +179,9 @@ local function eagle_alloc()
         api_rop_free(rproj3d)
         api_rop_free(rmview3d)
         api_rop_free(rmeshfar)
+
+        api_rop_free(rclrmid)
+        api_rop_free(rmeshmid)
 
         api_rop_free(rclrnear)
         api_rop_free(rmeshnear)
