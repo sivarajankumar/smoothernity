@@ -178,6 +178,12 @@ function M.alloc(x, y, z)
             camc.move(dv)
             api_vector_free(dv)
 
+            for z, xs in pairs(lands) do
+                for x, lnd in pairs(xs) do
+                    lnd.move()
+                end
+            end
+
             move.x = move.x + dx
             move.z = move.z + dz
         end
