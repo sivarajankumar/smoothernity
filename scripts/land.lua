@@ -7,12 +7,14 @@ local cfg = require 'config'
 function M.world_height(noise, lod, z, x)
     local n = 0
     if lod <= 0 then
-        n = noise.get(z * 0.001, x * 0.001)
+        n = n + 0.975*noise.get(z * 0.001, x * 0.001)
     elseif lod <= 1 then
-        n = n + 0.995*noise.get(z * 0.001, x * 0.001)
-        n = n + 0.005*noise.get(z * 0.01, x * 0.01)
+        n = n + 0.015
+        n = n + 0.975*noise.get(z * 0.001, x * 0.001)
+        n = n + 0.004*noise.get(z * 0.01, x * 0.01)
     else
-        n = n + 0.995*noise.get(z * 0.001, x * 0.001)
+        n = n + 0.020
+        n = n + 0.975*noise.get(z * 0.001, x * 0.001)
         n = n + 0.004*noise.get(z * 0.01, x * 0.01)
         n = n + 0.001*noise.get(z * 0.05, x * 0.05)
     end
