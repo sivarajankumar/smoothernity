@@ -87,6 +87,7 @@ function M.control(mach)
     local edist = wld.edge_dist()
     gui.edge_dist(edist)
     car.restrain(edist)
+    gui.control()
 end
 
 function M.work(mach)
