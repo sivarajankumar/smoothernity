@@ -4,7 +4,7 @@
 #include <GL/gl.h>
 
 #define VECTOR_ARGVS 5
-#define VECTOR_ARGMS 1
+#define VECTOR_ARGMS 2
 
 enum vector_ipl_e
 {
@@ -21,7 +21,8 @@ enum vector_e
     VECTOR_SEQ,
     VECTOR_MPOS,
     VECTOR_CORD,
-    VECTOR_PICK
+    VECTOR_PICK,
+    VECTOR_CAST
 };
 
 struct vector_t
@@ -34,6 +35,8 @@ struct vector_t
     struct vector_t *argv[VECTOR_ARGVS];
     struct matrix_t *argm[VECTOR_ARGMS];
 
+    int cast_wldi;
+    int cast_csi;
     float cord_min;
     float cord_max;
     float seq_t;
