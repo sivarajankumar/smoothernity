@@ -7,11 +7,11 @@ local cfg = require 'config'
 CORD_MIN = 20
 CORD_MAX = 20
 FROM_OFFSET_Y = 5
-FROM_RUBBER_Y = 0.05
-FROM_RUBBER_XZ = 0.1
+FROM_RUBBER_Y = 0.01
+FROM_RUBBER_XZ = 0.05
 TO_OFFSET_Y = 1
-TO_RUBBER_Y = 0.1
-TO_RUBBER_XZ = 0.1
+TO_RUBBER_Y = 0.05
+TO_RUBBER_XZ = 0.05
 
 function M.alloc(x, y, z)
     local self = {}
