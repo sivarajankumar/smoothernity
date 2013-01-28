@@ -1,6 +1,8 @@
 local M = {}
 
 local util = require 'util'
+local pwld = require 'physwld'
+local cfg = require 'config'
 
 CORD_MIN = 20
 CORD_MAX = 20
@@ -31,6 +33,7 @@ function M.alloc(x, y, z)
     local vcam_ofs_weights = api_vector_alloc()
     local vzero = api_vector_alloc()
     local vup = api_vector_alloc()
+    local sphere
 
     function self.free()
         api_matrix_free(self.matrix)
@@ -50,6 +53,7 @@ function M.alloc(x, y, z)
         api_vector_free(vcam_ofs_weights)
         api_vector_free(vzero)
         api_vector_free(vup)
+        api_physics_cs_free(sphere)
     end
 
     local function reset_rubber()
@@ -74,6 +78,14 @@ function M.alloc(x, y, z)
         api_vector_cord(vcam_from_xz, vtgt_center_xz, CORD_MIN, CORD_MAX)
         api_vector_rubber(vcam_from_smooth, vcam_from, vcam_from_rubber)
         api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
+    end
+
+    -- collision sphere
+    do
+        local sx, sy = util.camera_dims()
+        local sr = math.sqrt(sx*sx + sy*sy)
+        local r = math.sqrt(sr*sr + cfg.CAMERA_DIST*cfg.CAMERA_DIST)
+        sphere = api_physics_cs_alloc_sphere(r)
     end
 
     api_vector_const(vzero, 0, 0, 0, 0)
