@@ -29,6 +29,7 @@ local ACCEL_POP = 100
 local BRAKE_MAX = 1000
 local BRAKE_PUSH = 100
 local BRAKE_POP = 100
+local BRAKE_RESTRAIN = 200
 local STEER_MAX = 0.6
 local STEER_PUSH = 0.05
 local STEER_POP = 0.05
@@ -56,6 +57,7 @@ function M.alloc(x, y, z)
     local accel, brake, steer = 0, 0, 0
     local recov_frames = 0
     local recov_pressed = 0
+    local freedom = 1
 
     function self.free()
         for i = 0, 3 do
@@ -82,6 +84,10 @@ function M.alloc(x, y, z)
         local x, y, z, w = api_vector_get(vofs)
         util.matrix_move_global(mrecov, x, y, z)
         util.matrix_move_global(mrecov_next, x, y, z)
+    end
+
+    function self.restrain(value)
+        freedom = value
     end
 
     function self.update()
@@ -140,10 +146,12 @@ function M.alloc(x, y, z)
                     brake = 0
                 end
             end
-            api_physics_veh_set_wheel(veh, wheel_fl, accel, 0, -steer)
-            api_physics_veh_set_wheel(veh, wheel_fr, accel, 0, -steer)
-            api_physics_veh_set_wheel(veh, wheel_bl, 0, brake, 0)
-            api_physics_veh_set_wheel(veh, wheel_br, 0, brake, 0)
+            local acc = util.lerp(freedom, 0, 1, 0, accel)
+            local brk = util.lerp(freedom, 0, 1, BRAKE_RESTRAIN, brake)
+            api_physics_veh_set_wheel(veh, wheel_fl, acc, 0, -steer)
+            api_physics_veh_set_wheel(veh, wheel_fr, acc, 0, -steer)
+            api_physics_veh_set_wheel(veh, wheel_bl, 0, brk, 0)
+            api_physics_veh_set_wheel(veh, wheel_br, 0, brk, 0)
         end
 
         -- recovery
