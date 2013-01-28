@@ -14,6 +14,13 @@ function M.vector_const(x, y, z, w)
     return v
 end
 
+function M.vector_dist(v1, v2)
+    local x1, y1, z1, w1 = api_vector_get(v1)
+    local x2, y2, z2, w2 = api_vector_get(v2)
+    local x, y, z = x1 - x2, y1 - y2, z1 - z2
+    return math.sqrt(x*x + y*y + z*z)
+end
+
 function M.vector_copy(v, src)
     local x, y, z, w = api_vector_get(src)
     api_vector_const(v, x, y, z, w)

@@ -50,30 +50,33 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         end
     end
 
-    local function gen_bounds()
+    local function gen_bounds(z, x)
         local r = vis_range() + BUFFER + REST
-        local xmin, ymin, zmin = world_to_grid(genx - r, 0, genz - r)
-        local xmax, ymax, zmax = world_to_grid(genx + r, 0, genz + r)
+        local xmin, ymin, zmin = world_to_grid(x - r, 0, z - r)
+        local xmax, ymax, zmax = world_to_grid(x + r, 0, z + r)
         return zmin, xmin, zmax, xmax
+    end
+
+    local function gen_align(z, x, wz, wx)
+        while x < wx - BUFFER do
+            x = x + 0.5 * BUFFER
+        end
+        while x > wx + BUFFER do
+            x = x - 0.5 * BUFFER
+        end
+        while z < wz - BUFFER do
+            z = z + 0.5 * BUFFER
+        end
+        while z > wz + BUFFER do
+            z = z - 0.5 * BUFFER
+        end
+        return z, x
     end
 
     function self.generate(mach, wx, wy, wz)
 
-        -- align
-        while genx < wx - BUFFER do
-            genx = genx + BUFFER
-        end
-        while genx > wx + BUFFER do
-            genx = genx - BUFFER
-        end
-        while genz < wz - BUFFER do
-            genz = genz + BUFFER
-        end
-        while genz > wz + BUFFER do
-            genz = genz - BUFFER
-        end
-
-        local zmin, xmin, zmax, xmax = gen_bounds()
+        genz, genx = gen_align(genz, genx, wz, wx)
+        local zmin, xmin, zmax, xmax = gen_bounds(genz, genx)
 
         -- clear
         do
@@ -105,8 +108,8 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         end
     end
 
-    function self.gen_progress()
-        local zmin, xmin, zmax, xmax = gen_bounds()
+    function self.gen_progress(wx, wy, wz)
+        local zmin, xmin, zmax, xmax = gen_bounds(gen_align(genz, genx, wz, wx))
         local count = 0
         for z = zmin, zmax do
             for x = xmin, xmax do

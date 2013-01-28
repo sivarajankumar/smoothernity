@@ -3,6 +3,8 @@ local M = {}
 local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
+local cfg = require 'config'
+local gui = require 'gui.gui'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -35,6 +37,9 @@ local STEER_PUSH = 0.05
 local STEER_POP = 0.05
 local RECOVERY_FRAMES = 10
 local RECOVERY_OFS_Y = 1
+local FREEDOM_RUBBER = 1
+local SPEED_MIN = 60 * 1000 / 3600
+local SPEED_MAX = 100 * 1000 / 3600
 
 function M.alloc(x, y, z)
     local self = {}
@@ -58,6 +63,9 @@ function M.alloc(x, y, z)
     local recov_frames = 0
     local recov_pressed = 0
     local freedom = 1
+    local freedom_speed = 1
+    local freedom_move = 1
+    local vpos = api_vector_alloc()
 
     function self.free()
         for i = 0, 3 do
@@ -72,6 +80,7 @@ function M.alloc(x, y, z)
         api_matrix_free(self.mchassis)
         api_matrix_free(mrecov_next)
         api_matrix_free(mrecov)
+        api_vector_free(vpos)
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_physics_veh_free(veh)
@@ -84,13 +93,32 @@ function M.alloc(x, y, z)
         local x, y, z, w = api_vector_get(vofs)
         util.matrix_move_global(mrecov, x, y, z)
         util.matrix_move_global(mrecov_next, x, y, z)
+        util.vector_move(vpos, vofs)
     end
 
     function self.restrain(value)
-        freedom = value
+        freedom_move = value
     end
 
     function self.update()
+        -- restrict speed
+        do
+            local vprev = api_vector_alloc()
+            util.vector_copy(vprev, vpos)
+            api_vector_mpos(vpos, self.mchassis)
+            api_vector_update(vpos)
+            local speed = util.vector_dist(vprev, vpos) / cfg.FRAME_TIME
+            freedom_speed = util.lerp(speed, SPEED_MIN, SPEED_MAX, 1, 0)
+            api_vector_free(vprev)
+        end
+
+        -- update freedom
+        do
+            local frdest = math.min(freedom_move, freedom_speed)
+            freedom = freedom + (frdest - freedom) * FREEDOM_RUBBER
+            gui.player_freedom(freedom)
+        end
+
         -- controls
         do
             if api_input_key(API_INPUT_KEY_I) == 1 
@@ -146,12 +174,16 @@ function M.alloc(x, y, z)
                     brake = 0
                 end
             end
-            local acc = util.lerp(freedom, 0, 1, 0, accel)
-            local brk = util.lerp(freedom, 0, 1, BRAKE_RESTRAIN, brake)
-            api_physics_veh_set_wheel(veh, wheel_fl, acc, 0, -steer)
-            api_physics_veh_set_wheel(veh, wheel_fr, acc, 0, -steer)
-            api_physics_veh_set_wheel(veh, wheel_bl, 0, brk, 0)
-            api_physics_veh_set_wheel(veh, wheel_br, 0, brk, 0)
+
+            -- engage
+            do
+                local acc = util.lerp(freedom, 0, 1, 0, accel)
+                local brk = util.lerp(freedom, 0, 1, BRAKE_RESTRAIN, 0)
+                api_physics_veh_set_wheel(veh, wheel_fl, acc, brk, -steer)
+                api_physics_veh_set_wheel(veh, wheel_fr, acc, brk, -steer)
+                api_physics_veh_set_wheel(veh, wheel_bl, 0, brake + brk, 0)
+                api_physics_veh_set_wheel(veh, wheel_br, 0, brake + brk, 0)
+            end
         end
 
         -- recovery
@@ -263,6 +295,8 @@ function M.alloc(x, y, z)
         api_matrix_copy(mrecov, mchassis_phys)
         api_matrix_update(mrecov)
         api_matrix_stop(mrecov)
+        api_vector_mpos(vpos, self.mchassis)
+        api_vector_update(vpos)
     end
 
     -- visual
