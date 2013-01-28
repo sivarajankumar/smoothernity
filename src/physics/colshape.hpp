@@ -9,6 +9,7 @@ struct vehicle_t;
 struct colshape_t
 {
     btBoxShape *shape_box;
+    btSphereShape *shape_sphere;
     btHeightfieldTerrainShape *shape_hmap;
     btCompoundShape *shape_comp;
     btConvexShape *shape_convex;
@@ -31,6 +32,7 @@ int colshape_alloc(int*);
 int colshape_free(colshape_t*);
 colshape_t * colshape_get(int);
 int colshape_make_box(colshape_t *col, float *size);
+int colshape_make_sphere(colshape_t *col, float r);
 int colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
                        float hmin, float hmax, float *scale);
 int colshape_make_comp(colshape_t *col);

@@ -27,6 +27,8 @@ int colshape_init(int count)
         size = sizeof(btHeightfieldTerrainShape);
     if (size < sizeof(btCompoundShape))
         size = sizeof(btCompoundShape);
+    if (size < sizeof(btSphereShape))
+        size = sizeof(btSphereShape);
 
     g_colshapes.pool = (colshape_t*)calloc(count, sizeof(colshape_t));
     if (g_colshapes.pool == 0)
@@ -160,6 +162,18 @@ int colshape_make_box(colshape_t *colshape, float *size)
     }
     colshape->shape = colshape->shape_box;
     colshape->shape_convex = colshape->shape_box;
+    return PHYSRES_OK;
+}
+
+int colshape_make_sphere(colshape_t *colshape, float r)
+{
+    try {
+        colshape->shape_sphere = new (colshape->data) btSphereShape(r);
+    } catch (...) {
+        return PHYSRES_INTERNAL;
+    }
+    colshape->shape = colshape->shape_sphere;
+    colshape->shape_convex = colshape->shape_sphere;
     return PHYSRES_OK;
 }
 
