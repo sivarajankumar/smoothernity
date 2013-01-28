@@ -130,9 +130,11 @@ function M.alloc(centx, centy, centz)
     end
 
     function self.gen_progress()
+        api_vector_update(vplayer)
+        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         local sum = 0
         for k, v in pairs(planes) do
-            sum = sum + v.gen_progress()
+            sum = sum + v.gen_progress(wx, wy, wz)
         end
         return sum / lod.count
     end
