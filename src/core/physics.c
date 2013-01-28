@@ -855,6 +855,18 @@ int physics_wld_ddraw(int wldi)
     return 0;
 }
 
+int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout)
+{
+    int res;
+    res = physcpp_wld_cast(wldi, csi, mfrom, mto, vout);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, "physics_wld_cast: %s\n", physics_error_text(res));
+        return 1;
+    }
+    return 0;
+}
+
 int physics_rb_fetch_tm(int rbi, float *matrix)
 {
     return physcpp_rb_fetch_tm(rbi, matrix);

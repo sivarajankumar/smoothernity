@@ -121,6 +121,20 @@ int physcpp_wld_move(int wldi, float *offset)
 }
 
 extern "C"
+int physcpp_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout)
+{
+    world_t *wld;
+    colshape_t *cs;
+    wld = world_get(wldi);
+    cs = colshape_get(csi);
+    if (wld == 0)
+        return PHYSRES_INVALID_WLD;
+    if (cs == 0)
+        return PHYSRES_INVALID_CS;
+    return world_cast(wld, cs, mfrom, mto, vout);
+}
+
+extern "C"
 int physcpp_cs_alloc_box(int *csi, float *size)
 {
     int res;
