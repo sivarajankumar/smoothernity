@@ -11,6 +11,7 @@ struct colshape_t
     btBoxShape *shape_box;
     btHeightfieldTerrainShape *shape_hmap;
     btCompoundShape *shape_comp;
+    btConvexShape *shape_convex;
     btCollisionShape *shape;
     void *data;
     colshape_t *comp;
