@@ -141,6 +141,7 @@ int colshape_free(colshape_t *cs)
         }
     }
     cs->shape = 0;
+    cs->shape_convex = 0;
     cs->shape_box = 0;
     cs->shape_hmap = 0;
     cs->shape_comp = 0;
@@ -158,6 +159,7 @@ int colshape_make_box(colshape_t *colshape, float *size)
         return PHYSRES_INTERNAL;
     }
     colshape->shape = colshape->shape_box;
+    colshape->shape_convex = colshape->shape_box;
     return PHYSRES_OK;
 }
 

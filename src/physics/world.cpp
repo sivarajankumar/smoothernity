@@ -1,4 +1,5 @@
 #include "world.hpp"
+#include "colshape.hpp"
 #include "physres.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -246,6 +247,32 @@ int world_move(world_t *wld, float *offset)
                 rb->getMotionState()->setWorldTransform(tm);
             }
         }
+    }
+    catch (...)
+    {
+        return PHYSRES_INTERNAL;
+    }
+    return PHYSRES_OK;
+}
+
+int world_cast(world_t *wld, colshape_t *cs, float *mfrom,
+               float *mto, float *vout)
+{
+    if (cs->shape_convex == 0)
+        return PHYSRES_INVALID_CS;
+    try
+    {
+        btTransform tmfrom, tmto;
+        tmfrom.setFromOpenGLMatrix(mfrom);
+        tmto.setFromOpenGLMatrix(mto);
+        btCollisionWorld::ClosestConvexResultCallback res(tmfrom.getOrigin(),
+                                                          tmto.getOrigin());
+        wld->world->convexSweepTest(cs->shape_convex, tmfrom, tmto, res);
+        btVector3 out(lerp(res.m_convexFromWorld, res.m_convexToWorld,
+                           res.m_closestHitFraction));
+        vout[0] = out.m_floats[0];
+        vout[1] = out.m_floats[1];
+        vout[2] = out.m_floats[2];
     }
     catch (...)
     {
