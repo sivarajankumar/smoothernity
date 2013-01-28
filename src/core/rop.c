@@ -1,6 +1,7 @@
 #include "rop.h"
 #include "vector.h"
 #include "matrix.h"
+#include "timer.h"
 #include "vbuf.h"
 #include "ibuf.h"
 #include "mesh.h"
@@ -51,6 +52,8 @@ struct rops_t
     int left_min;
     int allocs;
     int frees;
+    float frame_time;
+    struct timer_t *frame_timer;
     struct rop_t *pool;
     struct rop_t *vacant;
 };
@@ -121,6 +124,18 @@ static int api_rop_left(lua_State *lua)
         return 0;
     }
     lua_pushinteger(lua, g_rops.left);
+    return 1;
+}
+
+static int api_rop_frame_time(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_rop_frame_time: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushnumber(lua, g_rops.frame_time);
     return 1;
 }
 
@@ -571,9 +586,12 @@ int rop_init(lua_State *lua, int count)
     int i;
     struct rop_t *rop;
 
+    g_rops.frame_timer = timer_create();
+    if (g_rops.frame_timer == 0)
+        goto cleanup;
     g_rops.pool = calloc(count, sizeof(struct rop_t));
     if (g_rops.pool == 0)
-        return 1;
+        goto cleanup;
     g_rops.vacant = g_rops.pool;
     g_rops.count = count;
     g_rops.left = count;
@@ -587,6 +605,7 @@ int rop_init(lua_State *lua, int count)
     }
 
     lua_register(lua, "api_rop_left", api_rop_left);
+    lua_register(lua, "api_rop_frame_time", api_rop_frame_time);
     lua_register(lua, "api_rop_free", api_rop_free);
     lua_register(lua, "api_rop_alloc_root", api_rop_alloc_root);
     lua_register(lua, "api_rop_alloc_tscale", api_rop_alloc_tscale);
@@ -608,6 +627,18 @@ int rop_init(lua_State *lua, int count)
     LUA_PUBLISH(GL_DEPTH_BUFFER_BIT, "API_ROP_CLEAR_DEPTH");
 
     return 0;
+cleanup:
+    if (g_rops.pool)
+    {
+        free(g_rops.pool);
+        g_rops.pool = 0;
+    }
+    if (g_rops.frame_timer)
+    {
+        timer_destroy(g_rops.frame_timer);
+        g_rops.frame_timer = 0;
+    }
+    return 1;
 }
 
 void rop_done(void)
@@ -619,6 +650,8 @@ void rop_done(void)
            g_rops.allocs, g_rops.frees);
     free(g_rops.pool);
     g_rops.pool = 0;
+    timer_destroy(g_rops.frame_timer);
+    g_rops.frame_timer = 0;
 }
 
 struct rop_t * rop_get(int ropi)
@@ -814,7 +847,11 @@ int rop_draw(struct rop_t *root, int frame_tag)
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
         else if (rop->type == ROP_SWAP)
+        {
             SDL_GL_SwapBuffers();
+            g_rops.frame_time = timer_passed(g_rops.frame_timer);
+            timer_reset(g_rops.frame_timer);
+        }
     }
     return 0;
 }
