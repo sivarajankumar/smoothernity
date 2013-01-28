@@ -14,6 +14,7 @@ int physcpp_wld_gravity(int wldi, float *v);
 int physcpp_wld_move(int wldi, float*);
 int physcpp_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout);
 int physcpp_cs_alloc_box(int *csi, float *size);
+int physcpp_cs_alloc_sphere(int *csi, float r);
 int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale);
 int physcpp_cs_alloc_comp(int *csi);

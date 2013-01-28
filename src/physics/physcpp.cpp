@@ -145,6 +145,16 @@ int physcpp_cs_alloc_box(int *csi, float *size)
 }
 
 extern "C"
+int physcpp_cs_alloc_sphere(int *csi, float r)
+{
+    int res;
+    res = colshape_alloc(csi);
+    if (res != PHYSRES_OK)
+        return res;
+    return colshape_make_sphere(colshape_get(*csi), r);
+}
+
+extern "C"
 int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale)
 {

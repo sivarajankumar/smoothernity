@@ -271,6 +271,41 @@ static int api_physics_cs_alloc_box(lua_State *lua)
     return 1;
 }
 
+static int api_physics_cs_alloc_sphere(lua_State *lua)
+{
+    float r;
+    int csi, res;
+
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_sphere: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    r = lua_tonumber(lua, 1);
+    lua_pop(lua, 1);
+
+    if (r <= 0)
+    {
+        lua_pushstring(lua, "api_physics_cs_alloc_sphere: radius <= 0");
+        lua_error(lua);
+        return 0;
+    }
+
+    res = physcpp_cs_alloc_sphere(&csi, r);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, physics_error_text(res));
+        lua_pushstring(lua, "api_physics_cs_alloc_sphere: error");
+        lua_error(lua);
+        return 0;
+    }
+
+    lua_pushinteger(lua, csi);
+    return 1;
+}
+
 static int api_physics_cs_alloc_hmap(lua_State *lua)
 {
     struct buf_t *hmap;
@@ -782,6 +817,7 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
     lua_register(lua, "api_physics_wld_gravity", api_physics_wld_gravity);
     lua_register(lua, "api_physics_wld_move", api_physics_wld_move);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
+    lua_register(lua, "api_physics_cs_alloc_sphere", api_physics_cs_alloc_sphere);
     lua_register(lua, "api_physics_cs_alloc_hmap", api_physics_cs_alloc_hmap);
     lua_register(lua, "api_physics_cs_alloc_comp", api_physics_cs_alloc_comp);
     lua_register(lua, "api_physics_cs_comp_add", api_physics_cs_comp_add);
