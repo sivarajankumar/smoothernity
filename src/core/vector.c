@@ -1,6 +1,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "buf.h"
+#include "physics.h"
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -523,6 +524,61 @@ static int api_vector_seq(lua_State *lua)
     return 0;
 }
 
+static int api_vector_cast(lua_State *lua)
+{
+    struct vector_t *vector;
+    struct matrix_t *m0, *m1;
+    int wldi, csi;
+
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
+    {
+        lua_pushstring(lua, "api_vector_cast: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector = vector_get(lua_tointeger(lua, 1));
+    wldi = lua_tointeger(lua, 2);
+    csi = lua_tointeger(lua, 3);
+    m0 = matrix_get(lua_tointeger(lua, 4));
+    m1 = matrix_get(lua_tointeger(lua, 5));
+    lua_pop(lua, 5);
+
+    if (vector == 0 || m0 == 0 || m1 == 0)
+    {
+        lua_pushstring(lua, "api_vector_cast: invalid object");
+        lua_error(lua);
+        return 0;
+    }
+
+    vector_clear_args(vector);
+
+    vector->frame_tag = 0;
+    vector->type = VECTOR_CAST;
+    vector->argm[0] = m0;
+    vector->argm[1] = m1;
+    vector->cast_wldi = wldi;
+    vector->cast_csi = csi;
+
+    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    {
+        lua_pushstring(lua, "api_vector_cast: nesting is too deep");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (physics_wld_cast(wldi, csi, m0->value, m1->value, vector->value) != 0)
+    {
+        lua_pushstring(lua, "api_vector_cast: invalid physics object");
+        lua_error(lua);
+        return 0;
+    }
+
+    return 0;
+}
+
 int vector_init(lua_State *lua, int count, int nesting)
 {
     int i;
@@ -552,6 +608,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     lua_register(lua, "api_vector_seq", api_vector_seq);
     lua_register(lua, "api_vector_mpos", api_vector_mpos);
     lua_register(lua, "api_vector_cord", api_vector_cord);
+    lua_register(lua, "api_vector_cast", api_vector_cast);
 
     #define LUA_PUBLISH(x) \
         lua_pushinteger(lua, x); \
@@ -741,6 +798,18 @@ static int vector_update_pick(struct vector_t *v, float dt, int force)
     return 0;
 }
 
+static int vector_update_cast(struct vector_t *v, float dt, int force)
+{
+    GLfloat *m0, *m1;
+    if (matrix_update(v->argm[0], dt, v->frame_tag, force) != 0)
+        return 1;
+    if (matrix_update(v->argm[1], dt, v->frame_tag, force) != 0)
+        return 1;
+    m0 = v->argm[0]->value;
+    m1 = v->argm[1]->value;
+    return physics_wld_cast(v->cast_wldi, v->cast_csi, m0, m1, v->value);
+}
+
 static void vector_update_seq(struct vector_t *v, float dt)
 {
     static const int SEQ_SKIP_MAX = 5;
@@ -812,6 +881,8 @@ int vector_update(struct vector_t *v, float dt, int frame_tag, int force)
         return vector_update_cord(v, dt, force);
     else if (v->type == VECTOR_PICK)
         return vector_update_pick(v, dt, force);
+    else if (v->type == VECTOR_CAST)
+        return vector_update_cast(v, dt, force);
     return 0;
 }
 
