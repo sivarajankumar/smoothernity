@@ -5,6 +5,7 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local cfg = require 'config'
 local gui = require 'gui.gui'
+local key = require 'key'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -66,6 +67,10 @@ function M.alloc(x, y, z)
     local freedom_speed = 1
     local freedom_move = 1
     local vpos = api_vector_alloc()
+    local cruise = false
+    local cruise_key = key.alloc(function() return API_INPUT_KEY_C end,
+                                 function() cruise = not cruise end,
+                                 function() end)
 
     function self.free()
         for i = 0, 3 do
@@ -173,6 +178,12 @@ function M.alloc(x, y, z)
                 if brake < 0 then
                     brake = 0
                 end
+            end
+
+            -- cruise control
+            cruise_key.update()
+            if cruise then
+                accel = ACCEL_MAX
             end
 
             -- engage
