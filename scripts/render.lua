@@ -6,7 +6,8 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local lod = require 'lod'
 
-local DEBUG_ZFAR = 20000
+local DEBUG_ZFAR = 200
+local EAGLE_ZFAR = 20000
 local ORTHO_ZNEAR = 0
 local ORTHO_ZFAR = 1
 
@@ -137,7 +138,7 @@ local function eagle_alloc()
     local self = {}
 
     local mproj2d = make_screen()
-    local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
+    local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
     local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     local vclrcol = util.vector_const(0, 0, 0, 0)
