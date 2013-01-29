@@ -56,6 +56,7 @@ function M.done()
     genbar.free()
     edgebar.free()
     frbar.free()
+    fpsbar.free()
     bar.done()
 end
 
