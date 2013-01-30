@@ -10,6 +10,8 @@ local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
 local ORTHO_ZNEAR = 0
 local ORTHO_ZFAR = 1
+local FOG_NEAR = 10000
+local FOG_FAR = 12800
 
 local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
@@ -71,12 +73,14 @@ local function visual_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
     local vclrdep = util.vector_const(1, 0, 0 ,0)
+    local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
     self.vtscale = util.vector_const(1, 0, 0, 0)
 
     local rroot = api_rop_alloc_root()
     local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
     local rclrcol = api_rop_alloc_clear_color(rclrdep, self.vclrcol)
-    local rtscale = api_rop_alloc_tscale(rclrcol, self.vtscale, 0)
+    local rfoglin = api_rop_alloc_fog_lin(rclrcol, self.vclrcol, vfogdist, 0, 1)
+    local rtscale = api_rop_alloc_tscale(rfoglin, self.vtscale, 0)
 
     local lods = {}
     for lodi = 0, lod.count - 1 do
@@ -93,13 +97,28 @@ local function visual_alloc()
         lods[lodi] = ld
     end
 
-    local rclr2d = api_rop_alloc_clear(lods[lod.count - 1].rmesh, API_ROP_CLEAR_DEPTH)
+    local rfogoff = api_rop_alloc_fog_off(lods[lod.count - 1].rmesh)
+    local rclr2d = api_rop_alloc_clear(rfogoff, API_ROP_CLEAR_DEPTH)
     local rproj2d = api_rop_alloc_proj(rclr2d, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
     local rmeshgui = api_rop_alloc_draw_meshes(rmview2d, meshes.GROUP_GUI)
     local rswap = api_rop_alloc_swap(rmeshgui)
 
     function self.free()
+        api_matrix_free(mproj2d)
+        api_matrix_free(mview2d)
+        api_matrix_free(self.mview3d)
+        api_vector_free(self.vclrcol)
+        api_vector_free(vclrdep)
+        api_vector_free(vfogdist)
+        api_vector_free(self.vtscale)
+
+        api_rop_free(rroot)
+        api_rop_free(rclrdep)
+        api_rop_free(rclrcol)
+        api_rop_free(rfoglin)
+        api_rop_free(rtscale)
+
         for k, v in pairs(lods) do
             api_matrix_free(v.mproj3d)
             api_rop_free(v.rclr)
@@ -108,18 +127,7 @@ local function visual_alloc()
             api_rop_free(v.rmesh)
         end
 
-        api_matrix_free(mproj2d)
-        api_matrix_free(mview2d)
-        api_matrix_free(self.mview3d)
-        api_vector_free(self.vclrcol)
-        api_vector_free(vclrdep)
-        api_vector_free(self.vtscale)
-
-        api_rop_free(rroot)
-        api_rop_free(rclrdep)
-        api_rop_free(rclrcol)
-        api_rop_free(rtscale)
-
+        api_rop_free(rfogoff)
         api_rop_free(rclr2d)
         api_rop_free(rproj2d)
         api_rop_free(rmview2d)
