@@ -13,13 +13,6 @@ struct vbuf_t
     struct mesh_t *meshes;
 };
 
-struct vbuf_data_t
-{
-    GLfloat pos[3];
-    GLfloat tex[2];
-    GLubyte color[4];
-};
-
 struct vbufs_t
 {
     int size;
