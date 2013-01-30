@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct vbuf_data_t
+{
+    GLfloat pos[3];
+    GLfloat tex[2];
+    GLubyte color[4];
+};
+
 struct vbufs_t g_vbufs;
 
 static void vbuf_free(struct vbuf_t *vbuf)
