@@ -12,7 +12,7 @@
 #include <GL/gl.h>
 #include <SDL.h>
 
-#define ROP_ARGVS 1
+#define ROP_ARGVS 2
 #define ROP_ARGMS 1
 
 enum rop_e
@@ -27,7 +27,9 @@ enum rop_e
     ROP_DRAW_MESHES,
     ROP_DBG_PHYSICS,
     ROP_DBG_TEXT,
-    ROP_SWAP
+    ROP_SWAP,
+    ROP_FOG_OFF,
+    ROP_FOG_LIN
 };
 
 struct rop_t
@@ -36,6 +38,8 @@ struct rop_t
     int flags;
     int depthi;
     int tscalei;
+    int neari;
+    int fari;
     int wldi;
     int group;
     int vacant;
@@ -581,6 +585,105 @@ static int api_rop_alloc_swap(lua_State *lua)
     return 1;
 }
 
+static int api_rop_alloc_fog_off(lua_State *lua)
+{
+    struct rop_t *rop, *prev;
+    int ropi;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_off: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    prev = rop_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
+    ropi = rop_alloc();
+    rop = rop_get(ropi);
+    if (rop == 0)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_off: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_off: invalid rop");
+        lua_error(lua);
+        return 0;
+    }
+
+    rop->type = ROP_FOG_OFF;
+    prev->chain_next = rop;
+
+    lua_pushinteger(lua, ropi);
+    return 1;
+}
+
+static int api_rop_alloc_fog_lin(lua_State *lua)
+{
+    struct rop_t *rop, *prev;
+    struct vector_t *color, *dist;
+    int ropi, neari, fari;
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_lin: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    prev = rop_get(lua_tointeger(lua, 1));
+    color = vector_get(lua_tointeger(lua, 2));
+    dist = vector_get(lua_tointeger(lua, 3));
+    neari = lua_tointeger(lua, 4);
+    fari = lua_tointeger(lua, 5);
+    lua_pop(lua, 5);
+
+    if (color == 0 || dist == 0)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_lin: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (neari < 0 || neari > 3 || fari < 0 || fari > 3)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_lin: invalid distance index");
+        lua_error(lua);
+        return 0;
+    }
+
+    ropi = rop_alloc();
+    rop = rop_get(ropi);
+    if (rop == 0)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_lin: out of rops");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (prev == 0 || rop == prev)
+    {
+        lua_pushstring(lua, "api_rop_alloc_fog_lin: invalid rop");
+        lua_error(lua);
+        return 0;
+    }
+
+    rop->type = ROP_FOG_LIN;
+    rop->argv[0] = color;
+    rop->argv[1] = dist;
+    rop->neari = neari;
+    rop->fari = fari;
+    prev->chain_next = rop;
+
+    lua_pushinteger(lua, ropi);
+    return 1;
+}
+
 int rop_init(lua_State *lua, int count)
 {
     int i;
@@ -618,6 +721,8 @@ int rop_init(lua_State *lua, int count)
     lua_register(lua, "api_rop_alloc_dbg_physics", api_rop_alloc_dbg_physics);
     lua_register(lua, "api_rop_alloc_dbg_text", api_rop_alloc_dbg_text);
     lua_register(lua, "api_rop_alloc_swap", api_rop_alloc_swap);
+    lua_register(lua, "api_rop_alloc_fog_off", api_rop_alloc_fog_off);
+    lua_register(lua, "api_rop_alloc_fog_lin", api_rop_alloc_fog_lin);
 
     #define LUA_PUBLISH(x, y) \
         lua_pushinteger(lua, x); \
@@ -713,6 +818,13 @@ int rop_update(struct rop_t *root, float dt, int frame_tag)
         else if (rop->type == ROP_DRAW_MESHES)
         {
             if (rop_update_meshes(dt, frame_tag) != 0)
+                return 1;
+        }
+        else if (rop->type == ROP_FOG_LIN)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                return 1;
+            if (vector_update(rop->argv[1], dt, frame_tag, 0) != 0)
                 return 1;
         }
     }
@@ -822,9 +934,27 @@ static void rop_draw_meshes(int frame_tag, int group)
     }
 }
 
+static void rop_swap()
+{
+    SDL_GL_SwapBuffers();
+    g_rops.frame_time = timer_passed(g_rops.frame_timer);
+    timer_reset(g_rops.frame_timer);
+}
+
+static void rop_fog_lin(struct rop_t *rop)
+{
+    glEnable(GL_FOG);
+    glFogi(GL_FOG_MODE, GL_LINEAR);
+    glFogfv(GL_FOG_COLOR, rop->argv[0]->value);
+    glFogf(GL_FOG_START, rop->argv[1]->value[rop->neari]);
+    glFogf(GL_FOG_END, rop->argv[1]->value[rop->fari]);
+    glFogi(GL_FOG_COORD_SRC, GL_FRAGMENT_DEPTH);
+}
+
 int rop_draw(struct rop_t *root, int frame_tag)
 {
     struct rop_t *rop;
+    glDisable(GL_FOG);
     for (rop = root; rop; rop = rop->chain_next)
     {
         if (rop->type == ROP_CLEAR_COLOR)
@@ -847,11 +977,11 @@ int rop_draw(struct rop_t *root, int frame_tag)
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
         else if (rop->type == ROP_SWAP)
-        {
-            SDL_GL_SwapBuffers();
-            g_rops.frame_time = timer_passed(g_rops.frame_timer);
-            timer_reset(g_rops.frame_timer);
-        }
+            rop_swap();
+        else if (rop->type == ROP_FOG_OFF)
+            glDisable(GL_FOG);
+        else if (rop->type == ROP_FOG_LIN)
+            rop_fog_lin(rop);
     }
     return 0;
 }
