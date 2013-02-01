@@ -48,12 +48,12 @@ function M.alloc(centx, centy, centz)
         api_vector_mpos(vplayer, mplayer)
     end
 
-    function self.generate(mach)
+    function self.generate()
         generating = true
         api_vector_update(vplayer)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         for lodi = lod.count - 1, 0, -1 do
-            planes[lodi].generate(mach, wx, wy, wz)
+            planes[lodi].generate(wx, wy, wz)
         end
         generating = false
     end

@@ -40,13 +40,13 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         return math.sqrt(c*c + cd*cd)
     end
 
-    local function add_land(mach, z, x)
+    local function add_land(z, x)
         if lands[z] == nil then
             lands[z] = {}
         end
         if lands[z][x] == nil and not quit.requested() then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = landalloc(mach, noise, move, lodi, wx, wy, wz)
+            lands[z][x] = landalloc(noise, move, lodi, wx, wy, wz)
         end
     end
 
@@ -73,7 +73,7 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         return z, x
     end
 
-    function self.generate(mach, wx, wy, wz)
+    function self.generate(wx, wy, wz)
 
         genz, genx = gen_align(genz, genx, wz, wx)
         local zmin, xmin, zmax, xmax = gen_bounds(genz, genx)
@@ -99,10 +99,10 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         -- generate
         do
             local gx, gy, gz = world_to_grid(genx, 0, genz)
-            add_land(mach, gz, gx)
+            add_land(gz, gx)
             for z = zmin, zmax do
                 for x = xmin, xmax do
-                    add_land(mach, z, x)
+                    add_land(z, x)
                 end
             end
         end

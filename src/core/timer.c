@@ -1,36 +1,31 @@
 #include "timer.h"
 #include "sys/time.h"
-#include <stdlib.h>
 
 struct timer_t
 {
     struct timeval time;
 };
 
-struct timer_t * timer_create(void)
-{
-    struct timer_t * timer;
-    timer = calloc(1, sizeof(struct timer_t));
-    if (timer == 0)
-        return 0;
-    timer_reset(timer);
-    return timer;
-}
+static struct timer_t g_timer;
 
-void timer_destroy(struct timer_t *timer)
-{
-    free(timer);
-}
-
-void timer_reset(struct timer_t *timer)
-{
-    gettimeofday(&timer->time, 0);
-}
-
-float timer_passed(struct timer_t *timer)
+static int api_timer(lua_State *lua)
 {
     struct timeval cur;
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_timer: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
     gettimeofday(&cur, 0);
-    return 0.000001f * (float)(((cur.tv_sec - timer->time.tv_sec) * 1000000) +
-                                (cur.tv_usec - timer->time.tv_usec));
+    lua_pushnumber(lua, 0.000001f *
+        (float)(((cur.tv_sec - g_timer.time.tv_sec) * 1000000) +
+                 (cur.tv_usec - g_timer.time.tv_usec)));
+    return 1;
+}
+
+void timer_init(lua_State *lua)
+{
+    gettimeofday(&g_timer.time, 0);
+    lua_register(lua, "api_timer", api_timer);
 }

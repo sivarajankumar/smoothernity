@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <SDL.h>
 #include "mpool.h"
-#include "machine.h"
 #include "timer.h"
 #include "render.h"
 #include "input.h"
@@ -50,37 +49,9 @@ struct main_t
     int storage_size;
     int storage_count;
     lua_State *lua;
-    struct machine_t *controller;
-    struct machine_t *worker;
-    struct timer_t *timer;
 };
 
 static struct main_t g_main;
-
-/* TODO: remove */
-static int api_main_machines_running(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_main_machines_running: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushboolean(lua, machine_running(g_main.controller) || machine_running(g_main.worker));
-    return 1;
-}
-
-static int api_main_time(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_main_time: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushnumber(lua, timer_passed(g_main.timer));
-    return 1;
-}
 
 static int api_main_gc_step(lua_State *lua)
 {
@@ -101,33 +72,6 @@ static int api_main_gc_step(lua_State *lua)
     }
     lua_gc(g_main.lua, LUA_GCSTEP, step);
     lua_gc(g_main.lua, LUA_GCSTOP, 0);
-    return 0;
-}
-
-/* TODO: remove */
-static int api_main_machines_update(lua_State *lua)
-{
-    float time;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_main_machines_update: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    time = lua_tonumber(lua, 1);
-    lua_pop(lua, 1);
-    if (machine_step(g_main.controller, 0) != 0)
-    {
-        lua_pushstring(lua, "api_main_machines_update: failed to run controller");
-        lua_error(lua);
-        return 0;
-    }
-    if (machine_step(g_main.worker, time) != 0)
-    {
-        lua_pushstring(lua, "api_main_machines_update: failed to run worker");
-        lua_error(lua);
-        return 0;
-    }
     return 0;
 }
 
@@ -309,12 +253,6 @@ static void main_done(void)
 
     if (g_main.lua)
         lua_close(g_main.lua);
-    if (g_main.controller)
-        machine_destroy(g_main.controller);
-    if (g_main.worker)
-        machine_destroy(g_main.worker);
-    if (g_main.timer)
-        timer_destroy(g_main.timer);
     if (g_main.mpool_sizes)
     {
         free(g_main.mpool_sizes);
@@ -370,15 +308,8 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    machine_init(g_main.lua);
     input_init(g_main.lua);
-
-    g_main.timer = timer_create();
-    if (g_main.timer == 0)
-    {
-        fprintf(stderr, "Cannot create timers\n");
-        return 1;
-    }
+    timer_init(g_main.lua);
 
     if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
                      g_main.rigidbody_count, g_main.vehicle_count) != 0)
@@ -429,20 +360,6 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    g_main.controller = machine_create(g_main.lua, "control");
-    if (g_main.controller == 0)
-    {
-        fprintf(stderr, "Cannot create controller\n");
-        return 1;
-    }
-
-    g_main.worker = machine_create(g_main.lua, "work");
-    if (g_main.worker == 0)
-    {
-        fprintf(stderr, "Cannot create worker\n");
-        return 1;
-    }
-
     if (render_init(&argc, argv, g_main.screen_width,
                                  g_main.screen_height) != 0)
     {
@@ -461,19 +378,30 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;
     }
-    lua_register(g_main.lua, "api_main_machines_running", api_main_machines_running);
-    lua_register(g_main.lua, "api_main_time", api_main_time);
     lua_register(g_main.lua, "api_main_gc_step", api_main_gc_step);
-    lua_register(g_main.lua, "api_main_machines_update", api_main_machines_update);
     return 0;
 }
 
 static void main_loop(void)
 {
+    lua_Debug dbg;
+    int level;
     printf("Game loop start\n");
     lua_getglobal(g_main.lua, "run");
-    if (!lua_isfunction(g_main.lua, -1) || lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
-        fprintf(stderr, "Cannot execute run() function: %s\n", lua_tostring(g_main.lua, -1));
+    if (!lua_isfunction(g_main.lua, -1))
+        fprintf(stderr, "Cannot find run() function\n");
+    else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
+    {
+        level = 0;
+        fprintf(stderr, "Call stack:\n");
+        while (lua_getstack(g_main.lua, level++, &dbg) == 1)
+        {
+            lua_getinfo(g_main.lua, "Sl", &dbg);
+            fprintf(stderr, "%s:%i\n", dbg.short_src, dbg.currentline);
+        }
+        fprintf(stderr, "Error:\n");
+        fprintf(stderr, "%s\n", lua_tostring(g_main.lua, -1));
+    }
     printf("Game loop finish\n");
 }
 

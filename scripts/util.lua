@@ -63,14 +63,6 @@ function M.set_gravity(x, y, z)
     api_vector_free(grav)
 end
 
-function M.wait(mach, us)
-    local time = api_machine_time(mach)
-    while api_machine_time(mach) - time < us
-    do
-        api_machine_sleep(mach)
-    end
-end
-
 function M.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()

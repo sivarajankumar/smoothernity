@@ -59,7 +59,7 @@ function M.done()
     pwld.done()
 end
 
-function M.control(mach)
+function M.control()
     if pressed == 0 then
         if api_input_key(API_INPUT_KEY_F10) == 1 then
             pressed = 1
@@ -89,8 +89,8 @@ function M.control(mach)
     car.restrain(edist)
 end
 
-function M.work(mach)
-    wld.generate(mach)
+function M.work()
+    wld.generate()
 end
 
 return M
