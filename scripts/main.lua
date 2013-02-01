@@ -10,7 +10,7 @@ local gui = require 'gui.gui'
 local work_finished = false
 local game_started = false
 
-local LOGIC_TIME = 0.01
+local LOGIC_TIME = 0.015
 local GC_STEP = 10
 
 function configure()
@@ -41,7 +41,7 @@ function configure()
 end
 
 local function run_co(co, start_time, max_time)
-    while co ~= nil do
+    while coroutine.status(co) ~= 'dead' do
         local res, arg = coroutine.resume(co)
         if res and arg then
             break
@@ -59,9 +59,7 @@ local function run_main()
     game.init()
     local prf = perf.alloc()
     local frame_time = api_timer()
-    local control, work
-
-    control = coroutine.create(
+    local control = coroutine.create(
         function()
             while not quit.requested()
             do
@@ -70,20 +68,18 @@ local function run_main()
                 ddraw.update()
                 coroutine.yield(true)
             end
-            control = nil
         end)
-
-    work = coroutine.create(
+    local work = coroutine.create(
         function()
             while not quit.requested()
             do
                 game.work()
                 coroutine.yield(true)
             end
-            work = nil
         end)
 
-    while control ~= nil and work ~= nil
+    while coroutine.status(control) ~= 'dead'
+       or coroutine.status(work) ~= 'dead'
     do
         local logic_time = api_timer()
         do
