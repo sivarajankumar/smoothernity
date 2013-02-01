@@ -384,24 +384,10 @@ static int main_init(int argc, char **argv)
 
 static void main_loop(void)
 {
-    lua_Debug dbg;
-    int level;
     printf("Game loop start\n");
     lua_getglobal(g_main.lua, "run");
-    if (!lua_isfunction(g_main.lua, -1))
-        fprintf(stderr, "Cannot find run() function\n");
-    else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
-    {
-        level = 0;
-        fprintf(stderr, "Call stack:\n");
-        while (lua_getstack(g_main.lua, level++, &dbg) == 1)
-        {
-            lua_getinfo(g_main.lua, "Sl", &dbg);
-            fprintf(stderr, "%s:%i\n", dbg.short_src, dbg.currentline);
-        }
-        fprintf(stderr, "Error:\n");
-        fprintf(stderr, "%s\n", lua_tostring(g_main.lua, -1));
-    }
+    if (!lua_isfunction(g_main.lua, -1) || lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
+        fprintf(stderr, "Error while executing run() function: %s\n", lua_tostring(g_main.lua, -1));
     printf("Game loop finish\n");
 }
 
