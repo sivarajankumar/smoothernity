@@ -1,17 +1,5 @@
-local ddraw = require 'ddraw'
-local perf = require 'perf'
 local game = require 'game'
 local cfg = require 'config'
-local render = require 'render'
-local pwld = require 'physwld'
-local quit = require 'quit'
-local gui = require 'gui.gui'
-
-local work_finished = false
-local game_started = false
-
-local LOGIC_TIME = 0.015
-local GC_STEP = 10
 
 function configure()
     return {mpool_sizes = function() return    100, 1000, 10000, 100000, 1000000, 5000000 end,
@@ -40,72 +28,8 @@ function configure()
             storage_count = 1}
 end
 
-local function run_co(co, start_time, max_time)
-    while coroutine.status(co) ~= 'dead' do
-        local res, arg = coroutine.resume(co)
-        if res and arg then
-            break
-        elseif not res then
-            io.write('Coroutine\n', debug.traceback(co), '\n')
-            error(arg)
-        end
-        if api_timer() - start_time > max_time then
-            break
-        end
-    end
-end
-
-local function tick(f)
-    local t = api_timer()
-    f()
-    return api_timer() - t
-end 
-
-local function run_main()
-    game.init()
-    local prf = perf.alloc()
-    local frame_time = api_timer()
-    local control = coroutine.create(
-        function()
-            while not quit.requested()
-            do
-                game.control()
-                quit.control()
-                ddraw.update()
-                coroutine.yield(true)
-            end
-        end)
-    local work = coroutine.create(
-        function()
-            while not quit.requested()
-            do
-                game.work()
-                coroutine.yield(true)
-            end
-        end)
-
-    while coroutine.status(control) ~= 'dead'
-       or coroutine.status(work) ~= 'dead'
-    do
-        local logic_time = api_timer()
-        prf.sample('physics', tick(function() api_physics_update(cfg.FRAME_TIME) end))
-        prf.sample('input', tick(function() api_input_update() end))
-        prf.sample('gc', tick(function() api_main_gc_step(GC_STEP) end))
-        prf.sample('control', tick(function() run_co(control, logic_time, 0) end))
-        prf.sample('work', tick(function() run_co(work, logic_time, LOGIC_TIME) end))
-        prf.sample('rupdate', tick(function() render.update() end))
-        prf.sample('rdraw', tick(function() render.draw() end))
-        prf.sample('frame', api_timer() - frame_time)
-        prf.update()
-        gui.frame_time(api_timer() - frame_time)
-        frame_time = api_timer()
-    end
-    prf.free()
-    game.done()
-end
-
 function run()
-    xpcall(run_main,
+    xpcall(game.run,
         function(msg)
             io.write(string.format('Main\n%s\nError: %s\n', debug.traceback(), msg))
         end)
