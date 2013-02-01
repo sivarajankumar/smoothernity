@@ -3,18 +3,9 @@
 #include "matrix.h"
 #include "mpool.h"
 #include "buf.h"
-#include "timer.h"
 #include "../physics/physcpp.h"
 #include "../physics/physres.h"
 #include <stdio.h>
-
-struct physics_t
-{
-    struct timer_t *timer;
-    float last_update_time;
-};
-
-static struct physics_t g_physics;
 
 static const char * physics_error_text(int res)
 {
@@ -50,6 +41,35 @@ static const char * physics_error_text(int res)
         return UNKNOWN;
 }
 
+static int api_physics_update(lua_State *lua)
+{
+    float dt;
+    int res;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_physics_update: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    dt = lua_tonumber(lua, 1);
+    lua_pop(lua, 1);
+    if (dt < 0.0f)
+    {
+        lua_pushstring(lua, "api_physics_update: negative dt");
+        lua_error(lua);
+        return 0;
+    }
+    res = physcpp_wld_update(dt);
+    if (res != PHYSRES_OK)
+    {
+        fprintf(stderr, "api_physics_update: %s\n", physics_error_text(res));
+        lua_pushstring(lua, "api_physics_update: physics error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
 static int api_physics_left(lua_State *lua)
 {
     int wld_left, cs_left, rb_left, veh_left;
@@ -65,18 +85,6 @@ static int api_physics_left(lua_State *lua)
     lua_pushinteger(lua, rb_left);
     lua_pushinteger(lua, veh_left);
     return 4;
-}
-
-static int api_physics_timing(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_physics_timing: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushnumber(lua, g_physics.last_update_time);
-    return 1;
 }
 
 static int api_physics_wld_gravity(lua_State *lua)
@@ -800,16 +808,13 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
 int physics_init(lua_State *lua, int wld_count, int cs_count,
                  int rb_count, int veh_count)
 {
-    g_physics.timer = timer_create();
-    if (g_physics.timer == 0)
-        return 1;
     if (physcpp_init(mpool_alloc, mpool_free, wld_count,
                      cs_count, rb_count, veh_count) != PHYSRES_OK)
     {
         return 1;
     }
+    lua_register(lua, "api_physics_update", api_physics_update);
     lua_register(lua, "api_physics_left", api_physics_left);
-    lua_register(lua, "api_physics_timing", api_physics_timing);
     lua_register(lua, "api_physics_wld_alloc", api_physics_wld_alloc);
     lua_register(lua, "api_physics_wld_free", api_physics_wld_free);
     lua_register(lua, "api_physics_wld_tscale", api_physics_wld_tscale);
@@ -857,26 +862,7 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
 
 void physics_done(void)
 {
-    if (g_physics.timer)
-    {
-        timer_destroy(g_physics.timer);
-        g_physics.timer = 0;
-    }
     physcpp_done();
-}
-
-int physics_update(float dt)
-{
-    int res;
-    timer_reset(g_physics.timer);
-    res = physcpp_wld_update(dt);
-    if (res != PHYSRES_OK)
-    {
-        fprintf(stderr, "physics_update: %s\n", physics_error_text(res));
-        return 1;
-    }
-    g_physics.last_update_time = timer_passed(g_physics.timer);
-    return 0;
 }
 
 int physics_wld_ddraw(int wldi)

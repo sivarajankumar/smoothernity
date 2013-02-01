@@ -3,19 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef int (*state_t) (struct machine_t *);
-
-struct machine_t
-{
-    lua_State *thread;
-    state_t next_state;
-    struct timer_t *step_timer;
-    struct timer_t *run_timer;
-    int sleep;
-    float last_step_time;
-};
-
-static int state_resume(struct machine_t *machine)
+int machine_state_resume(struct machine_t *machine)
 {
     lua_Debug dbg;
     int status, level;
@@ -47,7 +35,7 @@ static int api_machine_yield(lua_State *lua)
     }
     machine = lua_touserdata(lua, 1);
     lua_pop(lua, 1);
-    machine->next_state = state_resume;
+    machine->next_state = machine_state_resume;
     return lua_yield(lua, 0);
 }
 
@@ -63,7 +51,7 @@ static int api_machine_sleep(lua_State *lua)
     machine = lua_touserdata(lua, 1);
     lua_pop(lua, 1);
     machine->sleep = 1;
-    machine->next_state = state_resume;
+    machine->next_state = machine_state_resume;
     return lua_yield(lua, 0);
 }
 
@@ -147,7 +135,7 @@ struct machine_t * machine_create(lua_State *lua, const char *func)
         goto cleanup;
     lua_getglobal(machine->thread, func);
     lua_pushlightuserdata(machine->thread, machine);
-    machine->next_state = state_resume;
+    machine->next_state = machine_state_resume;
     return machine;
 cleanup:
     if (machine->step_timer)

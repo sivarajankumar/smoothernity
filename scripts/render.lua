@@ -13,6 +13,9 @@ local ORTHO_ZFAR = 1
 local FOG_NEAR = 10000
 local FOG_FAR = 12800
 
+local current_root = nil
+local frame_tag = 1000
+
 local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
     local vbounds = api_vector_alloc()
@@ -136,7 +139,7 @@ local function visual_alloc()
     end
 
     function self.engage()
-        api_render_engage(rroot)
+        current_root = rroot
     end
 
     return self
@@ -205,7 +208,7 @@ local function eagle_alloc()
     end
 
     function self.engage()
-        api_render_engage(rroot)
+        current_root = rroot
     end
 
     return self
@@ -253,22 +256,7 @@ local function debug_alloc()
     end
 
     function self.engage()
-        api_render_engage(rroot)
-    end
-
-    return self
-end
-
-local function empty_alloc()
-    local self = {}
-    local rroot = api_rop_alloc_root()
-
-    function self.free()
-        api_rop_free(rroot)
-    end
-
-    function self.engage()
-        api_render_engage(rroot)
+        current_root = rroot
     end
 
     return self
@@ -289,14 +277,25 @@ function M.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
-    M.empty = empty_alloc()
 end
 
 function M.done()
     M.visual.free()
     M.debug.free()
     M.eagle.free()
-    M.empty.free()
+end
+
+function M.update()
+    frame_tag = frame_tag + 1
+    if current_root ~= nil then
+        api_rop_update(current_root, cfg.FRAME_TIME, frame_tag)
+    end
+end
+
+function M.draw()
+    if current_root ~= nil then
+        api_rop_draw(current_root, frame_tag)
+    end
 end
 
 return M
