@@ -43,70 +43,89 @@ end
 function run()
     game.init()
     local prf = perf.alloc()
-    local frame_time = api_main_time()
-    while api_main_machines_running()
+    local frame_time = api_timer()
+    local control, work
+    control = coroutine.create(
+        function()
+            while not quit.requested()
+            do
+                game.control()
+                quit.control()
+                ddraw.update()
+                coroutine.yield(true)
+            end
+            control = nil
+        end)
+    work = coroutine.create(
+        function()
+            while not quit.requested()
+            do
+                game.work()
+                coroutine.yield(true)
+            end
+            work = nil
+        end)
+    while control ~= nil and work ~= nil
     do
-        local logic_time = api_main_time()
+        local logic_time = api_timer()
         do
-            local t = api_main_time()
+            local t = api_timer()
             api_physics_update(cfg.FRAME_TIME)
-            prf.sample('physics', api_main_time() - t)
+            prf.sample('physics', api_timer() - t)
         end
         do
-            local t = api_main_time()
+            local t = api_timer()
             api_input_update()
-            prf.sample('input', api_main_time() - t)
+            prf.sample('input', api_timer() - t)
         end
         do
-            local t = api_main_time()
+            local t = api_timer()
             api_main_gc_step(GC_STEP)
-            prf.sample('gc', api_main_time() - t)
+            prf.sample('gc', api_timer() - t)
         end
         do
-            local t = api_main_time()
-            api_main_machines_update(LOGIC_TIME - (api_main_time() - logic_time))
-            prf.sample('machines', api_main_time() - t)
+            local t = api_timer()
+            if control ~= nil then
+                local res, arg = coroutine.resume(control)
+                if not res then
+                    error(arg)
+                end
+            end
+            prf.sample('control', api_timer() - t)
         end
         do
-            local t = api_main_time()
+            local t = api_timer()
+            if work == nil then
+                io.write('work is nil\n')
+            end
+            while work ~= nil do
+                local res, arg = coroutine.resume(work)
+                if res and arg then
+                    break
+                elseif not res then
+                    error(arg)
+                end
+                if api_timer() - logic_time > LOGIC_TIME then
+                    break
+                end
+            end
+            prf.sample('work', api_timer() - t)
+        end
+        do
+            local t = api_timer()
             render.update()
-            prf.sample('rupdate', api_main_time() - t)
+            prf.sample('rupdate', api_timer() - t)
         end
         do
-            local t = api_main_time()
+            local t = api_timer()
             render.draw()
-            prf.sample('rdraw', api_main_time() - t)
+            prf.sample('rdraw', api_timer() - t)
         end
-        prf.sample('frame', api_main_time() - frame_time)
+        prf.sample('frame', api_timer() - frame_time)
         prf.update()
-        gui.frame_time(api_main_time() - frame_time)
-        frame_time = api_main_time()
+        gui.frame_time(api_timer() - frame_time)
+        frame_time = api_timer()
     end
     prf.free()
     game.done()
-end
-
-function control(mach)
-    game_started = true
-    while not quit.requested()
-    do
-        game.control(mach)
-        quit.control()
-        ddraw.update()
-        api_machine_yield(mach)
-    end
-    while not work_finished do
-        api_machine_yield(mach)
-    end
-end
-
-function work(mach)
-    while not quit.requested()
-    do
-        if game_started then
-            game.work(mach)
-        end
-        api_machine_sleep(mach)
-    end
-    work_finished = true
 end

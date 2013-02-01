@@ -7,7 +7,7 @@ local lod = require 'lod'
 local meshes = require 'meshes'
 local quit = require 'quit'
 
-local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
+local function common_alloc(noise, move, lodi, basx, basy, basz)
     local self = {}
 
     self.size = lod.lods[lodi].size
@@ -87,7 +87,7 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
             self.hmap[z] = {}
             for x = 0, self.res - 1 do
                 self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
-                api_machine_yield(mach)
+                coroutine.yield(false)
             end
         end
     end
@@ -103,7 +103,7 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
                              z - 0.5 * (self.res - 1),
                              r, g, b, a,
                              0, 0)
-                api_machine_yield(mach)
+                coroutine.yield(false)
             end
         end
         api_vbuf_bake(vb)
@@ -119,7 +119,7 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
                 local i11 = (x + 1) + (z + 1) * self.res
                 local i = (x + z * (self.res - 1)) * 6
                 api_ibuf_set(ib, i,  i00,i01,i10,  i10,i01,i11)
-                api_machine_yield(mach)
+                coroutine.yield(false)
             end
         end
         api_ibuf_bake(ib)
@@ -128,10 +128,10 @@ local function common_alloc(mach, noise, move, lodi, basx, basy, basz)
     return self
 end
 
-function M.phys_alloc(mach, noise, move, lodi, basx, basy, basz)
+function M.phys_alloc(noise, move, lodi, basx, basy, basz)
     local self = {}
 
-    local common = common_alloc(mach, noise, move, lodi, basx, basy, basz)
+    local common = common_alloc(noise, move, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scale, 1, scale)
@@ -165,7 +165,7 @@ function M.phys_alloc(mach, noise, move, lodi, basx, basy, basz)
         for z = 0, common.res - 1 do
             for x = 0, common.res - 1 do
                 api_buf_set(buf, x + z * common.res, common.hmap[z][x])
-                api_machine_yield(mach)
+                coroutine.yield(false)
             end
         end
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
@@ -189,9 +189,9 @@ function M.phys_alloc(mach, noise, move, lodi, basx, basy, basz)
     return self
 end
 
-function M.vis_alloc(mach, noise, move, lodi, basx, basy, basz)
+function M.vis_alloc(noise, move, lodi, basx, basy, basz)
     local self = {}
-    local common = common_alloc(mach, noise, move, lodi, basx, basy, basz)
+    local common = common_alloc(noise, move, lodi, basx, basy, basz)
 
     function self.free()
         common.free()
