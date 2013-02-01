@@ -55,6 +55,12 @@ local function run_co(co, start_time, max_time)
     end
 end
 
+local function tick(f)
+    local t = api_timer()
+    f()
+    return api_timer() - t
+end 
+
 local function run_main()
     game.init()
     local prf = perf.alloc()
@@ -82,41 +88,13 @@ local function run_main()
        or coroutine.status(work) ~= 'dead'
     do
         local logic_time = api_timer()
-        do
-            local t = api_timer()
-            api_physics_update(cfg.FRAME_TIME)
-            prf.sample('physics', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            api_input_update()
-            prf.sample('input', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            api_main_gc_step(GC_STEP)
-            prf.sample('gc', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            run_co(control, logic_time, 0)
-            prf.sample('control', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            run_co(work, logic_time, LOGIC_TIME)
-            prf.sample('work', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            render.update()
-            prf.sample('rupdate', api_timer() - t)
-        end
-        do
-            local t = api_timer()
-            render.draw()
-            prf.sample('rdraw', api_timer() - t)
-        end
+        prf.sample('physics', tick(function() api_physics_update(cfg.FRAME_TIME) end))
+        prf.sample('input', tick(function() api_input_update() end))
+        prf.sample('gc', tick(function() api_main_gc_step(GC_STEP) end))
+        prf.sample('control', tick(function() run_co(control, logic_time, 0) end))
+        prf.sample('work', tick(function() run_co(work, logic_time, LOGIC_TIME) end))
+        prf.sample('rupdate', tick(function() render.update() end))
+        prf.sample('rdraw', tick(function() render.draw() end))
         prf.sample('frame', api_timer() - frame_time)
         prf.update()
         gui.frame_time(api_timer() - frame_time)
