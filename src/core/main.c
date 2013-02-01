@@ -20,15 +20,13 @@
 #include "physics.h"
 #include "buf.h"
 #include "rop.h"
+#include "storage.h"
 
 struct main_t
 {
     int *mpool_sizes;
     int *mpool_counts;
     int mpool_len;
-    float frame_time;
-    float logic_time;
-    int gc_step;
     int screen_width;
     int screen_height;
     int mesh_count;
@@ -49,26 +47,88 @@ struct main_t
     int buf_size;
     int buf_count;
     int rop_count;
+    int storage_size;
+    int storage_count;
     lua_State *lua;
     struct machine_t *controller;
     struct machine_t *worker;
-    struct timer_t *logic_timer;
-    struct timer_t *gc_timer;
-    float last_gc_time;
+    struct timer_t *timer;
 };
 
 static struct main_t g_main;
 
-static int api_main_timing(lua_State *lua)
+/* TODO: remove */
+static int api_main_machines_running(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_main_timing: incorrect argument");
+        lua_pushstring(lua, "api_main_machines_running: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    lua_pushnumber(lua, g_main.last_gc_time);
+    lua_pushboolean(lua, machine_running(g_main.controller) || machine_running(g_main.worker));
     return 1;
+}
+
+static int api_main_time(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_main_time: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushnumber(lua, timer_passed(g_main.timer));
+    return 1;
+}
+
+static int api_main_gc_step(lua_State *lua)
+{
+    int step;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_main_gc_step: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    step = lua_tointeger(lua, 1);
+    lua_pop(lua, 1);
+    if (step <= 0)
+    {
+        lua_pushstring(lua, "api_main_gc_step: negative step");
+        lua_error(lua);
+        return 0;
+    }
+    lua_gc(g_main.lua, LUA_GCSTEP, step);
+    lua_gc(g_main.lua, LUA_GCSTOP, 0);
+    return 0;
+}
+
+/* TODO: remove */
+static int api_main_machines_update(lua_State *lua)
+{
+    float time;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_main_machines_update: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    time = lua_tonumber(lua, 1);
+    lua_pop(lua, 1);
+    if (machine_step(g_main.controller, 0) != 0)
+    {
+        lua_pushstring(lua, "api_main_machines_update: failed to run controller");
+        lua_error(lua);
+        return 0;
+    }
+    if (machine_step(g_main.worker, time) != 0)
+    {
+        lua_pushstring(lua, "api_main_machines_update: failed to run worker");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
 }
 
 static int main_panic(lua_State *lua)
@@ -189,10 +249,7 @@ static int main_configure(char *script)
         goto cleanup;
     }
 
-    if (main_get_float(lua, "frame_time", &g_main.frame_time) != 0
-     || main_get_float(lua, "logic_time", &g_main.logic_time) != 0
-     || main_get_int(lua, "gc_step", &g_main.gc_step) != 0
-     || main_get_int(lua, "screen_width", &g_main.screen_width) != 0
+    if (main_get_int(lua, "screen_width", &g_main.screen_width) != 0
      || main_get_int(lua, "screen_height", &g_main.screen_height) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
@@ -211,7 +268,9 @@ static int main_configure(char *script)
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "buf_count", &g_main.buf_count) != 0
-     || main_get_int(lua, "rop_count", &g_main.rop_count) != 0)
+     || main_get_int(lua, "rop_count", &g_main.rop_count) != 0
+     || main_get_int(lua, "storage_size", &g_main.storage_size) != 0
+     || main_get_int(lua, "storage_count", &g_main.storage_count) != 0)
     {
         goto cleanup;
     }
@@ -254,10 +313,8 @@ static void main_done(void)
         machine_destroy(g_main.controller);
     if (g_main.worker)
         machine_destroy(g_main.worker);
-    if (g_main.logic_timer)
-        timer_destroy(g_main.logic_timer);
-    if (g_main.gc_timer)
-        timer_destroy(g_main.gc_timer);
+    if (g_main.timer)
+        timer_destroy(g_main.timer);
     if (g_main.mpool_sizes)
     {
         free(g_main.mpool_sizes);
@@ -269,8 +326,8 @@ static void main_done(void)
         g_main.mpool_counts = 0;
     }
 
-    input_done();
     buf_done();
+    storage_done();
     rop_done();
     vector_done();
     matrix_done();
@@ -314,18 +371,12 @@ static int main_init(int argc, char **argv)
     }
 
     machine_init(g_main.lua);
+    input_init(g_main.lua);
 
-    g_main.logic_timer = timer_create();
-    g_main.gc_timer = timer_create();
-    if (g_main.logic_timer == 0 || g_main.gc_timer == 0)
+    g_main.timer = timer_create();
+    if (g_main.timer == 0)
     {
         fprintf(stderr, "Cannot create timers\n");
-        return 1;
-    }
-
-    if (input_init(g_main.lua) != 0)
-    {
-        fprintf(stderr, "Cannot init input\n");
         return 1;
     }
 
@@ -339,6 +390,12 @@ static int main_init(int argc, char **argv)
     if (rop_init(g_main.lua, g_main.rop_count) != 0)
     {
         fprintf(stderr, "Cannot init render operations\n");
+        return 1;
+    }
+
+    if (storage_init(g_main.lua, g_main.storage_size, g_main.storage_count) != 0)
+    {
+        fprintf(stderr, "Cannot init storages\n");
         return 1;
     }
 
@@ -386,8 +443,8 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (render_init(g_main.lua, &argc, argv, g_main.screen_width,
-                                       g_main.screen_height) != 0)
+    if (render_init(&argc, argv, g_main.screen_width,
+                                 g_main.screen_height) != 0)
     {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
@@ -404,50 +461,19 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;
     }
-    lua_register(g_main.lua, "api_main_timing", api_main_timing);
+    lua_register(g_main.lua, "api_main_machines_running", api_main_machines_running);
+    lua_register(g_main.lua, "api_main_time", api_main_time);
+    lua_register(g_main.lua, "api_main_gc_step", api_main_gc_step);
+    lua_register(g_main.lua, "api_main_machines_update", api_main_machines_update);
     return 0;
 }
 
 static void main_loop(void)
 {
     printf("Game loop start\n");
-    while (machine_running(g_main.controller) || machine_running(g_main.worker))
-    {
-        timer_reset(g_main.logic_timer);
-        if (physics_update(g_main.frame_time) != 0)
-        {
-            fprintf(stderr, "Failed to update physics\n");
-            return;
-        }
-        input_update();
-
-        timer_reset(g_main.gc_timer);
-        lua_gc(g_main.lua, LUA_GCSTEP, g_main.gc_step);
-        lua_gc(g_main.lua, LUA_GCSTOP, 0);
-        g_main.last_gc_time = timer_passed(g_main.gc_timer);
-
-        if (machine_step(g_main.controller, 0) != 0)
-        {
-            fprintf(stderr, "Failed to run controller\n");
-            return;
-        }
-        if (machine_step(g_main.worker, g_main.logic_time -
-                         timer_passed(g_main.logic_timer)) != 0)
-        {
-            fprintf(stderr, "Failed to run worker\n");
-            return;
-        }
-        if (render_update(g_main.frame_time) != 0)
-        {
-            fprintf(stderr, "Failed to update render\n");
-            return;
-        }
-        if (render_draw() != 0)
-        {
-            fprintf(stderr, "Failed to draw render\n");
-            return;
-        }
-    }
+    lua_getglobal(g_main.lua, "run");
+    if (!lua_isfunction(g_main.lua, -1) || lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
+        fprintf(stderr, "Cannot execute run() function: %s\n", lua_tostring(g_main.lua, -1));
     printf("Game loop finish\n");
 }
 

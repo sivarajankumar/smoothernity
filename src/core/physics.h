@@ -5,7 +5,6 @@
 int physics_init(lua_State *lua, int wld_count, int cs_count,
                  int rb_count, int veh_count);
 void physics_done(void);
-int physics_update(float dt);
 int physics_wld_ddraw(int wldi);
 int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout);
 int physics_rb_fetch_tm(int rbi, float *matrix);

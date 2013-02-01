@@ -64,6 +64,291 @@ struct rops_t
 
 static struct rops_t g_rops;
 
+static struct rop_t * rop_get(int ropi)
+{
+    if (ropi >= 0 && ropi < g_rops.count)
+        return g_rops.pool + ropi;
+    else
+        return 0;
+}
+
+static int rop_update_meshes(float dt, int frame_tag)
+{
+    struct vbuf_t *vbuf;
+    struct mesh_t *mesh_vbuf;
+    for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+    {
+        for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+        {
+            if (mesh_vbuf->ibuf->mapped)
+                continue;
+            if (matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0) != 0)
+                return 1;
+        }
+    }
+    return 0;
+}
+
+static int api_rop_update(lua_State *lua)
+{
+    float dt;
+    int frame_tag;
+    struct rop_t *root, *rop;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    {
+        lua_pushstring(lua, "api_rop_update: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    root = rop_get(lua_tointeger(lua, 1));
+    dt = lua_tonumber(lua, 2);
+    frame_tag = lua_tointeger(lua, 3);
+
+    if (root == 0)
+    {
+        lua_pushstring(lua, "api_rop_update: invalid rop");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (dt < 0.0f)
+    {
+        lua_pushstring(lua, "api_rop_update: negative dt");
+        lua_error(lua);
+        return 0;
+    }
+
+    for (rop = root; rop; rop = rop->chain_next)
+    {
+        if (rop->type == ROP_TIME_SCALE)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                goto error;
+            dt *= rop->argv[0]->value[rop->tscalei];
+        }
+        else if (rop->type == ROP_CLEAR_COLOR)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                goto error;
+        }
+        else if (rop->type == ROP_CLEAR_DEPTH)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                goto error;
+        }
+        else if (rop->type == ROP_PROJ)
+        {
+            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+                goto error;
+        }
+        else if (rop->type == ROP_MVIEW)
+        {
+            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+                goto error;
+        }
+        else if (rop->type == ROP_DRAW_MESHES)
+        {
+            if (rop_update_meshes(dt, frame_tag) != 0)
+                goto error;
+        }
+        else if (rop->type == ROP_FOG_LIN)
+        {
+            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+                goto error;
+            if (vector_update(rop->argv[1], dt, frame_tag, 0) != 0)
+                goto error;
+        }
+    }
+    return 0;
+error:
+    lua_pushstring(lua, "api_rop_update: error");
+    lua_error(lua);
+    return 0;
+}
+
+static void rop_clear_color(struct rop_t *rop)
+{
+    GLfloat *v;
+    v = rop->argv[0]->value;
+    glClearColor(v[0], v[1], v[2], v[3]);
+}
+
+static void rop_proj(struct rop_t *rop)
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(rop->argm[0]->value);
+}
+
+static void rop_mview(struct rop_t *rop)
+{
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(rop->argm[0]->value);
+}
+
+static void rop_draw_meshes(int frame_tag, int group)
+{
+    struct vbuf_t *vbuf;
+    struct ibuf_t *ibuf;
+    struct mesh_t *mesh_vbuf;
+    struct mesh_t *mesh_ibuf;
+    int vbuf_selected;
+    int ibuf_selected;
+    if (g_vbufs.with_meshes < g_ibufs.with_meshes)
+    {
+        for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+        {
+            if (vbuf->meshes == 0)
+                continue;
+            vbuf_selected = 0;
+            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+            {
+                if (mesh_vbuf->frame_tag == frame_tag)
+                    continue;
+                ibuf = mesh_vbuf->ibuf;
+                if (ibuf->mapped)
+                    continue;
+                ibuf_selected = 0;
+                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
+                {
+                    if (mesh_ibuf->frame_tag == frame_tag)
+                        continue;
+                    if (mesh_ibuf->group != group)
+                        continue;
+                    if (vbuf_selected == 0)
+                    {
+                        vbuf_selected = 1;
+                        vbuf_select(vbuf);
+                    }
+                    if (ibuf_selected == 0)
+                    {
+                        ibuf_selected = 1;
+                        ibuf_select(ibuf);
+                    }
+                    mesh_ibuf->frame_tag = frame_tag;
+                    mesh_draw(mesh_ibuf);
+                }
+            }
+        }
+    }
+    else
+    {
+        for (ibuf = g_ibufs.baked; ibuf; ibuf = ibuf->next)
+        {
+            if (ibuf->meshes == 0)
+                continue;
+            ibuf_selected = 0;
+            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
+            {
+                if (mesh_ibuf->frame_tag == frame_tag)
+                    continue;
+                vbuf = mesh_ibuf->vbuf;
+                if (vbuf->mapped)
+                    continue;
+                vbuf_selected = 0;
+                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
+                {
+                    if (mesh_vbuf->frame_tag == frame_tag)
+                        continue;
+                    if (mesh_vbuf->group != group)
+                        continue;
+                    if (vbuf_selected == 0)
+                    {
+                        vbuf_selected = 1;
+                        vbuf_select(vbuf);
+                    }
+                    if (ibuf_selected == 0)
+                    {
+                        ibuf_selected = 1;
+                        ibuf_select(ibuf);
+                    }
+                    mesh_vbuf->frame_tag = frame_tag;
+                    mesh_draw(mesh_vbuf);
+                }
+            }
+        }
+    }
+}
+
+static void rop_swap()
+{
+    SDL_GL_SwapBuffers();
+    g_rops.frame_time = timer_passed(g_rops.frame_timer);
+    timer_reset(g_rops.frame_timer);
+}
+
+static void rop_fog_lin(struct rop_t *rop)
+{
+    glEnable(GL_FOG);
+    glFogi(GL_FOG_MODE, GL_LINEAR);
+    glFogfv(GL_FOG_COLOR, rop->argv[0]->value);
+    glFogf(GL_FOG_START, rop->argv[1]->value[rop->neari]);
+    glFogf(GL_FOG_END, rop->argv[1]->value[rop->fari]);
+    glFogi(GL_FOG_COORD_SRC, GL_FRAGMENT_DEPTH);
+}
+
+static int api_rop_draw(lua_State *lua)
+{
+    int frame_tag;
+    struct rop_t *rop, *root;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_rop_draw: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    root = rop_get(lua_tointeger(lua, 1));
+    frame_tag = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+
+    if (root == 0)
+    {
+        lua_pushstring(lua, "api_rop_draw: invalid rop");
+        lua_error(lua);
+        return 0;
+    }
+
+    glDisable(GL_FOG);
+    for (rop = root; rop; rop = rop->chain_next)
+    {
+        if (rop->type == ROP_CLEAR_COLOR)
+            rop_clear_color(rop);
+        else if (rop->type == ROP_CLEAR_DEPTH)
+            glClearDepthf(rop->argv[0]->value[rop->depthi]);
+        else if (rop->type == ROP_CLEAR)
+            glClear(rop->flags);
+        else if (rop->type == ROP_PROJ)
+            rop_proj(rop);
+        else if (rop->type == ROP_MVIEW)
+            rop_mview(rop);
+        else if (rop->type == ROP_DRAW_MESHES)
+            rop_draw_meshes(frame_tag, rop->group);
+        else if (rop->type == ROP_DBG_PHYSICS)
+        {
+            if (physics_wld_ddraw(rop->wldi) != 0)
+            {
+                lua_pushstring(lua, "api_rop_draw: physics world debug draw error");
+                lua_error(lua);
+                return 0;
+            }
+        }
+        else if (rop->type == ROP_DBG_TEXT)
+            text_draw();
+        else if (rop->type == ROP_SWAP)
+            rop_swap();
+        else if (rop->type == ROP_FOG_OFF)
+            glDisable(GL_FOG);
+        else if (rop->type == ROP_FOG_LIN)
+            rop_fog_lin(rop);
+    }
+    return 0;
+}
+
 static int rop_alloc(void)
 {
     struct rop_t *rop;
@@ -708,6 +993,8 @@ int rop_init(lua_State *lua, int count)
     }
 
     lua_register(lua, "api_rop_left", api_rop_left);
+    lua_register(lua, "api_rop_update", api_rop_update);
+    lua_register(lua, "api_rop_draw", api_rop_draw);
     lua_register(lua, "api_rop_frame_time", api_rop_frame_time);
     lua_register(lua, "api_rop_free", api_rop_free);
     lua_register(lua, "api_rop_alloc_root", api_rop_alloc_root);
@@ -757,232 +1044,5 @@ void rop_done(void)
     g_rops.pool = 0;
     timer_destroy(g_rops.frame_timer);
     g_rops.frame_timer = 0;
-}
-
-struct rop_t * rop_get(int ropi)
-{
-    if (ropi >= 0 && ropi < g_rops.count)
-        return g_rops.pool + ropi;
-    else
-        return 0;
-}
-
-static int rop_update_meshes(float dt, int frame_tag)
-{
-    struct vbuf_t *vbuf;
-    struct mesh_t *mesh_vbuf;
-    for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
-    {
-        for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-        {
-            if (mesh_vbuf->ibuf->mapped)
-                continue;
-            if (matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0) != 0)
-                return 1;
-        }
-    }
-    return 0;
-}
-
-int rop_update(struct rop_t *root, float dt, int frame_tag)
-{
-    struct rop_t *rop;
-    for (rop = root; rop; rop = rop->chain_next)
-    {
-        if (rop->type == ROP_TIME_SCALE)
-        {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
-                return 1;
-            dt *= rop->argv[0]->value[rop->tscalei];
-        }
-        else if (rop->type == ROP_CLEAR_COLOR)
-        {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_CLEAR_DEPTH)
-        {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_PROJ)
-        {
-            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_MVIEW)
-        {
-            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_DRAW_MESHES)
-        {
-            if (rop_update_meshes(dt, frame_tag) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_FOG_LIN)
-        {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
-                return 1;
-            if (vector_update(rop->argv[1], dt, frame_tag, 0) != 0)
-                return 1;
-        }
-    }
-    return 0;
-}
-
-static void rop_clear_color(struct rop_t *rop)
-{
-    GLfloat *v;
-    v = rop->argv[0]->value;
-    glClearColor(v[0], v[1], v[2], v[3]);
-}
-
-static void rop_proj(struct rop_t *rop)
-{
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(rop->argm[0]->value);
-}
-
-static void rop_mview(struct rop_t *rop)
-{
-    glMatrixMode(GL_MODELVIEW);
-    glLoadMatrixf(rop->argm[0]->value);
-}
-
-static void rop_draw_meshes(int frame_tag, int group)
-{
-    struct vbuf_t *vbuf;
-    struct ibuf_t *ibuf;
-    struct mesh_t *mesh_vbuf;
-    struct mesh_t *mesh_ibuf;
-    int vbuf_selected;
-    int ibuf_selected;
-    if (g_vbufs.with_meshes < g_ibufs.with_meshes)
-    {
-        for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
-        {
-            if (vbuf->meshes == 0)
-                continue;
-            vbuf_selected = 0;
-            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-            {
-                if (mesh_vbuf->frame_tag == frame_tag)
-                    continue;
-                ibuf = mesh_vbuf->ibuf;
-                if (ibuf->mapped)
-                    continue;
-                ibuf_selected = 0;
-                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
-                {
-                    if (mesh_ibuf->frame_tag == frame_tag)
-                        continue;
-                    if (mesh_ibuf->group != group)
-                        continue;
-                    if (vbuf_selected == 0)
-                    {
-                        vbuf_selected = 1;
-                        vbuf_select(vbuf);
-                    }
-                    if (ibuf_selected == 0)
-                    {
-                        ibuf_selected = 1;
-                        ibuf_select(ibuf);
-                    }
-                    mesh_ibuf->frame_tag = frame_tag;
-                    mesh_draw(mesh_ibuf);
-                }
-            }
-        }
-    }
-    else
-    {
-        for (ibuf = g_ibufs.baked; ibuf; ibuf = ibuf->next)
-        {
-            if (ibuf->meshes == 0)
-                continue;
-            ibuf_selected = 0;
-            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
-            {
-                if (mesh_ibuf->frame_tag == frame_tag)
-                    continue;
-                vbuf = mesh_ibuf->vbuf;
-                if (vbuf->mapped)
-                    continue;
-                vbuf_selected = 0;
-                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-                {
-                    if (mesh_vbuf->frame_tag == frame_tag)
-                        continue;
-                    if (mesh_vbuf->group != group)
-                        continue;
-                    if (vbuf_selected == 0)
-                    {
-                        vbuf_selected = 1;
-                        vbuf_select(vbuf);
-                    }
-                    if (ibuf_selected == 0)
-                    {
-                        ibuf_selected = 1;
-                        ibuf_select(ibuf);
-                    }
-                    mesh_vbuf->frame_tag = frame_tag;
-                    mesh_draw(mesh_vbuf);
-                }
-            }
-        }
-    }
-}
-
-static void rop_swap()
-{
-    SDL_GL_SwapBuffers();
-    g_rops.frame_time = timer_passed(g_rops.frame_timer);
-    timer_reset(g_rops.frame_timer);
-}
-
-static void rop_fog_lin(struct rop_t *rop)
-{
-    glEnable(GL_FOG);
-    glFogi(GL_FOG_MODE, GL_LINEAR);
-    glFogfv(GL_FOG_COLOR, rop->argv[0]->value);
-    glFogf(GL_FOG_START, rop->argv[1]->value[rop->neari]);
-    glFogf(GL_FOG_END, rop->argv[1]->value[rop->fari]);
-    glFogi(GL_FOG_COORD_SRC, GL_FRAGMENT_DEPTH);
-}
-
-int rop_draw(struct rop_t *root, int frame_tag)
-{
-    struct rop_t *rop;
-    glDisable(GL_FOG);
-    for (rop = root; rop; rop = rop->chain_next)
-    {
-        if (rop->type == ROP_CLEAR_COLOR)
-            rop_clear_color(rop);
-        else if (rop->type == ROP_CLEAR_DEPTH)
-            glClearDepthf(rop->argv[0]->value[rop->depthi]);
-        else if (rop->type == ROP_CLEAR)
-            glClear(rop->flags);
-        else if (rop->type == ROP_PROJ)
-            rop_proj(rop);
-        else if (rop->type == ROP_MVIEW)
-            rop_mview(rop);
-        else if (rop->type == ROP_DRAW_MESHES)
-            rop_draw_meshes(frame_tag, rop->group);
-        else if (rop->type == ROP_DBG_PHYSICS)
-        {
-            if (physics_wld_ddraw(rop->wldi) != 0)
-                return 1;
-        }
-        else if (rop->type == ROP_DBG_TEXT)
-            text_draw();
-        else if (rop->type == ROP_SWAP)
-            rop_swap();
-        else if (rop->type == ROP_FOG_OFF)
-            glDisable(GL_FOG);
-        else if (rop->type == ROP_FOG_LIN)
-            rop_fog_lin(rop);
-    }
-    return 0;
 }
 
