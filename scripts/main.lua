@@ -40,11 +40,27 @@ function configure()
             storage_count = 1}
 end
 
-function run()
+local function run_co(co, start_time, max_time)
+    while co ~= nil do
+        local res, arg = coroutine.resume(co)
+        if res and arg then
+            break
+        elseif not res then
+            io.write('Coroutine\n', debug.traceback(co), '\n')
+            error(arg)
+        end
+        if api_timer() - start_time > max_time then
+            break
+        end
+    end
+end
+
+local function run_main()
     game.init()
     local prf = perf.alloc()
     local frame_time = api_timer()
     local control, work
+
     control = coroutine.create(
         function()
             while not quit.requested()
@@ -56,6 +72,7 @@ function run()
             end
             control = nil
         end)
+
     work = coroutine.create(
         function()
             while not quit.requested()
@@ -65,6 +82,7 @@ function run()
             end
             work = nil
         end)
+
     while control ~= nil and work ~= nil
     do
         local logic_time = api_timer()
@@ -85,30 +103,12 @@ function run()
         end
         do
             local t = api_timer()
-            if control ~= nil then
-                local res, arg = coroutine.resume(control)
-                if not res then
-                    error(arg)
-                end
-            end
+            run_co(control, logic_time, 0)
             prf.sample('control', api_timer() - t)
         end
         do
             local t = api_timer()
-            if work == nil then
-                io.write('work is nil\n')
-            end
-            while work ~= nil do
-                local res, arg = coroutine.resume(work)
-                if res and arg then
-                    break
-                elseif not res then
-                    error(arg)
-                end
-                if api_timer() - logic_time > LOGIC_TIME then
-                    break
-                end
-            end
+            run_co(work, logic_time, LOGIC_TIME)
             prf.sample('work', api_timer() - t)
         end
         do
@@ -128,4 +128,11 @@ function run()
     end
     prf.free()
     game.done()
+end
+
+function run()
+    xpcall(run_main,
+        function(msg)
+            io.write(string.format('Main\n%s\nError: %s\n', debug.traceback(), msg))
+        end)
 end
