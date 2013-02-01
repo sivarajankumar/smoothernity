@@ -56,8 +56,6 @@ struct rops_t
     int left_min;
     int allocs;
     int frees;
-    float frame_time;
-    struct timer_t *frame_timer;
     struct rop_t *pool;
     struct rop_t *vacant;
 };
@@ -272,13 +270,6 @@ static void rop_draw_meshes(int frame_tag, int group)
     }
 }
 
-static void rop_swap()
-{
-    SDL_GL_SwapBuffers();
-    g_rops.frame_time = timer_passed(g_rops.frame_timer);
-    timer_reset(g_rops.frame_timer);
-}
-
 static void rop_fog_lin(struct rop_t *rop)
 {
     glEnable(GL_FOG);
@@ -340,7 +331,7 @@ static int api_rop_draw(lua_State *lua)
         else if (rop->type == ROP_DBG_TEXT)
             text_draw();
         else if (rop->type == ROP_SWAP)
-            rop_swap();
+            SDL_GL_SwapBuffers();
         else if (rop->type == ROP_FOG_OFF)
             glDisable(GL_FOG);
         else if (rop->type == ROP_FOG_LIN)
@@ -413,18 +404,6 @@ static int api_rop_left(lua_State *lua)
         return 0;
     }
     lua_pushinteger(lua, g_rops.left);
-    return 1;
-}
-
-static int api_rop_frame_time(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_rop_frame_time: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushnumber(lua, g_rops.frame_time);
     return 1;
 }
 
@@ -973,10 +952,6 @@ int rop_init(lua_State *lua, int count)
 {
     int i;
     struct rop_t *rop;
-
-    g_rops.frame_timer = timer_create();
-    if (g_rops.frame_timer == 0)
-        goto cleanup;
     g_rops.pool = calloc(count, sizeof(struct rop_t));
     if (g_rops.pool == 0)
         goto cleanup;
@@ -995,7 +970,6 @@ int rop_init(lua_State *lua, int count)
     lua_register(lua, "api_rop_left", api_rop_left);
     lua_register(lua, "api_rop_update", api_rop_update);
     lua_register(lua, "api_rop_draw", api_rop_draw);
-    lua_register(lua, "api_rop_frame_time", api_rop_frame_time);
     lua_register(lua, "api_rop_free", api_rop_free);
     lua_register(lua, "api_rop_alloc_root", api_rop_alloc_root);
     lua_register(lua, "api_rop_alloc_tscale", api_rop_alloc_tscale);
@@ -1025,11 +999,6 @@ cleanup:
         free(g_rops.pool);
         g_rops.pool = 0;
     }
-    if (g_rops.frame_timer)
-    {
-        timer_destroy(g_rops.frame_timer);
-        g_rops.frame_timer = 0;
-    }
     return 1;
 }
 
@@ -1042,7 +1011,5 @@ void rop_done(void)
            g_rops.allocs, g_rops.frees);
     free(g_rops.pool);
     g_rops.pool = 0;
-    timer_destroy(g_rops.frame_timer);
-    g_rops.frame_timer = 0;
 }
 
