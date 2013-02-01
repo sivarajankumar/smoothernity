@@ -55,7 +55,6 @@ function M.run()
     pwld.init()
     render.init()
     gui.init()
-    util.set_gravity(0, -10, 0)
 
     local prf = perf.alloc()
     local frame_time = api_timer()
@@ -80,6 +79,7 @@ function M.run()
 
     camc.attach(car.mchassis)
     wld.attach(car.mchassis)
+    util.set_gravity(0, -10, 0)
     render.visual.engage()
 
     local control = coroutine.create(
