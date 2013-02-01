@@ -69,7 +69,7 @@ local function looper_alloc(count_max)
     end
 
     function self.sample(name, value)
-        self.stats[name].sample(value)
+        stats[name].sample(value)
     end
 
     function self.update()

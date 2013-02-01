@@ -23,9 +23,8 @@ function M.player_freedom(value)
     frbar.set(value)
 end
 
-function M.control()
-    local frame_time = api_rop_frame_time()
-    if frame_time > cfg.FRAME_TIME * THRESH then
+function M.frame_time(value)
+    if value > cfg.FRAME_TIME * THRESH then
         whole_frames = 0
     else
         whole_frames = whole_frames + 1

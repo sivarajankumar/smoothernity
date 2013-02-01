@@ -5,6 +5,7 @@ local cfg = require 'config'
 local render = require 'render'
 local pwld = require 'physwld'
 local quit = require 'quit'
+local gui = require 'gui.gui'
 
 local work_finished = false
 local game_started = false
@@ -78,6 +79,7 @@ function run()
         end
         prf.sample('frame', api_main_time() - frame_time)
         prf.update()
+        gui.frame_time(api_main_time() - frame_time)
         frame_time = api_main_time()
     end
     prf.free()
