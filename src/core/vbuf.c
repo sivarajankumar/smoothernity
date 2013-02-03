@@ -1,12 +1,17 @@
 #include "vbuf.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t VBUF_DATA_SIZE = 32;
+static const size_t VBUF_SIZE = 64;
 
 struct vbuf_data_t
 {
     GLfloat pos[3];
     GLfloat tex[2];
     GLubyte color[4];
+    char padding[8];
 };
 
 struct vbufs_t g_vbufs;
@@ -252,9 +257,19 @@ int vbuf_init(lua_State *lua, int size, int count)
 {
     struct vbuf_data_t data;
     int i;
-    g_vbufs.pool = calloc(count, sizeof(struct vbuf_t));
+    if (sizeof(struct vbuf_t) != VBUF_SIZE
+    ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE)
+    {
+        fprintf(stderr, "Invalid sizes:\n"
+                        "sizeof(struct vbuf_t) == %i\n"
+                        "sizeof(struct vbuf_data_t) == %i\n",
+                (int)sizeof(struct vbuf_t), (int)sizeof(struct vbuf_data_t));
+        return 1;
+    }
+    g_vbufs.pool = aligned_alloc(VBUF_SIZE, VBUF_SIZE * count);
     if (g_vbufs.pool == 0)
         return 1;
+    memset(g_vbufs.pool, 0, VBUF_SIZE * count);
     for (i = 0; i < count; ++i)
     {
         g_vbufs.pool[i].vacant = 1;
@@ -264,7 +279,7 @@ int vbuf_init(lua_State *lua, int size, int count)
             g_vbufs.pool[i].next = g_vbufs.pool + i + 1;
         glGenBuffers(1, &g_vbufs.pool[i].buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, g_vbufs.pool[i].buf_id);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(struct vbuf_data_t) * size,
+        glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
                      0, GL_STATIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
@@ -318,9 +333,9 @@ void vbuf_select(struct vbuf_t * vbuf)
 {
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, sizeof(struct vbuf_data_t), g_vbufs.offset_pos);
+    glVertexPointer(3, GL_FLOAT, VBUF_DATA_SIZE, g_vbufs.offset_pos);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(struct vbuf_data_t), g_vbufs.offset_tex);
+    glTexCoordPointer(2, GL_FLOAT, VBUF_DATA_SIZE, g_vbufs.offset_tex);
     glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(struct vbuf_data_t), g_vbufs.offset_color);
+    glColorPointer(4, GL_UNSIGNED_BYTE, VBUF_DATA_SIZE, g_vbufs.offset_color);
 }

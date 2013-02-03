@@ -11,6 +11,7 @@ struct vbuf_t
     struct vbuf_t *prev;
     struct vbuf_t *next;
     struct mesh_t *meshes;
+    char padding[16];
 };
 
 struct vbufs_t
