@@ -93,7 +93,7 @@ static int api_buf_alloc(lua_State *lua)
     buf->next = 0;
     buf->vacant = 0;
 
-    lua_pushinteger(lua, buf - g_bufs.pool);
+    lua_pushinteger(lua, ((char*)buf - g_bufs.pool) / BUF_SIZE);
     return 1;
 }
 
@@ -129,7 +129,7 @@ int buf_init(lua_State *lua, int size, int count)
 {
     int i;
     struct buf_t *buf;
-    if (sizeof(struct buf_t) != BUF_SIZE
+    if (sizeof(struct buf_t) > BUF_SIZE
     ||  (size & (size - 1)) != 0)
     {
         fprintf(stderr, "Invalid size:\n"
@@ -142,16 +142,16 @@ int buf_init(lua_State *lua, int size, int count)
     if (g_bufs.pool == 0)
         return 1;
     memset(g_bufs.pool, 0, BUF_SIZE * count);
-    g_bufs.vacant = g_bufs.pool;
+    g_bufs.vacant = (struct buf_t*)g_bufs.pool;
     g_bufs.count = count;
     g_bufs.left = count;
     g_bufs.size = size;
     g_bufs.left_min = count;
     for (i = 0; i < count; ++i)
     {
-        buf = g_bufs.pool + i;
+        buf = buf_get(i);
         if (i < count - 1)
-            buf->next = g_bufs.pool + i + 1;
+            buf->next = buf_get(i + 1);
         buf->vacant = 1;
         buf->data = aligned_alloc(BUF_DATA_ALIGN, sizeof(float) * size);
         if (buf->data == 0)
@@ -171,6 +171,7 @@ cleanup:
 void buf_done(void)
 {
     int i;
+    struct buf_t *buf;
     if (g_bufs.pool == 0)
         return;
     printf("Buffers usage: %i/%i, allocs/frees: %i/%i\n",
@@ -178,8 +179,9 @@ void buf_done(void)
            g_bufs.allocs, g_bufs.frees);
     for (i = 0; i < g_bufs.count; ++i)
     {
-        if (g_bufs.pool[i].data)
-            free(g_bufs.pool[i].data);
+        buf = buf_get(i);
+        if (buf->data)
+            free(buf->data);
     }
     free(g_bufs.pool);
     g_bufs.pool = 0;
@@ -188,7 +190,7 @@ void buf_done(void)
 struct buf_t * buf_get(int bufi)
 {
     if (bufi >= 0 && bufi < g_bufs.count)
-        return g_bufs.pool + bufi;
+        return (struct buf_t*)(g_bufs.pool + BUF_SIZE * bufi);
     else
         return 0;
 }

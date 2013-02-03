@@ -7,7 +7,6 @@ struct buf_t
     float *data;
     int vacant;
     struct buf_t *next;
-    char padding[8];
 };
 
 struct bufs_t
@@ -18,7 +17,7 @@ struct bufs_t
     int left_min;
     int allocs;
     int frees;
-    struct buf_t *pool;
+    char *pool;
     struct buf_t *vacant;
 };
 
