@@ -11,7 +11,7 @@ function configure()
             vbuf_count = 1000,
             ibuf_size = 65536,
             ibuf_count = 1000,
-            text_size = 100,
+            text_size = 128,
             text_count = 100,
             vector_count = 100,
             vector_nesting = 20,
