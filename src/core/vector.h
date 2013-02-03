@@ -27,8 +27,8 @@ enum vector_e
 
 struct vector_t
 {
+    GLfloat value[4]; /* must be first to ensure alignment */
     enum vector_e type;
-    GLfloat value[4];
     int frame_tag;
     int vacant;
     struct vector_t *next;
@@ -46,6 +46,8 @@ struct vector_t
     int seq_loop;
     enum vector_ipl_e seq_ipl;
     struct buf_t *seq_buf;
+
+    char padding[112];
 };
 
 int vector_init(lua_State *lua, int count, int nesting);

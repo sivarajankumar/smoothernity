@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdio.h>
 
+static const size_t VECTOR_SIZE = 256;
+
 struct vectors_t
 {
     int count;
@@ -582,9 +584,17 @@ static int api_vector_cast(lua_State *lua)
 int vector_init(lua_State *lua, int count, int nesting)
 {
     int i;
-    g_vectors.pool = calloc(count, sizeof(struct vector_t));
+    if (sizeof(struct vector_t) != VECTOR_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\n"
+                        "sizeof(struct vector_t) == %i\n",
+                (int)sizeof(struct vector_t));
+        return 1;
+    }
+    g_vectors.pool = aligned_alloc(VECTOR_SIZE, VECTOR_SIZE * count);
     if (g_vectors.pool == 0)
         return 1;
+    memset(g_vectors.pool, 0, VECTOR_SIZE * count);
     g_vectors.count = count;
     g_vectors.left = count;
     g_vectors.left_min = count;
