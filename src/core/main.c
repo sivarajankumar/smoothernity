@@ -98,11 +98,14 @@ static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
     newptr = mpool_alloc(nsize);
     if (newptr == 0)
         return 0;
-    else if (osize <= nsize)
-        memcpy(newptr, ptr, osize);
-    else
-        memcpy(newptr, ptr, nsize);
-    mpool_free(ptr);
+    else if (ptr)
+    {
+        if (osize <= nsize)
+            memcpy(newptr, ptr, osize);
+        else
+            memcpy(newptr, ptr, nsize);
+        mpool_free(ptr);
+    }
     return newptr;
 }
 
