@@ -9,11 +9,14 @@
 #include "text.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <GL/gl.h>
 #include <SDL.h>
 
 #define ROP_ARGVS 2
 #define ROP_ARGMS 1
+
+static const size_t ROP_SIZE = 128;
 
 enum rop_e
 {
@@ -47,6 +50,7 @@ struct rop_t
     struct rop_t *chain_next;
     struct vector_t *argv[ROP_ARGVS];
     struct matrix_t *argm[ROP_ARGMS];
+    char padding[48];
 };
 
 struct rops_t
@@ -952,9 +956,17 @@ int rop_init(lua_State *lua, int count)
 {
     int i;
     struct rop_t *rop;
-    g_rops.pool = calloc(count, sizeof(struct rop_t));
+    if (sizeof(struct rop_t) != ROP_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\n"
+                        "sizeof(struct rop_t) == %i\n",
+                (int)sizeof(struct rop_t));
+        return 1;
+    }
+    g_rops.pool = aligned_alloc(ROP_SIZE, ROP_SIZE * count);
     if (g_rops.pool == 0)
         goto cleanup;
+    memset(g_rops.pool, 0, ROP_SIZE * count);
     g_rops.vacant = g_rops.pool;
     g_rops.count = count;
     g_rops.left = count;
