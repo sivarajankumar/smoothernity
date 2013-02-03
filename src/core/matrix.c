@@ -6,6 +6,8 @@
 #include <math.h>
 #include <stdio.h>
 
+static const size_t MATRIX_SIZE = 256;
+
 struct matrices_t
 {
     int count;
@@ -54,7 +56,7 @@ static int api_matrix_alloc(lua_State *lua)
     matrix = g_matrices.vacant;
     g_matrices.vacant = g_matrices.vacant->next;
 
-    memset(matrix, 0, sizeof(struct matrix_t));
+    memset(matrix, 0, MATRIX_SIZE);
 
     lua_pushinteger(lua, matrix - g_matrices.pool);
     return 1;
@@ -126,7 +128,7 @@ static int api_matrix_copy(lua_State *lua)
     }
 
     mnext = matrix->next;
-    memcpy(matrix, msrc, sizeof(struct matrix_t));
+    memcpy(matrix, msrc, MATRIX_SIZE);
     matrix->next = mnext;
     return 0;
 }
@@ -653,9 +655,17 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
 int matrix_init(lua_State *lua, int count, int nesting)
 {
     int i;
-    g_matrices.pool = calloc(count, sizeof(struct matrix_t));
+    if (sizeof(struct matrix_t) != MATRIX_SIZE)
+    {
+        fprintf(stderr, "Invalid sizes:\n"
+                        "sizeof(struct matrix_t) == %i\n",
+                (int)sizeof(struct matrix_t));
+        return 1;
+    }
+    g_matrices.pool = aligned_alloc(MATRIX_SIZE, MATRIX_SIZE * count);
     if (g_matrices.pool == 0)
         return 1;
+    memset(g_matrices.pool, 0, MATRIX_SIZE * count);
     g_matrices.count = count;
     g_matrices.left = count;
     g_matrices.left_min = g_matrices.left;
