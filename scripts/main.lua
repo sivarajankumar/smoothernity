@@ -2,8 +2,7 @@ local game = require 'game'
 local cfg = require 'config'
 
 function configure()
-    return {mpool_aligns = function() return    16,   16,    16,    128,     128,    1024 end,
-            mpool_sizes = function() return    128, 1024,  8192, 131072, 1048576, 4194304 end,
+    return {mpool_sizes = function() return    128, 1024,  8192, 131072, 1048576, 4194304 end,
             mpool_counts = function() return 10000, 2000,  2000,      2,       2,       2 end,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,

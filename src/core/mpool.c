@@ -5,6 +5,7 @@
 
 static const size_t MPOOL_CHUNK_SIZE = 32;
 static const size_t MPOOL_SHELF_SIZE = 64;
+static const size_t MPOOL_DATA_ALIGN = 16;
 
 struct mpool_chunk_t
 {
@@ -16,7 +17,6 @@ struct mpool_chunk_t
 
 struct mpool_shelf_t
 {
-    int align;
     int size;
     int count;
     int left;
@@ -76,7 +76,7 @@ void * mpool_alloc(size_t size)
     chunk = shelf->vacant;
     shelf->vacant = shelf->vacant->next;
     chunk->next = 0;
-    return ((void**)chunk->data) + 1;
+    return ((char*)chunk->data) + MPOOL_DATA_ALIGN;
 }
 
 void mpool_free(void *ptr)
@@ -85,7 +85,7 @@ void mpool_free(void *ptr)
     struct mpool_shelf_t *shelf;
     if (ptr == 0)
         return;
-    chunk = ((struct mpool_chunk_t**)ptr)[-1];
+    chunk = *(struct mpool_chunk_t**)(((char*)ptr) - MPOOL_DATA_ALIGN);
     shelf = chunk->shelf;
     chunk->next = shelf->vacant;
     shelf->vacant = chunk;
@@ -93,20 +93,22 @@ void mpool_free(void *ptr)
     ++shelf->frees;
 }
 
-int mpool_init(const int aligns[], const int sizes[],
-               const int counts[], int len)
+int mpool_init(const int sizes[], const int counts[], int len)
 {
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *chunk;
-    int i, j, align, size, count;
+    int i, j, size, count;
     if (sizeof(struct mpool_chunk_t) != MPOOL_CHUNK_SIZE
-    ||  sizeof(struct mpool_shelf_t) != MPOOL_SHELF_SIZE)
+    ||  sizeof(struct mpool_shelf_t) != MPOOL_SHELF_SIZE
+    ||  sizeof(void*) > MPOOL_DATA_ALIGN)
     {
         fprintf(stderr, "Invalid size:\n"
                         "sizeof(struct mpool_chunk_t) == %i\n"
-                        "sizeof(struct mpool_shelf_t) == %i\n",
+                        "sizeof(struct mpool_shelf_t) == %i\n"
+                        "sizeof(void*) == %i\n",
                 (int)sizeof(struct mpool_chunk_t),
-                (int)sizeof(struct mpool_shelf_t));
+                (int)sizeof(struct mpool_shelf_t),
+                (int)sizeof(void*));
         return 1;
     }
     g_mpool.shelves = aligned_alloc(MPOOL_SHELF_SIZE, MPOOL_SHELF_SIZE * len);
@@ -118,18 +120,14 @@ int mpool_init(const int aligns[], const int sizes[],
     {
         if (i > 0 && sizes[i-1] >= sizes[i])
             goto cleanup;
-        align = aligns[i];
         size = sizes[i];
         count = counts[i];
-        if ((align & (align - 1)) != 0
-        ||  (size & (size - 1)) != 0)
+        if ((size & (size - 1)) != 0)
         {
-            fprintf(stderr, "Invalid shelf: align == %i, size == %i\n",
-                    align, size);
+            fprintf(stderr, "Invalid shelf size == %i\n", size);
             goto cleanup;
         }
         shelf = g_mpool.shelves + i;
-        shelf->align = align;
         shelf->size = size;
         shelf->count = count;
         shelf->left = count;
@@ -144,7 +142,8 @@ int mpool_init(const int aligns[], const int sizes[],
             chunk->shelf = g_mpool.shelves + i;
             if (j < counts[i] - 1)
                 chunk->next = shelf->chunks + j + 1;
-            chunk->data = malloc((size_t)sizes[i] + sizeof(void*));
+            /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
+            chunk->data = aligned_alloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
             if (chunk->data == 0)
                 goto cleanup;
             *(void**)(chunk->data) = chunk;
