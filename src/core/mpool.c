@@ -11,6 +11,7 @@ struct mpool_chunk_t
 
 struct mpool_shelf_t
 {
+    int align;
     int size;
     int count;
     int left;
@@ -85,11 +86,12 @@ void mpool_free(void *ptr)
     ++shelf->frees;
 }
 
-int mpool_init(const int sizes[], const int counts[], int len)
+int mpool_init(const int aligns[], const int sizes[],
+               const int counts[], int len)
 {
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *chunk;
-    int i, j;
+    int i, j, align, size;
     g_mpool.shelves = calloc(len, sizeof(struct mpool_shelf_t));
     if (g_mpool.shelves == 0)
         return 0;
@@ -98,8 +100,18 @@ int mpool_init(const int sizes[], const int counts[], int len)
     {
         if (i > 0 && sizes[i-1] >= sizes[i])
             goto cleanup;
+        align = aligns[i];
+        size = sizes[i];
+        if ((align & (align - 1)) != 0
+        ||  (size & (size - 1)) != 0)
+        {
+            fprintf(stderr, "Invalid shelf: align == %i, size == %i\n",
+                    align, size);
+            goto cleanup;
+        }
         shelf = g_mpool.shelves + i;
-        shelf->size = sizes[i];
+        shelf->align = align;
+        shelf->size = size;
         shelf->count = counts[i];
         shelf->left = counts[i];
         shelf->left_min = counts[i];

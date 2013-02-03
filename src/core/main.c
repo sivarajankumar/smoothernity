@@ -23,6 +23,7 @@
 
 struct main_t
 {
+    int *mpool_aligns;
     int *mpool_sizes;
     int *mpool_counts;
     int mpool_len;
@@ -222,7 +223,9 @@ static int main_configure(char *script)
         goto cleanup;
     }
 
-    if (main_get_int_array(lua, "mpool_sizes", &g_main.mpool_len,
+    if (main_get_int_array(lua, "mpool_aligns", &g_main.mpool_len,
+                           &g_main.mpool_aligns) != 0
+     || main_get_int_array(lua, "mpool_sizes", &g_main.mpool_len,
                            &g_main.mpool_sizes) != 0
      || main_get_int_array(lua, "mpool_counts", &g_main.mpool_len,
                            &g_main.mpool_counts) != 0)
@@ -234,6 +237,11 @@ static int main_configure(char *script)
     lua_close(lua);
     return 0;
 cleanup:
+    if (g_main.mpool_aligns)
+    {
+        free(g_main.mpool_aligns);
+        g_main.mpool_aligns = 0;
+    }
     if (g_main.mpool_sizes)
     {
         free(g_main.mpool_sizes);
@@ -256,6 +264,11 @@ static void main_done(void)
 
     if (g_main.lua)
         lua_close(g_main.lua);
+    if (g_main.mpool_aligns)
+    {
+        free(g_main.mpool_aligns);
+        g_main.mpool_aligns = 0;
+    }
     if (g_main.mpool_sizes)
     {
         free(g_main.mpool_sizes);
@@ -286,7 +299,8 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (mpool_init(g_main.mpool_sizes,
+    if (mpool_init(g_main.mpool_aligns,
+                   g_main.mpool_sizes,
                    g_main.mpool_counts,
                    g_main.mpool_len) == 0)
     {
