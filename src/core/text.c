@@ -4,6 +4,9 @@
 #include <string.h>
 #include <GL/glut.h>
 
+static const size_t TEXT_SIZE = 64;
+static const size_t TEXT_STRING_ALIGN = 16;
+
 enum text_font_e
 {
     TEXT_FONT_8_BY_13 = 0,
@@ -24,6 +27,7 @@ struct text_t
     int vacant;
     struct text_t *prev;
     struct text_t *next;
+    char padding[16];
 };
 
 struct texts_t
@@ -190,18 +194,30 @@ static int api_text_left(lua_State *lua)
 int text_init(lua_State *lua, int size, int count)
 {
     int i;
-    g_texts.pool = calloc(count, sizeof(struct text_t));
+    if (sizeof(struct text_t) != TEXT_SIZE
+    ||  (size & (size - 1)) != 0)
+    {
+        fprintf(stderr, "Invalid sizes:\n"
+                        "sizeof(struct text_t) == %i\n"
+                        "size == %i\n",
+                (int)sizeof(struct text_t),
+                size);
+        return 1;
+    }
+    g_texts.pool = aligned_alloc(TEXT_SIZE, TEXT_SIZE * count);
     if (g_texts.pool == 0)
         return 1;
+    memset(g_texts.pool, 0, TEXT_SIZE * count);
     for (i = 0; i < count; ++i)
     {
         if (i > 0)
             g_texts.pool[i].prev = g_texts.pool + i - 1;
         if (i < count - 1)
             g_texts.pool[i].next = g_texts.pool + i + 1;
-        g_texts.pool[i].string = calloc(size, sizeof(char));
+        g_texts.pool[i].string = aligned_alloc(TEXT_STRING_ALIGN, sizeof(char) * size);
         if (g_texts.pool[i].string == 0)
             goto cleanup;
+        memset(g_texts.pool[i].string, 0, sizeof(char) * size);
         g_texts.pool[i].vacant = 1;
     }
     g_texts.size = size;
