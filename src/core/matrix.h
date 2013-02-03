@@ -44,7 +44,6 @@ struct matrix_t
     struct vector_t *argv[MATRIX_ARGVS];
     struct matrix_t *argm[MATRIX_ARGMS];
     struct matrix_t *next;
-    char padding[104];
 };
 
 int matrix_init(lua_State *lua, int count, int nesting);
