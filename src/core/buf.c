@@ -142,11 +142,11 @@ int buf_init(lua_State *lua, int size, int count)
     if (g_bufs.pool == 0)
         return 1;
     memset(g_bufs.pool, 0, BUF_SIZE * count);
-    g_bufs.vacant = (struct buf_t*)g_bufs.pool;
     g_bufs.count = count;
     g_bufs.left = count;
     g_bufs.size = size;
     g_bufs.left_min = count;
+    g_bufs.vacant = buf_get(0);
     for (i = 0; i < count; ++i)
     {
         buf = buf_get(i);

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-static const size_t IBUF_DATA_SIZE = sizeof(GLuint);
 static const size_t IBUF_SIZE = 64;
 
 struct ibufs_t g_ibufs;
@@ -78,7 +77,7 @@ static int api_ibuf_alloc(lua_State *lua)
     ibuf->next = g_ibufs.mapped;
     g_ibufs.mapped = ibuf;
 
-    lua_pushinteger(lua, ibuf - g_ibufs.pool);
+    lua_pushinteger(lua, ((char*)ibuf - g_ibufs.pool) / IBUF_SIZE);
     return 1;
 }
 
@@ -151,7 +150,7 @@ static int api_ibuf_bake(lua_State *lua)
 static int api_ibuf_set(lua_State *lua)
 {
     struct ibuf_t *ibuf;
-    struct ibuf_data_t *data;
+    ibuf_data_t *data;
     int start, len, index, i;
 
     if (lua_gettop(lua) < 3 || !lua_isnumber(lua, 1)
@@ -195,7 +194,7 @@ static int api_ibuf_set(lua_State *lua)
             lua_error(lua);
             return 0;
         }
-        data[start + i].index = index;
+        data[start + i] = index;
     }
 
     lua_pop(lua, lua_gettop(lua));
@@ -217,16 +216,14 @@ static int api_ibuf_query(lua_State *lua)
 int ibuf_init(lua_State *lua, int size, int count)
 {
     int i;
-    if (sizeof(struct ibuf_t) != IBUF_SIZE
-    ||  sizeof(struct ibuf_data_t) != IBUF_DATA_SIZE
+    struct ibuf_t *ibuf;
+    if (sizeof(struct ibuf_t) > IBUF_SIZE
     ||  (size & (size - 1)) != 0)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct ibuf_t) == %i\n"
-                        "sizeof(struct ibuf_data_t) == %i\n"
                         "size == %i\n",
                 (int)sizeof(struct ibuf_t),
-                (int)sizeof(struct ibuf_data_t),
                 size);
         return 1;
     }
@@ -234,25 +231,26 @@ int ibuf_init(lua_State *lua, int size, int count)
     if (g_ibufs.pool == 0)
         return 1;
     memset(g_ibufs.pool, 0, IBUF_SIZE * count);
-    for (i = 0; i < count; ++i)
-    {
-        g_ibufs.pool[i].vacant = 1;
-        if (i > 0)
-            g_ibufs.pool[i].prev = g_ibufs.pool + i - 1;
-        if (i < count - 1)
-            g_ibufs.pool[i].next = g_ibufs.pool + i + 1;
-        glGenBuffers(1, &g_ibufs.pool[i].buf_id);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ibufs.pool[i].buf_id);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, IBUF_DATA_SIZE * size,
-                     0, GL_STATIC_DRAW);
-        if (glGetError() != GL_NO_ERROR)
-            goto cleanup;
-    }
-    g_ibufs.vacant = g_ibufs.pool;
     g_ibufs.size = size;
     g_ibufs.count = count;
     g_ibufs.left = count;
     g_ibufs.left_min = count;
+    g_ibufs.vacant = ibuf_get(0);
+    for (i = 0; i < count; ++i)
+    {
+        ibuf = ibuf_get(i);
+        ibuf->vacant = 1;
+        if (i > 0)
+            ibuf->prev = ibuf_get(i - 1);
+        if (i < count - 1)
+            ibuf->next = ibuf_get(i + 1);
+        glGenBuffers(1, &ibuf->buf_id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * size,
+                     0, GL_STATIC_DRAW);
+        if (glGetError() != GL_NO_ERROR)
+            goto cleanup;
+    }
 
     lua_register(lua, "api_ibuf_alloc", api_ibuf_alloc);
     lua_register(lua, "api_ibuf_free", api_ibuf_free);
@@ -285,7 +283,7 @@ void ibuf_done(void)
 struct ibuf_t * ibuf_get(int ibufi)
 {
     if (ibufi >= 0 && ibufi < g_ibufs.count)
-        return g_ibufs.pool + ibufi;
+        return (struct ibuf_t*)(g_ibufs.pool + IBUF_SIZE * ibufi);
     else
         return 0;
 }
