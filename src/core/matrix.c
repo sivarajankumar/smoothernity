@@ -16,7 +16,7 @@ struct matrices_t
     int nesting;
     int allocs;
     int frees;
-    struct matrix_t *pool;
+    char *pool;
     struct matrix_t *vacant;
 };
 
@@ -58,7 +58,7 @@ static int api_matrix_alloc(lua_State *lua)
 
     memset(matrix, 0, MATRIX_SIZE);
 
-    lua_pushinteger(lua, matrix - g_matrices.pool);
+    lua_pushinteger(lua, ((char*)matrix - g_matrices.pool) / MATRIX_SIZE);
     return 1;
 }
 
@@ -655,7 +655,8 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
 int matrix_init(lua_State *lua, int count, int nesting)
 {
     int i;
-    if (sizeof(struct matrix_t) != MATRIX_SIZE)
+    struct matrix_t *matrix;
+    if (sizeof(struct matrix_t) > MATRIX_SIZE)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct matrix_t) == %i\n",
@@ -670,12 +671,13 @@ int matrix_init(lua_State *lua, int count, int nesting)
     g_matrices.left = count;
     g_matrices.left_min = g_matrices.left;
     g_matrices.nesting = nesting;
-    g_matrices.vacant = g_matrices.pool;
+    g_matrices.vacant = matrix_get(0);
     for (i = 0; i < count; ++i)
     {
+        matrix = matrix_get(i);
         if (i < count - 1)
-            g_matrices.pool[i].next = g_matrices.pool + i + 1;
-        g_matrices.pool[i].vacant = 1;
+            matrix->next = matrix_get(i + 1);
+        matrix->vacant = 1;
     }
     lua_register(lua, "api_matrix_alloc", api_matrix_alloc);
     lua_register(lua, "api_matrix_free", api_matrix_free);
@@ -719,7 +721,7 @@ void matrix_done(void)
 struct matrix_t * matrix_get(int i)
 {
     if (i >= 0 && i < g_matrices.count)
-        return g_matrices.pool + i;
+        return (struct matrix_t*)(g_matrices.pool + MATRIX_SIZE * i);
     else
         return 0;
 }
