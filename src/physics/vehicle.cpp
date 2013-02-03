@@ -36,14 +36,36 @@ int vehicle_init(int count)
             veh->next = g_vehicles.pool + i + 1;
         veh->vacant = 1;
         try {
-            veh->mstate = new (veh->mstate_data) mstate_c();
-            veh->tuning = new (veh->tuning_data) btRaycastVehicle::btVehicleTuning();
+            #define ALIGNMENT(p, x) alignof(x) - ((p - (char*)0) % alignof(x))
+            #define TOTAL_SIZE(x) sizeof(x) + alignof(x)
+            veh->chassis_data = (char*)calloc(TOTAL_SIZE(btRigidBody), 1);
+            veh->ray_data = (char*)calloc(TOTAL_SIZE(btDefaultVehicleRaycaster), 1);
+            veh->veh_data = (char*)calloc(TOTAL_SIZE(btRaycastVehicle), 1);
+            veh->chassis_align = ALIGNMENT(veh->chassis_data, btRigidBody);
+            veh->ray_align = ALIGNMENT(veh->ray_data, btDefaultVehicleRaycaster);
+            veh->veh_align = ALIGNMENT(veh->veh_data, btRaycastVehicle);
+            veh->mstate = new mstate_c();
+            veh->tuning = new btRaycastVehicle::btVehicleTuning();
         } catch (...) {
             goto cleanup;
         }
     }
     return PHYSRES_OK;
 cleanup:
+    for (i = 0; i < count; ++i)
+    {
+        veh = g_vehicles.pool + i;
+        if (veh->chassis_data)
+            free(veh->chassis_data);
+        if (veh->ray_data)
+            free(veh->ray_data);
+        if (veh->veh_data)
+            free(veh->veh_data);
+        if (veh->mstate)
+            delete veh->mstate;
+        if (veh->tuning)
+            delete veh->tuning;
+    }
     free(g_vehicles.pool);
     g_vehicles.pool = 0;
     return PHYSRES_CANNOT_INIT;
@@ -63,8 +85,11 @@ void vehicle_done(void)
         veh = g_vehicles.pool + i;
         vehicle_free(veh);
         try {
-            veh->mstate->~mstate_c();
-            veh->tuning->~btVehicleTuning();
+            free(veh->chassis_data);
+            free(veh->ray_data);
+            free(veh->veh_data);
+            delete veh->mstate;
+            delete veh->tuning;
         } catch (...) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
@@ -197,9 +222,11 @@ int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
         info.m_friction = ch_frict;
         info.m_rollingFriction = ch_roll_frict;
 
-        veh->chassis = new (veh->chassis_data) btRigidBody(info);
-        veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(wld->world);
-        veh->veh = new (veh->veh_data)
+        veh->chassis = new (veh->chassis_data + veh->chassis_align)
+                            btRigidBody(info);
+        veh->ray = new (veh->ray_data + veh->ray_align)
+                        btDefaultVehicleRaycaster(wld->world);
+        veh->veh = new (veh->veh_data + veh->veh_align)
             btRaycastVehicle(*veh->tuning, veh->chassis, veh->ray);
         veh->veh->setCoordinateSystem(0, 1, 2);
         veh->chassis->setActivationState(DISABLE_DEACTIVATION);

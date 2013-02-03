@@ -39,20 +39,15 @@ int world_init(int count)
             wld->prev = g_worlds.pool + i - 1;
         try
         {
-            wld->colcfg = new (wld->colcfg_data)
-                btDefaultCollisionConfiguration();
-            wld->dispatcher = new (wld->dispatcher_data)
-                btCollisionDispatcher(wld->colcfg);
-            wld->broadphase = new (wld->broadphase_data)
-                btDbvtBroadphase();
-            wld->solver = new (wld->solver_data)
-                btSequentialImpulseConstraintSolver();
-            wld->world = new (wld->world_data)
-                btDiscreteDynamicsWorld(wld->dispatcher,
-                                        wld->broadphase,
-                                        wld->solver,
-                                        wld->colcfg);
-            wld->ddraw = new (wld->ddraw_data) ddraw_c();
+            wld->colcfg = new btDefaultCollisionConfiguration();
+            wld->dispatcher = new btCollisionDispatcher(wld->colcfg);
+            wld->broadphase = new btDbvtBroadphase();
+            wld->solver = new btSequentialImpulseConstraintSolver();
+            wld->world = new btDiscreteDynamicsWorld(wld->dispatcher,
+                                                     wld->broadphase,
+                                                     wld->solver,
+                                                     wld->colcfg);
+            wld->ddraw = new ddraw_c();
             wld->world->setDebugDrawer(wld->ddraw);
         }
         catch (...)
@@ -62,6 +57,22 @@ int world_init(int count)
     }
     return PHYSRES_OK;
 cleanup:
+    for (i = 0; i < count; ++i)
+    {
+        wld = g_worlds.pool + i;
+        if (wld->colcfg)
+            delete wld->colcfg;
+        if (wld->dispatcher)
+            delete wld->dispatcher;
+        if (wld->broadphase)
+            delete wld->broadphase;
+        if (wld->solver)
+            delete wld->solver;
+        if (wld->world)
+            delete wld->world;
+        if (wld->ddraw)
+            delete wld->ddraw;
+    }
     free(g_worlds.pool);
     g_worlds.pool = 0;
     return PHYSRES_CANNOT_INIT;
@@ -83,12 +94,12 @@ void world_done(void)
         wld = g_worlds.pool + i;
         try
         {
-            wld->world->~btDiscreteDynamicsWorld();
-            wld->solver->~btSequentialImpulseConstraintSolver();
-            wld->broadphase->~btDbvtBroadphase();
-            wld->dispatcher->~btCollisionDispatcher();
-            wld->colcfg->~btDefaultCollisionConfiguration();
-            wld->ddraw->~ddraw_c();
+            delete wld->world;
+            delete wld->solver;
+            delete wld->broadphase;
+            delete wld->dispatcher;
+            delete wld->colcfg;
+            delete wld->ddraw;
         }
         catch (...)
         {

@@ -14,12 +14,6 @@ struct world_t
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
     ddraw_c *ddraw;
-    char broadphase_data[sizeof(btDbvtBroadphase)];
-    char dispatcher_data[sizeof(btCollisionDispatcher)];
-    char solver_data[sizeof(btSequentialImpulseConstraintSolver)];
-    char colcfg_data[sizeof(btDefaultCollisionConfiguration)];
-    char world_data[sizeof(btDiscreteDynamicsWorld)];
-    char ddraw_data[sizeof(ddraw_c)];
 
     int vacant;
     world_t *next;

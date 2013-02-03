@@ -9,4 +9,4 @@ add_library(physics physcpp.cpp colshape.cpp mstate.cpp
 
 target_link_libraries(physics ${BULLET_LIBRARIES})
 
-add_definitions(-ansi -pedantic-errors -Wall -Wextra)
+add_definitions(-std=c++11 -pedantic-errors -Wall -Wextra)

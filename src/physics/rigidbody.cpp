@@ -36,13 +36,25 @@ int rigidbody_init(int count)
             rb->next = g_rigidbodies.pool + i + 1;
         rb->vacant = 1;
         try {
-            rb->mstate = new (rb->mstate_data) mstate_c();
+            rb->mstate = new mstate_c();
+            rb->body_data = (char*)calloc(sizeof(btRigidBody) +
+                                          alignof(btRigidBody), 1);
+            rb->body_align = alignof(btRigidBody) - ((rb->body_data - (char*)0)
+                                                     % alignof(btRigidBody));
         } catch (...) {
             goto cleanup;
         }
     }
     return PHYSRES_OK;
 cleanup:
+    for (i = 0; i < count; ++i)
+    {
+        rb = g_rigidbodies.pool + i;
+        if (rb->mstate)
+            delete rb->mstate;
+        if (rb->body_data)
+            free(rb->body_data);
+    }
     free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
     return PHYSRES_CANNOT_INIT;
@@ -60,7 +72,8 @@ void rigidbody_done(void)
     {
         rigidbody_free(g_rigidbodies.pool + i);
         try {
-            g_rigidbodies.pool[i].mstate->~mstate_c();
+            delete g_rigidbodies.pool[i].mstate;
+            free(g_rigidbodies.pool[i].body_data);
         } catch (...) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
@@ -156,7 +169,7 @@ int rigidbody_alloc(int *rbi, world_t *wld, colshape_t *cs, float *matrix,
         info.m_friction = frict;
         info.m_rollingFriction = roll_frict;
 
-        rb->body = new (rb->body_data) btRigidBody(info);
+        rb->body = new (rb->body_data + rb->body_align) btRigidBody(info);
 
         wld->world->addRigidBody(rb->body);
         rb->wld = wld;
