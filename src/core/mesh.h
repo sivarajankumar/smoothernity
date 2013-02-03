@@ -23,6 +23,8 @@ struct mesh_t
 
     struct mesh_t *prev;
     struct mesh_t *next;
+
+    char padding[32];
 };
 
 struct meshes_t

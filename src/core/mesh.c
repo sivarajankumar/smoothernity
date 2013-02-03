@@ -4,6 +4,9 @@
 #include "matrix.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t MESH_SIZE = 128;
 
 struct meshes_t g_meshes;
 
@@ -233,9 +236,17 @@ static int api_mesh_left(lua_State *lua)
 int mesh_init(lua_State *lua, int count)
 {
     int i;
-    g_meshes.pool = calloc(count, sizeof(struct mesh_t));
+    if (sizeof(struct mesh_t) != MESH_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\n"
+                        "sizeof(struct mesh_t) == %i\n",
+                (int)sizeof(struct mesh_t));
+        return 1;
+    }
+    g_meshes.pool = aligned_alloc(MESH_SIZE, MESH_SIZE * count);
     if (g_meshes.pool == 0)
         return 1;
+    memset(g_meshes.pool, 0, MESH_SIZE * count);
     for (i = 0; i < count; ++i)
     {
         if (i > 0)
