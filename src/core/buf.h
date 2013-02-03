@@ -7,6 +7,7 @@ struct buf_t
     float *data;
     int vacant;
     struct buf_t *next;
+    char padding[8];
 };
 
 struct bufs_t

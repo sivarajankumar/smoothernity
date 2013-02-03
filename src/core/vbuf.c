@@ -258,12 +258,16 @@ int vbuf_init(lua_State *lua, int size, int count)
     struct vbuf_data_t data;
     int i;
     if (sizeof(struct vbuf_t) != VBUF_SIZE
-    ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE)
+    ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE
+    ||  (size & (size - 1)) != 0)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct vbuf_t) == %i\n"
-                        "sizeof(struct vbuf_data_t) == %i\n",
-                (int)sizeof(struct vbuf_t), (int)sizeof(struct vbuf_data_t));
+                        "sizeof(struct vbuf_data_t) == %i\n"
+                        "size == %i\n",
+                (int)sizeof(struct vbuf_t),
+                (int)sizeof(struct vbuf_data_t),
+                size);
         return 1;
     }
     g_vbufs.pool = aligned_alloc(VBUF_SIZE, VBUF_SIZE * count);

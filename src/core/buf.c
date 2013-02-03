@@ -1,6 +1,10 @@
 #include "buf.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t BUF_SIZE = 32;
+static const size_t BUF_DATA_ALIGN = 16;
 
 struct bufs_t g_bufs;
 
@@ -125,9 +129,19 @@ int buf_init(lua_State *lua, int size, int count)
 {
     int i;
     struct buf_t *buf;
-    g_bufs.pool = calloc(count, sizeof(struct buf_t));
+    if (sizeof(struct buf_t) != BUF_SIZE
+    ||  (size & (size - 1)) != 0)
+    {
+        fprintf(stderr, "Invalid size:\n"
+                        "sizeof(struct buf_t) == %i\n"
+                        "size == %i\n",
+                (int)sizeof(struct buf_t), size);
+        return 1;
+    }
+    g_bufs.pool = aligned_alloc(BUF_SIZE, BUF_SIZE * count);
     if (g_bufs.pool == 0)
         return 1;
+    memset(g_bufs.pool, 0, BUF_SIZE * count);
     g_bufs.vacant = g_bufs.pool;
     g_bufs.count = count;
     g_bufs.left = count;
@@ -139,9 +153,10 @@ int buf_init(lua_State *lua, int size, int count)
         if (i < count - 1)
             buf->next = g_bufs.pool + i + 1;
         buf->vacant = 1;
-        buf->data = calloc(size, sizeof(float));
+        buf->data = aligned_alloc(BUF_DATA_ALIGN, sizeof(float) * size);
         if (buf->data == 0)
             goto cleanup;
+        memset(buf->data, 0, sizeof(float) * size);
     }
     lua_register(lua, "api_buf_alloc", api_buf_alloc);
     lua_register(lua, "api_buf_free", api_buf_free);

@@ -218,12 +218,16 @@ int ibuf_init(lua_State *lua, int size, int count)
 {
     int i;
     if (sizeof(struct ibuf_t) != IBUF_SIZE
-    ||  sizeof(struct ibuf_data_t) != IBUF_DATA_SIZE)
+    ||  sizeof(struct ibuf_data_t) != IBUF_DATA_SIZE
+    ||  (size & (size - 1)) != 0)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct ibuf_t) == %i\n"
-                        "sizeof(struct ibuf_data_t) == %i\n",
-                (int)sizeof(struct ibuf_t), (int)sizeof(struct ibuf_data_t));
+                        "sizeof(struct ibuf_data_t) == %i\n"
+                        "size == %i\n",
+                (int)sizeof(struct ibuf_t),
+                (int)sizeof(struct ibuf_data_t),
+                size);
         return 1;
     }
     g_ibufs.pool = aligned_alloc(IBUF_SIZE, IBUF_SIZE * count);
