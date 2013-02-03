@@ -14,7 +14,7 @@ struct colshape_t
     btCompoundShape *shape_comp;
     btConvexShape *shape_convex;
     btCollisionShape *shape;
-    void *data;
+    char *data;
     colshape_t *comp;
     colshape_t *comp_children;
     colshape_t *comp_next;

@@ -9,8 +9,8 @@ struct rigidbody_t
 {
     btRigidBody *body;
     mstate_c *mstate;
-    char body_data[sizeof(btRigidBody)];
-    char mstate_data[sizeof(mstate_c)];
+    size_t body_align;
+    char *body_data;
     rigidbody_t *next;
     int vacant;
     world_t *wld;
