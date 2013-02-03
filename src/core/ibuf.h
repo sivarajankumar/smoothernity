@@ -11,11 +11,12 @@ struct ibuf_t
     struct ibuf_t *prev;
     struct ibuf_t *next;
     struct mesh_t *meshes;
+    char padding[16];
 };
 
 struct ibuf_data_t
 {
-    GLushort index;
+    GLuint index;
 };
 
 struct ibufs_t

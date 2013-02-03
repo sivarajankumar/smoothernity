@@ -2,6 +2,10 @@
 #include "vbuf.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t IBUF_DATA_SIZE = sizeof(GLuint);
+static const size_t IBUF_SIZE = 64;
 
 struct ibufs_t g_ibufs;
 
@@ -213,9 +217,19 @@ static int api_ibuf_query(lua_State *lua)
 int ibuf_init(lua_State *lua, int size, int count)
 {
     int i;
-    g_ibufs.pool = calloc(count, sizeof(struct ibuf_t));
+    if (sizeof(struct ibuf_t) != IBUF_SIZE
+    ||  sizeof(struct ibuf_data_t) != IBUF_DATA_SIZE)
+    {
+        fprintf(stderr, "Invalid sizes:\n"
+                        "sizeof(struct ibuf_t) == %i\n"
+                        "sizeof(struct ibuf_data_t) == %i\n",
+                (int)sizeof(struct ibuf_t), (int)sizeof(struct ibuf_data_t));
+        return 1;
+    }
+    g_ibufs.pool = aligned_alloc(IBUF_SIZE, IBUF_SIZE * count);
     if (g_ibufs.pool == 0)
         return 1;
+    memset(g_ibufs.pool, 0, IBUF_SIZE * count);
     for (i = 0; i < count; ++i)
     {
         g_ibufs.pool[i].vacant = 1;
@@ -225,7 +239,7 @@ int ibuf_init(lua_State *lua, int size, int count)
             g_ibufs.pool[i].next = g_ibufs.pool + i + 1;
         glGenBuffers(1, &g_ibufs.pool[i].buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ibufs.pool[i].buf_id);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(struct ibuf_data_t) * size,
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, IBUF_DATA_SIZE * size,
                      0, GL_STATIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
