@@ -30,8 +30,8 @@ enum matrix_axis_e
 
 struct matrix_t
 {
+    GLfloat value[16]; /* should be first to ensure alignment */
     enum matrix_e type;
-    GLfloat value[16];
     int frame_tag;
     int vacant;
     enum matrix_axis_e rotaxis;
@@ -44,6 +44,7 @@ struct matrix_t
     struct vector_t *argv[MATRIX_ARGVS];
     struct matrix_t *argm[MATRIX_ARGMS];
     struct matrix_t *next;
+    char padding[104];
 };
 
 int matrix_init(lua_State *lua, int count, int nesting);
