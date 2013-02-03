@@ -302,7 +302,7 @@ static int main_init(int argc, char **argv)
     if (mpool_init(g_main.mpool_aligns,
                    g_main.mpool_sizes,
                    g_main.mpool_counts,
-                   g_main.mpool_len) == 0)
+                   g_main.mpool_len) != 0)
     {
         fprintf(stderr, "Cannot init memory pool\n");
         return 1;
