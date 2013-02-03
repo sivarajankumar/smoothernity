@@ -3,7 +3,7 @@ local cfg = require 'config'
 
 function configure()
     return {mpool_sizes = function() return    100, 1000, 10000, 100000, 1000000, 5000000 end,
-            mpool_counts = function() return 10000, 1000,  1000,      2,       2,       2 end,
+            mpool_counts = function() return 10000, 1000,  2000,      2,       2,       2 end,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             mesh_count = 1000,
