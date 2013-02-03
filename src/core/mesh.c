@@ -291,6 +291,6 @@ void mesh_draw(struct mesh_t *mesh)
     glPushMatrix();
     glMultMatrixf(mesh->matrix->value);
     glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_INT,
-                   (struct ibuf_data_t*)0 + mesh->ioffset);
+                   (ibuf_data_t*)0 + mesh->ioffset);
     glPopMatrix();
 }
