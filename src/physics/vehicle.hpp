@@ -12,11 +12,8 @@ struct vehicle_t
     btDefaultVehicleRaycaster *ray;
     btRaycastVehicle *veh;
     btRaycastVehicle::btVehicleTuning *tuning;
-    size_t chassis_align;
     char *chassis_data;
-    size_t ray_align;
     char *ray_data;
-    size_t veh_align;
     char *veh_data;
     vehicle_t *next;
     int vacant;
