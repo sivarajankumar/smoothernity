@@ -8,13 +8,13 @@ struct vehicle_t;
 
 struct colshape_t
 {
+    char *data; /* must come first to ensure alignment */
     btBoxShape *shape_box;
     btSphereShape *shape_sphere;
     btHeightfieldTerrainShape *shape_hmap;
     btCompoundShape *shape_comp;
     btConvexShape *shape_convex;
     btCollisionShape *shape;
-    char *data;
     colshape_t *comp;
     colshape_t *comp_children;
     colshape_t *comp_next;
