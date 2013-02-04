@@ -4,6 +4,9 @@
 #include "colshape.hpp"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t VEHICLE_SIZE = 256;
 
 struct vehicles_t
 {
@@ -12,7 +15,7 @@ struct vehicles_t
     int count;
     int allocs;
     int frees;
-    vehicle_t *pool;
+    char *pool;
     vehicle_t *vacant;
 };
 
@@ -22,28 +25,33 @@ int vehicle_init(int count)
 {
     int i;
     vehicle_t *veh;
-    g_vehicles.pool = (vehicle_t*)calloc(count, sizeof(vehicle_t));
+    if (sizeof(vehicle_t) > VEHICLE_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\nsizeof(vehicle_t) == %i\n",
+                (int)sizeof(vehicle_t));
+        return PHYSRES_CANNOT_INIT;
+    }
+    g_vehicles.pool = (char*)aligned_alloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
     if (g_vehicles.pool == 0)
         return PHYSRES_CANNOT_INIT;
-    g_vehicles.vacant = g_vehicles.pool;
+    memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
     g_vehicles.left = count;
     g_vehicles.left_min = count;
     g_vehicles.count = count;
+    g_vehicles.vacant = vehicle_get(0);
     for (i = 0; i < count; ++i)
     {
-        veh = g_vehicles.pool + i;
+        veh = vehicle_get(i);
         if (i < count - 1)
-            veh->next = g_vehicles.pool + i + 1;
+            veh->next = vehicle_get(i + 1);
         veh->vacant = 1;
         try {
-            #define ALIGNMENT(p, x) alignof(x) - ((p - (char*)0) % alignof(x))
-            #define TOTAL_SIZE(x) sizeof(x) + alignof(x)
-            veh->chassis_data = (char*)calloc(TOTAL_SIZE(btRigidBody), 1);
-            veh->ray_data = (char*)calloc(TOTAL_SIZE(btDefaultVehicleRaycaster), 1);
-            veh->veh_data = (char*)calloc(TOTAL_SIZE(btRaycastVehicle), 1);
-            veh->chassis_align = ALIGNMENT(veh->chassis_data, btRigidBody);
-            veh->ray_align = ALIGNMENT(veh->ray_data, btDefaultVehicleRaycaster);
-            veh->veh_align = ALIGNMENT(veh->veh_data, btRaycastVehicle);
+            veh->chassis_data = (char*)aligned_alloc(alignof(btRigidBody),
+                                                     sizeof(btRigidBody));
+            veh->ray_data = (char*)aligned_alloc(alignof(btDefaultVehicleRaycaster),
+                                                 sizeof(btDefaultVehicleRaycaster));
+            veh->veh_data = (char*)aligned_alloc(alignof(btRaycastVehicle),
+                                                 sizeof(btRaycastVehicle));
             veh->mstate = new mstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
         } catch (...) {
@@ -54,7 +62,7 @@ int vehicle_init(int count)
 cleanup:
     for (i = 0; i < count; ++i)
     {
-        veh = g_vehicles.pool + i;
+        veh = vehicle_get(i);
         if (veh->chassis_data)
             free(veh->chassis_data);
         if (veh->ray_data)
@@ -82,7 +90,7 @@ void vehicle_done(void)
            g_vehicles.allocs, g_vehicles.frees);
     for (i = 0; i < g_vehicles.count; ++i)
     {
-        veh = g_vehicles.pool + i;
+        veh = vehicle_get(i);
         vehicle_free(veh);
         try {
             free(veh->chassis_data);
@@ -106,7 +114,7 @@ int vehicle_left(void)
 vehicle_t * vehicle_get(int vehi)
 {
     if (vehi >= 0 && vehi < g_vehicles.count)
-        return g_vehicles.pool + vehi;
+        return (vehicle_t*)(g_vehicles.pool + VEHICLE_SIZE * vehi);
     else
         return 0;
 }
@@ -222,11 +230,9 @@ int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
         info.m_friction = ch_frict;
         info.m_rollingFriction = ch_roll_frict;
 
-        veh->chassis = new (veh->chassis_data + veh->chassis_align)
-                            btRigidBody(info);
-        veh->ray = new (veh->ray_data + veh->ray_align)
-                        btDefaultVehicleRaycaster(wld->world);
-        veh->veh = new (veh->veh_data + veh->veh_align)
+        veh->chassis = new (veh->chassis_data) btRigidBody(info);
+        veh->ray = new (veh->ray_data) btDefaultVehicleRaycaster(wld->world);
+        veh->veh = new (veh->veh_data)
             btRaycastVehicle(*veh->tuning, veh->chassis, veh->ray);
         veh->veh->setCoordinateSystem(0, 1, 2);
         veh->chassis->setActivationState(DISABLE_DEACTIVATION);
@@ -239,7 +245,7 @@ int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
         return PHYSRES_INTERNAL;
     }
 
-    *vehi = veh - g_vehicles.pool;
+    *vehi = ((char*)veh - g_vehicles.pool) / VEHICLE_SIZE;
     return PHYSRES_OK;
 }
 
