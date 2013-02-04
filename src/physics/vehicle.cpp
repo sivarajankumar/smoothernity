@@ -2,7 +2,7 @@
 #include "vehicle.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include <stdlib.h>
+#include "../util/util.hpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -31,7 +31,7 @@ int vehicle_init(int count)
                 (int)sizeof(vehicle_t));
         return PHYSRES_CANNOT_INIT;
     }
-    g_vehicles.pool = (char*)aligned_alloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
+    g_vehicles.pool = (char*)util_malloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
     if (g_vehicles.pool == 0)
         return PHYSRES_CANNOT_INIT;
     memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
@@ -46,12 +46,12 @@ int vehicle_init(int count)
             veh->next = vehicle_get(i + 1);
         veh->vacant = 1;
         try {
-            veh->chassis_data = (char*)aligned_alloc(alignof(btRigidBody),
-                                                     sizeof(btRigidBody));
-            veh->ray_data = (char*)aligned_alloc(alignof(btDefaultVehicleRaycaster),
-                                                 sizeof(btDefaultVehicleRaycaster));
-            veh->veh_data = (char*)aligned_alloc(alignof(btRaycastVehicle),
-                                                 sizeof(btRaycastVehicle));
+            veh->chassis_data = (char*)util_malloc(alignof(btRigidBody),
+                                                   sizeof(btRigidBody));
+            veh->ray_data = (char*)util_malloc(alignof(btDefaultVehicleRaycaster),
+                                               sizeof(btDefaultVehicleRaycaster));
+            veh->veh_data = (char*)util_malloc(alignof(btRaycastVehicle),
+                                               sizeof(btRaycastVehicle));
             veh->mstate = new mstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
         } catch (...) {
@@ -64,17 +64,17 @@ cleanup:
     {
         veh = vehicle_get(i);
         if (veh->chassis_data)
-            free(veh->chassis_data);
+            util_free(veh->chassis_data);
         if (veh->ray_data)
-            free(veh->ray_data);
+            util_free(veh->ray_data);
         if (veh->veh_data)
-            free(veh->veh_data);
+            util_free(veh->veh_data);
         if (veh->mstate)
             delete veh->mstate;
         if (veh->tuning)
             delete veh->tuning;
     }
-    free(g_vehicles.pool);
+    util_free(g_vehicles.pool);
     g_vehicles.pool = 0;
     return PHYSRES_CANNOT_INIT;
 }
@@ -93,16 +93,16 @@ void vehicle_done(void)
         veh = vehicle_get(i);
         vehicle_free(veh);
         try {
-            free(veh->chassis_data);
-            free(veh->ray_data);
-            free(veh->veh_data);
+            util_free(veh->chassis_data);
+            util_free(veh->ray_data);
+            util_free(veh->veh_data);
             delete veh->mstate;
             delete veh->tuning;
         } catch (...) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
     }
-    free(g_vehicles.pool);
+    util_free(g_vehicles.pool);
     g_vehicles.pool = 0;
 }
 
