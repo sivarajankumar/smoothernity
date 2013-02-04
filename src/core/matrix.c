@@ -1,7 +1,7 @@
 #include "matrix.h"
 #include "vector.h"
 #include "physics.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <string.h>
 #include <math.h>
 #include <stdio.h>
@@ -663,7 +663,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
                 (int)sizeof(struct matrix_t));
         return 1;
     }
-    g_matrices.pool = aligned_alloc(MATRIX_SIZE, MATRIX_SIZE * count);
+    g_matrices.pool = util_malloc(MATRIX_SIZE, MATRIX_SIZE * count);
     if (g_matrices.pool == 0)
         return 1;
     memset(g_matrices.pool, 0, MATRIX_SIZE * count);
@@ -714,7 +714,7 @@ void matrix_done(void)
     printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
            g_matrices.count - g_matrices.left_min, g_matrices.count,
            g_matrices.allocs, g_matrices.frees);
-    free(g_matrices.pool);
+    util_free(g_matrices.pool);
     g_matrices.pool = 0;
 }
 

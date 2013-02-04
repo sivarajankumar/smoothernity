@@ -2,7 +2,7 @@
 #include "vbuf.h"
 #include "ibuf.h"
 #include "matrix.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -244,7 +244,7 @@ int mesh_init(lua_State *lua, int count)
                 (int)sizeof(struct mesh_t));
         return 1;
     }
-    g_meshes.pool = aligned_alloc(MESH_SIZE, MESH_SIZE * count);
+    g_meshes.pool = util_malloc(MESH_SIZE, MESH_SIZE * count);
     if (g_meshes.pool == 0)
         return 1;
     memset(g_meshes.pool, 0, MESH_SIZE * count);
@@ -284,7 +284,7 @@ void mesh_done(void)
     printf("Meshes usage: %i/%i, allocs/frees: %i/%i\n",
            g_meshes.count - g_meshes.left_min, g_meshes.count,
            g_meshes.allocs, g_meshes.frees);
-    free(g_meshes.pool);
+    util_free(g_meshes.pool);
     g_meshes.pool = 0;
 }
 
