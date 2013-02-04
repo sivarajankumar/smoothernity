@@ -17,7 +17,7 @@ struct vectors_t
     int allocs;
     int frees;
     int nesting;
-    struct vector_t *pool;
+    char *pool;
     struct vector_t *vacant;
 };
 
@@ -59,7 +59,7 @@ static int api_vector_alloc(lua_State *lua)
 
     memset(vector, 0, sizeof(struct vector_t));
 
-    lua_pushinteger(lua, vector - g_vectors.pool);
+    lua_pushinteger(lua, ((char*)vector - g_vectors.pool) / VECTOR_SIZE);
     return 1;
 }
 
@@ -584,7 +584,8 @@ static int api_vector_cast(lua_State *lua)
 int vector_init(lua_State *lua, int count, int nesting)
 {
     int i;
-    if (sizeof(struct vector_t) != VECTOR_SIZE)
+    struct vector_t *vector;
+    if (sizeof(struct vector_t) > VECTOR_SIZE)
     {
         fprintf(stderr, "Invalid size:\n"
                         "sizeof(struct vector_t) == %i\n",
@@ -599,12 +600,13 @@ int vector_init(lua_State *lua, int count, int nesting)
     g_vectors.left = count;
     g_vectors.left_min = count;
     g_vectors.nesting = nesting;
-    g_vectors.vacant = g_vectors.pool;
+    g_vectors.vacant = vector_get(0);
     for (i = 0; i < count; ++i)
     {
+        vector = vector_get(i);
         if (i < count - 1)
-            g_vectors.pool[i].next = g_vectors.pool + i + 1;
-        g_vectors.pool[i].vacant = 1;
+            vector->next = vector_get(i + 1);
+        vector->vacant = 1;
     }
     lua_register(lua, "api_vector_alloc", api_vector_alloc);
     lua_register(lua, "api_vector_free", api_vector_free);
@@ -643,7 +645,7 @@ void vector_done(void)
 struct vector_t * vector_get(int i)
 {
     if (i >= 0 && i < g_vectors.count)
-        return g_vectors.pool + i;
+        return (struct vector_t*)(g_vectors.pool + VECTOR_SIZE * i);
     else
         return 0;
 }
