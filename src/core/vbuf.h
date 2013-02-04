@@ -11,7 +11,6 @@ struct vbuf_t
     struct vbuf_t *prev;
     struct vbuf_t *next;
     struct mesh_t *meshes;
-    char padding[16];
 };
 
 struct vbufs_t
@@ -26,7 +25,7 @@ struct vbufs_t
     void *offset_pos;
     void *offset_tex;
     void *offset_color;
-    struct vbuf_t *pool;
+    char *pool;
     struct vbuf_t *vacant;
     struct vbuf_t *mapped;
     struct vbuf_t *baked;
