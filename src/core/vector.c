@@ -2,7 +2,7 @@
 #include "matrix.h"
 #include "buf.h"
 #include "physics.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
@@ -591,7 +591,7 @@ int vector_init(lua_State *lua, int count, int nesting)
                 (int)sizeof(struct vector_t));
         return 1;
     }
-    g_vectors.pool = aligned_alloc(VECTOR_SIZE, VECTOR_SIZE * count);
+    g_vectors.pool = util_malloc(VECTOR_SIZE, VECTOR_SIZE * count);
     if (g_vectors.pool == 0)
         return 1;
     memset(g_vectors.pool, 0, VECTOR_SIZE * count);
@@ -637,7 +637,7 @@ void vector_done(void)
     printf("Vectors usage: %i/%i, allocs/frees: %i/%i\n",
            g_vectors.count - g_vectors.left_min, g_vectors.count,
            g_vectors.allocs, g_vectors.frees);
-    free(g_vectors.pool);
+    util_free(g_vectors.pool);
     g_vectors.pool = 0;
 }
 
