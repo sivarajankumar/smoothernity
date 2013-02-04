@@ -1,6 +1,6 @@
 #include "physres.h"
 #include "colshape.hpp"
-#include <stdlib.h>
+#include "../util/util.hpp"
 #include <stdio.h>
 
 static const size_t COLSHAPE_SIZE = 128;
@@ -36,7 +36,7 @@ int colshape_init(int count)
                 (int)sizeof(colshape_t));
         return PHYSRES_CANNOT_INIT;
     }
-    g_colshapes.pool = (char*)aligned_alloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
+    g_colshapes.pool = (char*)util_malloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
     if (g_colshapes.pool == 0)
         return PHYSRES_CANNOT_INIT;
     memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
@@ -50,7 +50,7 @@ int colshape_init(int count)
         if (i < count - 1)
             cs->next = colshape_get(i + 1);
         cs->vacant = 1;
-        cs->data = (char*)aligned_alloc(alignof(colshape_u), sizeof(colshape_u));
+        cs->data = (char*)util_malloc(alignof(colshape_u), sizeof(colshape_u));
         if (cs->data == 0)
             goto cleanup;
     }
@@ -60,9 +60,9 @@ cleanup:
     {
         cs = colshape_get(i);
         if (cs->data)
-            free(cs->data);
+            util_free(cs->data);
     }
-    free(g_colshapes.pool);
+    util_free(g_colshapes.pool);
     return PHYSRES_CANNOT_INIT;
 }
 
@@ -79,9 +79,9 @@ void colshape_done(void)
     {
         cs = colshape_get(i);
         colshape_free(cs);
-        free(cs->data);
+        util_free(cs->data);
     }
-    free(g_colshapes.pool);
+    util_free(g_colshapes.pool);
     g_colshapes.pool = 0;
 }
 
