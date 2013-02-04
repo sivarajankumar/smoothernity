@@ -1,7 +1,6 @@
 #include "ibuf.h"
 #include "vbuf.h"
 #include "../util/util.h"
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 

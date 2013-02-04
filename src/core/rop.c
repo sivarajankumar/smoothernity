@@ -7,7 +7,7 @@
 #include "mesh.h"
 #include "physics.h"
 #include "text.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
 #include <GL/gl.h>
@@ -962,7 +962,7 @@ int rop_init(lua_State *lua, int count)
                 (int)sizeof(struct rop_t));
         return 1;
     }
-    g_rops.pool = aligned_alloc(ROP_SIZE, ROP_SIZE * count);
+    g_rops.pool = util_malloc(ROP_SIZE, ROP_SIZE * count);
     if (g_rops.pool == 0)
         goto cleanup;
     memset(g_rops.pool, 0, ROP_SIZE * count);
@@ -1007,7 +1007,7 @@ int rop_init(lua_State *lua, int count)
 cleanup:
     if (g_rops.pool)
     {
-        free(g_rops.pool);
+        util_free(g_rops.pool);
         g_rops.pool = 0;
     }
     return 1;
@@ -1020,7 +1020,7 @@ void rop_done(void)
     printf("Render operations usage: %i/%i, allocs/frees: %i/%i\n",
            g_rops.count - g_rops.left_min, g_rops.count,
            g_rops.allocs, g_rops.frees);
-    free(g_rops.pool);
+    util_free(g_rops.pool);
     g_rops.pool = 0;
 }
 
