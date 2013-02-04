@@ -34,6 +34,7 @@ int world_init(int count)
     g_worlds.pool = (char*)aligned_alloc(WORLD_SIZE, WORLD_SIZE * count);
     if (g_worlds.pool == 0)
         return PHYSRES_CANNOT_INIT;
+    memset(g_worlds.pool, 0, WORLD_SIZE * count);
     g_worlds.count = count;
     g_worlds.left = count;
     g_worlds.left_min = count;

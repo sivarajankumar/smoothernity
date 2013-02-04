@@ -587,8 +587,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     struct vector_t *vector;
     if (sizeof(struct vector_t) > VECTOR_SIZE)
     {
-        fprintf(stderr, "Invalid size:\n"
-                        "sizeof(struct vector_t) == %i\n",
+        fprintf(stderr, "Invalid size:\nsizeof(struct vector_t) == %i\n",
                 (int)sizeof(struct vector_t));
         return 1;
     }
