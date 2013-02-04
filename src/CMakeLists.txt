@@ -3,3 +3,4 @@ project(SMOOTHERNITY)
 
 subdirs(core)
 subdirs(physics)
+subdirs(util)

@@ -15,6 +15,7 @@ add_executable(main
 
 target_link_libraries(main
                       physics
+                      util
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
                       ${GLUT_LIBRARIES}
