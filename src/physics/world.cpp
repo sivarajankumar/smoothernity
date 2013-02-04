@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "physres.h"
-#include <stdlib.h>
+#include "../util/util.hpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -31,7 +31,7 @@ int world_init(int count)
                 (int)sizeof(world_t));
         return PHYSRES_CANNOT_INIT;
     }
-    g_worlds.pool = (char*)aligned_alloc(WORLD_SIZE, WORLD_SIZE * count);
+    g_worlds.pool = (char*)util_malloc(WORLD_SIZE, WORLD_SIZE * count);
     if (g_worlds.pool == 0)
         return PHYSRES_CANNOT_INIT;
     memset(g_worlds.pool, 0, WORLD_SIZE * count);
@@ -83,7 +83,7 @@ cleanup:
         if (wld->ddraw)
             delete wld->ddraw;
     }
-    free(g_worlds.pool);
+    util_free(g_worlds.pool);
     g_worlds.pool = 0;
     return PHYSRES_CANNOT_INIT;
 }
@@ -116,7 +116,7 @@ void world_done(void)
             fprintf(stderr, "world_done: exception\n");
         }
     }
-    free(g_worlds.pool);
+    util_free(g_worlds.pool);
     g_worlds.pool = 0;
 }
 
