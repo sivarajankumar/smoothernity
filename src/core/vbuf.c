@@ -84,7 +84,7 @@ static int api_vbuf_alloc(lua_State *lua)
     vbuf->next = g_vbufs.mapped;
     g_vbufs.mapped = vbuf;
 
-    lua_pushinteger(lua, vbuf - g_vbufs.pool);
+    lua_pushinteger(lua, ((char*)vbuf - g_vbufs.pool) / VBUF_SIZE);
     return 1;
 }
 
@@ -256,8 +256,9 @@ static int api_vbuf_left(lua_State *lua)
 int vbuf_init(lua_State *lua, int size, int count)
 {
     struct vbuf_data_t data;
+    struct vbuf_t *vbuf;
     int i;
-    if (sizeof(struct vbuf_t) != VBUF_SIZE
+    if (sizeof(struct vbuf_t) > VBUF_SIZE
     ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE
     ||  (size & (size - 1)) != 0)
     {
@@ -274,21 +275,6 @@ int vbuf_init(lua_State *lua, int size, int count)
     if (g_vbufs.pool == 0)
         return 1;
     memset(g_vbufs.pool, 0, VBUF_SIZE * count);
-    for (i = 0; i < count; ++i)
-    {
-        g_vbufs.pool[i].vacant = 1;
-        if (i > 0)
-            g_vbufs.pool[i].prev = g_vbufs.pool + i - 1;
-        if (i < count - 1)
-            g_vbufs.pool[i].next = g_vbufs.pool + i + 1;
-        glGenBuffers(1, &g_vbufs.pool[i].buf_id);
-        glBindBuffer(GL_ARRAY_BUFFER, g_vbufs.pool[i].buf_id);
-        glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
-                     0, GL_STATIC_DRAW);
-        if (glGetError() != GL_NO_ERROR)
-            goto cleanup;
-    }
-    g_vbufs.vacant = g_vbufs.pool;
     g_vbufs.size = size;
     g_vbufs.count = count;
     g_vbufs.left = count;
@@ -296,6 +282,22 @@ int vbuf_init(lua_State *lua, int size, int count)
     g_vbufs.offset_pos = (char*)0 + ((char*)&data.pos - (char*)&data);
     g_vbufs.offset_tex = (char*)0 + ((char*)&data.tex - (char*)&data);
     g_vbufs.offset_color = (char*)0 + ((char*)&data.color - (char*)&data);
+    g_vbufs.vacant = vbuf_get(0);
+    for (i = 0; i < count; ++i)
+    {
+        vbuf = vbuf_get(i);
+        vbuf->vacant = 1;
+        if (i > 0)
+            vbuf->prev = vbuf_get(i - 1);
+        if (i < count - 1)
+            vbuf->next = vbuf_get(i + 1);
+        glGenBuffers(1, &vbuf->buf_id);
+        glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+        glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
+                     0, GL_STATIC_DRAW);
+        if (glGetError() != GL_NO_ERROR)
+            goto cleanup;
+    }
 
     lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
     lua_register(lua, "api_vbuf_free", api_vbuf_free);
@@ -328,7 +330,7 @@ void vbuf_done(void)
 struct vbuf_t * vbuf_get(int vbufi)
 {
     if (vbufi >= 0 && vbufi < g_vbufs.count)
-        return g_vbufs.pool + vbufi;
+        return (struct vbuf_t*)(g_vbufs.pool + VBUF_SIZE * vbufi);
     else
         return 0;
 }
