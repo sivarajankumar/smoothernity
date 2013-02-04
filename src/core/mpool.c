@@ -12,7 +12,6 @@ struct mpool_chunk_t
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *next;
     void *data; /* store pointer to chunk, then actual data */
-    char padding[8];
 };
 
 struct mpool_shelf_t
@@ -20,25 +19,39 @@ struct mpool_shelf_t
     int size;
     int count;
     int left;
-    struct mpool_chunk_t *chunks;
+    char *chunks;
     struct mpool_chunk_t *vacant;
 
     int left_min;
     int allocs;
     int frees;
     int alloc_fails;
-
-    char padding[16];
 };
 
 struct mpool_t
 {
     int shelves_len;
-    struct mpool_shelf_t *shelves;
+    char *shelves;
     int largest_size;
 };
 
 static struct mpool_t g_mpool;
+
+static struct mpool_shelf_t * mpool_get_shelf(int shelfi)
+{
+    if (shelfi >= 0 && shelfi < g_mpool.shelves_len)
+        return (struct mpool_shelf_t*)(g_mpool.shelves + MPOOL_SHELF_SIZE * shelfi);
+    else
+        return 0;
+}
+
+static struct mpool_chunk_t * mpool_get_chunk(int chunki, struct mpool_shelf_t *shelf)
+{
+    if (chunki >= 0 && chunki < shelf->count)
+        return (struct mpool_chunk_t*)(shelf->chunks + MPOOL_CHUNK_SIZE * chunki);
+    else
+        return 0;
+}
 
 void * mpool_alloc(size_t size)
 {
@@ -47,16 +60,13 @@ void * mpool_alloc(size_t size)
     struct mpool_shelf_t *shelf;
     if (size > (size_t)g_mpool.largest_size)
         g_mpool.largest_size = (int)size;
-    shelf = 0;
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
-        if ((size_t)g_mpool.shelves[i].size >= size)
-        {
-            shelf = g_mpool.shelves + i;
+        shelf = mpool_get_shelf(i);
+        if ((size_t)shelf->size >= size)
             break;
-        }
     }
-    if (shelf == 0)
+    if ((size_t)shelf->size < size)
     {
         fprintf(stderr, "mpool_alloc: cannot find shelf for size %i\n",
                 (int)size);
@@ -98,8 +108,8 @@ int mpool_init(const int sizes[], const int counts[], int len)
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *chunk;
     int i, j, size, count;
-    if (sizeof(struct mpool_chunk_t) != MPOOL_CHUNK_SIZE
-    ||  sizeof(struct mpool_shelf_t) != MPOOL_SHELF_SIZE
+    if (sizeof(struct mpool_chunk_t) > MPOOL_CHUNK_SIZE
+    ||  sizeof(struct mpool_shelf_t) > MPOOL_SHELF_SIZE
     ||  sizeof(void*) > MPOOL_DATA_ALIGN)
     {
         fprintf(stderr, "Invalid size:\n"
@@ -127,7 +137,7 @@ int mpool_init(const int sizes[], const int counts[], int len)
             fprintf(stderr, "Invalid shelf size == %i\n", size);
             goto cleanup;
         }
-        shelf = g_mpool.shelves + i;
+        shelf = mpool_get_shelf(i);
         shelf->size = size;
         shelf->count = count;
         shelf->left = count;
@@ -138,29 +148,30 @@ int mpool_init(const int sizes[], const int counts[], int len)
         memset(shelf->chunks, 0, MPOOL_CHUNK_SIZE * count);
         for (j = 0; j < counts[i]; ++j)
         {
-            chunk = shelf->chunks + j;
-            chunk->shelf = g_mpool.shelves + i;
+            chunk = mpool_get_chunk(j, shelf);
+            chunk->shelf = shelf;
             if (j < counts[i] - 1)
-                chunk->next = shelf->chunks + j + 1;
+                chunk->next = mpool_get_chunk(j + 1, shelf);
             /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
             chunk->data = aligned_alloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
             if (chunk->data == 0)
                 goto cleanup;
             *(void**)(chunk->data) = chunk;
         }
-        shelf->vacant = shelf->chunks;
+        shelf->vacant = mpool_get_chunk(0, shelf);
     }
     return 0;
 cleanup:
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
-        shelf = g_mpool.shelves + i;
+        shelf = mpool_get_shelf(i);
         if (shelf->chunks)
         {
             for (j = 0; j < shelf->count; ++j)
             {
-                if (shelf->chunks[j].data)
-                    free(shelf->chunks[j].data);
+                chunk = mpool_get_chunk(j, shelf);
+                if (chunk->data)
+                    free(chunk->data);
             }
             free(shelf->chunks);
         }
@@ -179,14 +190,14 @@ void mpool_done(void)
     printf("Largest requested memory chunk: %i B\n", g_mpool.largest_size);
     for (i = 0; i < g_mpool.shelves_len; ++i)
     {
-        shelf = g_mpool.shelves + i;
+        shelf = mpool_get_shelf(i);
         printf("Memory pool %i B chunks usage: %i/%i, allocs/frees: %i/%i "
                "(%i fails)\n",
                shelf->size,
                shelf->count - shelf->left_min, shelf->count,
                shelf->allocs, shelf->frees, shelf->alloc_fails);
         for (j = 0; j < shelf->count; ++j)
-            free(shelf->chunks[j].data);
+            free(mpool_get_chunk(j, shelf)->data);
         free(shelf->chunks);
     }
     free(g_mpool.shelves);
