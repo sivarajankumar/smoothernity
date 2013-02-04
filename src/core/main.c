@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <SDL.h>
+#include "../util/util.h"
 #include "mpool.h"
 #include "timer.h"
 #include "render.h"
@@ -20,6 +21,8 @@
 #include "buf.h"
 #include "rop.h"
 #include "storage.h"
+
+static const size_t ARRAY_ALIGN = 16;
 
 struct main_t
 {
@@ -127,13 +130,14 @@ static int main_get_int_array(lua_State *lua, const char *field,
                 field);
         return 1;
     }
-    *array = calloc(*len, sizeof(int));
+    *array = util_malloc(ARRAY_ALIGN, *len * sizeof(int));
     if (*array == 0)
     {
         fprintf(stderr, "Out of memory while loading configure()[\"%s\"]\n",
                 field);
         return 1;
     }
+    memset(*array, 0, *len * sizeof(int));
     for (i = 0; i < *len; ++i)
     {
         if (!lua_isnumber(lua, -(*len) + i))
@@ -236,12 +240,12 @@ static int main_configure(char *script)
 cleanup:
     if (g_main.mpool_sizes)
     {
-        free(g_main.mpool_sizes);
+        util_free(g_main.mpool_sizes);
         g_main.mpool_sizes = 0;
     }
     if (g_main.mpool_counts)
     {
-        free(g_main.mpool_counts);
+        util_free(g_main.mpool_counts);
         g_main.mpool_counts = 0;
     }
     lua_close(lua);
@@ -258,12 +262,12 @@ static void main_done(void)
         lua_close(g_main.lua);
     if (g_main.mpool_sizes)
     {
-        free(g_main.mpool_sizes);
+        util_free(g_main.mpool_sizes);
         g_main.mpool_sizes = 0;
     }
     if (g_main.mpool_counts)
     {
-        free(g_main.mpool_counts);
+        util_free(g_main.mpool_counts);
         g_main.mpool_counts = 0;
     }
 
