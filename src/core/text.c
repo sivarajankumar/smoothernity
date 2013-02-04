@@ -1,5 +1,5 @@
 #include "text.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
 #include <GL/glut.h>
@@ -204,7 +204,7 @@ int text_init(lua_State *lua, int size, int count)
                 size);
         return 1;
     }
-    g_texts.pool = aligned_alloc(TEXT_SIZE, TEXT_SIZE * count);
+    g_texts.pool = util_malloc(TEXT_SIZE, TEXT_SIZE * count);
     if (g_texts.pool == 0)
         return 1;
     memset(g_texts.pool, 0, TEXT_SIZE * count);
@@ -220,7 +220,7 @@ int text_init(lua_State *lua, int size, int count)
             text->prev = text_get(i - 1);
         if (i < count - 1)
             text->next = text_get(i + 1);
-        text->string = aligned_alloc(TEXT_STRING_ALIGN, sizeof(char) * size);
+        text->string = util_malloc(TEXT_STRING_ALIGN, sizeof(char) * size);
         if (text->string == 0)
             goto cleanup;
         memset(text->string, 0, sizeof(char) * size);
@@ -249,9 +249,9 @@ cleanup:
     {
         text = text_get(i);
         if (text->string)
-            free(text->string);
+            util_free(text->string);
     }
-    free(g_texts.pool);
+    util_free(g_texts.pool);
     g_texts.pool = 0;
     return 1;
 }
@@ -265,8 +265,8 @@ void text_done(void)
            g_texts.count - g_texts.left_min, g_texts.count,
            g_texts.allocs, g_texts.frees);
     for (i = 0; i < g_texts.count; ++i)
-        free(text_get(i)->string);
-    free(g_texts.pool);
+        util_free(text_get(i)->string);
+    util_free(g_texts.pool);
     g_texts.pool = 0;
 }
 
