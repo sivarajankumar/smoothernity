@@ -21,7 +21,7 @@ enum mesh_type_e
 static struct mesh_t * mesh_get(int meshi)
 {
     if (meshi >= 0 && meshi < g_meshes.count)
-        return g_meshes.pool + meshi;
+        return (struct mesh_t*)(g_meshes.pool + MESH_SIZE * meshi);
     else
         return 0;
 }
@@ -155,7 +155,7 @@ static int api_mesh_alloc(lua_State *lua)
     mesh->ibuf_next = ibuf->meshes;
     ibuf->meshes = mesh;
 
-    lua_pushinteger(lua, mesh - g_meshes.pool);
+    lua_pushinteger(lua, ((char*)mesh - g_meshes.pool) / MESH_SIZE);
     return 1;
 }
 
@@ -236,7 +236,8 @@ static int api_mesh_left(lua_State *lua)
 int mesh_init(lua_State *lua, int count)
 {
     int i;
-    if (sizeof(struct mesh_t) != MESH_SIZE)
+    struct mesh_t *mesh;
+    if (sizeof(struct mesh_t) > MESH_SIZE)
     {
         fprintf(stderr, "Invalid size:\n"
                         "sizeof(struct mesh_t) == %i\n",
@@ -247,18 +248,19 @@ int mesh_init(lua_State *lua, int count)
     if (g_meshes.pool == 0)
         return 1;
     memset(g_meshes.pool, 0, MESH_SIZE * count);
-    for (i = 0; i < count; ++i)
-    {
-        if (i > 0)
-            g_meshes.pool[i].prev = g_meshes.pool + i - 1;
-        if (i < count - 1)
-            g_meshes.pool[i].next = g_meshes.pool + i + 1;
-        g_meshes.pool[i].vacant = 1;
-    }
     g_meshes.left = count;
     g_meshes.left_min = count;
     g_meshes.count = count;
-    g_meshes.vacant = g_meshes.pool;
+    g_meshes.vacant = mesh_get(0);
+    for (i = 0; i < count; ++i)
+    {
+        mesh = mesh_get(i);
+        if (i > 0)
+            mesh->prev = mesh_get(i - 1);
+        if (i < count - 1)
+            mesh->next = mesh_get(i + 1);
+        mesh->vacant = 1;
+    }
 
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_free", api_mesh_free);
