@@ -30,7 +30,7 @@ enum matrix_axis_e
 
 struct matrix_t
 {
-    GLfloat value[16]; /* should be first to ensure alignment */
+    GLfloat value[16]; /* must come first to ensure alignment */
     enum matrix_e type;
     int frame_tag;
     int vacant;
