@@ -7,6 +7,6 @@ include_directories(${LUA_INCLUDE_DIR}
 add_library(physics physcpp.cpp colshape.cpp mstate.cpp 
             rigidbody.cpp ddraw.cpp vehicle.cpp world.cpp)
 
-target_link_libraries(physics ${BULLET_LIBRARIES})
+target_link_libraries(physics util ${BULLET_LIBRARIES})
 
 add_definitions(-std=c++11 -pedantic-errors -Wall -Wextra)
