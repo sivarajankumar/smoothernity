@@ -1,4 +1,5 @@
 #include "mpool.h"
+#include "../util/util.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -121,7 +122,7 @@ int mpool_init(const int sizes[], const int counts[], int len)
                 (int)sizeof(void*));
         return 1;
     }
-    g_mpool.shelves = aligned_alloc(MPOOL_SHELF_SIZE, MPOOL_SHELF_SIZE * len);
+    g_mpool.shelves = util_malloc(MPOOL_SHELF_SIZE, MPOOL_SHELF_SIZE * len);
     if (g_mpool.shelves == 0)
         return 1;
     memset(g_mpool.shelves, 0, MPOOL_SHELF_SIZE * len);
@@ -142,7 +143,7 @@ int mpool_init(const int sizes[], const int counts[], int len)
         shelf->count = count;
         shelf->left = count;
         shelf->left_min = count;
-        shelf->chunks = aligned_alloc(MPOOL_CHUNK_SIZE, MPOOL_CHUNK_SIZE * count);
+        shelf->chunks = util_malloc(MPOOL_CHUNK_SIZE, MPOOL_CHUNK_SIZE * count);
         if (shelf->chunks == 0)
             goto cleanup;
         memset(shelf->chunks, 0, MPOOL_CHUNK_SIZE * count);
@@ -153,7 +154,7 @@ int mpool_init(const int sizes[], const int counts[], int len)
             if (j < counts[i] - 1)
                 chunk->next = mpool_get_chunk(j + 1, shelf);
             /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
-            chunk->data = aligned_alloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
+            chunk->data = util_malloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
             if (chunk->data == 0)
                 goto cleanup;
             *(void**)(chunk->data) = chunk;
@@ -171,12 +172,12 @@ cleanup:
             {
                 chunk = mpool_get_chunk(j, shelf);
                 if (chunk->data)
-                    free(chunk->data);
+                    util_free(chunk->data);
             }
-            free(shelf->chunks);
+            util_free(shelf->chunks);
         }
     }
-    free(g_mpool.shelves);
+    util_free(g_mpool.shelves);
     g_mpool.shelves = 0;
     return 1;
 } 
@@ -197,9 +198,9 @@ void mpool_done(void)
                shelf->count - shelf->left_min, shelf->count,
                shelf->allocs, shelf->frees, shelf->alloc_fails);
         for (j = 0; j < shelf->count; ++j)
-            free(mpool_get_chunk(j, shelf)->data);
-        free(shelf->chunks);
+            util_free(mpool_get_chunk(j, shelf)->data);
+        util_free(shelf->chunks);
     }
-    free(g_mpool.shelves);
+    util_free(g_mpool.shelves);
     g_mpool.shelves = 0;
 }
