@@ -16,38 +16,26 @@ struct colshapes_t
     colshape_t *vacant;
 };
 
+union colshape_u
+{
+    btBoxShape box;
+    btHeightfieldTerrainShape hf;
+    btCompoundShape comp;
+    btSphereShape sph;
+};
+
 static colshapes_t g_colshapes;
 
 int colshape_init(int count)
 {
     int i;
-    size_t size;
-    size_t align;
     colshape_t *cs;
-
     if (sizeof(colshape_t) > COLSHAPE_SIZE)
     {
         fprintf(stderr, "Invalid size:\nsizeof(colshape_t) == %i\n",
                 (int)sizeof(colshape_t));
         return PHYSRES_CANNOT_INIT;
     }
-
-    size = sizeof(btBoxShape);
-    if (size < sizeof(btHeightfieldTerrainShape))
-        size = sizeof(btHeightfieldTerrainShape);
-    if (size < sizeof(btCompoundShape))
-        size = sizeof(btCompoundShape);
-    if (size < sizeof(btSphereShape))
-        size = sizeof(btSphereShape);
-
-    align = alignof(btBoxShape);
-    if (align < alignof(btHeightfieldTerrainShape))
-        align = alignof(btHeightfieldTerrainShape);
-    if (align < alignof(btCompoundShape))
-        align = alignof(btCompoundShape);
-    if (align < alignof(btSphereShape))
-        align = alignof(btSphereShape);
-
     g_colshapes.pool = (char*)aligned_alloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
     if (g_colshapes.pool == 0)
         return PHYSRES_CANNOT_INIT;
@@ -62,7 +50,7 @@ int colshape_init(int count)
         if (i < count - 1)
             cs->next = colshape_get(i + 1);
         cs->vacant = 1;
-        cs->data = (char*) calloc(size + align, 1);
+        cs->data = (char*)aligned_alloc(alignof(colshape_u), sizeof(colshape_u));
         if (cs->data == 0)
             goto cleanup;
     }
@@ -174,9 +162,7 @@ int colshape_free(colshape_t *cs)
 int colshape_make_box(colshape_t *colshape, float *size)
 {
     try {
-        char *addr = colshape->data + alignof(btBoxShape);
-        addr -= ((addr - (char*)0) % alignof(btBoxShape));
-        colshape->shape_box = new (addr)
+        colshape->shape_box = new (colshape->data)
             btBoxShape(btVector3(size[0], size[1], size[2]));
     } catch (...) {
         return PHYSRES_INTERNAL;
@@ -189,9 +175,7 @@ int colshape_make_box(colshape_t *colshape, float *size)
 int colshape_make_sphere(colshape_t *colshape, float r)
 {
     try {
-        char *addr = colshape->data + alignof(btSphereShape);
-        addr -= ((addr - (char*)0) % alignof(btSphereShape));
-        colshape->shape_sphere = new (addr) btSphereShape(r);
+        colshape->shape_sphere = new (colshape->data) btSphereShape(r);
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
@@ -204,9 +188,7 @@ int colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
                        float hmin, float hmax, float *scale)
 {
     try {
-        char *addr = cs->data + alignof(btHeightfieldTerrainShape);
-        addr -= ((addr - (char*)0) % alignof(btHeightfieldTerrainShape));
-        cs->shape_hmap = new (addr)
+        cs->shape_hmap = new (cs->data)
             btHeightfieldTerrainShape(width, length, hmap, 1,
                                       hmin, hmax, 1, PHY_FLOAT, false);
     } catch (...) {
@@ -220,9 +202,7 @@ int colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
 int colshape_make_comp(colshape_t *colshape)
 {
     try {
-        char *addr = colshape->data + alignof(btCompoundShape);
-        addr -= ((addr - (char*)0) % alignof(btCompoundShape));
-        colshape->shape_comp = new (addr) btCompoundShape();
+        colshape->shape_comp = new (colshape->data) btCompoundShape();
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
