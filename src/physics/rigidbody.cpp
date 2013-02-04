@@ -4,6 +4,9 @@
 #include "colshape.hpp"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t RIGIDBODY_SIZE = 128;
 
 struct rigidbodies_t
 {
@@ -12,7 +15,7 @@ struct rigidbodies_t
     int count;
     int allocs;
     int frees;
-    rigidbody_t *pool;
+    char *pool;
     rigidbody_t *vacant;
 };
 
@@ -22,25 +25,29 @@ int rigidbody_init(int count)
 {
     int i;
     rigidbody_t *rb;
-    g_rigidbodies.pool = (rigidbody_t*)calloc(count, sizeof(rigidbody_t));
+    if (sizeof(rigidbody_t) > RIGIDBODY_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\nsizeof(rigidbody_t) == %i\n",
+                (int)sizeof(rigidbody_t));
+        return PHYSRES_CANNOT_INIT;
+    }
+    g_rigidbodies.pool = (char*)aligned_alloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
     if (g_rigidbodies.pool == 0)
         return PHYSRES_CANNOT_INIT;
-    g_rigidbodies.vacant = g_rigidbodies.pool;
+    memset(g_rigidbodies.pool, 0, RIGIDBODY_SIZE * count);
     g_rigidbodies.left = count;
     g_rigidbodies.left_min = count;
     g_rigidbodies.count = count;
+    g_rigidbodies.vacant = rigidbody_get(0);
     for (i = 0; i < count; ++i)
     {
-        rb = g_rigidbodies.pool + i;
+        rb = rigidbody_get(i);
         if (i < count - 1)
-            rb->next = g_rigidbodies.pool + i + 1;
+            rb->next = rigidbody_get(i + 1);
         rb->vacant = 1;
         try {
             rb->mstate = new mstate_c();
-            rb->body_data = (char*)calloc(sizeof(btRigidBody) +
-                                          alignof(btRigidBody), 1);
-            rb->body_align = alignof(btRigidBody) - ((rb->body_data - (char*)0)
-                                                     % alignof(btRigidBody));
+            rb->data = (char*)aligned_alloc(alignof(btRigidBody), sizeof(btRigidBody));
         } catch (...) {
             goto cleanup;
         }
@@ -49,11 +56,11 @@ int rigidbody_init(int count)
 cleanup:
     for (i = 0; i < count; ++i)
     {
-        rb = g_rigidbodies.pool + i;
+        rb = rigidbody_get(i);
         if (rb->mstate)
             delete rb->mstate;
-        if (rb->body_data)
-            free(rb->body_data);
+        if (rb->data)
+            free(rb->data);
     }
     free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
@@ -63,6 +70,7 @@ cleanup:
 void rigidbody_done(void)
 {
     int i;
+    rigidbody_t *rb;
     if (g_rigidbodies.pool == 0)
         return;
     printf("Rigid bodies usage: %i/%i, allocs/frees: %i/%i\n",
@@ -70,10 +78,11 @@ void rigidbody_done(void)
            g_rigidbodies.allocs, g_rigidbodies.frees);
     for (i = 0; i < g_rigidbodies.count; ++i)
     {
-        rigidbody_free(g_rigidbodies.pool + i);
+        rb = rigidbody_get(i);
+        rigidbody_free(rb);
         try {
-            delete g_rigidbodies.pool[i].mstate;
-            free(g_rigidbodies.pool[i].body_data);
+            delete rb->mstate;
+            free(rb->data);
         } catch (...) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
@@ -90,7 +99,7 @@ int rigidbody_left(void)
 rigidbody_t * rigidbody_get(int rbi)
 {
     if (rbi >= 0 && rbi < g_rigidbodies.count)
-        return g_rigidbodies.pool + rbi;
+        return (rigidbody_t*)(g_rigidbodies.pool + RIGIDBODY_SIZE * rbi);
     else
         return 0;
 }
@@ -169,7 +178,7 @@ int rigidbody_alloc(int *rbi, world_t *wld, colshape_t *cs, float *matrix,
         info.m_friction = frict;
         info.m_rollingFriction = roll_frict;
 
-        rb->body = new (rb->body_data + rb->body_align) btRigidBody(info);
+        rb->body = new (rb->data) btRigidBody(info);
 
         wld->world->addRigidBody(rb->body);
         rb->wld = wld;
@@ -179,7 +188,7 @@ int rigidbody_alloc(int *rbi, world_t *wld, colshape_t *cs, float *matrix,
         return PHYSRES_INTERNAL;
     }
 
-    *rbi = rb - g_rigidbodies.pool;
+    *rbi = ((char*)rb - g_rigidbodies.pool) / RIGIDBODY_SIZE;
     return PHYSRES_OK;
 }
 
