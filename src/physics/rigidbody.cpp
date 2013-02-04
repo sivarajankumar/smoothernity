@@ -2,7 +2,7 @@
 #include "rigidbody.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include <stdlib.h>
+#include "../util/util.hpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -31,7 +31,7 @@ int rigidbody_init(int count)
                 (int)sizeof(rigidbody_t));
         return PHYSRES_CANNOT_INIT;
     }
-    g_rigidbodies.pool = (char*)aligned_alloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
+    g_rigidbodies.pool = (char*)util_malloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
     if (g_rigidbodies.pool == 0)
         return PHYSRES_CANNOT_INIT;
     memset(g_rigidbodies.pool, 0, RIGIDBODY_SIZE * count);
@@ -47,7 +47,7 @@ int rigidbody_init(int count)
         rb->vacant = 1;
         try {
             rb->mstate = new mstate_c();
-            rb->data = (char*)aligned_alloc(alignof(btRigidBody), sizeof(btRigidBody));
+            rb->data = (char*)util_malloc(alignof(btRigidBody), sizeof(btRigidBody));
         } catch (...) {
             goto cleanup;
         }
@@ -60,9 +60,9 @@ cleanup:
         if (rb->mstate)
             delete rb->mstate;
         if (rb->data)
-            free(rb->data);
+            util_free(rb->data);
     }
-    free(g_rigidbodies.pool);
+    util_free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
     return PHYSRES_CANNOT_INIT;
 }
@@ -82,12 +82,12 @@ void rigidbody_done(void)
         rigidbody_free(rb);
         try {
             delete rb->mstate;
-            free(rb->data);
+            util_free(rb->data);
         } catch (...) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
     }
-    free(g_rigidbodies.pool);
+    util_free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
 }
 
