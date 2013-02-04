@@ -50,7 +50,6 @@ struct rop_t
     struct rop_t *chain_next;
     struct vector_t *argv[ROP_ARGVS];
     struct matrix_t *argm[ROP_ARGMS];
-    char padding[48];
 };
 
 struct rops_t
@@ -60,7 +59,7 @@ struct rops_t
     int left_min;
     int allocs;
     int frees;
-    struct rop_t *pool;
+    char *pool;
     struct rop_t *vacant;
 };
 
@@ -69,7 +68,7 @@ static struct rops_t g_rops;
 static struct rop_t * rop_get(int ropi)
 {
     if (ropi >= 0 && ropi < g_rops.count)
-        return g_rops.pool + ropi;
+        return (struct rop_t*)(g_rops.pool + ROP_SIZE * ropi);
     else
         return 0;
 }
@@ -359,7 +358,7 @@ static int rop_alloc(void)
     g_rops.vacant = g_rops.vacant->vacant_next;
     rop->vacant_next = 0;
     rop->vacant = 0;
-    return rop - g_rops.pool;
+    return ((char*)rop - g_rops.pool) / ROP_SIZE;
 }
 
 static int api_rop_free(lua_State *lua)
@@ -956,7 +955,7 @@ int rop_init(lua_State *lua, int count)
 {
     int i;
     struct rop_t *rop;
-    if (sizeof(struct rop_t) != ROP_SIZE)
+    if (sizeof(struct rop_t) > ROP_SIZE)
     {
         fprintf(stderr, "Invalid size:\n"
                         "sizeof(struct rop_t) == %i\n",
@@ -967,16 +966,16 @@ int rop_init(lua_State *lua, int count)
     if (g_rops.pool == 0)
         goto cleanup;
     memset(g_rops.pool, 0, ROP_SIZE * count);
-    g_rops.vacant = g_rops.pool;
     g_rops.count = count;
     g_rops.left = count;
     g_rops.left_min = count;
+    g_rops.vacant = rop_get(0);
     for (i = 0; i < count; ++i)
     {
-        rop = g_rops.pool + i;
+        rop = rop_get(i);
         rop->vacant = 1;
         if (i < count - 1)
-            rop->vacant_next = g_rops.pool + i + 1;
+            rop->vacant_next = rop_get(i + 1);
     }
 
     lua_register(lua, "api_rop_left", api_rop_left);
