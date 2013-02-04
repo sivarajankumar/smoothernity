@@ -1,5 +1,5 @@
 #include "vbuf.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -271,7 +271,7 @@ int vbuf_init(lua_State *lua, int size, int count)
                 size);
         return 1;
     }
-    g_vbufs.pool = aligned_alloc(VBUF_SIZE, VBUF_SIZE * count);
+    g_vbufs.pool = util_malloc(VBUF_SIZE, VBUF_SIZE * count);
     if (g_vbufs.pool == 0)
         return 1;
     memset(g_vbufs.pool, 0, VBUF_SIZE * count);
@@ -307,7 +307,7 @@ int vbuf_init(lua_State *lua, int size, int count)
 
     return 0;
 cleanup:
-    free(g_vbufs.pool);
+    util_free(g_vbufs.pool);
     g_vbufs.pool = 0;
     return 1;
 }
@@ -323,7 +323,7 @@ void vbuf_done(void)
         vbuf_free(g_vbufs.mapped);
     while (g_vbufs.baked)
         vbuf_free(g_vbufs.baked);
-    free(g_vbufs.pool);
+    util_free(g_vbufs.pool);
     g_vbufs.pool = 0;
 }
 
