@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static const size_t COLSHAPE_SIZE = 128;
+
 struct colshapes_t
 {
     int count;
@@ -10,7 +12,7 @@ struct colshapes_t
     int left_min;
     int allocs;
     int frees;
-    colshape_t *pool;
+    char *pool;
     colshape_t *vacant;
 };
 
@@ -21,7 +23,14 @@ int colshape_init(int count)
     int i;
     size_t size;
     size_t align;
-    struct colshape_t *cs;
+    colshape_t *cs;
+
+    if (sizeof(colshape_t) > COLSHAPE_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\nsizeof(colshape_t) == %i\n",
+                (int)sizeof(colshape_t));
+        return PHYSRES_CANNOT_INIT;
+    }
 
     size = sizeof(btBoxShape);
     if (size < sizeof(btHeightfieldTerrainShape))
@@ -39,18 +48,19 @@ int colshape_init(int count)
     if (align < alignof(btSphereShape))
         align = alignof(btSphereShape);
 
-    g_colshapes.pool = (colshape_t*)calloc(count, sizeof(colshape_t));
+    g_colshapes.pool = (char*)aligned_alloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
     if (g_colshapes.pool == 0)
         return PHYSRES_CANNOT_INIT;
+    memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
     g_colshapes.count = count;
     g_colshapes.left = count;
     g_colshapes.left_min = count;
-    g_colshapes.vacant = g_colshapes.pool;
+    g_colshapes.vacant = colshape_get(0);
     for (i = 0; i < count; ++i)
     {
-        cs = g_colshapes.pool + i;
+        cs = colshape_get(i);
         if (i < count - 1)
-            cs->next = g_colshapes.pool + i + 1;
+            cs->next = colshape_get(i + 1);
         cs->vacant = 1;
         cs->data = (char*) calloc(size + align, 1);
         if (cs->data == 0)
@@ -60,7 +70,7 @@ int colshape_init(int count)
 cleanup:
     for (i = 0; i < count; ++i)
     {
-        cs = g_colshapes.pool + i;
+        cs = colshape_get(i);
         if (cs->data)
             free(cs->data);
     }
@@ -79,7 +89,7 @@ void colshape_done(void)
            g_colshapes.allocs, g_colshapes.frees);
     for (i = 0; i < g_colshapes.count; ++i)
     {
-        cs = g_colshapes.pool + i;
+        cs = colshape_get(i);
         colshape_free(cs);
         free(cs->data);
     }
@@ -105,14 +115,14 @@ int colshape_alloc(int *csi)
     g_colshapes.vacant = g_colshapes.vacant->next;
     colshape->vacant = 0;
     colshape->next = 0;
-    *csi = colshape - g_colshapes.pool;
+    *csi = ((char*)colshape - g_colshapes.pool) / COLSHAPE_SIZE;
     return PHYSRES_OK;
 }
 
 colshape_t * colshape_get(int colshapei)
 {
     if (colshapei >= 0 && colshapei < g_colshapes.count)
-        return g_colshapes.pool + colshapei;
+        return (colshape_t*)(g_colshapes.pool + COLSHAPE_SIZE * colshapei);
     else
         return 0;
 }
