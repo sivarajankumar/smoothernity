@@ -3,6 +3,9 @@
 #include "physres.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+static const size_t WORLD_SIZE = 128;
 
 struct worlds_t
 {
@@ -11,7 +14,7 @@ struct worlds_t
     int left_min;
     int allocs;
     int frees;
-    world_t *pool;
+    char *pool;
     world_t *vacant;
     world_t *active;
 };
@@ -22,21 +25,27 @@ int world_init(int count)
 {
     int i;
     world_t *wld;
-    g_worlds.pool = (world_t*)calloc(count, sizeof(world_t));
+    if (sizeof(world_t) > WORLD_SIZE)
+    {
+        fprintf(stderr, "Invalid size:\nsizeof(world_t) == %i\n",
+                (int)sizeof(world_t));
+        return PHYSRES_CANNOT_INIT;
+    }
+    g_worlds.pool = (char*)aligned_alloc(WORLD_SIZE, WORLD_SIZE * count);
     if (g_worlds.pool == 0)
         return PHYSRES_CANNOT_INIT;
-    g_worlds.vacant = g_worlds.pool;
     g_worlds.count = count;
     g_worlds.left = count;
     g_worlds.left_min = count;
+    g_worlds.vacant = world_get(0);
     for (i = 0; i < count; ++i)
     {
-        wld = g_worlds.pool + i;
+        wld = world_get(i);
         wld->vacant = 1;
         if (i < count - 1)
-            wld->next = g_worlds.pool + i + 1;
+            wld->next = world_get(i + 1);
         if (i > 0)
-            wld->prev = g_worlds.pool + i - 1;
+            wld->prev = world_get(i - 1);
         try
         {
             wld->colcfg = new btDefaultCollisionConfiguration();
@@ -59,7 +68,7 @@ int world_init(int count)
 cleanup:
     for (i = 0; i < count; ++i)
     {
-        wld = g_worlds.pool + i;
+        wld = world_get(i);
         if (wld->colcfg)
             delete wld->colcfg;
         if (wld->dispatcher)
@@ -91,7 +100,7 @@ void world_done(void)
         fprintf(stderr, "Some worlds are still active\n");
     for (i = 0; i < g_worlds.count; ++i)
     {
-        wld = g_worlds.pool + i;
+        wld = world_get(i);
         try
         {
             delete wld->world;
@@ -154,7 +163,7 @@ int world_alloc(int *worldi)
     wld->time_scale = 1;
     wld->vacant = 0;
 
-    *worldi = wld - g_worlds.pool;
+    *worldi = ((char*)wld - g_worlds.pool) / WORLD_SIZE;
 
     return PHYSRES_OK;
 }
@@ -194,7 +203,7 @@ int world_free(world_t *wld)
 world_t * world_get(int worldi)
 {
     if (worldi >= 0 && worldi < g_worlds.count)
-        return g_worlds.pool + worldi;
+        return (world_t*)(g_worlds.pool + WORLD_SIZE * worldi);
     else
         return 0;
 }
