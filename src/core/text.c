@@ -27,7 +27,6 @@ struct text_t
     int vacant;
     struct text_t *prev;
     struct text_t *next;
-    char padding[16];
 };
 
 struct texts_t
@@ -38,7 +37,7 @@ struct texts_t
     int left_min;
     int allocs;
     int frees;
-    struct text_t *pool;
+    char *pool;
     struct text_t *vacant;
     struct text_t *active;
 };
@@ -48,7 +47,7 @@ static struct texts_t g_texts;
 static struct text_t * text_get(int texti)
 {
     if (texti >= 0 && texti < g_texts.count)
-        return g_texts.pool + texti;
+        return (struct text_t*)(g_texts.pool + TEXT_SIZE * texti);
     else
         return 0;
 }
@@ -135,7 +134,7 @@ static int api_text_alloc(lua_State *lua)
     text->pos[1] = y;
     text->vacant = 0;
 
-    lua_pushinteger(lua, text - g_texts.pool);
+    lua_pushinteger(lua, ((char*)text - g_texts.pool) / TEXT_SIZE);
     return 1;
 }
 
@@ -194,7 +193,8 @@ static int api_text_left(lua_State *lua)
 int text_init(lua_State *lua, int size, int count)
 {
     int i;
-    if (sizeof(struct text_t) != TEXT_SIZE
+    struct text_t *text;
+    if (sizeof(struct text_t) > TEXT_SIZE
     ||  (size & (size - 1)) != 0)
     {
         fprintf(stderr, "Invalid sizes:\n"
@@ -208,23 +208,24 @@ int text_init(lua_State *lua, int size, int count)
     if (g_texts.pool == 0)
         return 1;
     memset(g_texts.pool, 0, TEXT_SIZE * count);
-    for (i = 0; i < count; ++i)
-    {
-        if (i > 0)
-            g_texts.pool[i].prev = g_texts.pool + i - 1;
-        if (i < count - 1)
-            g_texts.pool[i].next = g_texts.pool + i + 1;
-        g_texts.pool[i].string = aligned_alloc(TEXT_STRING_ALIGN, sizeof(char) * size);
-        if (g_texts.pool[i].string == 0)
-            goto cleanup;
-        memset(g_texts.pool[i].string, 0, sizeof(char) * size);
-        g_texts.pool[i].vacant = 1;
-    }
     g_texts.size = size;
     g_texts.count = count;
     g_texts.left = count;
     g_texts.left_min = count;
-    g_texts.vacant = g_texts.pool;
+    g_texts.vacant = text_get(0);
+    for (i = 0; i < count; ++i)
+    {
+        text = text_get(i);
+        if (i > 0)
+            text->prev = text_get(i - 1);
+        if (i < count - 1)
+            text->next = text_get(i + 1);
+        text->string = aligned_alloc(TEXT_STRING_ALIGN, sizeof(char) * size);
+        if (text->string == 0)
+            goto cleanup;
+        memset(text->string, 0, sizeof(char) * size);
+        text->vacant = 1;
+    }
 
     lua_register(lua, "api_text_alloc", api_text_alloc);
     lua_register(lua, "api_text_free", api_text_free);
@@ -246,8 +247,9 @@ int text_init(lua_State *lua, int size, int count)
 cleanup:
     for (i = 0; i < count; ++i)
     {
-        if (g_texts.pool[i].string)
-            free(g_texts.pool[i].string);
+        text = text_get(i);
+        if (text->string)
+            free(text->string);
     }
     free(g_texts.pool);
     g_texts.pool = 0;
@@ -263,7 +265,7 @@ void text_done(void)
            g_texts.count - g_texts.left_min, g_texts.count,
            g_texts.allocs, g_texts.frees);
     for (i = 0; i < g_texts.count; ++i)
-        free(g_texts.pool[i].string);
+        free(text_get(i)->string);
     free(g_texts.pool);
     g_texts.pool = 0;
 }
