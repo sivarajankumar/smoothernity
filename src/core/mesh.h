@@ -23,8 +23,6 @@ struct mesh_t
 
     struct mesh_t *prev;
     struct mesh_t *next;
-
-    char padding[32];
 };
 
 struct meshes_t
@@ -34,7 +32,7 @@ struct meshes_t
     int count;
     int allocs;
     int frees;
-    struct mesh_t *pool;
+    char *pool;
     struct mesh_t *vacant;
 };
 
