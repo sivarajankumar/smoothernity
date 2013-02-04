@@ -1,5 +1,5 @@
 #include "buf.h"
-#include <stdlib.h>
+#include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -138,7 +138,7 @@ int buf_init(lua_State *lua, int size, int count)
                 (int)sizeof(struct buf_t), size);
         return 1;
     }
-    g_bufs.pool = aligned_alloc(BUF_SIZE, BUF_SIZE * count);
+    g_bufs.pool = util_malloc(BUF_SIZE, BUF_SIZE * count);
     if (g_bufs.pool == 0)
         return 1;
     memset(g_bufs.pool, 0, BUF_SIZE * count);
@@ -153,7 +153,7 @@ int buf_init(lua_State *lua, int size, int count)
         if (i < count - 1)
             buf->next = buf_get(i + 1);
         buf->vacant = 1;
-        buf->data = aligned_alloc(BUF_DATA_ALIGN, sizeof(float) * size);
+        buf->data = util_malloc(BUF_DATA_ALIGN, sizeof(float) * size);
         if (buf->data == 0)
             goto cleanup;
         memset(buf->data, 0, sizeof(float) * size);
@@ -181,9 +181,9 @@ void buf_done(void)
     {
         buf = buf_get(i);
         if (buf->data)
-            free(buf->data);
+            util_free(buf->data);
     }
-    free(g_bufs.pool);
+    util_free(g_bufs.pool);
     g_bufs.pool = 0;
 }
 
