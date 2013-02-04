@@ -1,5 +1,6 @@
 #include "ibuf.h"
 #include "vbuf.h"
+#include "../util/util.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -227,7 +228,7 @@ int ibuf_init(lua_State *lua, int size, int count)
                 size);
         return 1;
     }
-    g_ibufs.pool = aligned_alloc(IBUF_SIZE, IBUF_SIZE * count);
+    g_ibufs.pool = util_malloc(IBUF_SIZE, IBUF_SIZE * count);
     if (g_ibufs.pool == 0)
         return 1;
     memset(g_ibufs.pool, 0, IBUF_SIZE * count);
@@ -260,7 +261,7 @@ int ibuf_init(lua_State *lua, int size, int count)
 
     return 0;
 cleanup:
-    free(g_ibufs.pool);
+    util_free(g_ibufs.pool);
     g_ibufs.pool = 0;
     return 1;
 }
@@ -276,7 +277,7 @@ void ibuf_done(void)
         ibuf_free(g_ibufs.mapped);
     while (g_ibufs.baked)
         ibuf_free(g_ibufs.baked);
-    free(g_ibufs.pool);
+    util_free(g_ibufs.pool);
     g_ibufs.pool = 0;
 }
 
