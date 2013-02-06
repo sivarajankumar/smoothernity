@@ -658,8 +658,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     struct matrix_t *matrix;
     if (sizeof(struct matrix_t) > MATRIX_SIZE)
     {
-        fprintf(stderr, "Invalid sizes:\n"
-                        "sizeof(struct matrix_t) == %i\n",
+        fprintf(stderr, "Invalid size:\nsizeof(struct matrix_t) == %i\n",
                 (int)sizeof(struct matrix_t));
         return 1;
     }

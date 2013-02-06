@@ -24,8 +24,9 @@ function configure()
             buf_size = 8192,
             buf_count = 100,
             rop_count = 100,
-            storage_size = 100000,
-            storage_count = 1}
+            storage_key_size = 128,
+            storage_data_size = 131072,
+            storage_count = 10}
 end
 
 function run()

@@ -49,7 +49,8 @@ struct main_t
     int buf_size;
     int buf_count;
     int rop_count;
-    int storage_size;
+    int storage_key_size;
+    int storage_data_size;
     int storage_count;
     lua_State *lua;
 };
@@ -220,7 +221,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "buf_count", &g_main.buf_count) != 0
      || main_get_int(lua, "rop_count", &g_main.rop_count) != 0
-     || main_get_int(lua, "storage_size", &g_main.storage_size) != 0
+     || main_get_int(lua, "storage_key_size", &g_main.storage_key_size) != 0
+     || main_get_int(lua, "storage_data_size", &g_main.storage_data_size) != 0
      || main_get_int(lua, "storage_count", &g_main.storage_count) != 0)
     {
         goto cleanup;
@@ -331,7 +333,8 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (storage_init(g_main.lua, g_main.storage_size, g_main.storage_count) != 0)
+    if (storage_init(g_main.lua, g_main.storage_key_size,
+                     g_main.storage_data_size, g_main.storage_count) != 0)
     {
         fprintf(stderr, "Cannot init storages\n");
         return 1;
