@@ -176,8 +176,8 @@ static int api_storage_left(lua_State *lua)
 static int api_storage_alloc_r(lua_State *lua)
 {
     struct storage_t *st;
-    size_t key_len;
     int sti;
+    size_t key_len;
     const char *key;
     if (lua_gettop(lua) != 1 || !lua_isstring(lua, 1))
     {
@@ -211,13 +211,80 @@ static int api_storage_alloc_r(lua_State *lua)
 
 static int api_storage_alloc_w(lua_State *lua)
 {
-    lua_error(lua);
-    return 0;
+    struct storage_t *st;
+    int sti;
+    size_t key_len, data_len;
+    const char *key, *data;
+    if (lua_gettop(lua) != 2 || !lua_isstring(lua, 1)
+    || !lua_isstring(lua, 2))
+    {
+        lua_pushstring(lua, "api_storage_alloc_w: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    key = lua_tolstring(lua, 1, &key_len);
+    data = lua_tolstring(lua, 1, &data_len);
+    lua_pop(lua, 2);
+    if (key_len >= (size_t)g_storages.key_size
+    || data_len >= (size_t)g_storages.data_size)
+    {
+        lua_pushstring(lua, "api_storage_alloc_w: string is too long");
+        lua_error(lua);
+        return 0;
+    }
+    sti = storage_alloc();
+    st = storage_get(sti);
+    if (st == 0)
+    {
+        lua_pushstring(lua, "api_storage_alloc_w: out of storages");
+        lua_error(lua);
+        return 0;
+    }
+    st->state = STORAGE_STATE_WAITING;
+    st->cmd = STORAGE_CMD_WRITE;
+    memcpy(st->key, key, key_len);
+    memcpy(st->data, data, data_len);
+    st->key[key_len] = 0;
+    st->data[data_len] = 0;
+    lua_pushinteger(lua, sti);
+    return 1;
 }
 
 static int api_storage_free(lua_State *lua)
 {
-    lua_error(lua);
+    struct storage_t *st;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_storage_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    st = storage_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    pthread_mutex_lock(&g_storages.mutex);
+    if (st == 0 || (st->state != STORAGE_STATE_DONE &&
+                    st->state != STORAGE_STATE_ERROR))
+    {
+        pthread_mutex_unlock(&g_storages.mutex);
+        lua_pushstring(lua, "api_storage_free: invalid storage");
+        lua_error(lua);
+        return 0;
+    }
+    pthread_mutex_unlock(&g_storages.mutex);
+    st->state = STORAGE_STATE_VACANT;
+    ++g_storages.left;
+    ++g_storages.frees;
+    if (st == g_storages.active_head)
+        g_storages.active_head = st->next;
+    if (st == g_storages.active_tail)
+        g_storages.active_tail = st->prev;
+    if (st->next)
+        st->next->prev = st->prev;
+    if (st->prev)
+        st->prev->next = st->next;
+    st->next = g_storages.vacant;
+    st->prev = 0;
+    g_storages.vacant = st;
     return 0;
 }
 
