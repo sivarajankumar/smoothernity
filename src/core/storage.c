@@ -86,6 +86,7 @@ static int storage_alloc(void)
     {
         st->prev = g_storages.active_tail;
         st->next = 0;
+        g_storages.active_tail->next = st;
         g_storages.active_tail = st;
     }
     return ((char*)st - g_storages.pool) / STORAGE_SIZE;
@@ -314,8 +315,26 @@ static int api_storage_state(lua_State *lua)
 
 static int api_storage_data(lua_State *lua)
 {
-    lua_error(lua);
-    return 0;
+    struct storage_t *st;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_storage_data: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    st = storage_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    pthread_mutex_lock(&g_storages.mutex);
+    if (st == 0 || st->state != STORAGE_STATE_DONE)
+    {
+        pthread_mutex_unlock(&g_storages.mutex);
+        lua_pushstring(lua, "api_storage_data: invalid storage");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushlstring(lua, st->data, st->size);
+    pthread_mutex_unlock(&g_storages.mutex);
+    return 1;
 }
 
 int storage_init(lua_State *lua, int key_size, int data_size, int count)
