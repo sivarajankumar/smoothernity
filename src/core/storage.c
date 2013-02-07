@@ -290,8 +290,26 @@ static int api_storage_free(lua_State *lua)
 
 static int api_storage_state(lua_State *lua)
 {
-    lua_error(lua);
-    return 0;
+    struct storage_t *st;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_storage_state: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    st = storage_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    pthread_mutex_lock(&g_storages.mutex);
+    if (st == 0)
+    {
+        pthread_mutex_unlock(&g_storages.mutex);
+        lua_pushstring(lua, "api_storage_state: invalid storage");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, (int)st->state);
+    pthread_mutex_unlock(&g_storages.mutex);
+    return 1;
 }
 
 static int api_storage_data(lua_State *lua)
