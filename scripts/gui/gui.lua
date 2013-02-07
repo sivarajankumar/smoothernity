@@ -1,10 +1,11 @@
 local M = {}
 
 local bar = require 'gui.bar'
+local wait = require 'gui.wait'
 local util = require 'util'
 local cfg = require 'config'
 
-local genbar, edgebar, frbar, fpsbar
+local genbar, edgebar, frbar, fpsbar, wt
 local whole_frames = 0
 local accum = 0
 
@@ -23,6 +24,14 @@ function M.player_freedom(value)
     frbar.set(value)
 end
 
+function M.wait_show()
+    wt.show()
+end
+
+function M.wait_hide()
+    wt.hide()
+end
+
 function M.frame_time(value)
     if value > cfg.FRAME_TIME * THRESH then
         whole_frames = 0
@@ -34,6 +43,7 @@ end
 
 function M.init()
     bar.init()
+    wait.init()
 
     local sx, sy = util.camera_dims()
     local sizex, sizey = 0.5, 0.05
@@ -49,6 +59,9 @@ function M.init()
 
     posy = posy + sizey + 0.05
     fpsbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+
+    wt = wait.alloc(sx - 0.3, -sy + 0.3, 0.25)
+    wt.show()
 end
 
 function M.done()
@@ -56,7 +69,9 @@ function M.done()
     edgebar.free()
     frbar.free()
     fpsbar.free()
+    wt.free()
     bar.done()
+    wait.done()
 end
 
 return M
