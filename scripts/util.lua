@@ -3,8 +3,8 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
-function M.async_read(key)
-    local s = api_storage_alloc_r(key)
+function M.async_read(uid)
+    local s = api_storage_alloc_r(uid)
     local res
     while true do
         if api_storage_state(s) == API_STORAGE_STATE_DONE then
@@ -14,31 +14,31 @@ function M.async_read(key)
             res = ''
             break
         end
-        coroutine.yield(true)
+        coroutine.yield(false)
     end
     api_storage_free(s)
     return res
 end
 
-function M.async_write(key, data)
-    local s = api_storage_alloc_w(key, data)
+function M.async_write(uid, data)
+    local s = api_storage_alloc_w(uid, data)
     while true do
         if api_storage_state(s) == API_STORAGE_STATE_DONE
         or api_storage_state(s) == API_STORAGE_STATE_ERROR
         then
             break
         end
-        coroutine.yield(true)
+        coroutine.yield(false)
     end
     api_storage_free(s)
 end
 
-function M.key_cache(key)
-    return string.format('%s/%s', os.getenv('SMOOTHERNITY_CACHE_DIR'), key)
+function M.uid_cache(uid)
+    return string.format('%s/%s', os.getenv('SMOOTHERNITY_CACHE_DIR'), uid)
 end
 
-function M.key_save(key)
-    return string.format('%s/%s', os.getenv('SMOOTHERNITY_SAVE_DIR'), key)
+function M.uid_save(uid)
+    return string.format('%s/%s', os.getenv('SMOOTHERNITY_SAVE_DIR'), uid)
 end
 
 function M.camera_dims()

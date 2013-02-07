@@ -10,18 +10,30 @@ local lod = require 'lod'
 
 local SCENE = 50
 
-local function move_alloc()
+local function move_alloc(uid)
     local self = {}
-    self.x, self.y, self.z = 0, 0, 0
+
+    function self.save()
+        util.async_write(util.uid_save(uid),
+            string.format('return %i, %i, %i', self.x, self.y, self.z))
+    end
+
+    local chunk = util.async_read(util.uid_save(uid))
+    if chunk == '' then
+        self.x, self.y, self.z = 0, 0, 0
+    else
+        self.x, self.y, self.z = loadstring(chunk)()
+    end
+
     return self
 end
 
-function M.alloc(centx, centy, centz)
+function M.alloc(uid, centx, centy, centz)
     local self = {}
 
     local planes = {}
-    local nse = noise.alloc('noise')
-    local move = move_alloc()
+    local nse = noise.alloc(string.format('%s_noise', uid))
+    local move = move_alloc(string.format('%s_move', uid))
     local vplayer = api_vector_alloc()
     local generating = false
     local text
@@ -147,6 +159,11 @@ function M.alloc(centx, centy, centz)
             min_dist = math.min(min_dist, v.edge_dist(wx, wy, wz))
         end
         return min_dist
+    end
+
+    function self.save()
+        nse.save()
+        move.save()
     end
 
     for lodi = 0, lod.count - 1 do
