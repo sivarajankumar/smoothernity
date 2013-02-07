@@ -78,6 +78,7 @@ local function visual_alloc()
     local vclrdep = util.vector_const(1, 0, 0 ,0)
     local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
     self.vtscale = util.vector_const(1, 0, 0, 0)
+    local vtscalegui = util.vector_const(1, 1, 1, 1)
 
     local rroot = api_rop_alloc_root()
     local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
@@ -100,7 +101,8 @@ local function visual_alloc()
         lods[lodi] = ld
     end
 
-    local rfogoff = api_rop_alloc_fog_off(lods[lod.count - 1].rmesh)
+    local rtscalegui = api_rop_alloc_tscale(lods[lod.count - 1].rmesh, vtscalegui, 0)
+    local rfogoff = api_rop_alloc_fog_off(rtscalegui)
     local rclr2d = api_rop_alloc_clear(rfogoff, API_ROP_CLEAR_DEPTH)
     local rproj2d = api_rop_alloc_proj(rclr2d, mproj2d)
     local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
@@ -115,6 +117,7 @@ local function visual_alloc()
         api_vector_free(vclrdep)
         api_vector_free(vfogdist)
         api_vector_free(self.vtscale)
+        api_vector_free(vtscalegui)
 
         api_rop_free(rroot)
         api_rop_free(rclrdep)
@@ -130,6 +133,7 @@ local function visual_alloc()
             api_rop_free(v.rmesh)
         end
 
+        api_rop_free(rtscalegui)
         api_rop_free(rfogoff)
         api_rop_free(rclr2d)
         api_rop_free(rproj2d)
