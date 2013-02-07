@@ -73,7 +73,7 @@ static struct rop_t * rop_get(int ropi)
         return 0;
 }
 
-static int rop_update_meshes(float dt, int frame_tag)
+static int rop_update_meshes(float dt, int frame_tag, int group)
 {
     struct vbuf_t *vbuf;
     struct mesh_t *mesh_vbuf;
@@ -82,6 +82,8 @@ static int rop_update_meshes(float dt, int frame_tag)
         for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
         {
             if (mesh_vbuf->ibuf->mapped)
+                continue;
+            if (mesh_vbuf->group != group)
                 continue;
             if (matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0) != 0)
                 return 1;
@@ -92,7 +94,7 @@ static int rop_update_meshes(float dt, int frame_tag)
 
 static int api_rop_update(lua_State *lua)
 {
-    float dt;
+    float dt0, dt;
     int frame_tag;
     struct rop_t *root, *rop;
 
@@ -105,7 +107,7 @@ static int api_rop_update(lua_State *lua)
     }
 
     root = rop_get(lua_tointeger(lua, 1));
-    dt = lua_tonumber(lua, 2);
+    dt0 = lua_tonumber(lua, 2);
     frame_tag = lua_tointeger(lua, 3);
 
     if (root == 0)
@@ -115,20 +117,21 @@ static int api_rop_update(lua_State *lua)
         return 0;
     }
 
-    if (dt < 0.0f)
+    if (dt0 < 0.0f)
     {
         lua_pushstring(lua, "api_rop_update: negative dt");
         lua_error(lua);
         return 0;
     }
 
+    dt = dt0;
     for (rop = root; rop; rop = rop->chain_next)
     {
         if (rop->type == ROP_TIME_SCALE)
         {
             if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
                 goto error;
-            dt *= rop->argv[0]->value[rop->tscalei];
+            dt = dt0 * rop->argv[0]->value[rop->tscalei];
         }
         else if (rop->type == ROP_CLEAR_COLOR)
         {
@@ -152,7 +155,7 @@ static int api_rop_update(lua_State *lua)
         }
         else if (rop->type == ROP_DRAW_MESHES)
         {
-            if (rop_update_meshes(dt, frame_tag) != 0)
+            if (rop_update_meshes(dt, frame_tag, rop->group) != 0)
                 goto error;
         }
         else if (rop->type == ROP_FOG_LIN)

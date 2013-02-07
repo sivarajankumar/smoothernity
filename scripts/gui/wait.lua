@@ -5,7 +5,7 @@ local meshes = require 'meshes'
 
 local ibuf, vbuf, vrot, brot
 
-local COLOR = function() return 0, 0, 0, 1 end
+local COLOR = function() return 0, 1, 0, 1 end
 local PERIOD = 1
 
 function M.alloc(x, y, r)
