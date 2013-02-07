@@ -63,7 +63,6 @@ function M.alloc(uid)
                 end
                 first_x = false
                 line = line .. string.format('[%i] = %f', x, v)
-                api_main_gc_step(10)
                 coroutine.yield(false)
             end
             line = line .. '}'
@@ -80,7 +79,6 @@ function M.alloc(uid)
             end
         else
             data[z] = loadstring(chunk)()
-            api_main_gc_step(10)
         end
     end
 
