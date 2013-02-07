@@ -246,7 +246,7 @@ static int api_storage_alloc_w(lua_State *lua)
     memcpy(st->key, key, key_len);
     memcpy(st->data, data, data_len);
     st->key[key_len] = 0;
-    st->data[data_len] = 0;
+    st->size = (int)data_len;
     lua_pushinteger(lua, sti);
     return 1;
 }
