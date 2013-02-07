@@ -5,7 +5,7 @@ local util = require 'util'
 local LENGTH = 256
 local WIDTH = 256
 
-function M.alloc()
+function M.alloc(key)
     local self = {}
     local data = {}
 

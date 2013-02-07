@@ -59,13 +59,7 @@ function M.run()
     local prf = perf.alloc()
     local frame_time = api_timer()
     local blink = blinker.alloc()
-    local wld = world.alloc(START_X, START_Y, START_Z)
-    local sx, sy, sz = start_pos(wld)
-    local cbs = cubes.alloc(sx, sy, sz - 5)
-    local car = vehicle.alloc(sx, sy, sz + 5)
-    local camc = camcord.alloc(sx, sy, sz + 10)
-    local camd = camdev.alloc(sx, sy, sz)
-    local camsw = camswitch.alloc(camc, camd)
+    local wld, cbs, car, camc, camd, camsw
     local keyctl = key.alloc(function() return API_INPUT_KEY_F10 end,
         function()
             local sx, sy, sz = start_pos(wld)
@@ -77,13 +71,29 @@ function M.run()
             wld.attach(car.mchassis)
         end, function() end)
 
-    camc.attach(car.mchassis)
-    wld.attach(car.mchassis)
     util.set_gravity(0, -10, 0)
     render.visual.engage()
 
+    local work = coroutine.create(
+        function()
+            while not quit.requested()
+            do
+                wld.generate()
+                coroutine.yield(true)
+            end
+        end)
+
     local control = coroutine.create(
         function()
+            wld = world.alloc(START_X, START_Y, START_Z)
+            local sx, sy, sz = start_pos(wld)
+            cbs = cubes.alloc(sx, sy, sz - 5)
+            car = vehicle.alloc(sx, sy, sz + 5)
+            camc = camcord.alloc(sx, sy, sz + 10)
+            camd = camdev.alloc(sx, sy, sz)
+            camsw = camswitch.alloc(camc, camd)
+            camc.attach(car.mchassis)
+            wld.attach(car.mchassis)
             while not quit.requested()
             do
                 quit.control()
@@ -102,15 +112,15 @@ function M.run()
                 car.restrain(edist)
                 coroutine.yield(true)
             end
-        end)
-
-    local work = coroutine.create(
-        function()
-            while not quit.requested()
-            do
-                wld.generate()
+            while coroutine.status(work) ~= 'dead' do
                 coroutine.yield(true)
             end
+            render.camera_stop()
+            camc.free()
+            camd.free()
+            car.free()
+            cbs.free()
+            wld.free()
         end)
 
     while coroutine.status(control) ~= 'dead'
@@ -120,6 +130,7 @@ function M.run()
         prf.sample('physics', tick(function() api_physics_update(cfg.FRAME_TIME) end))
         prf.sample('input', tick(function() api_input_update() end))
         prf.sample('gc', tick(function() api_main_gc_step(GC_STEP) end))
+        prf.sample('storage', tick(function() api_storage_update() end))
         prf.sample('control', tick(function() run_co(control, logic_time, 0) end))
         prf.sample('work', tick(function() run_co(work, logic_time, LOGIC_TIME) end))
         prf.sample('rupdate', tick(function() render.update() end))
@@ -132,11 +143,6 @@ function M.run()
 
     prf.free()
     blink.free()
-    wld.free()
-    cbs.free()
-    car.free()
-    camc.free()
-    camd.free()
     gui.done()
     render.done()
     pwld.done()

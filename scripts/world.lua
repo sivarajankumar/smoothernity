@@ -20,7 +20,7 @@ function M.alloc(centx, centy, centz)
     local self = {}
 
     local planes = {}
-    local nse = noise.alloc()
+    local nse = noise.alloc('noise')
     local move = move_alloc()
     local vplayer = api_vector_alloc()
     local generating = false
