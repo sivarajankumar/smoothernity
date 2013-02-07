@@ -7,6 +7,7 @@ function M.async_read(uid)
     local s = api_storage_alloc_r(uid)
     local res
     while true do
+        api_storage_update()
         if api_storage_state(s) == API_STORAGE_STATE_DONE then
             res = api_storage_data(s)
             break
@@ -23,6 +24,7 @@ end
 function M.async_write(uid, data)
     local s = api_storage_alloc_w(uid, data)
     while true do
+        api_storage_update()
         if api_storage_state(s) == API_STORAGE_STATE_DONE
         or api_storage_state(s) == API_STORAGE_STATE_ERROR
         then
