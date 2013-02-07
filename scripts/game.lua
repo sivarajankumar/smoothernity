@@ -61,14 +61,14 @@ function M.run()
     local frame_time = api_timer()
     local blink = blinker.alloc()
     local wld, cbs, car, camc, camd, camsw
-    local ready = false
+    local created = false
 
     util.set_gravity(0, -10, 0)
     render.visual.engage()
 
     local control = coroutine.create(
         function()
-            while not ready do
+            while not created do
                 coroutine.yield(true)
             end
             while not quit.requested()
@@ -92,6 +92,9 @@ function M.run()
 
     local work = coroutine.create(
         function()
+            gui.wait_show()
+            api_physics_wld_tscale(pwld.wld, 0)
+            render.timescale(0)
             wld = world.alloc('world', START_X, START_Y, START_Z)
             local sx, sy, sz = start_pos(wld)
             cbs = cubes.alloc(sx, sy, sz - 5)
@@ -101,7 +104,11 @@ function M.run()
             camsw = camswitch.alloc(camc, camd)
             camc.attach(car.mchassis)
             wld.attach(car.mchassis)
-            ready = true
+            created = true
+            wld.generate()
+            api_physics_wld_tscale(pwld.wld, 1)
+            render.timescale(1)
+            gui.wait_hide()
             while not quit.requested()
             do
                 wld.generate()
@@ -110,6 +117,9 @@ function M.run()
             while coroutine.status(control) ~= 'dead' do
                 coroutine.yield(true)
             end
+            gui.wait_show()
+            api_physics_wld_tscale(pwld.wld, 0)
+            render.timescale(0)
             car.save()
             wld.save()
             render.camera_stop()
