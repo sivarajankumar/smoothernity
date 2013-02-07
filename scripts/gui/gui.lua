@@ -61,7 +61,6 @@ function M.init()
     fpsbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
 
     wt = wait.alloc(sx - 0.3, -sy + 0.3, 0.25)
-    wt.show()
 end
 
 function M.done()
