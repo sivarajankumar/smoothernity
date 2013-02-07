@@ -224,7 +224,7 @@ static int api_storage_alloc_w(lua_State *lua)
         return 0;
     }
     key = lua_tolstring(lua, 1, &key_len);
-    data = lua_tolstring(lua, 1, &data_len);
+    data = lua_tolstring(lua, 2, &data_len);
     lua_pop(lua, 2);
     if (key_len >= (size_t)g_storages.key_size
     || data_len >= (size_t)g_storages.data_size)
