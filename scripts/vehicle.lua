@@ -41,8 +41,9 @@ local RECOVERY_OFS_Y = 1
 local FREEDOM_RUBBER = 1
 local SPEED_MIN = 60 * 1000 / 3600
 local SPEED_MAX = 100 * 1000 / 3600
+local SAVE_OFS_Y = 5
 
-function M.alloc(x, y, z)
+function M.alloc(uid, startx, starty, startz)
     local self = {}
 
     self.mchassis = api_matrix_alloc()
@@ -103,6 +104,16 @@ function M.alloc(x, y, z)
 
     function self.restrain(value)
         freedom_move = value
+    end
+
+    function self.save()
+        local vpos = api_vector_alloc()
+        api_vector_mpos(vpos, self.mchassis)
+        api_vector_update(vpos)
+        local x, y, z, w = api_vector_get(vpos)
+        util.async_write(util.uid_save(uid),
+            string.format('return %f, %f, %f', x, y + SAVE_OFS_Y, z))
+        api_vector_free(vpos)
     end
 
     function self.update()
@@ -282,6 +293,13 @@ function M.alloc(x, y, z)
 
     -- vehicle
     do
+        local x, y, z
+        local chunk = util.async_read(util.uid_save(uid))
+        if chunk == '' then
+            x, y, z = startx, starty, startz
+        else
+            x, y, z = loadstring(chunk)()
+        end
         local m = util.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
         veh = api_physics_veh_alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
                                     CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,

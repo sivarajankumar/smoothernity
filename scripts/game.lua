@@ -60,45 +60,20 @@ function M.run()
     local frame_time = api_timer()
     local blink = blinker.alloc()
     local wld, cbs, car, camc, camd, camsw
-    local keyctl = key.alloc(function() return API_INPUT_KEY_F10 end,
-        function()
-            local sx, sy, sz = start_pos(wld)
-            cbs.free()
-            cbs = cubes.alloc(sx, sy, sz - 5)
-            car.free()
-            car = vehicle.alloc(sx, sy, sz + 5)
-            camc.attach(car.mchassis)
-            wld.attach(car.mchassis)
-        end, function() end)
+    local ready = false
 
     util.set_gravity(0, -10, 0)
     render.visual.engage()
 
-    local work = coroutine.create(
-        function()
-            while not quit.requested()
-            do
-                wld.generate()
-                coroutine.yield(true)
-            end
-        end)
-
     local control = coroutine.create(
         function()
-            wld = world.alloc(START_X, START_Y, START_Z)
-            local sx, sy, sz = start_pos(wld)
-            cbs = cubes.alloc(sx, sy, sz - 5)
-            car = vehicle.alloc(sx, sy, sz + 5)
-            camc = camcord.alloc(sx, sy, sz + 10)
-            camd = camdev.alloc(sx, sy, sz)
-            camsw = camswitch.alloc(camc, camd)
-            camc.attach(car.mchassis)
-            wld.attach(car.mchassis)
+            while not ready do
+                coroutine.yield(true)
+            end
             while not quit.requested()
             do
                 quit.control()
                 ddraw.update()
-                keyctl.update()
                 car.update()
                 camd.update()
                 camsw.update()
@@ -112,9 +87,30 @@ function M.run()
                 car.restrain(edist)
                 coroutine.yield(true)
             end
-            while coroutine.status(work) ~= 'dead' do
+        end)
+
+    local work = coroutine.create(
+        function()
+            wld = world.alloc('world', START_X, START_Y, START_Z)
+            local sx, sy, sz = start_pos(wld)
+            cbs = cubes.alloc(sx, sy, sz - 5)
+            car = vehicle.alloc('car', sx, sy, sz + 5)
+            camc = camcord.alloc(sx, sy, sz + 10)
+            camd = camdev.alloc(sx, sy, sz)
+            camsw = camswitch.alloc(camc, camd)
+            camc.attach(car.mchassis)
+            wld.attach(car.mchassis)
+            ready = true
+            while not quit.requested()
+            do
+                wld.generate()
                 coroutine.yield(true)
             end
+            while coroutine.status(control) ~= 'dead' do
+                coroutine.yield(true)
+            end
+            car.save()
+            wld.save()
             render.camera_stop()
             camc.free()
             camd.free()
