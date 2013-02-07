@@ -50,7 +50,8 @@ struct storages_t
     pthread_t thread;
     int quit;
     struct storage_t *vacant;
-    struct storage_t *active;
+    struct storage_t *active_head;
+    struct storage_t *active_tail;
     struct storage_t *current;
 };
 
@@ -62,6 +63,32 @@ static struct storage_t * storage_get(int sti)
         return (struct storage_t*)(g_storages.pool + STORAGE_SIZE * sti);
     else
         return 0;
+}
+
+static int storage_alloc(void)
+{
+    struct storage_t *st;
+    if (g_storages.vacant == 0)
+        return -1;
+    ++g_storages.allocs;
+    --g_storages.left;
+    if (g_storages.left < g_storages.left_min)
+        g_storages.left_min = g_storages.left;
+    st = g_storages.vacant;
+    g_storages.vacant = g_storages.vacant->next;
+    g_storages.vacant->prev = 0;
+    if (g_storages.active_tail == 0 && g_storages.active_head == 0)
+    {
+        g_storages.active_head = g_storages.active_tail = st;
+        st->prev = st->next = 0;
+    }
+    else
+    {
+        st->prev = g_storages.active_tail;
+        st->next = 0;
+        g_storages.active_tail = st;
+    }
+    return ((char*)st - g_storages.pool) / STORAGE_SIZE;
 }
 
 static void* storage_thread(void *param)
@@ -119,7 +146,7 @@ static int api_storage_update(lua_State *lua)
     pthread_mutex_lock(&g_storages.mutex);
     if (g_storages.current == 0)
     {
-        for (st = g_storages.active; st; st = st->next)
+        for (st = g_storages.active_head; st; st = st->next)
         {
             if (st->state == STORAGE_STATE_WAITING)
             {
@@ -136,14 +163,50 @@ static int api_storage_update(lua_State *lua)
 
 static int api_storage_left(lua_State *lua)
 {
-    lua_error(lua);
-    return 0;
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_storage_left: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, g_storages.left);
+    return 1;
 }
 
 static int api_storage_alloc_r(lua_State *lua)
 {
-    lua_error(lua);
-    return 0;
+    struct storage_t *st;
+    size_t key_len;
+    int sti;
+    const char *key;
+    if (lua_gettop(lua) != 1 || !lua_isstring(lua, 1))
+    {
+        lua_pushstring(lua, "api_storage_alloc_r: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    key = lua_tolstring(lua, 1, &key_len);
+    lua_pop(lua, 1);
+    if (key_len >= (size_t)g_storages.key_size)
+    {
+        lua_pushstring(lua, "api_storage_alloc_r: key is too long");
+        lua_error(lua);
+        return 0;
+    }
+    sti = storage_alloc();
+    st = storage_get(sti);
+    if (st == 0)
+    {
+        lua_pushstring(lua, "api_storage_alloc_r: out of storages");
+        lua_error(lua);
+        return 0;
+    }
+    st->state = STORAGE_STATE_WAITING;
+    st->cmd = STORAGE_CMD_READ;
+    memcpy(st->key, key, key_len);
+    st->key[key_len] = 0;
+    lua_pushinteger(lua, sti);
+    return 1;
 }
 
 static int api_storage_alloc_w(lua_State *lua)
