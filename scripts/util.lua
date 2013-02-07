@@ -3,6 +3,44 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+function M.async_read(key)
+    local s = api_storage_alloc_r(key)
+    local res
+    while true do
+        if api_storage_state(s) == API_STORAGE_STATE_DONE then
+            res = api_storage_data(s)
+            break
+        elseif api_storage_state(s) == API_STORAGE_STATE_ERROR then
+            res = ''
+            break
+        end
+        coroutine.yield(true)
+    end
+    api_storage_free(s)
+    return res
+end
+
+function M.async_write(key, data)
+    local s = api_storage_alloc_w(key, data)
+    while true do
+        if api_storage_state(s) == API_STORAGE_STATE_DONE
+        or api_storage_state(s) == API_STORAGE_STATE_ERROR
+        then
+            break
+        end
+        coroutine.yield(true)
+    end
+    api_storage_free(s)
+end
+
+function M.key_cache(key)
+    return string.format('%s/%s', os.getenv('SMOOTHERNITY_CACHE_DIR'), key)
+end
+
+function M.key_save(key)
+    return string.format('%s/%s', os.getenv('SMOOTHERNITY_SAVE_DIR'), key)
+end
+
 function M.camera_dims()
     local mindim = math.min(cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT)
     return cfg.SCREEN_WIDTH / mindim, cfg.SCREEN_HEIGHT / mindim

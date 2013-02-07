@@ -262,6 +262,12 @@ local function debug_alloc()
     return self
 end
 
+function M.camera_stop()
+    api_matrix_stop(M.visual.mview3d)
+    api_matrix_stop(M.debug.mview3d)
+    api_matrix_stop(M.eagle.mview3d)
+end
+
 function M.camera(m)
     api_matrix_inv(M.visual.mview3d, m)
     api_matrix_inv(M.debug.mview3d, m)
