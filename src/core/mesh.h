@@ -15,12 +15,6 @@ struct mesh_t
     int vacant;
     int frame_tag; /* when this mesh was last drawn */
 
-    struct mesh_t *vbuf_prev;
-    struct mesh_t *vbuf_next;
-
-    struct mesh_t *ibuf_prev;
-    struct mesh_t *ibuf_next;
-
     struct mesh_t *prev;
     struct mesh_t *next;
 };
@@ -34,6 +28,7 @@ struct meshes_t
     int frees;
     char *pool;
     struct mesh_t *vacant;
+    struct mesh_t *active;
 };
 
 extern struct meshes_t g_meshes;

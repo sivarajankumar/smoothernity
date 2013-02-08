@@ -75,19 +75,13 @@ static struct rop_t * rop_get(int ropi)
 
 static int rop_update_meshes(float dt, int frame_tag, int group)
 {
-    struct vbuf_t *vbuf;
-    struct mesh_t *mesh_vbuf;
-    for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+    struct mesh_t *mesh;
+    for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
-        for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-        {
-            if (mesh_vbuf->ibuf->mapped)
-                continue;
-            if (mesh_vbuf->group != group)
-                continue;
-            if (matrix_update(mesh_vbuf->matrix, dt, frame_tag, 0) != 0)
-                return 1;
-        }
+        if (mesh->group != group)
+            continue;
+        if (matrix_update(mesh->matrix, dt, frame_tag, 0) != 0)
+            return 1;
     }
     return 0;
 }
@@ -196,83 +190,25 @@ static void rop_draw_meshes(int frame_tag, int group)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
-    struct mesh_t *mesh_vbuf;
-    struct mesh_t *mesh_ibuf;
-    int vbuf_selected;
-    int ibuf_selected;
-    if (g_vbufs.with_meshes < g_ibufs.with_meshes)
+    struct mesh_t *mesh;
+    vbuf = 0;
+    ibuf = 0;
+    for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
-        for (vbuf = g_vbufs.baked; vbuf; vbuf = vbuf->next)
+        if (mesh->frame_tag == frame_tag || mesh->group != group)
+            continue;
+        if (vbuf != mesh->vbuf)
         {
-            if (vbuf->meshes == 0)
-                continue;
-            vbuf_selected = 0;
-            for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-            {
-                if (mesh_vbuf->frame_tag == frame_tag)
-                    continue;
-                ibuf = mesh_vbuf->ibuf;
-                if (ibuf->mapped)
-                    continue;
-                ibuf_selected = 0;
-                for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
-                {
-                    if (mesh_ibuf->frame_tag == frame_tag)
-                        continue;
-                    if (mesh_ibuf->group != group)
-                        continue;
-                    if (vbuf_selected == 0)
-                    {
-                        vbuf_selected = 1;
-                        vbuf_select(vbuf);
-                    }
-                    if (ibuf_selected == 0)
-                    {
-                        ibuf_selected = 1;
-                        ibuf_select(ibuf);
-                    }
-                    mesh_ibuf->frame_tag = frame_tag;
-                    mesh_draw(mesh_ibuf);
-                }
-            }
+            vbuf = mesh->vbuf;
+            vbuf_select(vbuf);
         }
-    }
-    else
-    {
-        for (ibuf = g_ibufs.baked; ibuf; ibuf = ibuf->next)
+        if (ibuf != mesh->ibuf)
         {
-            if (ibuf->meshes == 0)
-                continue;
-            ibuf_selected = 0;
-            for (mesh_ibuf = ibuf->meshes; mesh_ibuf; mesh_ibuf = mesh_ibuf->ibuf_next)
-            {
-                if (mesh_ibuf->frame_tag == frame_tag)
-                    continue;
-                vbuf = mesh_ibuf->vbuf;
-                if (vbuf->mapped)
-                    continue;
-                vbuf_selected = 0;
-                for (mesh_vbuf = vbuf->meshes; mesh_vbuf; mesh_vbuf = mesh_vbuf->vbuf_next)
-                {
-                    if (mesh_vbuf->frame_tag == frame_tag)
-                        continue;
-                    if (mesh_vbuf->group != group)
-                        continue;
-                    if (vbuf_selected == 0)
-                    {
-                        vbuf_selected = 1;
-                        vbuf_select(vbuf);
-                    }
-                    if (ibuf_selected == 0)
-                    {
-                        ibuf_selected = 1;
-                        ibuf_select(ibuf);
-                    }
-                    mesh_vbuf->frame_tag = frame_tag;
-                    mesh_draw(mesh_vbuf);
-                }
-            }
+            ibuf = mesh->ibuf;
+            ibuf_select(ibuf);
         }
+        mesh->frame_tag = frame_tag;
+        mesh_draw(mesh);
     }
 }
 

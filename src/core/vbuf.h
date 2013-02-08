@@ -10,7 +10,6 @@ struct vbuf_t
     int vacant;
     struct vbuf_t *prev;
     struct vbuf_t *next;
-    struct mesh_t *meshes;
 };
 
 struct vbufs_t
@@ -21,7 +20,6 @@ struct vbufs_t
     int left_min;
     int allocs;
     int frees;
-    int with_meshes;
     void *offset_pos;
     void *offset_tex;
     void *offset_color;
