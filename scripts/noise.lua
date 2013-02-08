@@ -55,7 +55,9 @@ function M.alloc(uid)
 
     for z = 0, LENGTH - 1 do
         local chunk = util.async_read(util.uid_save(string.format('%s_%i', uid, z)))
-        if chunk == '' then
+        if chunk ~= '' then
+            data[z] = loadstring(chunk)()
+        else
             data[z] = {}
             for x = 0, WIDTH - 1 do
                 data[z][x] = math.random()
@@ -74,8 +76,6 @@ function M.alloc(uid)
                 line = line .. '}'
                 util.async_write(util.uid_save(string.format('%s_%i', uid, z)), line)
             end
-        else
-            data[z] = loadstring(chunk)()
         end
     end
 
