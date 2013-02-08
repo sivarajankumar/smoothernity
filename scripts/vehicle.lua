@@ -106,7 +106,7 @@ function M.alloc(uid, startx, starty, startz)
         freedom_move = value
     end
 
-    function self.save()
+    function self.save(wld)
         local vfrom = api_vector_alloc()
         local vto = api_vector_alloc()
         local mfwd = util.matrix_pos_stop(0, 0, -1)
@@ -118,10 +118,10 @@ function M.alloc(uid, startx, starty, startz)
         api_vector_update(vto)
         local fx, fy, fz = api_vector_get(vfrom)
         local tx, ty, tz = api_vector_get(vto)
+        local wx, wy, wz = wld.scene_to_world(fx, fy, fz)
+        wy = wld.height(wz, wx) + SAVE_OFS_Y
         util.async_write(util.uid_save(string.format('%s.lua', uid)),
-            string.format('return %f, %f, %f, %f, %f, %f',
-                          fx, fy + SAVE_OFS_Y, fz,
-                          tx, fy + SAVE_OFS_Y, tz))
+            string.format('return %f, %f, %f, %f, %f, %f', fx,wy,fz, tx,wy,tz))
         api_vector_free(vfrom)
         api_vector_free(vto)
         api_matrix_free(mfwd)
