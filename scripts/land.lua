@@ -42,7 +42,10 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     end
 
     function self.delete()
-        util.async_write(util.uid_cache(uid), '')
+        for z = 0, self.res - 1 do
+            util.async_write(util.uid_cache(string.format('%s_hmap_%i', uid, z)), '')
+            util.async_write(util.uid_cache(string.format('%s_colmap_%i', uid, z)), '')
+        end
     end
 
     local function to_world(z, x)
