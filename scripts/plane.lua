@@ -8,7 +8,7 @@ local quit = require 'quit'
 local BUFFER = 20
 local REST = 400
 
-function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
+function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
 
     local lands = {}
@@ -46,7 +46,8 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
         end
         if lands[z][x] == nil and not quit.requested() then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            lands[z][x] = landalloc(noise, move, lodi, wx, wy, wz)
+            lands[z][x] = landalloc(string.format('%s_land_%i_%i', uid, z, x),
+                                    noise, move, lodi, wx, wy, wz)
         end
     end
 
@@ -84,6 +85,7 @@ function M.alloc(noise, move, lodi, landalloc, centx, centy, centz)
                 local empty = true
                 for x, lnd in pairs(xs) do
                     if x < xmin or x > xmax or z < zmin or z > zmax then
+                        lnd.delete()
                         lnd.free()
                         xs[x] = nil
                     else

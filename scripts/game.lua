@@ -62,6 +62,7 @@ function M.run()
     local blink = blinker.alloc()
     local wld, cbs, car, camc, camd, camsw
     local created = false
+    local generated = false
 
     util.set_gravity(0, -10, 0)
     render.visual.engage()
@@ -80,7 +81,9 @@ function M.run()
                 camsw.update()
                 wld.move(car, camc)
                 wld.showhide()
-                pause.control()
+                if generated then
+                    pause.control()
+                end
                 gui.gen_progress(wld.gen_progress())
 
                 local edist = wld.edge_dist()
@@ -109,6 +112,7 @@ function M.run()
             api_physics_wld_tscale(pwld.wld, 1)
             render.timescale(1)
             gui.wait_hide()
+            generated = true
             while not quit.requested()
             do
                 wld.generate()

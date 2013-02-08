@@ -7,7 +7,7 @@ local lod = require 'lod'
 local meshes = require 'meshes'
 local quit = require 'quit'
 
-local function common_alloc(noise, move, lodi, basx, basy, basz)
+local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
 
     self.size = lod.lods[lodi].size
@@ -39,6 +39,10 @@ local function common_alloc(noise, move, lodi, basx, basy, basz)
             mesh = api_mesh_alloc(meshes.lod_group(lodi), API_MESH_TRIANGLES, vb, ib, -1,
                                   self.mmesh, 0, 6 * (self.res - 1) * (self.res - 1))
         end
+    end
+
+    function self.delete()
+        util.async_write(util.uid_cache(uid), '')
     end
 
     local function to_world(z, x)
@@ -128,10 +132,10 @@ local function common_alloc(noise, move, lodi, basx, basy, basz)
     return self
 end
 
-function M.phys_alloc(noise, move, lodi, basx, basy, basz)
+function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
 
-    local common = common_alloc(noise, move, lodi, basx, basy, basz)
+    local common = common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
     local buf = api_buf_alloc()
     local mvis = util.matrix_scl_stop(scale, 1, scale)
@@ -156,6 +160,10 @@ function M.phys_alloc(noise, move, lodi, basx, basy, basz)
     end
 
     function self.move()
+    end
+
+    function self.delete()
+        common.delete()
     end
 
     -- physics
@@ -189,9 +197,9 @@ function M.phys_alloc(noise, move, lodi, basx, basy, basz)
     return self
 end
 
-function M.vis_alloc(noise, move, lodi, basx, basy, basz)
+function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
-    local common = common_alloc(noise, move, lodi, basx, basy, basz)
+    local common = common_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     function self.free()
         common.free()
@@ -203,6 +211,10 @@ function M.vis_alloc(noise, move, lodi, basx, basy, basz)
 
     function self.show()
         common.show()
+    end
+
+    function self.delete()
+        common.delete()
     end
 
     function self.move()

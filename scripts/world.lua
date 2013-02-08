@@ -173,7 +173,8 @@ function M.alloc(uid, centx, centy, centz)
         else
             landalloc = land.vis_alloc
         end
-        planes[lodi] = plane.alloc(nse, move, lodi, landalloc, centx, centy, centz)
+        planes[lodi] = plane.alloc(string.format('%s_plane_%i', uid, lodi),
+                                   nse, move, lodi, landalloc, centx, centy, centz)
     end
 
     return self
