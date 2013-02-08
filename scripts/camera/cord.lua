@@ -9,6 +9,7 @@ CORD_MAX = 20
 FROM_OFFSET_Y = 5
 FROM_RUBBER_Y = 0.01
 FROM_RUBBER_XZ = 0.05
+SPHERE_SCALE = 2
 TO_OFFSET_Y = 1
 TO_RUBBER_Y = 0.05
 TO_RUBBER_XZ = 0.05
@@ -88,7 +89,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
         local sx, sy = util.camera_dims()
         local sr = math.sqrt(sx*sx + sy*sy)
         local r = math.sqrt(sr*sr + cfg.CAMERA_DIST*cfg.CAMERA_DIST)
-        sphere = api_physics_cs_alloc_sphere(r)
+        sphere = api_physics_cs_alloc_sphere(r * SPHERE_SCALE)
     end
 
     api_vector_const(vzero, 0, 0, 0, 0)
