@@ -13,7 +13,7 @@ TO_OFFSET_Y = 1
 TO_RUBBER_Y = 0.05
 TO_RUBBER_XZ = 0.05
 
-function M.alloc(x, y, z)
+function M.alloc(uid, mstarttgt, startx, starty, startz)
     local self = {}
 
     self.matrix = api_matrix_alloc()
@@ -68,21 +68,6 @@ function M.alloc(x, y, z)
         api_physics_cs_free(sphere)
     end
 
-    local function reset_rubber()
-        api_vector_update(vcast_from)
-        util.vector_copy(vcam_from_smooth, vcast_from)
-        api_vector_rubber(vcam_from_smooth, vcast_from, vcam_from_rubber)
-
-        api_vector_update(vcam_to)
-        util.vector_copy(vcam_to_smooth, vcam_to)
-        api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
-    end
-
-    function self.attach(mtarget)
-        api_vector_mpos(vtgt_center, mtarget)
-        reset_rubber()
-    end
-
     function self.move(vofs)
         util.vector_move(vcam_from_smooth, vofs)
         util.vector_move(vcam_to_smooth, vofs)
@@ -90,6 +75,12 @@ function M.alloc(x, y, z)
         api_vector_cord(vcam_from_xz, vtgt_center_xz, CORD_MIN, CORD_MAX)
         api_vector_rubber(vcam_from_smooth, vcast_from, vcam_from_rubber)
         api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
+    end
+
+    function self.save()
+        local x, y, z, w = api_vector_get(vcam_from_xz)
+        util.async_write(util.uid_save(string.format('%s.lua', uid)),
+            string.format('return %f, %f, %f', x, y, z))
     end
 
     -- collision sphere
@@ -114,7 +105,15 @@ function M.alloc(x, y, z)
                                      TO_RUBBER_Y,
                                      TO_RUBBER_XZ, 0)
 
-    api_vector_const(vtgt_center, x, y, z - 1, 0)
+    local x, y, z
+    local chunk = util.async_read(util.uid_save(string.format('%s.lua', uid)))
+    if chunk == '' then
+        x, y, z = startx, starty, startz
+    else
+        x, y, z = loadstring(chunk)()
+    end
+
+    api_vector_mpos(vtgt_center, mstarttgt)
     api_vector_pick(vtgt_center_xz, vtgt_center, vzero, vtgt_center, vzero)
 
     api_vector_const(vcam_from_xz, x, 0, z, 0)
@@ -133,6 +132,7 @@ function M.alloc(x, y, z)
 
     api_vector_wsum(vcam_to_y, vcam_ofs_weights, vtgt_center, vcam_to_ofs, vzero, vzero)
     api_vector_pick(vcam_to, vtgt_center_xz, vcam_to_y, vtgt_center_xz, vzero)
+    api_vector_update(vcam_to)
     util.vector_copy(vcam_to_smooth, vcam_to)
     api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
 
