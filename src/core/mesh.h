@@ -28,7 +28,7 @@ struct meshes_t
     int frees;
     char *pool;
     struct mesh_t *vacant;
-    struct mesh_t *active;
+    struct mesh_t *active; /* sorted */
 };
 
 extern struct meshes_t g_meshes;

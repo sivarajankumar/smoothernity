@@ -31,7 +31,7 @@ static int api_mesh_alloc(lua_State *lua)
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
     struct matrix_t *matrix;
-    struct mesh_t *mesh, *mcur;
+    struct mesh_t *mesh, *mvbuf, *mibuf;
     int type, group, texi, ioffset, icount;
 
     if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
@@ -138,25 +138,43 @@ static int api_mesh_alloc(lua_State *lua)
     else
         mesh->type = GL_TRIANGLES;
 
-    for (mcur = g_meshes.active; mcur; mcur = mcur->next)
-    {
-        if (mcur->ibuf == ibuf && mcur->vbuf == vbuf)
-        {
-            mesh->prev = mcur;
-            mesh->next = mcur->next;
-            if (mcur->next)
-                mcur->next->prev = mesh;
-            mcur->next = mesh;
-            break;
-        }
-    }
-    if (mcur == 0)
+    /* maintain sorted order in the g_meshes.active list
+       to minimize opengl state switches during draw */
+
+    mvbuf = g_meshes.active;
+    while (mvbuf && mvbuf->vbuf != vbuf)
+        mvbuf = mvbuf->next;
+    if (mvbuf == 0)
     {
         mesh->prev = 0;
         mesh->next = g_meshes.active;
         if (g_meshes.active)
             g_meshes.active->prev = mesh;
         g_meshes.active = mesh;
+    }
+    else
+    {
+        mibuf = mvbuf;
+        while (mibuf && mibuf->vbuf == vbuf && mibuf->ibuf != ibuf)
+            mibuf = mibuf->next;
+        if (mibuf == 0 || mibuf->vbuf != vbuf)
+        {
+            mesh->prev = mvbuf->prev;
+            mesh->next = mvbuf;
+            if (g_meshes.active == mvbuf)
+                g_meshes.active = mesh;
+            if (mvbuf->prev)
+                mvbuf->prev->next = mesh;
+            mvbuf->prev = mesh;
+        }
+        else
+        {
+            mesh->prev = mibuf;
+            mesh->next = mibuf->next;
+            if (mibuf->next)
+                mibuf->next->prev = mesh;
+            mibuf->next = mesh;
+        }
     }
 
     lua_pushinteger(lua, ((char*)mesh - g_meshes.pool) / MESH_SIZE);
