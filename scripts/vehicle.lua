@@ -111,7 +111,7 @@ function M.alloc(uid, startx, starty, startz)
         api_vector_mpos(vpos, self.mchassis)
         api_vector_update(vpos)
         local x, y, z, w = api_vector_get(vpos)
-        util.async_write(util.uid_save(uid),
+        util.async_write(util.uid_save(string.format('%s.lua', uid)),
             string.format('return %f, %f, %f', x, y + SAVE_OFS_Y, z))
         api_vector_free(vpos)
     end
@@ -294,7 +294,7 @@ function M.alloc(uid, startx, starty, startz)
     -- vehicle
     do
         local x, y, z
-        local chunk = util.async_read(util.uid_save(uid))
+        local chunk = util.async_read(util.uid_save(string.format('%s.lua', uid)))
         if chunk == '' then
             x, y, z = startx, starty, startz
         else

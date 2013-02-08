@@ -14,11 +14,11 @@ local function move_alloc(uid)
     local self = {}
 
     function self.save()
-        util.async_write(util.uid_save(uid),
+        util.async_write(util.uid_save(string.format('%s.lua', uid)),
             string.format('return %i, %i, %i', self.x, self.y, self.z))
     end
 
-    local chunk = util.async_read(util.uid_save(uid))
+    local chunk = util.async_read(util.uid_save(string.format('%s.lua', uid)))
     if chunk == '' then
         self.x, self.y, self.z = 0, 0, 0
     else

@@ -54,7 +54,7 @@ function M.alloc(uid)
     end
 
     for z = 0, LENGTH - 1 do
-        local chunk = util.async_read(util.uid_save(string.format('%s_%i', uid, z)))
+        local chunk = util.async_read(util.uid_save(string.format('%s_%i.lua', uid, z)))
         if chunk ~= '' then
             data[z] = loadstring(chunk)()
         else
@@ -63,18 +63,18 @@ function M.alloc(uid)
                 data[z][x] = math.random()
             end
             do
-                local line = 'return {'
+                chunk = 'return {\n'
                 local first_x = true
                 for x, v in pairs(data[z]) do
                     if not first_x then
-                        line = line .. ', '
+                        chunk = chunk .. ',\n'
                     end
                     first_x = false
-                    line = line .. string.format('[%i] = %f', x, v)
+                    chunk = chunk .. string.format('    [%i] = %f', x, v)
                     coroutine.yield(false)
                 end
-                line = line .. '}'
-                util.async_write(util.uid_save(string.format('%s_%i', uid, z)), line)
+                chunk = chunk .. '\n}'
+                util.async_write(util.uid_save(string.format('%s_%i.lua', uid, z)), chunk)
             end
         end
     end
