@@ -43,8 +43,8 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     function self.delete()
         for z = 0, self.res - 1 do
-            util.async_write(util.uid_cache(string.format('%s_hmap_%i', uid, z)), '')
-            util.async_write(util.uid_cache(string.format('%s_colmap_%i', uid, z)), '')
+            util.async_write(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)), '')
+            util.async_write(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)), '')
         end
     end
 
@@ -91,7 +91,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     -- height map
     do
         for z = 0, self.res - 1 do
-            local chunk = util.async_read(util.uid_cache(string.format('%s_hmap_%i', uid, z)))
+            local chunk = util.async_read(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)))
             if chunk ~= '' then
                 self.hmap[z] = loadstring(chunk)()
             else
@@ -101,18 +101,18 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                     coroutine.yield(false)
                 end
                 if not quit.requested() then
-                    local line = 'return {'
+                    chunk = 'return {\n'
                     local first_x = true
                     for x, v in pairs(self.hmap[z]) do
                         if not first_x then
-                            line = line .. ', '
+                            chunk = chunk .. ',\n'
                         end
                         first_x = false
-                        line = line .. string.format('[%i] = %f', x, v)
+                        chunk = chunk .. string.format('    [%i] = %f', x, v)
                         coroutine.yield(false)
                     end
-                    line = line .. '}'
-                    util.async_write(util.uid_cache(string.format('%s_hmap_%i', uid, z)), line)
+                    chunk = chunk .. '\n}'
+                    util.async_write(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)), chunk)
                 end
             end
         end
@@ -122,7 +122,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     do
         for z = 0, self.res - 1 do
             local colmap
-            local chunk = util.async_read(util.uid_cache(string.format('%s_colmap_%i', uid, z)))
+            local chunk = util.async_read(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)))
             if chunk ~= '' then
                 colmap = loadstring(chunk)()
             else
@@ -133,19 +133,19 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                     coroutine.yield(false)
                 end
                 if not quit.requested() then
-                    local line = 'return {'
+                    chunk = 'return {\n'
                     local first_x = true
                     for x, v in pairs(colmap) do
                         if not first_x then
-                            line = line .. ', '
+                            chunk = chunk .. ',\n'
                         end
                         first_x = false
-                        line = line .. string.format('[%i] = {r = %f, g = %f, b = %f, a = %f}',
-                                                     x, v.r, v.g, v.b, v.a)
+                        chunk = chunk .. string.format('    [%i] = {r = %f, g = %f, b = %f, a = %f}',
+                                                       x, v.r, v.g, v.b, v.a)
                         coroutine.yield(false)
                     end
-                    line = line .. '}'
-                    util.async_write(util.uid_cache(string.format('%s_colmap_%i', uid, z)), line)
+                    chunk = chunk .. '\n}'
+                    util.async_write(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)), chunk)
                 end
             end
             for x = 0, self.res - 1 do
