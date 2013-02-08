@@ -107,13 +107,25 @@ function M.alloc(uid, startx, starty, startz)
     end
 
     function self.save()
-        local vpos = api_vector_alloc()
-        api_vector_mpos(vpos, self.mchassis)
-        api_vector_update(vpos)
-        local x, y, z, w = api_vector_get(vpos)
+        local vfrom = api_vector_alloc()
+        local vto = api_vector_alloc()
+        local mfwd = util.matrix_pos_stop(0, 0, -1)
+        local mto = api_matrix_alloc()
+        api_matrix_mul(mto, self.mchassis, mfwd)
+        api_vector_mpos(vfrom, self.mchassis)
+        api_vector_update(vfrom)
+        api_vector_mpos(vto, mto)
+        api_vector_update(vto)
+        local fx, fy, fz = api_vector_get(vfrom)
+        local tx, ty, tz = api_vector_get(vto)
         util.async_write(util.uid_save(string.format('%s.lua', uid)),
-            string.format('return %f, %f, %f', x, y + SAVE_OFS_Y, z))
-        api_vector_free(vpos)
+            string.format('return %f, %f, %f, %f, %f, %f',
+                          fx, fy + SAVE_OFS_Y, fz,
+                          tx, fy + SAVE_OFS_Y, tz))
+        api_vector_free(vfrom)
+        api_vector_free(vto)
+        api_matrix_free(mfwd)
+        api_matrix_free(mto)
     end
 
     function self.update()
@@ -293,14 +305,15 @@ function M.alloc(uid, startx, starty, startz)
 
     -- vehicle
     do
-        local x, y, z
+        local fx, fy, fz, tx, ty, tz
         local chunk = util.async_read(util.uid_save(string.format('%s.lua', uid)))
         if chunk == '' then
-            x, y, z = startx, starty, startz
+            fx, fy, fz = startx, starty, startz
+            tx, ty, tz = startx, starty, startz - 1
         else
-            x, y, z = loadstring(chunk)()
+            fx, fy, fz, tx, ty, tz = loadstring(chunk)()
         end
-        local m = util.matrix_pos_rot_stop(x, y, z, API_MATRIX_AXIS_Y, math.pi)
+        local m = util.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, 0, 1, 0)
         veh = api_physics_veh_alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
                                     CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)
