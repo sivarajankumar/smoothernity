@@ -10,7 +10,6 @@ struct ibuf_t
     int vacant;
     struct ibuf_t *prev;
     struct ibuf_t *next;
-    struct mesh_t *meshes;
 };
 
 typedef GLuint ibuf_data_t;
@@ -21,7 +20,6 @@ struct ibufs_t
     int count;
     int left;
     int left_min;
-    int with_meshes;
     int allocs;
     int frees;
     char *pool;

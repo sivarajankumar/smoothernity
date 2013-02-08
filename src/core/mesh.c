@@ -31,7 +31,7 @@ static int api_mesh_alloc(lua_State *lua)
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
     struct matrix_t *matrix;
-    struct mesh_t *mesh;
+    struct mesh_t *mesh, *mcur;
     int type, group, texi, ioffset, icount;
 
     if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
@@ -124,9 +124,6 @@ static int api_mesh_alloc(lua_State *lua)
     if (mesh->next)
         mesh->next->prev = mesh->prev;
 
-    mesh->prev = 0;
-    mesh->next = 0;
-
     mesh->group = group;
     mesh->ibuf = ibuf;
     mesh->vbuf = vbuf;
@@ -141,22 +138,56 @@ static int api_mesh_alloc(lua_State *lua)
     else
         mesh->type = GL_TRIANGLES;
 
-    if (vbuf->meshes)
-        vbuf->meshes->vbuf_prev = mesh;
-    else
-        ++g_vbufs.with_meshes;
-    mesh->vbuf_next = vbuf->meshes;
-    vbuf->meshes = mesh;
-
-    if (ibuf->meshes)
-        ibuf->meshes->ibuf_prev = mesh;
-    else
-        ++g_ibufs.with_meshes;
-    mesh->ibuf_next = ibuf->meshes;
-    ibuf->meshes = mesh;
+    for (mcur = g_meshes.active; mcur; mcur = mcur->next)
+    {
+        if (mcur->ibuf == ibuf && mcur->vbuf == vbuf)
+        {
+            mesh->prev = mcur;
+            mesh->next = mcur->next;
+            if (mcur->next)
+                mcur->next->prev = mesh;
+            mcur->next = mesh;
+            break;
+        }
+    }
+    if (mcur == 0)
+    {
+        mesh->prev = 0;
+        mesh->next = g_meshes.active;
+        if (g_meshes.active)
+            g_meshes.active->prev = mesh;
+        g_meshes.active = mesh;
+    }
 
     lua_pushinteger(lua, ((char*)mesh - g_meshes.pool) / MESH_SIZE);
     return 1;
+}
+
+static int api_mesh_group(lua_State *lua)
+{
+    struct mesh_t *mesh;
+    int group;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_mesh_group: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    mesh = mesh_get(lua_tointeger(lua, 1));
+    group = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+
+    if (mesh == 0)
+    {
+        lua_pushstring(lua, "api_mesh_group: invalid mesh");
+        lua_error(lua);
+        return 0;
+    }
+    mesh->group = group;
+    return 0;
 }
 
 static int api_mesh_free(lua_State *lua)
@@ -184,34 +215,16 @@ static int api_mesh_free(lua_State *lua)
     ++g_meshes.frees;
     mesh->vacant = 1;
 
-    if (mesh->vbuf->meshes == mesh)
-    {
-        mesh->vbuf->meshes = mesh->vbuf->meshes->next;
-        if (mesh->vbuf->meshes == 0)
-            --g_vbufs.with_meshes;
-    }
-    if (mesh->vbuf_next)
-        mesh->vbuf_next->vbuf_prev = mesh->vbuf_prev;
-    if (mesh->vbuf_prev)
-        mesh->vbuf_prev->vbuf_next = mesh->vbuf_next;
-    mesh->vbuf_next = 0;
-    mesh->vbuf_prev = 0;
-
-    if (mesh->ibuf->meshes == mesh)
-    {
-        mesh->ibuf->meshes = mesh->ibuf->meshes->next;
-        if (mesh->ibuf->meshes == 0)
-            --g_ibufs.with_meshes;
-    }
-    if (mesh->ibuf_next)
-        mesh->ibuf_next->ibuf_prev = mesh->ibuf_prev;
-    if (mesh->ibuf_prev)
-        mesh->ibuf_prev->ibuf_next = mesh->ibuf_next;
-    mesh->ibuf_next = 0;
-    mesh->ibuf_prev = 0;
+    if (mesh->prev)
+        mesh->prev->next = mesh->next;
+    if (mesh->next)
+        mesh->next->prev = mesh->prev;
+    if (g_meshes.active == mesh)
+        g_meshes.active = mesh->next;
 
     if (g_meshes.vacant)
         g_meshes.vacant->prev = mesh;
+    mesh->prev = 0;
     mesh->next = g_meshes.vacant;
     g_meshes.vacant = mesh;
 
@@ -263,6 +276,7 @@ int mesh_init(lua_State *lua, int count)
     }
 
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
+    lua_register(lua, "api_mesh_group", api_mesh_group);
     lua_register(lua, "api_mesh_free", api_mesh_free);
     lua_register(lua, "api_mesh_left", api_mesh_left);
 
