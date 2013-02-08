@@ -120,8 +120,9 @@ function M.alloc(uid, startx, starty, startz)
         local tx, ty, tz = api_vector_get(vto)
         local wx, wy, wz = wld.scene_to_world(fx, fy, fz)
         wy = wld.height(wz, wx) + SAVE_OFS_Y
+        local sx, sy, sz = wld.world_to_scene(wx, wy, wz)
         util.async_write(util.uid_save(string.format('%s.lua', uid)),
-            string.format('return %f, %f, %f, %f, %f, %f', fx,wy,fz, tx,wy,tz))
+            string.format('return %f, %f, %f, %f, %f, %f', fx,sy,fz, tx,sy,tz))
         api_vector_free(vfrom)
         api_vector_free(vto)
         api_matrix_free(mfwd)
