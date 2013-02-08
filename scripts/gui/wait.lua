@@ -17,31 +17,22 @@ function M.alloc(x, y, r)
         api_matrix_free(mfinal)
         api_vector_free(vpos)
         api_vector_free(vscl)
-        if mesh ~= nil then
-            api_mesh_free(mesh)
-        end
+        api_mesh_free(mesh)
     end
 
     function self.show()
-        if mesh == nil then
-            mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                                  mfinal, 0, 3)
-        end
+        api_mesh_group(mesh, meshes.GROUP_GUI)
     end
 
     function self.hide()
-        if mesh ~= nil then
-            api_mesh_free(mesh)
-            mesh = nil
-        end
+        api_mesh_group(mesh, meshes.GROUP_HIDDEN)
     end
 
-    do
-        vpos = util.vector_const(x, y, -0.5, 0)
-        vscl = util.vector_const(r, r, 1, 0)
-        api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
-    end
-
+    vpos = util.vector_const(x, y, -0.5, 0)
+    vscl = util.vector_const(r, r, 1, 0)
+    api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
+    mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
+                          mfinal, 0, 3)
     return self
 end
 

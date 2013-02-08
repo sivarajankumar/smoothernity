@@ -22,23 +22,15 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_matrix_free(self.mmesh)
-        if mesh ~= nil then
-            api_mesh_free(mesh)
-        end
+        api_mesh_free(mesh)
     end
 
     function self.hide()
-        if mesh ~= nil then
-            api_mesh_free(mesh)
-            mesh = nil
-        end
+        api_mesh_group(mesh, meshes.GROUP_HIDDEN)
     end
 
     function self.show()
-        if mesh == nil then
-            mesh = api_mesh_alloc(meshes.lod_group(lodi), API_MESH_TRIANGLES, vb, ib, -1,
-                                  self.mmesh, 0, 6 * (self.res - 1) * (self.res - 1))
-        end
+        api_mesh_group(mesh, meshes.lod_group(lodi))
     end
 
     function self.delete()
@@ -177,6 +169,9 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         end
         api_ibuf_bake(ib)
     end
+
+    mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib, -1,
+                          self.mmesh, 0, 6 * (self.res - 1) * (self.res - 1))
 
     return self
 end
