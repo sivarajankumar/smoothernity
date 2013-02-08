@@ -162,7 +162,6 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.save()
-        nse.save()
         move.save()
     end
 

@@ -53,29 +53,26 @@ function M.alloc(uid)
         return get_spline(z, x)
     end
 
-    function self.save()
-        for z, xs in pairs(data) do
-            local line = 'return {'
-            local first_x = true
-            for x, v in pairs(xs) do
-                if not first_x then
-                    line = line .. ', '
-                end
-                first_x = false
-                line = line .. string.format('[%i] = %f', x, v)
-                coroutine.yield(false)
-            end
-            line = line .. '}'
-            util.async_write(util.uid_save(string.format('%s_%i', uid, z)), line)
-        end
-    end
-
     for z = 0, LENGTH - 1 do
         local chunk = util.async_read(util.uid_save(string.format('%s_%i', uid, z)))
         if chunk == '' then
             data[z] = {}
             for x = 0, WIDTH - 1 do
                 data[z][x] = math.random()
+            end
+            do
+                local line = 'return {'
+                local first_x = true
+                for x, v in pairs(data[z]) do
+                    if not first_x then
+                        line = line .. ', '
+                    end
+                    first_x = false
+                    line = line .. string.format('[%i] = %f', x, v)
+                    coroutine.yield(false)
+                end
+                line = line .. '}'
+                util.async_write(util.uid_save(string.format('%s_%i', uid, z)), line)
             end
         else
             data[z] = loadstring(chunk)()
