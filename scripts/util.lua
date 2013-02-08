@@ -103,6 +103,23 @@ function M.set_gravity(x, y, z)
     api_vector_free(grav)
 end
 
+function M.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, ux, uy, uz)
+    local m = api_matrix_alloc()
+    local from = api_vector_alloc()
+    local to = api_vector_alloc()
+    local up = api_vector_alloc()
+    api_vector_const(from, fx, fy, fz, 0)
+    api_vector_const(to, tx, ty, tz, 0)
+    api_vector_const(up, ux, uy, uz, 0)
+    api_matrix_from_to_up(m, from, to, up)
+    api_matrix_update(m)
+    api_matrix_stop(m)
+    api_vector_free(from)
+    api_vector_free(to)
+    api_vector_free(up)
+    return m
+end
+
 function M.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = api_matrix_alloc()
     local pos = api_vector_alloc()
