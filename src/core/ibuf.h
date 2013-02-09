@@ -3,12 +3,18 @@
 #include <GL/gl.h>
 #include <lua.h>
 
+enum ibuf_e
+{
+    IBUF_VACANT,
+    IBUF_MAPPED,
+    IBUF_BAKED
+};
+
 struct ibuf_t
 {
     GLuint buf_id;
     GLvoid *mapped;
-    int vacant;
-    struct ibuf_t *prev; /* TODO: remove */
+    enum ibuf_e state;
     struct ibuf_t *next;
 };
 
@@ -24,8 +30,6 @@ struct ibufs_t
     int frees;
     char *pool;
     struct ibuf_t *vacant;
-    struct ibuf_t *mapped; /* TODO: remove */
-    struct ibuf_t *baked; /* TODO: remove */
 };
 
 extern struct ibufs_t g_ibufs;

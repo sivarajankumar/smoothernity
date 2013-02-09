@@ -8,35 +8,6 @@ static const size_t IBUF_SIZE = 64;
 
 struct ibufs_t g_ibufs;
 
-static void ibuf_free(struct ibuf_t *ibuf)
-{
-    ibuf->vacant = 1;
-    ++g_ibufs.left;
-    ++g_ibufs.frees;
-
-    if (ibuf->mapped)
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-        glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-        ibuf->mapped = 0;
-        if (g_ibufs.mapped == ibuf)
-            g_ibufs.mapped = ibuf->next;
-    }
-    else if (g_ibufs.baked == ibuf)
-        g_ibufs.baked = ibuf->next;
-
-    if (ibuf->prev)
-        ibuf->prev->next = ibuf->next;
-    if (ibuf->next)
-        ibuf->next->prev = ibuf->prev;
-
-    if (g_ibufs.vacant)
-        g_ibufs.vacant->prev = ibuf;
-    ibuf->prev = 0;
-    ibuf->next = g_ibufs.vacant;
-    g_ibufs.vacant = ibuf;
-}
-
 static int api_ibuf_alloc(lua_State *lua)
 {
     struct ibuf_t *ibuf;
@@ -57,7 +28,6 @@ static int api_ibuf_alloc(lua_State *lua)
 
     ibuf = g_ibufs.vacant;
     g_ibufs.vacant = g_ibufs.vacant->next;
-    ibuf->vacant = 0;
     ++g_ibufs.allocs;
     --g_ibufs.left;
     if (g_ibufs.left < g_ibufs.left_min)
@@ -65,17 +35,8 @@ static int api_ibuf_alloc(lua_State *lua)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     ibuf->mapped = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-
-    if (ibuf->prev)
-        ibuf->prev->next = ibuf->next;
-    if (ibuf->next)
-        ibuf->next->prev = ibuf->prev;
-
-    if (g_ibufs.mapped)
-        g_ibufs.mapped->prev = ibuf;
-    ibuf->prev = 0;
-    ibuf->next = g_ibufs.mapped;
-    g_ibufs.mapped = ibuf;
+    ibuf->state = IBUF_MAPPED;
+    ibuf->next = 0;
 
     lua_pushinteger(lua, ((char*)ibuf - g_ibufs.pool) / IBUF_SIZE);
     return 1;
@@ -95,14 +56,26 @@ static int api_ibuf_free(lua_State *lua)
     ibuf = ibuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (ibuf == 0 || ibuf->vacant == 1)
+    if (ibuf == 0 || ibuf->state == IBUF_VACANT)
     {
         lua_pushstring(lua, "api_ibuf_free: invalid ibuf");
         lua_error(lua);
         return 0;
     }
 
-    ibuf_free(ibuf);
+    ++g_ibufs.left;
+    ++g_ibufs.frees;
+
+    if (ibuf->state == IBUF_MAPPED)
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+        glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+        ibuf->mapped = 0;
+    }
+
+    ibuf->state = IBUF_VACANT;
+    ibuf->next = g_ibufs.vacant;
+    g_ibufs.vacant = ibuf;
     return 0;
 }
 
@@ -120,7 +93,7 @@ static int api_ibuf_bake(lua_State *lua)
     ibuf = ibuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (ibuf == 0 || ibuf->mapped == 0)
+    if (ibuf == 0 || ibuf->state != IBUF_MAPPED)
     {
         lua_pushstring(lua, "api_ibuf_bake: invalid ibuf");
         lua_error(lua);
@@ -130,20 +103,7 @@ static int api_ibuf_bake(lua_State *lua)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     ibuf->mapped = 0;
-
-    if (g_ibufs.mapped == ibuf)
-        g_ibufs.mapped = ibuf->next;
-
-    if (ibuf->prev)
-        ibuf->prev->next = ibuf->next;
-    if (ibuf->next)
-        ibuf->next->prev = ibuf->prev;
-
-    if (g_ibufs.baked)
-        g_ibufs.baked->prev = ibuf;
-    ibuf->prev = 0;
-    ibuf->next = g_ibufs.baked;
-    g_ibufs.baked = ibuf;
+    ibuf->state = IBUF_BAKED;
     return 0;
 }
 
@@ -164,7 +124,7 @@ static int api_ibuf_set(lua_State *lua)
     start = lua_tointeger(lua, 2);
     len = lua_gettop(lua) - 2;
 
-    if (ibuf == 0 || ibuf->mapped == 0)
+    if (ibuf == 0 || ibuf->state != IBUF_MAPPED)
     {
         lua_pushstring(lua, "api_ibuf_set: invalid ibuf");
         lua_error(lua);
@@ -201,11 +161,11 @@ static int api_ibuf_set(lua_State *lua)
     return 0;
 }
 
-static int api_ibuf_query(lua_State *lua)
+static int api_ibuf_left(lua_State *lua)
 {
     if (lua_gettop(lua) != 0)
     {
-        lua_pushstring(lua, "api_ibuf_query: incorrect argument");
+        lua_pushstring(lua, "api_ibuf_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -239,9 +199,7 @@ int ibuf_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         ibuf = ibuf_get(i);
-        ibuf->vacant = 1;
-        if (i > 0)
-            ibuf->prev = ibuf_get(i - 1);
+        ibuf->state = IBUF_VACANT;
         if (i < count - 1)
             ibuf->next = ibuf_get(i + 1);
         glGenBuffers(1, &ibuf->buf_id);
@@ -256,7 +214,7 @@ int ibuf_init(lua_State *lua, int size, int count)
     lua_register(lua, "api_ibuf_free", api_ibuf_free);
     lua_register(lua, "api_ibuf_set", api_ibuf_set);
     lua_register(lua, "api_ibuf_bake", api_ibuf_bake);
-    lua_register(lua, "api_ibuf_query", api_ibuf_query);
+    lua_register(lua, "api_ibuf_left", api_ibuf_left);
 
     return 0;
 cleanup:
@@ -272,10 +230,6 @@ void ibuf_done(void)
     printf("Index buffers usage: %i/%i, allocs/frees: %i/%i\n",
            g_ibufs.count - g_ibufs.left_min, g_ibufs.count,
            g_ibufs.allocs, g_ibufs.frees);
-    while (g_ibufs.mapped)
-        ibuf_free(g_ibufs.mapped);
-    while (g_ibufs.baked)
-        ibuf_free(g_ibufs.baked);
     util_free(g_ibufs.pool);
     g_ibufs.pool = 0;
 }
