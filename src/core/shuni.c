@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-static const size_t SHUNI_SIZE = 32;
+static const size_t SHUNI_SIZE = 128;
 
 enum shuni_bind_e
 {
