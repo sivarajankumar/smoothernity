@@ -1,6 +1,7 @@
 #pragma once
 
 #include <lua.h>
+#include <GL/gl.h>
 
 #define SHUNI_ARGVS 1
 
@@ -13,6 +14,7 @@ enum shuni_e
 
 struct shuni_t
 {
+    GLuint loc_id;
     enum shuni_e state;
     struct shprog_t *shprog;
     struct mesh_t *mesh;

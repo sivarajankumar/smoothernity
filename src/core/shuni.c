@@ -133,8 +133,10 @@ static int api_shuni_alloc_vector(lua_State *lua)
     struct mesh_t *mesh;
     struct vector_t *vector;
     int meshi, ishuni;
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    const char *name;
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3)
+    || !lua_isnumber(lua, 4))
     {
         lua_pushstring(lua, "api_shuni_alloc_vector: incorrect argument");
         lua_error(lua);
@@ -142,10 +144,12 @@ static int api_shuni_alloc_vector(lua_State *lua)
     }
     shprog = shprog_get(lua_tointeger(lua, 1));
     meshi = lua_tointeger(lua, 2);
-    vector = vector_get(lua_tointeger(lua, 3));
-    lua_pop(lua, 3);
+    name = lua_tostring(lua, 3);
+    vector = vector_get(lua_tointeger(lua, 4));
+    lua_pop(lua, 4);
     mesh = mesh_get(meshi);
-    if (shprog == 0 || (mesh == 0 && meshi != SHUNI_ALL_MESHES) || vector == 0)
+    if (shprog == 0 || shprog->state != SHPROG_LINKED
+    || (mesh == 0 && meshi != SHUNI_ALL_MESHES) || vector == 0)
     {
         lua_pushstring(lua, "api_shuni_alloc_vector: invalid object");
         lua_error(lua);
@@ -159,6 +163,7 @@ static int api_shuni_alloc_vector(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+    shuni->loc_id = glGetUniformLocation(shprog->prog_id, name);
     shuni->state = SHUNI_VECTOR;
     shuni->argv[0] = vector;
     lua_pushinteger(lua, ishuni);
@@ -216,9 +221,7 @@ void shuni_done(void)
 
 static void shuni_select_vector(struct shuni_t *shuni)
 {
-    /* TODO */
-    if (shuni != 0)
-        return;
+    glUniform4fv(shuni->loc_id, 1, shuni->argv[0]->value);
 }
 
 void shuni_select(struct shuni_t *shuni)
