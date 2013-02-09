@@ -3,6 +3,7 @@ local M = {}
 local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
+local shader = require 'shader.shader'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -89,8 +90,10 @@ function M.alloc(x, y, z)
 
     -- visual
     do
-        mesh_big = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mrb, 0, 36)
-        mesh_small = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, msmall, 0, 36)
+        mesh_big = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                  -1, shader.default(), mrb, 0, 36)
+        mesh_small = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                    -1, shader.default(), msmall, 0, 36)
     end
 
     return self

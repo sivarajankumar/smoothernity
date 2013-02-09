@@ -17,6 +17,7 @@ local quit = require 'quit'
 local ddraw = require 'ddraw'
 local perf = require 'perf'
 local key = require 'key'
+local shader = require 'shader.shader'
 
 local LOGIC_TIME = 0.015
 local GC_STEP = 10
@@ -53,6 +54,7 @@ local function tick(f)
 end 
 
 function M.run()
+    shader.init()
     pwld.init()
     render.init()
     gui.init()
@@ -157,6 +159,7 @@ function M.run()
     gui.done()
     render.done()
     pwld.done()
+    shader.done()
 end
 
 return M

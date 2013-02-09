@@ -182,6 +182,7 @@ void shprog_done(void)
 
 void shprog_select(struct shprog_t *shprog)
 {
+    /* TODO */
     if (shprog->state == SHPROG_LINKED)
-        printf("TODO: do select");
+        return;
 }
