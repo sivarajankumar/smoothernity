@@ -187,7 +187,7 @@ static int api_shprog_link(lua_State *lua)
         else
         {
             glGetProgramInfoLog(shprog->prog_id, len, &res, log);
-            fprintf(stderr, "GL Log:\n%s\n", log);
+            fprintf(stderr, "Log:\n%s\n", log);
         }
         lua_pushstring(lua, "api_shprog_link: link error");
         lua_error(lua);
