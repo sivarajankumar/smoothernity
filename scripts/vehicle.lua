@@ -6,6 +6,7 @@ local meshes = require 'meshes'
 local cfg = require 'config'
 local gui = require 'gui.gui'
 local key = require 'key'
+local shader = require 'shader.shader'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -344,9 +345,11 @@ function M.alloc(uid, startx, starty, startz)
 
     -- visual
     do
-        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, self.mchassis, 0, 36)
+        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                      -1, shader.default(), self.mchassis, 0, 36)
         for i = 0, 3 do
-            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib, -1, mwheel[i], 0, 36)
+            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                           -1, shader.default(), mwheel[i], 0, 36)
         end
     end
 

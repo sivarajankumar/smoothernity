@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'util'
 local meshes = require 'meshes'
+local shader = require 'shader.shader'
 
 local ibuf, vbuf, vrot, brot
 
@@ -32,7 +33,7 @@ function M.alloc(x, y, r)
     vscl = util.vector_const(r, r, 1, 0)
     api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
     mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                          mfinal, 0, 3)
+                          shader.default(), mfinal, 0, 3)
     return self
 end
 

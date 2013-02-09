@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'util'
 local meshes = require 'meshes'
+local shader = require 'shader.shader'
 
 local ibuf, vbuf
 
@@ -49,9 +50,9 @@ function M.alloc(xmin, ymin, xmax, ymax)
     -- visual
     do
         mesh_back = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                                   mback, BACK_IBUF_OFS, 6)
+                                   shader.default(), mback, BACK_IBUF_OFS, 6)
         mesh_front = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                                    mfront, FRONT_IBUF_OFS, 6)
+                                    shader.default(), mfront, FRONT_IBUF_OFS, 6)
     end
 
     return self

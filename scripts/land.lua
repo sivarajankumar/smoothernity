@@ -6,6 +6,7 @@ local cfg = require 'config'
 local lod = require 'lod'
 local meshes = require 'meshes'
 local quit = require 'quit'
+local shader = require 'shader.shader'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -170,8 +171,9 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_ibuf_bake(ib)
     end
 
+    local verts = 6 * (self.res - 1) * (self.res - 1)
     mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib, -1,
-                          self.mmesh, 0, 6 * (self.res - 1) * (self.res - 1))
+                          shader.default(), self.mmesh, 0, verts)
 
     return self
 end

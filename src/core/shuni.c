@@ -216,8 +216,9 @@ void shuni_done(void)
 
 static void shuni_select_vector(struct shuni_t *shuni)
 {
+    /* TODO */
     if (shuni != 0)
-        printf("TODO: do select");
+        return;
 }
 
 void shuni_select(struct shuni_t *shuni)
