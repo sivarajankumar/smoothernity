@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 static const size_t SHPROG_SIZE = 32;
+#define LOG_SIZE 1024
 
 struct shprogs_t
 {
@@ -63,6 +64,7 @@ static int api_shprog_alloc(lua_State *lua)
     g_shprogs.vacant = g_shprogs.vacant->next;
     shprog->next = 0;
     shprog->state = SHPROG_CREATED;
+    shprog->prog_id = glCreateProgram();
 
     lua_pushinteger(lua, ((char*)shprog - g_shprogs.pool) / SHPROG_SIZE);
     return 1;
@@ -92,6 +94,9 @@ static int api_shprog_free(lua_State *lua)
     shprog->state = SHPROG_VACANT;
     shprog->next = g_shprogs.vacant;
     g_shprogs.vacant = shprog;
+
+    glDeleteProgram(shprog->prog_id);
+
     return 0;
 }
 
@@ -117,6 +122,8 @@ static int api_shprog_attach(lua_State *lua)
 
 static int api_shprog_link(lua_State *lua)
 {
+    static char log[LOG_SIZE];
+    GLint res, len;
     struct shprog_t *shprog;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -132,6 +139,24 @@ static int api_shprog_link(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+
+    glLinkProgram(shprog->prog_id);
+    glGetProgramiv(shprog->prog_id, GL_LINK_STATUS, &res);
+    if (res == GL_FALSE)
+    {
+        glGetProgramiv(shprog->prog_id, GL_INFO_LOG_LENGTH, &len);
+        if (len >= LOG_SIZE)
+            fprintf(stderr, "Log size is too small: %i\n", (int)len);
+        else
+        {
+            glGetProgramInfoLog(shprog->prog_id, len, &res, log);
+            fprintf(stderr, "GL Log:\n%s\n", log);
+        }
+        lua_pushstring(lua, "api_shprog_link: link error");
+        lua_error(lua);
+        return 0;
+    }
+
     shprog->state = SHPROG_LINKED;
     return 0;
 }

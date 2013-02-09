@@ -1,6 +1,7 @@
 #pragma once
 
 #include <lua.h>
+#include <GL/gl.h>
 
 enum shprog_e
 {
@@ -11,6 +12,7 @@ enum shprog_e
 
 struct shprog_t
 {
+    GLuint prog_id;
     enum shprog_e state;
     struct shprog_t *next;
     struct shuni_t *shunis;
