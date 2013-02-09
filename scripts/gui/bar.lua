@@ -26,6 +26,8 @@ function M.alloc(xmin, ymin, xmax, ymax)
         api_vector_free(vfront_pos)
         api_vector_free(vfront_scl)
         api_vector_free(vzero)
+        api_shuni_free(ucolfr)
+        api_shuni_free(ucolbk)
     end
 
     function self.set(value)
