@@ -2,9 +2,7 @@ local M = {}
 
 local util = require 'util'
 
-local vcolor
-local shprog
-local shuni
+local vcolor, shprog, shuni
 
 function M.init()
     shprog = api_shprog_alloc()
