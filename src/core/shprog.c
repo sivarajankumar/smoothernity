@@ -102,21 +102,58 @@ static int api_shprog_free(lua_State *lua)
 
 static int api_shprog_attach(lua_State *lua)
 {
+    static char log[LOG_SIZE];
     struct shprog_t *shprog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    int type;
+    size_t data_len;
+    const char *data;
+    GLuint shader;
+    GLint gldata_len, res, log_len;
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3))
     {
         lua_pushstring(lua, "api_shprog_attach: incorrect argument");
         lua_error(lua);
         return 0;
     }
     shprog = shprog_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    type = lua_tointeger(lua, 2);
+    data = lua_tolstring(lua, 3, &data_len);
+    lua_pop(lua, 3);
     if (shprog == 0 || shprog->state != SHPROG_CREATED)
     {
         lua_pushstring(lua, "api_shprog_attach: invalid shprog");
         lua_error(lua);
         return 0;
     }
+    if (type != (int)GL_VERTEX_SHADER && type != (int)GL_FRAGMENT_SHADER)
+    {
+        lua_pushstring(lua, "api_shprog_attach: invalid type");
+        lua_error(lua);
+        return 0;
+    }
+    shader = glCreateShader((GLenum)type);
+    gldata_len = (GLint)data_len;
+    glShaderSource(shader, 1, &data, &gldata_len);
+    glCompileShader(shader);
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &res);
+    if (res == GL_FALSE)
+    {
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
+        if (log_len >= LOG_SIZE)
+            fprintf(stderr, "Log size is to small: %i\n", (int)log_len);
+        else
+        {
+            glGetShaderInfoLog(shader, log_len, &res, log);
+            fprintf(stderr, "Log:\n%s\n", log);
+        }
+        glDeleteShader(shader);
+        lua_pushstring(lua, "api_shprog_attach: compile error");
+        lua_error(lua);
+        return 0;
+    }
+    glAttachShader(shprog->prog_id, shader);
+    glDeleteShader(shader);
     return 0;
 }
 
@@ -191,6 +228,14 @@ int shprog_init(lua_State *lua, int count)
     lua_register(lua, "api_shprog_free", api_shprog_free);
     lua_register(lua, "api_shprog_attach", api_shprog_attach); 
     lua_register(lua, "api_shprog_link", api_shprog_link);
+
+    #define LUA_PUBLISH(x, y) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, y);
+
+    LUA_PUBLISH(GL_VERTEX_SHADER, "API_SHPROG_VERTEX");
+    LUA_PUBLISH(GL_FRAGMENT_SHADER, "API_SHPROG_FRAGMENT");
+
     return 0;
 }
 
