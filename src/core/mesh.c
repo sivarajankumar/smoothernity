@@ -30,15 +30,16 @@ static int api_mesh_alloc(lua_State *lua)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
+    struct shprog_t *shprog;
     struct matrix_t *matrix;
-    struct mesh_t *mesh, *mvbuf, *mibuf;
+    struct mesh_t *mesh, *mvbuf, *mibuf, *mshprog;
     int type, group, texi, ioffset, icount;
 
-    if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 9 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
     || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
-    || !lua_isnumber(lua, 7))
+    || !lua_isnumber(lua, 8) || !lua_isnumber(lua, 9))
     {
         lua_pushstring(lua, "api_mesh_alloc: incorrect argument");
         lua_error(lua);
@@ -50,17 +51,11 @@ static int api_mesh_alloc(lua_State *lua)
     vbuf = vbuf_get(lua_tointeger(lua, 3));
     ibuf = ibuf_get(lua_tointeger(lua, 4));
     texi = lua_tointeger(lua, 5);
-    matrix = matrix_get(lua_tointeger(lua, 6));
-    ioffset = lua_tointeger(lua, 7);
-    icount = lua_tointeger(lua, 8);
-    lua_pop(lua, 8);
-
-    if (texi != -1)
-    {
-        lua_pushstring(lua, "api_mesh_alloc: no textures yet");
-        lua_error(lua);
-        return 0;
-    }
+    shprog = shprog_get(lua_tointeger(lua, 6));
+    matrix = matrix_get(lua_tointeger(lua, 7));
+    ioffset = lua_tointeger(lua, 8);
+    icount = lua_tointeger(lua, 9);
+    lua_pop(lua, 9);
 
     if (g_meshes.vacant == 0)
     {
@@ -69,23 +64,9 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    if (vbuf == 0)
+    if (vbuf == 0 || ibuf == 0 || texi != -1 || shprog == 0 || matrix == 0)
     {
-        lua_pushstring(lua, "api_mesh_alloc: invalid vbuf");
-        lua_error(lua);
-        return 0;
-    }
-    
-    if (ibuf == 0)
-    {
-        lua_pushstring(lua, "api_mesh_alloc: invalid ibuf");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (matrix == 0)
-    {
-        lua_pushstring(lua, "api_mesh_alloc: invalid matrix");
+        lua_pushstring(lua, "api_mesh_alloc: invalid object");
         lua_error(lua);
         return 0;
     }
@@ -97,16 +78,10 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    if (ioffset < 0 || ioffset >= g_ibufs.size)
+    if (ioffset < 0 || ioffset >= g_ibufs.size
+    ||  icount <= 0 || icount >= g_ibufs.size - ioffset)
     {
-        lua_pushstring(lua, "api_mesh_alloc: offset out of range");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (icount <= 0 || icount >= g_ibufs.size - ioffset)
-    {
-        lua_pushstring(lua, "api_mesh_alloc: count out of range");
+        lua_pushstring(lua, "api_mesh_alloc: number out of range");
         lua_error(lua);
         return 0;
     }
@@ -127,6 +102,7 @@ static int api_mesh_alloc(lua_State *lua)
     mesh->group = group;
     mesh->ibuf = ibuf;
     mesh->vbuf = vbuf;
+    mesh->shprog = shprog;
     mesh->matrix = matrix;
     mesh->ioffset = ioffset;
     mesh->icount = icount;
@@ -138,13 +114,16 @@ static int api_mesh_alloc(lua_State *lua)
     else
         mesh->type = GL_TRIANGLES;
 
-    /* maintain sorted order in the g_meshes.active list
-       to minimize opengl state switches during draw */
+    /*
+       Maintain sorted order in the g_meshes.active list
+       to minimize OpenGL state switches during draw.
+       O(N), N = active meshes
+    */
 
-    mvbuf = g_meshes.active;
-    while (mvbuf && mvbuf->vbuf != vbuf)
-        mvbuf = mvbuf->next;
-    if (mvbuf == 0)
+    mshprog = g_meshes.active;
+    while (mshprog && mshprog->shprog != shprog)
+        mshprog = mshprog->next;
+    if (mshprog == 0)
     {
         mesh->prev = 0;
         mesh->next = g_meshes.active;
@@ -154,26 +133,45 @@ static int api_mesh_alloc(lua_State *lua)
     }
     else
     {
-        mibuf = mvbuf;
-        while (mibuf && mibuf->vbuf == vbuf && mibuf->ibuf != ibuf)
-            mibuf = mibuf->next;
-        if (mibuf == 0 || mibuf->vbuf != vbuf)
+        mvbuf = mshprog;
+        while (mvbuf && mvbuf->shprog == shprog && mvbuf->vbuf != vbuf)
+            mvbuf = mvbuf->next;
+        if (mvbuf == 0 || mvbuf->shprog != shprog)
         {
-            mesh->prev = mvbuf->prev;
-            mesh->next = mvbuf;
-            if (g_meshes.active == mvbuf)
+            mesh->prev = mshprog->prev;
+            mesh->next = mshprog;
+            if (g_meshes.active == mshprog)
                 g_meshes.active = mesh;
-            if (mvbuf->prev)
-                mvbuf->prev->next = mesh;
-            mvbuf->prev = mesh;
+            if (mshprog->prev)
+                mshprog->prev->next = mesh;
+            mshprog->prev = mesh;
         }
         else
         {
-            mesh->prev = mibuf;
-            mesh->next = mibuf->next;
-            if (mibuf->next)
-                mibuf->next->prev = mesh;
-            mibuf->next = mesh;
+            mibuf = mvbuf;
+            while (mibuf && mibuf->shprog == shprog &&
+                   mibuf->vbuf == vbuf && mibuf->ibuf != ibuf)
+            {
+                mibuf = mibuf->next;
+            }
+            if (mibuf == 0 || mibuf->shprog != shprog || mibuf->vbuf != vbuf)
+            {
+                mesh->prev = mvbuf->prev;
+                mesh->next = mvbuf;
+                if (g_meshes.active == mvbuf)
+                    g_meshes.active = mesh;
+                if (mvbuf->prev)
+                    mvbuf->prev->next = mesh;
+                mvbuf->prev = mesh;
+            }
+            else
+            {
+                mesh->prev = mibuf;
+                mesh->next = mibuf->next;
+                if (mibuf->next)
+                    mibuf->next->prev = mesh;
+                mibuf->next = mesh;
+            }
         }
     }
 
@@ -248,6 +246,7 @@ static int api_mesh_free(lua_State *lua)
 
     mesh->ibuf = 0;
     mesh->vbuf = 0;
+    mesh->shprog = 0;
     mesh->matrix = 0;
     return 0;
 }

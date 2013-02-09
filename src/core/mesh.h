@@ -7,6 +7,8 @@ struct mesh_t
 {
     struct ibuf_t *ibuf;
     struct vbuf_t *vbuf;
+    struct shprog_t *shprog;
+    struct shuni_t *shunis;
     struct matrix_t *matrix;
     GLenum type;
     int ioffset;

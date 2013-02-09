@@ -1,20 +1,8 @@
 #include "shuni.h"
 
-#define SHUNI_ARGVS 1
-
-enum shuni_e
+enum shuni_bind_e
 {
-    SHUNI_3_F
-};
-
-struct shuni_t
-{
-    enum shuni_e type;
-    int vacant;
-    struct shprog_t *shprog;
-    struct shuni_t *next;
-    struct shuni_t *shprog_prev;
-    struct shuni_t *shprog_next;
+    SHUNI_MESHES_ALL = -1 /* must be negative */
 };
 
 struct shunis_t
@@ -32,11 +20,20 @@ static struct shunis_t g_shunis;
 
 int shuni_init(lua_State *lua, int count)
 {
-    lua_register(lua, "api_shuni_alloc_3f", api_shuni_alloc_3f);
+    lua_register(lua, "api_shuni_alloc", api_shuni_alloc);
     lua_register(lua, "api_shuni_free", api_shuni_free);
+    lua_register(lua, "api_shuni_vector", api_shuni_vector);
     return 0;
 }
 
 void shuni_done(void)
+{
+}
+
+void shuni_select(struct shuni_t *shuni)
+{
+}
+
+int shuni_update(struct shuni_t *shuni, float dt, int frame_tag, int force)
 {
 }

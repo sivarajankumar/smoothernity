@@ -5,6 +5,8 @@
 #include "vbuf.h"
 #include "ibuf.h"
 #include "mesh.h"
+#include "shuni.h"
+#include "shprog.h"
 #include "physics.h"
 #include "text.h"
 #include "../util/util.h"
@@ -75,6 +77,7 @@ static struct rop_t * rop_get(int ropi)
 
 static int rop_update_meshes(float dt, int frame_tag, int group)
 {
+    struct shuni_t *shuni;
     struct mesh_t *mesh;
     for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
@@ -82,6 +85,16 @@ static int rop_update_meshes(float dt, int frame_tag, int group)
             continue;
         if (matrix_update(mesh->matrix, dt, frame_tag, 0) != 0)
             return 1;
+        for (shuni = mesh->shprog->shunis; shuni; shuni = shuni->shprog_next)
+        {
+            if (shuni_update(shuni, dt, frame_tag, 0) != 0)
+                return 1;
+        }
+        for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
+        {
+            if (shuni_update(shuni, dt, frame_tag, 0) != 0)
+                return 1;
+        }
     }
     return 0;
 }
@@ -190,9 +203,12 @@ static void rop_draw_meshes(int frame_tag, int group)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
+    struct shprog_t *shprog;
     struct mesh_t *mesh;
+    struct shuni_t *shuni;
     vbuf = 0;
     ibuf = 0;
+    shprog = 0;
     for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
         if (mesh->frame_tag == frame_tag || mesh->group != group)
@@ -207,6 +223,15 @@ static void rop_draw_meshes(int frame_tag, int group)
             ibuf = mesh->ibuf;
             ibuf_select(ibuf);
         }
+        if (shprog != mesh->shprog)
+        {
+            shprog = mesh->shprog;
+            shprog_select(shprog);
+            for (shuni = shprog->shunis; shuni; shuni = shuni->shprog_next)
+                shuni_select(shuni);
+        }
+        for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
+            shuni_select(shuni);
         mesh->frame_tag = frame_tag;
         mesh_draw(mesh);
     }

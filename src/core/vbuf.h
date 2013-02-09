@@ -8,7 +8,7 @@ struct vbuf_t
     GLuint buf_id;
     GLvoid *mapped;
     int vacant;
-    struct vbuf_t *prev;
+    struct vbuf_t *prev; /* TODO: remove */
     struct vbuf_t *next;
 };
 
@@ -25,8 +25,8 @@ struct vbufs_t
     void *offset_color;
     char *pool;
     struct vbuf_t *vacant;
-    struct vbuf_t *mapped;
-    struct vbuf_t *baked;
+    struct vbuf_t *mapped; /* TODO: remove */
+    struct vbuf_t *baked; /* TODO: remove */
 };
 
 extern struct vbufs_t g_vbufs;

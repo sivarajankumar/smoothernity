@@ -26,7 +26,9 @@ function configure()
             rop_count = 100,
             storage_key_size = 128,
             storage_data_size = 131072,
-            storage_count = 10}
+            storage_count = 10,
+            shuni_count = 1000,
+            shprog_count = 10}
 end
 
 function run()
