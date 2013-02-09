@@ -6,15 +6,17 @@
 
 enum shuni_e
 {
+    SHUNI_VACANT,
+    SHUNI_CREATED,
     SHUNI_VECTOR
 };
 
 struct shuni_t
 {
-    enum shuni_e type;
-    int vacant;
+    enum shuni_e state;
     struct shprog_t *shprog;
     struct mesh_t *mesh;
+    struct vector_t *argv[SHUNI_ARGVS];
     struct shuni_t *next;
     struct shuni_t *shprog_prev;
     struct shuni_t *shprog_next;

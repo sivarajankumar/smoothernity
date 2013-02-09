@@ -2,6 +2,7 @@
 #include "vbuf.h"
 #include "ibuf.h"
 #include "matrix.h"
+#include "shprog.h"
 #include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
@@ -18,7 +19,7 @@ enum mesh_type_e
     MESH_TYPES_TOTAL = 3
 };
 
-static struct mesh_t * mesh_get(int meshi)
+struct mesh_t * mesh_get(int meshi)
 {
     if (meshi >= 0 && meshi < g_meshes.count)
         return (struct mesh_t*)(g_meshes.pool + MESH_SIZE * meshi);
