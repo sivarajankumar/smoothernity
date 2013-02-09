@@ -1,18 +1,33 @@
 local M = {}
 
-local shdef
+local util = require 'util'
+
+local vcolor
+local shprog
+local shuni
 
 function M.init()
-    shdef = api_shprog_alloc()
-    api_shprog_link(shdef)
+    shprog = api_shprog_alloc()
+    api_shprog_attach(shprog, API_SHPROG_FRAGMENT,
+        'uniform vec4 color;\n' ..
+        'void main()\n' ..
+        '{\n' ..
+        '   gl_FragColor = color * gl_Color;\n' ..
+        '}\n'
+    )
+    api_shprog_link(shprog)
+    vcolor = util.vector_const(1, 1, 1, 1)
+    shuni = api_shuni_alloc_vector(shprog, API_SHUNI_ALL_MESHES, 'color', vcolor)
 end
 
 function M.done()
-    api_shprog_free(shdef)
+    api_shprog_free(shprog)
+    api_vector_free(vcolor)
+    api_shuni_free(shuni)
 end
 
 function M.default()
-    return shdef
+    return shprog
 end
 
 return M
