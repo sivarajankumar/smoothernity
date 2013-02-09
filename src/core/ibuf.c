@@ -244,5 +244,6 @@ struct ibuf_t * ibuf_get(int ibufi)
 
 void ibuf_select(struct ibuf_t * ibuf)
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+    if (ibuf->state == IBUF_BAKED)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
 }

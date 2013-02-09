@@ -16,35 +16,6 @@ struct vbuf_data_t
 
 struct vbufs_t g_vbufs;
 
-static void vbuf_free(struct vbuf_t *vbuf)
-{
-    vbuf->vacant = 1;
-    ++g_vbufs.left;
-    ++g_vbufs.frees;
-
-    if (vbuf->mapped)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
-        glUnmapBuffer(GL_ARRAY_BUFFER);
-        vbuf->mapped = 0;
-        if (vbuf == g_vbufs.mapped)
-            g_vbufs.mapped = vbuf->next;
-    }
-    else if (vbuf == g_vbufs.baked)
-        g_vbufs.baked = vbuf->next;
-
-    if (vbuf->prev)
-        vbuf->prev->next = vbuf->next;
-    if (vbuf->next)
-        vbuf->next->prev = vbuf->prev;
-
-    if (g_vbufs.vacant)
-        g_vbufs.vacant->prev = vbuf;
-    vbuf->prev = 0;
-    vbuf->next = g_vbufs.vacant;
-    g_vbufs.vacant = vbuf;
-}
-
 static int api_vbuf_alloc(lua_State *lua)
 {
     struct vbuf_t *vbuf;
@@ -63,8 +34,8 @@ static int api_vbuf_alloc(lua_State *lua)
     }
 
     vbuf = g_vbufs.vacant;
-    vbuf->vacant = 0;
-    g_vbufs.vacant = vbuf->next;
+    g_vbufs.vacant = g_vbufs.vacant->next;
+
     ++g_vbufs.allocs;
     --g_vbufs.left;
     if (g_vbufs.left < g_vbufs.left_min)
@@ -72,17 +43,8 @@ static int api_vbuf_alloc(lua_State *lua)
 
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     vbuf->mapped = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-
-    if (vbuf->prev)
-        vbuf->prev->next = vbuf->next;
-    if (vbuf->next)
-        vbuf->next->prev = vbuf->prev;
-
-    if (g_vbufs.mapped)
-        g_vbufs.mapped->prev = vbuf;
-    vbuf->prev = 0;
-    vbuf->next = g_vbufs.mapped;
-    g_vbufs.mapped = vbuf;
+    vbuf->state = VBUF_MAPPED;
+    vbuf->next = 0;
 
     lua_pushinteger(lua, ((char*)vbuf - g_vbufs.pool) / VBUF_SIZE);
     return 1;
@@ -101,14 +63,26 @@ static int api_vbuf_free(lua_State *lua)
     vbuf = vbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (vbuf == 0 || vbuf->vacant == 1)
+    if (vbuf == 0 || vbuf->state == VBUF_VACANT)
     {
         lua_pushstring(lua, "api_vbuf_free: invalid vbuf");
         lua_error(lua);
         return 0;
     }
 
-    vbuf_free(vbuf);
+    ++g_vbufs.left;
+    ++g_vbufs.frees;
+
+    if (vbuf->state == VBUF_MAPPED)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+        vbuf->mapped = 0;
+    }
+
+    vbuf->next = g_vbufs.vacant;
+    g_vbufs.vacant = vbuf;
+    vbuf->state = VBUF_VACANT;
     return 0;
 }
 
@@ -124,7 +98,7 @@ static int api_vbuf_bake(lua_State *lua)
     vbuf = vbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (vbuf == 0 || vbuf->mapped == 0)
+    if (vbuf == 0 || vbuf->state != VBUF_MAPPED)
     {
         lua_pushstring(lua, "api_vbuf_bake: invalid vbuf");
         lua_error(lua);
@@ -134,20 +108,7 @@ static int api_vbuf_bake(lua_State *lua)
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     glUnmapBuffer(GL_ARRAY_BUFFER);
     vbuf->mapped = 0;
-
-    if (g_vbufs.mapped == vbuf)
-        g_vbufs.mapped = vbuf->next;
-
-    if (vbuf->prev)
-        vbuf->prev->next = vbuf->next;
-    if (vbuf->next)
-        vbuf->next->prev = vbuf->prev;
-
-    if (g_vbufs.baked)
-        g_vbufs.baked->prev = vbuf;
-    vbuf->prev = 0;
-    vbuf->next = g_vbufs.baked;
-    g_vbufs.baked = vbuf;
+    vbuf->state = VBUF_BAKED;
     return 0;
 }
 
@@ -170,7 +131,7 @@ static int api_vbuf_set(lua_State *lua)
     start = lua_tointeger(lua, 2);
     len = (lua_gettop(lua) - 2) / 9;
 
-    if (vbuf == 0 || vbuf->mapped == 0)
+    if (vbuf == 0 || vbuf->state != VBUF_MAPPED)
     {
         lua_pushstring(lua, "api_vbuf_set: invalid vbuf");
         lua_error(lua);
@@ -286,9 +247,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         vbuf = vbuf_get(i);
-        vbuf->vacant = 1;
-        if (i > 0)
-            vbuf->prev = vbuf_get(i - 1);
+        vbuf->state = VBUF_VACANT;
         if (i < count - 1)
             vbuf->next = vbuf_get(i + 1);
         glGenBuffers(1, &vbuf->buf_id);
@@ -319,10 +278,6 @@ void vbuf_done(void)
     printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
            g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
            g_vbufs.allocs, g_vbufs.frees);
-    while (g_vbufs.mapped)
-        vbuf_free(g_vbufs.mapped);
-    while (g_vbufs.baked)
-        vbuf_free(g_vbufs.baked);
     util_free(g_vbufs.pool);
     g_vbufs.pool = 0;
 }
@@ -337,6 +292,8 @@ struct vbuf_t * vbuf_get(int vbufi)
 
 void vbuf_select(struct vbuf_t * vbuf)
 {
+    if (vbuf->state != VBUF_BAKED)
+        return;
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, VBUF_DATA_SIZE, g_vbufs.offset_pos);
