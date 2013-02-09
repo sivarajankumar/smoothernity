@@ -1,15 +1,4 @@
 #include "shprog.h"
-#include "GL/gl.h"
-
-struct shprog_t
-{
-    GLuint prog_id;
-    int vacant;
-    struct shprog_t *next;
-    struct shprog_t *prev;
-    struct mesh_t *meshes;
-    struct shuni_t *shunis;
-};
 
 struct shprogs_t
 {
@@ -20,8 +9,6 @@ struct shprogs_t
     int frees;
     char *pool;
     struct shprog_t *vacant;
-    struct shprog_t *created;
-    struct shprog_t *linked;
 };
 
 static struct shprogs_t g_shprogs;
@@ -36,5 +23,13 @@ int shprog_init(lua_State *lua, int count)
 }
 
 void shprog_done(void)
+{
+}
+
+struct shprog_t * shprog_get(int)
+{
+}
+
+void shprog_select(struct shprog_t *shprog)
 {
 }

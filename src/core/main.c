@@ -21,6 +21,8 @@
 #include "buf.h"
 #include "rop.h"
 #include "storage.h"
+#include "shprog.h"
+#include "shuni.h"
 
 static const size_t ARRAY_ALIGN = 16;
 
@@ -52,6 +54,8 @@ struct main_t
     int storage_key_size;
     int storage_data_size;
     int storage_count;
+    int shprog_count;
+    int shuni_count;
     lua_State *lua;
 };
 
@@ -223,7 +227,9 @@ static int main_configure(char *script)
      || main_get_int(lua, "rop_count", &g_main.rop_count) != 0
      || main_get_int(lua, "storage_key_size", &g_main.storage_key_size) != 0
      || main_get_int(lua, "storage_data_size", &g_main.storage_data_size) != 0
-     || main_get_int(lua, "storage_count", &g_main.storage_count) != 0)
+     || main_get_int(lua, "storage_count", &g_main.storage_count) != 0
+     || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
+     || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0)
     {
         goto cleanup;
     }
@@ -258,6 +264,8 @@ static void main_done(void)
 {
     vbuf_done();
     ibuf_done();
+    shuni_done();
+    shprog_done();
     render_done();
 
     if (g_main.lua)
@@ -388,6 +396,19 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;
     }
+
+    if (shprog_init(g_main.lua, g_main.shprog_count) != 0)
+    {
+        fprintf(stderr, "Cannot init shader programs\n");
+        return 1;
+    }
+
+    if (shuni_init(g_main.lua, g_main.shuni_count) != 0)
+    {
+        fprintf(stderr, "Cannot init shader uniforms\n");
+        return 1;
+    }
+
     lua_register(g_main.lua, "api_main_gc_step", api_main_gc_step);
     return 0;
 }
