@@ -41,16 +41,17 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
 
     local function make_chunk(size, start, r)
         local chunk = {}
-        chunk.size = size
+        local shelf = shelves[size]
+        chunk.size = 0
         chunk.start = start
         chunk.res = r
-        chunk.id = shelves[size].left
+        chunk.id = shelf.left
         function chunk.free()
-            local shelf = shelves[chunk.size]
             if shelf.chunks[chunk.id] ~= nil then
                 error(string.format('Chunk with id %i already exists in shelf %i.\n',
-                                    chunk.id, chunk.size))
+                                    chunk.id, shelf.size))
             end
+            chunk.size = 0
             shelf.frees = shelf.frees + 1
             shelf.left = shelf.left + 1
             shelf.chunks[chunk.id] = chunk
@@ -92,6 +93,7 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
         end
         for i, chunk in pairs(shelf.chunks) do
             shelf.chunks[i] = nil
+            chunk.size = size
             return chunk
         end
     end
@@ -109,10 +111,6 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
                 while start + size <= res_size and left[size] > 0 do
                     local shelf = ensure_shelf(size)
                     local chunk = make_chunk(size, start, res[ri])
-                    if shelf.chunks[chunk.id] ~= nil then
-                        error(string.format('Chunk with id %i already exists in shelf %i.\n',
-                                            chunk.id, size))
-                    end
                     shelf.chunks[chunk.id] = chunk
                     shelf.count = shelf.count + 1
                     shelf.left = shelf.left + 1
