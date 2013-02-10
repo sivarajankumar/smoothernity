@@ -20,6 +20,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local mesh
 
     function self.free()
+        util.sync_wait()
         api_vbuf_free(vb)
         api_ibuf_free(ib)
         api_matrix_free(self.mmesh)

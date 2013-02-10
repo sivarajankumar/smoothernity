@@ -5,7 +5,7 @@ local cfg = require 'config'
 
 function M.sync_wait()
     local s = api_sync_alloc()
-    while not api_sync_ready(s) do
+    while api_sync_ready(s) == 0 do
         coroutine.yield(false)
     end
     api_sync_free(s)
