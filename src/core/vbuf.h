@@ -6,13 +6,15 @@
 enum vbuf_e
 {
     VBUF_VACANT,
-    VBUF_MAPPED,
-    VBUF_BAKED
+    VBUF_UNMAPPED,
+    VBUF_MAPPED
 };
 
 struct vbuf_t
 {
     GLuint buf_id;
+    int mapped_ofs;
+    int mapped_len;
     GLvoid *mapped;
     enum vbuf_e state;
     struct vbuf_t *next;
