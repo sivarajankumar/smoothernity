@@ -28,7 +28,8 @@ function configure()
             storage_data_size = 131072,
             storage_count = 10,
             shuni_count = 1000,
-            shprog_count = 10}
+            shprog_count = 10,
+            sync_count = 10}
 end
 
 function run()

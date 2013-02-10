@@ -3,6 +3,14 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+function M.sync_wait()
+    local s = api_sync_alloc()
+    while not api_sync_ready(s) do
+        coroutine.yield(false)
+    end
+    api_sync_free(s)
+end
+
 function M.async_read(uid)
     local s = api_storage_alloc_r(uid)
     local res

@@ -23,6 +23,7 @@
 #include "storage.h"
 #include "shprog.h"
 #include "shuni.h"
+#include "sync.h"
 
 static const size_t ARRAY_ALIGN = 16;
 
@@ -56,6 +57,7 @@ struct main_t
     int storage_count;
     int shprog_count;
     int shuni_count;
+    int sync_count;
     lua_State *lua;
 };
 
@@ -229,7 +231,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "storage_data_size", &g_main.storage_data_size) != 0
      || main_get_int(lua, "storage_count", &g_main.storage_count) != 0
      || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
-     || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0)
+     || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0
+     || main_get_int(lua, "sync_count", &g_main.sync_count) != 0)
     {
         goto cleanup;
     }
@@ -286,6 +289,7 @@ static void main_done(void)
     rop_done();
     vector_done();
     matrix_done();
+    sync_done();
     mesh_done();
     text_done();
     physics_done();
@@ -375,6 +379,12 @@ static int main_init(int argc, char **argv)
     if (text_init(g_main.lua, g_main.text_size, g_main.text_count) != 0)
     {
         fprintf(stderr, "Cannot init texts\n");
+        return 1;
+    }
+
+    if (sync_init(g_main.lua, g_main.sync_count) != 0)
+    {
+        fprintf(stderr, "Cannot init syncs\n");
         return 1;
     }
 
