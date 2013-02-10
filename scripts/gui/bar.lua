@@ -62,10 +62,10 @@ function M.init()
     do
         vbuf = poolvbuf.alloc(4)
         api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
-        api_vbuf_set(vbuf.res, vbuf.size, 0,-1, 0,   1, 1, 1, 1,   0, 0,
-                                          0, 1, 0,   1, 1, 1, 1,   0, 0,
-                                          2,-1, 0,   1, 1, 1, 1,   0, 0,
-                                          2, 1, 0,   1, 1, 1, 1,   0, 0)
+        api_vbuf_set(vbuf.res, vbuf.start, 0,-1, 0,   1, 1, 1, 1,   0, 0,
+                                           0, 1, 0,   1, 1, 1, 1,   0, 0,
+                                           2,-1, 0,   1, 1, 1, 1,   0, 0,
+                                           2, 1, 0,   1, 1, 1, 1,   0, 0)
         api_vbuf_unmap(vbuf.res)
     end
     do
