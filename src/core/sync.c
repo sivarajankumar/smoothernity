@@ -61,6 +61,12 @@ static int api_sync_alloc(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+
+    ++g_syncs.allocs;
+    --g_syncs.left;
+    if (g_syncs.left < g_syncs.left_min)
+        g_syncs.left_min = g_syncs.left;
+
     sync = g_syncs.vacant;
     g_syncs.vacant = g_syncs.vacant->next;
     sync->next = 0;
@@ -87,6 +93,8 @@ static int api_sync_free(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+    ++g_syncs.frees;
+    ++g_syncs.left;
     sync->vacant = 1;
     sync->next = g_syncs.vacant;
     g_syncs.vacant = sync;
