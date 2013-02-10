@@ -69,8 +69,14 @@ static int api_ibuf_map(lua_State *lua)
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
     ibuf->mapped = glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)ofs, (GLsizeiptr)len,
-                                    GL_WRITE_ONLY | GL_MAP_UNSYNCHRONIZED_BIT |
+                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
                                     GL_MAP_INVALIDATE_RANGE_BIT);
+    if (ibuf->mapped == 0)
+    {
+        lua_pushstring(lua, "api_ibuf_map: mapping error");
+        lua_error(lua);
+        return 0;
+    }
     ibuf->mapped_ofs = ofs;
     ibuf->mapped_len = len;
     ibuf->state = IBUF_MAPPED;
@@ -231,7 +237,7 @@ int ibuf_init(lua_State *lua, int size, int count)
         glGenBuffers(1, &ibuf->buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * size,
-                     0, GL_STATIC_DRAW);
+                     0, GL_DYNAMIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
