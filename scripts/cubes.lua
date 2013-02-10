@@ -4,6 +4,7 @@ local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
+local poolbuf = require 'pool.buf'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -14,8 +15,8 @@ function M.alloc(x, y, z)
     local mrb = api_matrix_alloc()
     local mloc = api_matrix_alloc()
     local msmall = api_matrix_alloc()
-    local brot = api_buf_alloc()
-    local bpos = api_buf_alloc()
+    local brot = poolbuf.alloc(10)
+    local bpos = poolbuf.alloc(20)
     local vrot = api_vector_alloc()
     local vpos = api_vector_alloc()
     local vscl = api_vector_alloc()
@@ -34,8 +35,8 @@ function M.alloc(x, y, z)
         api_vector_free(vrot)
         api_vector_free(vpos)
         api_vector_free(vscl)
-        api_buf_free(brot)
-        api_buf_free(bpos)
+        brot.free()
+        bpos.free()
         api_mesh_free(mesh_big)
         api_mesh_free(mesh_small)
         api_physics_rb_free(rb)
@@ -68,11 +69,11 @@ function M.alloc(x, y, z)
 
     -- matrices
     do
-        api_buf_set(brot, 0,   0,0,0,0,3,   math.pi*2,0,0,0,0)
-        api_buf_set(bpos, 0,   2,1, 2,0,1,   2,-1,-2,0,1,
-                              -2,1,-2,0,1,  -2,-1, 2,0,1)
-        api_vector_seq(vrot, brot, 0, 2, 1, API_VECTOR_IPL_LINEAR)
-        api_vector_seq(vpos, bpos, 0, 4, 1, API_VECTOR_IPL_SPLINE)
+        api_buf_set(brot.res, brot.start,   0,0,0,0,3,   math.pi*2,0,0,0,0)
+        api_buf_set(bpos.res, bpos.start,   2,1, 2,0,1,   2,-1,-2,0,1,
+                                           -2,1,-2,0,1,  -2,-1, 2,0,1)
+        api_vector_seq(vrot, brot.res, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
+        api_vector_seq(vpos, bpos.res, bpos.start, 4, 1, API_VECTOR_IPL_SPLINE)
         api_vector_const(vscl, 0.5, 0.5, 0.5, 0)
         api_matrix_pos_scl_rot(mloc, vpos, vscl, vrot, API_MATRIX_AXIS_Y, 0)
         api_matrix_mul(msmall, mrb, mloc)

@@ -7,6 +7,7 @@ local lod = require 'lod'
 local meshes = require 'meshes'
 local quit = require 'quit'
 local shader = require 'shader.shader'
+local poolbuf = require 'pool.buf'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -184,7 +185,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     local common = common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
-    local buf = api_buf_alloc()
+    local buf = poolbuf.alloc(common.res * common.res)
     local mvis = util.matrix_scl_stop(scale, 1, scale)
     local mrb = api_matrix_alloc()
     local cs, rb
@@ -194,7 +195,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_matrix_free(mrb)
         api_physics_rb_free(rb)
         api_physics_cs_free(cs)
-        api_buf_free(buf)
+        buf.free()
         common.free()
     end
 
@@ -219,14 +220,14 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_vector_const(vsize, scale, 1, scale, 0)
         for z = 0, common.res - 1 do
             for x = 0, common.res - 1 do
-                api_buf_set(buf, x + z * common.res, common.hmap[z][x])
+                api_buf_set(buf.res, buf.start + x + z * common.res, common.hmap[z][x])
                 coroutine.yield(false)
             end
         end
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
                                           basy + move.y,
                                           basz + move.z + 0.5*common.size)
-        cs = api_physics_cs_alloc_hmap(buf, 0, common.res, common.res,
+        cs = api_physics_cs_alloc_hmap(buf.res, buf.start, common.res, common.res,
                                        -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = api_physics_rb_alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
