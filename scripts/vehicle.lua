@@ -351,10 +351,10 @@ function M.alloc(uid, startx, starty, startz)
     -- visual
     do
         mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                      -1, shader.default(), self.mchassis, ib.start, 36)
+                                      -1, shader.default(), self.mchassis, ib.start, ib.size)
         for i = 0, 3 do
             mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                           -1, shader.default(), mwheel[i], ib.start, 36)
+                                           -1, shader.default(), mwheel[i], ib.start, ib.size)
         end
     end
 
