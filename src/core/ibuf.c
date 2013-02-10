@@ -68,7 +68,9 @@ static int api_ibuf_map(lua_State *lua)
         return 0;
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-    ibuf->mapped = glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)ofs, (GLsizeiptr)len,
+    ibuf->mapped = glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER,
+                                    (GLintptr)(ofs * (int)sizeof(ibuf_data_t)),
+                                    (GLsizeiptr)(len * (int)sizeof(ibuf_data_t)),
                                     GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
                                     GL_MAP_INVALIDATE_RANGE_BIT);
     if (ibuf->mapped == 0)
