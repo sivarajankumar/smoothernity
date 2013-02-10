@@ -77,7 +77,8 @@ static int api_vbuf_map(lua_State *lua)
     }
     glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
     vbuf->mapped = glMapBufferRange(GL_ARRAY_BUFFER, (GLintptr)ofs, (GLsizeiptr)len,
-                                    GL_WRITE_ONLY | GL_MAP_UNSYNCHRONIZED_BIT);
+                                    GL_WRITE_ONLY | GL_MAP_UNSYNCHRONIZED_BIT |
+                                    GL_MAP_INVALIDATE_RANGE_BIT);
     vbuf->mapped_ofs = ofs;
     vbuf->mapped_len = len;
     vbuf->state = VBUF_MAPPED;

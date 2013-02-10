@@ -322,11 +322,8 @@ void mesh_done(void)
 
 void mesh_draw(struct mesh_t *mesh)
 {
-    if (mesh->ibuf->state != IBUF_BAKED
-    ||  mesh->shprog->state != SHPROG_LINKED)
-    {
+    if (mesh->shprog->state != SHPROG_LINKED)
         return;
-    }
     glPushMatrix();
     glMultMatrixf(mesh->matrix->value);
     glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_INT,

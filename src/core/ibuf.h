@@ -6,13 +6,15 @@
 enum ibuf_e
 {
     IBUF_VACANT,
-    IBUF_MAPPED,
-    IBUF_BAKED
+    IBUF_UNMAPPED,
+    IBUF_MAPPED
 };
 
 struct ibuf_t
 {
     GLuint buf_id;
+    int mapped_ofs;
+    int mapped_len;
     GLvoid *mapped;
     enum ibuf_e state;
     struct ibuf_t *next;
