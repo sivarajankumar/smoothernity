@@ -3,6 +3,7 @@ local M = {}
 local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
+local poolbuf = require 'pool.buf'
 
 local ibuf, vbuf, vrot, brot
 
@@ -58,16 +59,16 @@ function M.init()
     end
     do
         vrot = api_vector_alloc()
-        brot = api_buf_alloc()
-        api_buf_set(brot, 0,   0,0,0,0,PERIOD,   math.pi*2,0,0,0,0)
-        api_vector_seq(vrot, brot, 0, 2, 1, API_VECTOR_IPL_LINEAR)
+        brot = poolbuf.alloc(10)
+        api_buf_set(brot.res, brot.start,   0,0,0,0,PERIOD,   math.pi*2,0,0,0,0)
+        api_vector_seq(vrot, brot.res, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
     end
 end
 
 function M.done()
     api_vbuf_free(vbuf)
     api_ibuf_free(ibuf)
-    api_buf_free(brot)
+    brot.free()
     api_vector_free(vrot)
 end
 

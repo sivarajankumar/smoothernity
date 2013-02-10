@@ -4,6 +4,7 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
     local self = {}
     local shelves = {}
     local res = {}
+    local largest_size = 0
 
     local function find_shelf(size)
         local min_size
@@ -61,6 +62,7 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
         local sizes = {}
         for s in pairs(shelves) do table.insert(sizes, s) end
         table.sort(sizes)
+        io.write(string.format('%s largest requested chunk: %i\n', title, largest_size))
         for si, s in ipairs(sizes) do
             local shelf = shelves[s]
             io.write(string.format('%s pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
@@ -79,6 +81,9 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
         local shelf = find_shelf(size)
         if shelf.left == 0 then
             error(string.format('Out of chunks in shelf %i.\n', shelf.size))
+        end
+        if size > largest_size then
+            largest_size = size
         end
         shelf.allocs = shelf.allocs + 1
         shelf.left = shelf.left - 1
