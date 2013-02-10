@@ -2,11 +2,13 @@
 #include "../util/util.h"
 #include <string.h>
 #include <stdio.h>
+#include <GL/gl.h>
 
 static const size_t SYNC_SIZE = 32;
 
 struct sync_t
 {
+    GLsync sync_id;
     int vacant;
     struct sync_t *next;
 };
@@ -63,6 +65,7 @@ static int api_sync_alloc(lua_State *lua)
     g_syncs.vacant = g_syncs.vacant->next;
     sync->next = 0;
     sync->vacant = 0;
+    sync->sync_id = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
     lua_pushinteger(lua, ((char*)sync - g_syncs.pool) / SYNC_SIZE);
     return 1;
 }
@@ -87,12 +90,15 @@ static int api_sync_free(lua_State *lua)
     sync->vacant = 1;
     sync->next = g_syncs.vacant;
     g_syncs.vacant = sync;
+    glDeleteSync(sync->sync_id);
     return 0;
 }
 
 static int api_sync_ready(lua_State *lua)
 {
     struct sync_t *sync;
+    GLint status;
+    GLsizei len;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_sync_ready: incorrect argument");
@@ -107,7 +113,8 @@ static int api_sync_ready(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, 1); /* TODO */
+    glGetSynciv(sync->sync_id, GL_SYNC_STATUS, 1, &len, &status);
+    lua_pushinteger(lua, status == GL_SIGNALED);
     return 1;
 }
 
