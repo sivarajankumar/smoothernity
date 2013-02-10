@@ -8,6 +8,8 @@ local meshes = require 'meshes'
 local quit = require 'quit'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
+local poolibuf = require 'pool.ibuf'
+local poolvbuf = require 'pool.vbuf'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -16,14 +18,14 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     self.res = lod.lods[lodi].res
     self.mmesh = api_matrix_alloc()
     self.hmap = {}
-    local vb = api_vbuf_alloc()
-    local ib = api_ibuf_alloc()
+    local vb = poolvbuf.alloc(self.res * self.res)
+    local ib = poolibuf.alloc(6 * (self.res - 1) * (self.res - 1))
     local mesh
 
     function self.free()
         api_mesh_free(mesh)
-        api_vbuf_free(vb)
-        api_ibuf_free(ib)
+        vb.free()
+        ib.free()
         api_matrix_free(self.mmesh)
         util.sync_wait()
     end
@@ -115,6 +117,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     -- vertex buffer
     do
+        api_vbuf_map(vb.res, vb.start, vb.size)
         for z = 0, self.res - 1 do
             local colmap
             local chunk = util.async_read(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)))
@@ -145,7 +148,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
             end
             for x = 0, self.res - 1 do
                 local col = colmap[x]
-                api_vbuf_set(vb, x + z * self.res,
+                api_vbuf_set(vb.res, vb.start + x + z * self.res,
                              x - 0.5 * (self.res - 1),
                              self.hmap[z][x],
                              z - 0.5 * (self.res - 1),
@@ -154,28 +157,30 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                 coroutine.yield(false)
             end
         end
-        api_vbuf_bake(vb)
+        api_vbuf_unmap(vb.res)
     end
 
     -- index buffer
     do
+        api_ibuf_map(ib.res, ib.start, ib.size)
+        local o = vb.start
         for z = 0, self.res - 2 do
             for x = 0, self.res - 2 do
-                local i00 = x + z * self.res
-                local i01 = x + (z + 1) * self.res
-                local i10 = (x + 1) + z * self.res
-                local i11 = (x + 1) + (z + 1) * self.res
-                local i = (x + z * (self.res - 1)) * 6
-                api_ibuf_set(ib, i,  i00,i01,i10,  i10,i01,i11)
+                local i00 = o + x + z * self.res
+                local i01 = o + x + (z + 1) * self.res
+                local i10 = o + (x + 1) + z * self.res
+                local i11 = o + (x + 1) + (z + 1) * self.res
+                local i = ib.start + (x + z * (self.res - 1)) * 6
+                api_ibuf_set(ib.res, i,  i00,i01,i10,  i10,i01,i11)
                 coroutine.yield(false)
             end
         end
-        api_ibuf_bake(ib)
+        api_ibuf_unmap(ib.res)
     end
 
     local verts = 6 * (self.res - 1) * (self.res - 1)
-    mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib, -1,
-                          shader.default(), self.mmesh, 0, verts)
+    mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb.res, ib.res, -1,
+                          shader.default(), self.mmesh, ib.start, verts)
 
     return self
 end

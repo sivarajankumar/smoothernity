@@ -19,6 +19,8 @@ local perf = require 'perf'
 local key = require 'key'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
+local poolibuf = require 'pool.ibuf'
+local poolvbuf = require 'pool.vbuf'
 
 local LOGIC_TIME = 0.015
 local GC_STEP = 10
@@ -56,6 +58,8 @@ end
 
 function M.run()
     poolbuf.init()
+    poolibuf.init()
+    poolvbuf.init()
     shader.init()
     pwld.init()
     render.init()
@@ -162,6 +166,8 @@ function M.run()
     render.done()
     pwld.done()
     shader.done()
+    poolvbuf.done()
+    poolibuf.done()
     poolbuf.done()
 end
 
