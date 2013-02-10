@@ -36,7 +36,7 @@ function M.alloc(x, y, r)
     vscl = util.vector_const(r, r, 1, 0)
     api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
     mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
-                          shader.default(), mfinal, ibuf.start, 3)
+                          shader.default(), mfinal, ibuf.start, ibuf.size)
     return self
 end
 

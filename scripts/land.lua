@@ -178,9 +178,8 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_ibuf_unmap(ib.res)
     end
 
-    local verts = 6 * (self.res - 1) * (self.res - 1)
     mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb.res, ib.res, -1,
-                          shader.default(), self.mmesh, ib.start, verts)
+                          shader.default(), self.mmesh, ib.start, ib.size)
 
     return self
 end

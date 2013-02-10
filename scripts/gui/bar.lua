@@ -48,9 +48,9 @@ function M.alloc(xmin, ymin, xmax, ymax)
 
     do
         mesh_back = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
-                                   shader.color(), mback, ibuf.start, 6)
+                                   shader.color(), mback, ibuf.start, ibuf.size)
         mesh_front = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
-                                    shader.color(), mfront, ibuf.start, 6)
+                                    shader.color(), mfront, ibuf.start, ibuf.size)
         ucolfr = api_shuni_alloc_vector(shader.color(), mesh_front, 'color', vcolfr)
         ucolbk = api_shuni_alloc_vector(shader.color(), mesh_back, 'color', vcolbk)
     end
