@@ -7,6 +7,8 @@ local cfg = require 'config'
 local gui = require 'gui.gui'
 local key = require 'key'
 local shader = require 'shader.shader'
+local poolibuf = require 'pool.ibuf'
+local poolvbuf = require 'pool.vbuf'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -48,8 +50,8 @@ function M.alloc(uid, startx, starty, startz)
     local self = {}
 
     self.mchassis = api_matrix_alloc()
-    local vb = api_vbuf_alloc()
-    local ib = api_ibuf_alloc()
+    local vb = poolvbuf.alloc(8)
+    local ib = poolibuf.alloc(36)
     local cs_inert, cs_shape_box, cs_shape, veh
     local wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
@@ -88,8 +90,8 @@ function M.alloc(uid, startx, starty, startz)
         api_matrix_free(mrecov_next)
         api_matrix_free(mrecov)
         api_vector_free(vpos)
-        api_vbuf_free(vb)
-        api_ibuf_free(ib)
+        vb.free()
+        ib.free()
         api_physics_veh_free(veh)
         api_physics_cs_free(cs_shape_box)
         api_physics_cs_free(cs_shape)
@@ -270,26 +272,29 @@ function M.alloc(uid, startx, starty, startz)
 
     -- vertex buffer
     do
-        api_vbuf_set(vb, 0, -1,-1, 1,   1, 0, 0, 1,   0, 0,
-                             1,-1, 1,   0, 1, 0, 1,   0, 0,
-                             1, 1, 1,   0, 0, 1, 1,   0, 0,
-                            -1, 1, 1,   1, 1, 1, 1,   0, 0,
-                            -1,-1,-1,   0, 1, 1, 1,   0, 0,
-                             1,-1,-1,   0, 0, 0, 1,   0, 0,
-                             1, 1,-1,   1, 1, 0, 1,   0, 0,
-                            -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        api_vbuf_bake(vb)
+        api_vbuf_map(vb.res, vb.start, vb.size)
+        api_vbuf_set(vb.res, vb.start,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                                         1,-1, 1,   0, 1, 0, 1,   0, 0,
+                                         1, 1, 1,   0, 0, 1, 1,   0, 0,
+                                        -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                                        -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                                         1,-1,-1,   0, 0, 0, 1,   0, 0,
+                                         1, 1,-1,   1, 1, 0, 1,   0, 0,
+                                        -1, 1,-1,   1, 0, 1, 1,   0, 0)
+        api_vbuf_unmap(vb.res)
     end
 
     -- index buffer
     do
-        api_ibuf_set(ib, 0,  0,1,2,  0,2,3,
-                             1,5,6,  1,6,2,
-                             5,4,7,  5,7,6,
-                             4,0,3,  4,3,7,
-                             3,2,6,  3,6,7,
-                             1,0,4,  1,4,5)
-        api_ibuf_bake(ib)
+        local o = vb.start
+        api_ibuf_map(ib.res, ib.start, ib.size)
+        api_ibuf_set(ib.res, ib.start,   o+0,o+1,o+2,  o+0,o+2,o+3,
+                                         o+1,o+5,o+6,  o+1,o+6,o+2,
+                                         o+5,o+4,o+7,  o+5,o+7,o+6,
+                                         o+4,o+0,o+3,  o+4,o+3,o+7,
+                                         o+3,o+2,o+6,  o+3,o+6,o+7,
+                                         o+1,o+0,o+4,  o+1,o+4,o+5)
+        api_ibuf_unmap(ib.res)
     end
 
     -- collision shape
@@ -345,11 +350,11 @@ function M.alloc(uid, startx, starty, startz)
 
     -- visual
     do
-        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                      -1, shader.default(), self.mchassis, 0, 36)
+        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
+                                      -1, shader.default(), self.mchassis, ib.start, 36)
         for i = 0, 3 do
-            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                           -1, shader.default(), mwheel[i], 0, 36)
+            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
+                                           -1, shader.default(), mwheel[i], ib.start, 36)
         end
     end
 

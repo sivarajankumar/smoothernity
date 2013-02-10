@@ -3,6 +3,8 @@ local M = {}
 local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
+local poolibuf = require 'pool.ibuf'
+local poolvbuf = require 'pool.vbuf'
 
 local ibuf, vbuf, vcolfr, vcolbk
 
@@ -45,10 +47,10 @@ function M.alloc(xmin, ymin, xmax, ymax)
     end
 
     do
-        mesh_back = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                                   shader.default(), mback, 0, 6)
-        mesh_front = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                                    shader.default(), mfront, 0, 6)
+        mesh_back = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
+                                   shader.default(), mback, ibuf.start, 6)
+        mesh_front = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
+                                    shader.default(), mfront, ibuf.start, 6)
         ucolfr = api_shuni_alloc_vector(shader.default(), mesh_front, 'color', vcolfr)
         ucolbk = api_shuni_alloc_vector(shader.default(), mesh_back, 'color', vcolbk)
     end
@@ -58,17 +60,20 @@ end
 
 function M.init()
     do
-        vbuf = api_vbuf_alloc()
-        api_vbuf_set(vbuf, 0, 0,-1, 0,   1, 1, 1, 1,   0, 0,
-                              0, 1, 0,   1, 1, 1, 1,   0, 0,
-                              2,-1, 0,   1, 1, 1, 1,   0, 0,
-                              2, 1, 0,   1, 1, 1, 1,   0, 0)
-        api_vbuf_bake(vbuf)
+        vbuf = poolvbuf.alloc(4)
+        api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
+        api_vbuf_set(vbuf.res, vbuf.size, 0,-1, 0,   1, 1, 1, 1,   0, 0,
+                                          0, 1, 0,   1, 1, 1, 1,   0, 0,
+                                          2,-1, 0,   1, 1, 1, 1,   0, 0,
+                                          2, 1, 0,   1, 1, 1, 1,   0, 0)
+        api_vbuf_unmap(vbuf.res)
     end
     do
-        ibuf = api_ibuf_alloc()
-        api_ibuf_set(ibuf, 0,  1,0,2,  1,2,3)
-        api_ibuf_bake(ibuf)
+        ibuf = poolibuf.alloc(6)
+        local o = vbuf.start
+        api_ibuf_map(ibuf.res, ibuf.start, ibuf.size)
+        api_ibuf_set(ibuf.res, ibuf.start,  o+1,o+0,o+2,  o+1,o+2,o+3)
+        api_ibuf_unmap(ibuf.res)
     end
     do
         vcolfr = util.vector_const(FRONT_COLOR())
@@ -77,8 +82,8 @@ function M.init()
 end
 
 function M.done()
-    api_vbuf_free(vbuf)
-    api_ibuf_free(ibuf)
+    vbuf.free()
+    ibuf.free()
     api_vector_free(vcolfr)
     api_vector_free(vcolbk)
 end

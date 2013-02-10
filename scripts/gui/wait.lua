@@ -4,6 +4,8 @@ local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
+local poolibuf = require 'pool.ibuf'
+local poolvbuf = require 'pool.vbuf'
 
 local ibuf, vbuf, vrot, brot
 
@@ -33,8 +35,8 @@ function M.alloc(x, y, r)
     vpos = util.vector_const(x, y, -0.5, 0)
     vscl = util.vector_const(r, r, 1, 0)
     api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
-    mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf, -1,
-                          shader.default(), mfinal, 0, 3)
+    mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
+                          shader.default(), mfinal, ibuf.start, 3)
     return self
 end
 
@@ -46,16 +48,19 @@ function M.init()
         local x2, y2 = cossin(90 + 120)
         local x3, y3 = cossin(90 + 120 + 120)
         local r, g, b, a = COLOR()
-        vbuf = api_vbuf_alloc()
-        api_vbuf_set(vbuf, 0, x1,y1, 0,   r, g, b, a,   0, 0,
-                              x2,y2, 0,   r, g, b, a,   0, 0,
-                              x3,y3, 0,   r, g, b, a,   0, 0)
-        api_vbuf_bake(vbuf)
+        vbuf = poolvbuf.alloc(3)
+        api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
+        api_vbuf_set(vbuf.res, vbuf.start, x1,y1, 0,   r, g, b, a,   0, 0,
+                                           x2,y2, 0,   r, g, b, a,   0, 0,
+                                           x3,y3, 0,   r, g, b, a,   0, 0)
+        api_vbuf_unmap(vbuf.res)
     end
     do
-        ibuf = api_ibuf_alloc()
-        api_ibuf_set(ibuf, 0, 0,1,2)
-        api_ibuf_bake(ibuf)
+        ibuf = poolibuf.alloc(3)
+        local o = vbuf.start
+        api_ibuf_map(ibuf.res, ibuf.start, ibuf.size)
+        api_ibuf_set(ibuf.res, ibuf.start, o+0,o+1,o+2)
+        api_ibuf_unmap(ibuf.res)
     end
     do
         vrot = api_vector_alloc()
@@ -66,8 +71,8 @@ function M.init()
 end
 
 function M.done()
-    api_vbuf_free(vbuf)
-    api_ibuf_free(ibuf)
+    vbuf.free()
+    ibuf.free()
     brot.free()
     api_vector_free(vrot)
 end
