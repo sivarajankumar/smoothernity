@@ -18,6 +18,7 @@ local ddraw = require 'ddraw'
 local perf = require 'perf'
 local key = require 'key'
 local shader = require 'shader.shader'
+local poolbuf = require 'pool.buf'
 
 local LOGIC_TIME = 0.015
 local GC_STEP = 10
@@ -54,6 +55,7 @@ local function tick(f)
 end 
 
 function M.run()
+    poolbuf.init()
     shader.init()
     pwld.init()
     render.init()
@@ -160,6 +162,7 @@ function M.run()
     render.done()
     pwld.done()
     shader.done()
+    poolbuf.done()
 end
 
 return M
