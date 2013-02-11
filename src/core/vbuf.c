@@ -285,8 +285,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     {
         vbuf = vbuf_get(i);
         vbuf->state = VBUF_VACANT;
-        if (i < count - 1)
-            vbuf->next = vbuf_get(i + 1);
+        vbuf->next = vbuf_get(i + 1);
         glGenBuffers(1, &vbuf->buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
         glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,

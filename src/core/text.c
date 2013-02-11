@@ -216,10 +216,8 @@ int text_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         text = text_get(i);
-        if (i > 0)
-            text->prev = text_get(i - 1);
-        if (i < count - 1)
-            text->next = text_get(i + 1);
+        text->prev = text_get(i - 1);
+        text->next = text_get(i + 1);
         text->string = util_malloc(TEXT_STRING_ALIGN, sizeof(char) * size);
         if (text->string == 0)
             goto cleanup;

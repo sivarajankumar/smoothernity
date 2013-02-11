@@ -191,8 +191,7 @@ int shuni_init(lua_State *lua, int count)
     for (i = 0; i < count; ++i)
     {
         shuni = shuni_get(i);
-        if (i < count - 1)
-            shuni->next = shuni_get(i + 1);
+        shuni->next = shuni_get(i + 1);
         shuni->state = SHUNI_VACANT;
     }
     lua_register(lua, "api_shuni_left", api_shuni_left);

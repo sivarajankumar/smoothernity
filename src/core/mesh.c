@@ -286,10 +286,8 @@ int mesh_init(lua_State *lua, int count)
     for (i = 0; i < count; ++i)
     {
         mesh = mesh_get(i);
-        if (i > 0)
-            mesh->prev = mesh_get(i - 1);
-        if (i < count - 1)
-            mesh->next = mesh_get(i + 1);
+        mesh->prev = mesh_get(i - 1);
+        mesh->next = mesh_get(i + 1);
         mesh->vacant = 1;
     }
 

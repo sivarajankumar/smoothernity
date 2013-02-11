@@ -42,8 +42,7 @@ int vehicle_init(int count)
     for (i = 0; i < count; ++i)
     {
         veh = vehicle_get(i);
-        if (i < count - 1)
-            veh->next = vehicle_get(i + 1);
+        veh->next = vehicle_get(i + 1);
         veh->vacant = 1;
         try {
             veh->chassis_data = (char*)util_malloc(alignof(btRigidBody),

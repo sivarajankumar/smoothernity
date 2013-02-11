@@ -674,8 +674,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     for (i = 0; i < count; ++i)
     {
         matrix = matrix_get(i);
-        if (i < count - 1)
-            matrix->next = matrix_get(i + 1);
+        matrix->next = matrix_get(i + 1);
         matrix->vacant = 1;
     }
     lua_register(lua, "api_matrix_alloc", api_matrix_alloc);

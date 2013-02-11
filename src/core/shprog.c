@@ -219,8 +219,7 @@ int shprog_init(lua_State *lua, int count)
     for (i = 0; i < count; ++i)
     {
         shprog = shprog_get(i);
-        if (i < count - 1)
-            shprog->next = shprog_get(i + 1);
+        shprog->next = shprog_get(i + 1);
         shprog->state = SHPROG_VACANT;
     }
     lua_register(lua, "api_shprog_left", api_shprog_left);

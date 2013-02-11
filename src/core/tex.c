@@ -59,8 +59,8 @@ int tex_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         tex = tex_get(i);
-        tex->vacant = 1;
         tex->next = tex_get(i + 1);
+        tex->vacant = 1;
     }
     lua_register(lua, "api_tex_left", api_tex_left);
     lua_register(lua, "api_tex_alloc", api_tex_alloc);

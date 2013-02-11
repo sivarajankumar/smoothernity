@@ -150,8 +150,7 @@ int mpool_init(const int sizes[], const int counts[], int len)
         {
             chunk = mpool_get_chunk(j, shelf);
             chunk->shelf = shelf;
-            if (j < counts[i] - 1)
-                chunk->next = mpool_get_chunk(j + 1, shelf);
+            chunk->next = mpool_get_chunk(j + 1, shelf);
             /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
             chunk->data = util_malloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
             if (chunk->data == 0)

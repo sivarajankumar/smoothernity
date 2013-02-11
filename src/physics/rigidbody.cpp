@@ -42,8 +42,7 @@ int rigidbody_init(int count)
     for (i = 0; i < count; ++i)
     {
         rb = rigidbody_get(i);
-        if (i < count - 1)
-            rb->next = rigidbody_get(i + 1);
+        rb->next = rigidbody_get(i + 1);
         rb->vacant = 1;
         try {
             rb->mstate = new mstate_c();
