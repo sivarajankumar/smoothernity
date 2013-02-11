@@ -603,8 +603,7 @@ int vector_init(lua_State *lua, int count, int nesting)
     for (i = 0; i < count; ++i)
     {
         vector = vector_get(i);
-        if (i < count - 1)
-            vector->next = vector_get(i + 1);
+        vector->next = vector_get(i + 1);
         vector->vacant = 1;
     }
     lua_register(lua, "api_vector_alloc", api_vector_alloc);

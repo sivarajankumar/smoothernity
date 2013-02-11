@@ -366,10 +366,8 @@ int storage_init(lua_State *lua, int key_size, int data_size, int count)
     for (i = 0; i < count; ++i)
     {
         st = storage_get(i);
-        if (i > 0)
-            st->prev = storage_get(i - 1);
-        if (i < count - 1)
-            st->next = storage_get(i + 1);
+        st->prev = storage_get(i - 1);
+        st->next = storage_get(i + 1);
         st->key = util_malloc(STORAGE_KEY_ALIGN, key_size);
         st->data = util_malloc(STORAGE_DATA_ALIGN, data_size);
         if (st->key == 0 || st->data == 0)

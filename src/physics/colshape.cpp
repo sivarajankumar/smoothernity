@@ -47,8 +47,7 @@ int colshape_init(int count)
     for (i = 0; i < count; ++i)
     {
         cs = colshape_get(i);
-        if (i < count - 1)
-            cs->next = colshape_get(i + 1);
+        cs->next = colshape_get(i + 1);
         cs->vacant = 1;
         cs->data = (char*)util_malloc(alignof(colshape_u), sizeof(colshape_u));
         if (cs->data == 0)

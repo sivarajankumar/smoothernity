@@ -938,8 +938,7 @@ int rop_init(lua_State *lua, int count)
     {
         rop = rop_get(i);
         rop->vacant = 1;
-        if (i < count - 1)
-            rop->vacant_next = rop_get(i + 1);
+        rop->vacant_next = rop_get(i + 1);
     }
 
     lua_register(lua, "api_rop_left", api_rop_left);

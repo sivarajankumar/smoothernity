@@ -234,8 +234,7 @@ int ibuf_init(lua_State *lua, int size, int count)
     {
         ibuf = ibuf_get(i);
         ibuf->state = IBUF_VACANT;
-        if (i < count - 1)
-            ibuf->next = ibuf_get(i + 1);
+        ibuf->next = ibuf_get(i + 1);
         glGenBuffers(1, &ibuf->buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * size,

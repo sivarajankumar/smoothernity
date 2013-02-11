@@ -147,8 +147,7 @@ int sync_init(lua_State *lua, int count)
     for (i = 0; i < count; ++i)
     {
         sync = sync_get(i);
-        if (i < count - 1)
-            sync->next = sync_get(i + 1);
+        sync->next = sync_get(i + 1);
         sync->vacant = 1;
     }
     lua_register(lua, "api_sync_left", api_sync_left);

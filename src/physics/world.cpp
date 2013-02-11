@@ -43,10 +43,8 @@ int world_init(int count)
     {
         wld = world_get(i);
         wld->vacant = 1;
-        if (i < count - 1)
-            wld->next = world_get(i + 1);
-        if (i > 0)
-            wld->prev = world_get(i - 1);
+        wld->next = world_get(i + 1);
+        wld->prev = world_get(i - 1);
         try
         {
             wld->colcfg = new btDefaultCollisionConfiguration();

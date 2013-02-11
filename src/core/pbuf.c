@@ -44,7 +44,7 @@ struct pbufs_t
 
 static struct pbufs_t g_pbufs;
 
-struct pbuf_t * pbuf_get(int pbufi)
+static struct pbuf_t * pbuf_get(int pbufi)
 {
     if (pbufi >= 0 && pbufi < g_pbufs.count)
         return (struct pbuf_t*)(g_pbufs.pool + PBUF_SIZE * pbufi);
@@ -304,8 +304,7 @@ int pbuf_init(lua_State *lua, int size, int count)
     {
         pbuf = pbuf_get(i);
         pbuf->state = PBUF_VACANT;
-        if (i < count - 1)
-            pbuf->next = pbuf_get(i + 1);
+        pbuf->next = pbuf_get(i + 1);
         glGenBuffers(1, &pbuf->buf_id);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
         glBufferData(GL_PIXEL_UNPACK_BUFFER, PBUF_DATA_SIZE * size,

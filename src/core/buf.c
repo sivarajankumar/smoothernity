@@ -150,8 +150,7 @@ int buf_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         buf = buf_get(i);
-        if (i < count - 1)
-            buf->next = buf_get(i + 1);
+        buf->next = buf_get(i + 1);
         buf->vacant = 1;
         buf->data = util_malloc(BUF_DATA_ALIGN, sizeof(float) * size);
         if (buf->data == 0)
