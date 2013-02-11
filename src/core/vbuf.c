@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
+static const int VBUF_DATA_ATTRS = 9;
 static const size_t VBUF_DATA_SIZE = 32;
 static const size_t VBUF_SIZE = 64;
 
@@ -155,7 +156,7 @@ static int api_vbuf_set(lua_State *lua)
     struct vbuf_t *vbuf;
     struct vbuf_data_t *data;
 
-    if (lua_gettop(lua) < 11 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) < (2 + VBUF_DATA_ATTRS) || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_vbuf_set: incorrect argument");
@@ -165,7 +166,7 @@ static int api_vbuf_set(lua_State *lua)
 
     vbuf = vbuf_get(lua_tointeger(lua, 1));
     ofs = lua_tointeger(lua, 2);
-    len = (lua_gettop(lua) - 2) / 9;
+    len = (lua_gettop(lua) - 2) / VBUF_DATA_ATTRS;
 
     if (vbuf == 0 || vbuf->state != VBUF_MAPPED)
     {
@@ -181,7 +182,7 @@ static int api_vbuf_set(lua_State *lua)
         return 0;
     }
 
-    if ((lua_gettop(lua) - 2) % 9 != 0)
+    if ((lua_gettop(lua) - 2) % VBUF_DATA_ATTRS != 0)
     {
         lua_pushstring(lua, "api_vbuf_set: incorrect data count");
         lua_error(lua);
@@ -190,8 +191,8 @@ static int api_vbuf_set(lua_State *lua)
 
     for (i = 0; i < len; ++i)
     {
-        iofs = 3 + (i * 9);
-        for (j = 0; j < 9; ++j)
+        iofs = 3 + (i * VBUF_DATA_ATTRS);
+        for (j = 0; j < VBUF_DATA_ATTRS; ++j)
         {
             if (!lua_isnumber(lua, iofs + j))
             {
@@ -234,7 +235,7 @@ static int api_vbuf_set(lua_State *lua)
         data->color[3] = (GLubyte) (a * 255.0f);
     }
 
-    lua_pop(lua, 3 + (len * 9));
+    lua_pop(lua, 3 + (len * VBUF_DATA_ATTRS));
     return 0;
 }
 

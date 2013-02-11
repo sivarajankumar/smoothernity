@@ -13,6 +13,7 @@
 #include "input.h"
 #include "ibuf.h"
 #include "vbuf.h"
+#include "pbuf.h"
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
@@ -39,6 +40,8 @@ struct main_t
     int vbuf_count;
     int ibuf_size;
     int ibuf_count;
+    int pbuf_size;
+    int pbuf_count;
     int text_size;
     int text_count;
     int vector_count;
@@ -212,6 +215,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
+     || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
+     || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
      || main_get_int(lua, "ibuf_size", &g_main.ibuf_size) != 0
      || main_get_int(lua, "ibuf_count", &g_main.ibuf_count) != 0
      || main_get_int(lua, "text_size", &g_main.text_size) != 0
@@ -266,6 +271,7 @@ cleanup:
 static void main_done(void)
 {
     vbuf_done();
+    pbuf_done();
     ibuf_done();
     shuni_done();
     shprog_done();
@@ -404,6 +410,12 @@ static int main_init(int argc, char **argv)
     if (ibuf_init(g_main.lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
     {
         fprintf(stderr, "Cannot init index buffers\n");
+        return 1;
+    }
+
+    if (pbuf_init(g_main.lua, g_main.pbuf_size, g_main.pbuf_count) != 0)
+    {
+        fprintf(stderr, "Cannot init pixel buffers\n");
         return 1;
     }
 

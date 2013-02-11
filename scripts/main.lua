@@ -11,6 +11,8 @@ function configure()
             vbuf_count = cfg.VBUF_COUNT,
             ibuf_size = cfg.IBUF_SIZE,
             ibuf_count = cfg.IBUF_COUNT,
+            pbuf_size = 1048576,
+            pbuf_count = 1,
             text_size = 128,
             text_count = 100,
             vector_count = 100,
