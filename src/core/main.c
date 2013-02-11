@@ -14,6 +14,7 @@
 #include "ibuf.h"
 #include "vbuf.h"
 #include "pbuf.h"
+#include "tex.h"
 #include "mesh.h"
 #include "text.h"
 #include "vector.h"
@@ -42,6 +43,8 @@ struct main_t
     int ibuf_count;
     int pbuf_size;
     int pbuf_count;
+    int tex_size;
+    int tex_count;
     int text_size;
     int text_count;
     int vector_count;
@@ -215,10 +218,12 @@ static int main_configure(char *script)
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
-     || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
-     || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
      || main_get_int(lua, "ibuf_size", &g_main.ibuf_size) != 0
      || main_get_int(lua, "ibuf_count", &g_main.ibuf_count) != 0
+     || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
+     || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
+     || main_get_int(lua, "tex_size", &g_main.tex_size) != 0
+     || main_get_int(lua, "tex_count", &g_main.tex_count) != 0
      || main_get_int(lua, "text_size", &g_main.text_size) != 0
      || main_get_int(lua, "text_count", &g_main.text_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
@@ -271,8 +276,9 @@ cleanup:
 static void main_done(void)
 {
     vbuf_done();
-    pbuf_done();
     ibuf_done();
+    pbuf_done();
+    tex_done();
     shuni_done();
     shprog_done();
     render_done();
@@ -416,6 +422,12 @@ static int main_init(int argc, char **argv)
     if (pbuf_init(g_main.lua, g_main.pbuf_size, g_main.pbuf_count) != 0)
     {
         fprintf(stderr, "Cannot init pixel buffers\n");
+        return 1;
+    }
+
+    if (tex_init(g_main.lua, g_main.tex_size, g_main.tex_count) != 0)
+    {
+        fprintf(stderr, "Cannot init textures\n");
         return 1;
     }
 
