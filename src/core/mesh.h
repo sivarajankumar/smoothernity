@@ -15,7 +15,7 @@ struct mesh_t
     int icount;
     int group;
     int vacant;
-    int frame_tag; /* when this mesh was last drawn */
+    int draw_tag;
 
     struct mesh_t *prev;
     struct mesh_t *next;
