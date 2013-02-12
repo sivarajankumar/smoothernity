@@ -1,5 +1,6 @@
 #include "tex.h"
 #include "../util/util.h"
+#include <GL/gl.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -7,6 +8,7 @@ static const size_t TEX_SIZE = 16;
 
 struct tex_t
 {
+    GLuint tex_id;
     int vacant;
     struct tex_t *next;
 };
@@ -111,8 +113,8 @@ static int api_tex_set(lua_State *lua)
 
 int tex_init(lua_State *lua, int size, int count)
 {
-    struct tex_t *tex;
     int i;
+    struct tex_t *tex;
     if (sizeof(struct tex_t) > TEX_SIZE
     ||  (size & (size - 1)) != 0)
     {
@@ -137,21 +139,31 @@ int tex_init(lua_State *lua, int size, int count)
         tex = tex_get(i);
         tex->next = tex_get(i + 1);
         tex->vacant = 1;
+        glGenTextures(1, &tex->tex_id);
+        if (glGetError() != GL_NO_ERROR)
+            goto cleanup;
     }
     lua_register(lua, "api_tex_left", api_tex_left);
     lua_register(lua, "api_tex_alloc", api_tex_alloc);
     lua_register(lua, "api_tex_free", api_tex_free);
     lua_register(lua, "api_tex_set", api_tex_set);
     return 0;
+cleanup:
+    util_free(g_texs.pool);
+    g_texs.pool = 0;
+    return 1;
 }
 
 void tex_done(void)
 {
+    int i;
     if (g_texs.pool == 0)
         return;
     printf("Textures usage: %i/%i, allocs/frees: %i/%i\n",
            g_texs.count - g_texs.left_min, g_texs.count,
            g_texs.allocs, g_texs.frees);
+    for (i = 0; i < g_texs.count; ++i)
+        glDeleteTextures(1, &tex_get(i)->tex_id);
     util_free(g_texs.pool);
     g_texs.pool = 0;
 }
