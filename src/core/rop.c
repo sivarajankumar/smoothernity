@@ -24,8 +24,6 @@ enum rop_e
 {
     ROP_ROOT,
     ROP_TIME_SCALE,
-    ROP_CLEAR_COLOR,
-    ROP_CLEAR_DEPTH,
     ROP_CLEAR,
     ROP_PROJ,
     ROP_MVIEW,
@@ -140,16 +138,6 @@ static int api_rop_update(lua_State *lua)
                 goto error;
             dt = dt0 * rop->argv[0]->value[rop->tscalei];
         }
-        else if (rop->type == ROP_CLEAR_COLOR)
-        {
-            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
-                goto error;
-        }
-        else if (rop->type == ROP_CLEAR_DEPTH)
-        {
-            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
-                goto error;
-        }
         else if (rop->type == ROP_PROJ)
         {
             if (matrix_update(rop->argm[0], dt, update_tag, 0) != 0)
@@ -178,13 +166,6 @@ error:
     lua_pushstring(lua, "api_rop_update: error");
     lua_error(lua);
     return 0;
-}
-
-static void rop_clear_color(struct rop_t *rop)
-{
-    GLfloat *v;
-    v = rop->argv[0]->value;
-    glClearColor(v[0], v[1], v[2], v[3]);
 }
 
 static void rop_proj(struct rop_t *rop)
@@ -274,11 +255,7 @@ static int api_rop_draw(lua_State *lua)
     glDisable(GL_FOG);
     for (rop = root; rop; rop = rop->chain_next)
     {
-        if (rop->type == ROP_CLEAR_COLOR)
-            rop_clear_color(rop);
-        else if (rop->type == ROP_CLEAR_DEPTH)
-            glClearDepthf(rop->argv[0]->value[rop->depthi]);
-        else if (rop->type == ROP_CLEAR)
+        if (rop->type == ROP_CLEAR)
             glClear(rop->flags);
         else if (rop->type == ROP_PROJ)
             rop_proj(rop);
@@ -444,96 +421,6 @@ static int api_rop_alloc_tscale(lua_State *lua)
     rop->type = ROP_TIME_SCALE;
     rop->argv[0] = tscale;
     rop->tscalei = tscalei;
-    prev->chain_next = rop;
-
-    lua_pushinteger(lua, ropi);
-    return 1;
-}
-
-static int api_rop_alloc_clear_color(lua_State *lua)
-{
-    struct rop_t *rop, *prev;
-    struct vector_t *color;
-    int ropi;
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2))
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_color: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    prev = rop_get(lua_tointeger(lua, 1));
-    color = vector_get(lua_tointeger(lua, 2));
-    lua_pop(lua, 2);
-
-    ropi = rop_alloc();
-    rop = rop_get(ropi);
-    if (rop == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_color: out of rops");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (prev == 0 || color == 0 || rop == prev)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_color: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
-    rop->type = ROP_CLEAR_COLOR;
-    rop->argv[0] = color;
-    prev->chain_next = rop;
-
-    lua_pushinteger(lua, ropi);
-    return 1;
-}
-
-static int api_rop_alloc_clear_depth(lua_State *lua)
-{
-    struct rop_t *rop, *prev;
-    struct vector_t *depth;
-    int ropi, depthi;
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_depth: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    prev = rop_get(lua_tointeger(lua, 1));
-    depth = vector_get(lua_tointeger(lua, 2));
-    depthi = lua_tointeger(lua, 3);
-    lua_pop(lua, 3);
-
-    if (depthi < 0 || depthi > 3)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_depth: invalid depth index");
-        lua_error(lua);
-        return 0;
-    }
-
-    ropi = rop_alloc();
-    rop = rop_get(ropi);
-    if (rop == 0)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_depth: out of rops");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (prev == 0 || depth == 0 || rop == prev)
-    {
-        lua_pushstring(lua, "api_rop_alloc_clear_depth: invalid object");
-        lua_error(lua);
-        return 0;
-    }
-
-    rop->type = ROP_CLEAR_DEPTH;
-    rop->argv[0] = depth;
-    rop->depthi = depthi;
     prev->chain_next = rop;
 
     lua_pushinteger(lua, ropi);
@@ -947,8 +834,6 @@ int rop_init(lua_State *lua, int count)
     lua_register(lua, "api_rop_free", api_rop_free);
     lua_register(lua, "api_rop_alloc_root", api_rop_alloc_root);
     lua_register(lua, "api_rop_alloc_tscale", api_rop_alloc_tscale);
-    lua_register(lua, "api_rop_alloc_clear_color", api_rop_alloc_clear_color);
-    lua_register(lua, "api_rop_alloc_clear_depth", api_rop_alloc_clear_depth);
     lua_register(lua, "api_rop_alloc_clear", api_rop_alloc_clear);
     lua_register(lua, "api_rop_alloc_proj", api_rop_alloc_proj);
     lua_register(lua, "api_rop_alloc_mview", api_rop_alloc_mview);

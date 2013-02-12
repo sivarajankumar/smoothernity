@@ -1,7 +1,8 @@
+#include "render.h"
+#include "vector.h"
 #include <SDL.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
-#include "render.h"
 
 struct render_t
 {
@@ -13,7 +14,60 @@ struct render_t
 
 static struct render_t g_render;
 
-int render_init(int *argc, char **argv, int width, int height)
+static int api_render_clear_color(lua_State *lua)
+{
+    GLfloat *v;
+    struct vector_t *vec;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_render_clear_color: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    vec = vector_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (vec == 0)
+    {
+        lua_pushstring(lua, "api_render_clear_color: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+    v = vec->value;
+    glClearColor(v[0], v[1], v[2], v[3]);
+    return 0;
+}
+
+static int api_render_clear_depth(lua_State *lua)
+{
+    struct vector_t *vec;
+    int depthi;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_render_clear_depth: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    vec = vector_get(lua_tointeger(lua, 1));
+    depthi = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+    if (depthi < 0 || depthi > 3)
+    {
+        lua_pushstring(lua, "api_render_clear_depth: invalid depth index");
+        lua_error(lua);
+        return 0;
+    }
+    if (vec == 0)
+    {
+        lua_pushstring(lua, "api_render_clear_depth: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+    glClearDepthf(vec->value[depthi]);
+    return 0;
+}
+
+int render_init(lua_State *lua, int *argc, char **argv, int width, int height)
 {
     int bpp;
     int flags;
@@ -50,6 +104,22 @@ int render_init(int *argc, char **argv, int width, int height)
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glViewport(0, 0, width, height);
+
+    lua_register(lua, "api_render_clear_color", api_render_clear_color);
+    lua_register(lua, "api_render_clear_depth", api_render_clear_depth);
+    lua_register(lua, "api_render_clear", api_render_clear);
+    lua_register(lua, "api_render_proj", api_render_proj);
+    lua_register(lua, "api_render_mview", api_render_mview);
+    lua_register(lua, "api_render_swap", api_render_swap);
+    lua_register(lua, "api_render_fog_off", api_render_fog_off);
+    lua_register(lua, "api_render_fog_lin", api_render_fog_lin);
+
+    #define LUA_PUBLISH(x, y) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, y);
+
+    LUA_PUBLISH(GL_COLOR_BUFFER_BIT, "API_RENDER_CLEAR_COLOR");
+    LUA_PUBLISH(GL_DEPTH_BUFFER_BIT, "API_RENDER_CLEAR_DEPTH");
 
     return 0;
 cleanup:
