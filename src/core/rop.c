@@ -75,7 +75,7 @@ static struct rop_t * rop_get(int ropi)
         return 0;
 }
 
-static int rop_update_meshes(float dt, int frame_tag, int group)
+static int rop_update_meshes(float dt, int update_tag, int group)
 {
     struct shuni_t *shuni;
     struct mesh_t *mesh;
@@ -83,16 +83,16 @@ static int rop_update_meshes(float dt, int frame_tag, int group)
     {
         if (mesh->group != group)
             continue;
-        if (matrix_update(mesh->matrix, dt, frame_tag, 0) != 0)
+        if (matrix_update(mesh->matrix, dt, update_tag, 0) != 0)
             return 1;
         for (shuni = mesh->shprog->shunis; shuni; shuni = shuni->shprog_next)
         {
-            if (shuni_update(shuni, dt, frame_tag, 0) != 0)
+            if (shuni_update(shuni, dt, update_tag, 0) != 0)
                 return 1;
         }
         for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
         {
-            if (shuni_update(shuni, dt, frame_tag, 0) != 0)
+            if (shuni_update(shuni, dt, update_tag, 0) != 0)
                 return 1;
         }
     }
@@ -102,7 +102,7 @@ static int rop_update_meshes(float dt, int frame_tag, int group)
 static int api_rop_update(lua_State *lua)
 {
     float dt0, dt;
-    int frame_tag;
+    int update_tag;
     struct rop_t *root, *rop;
 
     if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
@@ -115,7 +115,7 @@ static int api_rop_update(lua_State *lua)
 
     root = rop_get(lua_tointeger(lua, 1));
     dt0 = lua_tonumber(lua, 2);
-    frame_tag = lua_tointeger(lua, 3);
+    update_tag = lua_tointeger(lua, 3);
 
     if (root == 0)
     {
@@ -136,40 +136,40 @@ static int api_rop_update(lua_State *lua)
     {
         if (rop->type == ROP_TIME_SCALE)
         {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
                 goto error;
             dt = dt0 * rop->argv[0]->value[rop->tscalei];
         }
         else if (rop->type == ROP_CLEAR_COLOR)
         {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
                 goto error;
         }
         else if (rop->type == ROP_CLEAR_DEPTH)
         {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
                 goto error;
         }
         else if (rop->type == ROP_PROJ)
         {
-            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+            if (matrix_update(rop->argm[0], dt, update_tag, 0) != 0)
                 goto error;
         }
         else if (rop->type == ROP_MVIEW)
         {
-            if (matrix_update(rop->argm[0], dt, frame_tag, 0) != 0)
+            if (matrix_update(rop->argm[0], dt, update_tag, 0) != 0)
                 goto error;
         }
         else if (rop->type == ROP_DRAW_MESHES)
         {
-            if (rop_update_meshes(dt, frame_tag, rop->group) != 0)
+            if (rop_update_meshes(dt, update_tag, rop->group) != 0)
                 goto error;
         }
         else if (rop->type == ROP_FOG_LIN)
         {
-            if (vector_update(rop->argv[0], dt, frame_tag, 0) != 0)
+            if (vector_update(rop->argv[0], dt, update_tag, 0) != 0)
                 goto error;
-            if (vector_update(rop->argv[1], dt, frame_tag, 0) != 0)
+            if (vector_update(rop->argv[1], dt, update_tag, 0) != 0)
                 goto error;
         }
     }

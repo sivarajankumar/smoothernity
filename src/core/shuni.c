@@ -229,14 +229,9 @@ void shuni_select(struct shuni_t *shuni)
         shuni_select_vector(shuni);
 }
 
-static int shuni_update_vector(struct shuni_t *shuni, float dt, int frame_tag, int force)
-{
-    return vector_update(shuni->argv[0], dt, frame_tag, force);
-}
-
-int shuni_update(struct shuni_t *shuni, float dt, int frame_tag, int force)
+int shuni_update(struct shuni_t *shuni, float dt, int update_tag, int force)
 {
     if (shuni->state == SHUNI_VECTOR)
-        return shuni_update_vector(shuni, dt, frame_tag, force);
+        return vector_update(shuni->argv[0], dt, update_tag, force);
     return 0;
 }
