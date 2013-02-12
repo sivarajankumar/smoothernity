@@ -9,6 +9,11 @@
 
 static const size_t VECTOR_SIZE = 256;
 
+enum vectors_e
+{
+    VECTOR_FORCED_UPDATE = -1 /* unique update_tag */
+};
+
 struct vectors_t
 {
     int count;
@@ -136,8 +141,11 @@ static int api_vector_get(lua_State *lua)
 static int api_vector_update(lua_State *lua)
 {
     struct vector_t *vector;
+    int update_tag, force;
+    float dt;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_vector_update: incorrect argument");
         lua_error(lua);
@@ -145,7 +153,9 @@ static int api_vector_update(lua_State *lua)
     }
 
     vector = vector_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    dt = lua_tonumber(lua, 2);
+    update_tag = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
 
     if (vector == 0)
     {
@@ -154,7 +164,8 @@ static int api_vector_update(lua_State *lua)
         return 0;
     }
 
-    if (vector_update(vector, 0, 0, 1) != 0)
+    force = update_tag == VECTOR_FORCED_UPDATE;
+    if (vector_update(vector, dt, update_tag, force) != 0)
     {
         lua_pushstring(lua, "api_vector_update: update error");
         lua_error(lua);
@@ -626,6 +637,7 @@ int vector_init(lua_State *lua, int count, int nesting)
 
     LUA_PUBLISH(VECTOR_IPL_LINEAR);
     LUA_PUBLISH(VECTOR_IPL_SPLINE);
+    LUA_PUBLISH(VECTOR_FORCED_UPDATE);
     return 0;
 }
 

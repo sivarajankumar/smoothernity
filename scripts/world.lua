@@ -62,7 +62,7 @@ function M.alloc(uid, centx, centy, centz)
 
     function self.generate()
         generating = true
-        api_vector_update(vplayer)
+        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         for lodi = lod.count - 1, 0, -1 do
             planes[lodi].generate(wx, wy, wz)
@@ -77,7 +77,7 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.move(car, camc)
-        api_vector_update(vplayer)
+        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local x, y, z = api_vector_get(vplayer)
         local wx, wy, wz = self.scene_to_world(x, y, z)
 
@@ -134,7 +134,7 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.showhide()
-        api_vector_update(vplayer)
+        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         for k, v in pairs(planes) do
             v.showhide(wx, wy, wz)
@@ -142,7 +142,7 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.gen_progress()
-        api_vector_update(vplayer)
+        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         local sum = 0
         for k, v in pairs(planes) do
@@ -152,7 +152,7 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.edge_dist()
-        api_vector_update(vplayer)
+        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
         local min_dist = 1
         for k, v in pairs(planes) do
