@@ -116,7 +116,7 @@ static int api_tex_set(lua_State *lua)
     || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
     || !lua_isnumber(lua, 8))
     {
-        lua_pushstring(lua, "api_tex_free: incorrect argument");
+        lua_pushstring(lua, "api_tex_set: incorrect argument");
         lua_error(lua);
         return 0;
     }
