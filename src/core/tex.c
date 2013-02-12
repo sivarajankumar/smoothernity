@@ -111,25 +111,21 @@ static int api_tex_set(lua_State *lua)
     return 0;
 }
 
-int tex_init(lua_State *lua, int size, int count)
+int tex_init(lua_State *lua, int size2, int count)
 {
     int i;
     struct tex_t *tex;
-    if (sizeof(struct tex_t) > TEX_SIZE
-    ||  (size & (size - 1)) != 0)
+    if (sizeof(struct tex_t) > TEX_SIZE)
     {
-        fprintf(stderr, "Invalid sizes:\n"
-                        "sizeof(struct tex_t) == %i\n"
-                        "size == %i\n",
-                (int)sizeof(struct tex_t),
-                size);
+        fprintf(stderr, "Invalid sizes:\nsizeof(struct tex_t) == %i\n",
+                (int)sizeof(struct tex_t));
         return 1;
     }
     g_texs.pool = util_malloc(TEX_SIZE, TEX_SIZE * count);
     if (g_texs.pool == 0)
         return 1;
     memset(g_texs.pool, 0, TEX_SIZE * count);
-    g_texs.size = size;
+    g_texs.size = 1 << size2;
     g_texs.count = count;
     g_texs.left = count;
     g_texs.left_min = count;
@@ -140,6 +136,9 @@ int tex_init(lua_State *lua, int size, int count)
         tex->next = tex_get(i + 1);
         tex->vacant = 1;
         glGenTextures(1, &tex->tex_id);
+        glBindTexture(GL_TEXTURE_2D, tex->tex_id);
+        glTexStorage2D(GL_TEXTURE_2D, size2 + 1, GL_RGBA8,
+                       g_texs.size, g_texs.size);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
