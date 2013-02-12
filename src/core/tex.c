@@ -5,6 +5,16 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+
+TODO:
+
+Assign textures to texture units permanently in tex_init().
+Use 2d texture arrays.
+Use different sizes for different textures.
+
+*/
+
 static const size_t TEX_SIZE = 16;
 
 struct tex_t
@@ -154,6 +164,7 @@ static int api_tex_set(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, tex->tex_id);
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
