@@ -29,4 +29,4 @@ struct shuni_t
 int shuni_init(lua_State *lua, int count);
 void shuni_done(void);
 void shuni_select(struct shuni_t*);
-int shuni_update(struct shuni_t*, float dt, int frame_tag, int force);
+int shuni_update(struct shuni_t*, float dt, int update_tag, int force);
