@@ -239,7 +239,7 @@ function M.alloc(uid, startx, starty, startz)
                 recov_frames = 0
                 api_matrix_copy(mrecov, mrecov_next)
                 api_matrix_copy(mrecov_next, mchassis_phys)
-                api_matrix_update(mrecov_next)
+                api_matrix_update(mrecov_next, 0, API_MATRIX_FORCED_UPDATE)
                 util.matrix_move_global(mrecov_next, 0, RECOVERY_OFS_Y, 0)
             end
             if recov_pressed == 0 then
@@ -342,7 +342,7 @@ function M.alloc(uid, startx, starty, startz)
             api_matrix_mul(mwheel[i], mwheel_physic[i], mwheel_local)
         end
         api_matrix_copy(mrecov, mchassis_phys)
-        api_matrix_update(mrecov)
+        api_matrix_update(mrecov, 0, API_MATRIX_FORCED_UPDATE)
         api_matrix_stop(mrecov)
         api_vector_mpos(vpos, self.mchassis)
         api_vector_update(vpos, 0, API_VECTOR_FORCED_UPDATE)
