@@ -32,7 +32,7 @@ struct matrix_t
 {
     GLfloat value[16]; /* must come first to ensure alignment */
     enum matrix_e type;
-    int frame_tag;
+    int update_tag;
     int vacant;
     enum matrix_axis_e rotaxis;
     int rotanglei;
@@ -50,7 +50,7 @@ int matrix_init(lua_State *lua, int count, int nesting);
 void matrix_done(void);
 struct matrix_t * matrix_get(int);
 int matrix_update(struct matrix_t *matrix, float dt,
-                  int frame_tag, int force);
+                  int update_tag, int force);
 int matrix_nesting(struct matrix_t *matrix, int limit);
 void matrix_inv(GLfloat *out, GLfloat *m);
 void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2);
