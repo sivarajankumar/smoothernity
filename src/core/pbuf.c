@@ -330,17 +330,13 @@ cleanup:
 void pbuf_done(void)
 {
     int i;
-    struct pbuf_t *pbuf;
     if (g_pbufs.pool == 0)
         return;
     printf("Pixel buffers usage: %i/%i, allocs/frees: %i/%i\n",
            g_pbufs.count - g_pbufs.left_min, g_pbufs.count,
            g_pbufs.allocs, g_pbufs.frees);
     for (i = 0; i < g_pbufs.count; ++i)
-    {
-        pbuf = pbuf_get(i);
-        glDeleteBuffers(1, &pbuf->buf_id);
-    }
+        glDeleteBuffers(1, &pbuf_get(i)->buf_id);
     util_free(g_pbufs.pool);
     g_pbufs.pool = 0;
 }

@@ -260,17 +260,13 @@ cleanup:
 void ibuf_done(void)
 {
     int i;
-    struct ibuf_t *ibuf;
     if (g_ibufs.pool == 0)
         return;
     printf("Index buffers usage: %i/%i, allocs/frees: %i/%i\n",
            g_ibufs.count - g_ibufs.left_min, g_ibufs.count,
            g_ibufs.allocs, g_ibufs.frees);
     for (i = 0; i < g_ibufs.count; ++i)
-    {
-        ibuf = ibuf_get(i);
-        glDeleteBuffers(1, &ibuf->buf_id);
-    }
+        glDeleteBuffers(1, &ibuf_get(i)->buf_id);
     util_free(g_ibufs.pool);
     g_ibufs.pool = 0;
 }
