@@ -11,7 +11,7 @@ static const size_t VECTOR_SIZE = 256;
 
 enum vectors_e
 {
-    VECTOR_FORCED_UPDATE = -1 /* unique update_tag */
+    VECTOR_FORCED_UPDATE = -1 /* special update_tag */
 };
 
 struct vectors_t

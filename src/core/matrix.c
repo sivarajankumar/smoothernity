@@ -8,6 +8,11 @@
 
 static const size_t MATRIX_SIZE = 256;
 
+enum matrices_e
+{
+    MATRIX_FORCED_UPDATE = -1 /* special update_tag */
+};
+
 struct matrices_t
 {
     int count;
@@ -164,8 +169,11 @@ static int api_matrix_stop(lua_State *lua)
 static int api_matrix_update(lua_State *lua)
 {
     struct matrix_t *matrix;
+    int update_tag, force;
+    float dt;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
     {
         lua_pushstring(lua, "api_matrix_update: incorrect argument");
         lua_error(lua);
@@ -173,7 +181,9 @@ static int api_matrix_update(lua_State *lua)
     }
 
     matrix = matrix_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    dt = lua_tonumber(lua, 2);
+    update_tag = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
 
     if (matrix == 0)
     {
@@ -181,8 +191,8 @@ static int api_matrix_update(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    if (matrix_update(matrix, 0, 0, 1) != 0)
+    force = update_tag == MATRIX_FORCED_UPDATE;
+    if (matrix_update(matrix, dt, update_tag, force) != 0)
     {
         lua_pushstring(lua, "api_matrix_update: update error");
         lua_error(lua);
@@ -701,6 +711,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
     LUA_PUBLISH(MATRIX_AXIS_X);
     LUA_PUBLISH(MATRIX_AXIS_Y);
     LUA_PUBLISH(MATRIX_AXIS_Z);
+    LUA_PUBLISH(MATRIX_FORCED_UPDATE);
 
     return 0;
 }
