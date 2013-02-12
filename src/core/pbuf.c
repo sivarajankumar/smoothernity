@@ -1,6 +1,5 @@
 #include "pbuf.h"
 #include "../util/util.h"
-#include <GL/gl.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -8,43 +7,9 @@ static const int PBUF_DATA_ATTRS = 4;
 static const size_t PBUF_DATA_SIZE = 4;
 static const size_t PBUF_SIZE = 64;
 
-enum pbuf_e
-{
-    PBUF_VACANT,
-    PBUF_UNMAPPED,
-    PBUF_MAPPED
-};
+struct pbufs_t g_pbufs;
 
-struct pbuf_t
-{
-    GLuint buf_id;
-    int mapped_ofs;
-    int mapped_len;
-    GLvoid *mapped;
-    enum pbuf_e state;
-    struct pbuf_t *next;
-};
-
-struct pbuf_data_t
-{
-    GLubyte color[4];
-};
-
-struct pbufs_t
-{
-    int size;
-    int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
-    char *pool;
-    struct pbuf_t *vacant;
-};
-
-static struct pbufs_t g_pbufs;
-
-static struct pbuf_t * pbuf_get(int pbufi)
+struct pbuf_t * pbuf_get(int pbufi)
 {
     if (pbufi >= 0 && pbufi < g_pbufs.count)
         return (struct pbuf_t*)(g_pbufs.pool + PBUF_SIZE * pbufi);
