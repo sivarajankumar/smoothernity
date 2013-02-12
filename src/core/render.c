@@ -1,5 +1,6 @@
 #include "render.h"
 #include "vector.h"
+#include "matrix.h"
 #include <SDL.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
@@ -64,6 +65,130 @@ static int api_render_clear_depth(lua_State *lua)
         return 0;
     }
     glClearDepthf(vec->value[depthi]);
+    return 0;
+}
+
+static int api_render_clear(lua_State *lua)
+{
+    int flags;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_render_clear: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    flags = lua_tointeger(lua, 1);
+    lua_pop(lua, 1);
+    glClear(flags);
+    return 0;
+}
+
+static int api_render_proj(lua_State *lua)
+{
+    struct matrix_t *m;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_render_proj: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    m = matrix_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (m == 0)
+    {
+        lua_pushstring(lua, "api_render_proj: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(m->value);
+    return 0;
+}
+
+static int api_render_mview(lua_State *lua)
+{
+    struct matrix_t *m;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_render_mview: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    m = matrix_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (m == 0)
+    {
+        lua_pushstring(lua, "api_render_mview: invalid matrix");
+        lua_error(lua);
+        return 0;
+    }
+    glMatrixMode(GL_MODELVIEW);
+    glLoadMatrixf(m->value);
+    return 0;
+}
+
+static int api_render_swap(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_render_swap: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    SDL_GL_SwapBuffers();
+    return 0;
+}
+
+static int api_render_fog_off(lua_State *lua)
+{
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_render_fog_off: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    glDisable(GL_FOG);
+    return 0;
+}
+
+static int api_render_fog_lin(lua_State *lua)
+{
+    struct vector_t *color, *dist;
+    int neari, fari;
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4))
+    {
+        lua_pushstring(lua, "api_render_fog_lin: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    color = vector_get(lua_tointeger(lua, 1));
+    dist = vector_get(lua_tointeger(lua, 2));
+    neari = lua_tointeger(lua, 3);
+    fari = lua_tointeger(lua, 4);
+    lua_pop(lua, 4);
+
+    if (color == 0 || dist == 0)
+    {
+        lua_pushstring(lua, "api_render_fog_lin: invalid vector");
+        lua_error(lua);
+        return 0;
+    }
+
+    if (neari < 0 || neari > 3 || fari < 0 || fari > 3)
+    {
+        lua_pushstring(lua, "api_render_fog_lin: invalid distance index");
+        lua_error(lua);
+        return 0;
+    }
+    glEnable(GL_FOG);
+    glFogi(GL_FOG_MODE, GL_LINEAR);
+    glFogfv(GL_FOG_COLOR, color->value);
+    glFogf(GL_FOG_START, dist->value[neari]);
+    glFogf(GL_FOG_END, dist->value[fari]);
+    glFogi(GL_FOG_COORD_SRC, GL_FRAGMENT_DEPTH);
     return 0;
 }
 
