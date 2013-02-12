@@ -1,4 +1,5 @@
 #include "tex.h"
+#include "pbuf.h"
 #include "../util/util.h"
 #include <GL/gl.h>
 #include <stdio.h>
@@ -15,7 +16,7 @@ struct tex_t
 
 struct texs_t
 {
-    int size;
+    int size; /* log2 */
     int count;
     int left;
     int left_min;
@@ -106,12 +107,63 @@ static int api_tex_free(lua_State *lua)
 
 static int api_tex_set(lua_State *lua)
 {
-    /* TODO */
-    lua_error(lua);
+    struct tex_t *tex;
+    struct pbuf_t *pbuf;
+    int ofs, mip, xofs, yofs, xsize, ysize;
+    if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
+    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
+    || !lua_isnumber(lua, 8))
+    {
+        lua_pushstring(lua, "api_tex_free: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    tex = tex_get(lua_tointeger(lua, 1));
+    pbuf = pbuf_get(lua_tointeger(lua, 2));
+    ofs = lua_tointeger(lua, 3);
+    mip = lua_tointeger(lua, 4);
+    xofs = lua_tointeger(lua, 5);
+    yofs = lua_tointeger(lua, 6);
+    xsize = lua_tointeger(lua, 7);
+    ysize = lua_tointeger(lua, 8);
+    lua_pop(lua, 8);
+    if (tex == 0 || pbuf == 0 || pbuf->state != PBUF_UNMAPPED)
+    {
+        lua_pushstring(lua, "api_tex_set: invalid object");
+        lua_error(lua);
+        return 0;
+    }
+    if (mip < 0 || mip > g_texs.size)
+    {
+        lua_pushstring(lua, "api_tex_set: invalid mip");
+        lua_error(lua);
+        return 0;
+    }
+    if (xsize <= 0 || xofs < 0 || xofs > (1 << g_texs.size) - xsize
+    ||  ysize <= 0 || yofs < 0 || yofs > (1 << g_texs.size) - ysize)
+    {
+        lua_pushstring(lua, "api_tex_set: invalid xy range");
+        lua_error(lua);
+        return 0;
+    }
+    if (ofs < 0 || ofs > g_pbufs.size - xsize*ysize)
+    {
+        lua_pushstring(lua, "api_tex_set: invalid pbuf offset");
+        lua_error(lua);
+        return 0;
+    }
+    glBindTexture(GL_TEXTURE_2D, tex->tex_id);
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexSubImage2D(GL_TEXTURE_2D, mip, xofs, yofs, xsize, ysize,
+                    GL_RGBA, GL_UNSIGNED_BYTE,
+                    (struct pbuf_data_t*)0 + ofs);
     return 0;
 }
 
-int tex_init(lua_State *lua, int size2, int count)
+int tex_init(lua_State *lua, int size, int count)
 {
     int i;
     struct tex_t *tex;
@@ -125,7 +177,7 @@ int tex_init(lua_State *lua, int size2, int count)
     if (g_texs.pool == 0)
         return 1;
     memset(g_texs.pool, 0, TEX_SIZE * count);
-    g_texs.size = 1 << size2;
+    g_texs.size = size;
     g_texs.count = count;
     g_texs.left = count;
     g_texs.left_min = count;
@@ -137,8 +189,8 @@ int tex_init(lua_State *lua, int size2, int count)
         tex->vacant = 1;
         glGenTextures(1, &tex->tex_id);
         glBindTexture(GL_TEXTURE_2D, tex->tex_id);
-        glTexStorage2D(GL_TEXTURE_2D, size2 + 1, GL_RGBA8,
-                       g_texs.size, g_texs.size);
+        glTexStorage2D(GL_TEXTURE_2D, size + 1, GL_RGBA8,
+                       1 << size, 1 << size);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
