@@ -155,7 +155,7 @@ static int api_matrix_stop(lua_State *lua)
     }
 
     matrix_clear_args(matrix);
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_CONST;
 
     return 0;
@@ -217,7 +217,7 @@ static int api_matrix_mul(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_MUL;
     matrix->argm[0] = m0;
     matrix->argm[1] = m1;
@@ -260,7 +260,7 @@ static int api_matrix_mul_stop(lua_State *lua)
     matrix_mul(m, m0->value, m1->value);
 
     matrix_clear_args(matrix);
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_CONST;
     memcpy(matrix->value, m, 16 * sizeof(GLfloat));
 
@@ -292,7 +292,7 @@ static int api_matrix_inv(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_INV;
     matrix->argm[0] = m0;
 
@@ -345,7 +345,7 @@ static int api_matrix_frustum(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_FRUSTUM;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
@@ -401,7 +401,7 @@ static int api_matrix_ortho(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_ORTHO;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
@@ -466,7 +466,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_POS_SCL_ROT;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
@@ -513,7 +513,7 @@ static int api_matrix_from_to_up(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_FROM_TO_UP;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
@@ -555,7 +555,7 @@ static int api_matrix_rigid_body(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_RIGID_BODY;
     matrix->rigid_body = rbi;
 
@@ -595,7 +595,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_VEHICLE_CHASSIS;
     matrix->vehicle = vehi;
 
@@ -636,7 +636,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
 
     matrix_clear_args(matrix);
 
-    matrix->frame_tag = 0;
+    matrix->update_tag = 0;
     matrix->type = MATRIX_VEHICLE_WHEEL;
     matrix->vehicle = vehi;
     matrix->wheel = wheel;
@@ -752,97 +752,116 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         return limit;
 }
 
-int matrix_update(struct matrix_t *m, float dt,
-                  int frame_tag, int force)
+static int matrix_update_mul(struct matrix_t *m, float dt, int force)
+{
+    GLfloat *m0, *m1;
+    if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
+        return 1;
+    if (matrix_update(m->argm[1], dt, m->update_tag, force) != 0)
+        return 1;
+    m0 = m->argm[0]->value;
+    m1 = m->argm[1]->value;
+    matrix_mul(m->value, m0, m1);
+    return 0;
+}
+
+static int matrix_update_inv(struct matrix_t *m, float dt, int force)
+{
+    GLfloat *m0;
+    if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
+        return 1;
+    m0 = m->argm[0]->value;
+    matrix_inv(m->value, m0);
+    return 0;
+}
+
+static int matrix_update_frustum(struct matrix_t *m, float dt, int force)
+{
+    GLfloat *v0, *v1;
+    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+        return 1;
+    v0 = m->argv[0]->value;
+    v1 = m->argv[1]->value;
+    matrix_frustum(m->value, v0[0], v0[1], v0[2], v0[3],
+                   v1[m->zneari], v1[m->zfari]);
+    return 0;
+}
+
+static int matrix_update_ortho(struct matrix_t *m, float dt, int force)
+{
+    GLfloat *v0, *v1;
+    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+        return 1;
+    v0 = m->argv[0]->value;
+    v1 = m->argv[1]->value;
+    matrix_ortho(m->value, v0[0], v0[1], v0[2], v0[3],
+                 v1[m->zneari], v1[m->zfari]);
+    return 0;
+}
+
+static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force)
 {
     GLfloat *v0, *v1, *v2;
-    GLfloat *m0, *m1;
+    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[2], dt, m->update_tag, force) != 0)
+        return 1;
+    v0 = m->argv[0]->value;
+    v1 = m->argv[1]->value;
+    v2 = m->argv[2]->value;
+    matrix_pos_scl_rot(m->value, v0, v1,
+                       m->rotaxis, v2[m->rotanglei]);
+    return 0;
+}
+
+static int matrix_update_from_to_up(struct matrix_t *m, float dt, int force)
+{
+    GLfloat *v0, *v1, *v2;
+    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+        return 1;
+    if (vector_update(m->argv[2], dt, m->update_tag, force) != 0)
+        return 1;
+    v0 = m->argv[0]->value;
+    v1 = m->argv[1]->value;
+    v2 = m->argv[2]->value;
+    matrix_from_to_up(m->value, v0, v1, v2);
+    return 0;
+}
+
+int matrix_update(struct matrix_t *m, float dt,
+                  int update_tag, int force)
+{
     if (m->type == MATRIX_CONST)
         return 0;
-    if (force == 0 && m->frame_tag == frame_tag)
+    if (force == 0 && m->update_tag == update_tag)
         return 0;
-    m->frame_tag = frame_tag;
+    m->update_tag = update_tag;
     if (m->type == MATRIX_MUL)
-    {
-        if (matrix_update(m->argm[0], dt, frame_tag, force) != 0)
-            return 1;
-        if (matrix_update(m->argm[1], dt, frame_tag, force) != 0)
-            return 1;
-        m0 = m->argm[0]->value;
-        m1 = m->argm[1]->value;
-        matrix_mul(m->value, m0, m1);
-    }
+        return matrix_update_mul(m, dt, force);
     else if (m->type == MATRIX_INV)
-    {
-        if (matrix_update(m->argm[0], dt, frame_tag, force) != 0)
-            return 1;
-        m0 = m->argm[0]->value;
-        matrix_inv(m->value, m0);
-    }
+        return matrix_update_inv(m, dt, force);
     else if (m->type == MATRIX_FRUSTUM)
-    {
-        if (vector_update(m->argv[0], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[1], dt, frame_tag, force) != 0)
-            return 1;
-        v0 = m->argv[0]->value;
-        v1 = m->argv[1]->value;
-        matrix_frustum(m->value, v0[0], v0[1], v0[2], v0[3],
-                       v1[m->zneari], v1[m->zfari]);
-    }
+        return matrix_update_frustum(m, dt, force);
     else if (m->type == MATRIX_ORTHO)
-    {
-        if (vector_update(m->argv[0], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[1], dt, frame_tag, force) != 0)
-            return 1;
-        v0 = m->argv[0]->value;
-        v1 = m->argv[1]->value;
-        matrix_ortho(m->value, v0[0], v0[1], v0[2], v0[3],
-                     v1[m->zneari], v1[m->zfari]);
-    }
+        return matrix_update_ortho(m, dt, force);
     else if (m->type == MATRIX_POS_SCL_ROT)
-    {
-        if (vector_update(m->argv[0], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[1], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[2], dt, frame_tag, force) != 0)
-            return 1;
-        v0 = m->argv[0]->value;
-        v1 = m->argv[1]->value;
-        v2 = m->argv[2]->value;
-        matrix_pos_scl_rot(m->value, v0, v1,
-                           m->rotaxis, v2[m->rotanglei]);
-    }
+        return matrix_update_pos_scl_rot(m, dt, force);
     else if (m->type == MATRIX_FROM_TO_UP)
-    {
-        if (vector_update(m->argv[0], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[1], dt, frame_tag, force) != 0)
-            return 1;
-        if (vector_update(m->argv[2], dt, frame_tag, force) != 0)
-            return 1;
-        v0 = m->argv[0]->value;
-        v1 = m->argv[1]->value;
-        v2 = m->argv[2]->value;
-        matrix_from_to_up(m->value, v0, v1, v2);
-    }
+        return matrix_update_from_to_up(m, dt, force);
     else if (m->type == MATRIX_RIGID_BODY)
-    {
-        if (physics_rb_fetch_tm(m->rigid_body, m->value) != 0)
-            return 1;
-    }
+        return physics_rb_fetch_tm(m->rigid_body, m->value);
     else if (m->type == MATRIX_VEHICLE_CHASSIS)
-    {
-        if (physics_veh_fetch_chassis_tm(m->vehicle, m->value) != 0)
-            return 1;
-    }
+        return physics_veh_fetch_chassis_tm(m->vehicle, m->value);
     else if (m->type == MATRIX_VEHICLE_WHEEL)
-    {
-        if (physics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value) != 0)
-            return 1;
-    }
+        return physics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value);
     return 0;
 }
 
