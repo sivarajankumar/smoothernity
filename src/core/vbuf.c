@@ -311,17 +311,13 @@ cleanup:
 void vbuf_done(void)
 {
     int i;
-    struct vbuf_t *vbuf;
     if (g_vbufs.pool == 0)
         return;
     printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
            g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
            g_vbufs.allocs, g_vbufs.frees);
     for (i = 0; i < g_vbufs.count; ++i)
-    {
-        vbuf = vbuf_get(i);
-        glDeleteBuffers(1, &vbuf->buf_id);
-    }
+        glDeleteBuffers(1, &vbuf_get(i)->buf_id);
     util_free(g_vbufs.pool);
     g_vbufs.pool = 0;
 }
