@@ -199,7 +199,7 @@ static void rop_mview(struct rop_t *rop)
     glLoadMatrixf(rop->argm[0]->value);
 }
 
-static void rop_draw_meshes(int frame_tag, int group)
+static void rop_draw_meshes(int draw_tag, int group)
 {
     struct vbuf_t *vbuf;
     struct ibuf_t *ibuf;
@@ -211,7 +211,7 @@ static void rop_draw_meshes(int frame_tag, int group)
     shprog = 0;
     for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
-        if (mesh->frame_tag == frame_tag || mesh->group != group)
+        if (mesh->draw_tag == draw_tag || mesh->group != group)
             continue;
         if (vbuf != mesh->vbuf)
         {
@@ -232,7 +232,7 @@ static void rop_draw_meshes(int frame_tag, int group)
         }
         for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
             shuni_select(shuni);
-        mesh->frame_tag = frame_tag;
+        mesh->draw_tag = draw_tag;
         mesh_draw(mesh);
     }
 }
@@ -249,7 +249,7 @@ static void rop_fog_lin(struct rop_t *rop)
 
 static int api_rop_draw(lua_State *lua)
 {
-    int frame_tag;
+    int draw_tag;
     struct rop_t *rop, *root;
 
     if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
@@ -261,7 +261,7 @@ static int api_rop_draw(lua_State *lua)
     }
 
     root = rop_get(lua_tointeger(lua, 1));
-    frame_tag = lua_tointeger(lua, 2);
+    draw_tag = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
     if (root == 0)
@@ -285,7 +285,7 @@ static int api_rop_draw(lua_State *lua)
         else if (rop->type == ROP_MVIEW)
             rop_mview(rop);
         else if (rop->type == ROP_DRAW_MESHES)
-            rop_draw_meshes(frame_tag, rop->group);
+            rop_draw_meshes(draw_tag, rop->group);
         else if (rop->type == ROP_DBG_PHYSICS)
         {
             if (physics_wld_ddraw(rop->wldi) != 0)
