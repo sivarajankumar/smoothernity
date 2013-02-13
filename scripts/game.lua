@@ -15,7 +15,6 @@ local pause = require 'pause'
 local gui = require 'gui.gui'
 local quit = require 'quit'
 local ddraw = require 'ddraw'
-local perf = require 'perf'
 local key = require 'key'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
@@ -50,12 +49,6 @@ local function run_co(co, start_time, max_time)
     end
 end
 
-local function tick(f)
-    local t = api_timer()
-    f()
-    return api_timer() - t
-end 
-
 function M.run()
     poolbuf.init()
     poolibuf.init()
@@ -65,8 +58,6 @@ function M.run()
     render.init()
     gui.init()
 
-    local prf = perf.alloc()
-    local frame_time = api_timer()
     local blink = blinker.alloc()
     local wld, cbs, car, camc, camd, camsw
     local created = false
@@ -146,20 +137,32 @@ function M.run()
        or coroutine.status(work) ~= 'dead'
     do
         local logic_time = api_timer()
-        prf.sample('physics', tick(function() api_physics_update(cfg.FRAME_TIME) end))
-        prf.sample('input', tick(function() api_input_update() end))
-        prf.sample('gc', tick(function() api_main_gc_step(GC_STEP) end))
-        prf.sample('storage', tick(function() api_storage_update() end))
-        prf.sample('control', tick(function() run_co(control, logic_time, 0) end))
-        prf.sample('work', tick(function() run_co(work, logic_time, LOGIC_TIME) end))
-        prf.sample('rupdate', tick(function() render.update() end))
-        prf.sample('rdraw', tick(function() render.draw() end))
-        prf.sample('frame', api_timer() - frame_time)
-        prf.update()
-        frame_time = api_timer()
+        local core_time = logic_time
+        api_physics_update(cfg.FRAME_TIME)
+        api_input_update()
+        api_main_gc_step(GC_STEP)
+        api_storage_update()
+
+        local control_time = api_timer()
+        run_co(control, logic_time, 0)
+
+        local work_time = api_timer()
+        run_co(work, logic_time, LOGIC_TIME)
+
+        local rupdate_time = api_timer()
+        render.update()
+
+        local rdraw_time = api_timer()
+        render.draw()
+
+        core_time = control_time - core_time
+        control_time = work_time - control_time
+        work_time = rupdate_time - work_time
+        rupdate_time = rdraw_time - rupdate_time
+        rdraw_time = api_timer() - rdraw_time
+        gui.cpu_times(core_time, control_time, work_time, rupdate_time, rdraw_time)
     end
 
-    prf.free()
     blink.free()
     gui.done()
     render.done()

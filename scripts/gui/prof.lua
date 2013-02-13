@@ -6,7 +6,7 @@ local util = require 'util'
 local BORDER = 0.05
 local COLOR_BACK = {0, 0, 0, 1}
 local COLOR_REF = {1, 1, 1, 1}
-local MAX_FRAMES = 600
+local MAX_FRAMES = 300
 
 function M.alloc(xmin, ymin, xmax, ymax, refvalue, ...)
     local self = {}
