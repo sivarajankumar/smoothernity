@@ -16,14 +16,14 @@ function M.update()
             pressed = 1
             if mode == MODE_VISUAL then
                 mode = MODE_EAGLE
-                render.eagle.engage()
+                render.engage(render.eagle)
             elseif mode == MODE_EAGLE then
                 mode = MODE_DEBUG
-                render.debug.engage()
+                render.engage(render.debug)
                 api_physics_wld_ddraw_mode(pwld.wld, API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
             elseif mode == MODE_DEBUG then
                 mode = MODE_VISUAL
-                render.visual.engage()
+                render.engage(render.visual)
             end
         end
     elseif pressed == 1 then
