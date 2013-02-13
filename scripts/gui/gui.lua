@@ -47,8 +47,8 @@ function M.gpu_times(logic, draw, swap)
     gpuprof.set(logic, draw, swap)
 end
 
-function M.cpu_times(core, control, work, rupdate, rdraw)
-    cpuprof.set(core, control, work, rupdate, rdraw)
+function M.cpu_times(core, control, work, rupdate, rdraw, rswap)
+    cpuprof.set(core, control, work, rupdate, rdraw, rswap)
 end
 
 function M.init()
@@ -85,7 +85,8 @@ function M.init()
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {1,0,1,1}, {1,1,0,1}, {0,0.5,1,1}, {0,1,0,1}, {1,0.5,0,1})
+                         {1,0,1,1}, {1,1,0,1}, {0,0.5,1,1},
+                         {1,0.5,0.5,1}, {0,1,0,1}, {1,0.5,0,1})
 end
 
 function M.done()

@@ -159,8 +159,8 @@ function M.run()
         control_time = work_time - control_time
         work_time = rupdate_time - work_time
         rupdate_time = rdraw_time - rupdate_time
-        rdraw_time = api_timer() - rdraw_time
-        gui.cpu_times(core_time, control_time, work_time, rupdate_time, rdraw_time)
+        rdraw_time = api_timer() - rdraw_time - render.swap_time
+        gui.cpu_times(core_time, control_time, work_time, rupdate_time, rdraw_time, render.swap_time)
     end
 
     blink.free()
