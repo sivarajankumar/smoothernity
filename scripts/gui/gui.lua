@@ -68,9 +68,19 @@ function M.init()
 
     wt = wait.alloc(-sx + 0.3, sy - 0.3, 0.25)
     wt.hide()
+
+    sizex, sizey = 0.5, 0.35
+    posx, posy = sx - sizex - 0.1, -sy + 0.1
+
+    gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
+                         {0,0.5,1,1}, {0,1,0,1}, {1,0.5,0,1})
+    gpuprof.set(0.01, 0.003, 0.001)
+    gpuprof.set(0.02, 0.005, 0.002)
+    gpuprof.set(0.01, 0.004, 0.0013)
 end
 
 function M.done()
+    gpuprof.free()
     genbar.free()
     edgebar.free()
     frbar.free()

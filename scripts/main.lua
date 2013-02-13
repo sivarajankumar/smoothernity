@@ -17,7 +17,7 @@ function configure()
             tex_count = 1,
             text_size = 128,
             text_count = 100,
-            vector_count = 100,
+            vector_count = 200,
             vector_nesting = 20,
             matrix_count = 1000,
             matrix_nesting = 20,
