@@ -4,8 +4,9 @@ local bar = require 'gui.bar'
 local wait = require 'gui.wait'
 local util = require 'util'
 local cfg = require 'config'
+local prof = require 'gui.prof'
 
-local genbar, edgebar, frbar, fpsbar, wt
+local genbar, edgebar, frbar, fpsbar, wt, gpuprof
 local whole_frames = 0
 local accum = 0
 
@@ -65,7 +66,7 @@ function M.init()
     fpsbar = bar.alloc(posx, posy, posx + sizex, posy + sizey,
                        {0,1,0,1}, {0,0,0,1})
 
-    wt = wait.alloc(sx - 0.3, -sy + 0.3, 0.25)
+    wt = wait.alloc(-sx + 0.3, sy - 0.3, 0.25)
     wt.hide()
 end
 
