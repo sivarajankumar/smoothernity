@@ -156,7 +156,6 @@ function M.run()
         prf.sample('rdraw', tick(function() render.draw() end))
         prf.sample('frame', api_timer() - frame_time)
         prf.update()
-        gui.frame_time(api_timer() - frame_time)
         frame_time = api_timer()
     end
 

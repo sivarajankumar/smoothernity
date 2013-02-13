@@ -5,6 +5,7 @@ local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 local lod = require 'lod'
+local gui = require 'gui.gui'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -74,10 +75,19 @@ local function visual_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
     self.tscale = 1
+    local queries = {}
+    local query
+    local qid = 0
 
     function self.free()
         api_matrix_free(self.mview3d)
         api_vector_free(self.vclrcol)
+        for i, q in pairs(queries) do
+            while api_query_ready(q) == 0 do
+                coroutine.yield(false)
+            end
+            api_query_free(q)
+        end
     end
 
     function self.draw(draw_tag)
@@ -108,6 +118,23 @@ local function visual_alloc()
         api_render_mview(mview2d)
         api_mesh_draw(meshes.GROUP_GUI, draw_tag)
         api_render_swap()
+
+        if query ~= nil then
+            api_query_end(query)
+            queries[qid] = query
+            query = nil
+            qid = qid + 1
+        end
+        query = api_query_alloc_time()
+        for i, q in pairs(queries) do
+            if api_query_ready(q) == 1 then
+                local secs = api_query_result(q) * 0.000000001
+                gui.frame_time(secs)
+                io.write(string.format('query result: %f\n', secs))
+                api_query_free(q)
+                queries[i] = nil
+            end
+        end
 
         api_vector_free(vfogdist)
         api_vector_free(vclrdep)

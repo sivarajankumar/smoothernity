@@ -10,7 +10,7 @@ local whole_frames = 0
 local accum = 0
 
 local MAX_FRAMES = 600
-local THRESH = 1.5
+local THRESH = 1
 
 function M.gen_progress(value)
     genbar.set(value)
