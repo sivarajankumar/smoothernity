@@ -83,8 +83,18 @@ function M.run()
                 if generated then
                     pause.control()
                 end
-                gui.gen_progress(wld.gen_progress())
+                coroutine.yield(true)
+            end
+        end)
 
+    local slowpok = coroutine.create(
+        function()
+            while not created do
+                coroutine.yield(true)
+            end
+            while not quit.requested()
+            do
+                gui.gen_progress(wld.gen_progress())
                 local edist = wld.edge_dist()
                 gui.edge_dist(edist)
                 car.restrain(edist)
@@ -116,7 +126,9 @@ function M.run()
                 wld.generate()
                 coroutine.yield(true)
             end
-            while coroutine.status(control) ~= 'dead' do
+            while coroutine.status(control) ~= 'dead'
+               or coroutine.status(slowpok) ~= 'dead'
+            do
                 coroutine.yield(true)
             end
             gui.wait_show()
@@ -134,6 +146,7 @@ function M.run()
         end)
 
     while coroutine.status(control) ~= 'dead'
+       or coroutine.status(slowpok) ~= 'dead'
        or coroutine.status(work) ~= 'dead'
     do
         local logic_time = api_timer()
@@ -146,6 +159,9 @@ function M.run()
         local control_time = api_timer()
         run_co(control, logic_time, 0)
 
+        local slowpok_time = api_timer()
+        run_co(slowpok, logic_time, 0)
+
         local work_time = api_timer()
         run_co(work, logic_time, LOGIC_TIME)
 
@@ -156,11 +172,12 @@ function M.run()
         render.draw()
 
         core_time = control_time - core_time
-        control_time = work_time - control_time
+        control_time = slowpok_time - control_time
+        slowpok_time = work_time - slowpok_time
         work_time = rupdate_time - work_time
         rupdate_time = rdraw_time - rupdate_time
         rdraw_time = api_timer() - rdraw_time
-        gui.cpu_times(core_time, control_time, work_time, rupdate_time, rdraw_time)
+        gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time, rdraw_time)
     end
 
     blink.free()
