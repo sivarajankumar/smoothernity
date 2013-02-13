@@ -329,6 +329,7 @@ static int api_mesh_draw(lua_State *lua)
     vbuf = 0;
     ibuf = 0;
     shprog = 0;
+    glMatrixMode(GL_MODELVIEW);
     for (mesh = g_meshes.active; mesh; mesh = mesh->next)
     {
         if (mesh->draw_tag == draw_tag
