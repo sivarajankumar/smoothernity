@@ -16,7 +16,6 @@ local FOG_FAR = 12800
 
 local current = nil
 local frame_tag = 1000
-M.swap_time = 0
 
 local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
@@ -90,7 +89,6 @@ local function visual_alloc()
         for i, f in pairs(frames) do
             util.query_free(f.logic)
             util.query_free(f.draw)
-            util.query_free(f.swap)
         end
     end
 
@@ -133,31 +131,20 @@ local function visual_alloc()
         api_render_proj(mproj2d)
         api_render_mview(mview2d)
         api_mesh_draw(meshes.GROUP_GUI, draw_tag)
+        api_render_swap()
         if frame ~= nil then
             api_query_end(frame.draw)
-            frame.swap = api_query_alloc_time()
-        end
-        M.swap_time = api_timer()
-        api_render_swap()
-        M.swap_time = api_timer() - M.swap_time
-        if frame ~= nil then
-            api_query_end(frame.swap)
         end
 
         qlogic = api_query_alloc_time()
         for i, f in pairs(frames) do
-            if api_query_ready(f.logic) == 1 and
-               api_query_ready(f.draw) == 1 and
-               api_query_ready(f.swap) == 1
-            then
+            if api_query_ready(f.logic) == 1 and api_query_ready(f.draw) == 1 then
                 local logicsecs = api_query_result(f.logic) * 0.000000001
                 local drawsecs = api_query_result(f.draw) * 0.000000001
-                local swapsecs = api_query_result(f.swap) * 0.000000001
-                gui.frame_time(logicsecs + drawsecs + swapsecs)
-                gui.gpu_times(logicsecs, drawsecs, swapsecs)
+                gui.frame_time(logicsecs + drawsecs)
+                gui.gpu_times(logicsecs, drawsecs)
                 api_query_free(f.logic)
                 api_query_free(f.draw)
-                api_query_free(f.swap)
                 frames[i] = nil
             end
         end
