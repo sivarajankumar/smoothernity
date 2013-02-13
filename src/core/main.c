@@ -25,6 +25,7 @@
 #include "shprog.h"
 #include "shuni.h"
 #include "sync.h"
+#include "query.h"
 
 static const size_t ARRAY_ALIGN = 16;
 
@@ -62,6 +63,7 @@ struct main_t
     int shprog_count;
     int shuni_count;
     int sync_count;
+    int query_count;
     lua_State *lua;
 };
 
@@ -239,7 +241,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "storage_count", &g_main.storage_count) != 0
      || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
      || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0
-     || main_get_int(lua, "sync_count", &g_main.sync_count) != 0)
+     || main_get_int(lua, "sync_count", &g_main.sync_count) != 0
+     || main_get_int(lua, "query_count", &g_main.query_count) != 0)
     {
         goto cleanup;
     }
@@ -278,6 +281,7 @@ static void main_done(void)
     tex_done();
     shuni_done();
     shprog_done();
+    query_done();
     render_done();
 
     if (g_main.lua)
@@ -396,6 +400,12 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
+
+    if (query_init(g_main.lua, g_main.query_count) != 0)
+    {
+        fprintf(stderr, "Cannot init queries\n");
+        return 1;
+    }
 
     if (vbuf_init(g_main.lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
     {

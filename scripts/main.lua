@@ -32,7 +32,8 @@ function configure()
             storage_count = 10,
             shuni_count = 1000,
             shprog_count = 10,
-            sync_count = 10}
+            sync_count = 10,
+            query_count = 10}
 end
 
 function run()
