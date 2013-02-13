@@ -86,8 +86,8 @@ static int api_query_alloc_time(lua_State *lua)
     g_queries.vacant = g_queries.vacant->next;
     query->next = 0;
     query->state = QUERY_STATE_BEGIN;
-    glBeginQuery(GL_TIME_ELAPSED, query->query_id);
     g_queries.inside = 1;
+    glBeginQuery(GL_TIME_ELAPSED, query->query_id);
     lua_pushinteger(lua, ((char*)query - g_queries.pool) / QUERY_SIZE);
     return 1;
 }
@@ -135,6 +135,7 @@ static int api_query_end(lua_State *lua)
         return 0;
     }
     query->state = QUERY_STATE_WAITING;
+    g_queries.inside = 0;
     glEndQuery(GL_TIME_ELAPSED);
     return 0;
 }
