@@ -43,6 +43,10 @@ function M.frame_time(value)
     fpsbar.set(x, 1 - x)
 end
 
+function M.gpu_times(logic, draw, swap)
+    gpuprof.set(logic, draw, swap)
+end
+
 function M.init()
     bar.init()
     wait.init()
@@ -74,9 +78,6 @@ function M.init()
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          {0,0.5,1,1}, {0,1,0,1}, {1,0.5,0,1})
-    gpuprof.set(0.01, 0.003, 0.001)
-    gpuprof.set(0.02, 0.005, 0.002)
-    gpuprof.set(0.01, 0.004, 0.0013)
 end
 
 function M.done()

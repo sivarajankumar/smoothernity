@@ -3,6 +3,12 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+function M.query_free(q)
+    while api_query_ready(q) == 0 do
+    end
+    api_query_free(q)
+end
+
 function M.sum(...)
     local s = 0
     for _, v in ipairs({...}) do
