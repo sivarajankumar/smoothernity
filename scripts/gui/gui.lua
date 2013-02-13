@@ -43,12 +43,12 @@ function M.frame_time(value)
     fpsbar.set(x, 1 - x)
 end
 
-function M.gpu_times(logic, draw, swap)
-    gpuprof.set(logic, draw, swap)
+function M.gpu_times(logic, draw)
+    gpuprof.set(logic, draw)
 end
 
-function M.cpu_times(core, control, work, rupdate, rdraw, rswap)
-    cpuprof.set(core, control, work, rupdate, rdraw, rswap)
+function M.cpu_times(core, control, work, rupdate, rdraw)
+    cpuprof.set(core, control, work, rupdate, rdraw)
 end
 
 function M.init()
@@ -81,12 +81,11 @@ function M.init()
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {0,0.5,1,1}, {0,1,0,1}, {1,0.5,0,1})
+                         {0,0.5,1,1}, {0,1,0,1})
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {1,0,1,1}, {1,1,0,1}, {0,0.5,1,1},
-                         {1,0.5,0.5,1}, {0,1,0,1}, {1,0.5,0,1})
+                         {1,0,0,1}, {1,1,0,1}, {0,0.5,1,1}, {1,0.5,0,1}, {0,1,0,1})
 end
 
 function M.done()
