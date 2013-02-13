@@ -6,53 +6,64 @@ local shader = require 'shader.shader'
 local poolibuf = require 'pool.ibuf'
 local poolvbuf = require 'pool.vbuf'
 
-local ibuf, vbuf, vcolfr, vcolbk
+local ibuf, vbuf
 
-local BACK_COLOR = function() return 0, 0, 0, 1 end
-local FRONT_COLOR = function() return 0, 1, 0, 1 end
+local BACK_Z = -0.5
+local FRONT_Z = 0.1
 
-function M.alloc(xmin, ymin, xmax, ymax)
+function M.alloc(xmin, ymin, xmax, ymax, ...)
     local self = {}
-    local mesh_back, mesh_front, mback, vfront_pos, vfront_scl
-    local mfront = api_matrix_alloc()
-    local mfront_local = api_matrix_alloc()
+    local mroot
     local vzero = util.vector_const(0, 0, 0, 0)
-    local ucolfr, ucolbk
+    local stripes = {}
 
     function self.free()
-        api_mesh_free(mesh_back)
-        api_mesh_free(mesh_front)
-        api_matrix_free(mback)
-        api_matrix_free(mfront)
-        api_matrix_free(mfront_local)
-        api_vector_free(vfront_pos)
-        api_vector_free(vfront_scl)
+        api_matrix_free(mroot)
         api_vector_free(vzero)
-        api_shuni_free(ucolfr)
-        api_shuni_free(ucolbk)
+        for i, s in ipairs(stripes) do
+            api_vector_free(s.vpos)
+            api_vector_free(s.vscl)
+            api_vector_free(s.vcol)
+            api_matrix_free(s.mlocal)
+            api_matrix_free(s.mfinal)
+            api_mesh_free(s.mesh)
+            api_shuni_free(s.ucol)
+        end
     end
 
-    function self.set(value)
-        api_vector_const(vfront_scl, value, 1, 1, 0)
+    function self.set(...)
+        local sum = util.sum(...)
+        local x = 0
+        for i, v in ipairs({...}) do
+            local stripe = stripes[i]
+            local nv = 0
+            if sum > 0 then
+                nv = v / sum
+            end
+            api_vector_const(stripe.vpos, x, 0, FRONT_Z, 0)
+            api_vector_const(stripe.vscl, nv, 1, 1, 0)
+            x = x + nv
+        end
     end
 
     do
         local centx, centy = 0.5*(xmin+xmax), 0.5*(ymin+ymax)
-        local sclx, scly = 0.5*(xmax-xmin), 0.5*(ymax-ymin)
-        mback = util.matrix_pos_scl_stop(xmin, centy, -0.5, sclx, scly, 1)
-        vfront_pos = util.vector_const(0, 0, 0.1, 0)
-        vfront_scl = util.vector_const(0, 1, 1, 0)
-        api_matrix_pos_scl_rot(mfront_local, vfront_pos, vfront_scl, vzero, API_MATRIX_AXIS_X, 0)
-        api_matrix_mul(mfront, mback, mfront_local)
-    end
-
-    do
-        mesh_back = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
-                                   shader.color(), mback, ibuf.start, ibuf.size)
-        mesh_front = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
-                                    shader.color(), mfront, ibuf.start, ibuf.size)
-        ucolfr = api_shuni_alloc_vector(shader.color(), mesh_front, 'color', vcolfr)
-        ucolbk = api_shuni_alloc_vector(shader.color(), mesh_back, 'color', vcolbk)
+        local sclx, scly = xmax-xmin, ymax-ymin
+        mroot = util.matrix_pos_scl_stop(xmin, centy, BACK_Z, sclx, scly, 1)
+        for i, col in ipairs({...}) do
+            local stripe = {}
+            stripe.vpos = util.vector_const(0, 0, FRONT_Z, 0)
+            stripe.vscl = util.vector_const(0, 1, 1, 0)
+            stripe.vcol = util.vector_const(unpack(col))
+            stripe.mlocal = api_matrix_alloc()
+            stripe.mfinal = api_matrix_alloc()
+            api_matrix_pos_scl_rot(stripe.mlocal, stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
+            api_matrix_mul(stripe.mfinal, mroot, stripe.mlocal)
+            stripe.mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
+                                         shader.color(), stripe.mfinal, ibuf.start, ibuf.size)
+            stripe.ucol = api_shuni_alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
+            table.insert(stripes, stripe)
+        end
     end
 
     return self
@@ -62,10 +73,10 @@ function M.init()
     do
         vbuf = poolvbuf.alloc(4)
         api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
-        api_vbuf_set(vbuf.res, vbuf.start, 0,-1, 0,   1, 1, 1, 1,   0, 0,
-                                           0, 1, 0,   1, 1, 1, 1,   0, 0,
-                                           2,-1, 0,   1, 1, 1, 1,   0, 0,
-                                           2, 1, 0,   1, 1, 1, 1,   0, 0)
+        api_vbuf_set(vbuf.res, vbuf.start, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
+                                           0, 0.5, 0,   1, 1, 1, 1,   0, 0,
+                                           1,-0.5, 0,   1, 1, 1, 1,   0, 0,
+                                           1, 0.5, 0,   1, 1, 1, 1,   0, 0)
         api_vbuf_unmap(vbuf.res)
     end
     do
@@ -75,17 +86,11 @@ function M.init()
         api_ibuf_set(ibuf.res, ibuf.start,  o+1,o+0,o+2,  o+1,o+2,o+3)
         api_ibuf_unmap(ibuf.res)
     end
-    do
-        vcolfr = util.vector_const(FRONT_COLOR())
-        vcolbk = util.vector_const(BACK_COLOR())
-    end
 end
 
 function M.done()
     vbuf.free()
     ibuf.free()
-    api_vector_free(vcolfr)
-    api_vector_free(vcolbk)
 end
 
 return M

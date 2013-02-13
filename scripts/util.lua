@@ -3,6 +3,14 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+function M.sum(...)
+    local s = 0
+    for _, v in ipairs({...}) do
+        s = s + v
+    end
+    return s
+end
+
 function M.sync_wait()
     local s = api_sync_alloc()
     while api_sync_ready(s) == 0 do
