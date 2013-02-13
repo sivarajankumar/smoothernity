@@ -52,6 +52,30 @@ static struct text_t * text_get(int texti)
         return 0;
 }
 
+static int api_text_draw(lua_State *lua)
+{
+    int i;
+    struct text_t *text;
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_text_draw: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    glColor4f(1, 1, 1, 1);
+    for (text = g_texts.active; text; text = text->next)
+    {
+        glRasterPos2iv(text->pos);
+        for (i = 0; i < g_texts.size; ++i)
+        {
+            if (text->string[i] == 0)
+                break;
+            glutBitmapCharacter(text->font, text->string[i]);
+        }
+    }
+    return 0;
+}
+
 static int api_text_alloc(lua_State *lua)
 {
     const char *string;
@@ -225,6 +249,7 @@ int text_init(lua_State *lua, int size, int count)
         text->vacant = 1;
     }
 
+    lua_register(lua, "api_text_draw", api_text_draw);
     lua_register(lua, "api_text_alloc", api_text_alloc);
     lua_register(lua, "api_text_free", api_text_free);
     lua_register(lua, "api_text_left", api_text_left);
@@ -266,21 +291,4 @@ void text_done(void)
         util_free(text_get(i)->string);
     util_free(g_texts.pool);
     g_texts.pool = 0;
-}
-
-void text_draw(void)
-{
-    int i;
-    struct text_t *text;
-    glColor4f(1, 1, 1, 1);
-    for (text = g_texts.active; text; text = text->next)
-    {
-        glRasterPos2iv(text->pos);
-        for (i = 0; i < g_texts.size; ++i)
-        {
-            if (text->string[i] == 0)
-                break;
-            glutBitmapCharacter(text->font, text->string[i]);
-        }
-    }
 }

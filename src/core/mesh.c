@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "vbuf.h"
 #include "ibuf.h"
+#include "shuni.h"
 #include "matrix.h"
 #include "shprog.h"
 #include "../util/util.h"
@@ -264,6 +265,107 @@ static int api_mesh_left(lua_State *lua)
     return 1;
 }
 
+static int api_mesh_update(lua_State *lua)
+{
+    struct shuni_t *shuni;
+    struct mesh_t *mesh;
+    int group, update_tag;
+    float dt;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
+    {
+        lua_pushstring(lua, "api_mesh_update: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    group = lua_tointeger(lua, 1);
+    dt = lua_tonumber(lua, 2);
+    update_tag = lua_tointeger(lua, 3);
+    lua_pop(lua, 3);
+
+    for (mesh = g_meshes.active; mesh; mesh = mesh->next)
+    {
+        if (mesh->group != group)
+            continue;
+        if (matrix_update(mesh->matrix, dt, update_tag, 0) != 0)
+            return 1;
+        for (shuni = mesh->shprog->shunis; shuni; shuni = shuni->shprog_next)
+        {
+            if (shuni_update(shuni, dt, update_tag, 0) != 0)
+                return 1;
+        }
+        for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
+        {
+            if (shuni_update(shuni, dt, update_tag, 0) != 0)
+                return 1;
+        }
+    }
+    return 0;
+}
+
+static int api_mesh_draw(lua_State *lua)
+{
+    struct vbuf_t *vbuf;
+    struct ibuf_t *ibuf;
+    struct shprog_t *shprog;
+    struct mesh_t *mesh;
+    struct shuni_t *shuni;
+    int group, draw_tag;
+
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_mesh_draw: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+
+    group = lua_tointeger(lua, 1);
+    draw_tag = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+
+    vbuf = 0;
+    ibuf = 0;
+    shprog = 0;
+    for (mesh = g_meshes.active; mesh; mesh = mesh->next)
+    {
+        if (mesh->draw_tag == draw_tag
+        ||  mesh->group != group
+        ||  mesh->shprog->state != SHPROG_LINKED)
+        {
+            continue;
+        }
+        mesh->draw_tag = draw_tag;
+        if (vbuf != mesh->vbuf)
+        {
+            vbuf = mesh->vbuf;
+            vbuf_select(vbuf);
+        }
+        if (ibuf != mesh->ibuf)
+        {
+            ibuf = mesh->ibuf;
+            ibuf_select(ibuf);
+        }
+        if (shprog != mesh->shprog)
+        {
+            shprog = mesh->shprog;
+            shprog_select(shprog);
+            for (shuni = shprog->shunis; shuni; shuni = shuni->shprog_next)
+                shuni_select(shuni);
+        }
+        for (shuni = mesh->shunis; shuni; shuni = shuni->mesh_next)
+            shuni_select(shuni);
+        glPushMatrix();
+        glMultMatrixf(mesh->matrix->value);
+        glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_INT,
+                       (ibuf_data_t*)0 + mesh->ioffset);
+        glPopMatrix();
+    }
+    return 0;
+}
+
 int mesh_init(lua_State *lua, int count)
 {
     int i;
@@ -291,6 +393,8 @@ int mesh_init(lua_State *lua, int count)
         mesh->vacant = 1;
     }
 
+    lua_register(lua, "api_mesh_draw", api_mesh_draw);
+    lua_register(lua, "api_mesh_update", api_mesh_update);
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_group", api_mesh_group);
     lua_register(lua, "api_mesh_free", api_mesh_free);
@@ -316,15 +420,4 @@ void mesh_done(void)
            g_meshes.allocs, g_meshes.frees);
     util_free(g_meshes.pool);
     g_meshes.pool = 0;
-}
-
-void mesh_draw(struct mesh_t *mesh)
-{
-    if (mesh->shprog->state != SHPROG_LINKED)
-        return;
-    glPushMatrix();
-    glMultMatrixf(mesh->matrix->value);
-    glDrawElements(mesh->type, mesh->icount, GL_UNSIGNED_INT,
-                   (ibuf_data_t*)0 + mesh->ioffset);
-    glPopMatrix();
 }
