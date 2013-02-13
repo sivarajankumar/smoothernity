@@ -9,6 +9,7 @@ static const size_t QUERY_SIZE = 32;
 enum query_state_e
 {
     QUERY_STATE_VACANT,
+    QUERY_STATE_BEGIN,
     QUERY_STATE_WAITING,
     QUERY_STATE_READY
 };
@@ -27,6 +28,7 @@ struct queries_t
     int left_min;
     int allocs;
     int frees;
+    int inside;
     char *pool;
     struct query_t *vacant;
 };
@@ -62,6 +64,12 @@ static int api_query_alloc_time(lua_State *lua)
         lua_error(lua);
         return 0;
     }
+    if (g_queries.inside == 1)
+    {
+        lua_pushstring(lua, "api_query_alloc_time: recursive query opening");
+        lua_error(lua);
+        return 0;
+    }
     if (g_queries.vacant == 0)
     {
         lua_pushstring(lua, "api_query_alloc_time: out of queries");
@@ -77,8 +85,9 @@ static int api_query_alloc_time(lua_State *lua)
     query = g_queries.vacant;
     g_queries.vacant = g_queries.vacant->next;
     query->next = 0;
-    query->state = QUERY_STATE_WAITING;
-    glQueryCounter(query->query_id, GL_TIMESTAMP);
+    query->state = QUERY_STATE_BEGIN;
+    glBeginQuery(GL_TIME_ELAPSED, query->query_id);
+    g_queries.inside = 1;
     lua_pushinteger(lua, ((char*)query - g_queries.pool) / QUERY_SIZE);
     return 1;
 }
@@ -105,6 +114,28 @@ static int api_query_free(lua_State *lua)
     query->state = QUERY_STATE_VACANT;
     query->next = g_queries.vacant;
     g_queries.vacant = query;
+    return 0;
+}
+
+static int api_query_end(lua_State *lua)
+{
+    struct query_t *query;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_query_end: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    query = query_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (query == 0 || query->state != QUERY_STATE_BEGIN)
+    {
+        lua_pushstring(lua, "api_query_end: invalid query");
+        lua_error(lua);
+        return 0;
+    }
+    query->state = QUERY_STATE_WAITING;
+    glEndQuery(GL_TIME_ELAPSED);
     return 0;
 }
 
@@ -135,7 +166,7 @@ static int api_query_ready(lua_State *lua)
 
 static int api_query_result(lua_State *lua)
 {
-    GLuint64 result;
+    GLint result;
     struct query_t *query;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -151,7 +182,7 @@ static int api_query_result(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glGetQueryObjectui64v(query->query_id, GL_QUERY_RESULT, &result);
+    glGetQueryObjectiv(query->query_id, GL_QUERY_RESULT, &result);
     lua_pushnumber(lua, result);
     return 1;
 }
@@ -184,6 +215,7 @@ int query_init(lua_State *lua, int count)
     lua_register(lua, "api_query_left", api_query_left);
     lua_register(lua, "api_query_alloc_time", api_query_alloc_time);
     lua_register(lua, "api_query_free", api_query_free);
+    lua_register(lua, "api_query_end", api_query_end);
     lua_register(lua, "api_query_ready", api_query_ready);
     lua_register(lua, "api_query_result", api_query_result);
     return 0;
