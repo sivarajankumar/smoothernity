@@ -193,9 +193,7 @@ local function eagle_alloc()
     function self.draw(draw_tag)
         local vclrcol = util.vector_const(0, 0, 0, 0)
         local vclrdep = util.vector_const(1, 0, 0 ,0)
-        local mproj2d = make_screen()
         local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
-        local mview2d = util.matrix_pos_stop(0, 0, 0)
 
         api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
@@ -210,15 +208,10 @@ local function eagle_alloc()
             end
             api_mesh_draw(meshes.lod_group(lodi), draw_tag)
         end
-        api_render_proj(mproj2d)
-        api_render_mview(mview2d)
-        api_text_draw()
         api_render_swap()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
-        api_matrix_free(mproj2d)
-        api_matrix_free(mview2d)
         api_matrix_free(mproj3d)
     end
 
@@ -244,9 +237,7 @@ local function debug_alloc()
     function self.draw(draw_tag)
         local vclrcol = util.vector_const(0, 0, 0, 0)
         local vclrdep = util.vector_const(1, 0, 0 ,0)
-        local mproj2d = make_screen()
         local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
-        local mview2d = util.matrix_pos_stop(0, 0, 0)
 
         api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
@@ -255,16 +246,10 @@ local function debug_alloc()
         api_render_proj(mproj3d)
         api_render_mview(self.mview3d)
         api_physics_wld_ddraw(pwld.wld)
-
-        api_render_proj(mproj2d)
-        api_render_mview(mview2d)
-        api_text_draw()
         api_render_swap()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
-        api_matrix_free(mproj2d)
-        api_matrix_free(mview2d)
         api_matrix_free(mproj3d)
     end
 

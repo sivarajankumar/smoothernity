@@ -16,7 +16,6 @@
 #include "pbuf.h"
 #include "tex.h"
 #include "mesh.h"
-#include "text.h"
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
@@ -45,8 +44,6 @@ struct main_t
     int pbuf_count;
     int tex_size;
     int tex_count;
-    int text_size;
-    int text_count;
     int vector_count;
     int vector_nesting;
     int matrix_count;
@@ -224,8 +221,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
      || main_get_int(lua, "tex_size", &g_main.tex_size) != 0
      || main_get_int(lua, "tex_count", &g_main.tex_count) != 0
-     || main_get_int(lua, "text_size", &g_main.text_size) != 0
-     || main_get_int(lua, "text_count", &g_main.text_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
@@ -303,7 +298,6 @@ static void main_done(void)
     matrix_done();
     sync_done();
     mesh_done();
-    text_done();
     physics_done();
     mpool_done();
 }
@@ -382,20 +376,13 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (text_init(g_main.lua, g_main.text_size, g_main.text_count) != 0)
-    {
-        fprintf(stderr, "Cannot init texts\n");
-        return 1;
-    }
-
     if (sync_init(g_main.lua, g_main.sync_count) != 0)
     {
         fprintf(stderr, "Cannot init syncs\n");
         return 1;
     }
 
-    if (render_init(g_main.lua, &argc, argv,
-                    g_main.screen_width, g_main.screen_height) != 0)
+    if (render_init(g_main.lua, g_main.screen_width, g_main.screen_height) != 0)
     {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;

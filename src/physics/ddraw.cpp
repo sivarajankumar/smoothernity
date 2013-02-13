@@ -1,7 +1,7 @@
 #include "ddraw.hpp"
 #include <stdio.h>
 #include <string.h>
-#include <GL/glut.h>
+#include <GL/gl.h>
 
 ddraw_c::ddraw_c()
 : mode(0)
@@ -33,17 +33,8 @@ void ddraw_c::reportErrorWarning(const char *text)
     fprintf(stderr, "physics: %s\n", text);
 }
 
-void ddraw_c::draw3dText(const btVector3 &pos, const char *text)
+void ddraw_c::draw3dText(const btVector3&, const char*)
 {
-    int i, len;
-    len = (int)strlen(text);
-    glRasterPos3f(pos.getX(), pos.getY(), pos.getZ());
-    for (i = 0; i < len; ++i)
-    {
-        if (text[i] == 0)
-            break;
-        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, text[i]);
-    }
 }
 
 void ddraw_c::setDebugMode(int m)
