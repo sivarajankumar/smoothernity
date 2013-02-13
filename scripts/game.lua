@@ -73,7 +73,7 @@ function M.run()
     local generated = false
 
     util.set_gravity(0, -10, 0)
-    render.visual.engage()
+    render.engage(render.visual)
 
     local control = coroutine.create(
         function()

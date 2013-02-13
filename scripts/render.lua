@@ -13,7 +13,7 @@ local ORTHO_ZFAR = 1
 local FOG_NEAR = 10000
 local FOG_FAR = 12800
 
-local current_root = nil
+local current = nil
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
@@ -71,79 +71,57 @@ end
 local function visual_alloc()
     local self = {}
 
-    local mproj2d = make_ortho()
-    local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
-    local vclrdep = util.vector_const(1, 0, 0 ,0)
-    local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
-    self.vtscale = util.vector_const(1, 0, 0, 0)
-    local vtscalegui = util.vector_const(1, 1, 1, 1)
-
-    local rroot = api_rop_alloc_root()
-    local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
-    local rclrcol = api_rop_alloc_clear_color(rclrdep, self.vclrcol)
-    local rfoglin = api_rop_alloc_fog_lin(rclrcol, self.vclrcol, vfogdist, 0, 1)
-    local rtscale = api_rop_alloc_tscale(rfoglin, self.vtscale, 0)
-
-    local lods = {}
-    for lodi = 0, lod.count - 1 do
-        local ld = {}
-        ld.mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
-        if lodi == 0 then
-            ld.rclr = api_rop_alloc_clear(rtscale, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-        else
-            ld.rclr = api_rop_alloc_clear(lods[lodi - 1].rmesh, API_ROP_CLEAR_DEPTH)
-        end
-        ld.rproj3d = api_rop_alloc_proj(ld.rclr, ld.mproj3d)
-        ld.rmview3d = api_rop_alloc_mview(ld.rproj3d, self.mview3d)
-        ld.rmesh = api_rop_alloc_draw_meshes(ld.rmview3d, meshes.lod_group(lodi))
-        lods[lodi] = ld
-    end
-
-    local rtscalegui = api_rop_alloc_tscale(lods[lod.count - 1].rmesh, vtscalegui, 0)
-    local rfogoff = api_rop_alloc_fog_off(rtscalegui)
-    local rclr2d = api_rop_alloc_clear(rfogoff, API_ROP_CLEAR_DEPTH)
-    local rproj2d = api_rop_alloc_proj(rclr2d, mproj2d)
-    local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
-    local rmeshgui = api_rop_alloc_draw_meshes(rmview2d, meshes.GROUP_GUI)
-    local rswap = api_rop_alloc_swap(rmeshgui)
+    self.tscale = 1
 
     function self.free()
-        api_matrix_free(mproj2d)
-        api_matrix_free(mview2d)
         api_matrix_free(self.mview3d)
         api_vector_free(self.vclrcol)
-        api_vector_free(vclrdep)
-        api_vector_free(vfogdist)
-        api_vector_free(self.vtscale)
-        api_vector_free(vtscalegui)
-
-        api_rop_free(rroot)
-        api_rop_free(rclrdep)
-        api_rop_free(rclrcol)
-        api_rop_free(rfoglin)
-        api_rop_free(rtscale)
-
-        for k, v in pairs(lods) do
-            api_matrix_free(v.mproj3d)
-            api_rop_free(v.rclr)
-            api_rop_free(v.rproj3d)
-            api_rop_free(v.rmview3d)
-            api_rop_free(v.rmesh)
-        end
-
-        api_rop_free(rtscalegui)
-        api_rop_free(rfogoff)
-        api_rop_free(rclr2d)
-        api_rop_free(rproj2d)
-        api_rop_free(rmview2d)
-        api_rop_free(rmeshgui)
-        api_rop_free(rswap)
     end
 
-    function self.engage()
-        current_root = rroot
+    function self.draw(draw_tag)
+        local vclrdep = util.vector_const(1, 0, 0 ,0)
+        local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
+        local mproj2d = make_ortho()
+        local mview2d = util.matrix_pos_stop(0, 0, 0)
+
+        api_render_fog_off()
+        api_render_clear_depth(vclrdep, 0)
+        api_render_clear_color(self.vclrcol)
+        api_render_fog_lin(self.vclrcol, vfogdist, 0, 1)
+        api_render_mview(self.mview3d)
+        for lodi = 0, lod.count - 1 do
+            local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
+            if lodi == 0 then
+                api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+            else
+                api_render_clear(API_RENDER_CLEAR_DEPTH)
+            end
+            api_render_proj(mproj3d)
+            api_mesh_draw(meshes.lod_group(lodi), draw_tag)
+            api_matrix_free(mproj3d)
+        end
+        api_render_fog_off()
+        api_render_clear(API_RENDER_CLEAR_DEPTH)
+        api_render_proj(mproj2d)
+        api_render_mview(mview2d)
+        api_mesh_draw(meshes.GROUP_GUI, draw_tag)
+        api_render_swap()
+
+        api_vector_free(vfogdist)
+        api_vector_free(vclrdep)
+        api_matrix_free(mproj2d)
+        api_matrix_free(mview2d)
+    end
+
+    function self.update(dt, update_tag)
+        api_vector_update(self.vclrcol, dt, update_tag)
+        api_matrix_update(self.mview3d, dt, update_tag)
+        for lodi = 0, lod.count - 1 do
+            api_mesh_update(meshes.lod_group(lodi), dt * self.tscale, update_tag)
+        end
+        api_mesh_update(meshes.GROUP_GUI, dt, update_tag)
     end
 
     return self
@@ -152,67 +130,50 @@ end
 local function eagle_alloc()
     local self = {}
 
-    local mproj2d = make_screen()
-    local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
-    local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
-    local vclrcol = util.vector_const(0, 0, 0, 0)
-    local vclrdep = util.vector_const(1, 0, 0 ,0)
-    self.vtscale = util.vector_const(1, 0, 0, 0)
-
-    local rroot = api_rop_alloc_root()
-    local rclrdep = api_rop_alloc_clear_depth(rroot, vclrdep, 0)
-    local rclrcol = api_rop_alloc_clear_color(rclrdep, vclrcol)
-    local rtscale = api_rop_alloc_tscale(rclrcol, self.vtscale, 0)
-    local rproj3d = api_rop_alloc_proj(rtscale, mproj3d)
-    local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
-
-    local lods = {}
-    for lodi = 0, lod.count - 1 do
-        local ld = {}
-        if lodi == 0 then
-            ld.rclr = api_rop_alloc_clear(rmview3d, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-        else
-            ld.rclr = api_rop_alloc_clear(lods[lodi - 1].rmesh, API_ROP_CLEAR_DEPTH)
-        end
-        ld.rmesh = api_rop_alloc_draw_meshes(ld.rclr, meshes.lod_group(lodi))
-        lods[lodi] = ld
-    end
-
-    local rproj2d = api_rop_alloc_proj(lods[lod.count - 1].rmesh, mproj2d)
-    local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
-    local rtext = api_rop_alloc_dbg_text(rmview2d)
-    local rswap = api_rop_alloc_swap(rtext)
+    self.tscale = 1
 
     function self.free()
-        api_matrix_free(mproj2d)
-        api_matrix_free(mproj3d)
-        api_matrix_free(mview2d)
         api_matrix_free(self.mview3d)
-        api_vector_free(vclrcol)
-        api_vector_free(vclrdep)
-        api_vector_free(self.vtscale)
-
-        api_rop_free(rroot)
-        api_rop_free(rclrdep)
-        api_rop_free(rclrcol)
-        api_rop_free(rtscale)
-        api_rop_free(rproj3d)
-        api_rop_free(rmview3d)
-
-        for k, v in pairs(lods) do
-            api_rop_free(v.rclr)
-            api_rop_free(v.rmesh)
-        end
-
-        api_rop_free(rproj2d)
-        api_rop_free(rmview2d)
-        api_rop_free(rtext)
-        api_rop_free(rswap)
     end
 
-    function self.engage()
-        current_root = rroot
+    function self.draw(draw_tag)
+        local vclrcol = util.vector_const(0, 0, 0, 0)
+        local vclrdep = util.vector_const(1, 0, 0 ,0)
+        local mproj2d = make_screen()
+        local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
+        local mview2d = util.matrix_pos_stop(0, 0, 0)
+
+        api_render_fog_off()
+        api_render_clear_depth(vclrdep, 0)
+        api_render_clear_color(vclrcol)
+        api_render_proj(mproj3d)
+        api_render_mview(self.mview3d)
+        for lodi = 0, lod.count - 1 do
+            if lodi == 0 then
+                api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+            else
+                api_render_clear(API_RENDER_CLEAR_DEPTH)
+            end
+            api_mesh_draw(meshes.lod_group(lodi), draw_tag)
+        end
+        api_render_proj(mproj2d)
+        api_render_mview(mview2d)
+        api_text_draw()
+        api_render_swap()
+
+        api_vector_free(vclrcol)
+        api_vector_free(vclrdep)
+        api_matrix_free(mproj2d)
+        api_matrix_free(mview2d)
+        api_matrix_free(mproj3d)
+    end
+
+    function self.update(dt, update_tag)
+        api_matrix_update(self.mview3d, dt, update_tag)
+        for lodi = 0, lod.count - 1 do
+            api_mesh_update(meshes.lod_group(lodi), dt * self.tscale, update_tag)
+        end
     end
 
     return self
@@ -221,46 +182,41 @@ end
 local function debug_alloc()
     local self = {}
 
-    local mproj2d = make_screen()
-    local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
-    local mview2d = util.matrix_pos_stop(0, 0, 0)
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
-    local vclrcol = util.vector_const(0, 0, 0, 0)
-    local vclrdep = util.vector_const(1, 0, 0 ,0)
-    local rroot = api_rop_alloc_root()
-    local rclrcol = api_rop_alloc_clear_color(rroot, vclrcol)
-    local rclrdep = api_rop_alloc_clear_depth(rclrcol, vclrdep, 0)
-    local rclr = api_rop_alloc_clear(rclrdep, API_ROP_CLEAR_COLOR + API_ROP_CLEAR_DEPTH)
-    local rproj3d = api_rop_alloc_proj(rclr, mproj3d)
-    local rmview3d = api_rop_alloc_mview(rproj3d, self.mview3d)
-    local rphys = api_rop_alloc_dbg_physics(rmview3d, pwld.wld)
-    local rproj2d = api_rop_alloc_proj(rphys, mproj2d)
-    local rmview2d = api_rop_alloc_mview(rproj2d, mview2d)
-    local rtext = api_rop_alloc_dbg_text(rmview2d)
-    local rswap = api_rop_alloc_swap(rtext)
 
     function self.free()
-        api_matrix_free(mproj2d)
-        api_matrix_free(mproj3d)
-        api_matrix_free(mview2d)
         api_matrix_free(self.mview3d)
-        api_vector_free(vclrcol)
-        api_vector_free(vclrdep)
-        api_rop_free(rroot)
-        api_rop_free(rclrcol)
-        api_rop_free(rclrdep)
-        api_rop_free(rclr)
-        api_rop_free(rproj3d)
-        api_rop_free(rmview3d)
-        api_rop_free(rphys)
-        api_rop_free(rproj2d)
-        api_rop_free(rmview2d)
-        api_rop_free(rtext)
-        api_rop_free(rswap)
     end
 
-    function self.engage()
-        current_root = rroot
+    function self.draw(draw_tag)
+        local vclrcol = util.vector_const(0, 0, 0, 0)
+        local vclrdep = util.vector_const(1, 0, 0 ,0)
+        local mproj2d = make_screen()
+        local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
+        local mview2d = util.matrix_pos_stop(0, 0, 0)
+
+        api_render_fog_off()
+        api_render_clear_depth(vclrdep, 0)
+        api_render_clear_color(vclrcol)
+        api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+        api_render_proj(mproj3d)
+        api_render_mview(self.mview3d)
+        api_physics_wld_ddraw(pwld.wld)
+
+        api_render_proj(mproj2d)
+        api_render_mview(mview2d)
+        api_text_draw()
+        api_render_swap()
+
+        api_vector_free(vclrcol)
+        api_vector_free(vclrdep)
+        api_matrix_free(mproj2d)
+        api_matrix_free(mview2d)
+        api_matrix_free(mproj3d)
+    end
+
+    function self.update(dt, update_tag)
+        api_matrix_update(self.mview3d, dt, update_tag)
     end
 
     return self
@@ -279,8 +235,8 @@ function M.camera(m)
 end
 
 function M.timescale(t)
-    api_vector_const(M.visual.vtscale, t, 0, 0, 0)
-    api_vector_const(M.eagle.vtscale, t, 0, 0, 0)
+    M.visual.tscale = t
+    M.eagle.tscale = t
 end
 
 function M.init()
@@ -295,16 +251,20 @@ function M.done()
     M.eagle.free()
 end
 
+function M.engage(what)
+    current = what
+end
+
 function M.update()
     frame_tag = frame_tag + 1
-    if current_root ~= nil then
-        api_rop_update(current_root, cfg.FRAME_TIME, frame_tag)
+    if current ~= nil then
+        current.update(cfg.FRAME_TIME, frame_tag)
     end
 end
 
 function M.draw()
-    if current_root ~= nil then
-        api_rop_draw(current_root, frame_tag)
+    if current ~= nil then
+        current.draw(frame_tag)
     end
 end
 
