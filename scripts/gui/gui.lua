@@ -13,15 +13,15 @@ local MAX_FRAMES = 600
 local THRESH = 1
 
 function M.gen_progress(value)
-    genbar.set(value)
+    genbar.set(value, 1 - value)
 end
 
 function M.edge_dist(value)
-    edgebar.set(value)
+    edgebar.set(value, 1 - value)
 end
 
 function M.player_freedom(value)
-    frbar.set(value)
+    frbar.set(value, 1 - value)
 end
 
 function M.wait_show()
@@ -38,7 +38,8 @@ function M.frame_time(value)
     else
         whole_frames = whole_frames + 1
     end
-    fpsbar.set(util.lerp(whole_frames, 0, MAX_FRAMES, 0, 1))
+    local x = util.lerp(whole_frames, 0, MAX_FRAMES, 0, 1)
+    fpsbar.set(x, 1 - x)
 end
 
 function M.init()
@@ -49,16 +50,20 @@ function M.init()
     local sizex, sizey = 0.5, 0.05
     local posx, posy = -sx + 0.1, -sy + 0.1
 
-    genbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+    genbar = bar.alloc(posx, posy, posx + sizex, posy + sizey,
+                       {0,1,0,1}, {0,0,0,1})
 
     posy = posy + sizey + 0.05
-    edgebar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+    edgebar = bar.alloc(posx, posy, posx + sizex, posy + sizey,
+                       {0,1,0,1}, {0,0,0,1})
 
     posy = posy + sizey + 0.05
-    frbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+    frbar = bar.alloc(posx, posy, posx + sizex, posy + sizey,
+                      {0,1,0,1}, {0,0,0,1})
 
     posy = posy + sizey + 0.05
-    fpsbar = bar.alloc(posx, posy, posx + sizex, posy + sizey)
+    fpsbar = bar.alloc(posx, posy, posx + sizex, posy + sizey,
+                       {0,1,0,1}, {0,0,0,1})
 
     wt = wait.alloc(sx - 0.3, -sy + 0.3, 0.25)
     wt.hide()
