@@ -82,9 +82,12 @@ local function visual_alloc()
     function self.free()
         api_matrix_free(self.mview3d)
         api_vector_free(self.vclrcol)
+        if query ~= nil then
+            api_query_end(query)
+            queries[qid] = query
+        end
         for i, q in pairs(queries) do
             while api_query_ready(q) == 0 do
-                coroutine.yield(false)
             end
             api_query_free(q)
         end
@@ -130,7 +133,6 @@ local function visual_alloc()
             if api_query_ready(q) == 1 then
                 local secs = api_query_result(q) * 0.000000001
                 gui.frame_time(secs)
-                io.write(string.format('query result: %f\n', secs))
                 api_query_free(q)
                 queries[i] = nil
             end
