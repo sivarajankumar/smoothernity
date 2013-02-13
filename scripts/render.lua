@@ -75,21 +75,21 @@ local function visual_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
     self.vclrcol = util.vector_const(0, 0, 0, 0)
     self.tscale = 1
-    local queries = {}
-    local query
-    local qid = 0
+    local frames = {}
+    local qlogic
+    local fid = 0
 
     function self.free()
         api_matrix_free(self.mview3d)
         api_vector_free(self.vclrcol)
-        if query ~= nil then
-            api_query_end(query)
-            queries[qid] = query
+        if qlogic ~= nil then
+            api_query_end(qlogic)
+            util.query_free(qlogic)
         end
-        for i, q in pairs(queries) do
-            while api_query_ready(q) == 0 do
-            end
-            api_query_free(q)
+        for i, f in pairs(frames) do
+            util.query_free(f.logic)
+            util.query_free(f.draw)
+            util.query_free(f.swap)
         end
     end
 
@@ -98,7 +98,19 @@ local function visual_alloc()
         local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
         local mproj2d = make_ortho()
         local mview2d = util.matrix_pos_stop(0, 0, 0)
+        local frame
 
+        if qlogic ~= nil then
+            api_query_end(qlogic)
+            frame = {}
+            frame.logic = qlogic
+            qlogic = nil
+            frames[fid] = frame
+            fid = fid + 1
+        end
+        if frame ~= nil then
+            frame.draw = api_query_alloc_time()
+        end
         api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(self.vclrcol)
@@ -120,21 +132,30 @@ local function visual_alloc()
         api_render_proj(mproj2d)
         api_render_mview(mview2d)
         api_mesh_draw(meshes.GROUP_GUI, draw_tag)
-        api_render_swap()
-
-        if query ~= nil then
-            api_query_end(query)
-            queries[qid] = query
-            query = nil
-            qid = qid + 1
+        if frame ~= nil then
+            api_query_end(frame.draw)
+            frame.swap = api_query_alloc_time()
         end
-        query = api_query_alloc_time()
-        for i, q in pairs(queries) do
-            if api_query_ready(q) == 1 then
-                local secs = api_query_result(q) * 0.000000001
-                gui.frame_time(secs)
-                api_query_free(q)
-                queries[i] = nil
+        api_render_swap()
+        if frame ~= nil then
+            api_query_end(frame.swap)
+        end
+
+        qlogic = api_query_alloc_time()
+        for i, f in pairs(frames) do
+            if api_query_ready(f.logic) == 1 and
+               api_query_ready(f.draw) == 1 and
+               api_query_ready(f.swap) == 1
+            then
+                local logicsecs = api_query_result(f.logic) * 0.000000001
+                local drawsecs = api_query_result(f.draw) * 0.000000001
+                local swapsecs = api_query_result(f.swap) * 0.000000001
+                gui.frame_time(logicsecs + drawsecs + swapsecs)
+                gui.gpu_times(logicsecs, drawsecs, swapsecs)
+                api_query_free(f.logic)
+                api_query_free(f.draw)
+                api_query_free(f.swap)
+                frames[i] = nil
             end
         end
 
