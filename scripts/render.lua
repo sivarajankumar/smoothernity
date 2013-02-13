@@ -16,6 +16,7 @@ local FOG_FAR = 12800
 
 local current = nil
 local frame_tag = 1000
+M.swap_time = 0
 
 local function make_frustum(znear, zfar, dist)
     local mproj = api_matrix_alloc()
@@ -136,7 +137,9 @@ local function visual_alloc()
             api_query_end(frame.draw)
             frame.swap = api_query_alloc_time()
         end
+        M.swap_time = api_timer()
         api_render_swap()
+        M.swap_time = api_timer() - M.swap_time
         if frame ~= nil then
             api_query_end(frame.swap)
         end
