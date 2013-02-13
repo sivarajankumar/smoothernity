@@ -36,12 +36,8 @@ function M.alloc(uid, centx, centy, centz)
     local move = move_alloc(string.format('%s_move', uid))
     local vplayer = api_vector_alloc()
     local generating = false
-    local text
 
     function self.free()
-        if text ~= nil then
-            api_text_free(text)
-        end
         api_vector_free(vplayer)
         for k, v in pairs(planes) do
             v.free()
@@ -80,21 +76,6 @@ function M.alloc(uid, centx, centy, centz)
         api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
         local x, y, z = api_vector_get(vplayer)
         local wx, wy, wz = self.scene_to_world(x, y, z)
-
-        do
-            if text ~= nil then
-                api_text_free(text)
-            end
-            local str = ''
-            if generating then
-                str = str .. 'G ' 
-            else
-                str = str .. '  ' 
-            end
-            str = str .. string.format('(% 3i, % 3i, % 3i) (%i, %i, %i)',
-                                       x, y, z, wx, wy, wz)
-            text = api_text_alloc(str, API_TEXT_FONT_8_BY_13, 20, 40)
-        end
 
         local dx, dy, dz = 0, 0, 0
         while x + dx < -SCENE do

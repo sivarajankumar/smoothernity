@@ -3,7 +3,6 @@
 #include "matrix.h"
 #include <SDL.h>
 #include <GL/gl.h>
-#include <GL/glut.h>
 
 struct render_t
 {
@@ -192,13 +191,12 @@ static int api_render_fog_lin(lua_State *lua)
     return 0;
 }
 
-int render_init(lua_State *lua, int *argc, char **argv, int width, int height)
+int render_init(lua_State *lua, int width, int height)
 {
     int bpp;
     int flags;
     const SDL_VideoInfo *info;
 
-    glutInit(argc, argv);
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         return 1;
     SDL_ShowCursor(SDL_DISABLE);
