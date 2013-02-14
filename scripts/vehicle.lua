@@ -42,8 +42,8 @@ local STEER_POP = 0.05
 local RECOVERY_FRAMES = 10
 local RECOVERY_OFS_Y = 1
 local FREEDOM_RUBBER = 1
-local SPEED_MIN = 30 * 1000 / 3600
-local SPEED_MAX = 50 * 1000 / 3600
+local SPEED_MIN = 60 * 1000 / 3600
+local SPEED_MAX = 100 * 1000 / 3600
 local SAVE_OFS_Y = 5
 
 function M.alloc(uid, startx, starty, startz)

@@ -21,7 +21,7 @@ local poolbuf = require 'pool.buf'
 local poolibuf = require 'pool.ibuf'
 local poolvbuf = require 'pool.vbuf'
 
-local LOGIC_TIME = 0.012
+local LOGIC_TIME = 0.015
 local GC_STEP = 10
 local START_X = 0
 local START_Y = 0
