@@ -1,10 +1,12 @@
 include(FindLua51)
 include(FindSDL)
 include(FindOpenGL)
+include(FindGLEW)
 include(FindThreads)
 
 include_directories(${LUA_INCLUDE_DIR}
                     ${SDL_INCLUDE_DIR}
+                    ${GLEW_INCLUDE_DIRS}
                     ${OPENGL_INCLUDE_DIR})
 
 add_executable(main
@@ -17,6 +19,7 @@ target_link_libraries(main
                       util
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
+                      ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT})
 

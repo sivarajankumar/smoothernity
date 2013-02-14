@@ -128,6 +128,7 @@ function M.alloc(uid, centx, centy, centz)
         local sum = 0
         for k, v in pairs(planes) do
             sum = sum + v.gen_progress(wx, wy, wz)
+            coroutine.yield(false)
         end
         return sum / lod.count
     end
@@ -138,6 +139,7 @@ function M.alloc(uid, centx, centy, centz)
         local min_dist = 1
         for k, v in pairs(planes) do
             min_dist = math.min(min_dist, v.edge_dist(wx, wy, wz))
+            coroutine.yield(false)
         end
         return min_dist
     end

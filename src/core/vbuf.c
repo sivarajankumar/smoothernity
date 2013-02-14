@@ -80,8 +80,7 @@ static int api_vbuf_map(lua_State *lua)
     vbuf->mapped = glMapBufferRange(GL_ARRAY_BUFFER,
                                     (GLintptr)(ofs * (int)VBUF_DATA_SIZE),
                                     (GLsizeiptr)(len * (int)VBUF_DATA_SIZE),
-                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
-                                    GL_MAP_INVALIDATE_RANGE_BIT);
+                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
     if (vbuf->mapped == 0)
     {
         lua_pushstring(lua, "api_vbuf_map: mapping error");
@@ -289,7 +288,7 @@ int vbuf_init(lua_State *lua, int size, int count)
         glGenBuffers(1, &vbuf->buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
         glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
-                     0, GL_DYNAMIC_DRAW);
+                     0, GL_STREAM_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
