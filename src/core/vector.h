@@ -1,7 +1,7 @@
 #pragma once
 
 #include <lua.h>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 #define VECTOR_ARGVS 5
 #define VECTOR_ARGMS 2
