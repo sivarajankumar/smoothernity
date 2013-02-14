@@ -15,7 +15,7 @@ function configure()
             pbuf_count = 1,
             tex_size = 10,
             tex_count = 1,
-            vector_count = 200,
+            vector_count = 300,
             vector_nesting = 20,
             matrix_count = 1000,
             matrix_nesting = 20,
