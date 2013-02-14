@@ -237,7 +237,7 @@ int ibuf_init(lua_State *lua, int size, int count)
         glGenBuffers(1, &ibuf->buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * size,
-                     0, GL_DYNAMIC_DRAW);
+                     0, GL_STREAM_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
