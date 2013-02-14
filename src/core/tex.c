@@ -1,7 +1,7 @@
 #include "tex.h"
 #include "pbuf.h"
 #include "../util/util.h"
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include <stdio.h>
 #include <string.h>
 

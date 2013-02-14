@@ -2,7 +2,7 @@
 #include "../util/util.h"
 #include <string.h>
 #include <stdio.h>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 static const size_t QUERY_SIZE = 32;
 
