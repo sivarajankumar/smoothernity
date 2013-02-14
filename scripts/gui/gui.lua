@@ -8,7 +8,7 @@ local prof = require 'gui.prof'
 
 local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
 local whole_frames = 0
-local accum = 0
+local move_frames = 0
 
 local MAX_FRAMES = 600
 local THRESH = 1
@@ -47,8 +47,8 @@ function M.gpu_times(logic, draw)
     gpuprof.set(logic, draw)
 end
 
-function M.cpu_times(core, control, slowpok, work, rupdate, rdraw)
-    cpuprof.set(core, control, slowpok, work, rupdate, rdraw)
+function M.cpu_times(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
+    cpuprof.set(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
 end
 
 function M.init()
@@ -85,7 +85,8 @@ function M.init()
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {1,0,0,1}, {1,1,0,1}, {1,0,1,1}, {0,0.5,1,1}, {1,0.5,0,1}, {0,1,0,1})
+                         {1,0,0,1}, {1,1,0,1}, {1,0,1,1}, {0,0.5,1,1},
+                         {1,0.5,0,1}, {0.5,0,1,1}, {0,1,0,1}, {1,0.5,0,1})
 end
 
 function M.done()

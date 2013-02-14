@@ -21,7 +21,7 @@ local poolbuf = require 'pool.buf'
 local poolibuf = require 'pool.ibuf'
 local poolvbuf = require 'pool.vbuf'
 
-local LOGIC_TIME = 0.015
+local LOGIC_TIME = 0.013
 local GC_STEP = 10
 local START_X = 0
 local START_Y = 0
@@ -176,8 +176,9 @@ function M.run()
         slowpok_time = work_time - slowpok_time
         work_time = rupdate_time - work_time
         rupdate_time = rdraw_time - rupdate_time
-        rdraw_time = api_timer() - rdraw_time
-        gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time, rdraw_time)
+        rdraw_time = api_timer() - rdraw_time - render.clear_time - render.swap_time
+        gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time,
+                      render.clear_time, rdraw_time, render.swap_time)
     end
 
     blink.free()

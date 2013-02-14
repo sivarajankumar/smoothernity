@@ -14,6 +14,8 @@ local ORTHO_ZFAR = 1
 local FOG_NEAR = 10000
 local FOG_FAR = 12800
 
+M.clear_time = 0
+M.swap_time = 0
 local current, prof
 local frame_tag = 1000
 
@@ -185,16 +187,16 @@ local function visual_alloc()
 
         prof.draw_begin()
 
-        api_render_fog_off()
+        M.clear_time = api_timer()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(self.vclrcol)
+        api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+        M.clear_time = api_timer() - M.clear_time
         api_render_fog_lin(self.vclrcol, vfogdist, 0, 1)
         api_render_mview(self.mview3d)
         for lodi = 0, lod.count - 1 do
             local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
-            if lodi == 0 then
-                api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
-            else
+            if lodi > 0 then
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             api_render_proj(mproj3d)
@@ -206,7 +208,9 @@ local function visual_alloc()
         api_render_proj(mproj2d)
         api_render_mview(mview2d)
         api_mesh_draw(meshes.GROUP_GUI, draw_tag)
+        M.swap_time = api_timer()
         api_render_swap()
+        M.swap_time = api_timer() - M.swap_time
 
         prof.draw_end()
 
