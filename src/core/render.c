@@ -2,7 +2,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include <SDL.h>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 struct render_t
 {
@@ -215,6 +215,12 @@ int render_init(lua_State *lua, int width, int height)
 
     g_render.screen = SDL_SetVideoMode(width, height, bpp, flags);
     if (g_render.screen == 0)
+        goto cleanup;
+
+    if (glewInit() != GLEW_OK)
+        goto cleanup;
+
+    if (!GLEW_ARB_timer_query)
         goto cleanup;
 
     g_render.width = width;

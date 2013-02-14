@@ -27,7 +27,6 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         vb.free()
         ib.free()
         api_matrix_free(self.mmesh)
-        util.sync_wait()
     end
 
     function self.hide()

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lua.h"
-#include "GL/gl.h"
+#include "GL/glew.h"
 
 #define MATRIX_ARGVS 3
 #define MATRIX_ARGMS 2

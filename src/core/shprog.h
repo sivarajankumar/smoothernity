@@ -1,7 +1,7 @@
 #pragma once
 
 #include <lua.h>
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 enum shprog_e
 {

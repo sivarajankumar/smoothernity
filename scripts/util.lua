@@ -3,6 +3,8 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 
+local MAX_WAIT_TIME = 10
+
 function M.query_free(q)
     while api_query_ready(q) == 0 do
     end
@@ -18,14 +20,19 @@ function M.sum(...)
 end
 
 function M.sync_wait()
+    local t = api_timer()
     local s = api_sync_alloc()
     while api_sync_ready(s) == 0 do
-        coroutine.yield(false)
+        if api_timer() - t > MAX_WAIT_TIME then
+            lua_error('sync_wait: too long\n')
+        end
+        coroutine.yield(true)
     end
     api_sync_free(s)
 end
 
 function M.async_read(uid)
+    local t = api_timer()
     local s = api_storage_alloc_r(uid)
     local res
     while true do
@@ -37,6 +44,9 @@ function M.async_read(uid)
             res = ''
             break
         end
+        if api_timer() - t > MAX_WAIT_TIME then
+            lua_error('sync_wait: too long\n')
+        end
         coroutine.yield(false)
     end
     api_storage_free(s)
@@ -44,6 +54,7 @@ function M.async_read(uid)
 end
 
 function M.async_write(uid, data)
+    local t = api_timer()
     local s = api_storage_alloc_w(uid, data)
     while true do
         api_storage_update()
@@ -51,6 +62,9 @@ function M.async_write(uid, data)
         or api_storage_state(s) == API_STORAGE_STATE_ERROR
         then
             break
+        end
+        if api_timer() - t > MAX_WAIT_TIME then
+            lua_error('sync_wait: too long\n')
         end
         coroutine.yield(false)
     end
