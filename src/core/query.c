@@ -55,9 +55,25 @@ static int api_query_left(lua_State *lua)
     return 1;
 }
 
+static int query_alloc(void)
+{
+    struct query_t *query;
+    if (g_queries.vacant == 0)
+        return -1;
+    ++g_queries.allocs;
+    --g_queries.left;
+    if (g_queries.left < g_queries.left_min)
+        g_queries.left_min = g_queries.left;
+    query = g_queries.vacant;
+    g_queries.vacant = g_queries.vacant->next;
+    query->next = 0;
+    return ((char*)query - g_queries.pool) / QUERY_SIZE;
+}
+
 static int api_query_alloc_time(lua_State *lua)
 {
     struct query_t *query;
+    int iquery;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_query_alloc_time: incorrect argument");
@@ -70,62 +86,42 @@ static int api_query_alloc_time(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (g_queries.vacant == 0)
+    iquery = query_alloc();
+    query = query_get(iquery);
+    if (query == 0)
     {
         lua_pushstring(lua, "api_query_alloc_time: out of queries");
         lua_error(lua);
         return 0;
     }
-
-    ++g_queries.allocs;
-    --g_queries.left;
-    if (g_queries.left < g_queries.left_min)
-        g_queries.left_min = g_queries.left;
-
-    query = g_queries.vacant;
-    g_queries.vacant = g_queries.vacant->next;
-    query->next = 0;
     query->state = QUERY_STATE_BEGIN;
     g_queries.inside = 1;
     glBeginQuery(GL_TIME_ELAPSED, query->query_id);
-    lua_pushinteger(lua, ((char*)query - g_queries.pool) / QUERY_SIZE);
+    lua_pushinteger(lua, iquery);
     return 1;
 }
 
 static int api_query_alloc_stamp(lua_State *lua)
 {
     struct query_t *query;
+    int iquery;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_query_alloc_stamp: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    if (g_queries.inside == 1)
-    {
-        lua_pushstring(lua, "api_query_alloc_stamp: recursive query opening");
-        lua_error(lua);
-        return 0;
-    }
-    if (g_queries.vacant == 0)
+    iquery = query_alloc();
+    query = query_get(iquery);
+    if (query == 0)
     {
         lua_pushstring(lua, "api_query_alloc_stamp: out of queries");
         lua_error(lua);
         return 0;
     }
-
-    ++g_queries.allocs;
-    --g_queries.left;
-    if (g_queries.left < g_queries.left_min)
-        g_queries.left_min = g_queries.left;
-
-    query = g_queries.vacant;
-    g_queries.vacant = g_queries.vacant->next;
-    query->next = 0;
     query->state = QUERY_STATE_WAITING;
-    g_queries.inside = 1;
     glQueryCounter(GL_TIMESTAMP, query->query_id);
-    lua_pushinteger(lua, ((char*)query - g_queries.pool) / QUERY_SIZE);
+    lua_pushinteger(lua, iquery);
     return 1;
 }
 

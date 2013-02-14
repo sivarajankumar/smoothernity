@@ -14,7 +14,7 @@ local ORTHO_ZFAR = 1
 local FOG_NEAR = 10000
 local FOG_FAR = 12800
 
-local current = nil
+local current, prof
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
@@ -69,19 +69,13 @@ local function make_screen()
     return mproj
 end
 
-local function visual_alloc()
+local function prof_scoped_alloc()
     local self = {}
-
-    self.mview3d = util.matrix_pos_stop(0, 0, 0)
-    self.vclrcol = util.vector_const(0, 0, 0, 0)
-    self.tscale = 1
     local frames = {}
     local qlogic
     local fid = 0
 
     function self.free()
-        api_matrix_free(self.mview3d)
-        api_vector_free(self.vclrcol)
         if qlogic ~= nil then
             api_query_end(qlogic)
             util.query_free(qlogic)
@@ -92,24 +86,105 @@ local function visual_alloc()
         end
     end
 
+    function self.draw_begin()
+        if qlogic ~= nil then
+            api_query_end(qlogic)
+            local frame = {}
+            frame.logic = qlogic
+            frame.draw = api_query_alloc_time()
+            qlogic = nil
+            frames[fid] = frame
+        end
+    end
+
+    function self.draw_end()
+        local frame = frames[fid]
+        if frame ~= nil then
+            api_query_end(frame.draw)
+        end
+        qlogic = api_query_alloc_time()
+        fid = fid + 1
+        for i, f in pairs(frames) do
+            if api_query_ready(f.logic) == 1 and api_query_ready(f.draw) == 1 then
+                local logicsecs = api_query_result(f.logic) * 0.000000001
+                local drawsecs = api_query_result(f.draw) * 0.000000001
+                gui.frame_time(logicsecs + drawsecs)
+                gui.gpu_times(logicsecs, drawsecs)
+                api_query_free(f.logic)
+                api_query_free(f.draw)
+                frames[i] = nil
+            end
+        end
+    end
+
+    return self
+end
+
+local function prof_stamp_alloc()
+    local self = {}
+    local frames = {}
+    local fid = 0
+
+    function self.free()
+        for i, f in pairs(frames) do
+            util.query_free(f.draw_begin)
+            util.query_free(f.draw_end)
+        end
+    end
+
+    function self.draw_begin()
+        local frame = {}
+        frame.draw_begin = api_query_alloc_stamp()
+        frames[fid] = frame
+    end
+
+    function self.draw_end()
+        local frame = frames[fid]
+        frame.draw_end = api_query_alloc_stamp()
+        fid = fid + 1
+        for i, f in pairs(frames) do
+            local fprev = frames[i - 1]
+            if fprev ~= nil and api_query_ready(f.draw_end) == 1 then
+                api_query_ready(f.draw_begin)
+                api_query_ready(fprev.draw_begin)
+                api_query_ready(fprev.draw_end)
+                local draw_end_prev = api_query_result(fprev.draw_end)
+                local draw_end = api_query_result(f.draw_end)
+                local draw_begin = api_query_result(f.draw_begin)
+                local logic = (draw_begin - draw_end_prev) * 0.000000001
+                local draw = (draw_end - draw_begin) * 0.000000001
+                gui.frame_time(logic + draw)
+                gui.gpu_times(logic, draw)
+                api_query_free(fprev.draw_begin)
+                api_query_free(fprev.draw_end)
+                frames[i - 1] = nil
+            end
+        end
+    end
+
+    return self
+end
+
+local function visual_alloc()
+    local self = {}
+
+    self.mview3d = util.matrix_pos_stop(0, 0, 0)
+    self.vclrcol = util.vector_const(0, 0, 0, 0)
+    self.tscale = 1
+
+    function self.free()
+        api_matrix_free(self.mview3d)
+        api_vector_free(self.vclrcol)
+    end
+
     function self.draw(draw_tag)
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
         local mproj2d = make_ortho()
         local mview2d = util.matrix_pos_stop(0, 0, 0)
-        local frame
 
-        if qlogic ~= nil then
-            api_query_end(qlogic)
-            frame = {}
-            frame.logic = qlogic
-            qlogic = nil
-            frames[fid] = frame
-            fid = fid + 1
-        end
-        if frame ~= nil then
-            frame.draw = api_query_alloc_time()
-        end
+        prof.draw_begin()
+
         api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(self.vclrcol)
@@ -132,22 +207,8 @@ local function visual_alloc()
         api_render_mview(mview2d)
         api_mesh_draw(meshes.GROUP_GUI, draw_tag)
         api_render_swap()
-        if frame ~= nil then
-            api_query_end(frame.draw)
-        end
 
-        qlogic = api_query_alloc_time()
-        for i, f in pairs(frames) do
-            if api_query_ready(f.logic) == 1 and api_query_ready(f.draw) == 1 then
-                local logicsecs = api_query_result(f.logic) * 0.000000001
-                local drawsecs = api_query_result(f.draw) * 0.000000001
-                gui.frame_time(logicsecs + drawsecs)
-                gui.gpu_times(logicsecs, drawsecs)
-                api_query_free(f.logic)
-                api_query_free(f.draw)
-                frames[i] = nil
-            end
-        end
+        prof.draw_end()
 
         api_vector_free(vfogdist)
         api_vector_free(vclrdep)
@@ -268,12 +329,14 @@ function M.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
+    prof = prof_scoped_alloc()
 end
 
 function M.done()
     M.visual.free()
     M.debug.free()
     M.eagle.free()
+    prof.free()
 end
 
 function M.engage(what)
