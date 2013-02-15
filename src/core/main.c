@@ -42,8 +42,8 @@ struct main_t
     int ibuf_count;
     int pbuf_size;
     int pbuf_count;
-    int tex_size;
-    int tex_count;
+    int *tex;
+    int tex_len;
     int vector_count;
     int vector_nesting;
     int matrix_count;
@@ -219,8 +219,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "ibuf_count", &g_main.ibuf_count) != 0
      || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
      || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
-     || main_get_int(lua, "tex_size", &g_main.tex_size) != 0
-     || main_get_int(lua, "tex_count", &g_main.tex_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
@@ -245,7 +243,8 @@ static int main_configure(char *script)
     if (main_get_int_array(lua, "mpool_sizes", &g_main.mpool_len,
                            &g_main.mpool_sizes) != 0
      || main_get_int_array(lua, "mpool_counts", &g_main.mpool_len,
-                           &g_main.mpool_counts) != 0)
+                           &g_main.mpool_counts) != 0
+     || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0)
     {
         goto cleanup;
     }
@@ -263,6 +262,11 @@ cleanup:
     {
         util_free(g_main.mpool_counts);
         g_main.mpool_counts = 0;
+    }
+    if (g_main.tex)
+    {
+        util_free(g_main.tex);
+        g_main.tex = 0;
     }
     lua_close(lua);
     return 1;
@@ -290,6 +294,11 @@ static void main_done(void)
     {
         util_free(g_main.mpool_counts);
         g_main.mpool_counts = 0;
+    }
+    if (g_main.tex)
+    {
+        util_free(g_main.tex);
+        g_main.tex = 0;
     }
 
     buf_done();
@@ -412,7 +421,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (tex_init(g_main.lua, g_main.tex_size, g_main.tex_count) != 0)
+    if (tex_init(g_main.lua, g_main.tex, g_main.tex_len) != 0)
     {
         fprintf(stderr, "Cannot init textures\n");
         return 1;

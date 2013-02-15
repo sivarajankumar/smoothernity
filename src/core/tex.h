@@ -2,5 +2,5 @@
 
 #include <lua.h>
 
-int tex_init(lua_State *lua, int size, int count);
+int tex_init(lua_State *lua, int *sizes, int len);
 void tex_done(void);
