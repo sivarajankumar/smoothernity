@@ -13,8 +13,15 @@ function configure()
             ibuf_count = cfg.IBUF_COUNT,
             pbuf_size = 1048576,
             pbuf_count = 1,
-            tex_size = 10,
-            tex_count = 1,
+            tex = function()
+                local t = {}
+                for i, p in ipairs(cfg.TEX_POOL) do
+                    local size, layers = unpack(p)
+                    table.insert(t, size)
+                    table.insert(t, layers)
+                end
+                return unpack(t)
+            end,
             vector_count = 300,
             vector_nesting = 20,
             matrix_count = 1000,

@@ -80,8 +80,7 @@ static int api_pbuf_map(lua_State *lua)
     pbuf->mapped = glMapBufferRange(GL_PIXEL_UNPACK_BUFFER,
                                     (GLintptr)(ofs * (int)PBUF_DATA_SIZE),
                                     (GLsizeiptr)(len * (int)PBUF_DATA_SIZE),
-                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
-                                    GL_MAP_INVALIDATE_RANGE_BIT);
+                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
     if (pbuf->mapped == 0)
     {
         lua_pushstring(lua, "api_pbuf_map: mapping error");

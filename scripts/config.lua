@@ -14,5 +14,6 @@ M.VBUF_POOL = {[128] = 64, [8192] = 255}
 M.IBUF_SIZE = 16777216
 M.IBUF_COUNT = 1
 M.IBUF_POOL = {[128] = 512, [65536] = 255}
+M.TEX_POOL = {{10, 5}, {9, 5}, {8, 5}}
 
 return M
