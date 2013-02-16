@@ -97,9 +97,9 @@ function M.alloc(x, y, z)
     -- visual
     do
         mesh_big = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                  -1, shader.default(), mrb, ib.start, ib.size)
+                                  shader.default(), mrb, ib.start, ib.size)
         mesh_small = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                    -1, shader.default(), msmall, ib.start, ib.size)
+                                    shader.default(), msmall, ib.start, ib.size)
     end
 
     return self

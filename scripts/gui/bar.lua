@@ -59,7 +59,7 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             stripe.mfinal = api_matrix_alloc()
             api_matrix_pos_scl_rot(stripe.mlocal, stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
             api_matrix_mul(stripe.mfinal, mroot, stripe.mlocal)
-            stripe.mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res, -1,
+            stripe.mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res,
                                          shader.color(), stripe.mfinal, ibuf.start, ibuf.size)
             stripe.ucol = api_shuni_alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
             table.insert(stripes, stripe)
