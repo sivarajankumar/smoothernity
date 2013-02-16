@@ -102,11 +102,47 @@ static int api_tex_set(lua_State *lua)
     return 0;
 }
 
+static int api_tex_wrap(lua_State *lua)
+{
+    struct tex_t *tex;
+    int texi, wrap;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
+    {
+        lua_pushstring(lua, "api_tex_wrap: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    texi = lua_tointeger(lua, 1);
+    wrap = lua_tointeger(lua, 2);
+    lua_pop(lua, 2);
+    tex = tex_get(texi);
+    if (tex == 0)
+    {
+        lua_pushstring(lua, "api_tex_wrap: invalid texture");
+        lua_error(lua);
+        return 0;
+    }
+    glActiveTexture(GL_TEXTURE0 + texi);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, tex->tex_id);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, wrap);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, wrap);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_R, wrap);
+    if (glGetError() != GL_NO_ERROR)
+    {
+        lua_pushstring(lua, "api_tex_wrap: gl error");
+        lua_error(lua);
+        return 0;
+    }
+    return 0;
+}
+
 int tex_init(lua_State *lua, int *sizes, int len)
 {
     int i;
     struct tex_t *tex;
     struct tex_init_t *tinit;
+    GLint max_units;
     if (sizeof(struct tex_t) > TEX_SIZE || len % 2 != 0)
     {
         fprintf(stderr, "Invalid sizes:\nsizeof(struct tex_t) == %i\nlen = %i\n",
@@ -129,10 +165,24 @@ int tex_init(lua_State *lua, int *sizes, int len)
         glBindTexture(GL_TEXTURE_2D_ARRAY, tex->tex_id);
         glTexStorage3D(GL_TEXTURE_2D_ARRAY, tex->size + 1, GL_RGBA8,
                        1 << tex->size, 1 << tex->size, tex->layers);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER,
+                        GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
     lua_register(lua, "api_tex_set", api_tex_set);
+    lua_register(lua, "api_tex_wrap", api_tex_wrap);
+
+    #define LUA_PUBLISH(x, y) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, y);
+
+    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &max_units);
+    LUA_PUBLISH(max_units, "API_TEX_MAX_UNITS");
+    LUA_PUBLISH(GL_CLAMP_TO_EDGE, "API_TEX_WRAP_EDGE");
+    LUA_PUBLISH(GL_REPEAT, "API_TEX_WRAP_REPEAT");
+    LUA_PUBLISH(GL_MIRRORED_REPEAT, "API_TEX_MIRRORED_REPEAT");
     return 0;
 cleanup:
     util_free(g_texs.pool);
