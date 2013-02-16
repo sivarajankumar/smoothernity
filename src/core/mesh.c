@@ -35,13 +35,13 @@ static int api_mesh_alloc(lua_State *lua)
     struct shprog_t *shprog;
     struct matrix_t *matrix;
     struct mesh_t *mesh, *mvbuf, *mibuf, *mshprog;
-    int type, group, texi, ioffset, icount;
+    int type, group, ioffset, icount;
 
-    if (lua_gettop(lua) != 9 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
     || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
-    || !lua_isnumber(lua, 8) || !lua_isnumber(lua, 9))
+    || !lua_isnumber(lua, 8))
     {
         lua_pushstring(lua, "api_mesh_alloc: incorrect argument");
         lua_error(lua);
@@ -52,12 +52,11 @@ static int api_mesh_alloc(lua_State *lua)
     type = lua_tointeger(lua, 2);
     vbuf = vbuf_get(lua_tointeger(lua, 3));
     ibuf = ibuf_get(lua_tointeger(lua, 4));
-    texi = lua_tointeger(lua, 5);
-    shprog = shprog_get(lua_tointeger(lua, 6));
-    matrix = matrix_get(lua_tointeger(lua, 7));
-    ioffset = lua_tointeger(lua, 8);
-    icount = lua_tointeger(lua, 9);
-    lua_pop(lua, 9);
+    shprog = shprog_get(lua_tointeger(lua, 5));
+    matrix = matrix_get(lua_tointeger(lua, 6));
+    ioffset = lua_tointeger(lua, 7);
+    icount = lua_tointeger(lua, 8);
+    lua_pop(lua, 8);
 
     if (g_meshes.vacant == 0)
     {
@@ -66,7 +65,7 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    if (vbuf == 0 || ibuf == 0 || texi != -1 || shprog == 0 || matrix == 0)
+    if (vbuf == 0 || ibuf == 0 || shprog == 0 || matrix == 0)
     {
         lua_pushstring(lua, "api_mesh_alloc: invalid object");
         lua_error(lua);
