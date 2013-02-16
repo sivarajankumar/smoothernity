@@ -170,6 +170,49 @@ static int api_shuni_alloc_vector(lua_State *lua)
     return 1;
 }
 
+static int api_shuni_alloc_int(lua_State *lua)
+{
+    struct shuni_t *shuni;
+    struct shprog_t *shprog;
+    struct mesh_t *mesh;
+    int meshi, ishuni, argi;
+    const char *name;
+    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3)
+    || !lua_isnumber(lua, 4))
+    {
+        lua_pushstring(lua, "api_shuni_alloc_int: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    shprog = shprog_get(lua_tointeger(lua, 1));
+    meshi = lua_tointeger(lua, 2);
+    name = lua_tostring(lua, 3);
+    argi = lua_tointeger(lua, 4);
+    lua_pop(lua, 4);
+    mesh = mesh_get(meshi);
+    if (shprog == 0 || shprog->state != SHPROG_LINKED
+    || (mesh == 0 && meshi != SHUNI_ALL_MESHES))
+    {
+        lua_pushstring(lua, "api_shuni_alloc_int: invalid object");
+        lua_error(lua);
+        return 0;
+    }
+    ishuni = shuni_alloc(shprog, mesh);
+    shuni = shuni_get(ishuni);
+    if (shuni == 0)
+    {
+        lua_pushstring(lua, "api_shuni_alloc_int: out of shunis");
+        lua_error(lua);
+        return 0;
+    }
+    shuni->loc_id = glGetUniformLocation(shprog->prog_id, name);
+    shuni->state = SHUNI_INTEGER;
+    shuni->argi[0] = argi;
+    lua_pushinteger(lua, ishuni);
+    return 1;
+}
+
 int shuni_init(lua_State *lua, int count)
 {
     int i;
@@ -196,6 +239,7 @@ int shuni_init(lua_State *lua, int count)
     }
     lua_register(lua, "api_shuni_left", api_shuni_left);
     lua_register(lua, "api_shuni_alloc_vector", api_shuni_alloc_vector);
+    lua_register(lua, "api_shuni_alloc_int", api_shuni_alloc_int);
     lua_register(lua, "api_shuni_free", api_shuni_free);
 
     #define LUA_PUBLISH(x) \
@@ -203,7 +247,6 @@ int shuni_init(lua_State *lua, int count)
         lua_setglobal(lua, "API_"#x);
 
     LUA_PUBLISH(SHUNI_ALL_MESHES);
-
     return 0;
 }
 
@@ -218,15 +261,12 @@ void shuni_done(void)
     g_shunis.pool = 0;
 }
 
-static void shuni_select_vector(struct shuni_t *shuni)
-{
-    glUniform4fv(shuni->loc_id, 1, shuni->argv[0]->value);
-}
-
 void shuni_select(struct shuni_t *shuni)
 {
     if (shuni->state == SHUNI_VECTOR)
-        shuni_select_vector(shuni);
+        glUniform4fv(shuni->loc_id, 1, shuni->argv[0]->value);
+    else if (shuni->state == SHUNI_INTEGER)
+        glUniform1i(shuni->loc_id, shuni->argi[0]);
 }
 
 int shuni_update(struct shuni_t *shuni, float dt, int update_tag, int force)

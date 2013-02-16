@@ -4,12 +4,14 @@
 #include <GL/glew.h>
 
 #define SHUNI_ARGVS 1
+#define SHUNI_ARGIS 1
 
 enum shuni_e
 {
     SHUNI_VACANT,
     SHUNI_CREATED,
-    SHUNI_VECTOR
+    SHUNI_VECTOR,
+    SHUNI_INTEGER
 };
 
 struct shuni_t
@@ -19,6 +21,7 @@ struct shuni_t
     struct shprog_t *shprog;
     struct mesh_t *mesh;
     struct vector_t *argv[SHUNI_ARGVS];
+    int argi[SHUNI_ARGIS];
     struct shuni_t *next;
     struct shuni_t *shprog_prev;
     struct shuni_t *shprog_next;
