@@ -11,8 +11,8 @@ function configure()
             vbuf_count = cfg.VBUF_COUNT,
             ibuf_size = cfg.IBUF_SIZE,
             ibuf_count = cfg.IBUF_COUNT,
-            pbuf_size = 1048576,
-            pbuf_count = 1,
+            pbuf_size = cfg.PBUF_SIZE,
+            pbuf_count = cfg.PBUF_COUNT,
             tex = function()
                 local t = {}
                 for i, p in ipairs(cfg.TEX_POOL) do
