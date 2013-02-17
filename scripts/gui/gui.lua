@@ -6,6 +6,7 @@ local util = require 'util'
 local cfg = require 'config'
 local prof = require 'gui.prof'
 local color = require 'color'
+local textest = require 'gui.textest'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
 local COLOR_GPU_DRAW = color.GREEN
@@ -23,7 +24,7 @@ local COLOR_CPU_RDEFER = COLOR_GPU_DEFER
 local MAX_FRAMES = 600
 local THRESH = 1
 
-local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
+local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, ttest
 local whole_frames = 0
 local move_frames = 0
 local inited = false
@@ -76,6 +77,7 @@ end
 function M.init()
     bar.init()
     wait.init()
+    textest.init()
 
     local sx, sy = util.camera_dims()
     local sizex, sizey = 0.5, 0.05
@@ -111,6 +113,8 @@ function M.init()
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
                          COLOR_CPU_RDRAW, COLOR_CPU_RSWAP, COLOR_CPU_RDEFER)
 
+    ttest = textest.alloc(0, 0, 1)
+
     inited = true
 end
 
@@ -123,8 +127,10 @@ function M.done()
     frbar.free()
     fpsbar.free()
     wt.free()
+    ttest.free()
     bar.done()
     wait.done()
+    textest.done()
 end
 
 return M

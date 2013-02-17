@@ -155,7 +155,7 @@ static int api_pbuf_set(lua_State *lua)
     struct pbuf_t *pbuf;
     struct pbuf_data_t *data;
 
-    if (lua_gettop(lua) < 11 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) < (2 + PBUF_DATA_ATTRS) || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_pbuf_set: incorrect argument");
