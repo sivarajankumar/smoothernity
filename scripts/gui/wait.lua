@@ -49,18 +49,18 @@ function M.init()
         local x3, y3 = cossin(90 + 120 + 120)
         local r, g, b, a = COLOR()
         vbuf = poolvbuf.alloc(3)
-        api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
+        vbuf.map()
         api_vbuf_set(vbuf.res, vbuf.start, x1,y1, 0,   r, g, b, a,   0, 0,
                                            x2,y2, 0,   r, g, b, a,   0, 0,
                                            x3,y3, 0,   r, g, b, a,   0, 0)
-        api_vbuf_unmap(vbuf.res)
+        vbuf.unmap()
     end
     do
         ibuf = poolibuf.alloc(3)
         local o = vbuf.start
-        api_ibuf_map(ibuf.res, ibuf.start, ibuf.size)
+        ibuf.map()
         api_ibuf_set(ibuf.res, ibuf.start, o+0,o+1,o+2)
-        api_ibuf_unmap(ibuf.res)
+        ibuf.unmap()
     end
     do
         vrot = api_vector_alloc()

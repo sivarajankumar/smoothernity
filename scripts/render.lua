@@ -6,6 +6,7 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local lod = require 'lod'
 local gui = require 'gui.gui'
+local deferred = require 'deferred'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -16,7 +17,7 @@ local FOG_FAR = 12800
 
 M.clear_time = 0
 M.swap_time = 0
-local current, prof
+local current, prof, def
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
@@ -211,6 +212,7 @@ local function visual_alloc()
         M.swap_time = api_timer()
         api_render_swap()
         M.swap_time = api_timer() - M.swap_time
+        def.run()
 
         prof.draw_end()
 
@@ -261,6 +263,7 @@ local function eagle_alloc()
             api_mesh_draw(meshes.lod_group(lodi), draw_tag)
         end
         api_render_swap()
+        def.run()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
@@ -299,6 +302,7 @@ local function debug_alloc()
         api_render_mview(self.mview3d)
         api_physics_wld_ddraw(pwld.wld)
         api_render_swap()
+        def.run()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
@@ -334,6 +338,7 @@ function M.init()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
     prof = prof_scoped_alloc()
+    def = deferred.alloc()
 end
 
 function M.done()
@@ -345,6 +350,10 @@ end
 
 function M.engage(what)
     current = what
+end
+
+function M.defer(cmd)
+    def.defer(cmd)
 end
 
 function M.update()

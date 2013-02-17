@@ -72,19 +72,19 @@ end
 function M.init()
     do
         vbuf = poolvbuf.alloc(4)
-        api_vbuf_map(vbuf.res, vbuf.start, vbuf.size)
+        vbuf.map()
         api_vbuf_set(vbuf.res, vbuf.start, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
                                            0, 0.5, 0,   1, 1, 1, 1,   0, 0,
                                            1,-0.5, 0,   1, 1, 1, 1,   0, 0,
                                            1, 0.5, 0,   1, 1, 1, 1,   0, 0)
-        api_vbuf_unmap(vbuf.res)
+        vbuf.unmap()
     end
     do
         ibuf = poolibuf.alloc(6)
         local o = vbuf.start
-        api_ibuf_map(ibuf.res, ibuf.start, ibuf.size)
+        ibuf.map()
         api_ibuf_set(ibuf.res, ibuf.start,  o+1,o+0,o+2,  o+1,o+2,o+3)
-        api_ibuf_unmap(ibuf.res)
+        ibuf.unmap()
     end
 end
 

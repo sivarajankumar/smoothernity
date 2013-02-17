@@ -6,6 +6,7 @@ local util = require 'util'
 local cfg = require 'config'
 local prof = require 'gui.prof'
 
+local inited = false
 local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
 local whole_frames = 0
 local move_frames = 0
@@ -34,6 +35,9 @@ function M.wait_hide()
 end
 
 function M.frame_time(value)
+    if not inited then
+        return
+    end
     if value > cfg.FRAME_TIME * THRESH then
         whole_frames = 0
     else
@@ -44,11 +48,15 @@ function M.frame_time(value)
 end
 
 function M.gpu_times(logic, draw)
-    gpuprof.set(logic, draw)
+    if inited then
+        gpuprof.set(logic, draw)
+    end
 end
 
 function M.cpu_times(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
-    cpuprof.set(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
+    if inited then
+        cpuprof.set(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
+    end
 end
 
 function M.init()
@@ -87,9 +95,11 @@ function M.init()
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          {1,0,0,1}, {1,1,0,1}, {1,0,1,1}, {0,0.5,1,1},
                          {1,0.5,0,1}, {0.5,0,1,1}, {0,1,0,1}, {1,0.5,0,1})
+    inited = true
 end
 
 function M.done()
+    inited = false
     gpuprof.free()
     cpuprof.free()
     genbar.free()

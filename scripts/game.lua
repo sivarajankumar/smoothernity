@@ -51,14 +51,12 @@ end
 
 function M.run()
     poolbuf.init()
-    poolibuf.init()
-    poolvbuf.init()
+    poolibuf.init(render)
+    poolvbuf.init(render)
     shader.init()
     pwld.init()
     render.init()
-    gui.init()
 
-    local blink = blinker.alloc()
     local wld, cbs, car, camc, camd, camsw
     local created = false
     local generated = false
@@ -104,6 +102,8 @@ function M.run()
 
     local work = coroutine.create(
         function()
+            local blink = blinker.alloc()
+            gui.init()
             gui.wait_show()
             api_physics_wld_tscale(pwld.wld, 0)
             render.timescale(0)
@@ -143,6 +143,8 @@ function M.run()
             car.free()
             cbs.free()
             wld.free()
+            gui.done()
+            blink.free()
         end)
 
     while coroutine.status(control) ~= 'dead'
@@ -181,8 +183,6 @@ function M.run()
                       render.clear_time, rdraw_time, render.swap_time)
     end
 
-    blink.free()
-    gui.done()
     render.done()
     pwld.done()
     shader.done()
