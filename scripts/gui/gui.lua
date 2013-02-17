@@ -9,14 +9,16 @@ local color = require 'color'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
 local COLOR_GPU_DRAW = color.GREEN
+local COLOR_GPU_DEFER = color.CYAN
 local COLOR_CPU_CORE = color.RED
 local COLOR_CPU_CONTROL = color.YELLOW
 local COLOR_CPU_SLOWPOK = color.PURPLE
 local COLOR_CPU_WORK = COLOR_GPU_LOGIC
-local COLOR_CPU_RUPDATE = color.ORANGE
+local COLOR_CPU_RUPDATE = color.ORANGE_D
 local COLOR_CPU_RCLEAR = color.PURPLE_D
 local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
-local COLOR_CPU_RSWAP = color.ORANGE_D
+local COLOR_CPU_RSWAP = color.ORANGE
+local COLOR_CPU_RDEFER = COLOR_GPU_DEFER
 
 local MAX_FRAMES = 600
 local THRESH = 1
@@ -59,15 +61,15 @@ function M.frame_time(value)
     fpsbar.set(x, 1 - x)
 end
 
-function M.gpu_times(logic, draw)
+function M.gpu_times(...)
     if inited then
-        gpuprof.set(logic, draw)
+        gpuprof.set(...)
     end
 end
 
-function M.cpu_times(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
+function M.cpu_times(...)
     if inited then
-        cpuprof.set(core, control, slowpok, work, rupdate, rclear, rdraw, rswap)
+        cpuprof.set(...)
     end
 end
 
@@ -101,13 +103,13 @@ function M.init()
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW)
+                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW, COLOR_GPU_DEFER)
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          COLOR_CPU_CORE, COLOR_CPU_CONTROL, COLOR_CPU_SLOWPOK,
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
-                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP)
+                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP, COLOR_CPU_RDEFER)
 
     inited = true
 end
