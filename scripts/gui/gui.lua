@@ -7,13 +7,24 @@ local cfg = require 'config'
 local prof = require 'gui.prof'
 local color = require 'color'
 
-local inited = false
-local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
-local whole_frames = 0
-local move_frames = 0
+local COLOR_GPU_LOGIC = color.BLUE_L
+local COLOR_GPU_DRAW = color.GREEN
+local COLOR_CPU_CORE = color.RED
+local COLOR_CPU_CONTROL = color.YELLOW
+local COLOR_CPU_SLOWPOK = color.PURPLE
+local COLOR_CPU_WORK = COLOR_GPU_LOGIC
+local COLOR_CPU_RUPDATE = color.ORANGE
+local COLOR_CPU_RCLEAR = color.PURPLE_D
+local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
+local COLOR_CPU_RSWAP = color.ORANGE_D
 
 local MAX_FRAMES = 600
 local THRESH = 1
+
+local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
+local whole_frames = 0
+local move_frames = 0
+local inited = false
 
 function M.gen_progress(value)
     genbar.set(value, 1 - value)
@@ -90,12 +101,13 @@ function M.init()
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {0,0.5,1,1}, {0,1,0,1})
+                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW)
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         {1,0,0,1}, {1,1,0,1}, {1,0,1,1}, {0,0.5,1,1},
-                         {1,0.5,0,1}, {0.5,0,1,1}, {0,1,0,1}, {1,0.5,0,1})
+                         COLOR_CPU_CORE, COLOR_CPU_CONTROL, COLOR_CPU_SLOWPOK,
+                         COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
+                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP)
 
     inited = true
 end
