@@ -5,6 +5,7 @@ local wait = require 'gui.wait'
 local util = require 'util'
 local cfg = require 'config'
 local prof = require 'gui.prof'
+local color = require 'color'
 
 local inited = false
 local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof
@@ -95,6 +96,7 @@ function M.init()
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          {1,0,0,1}, {1,1,0,1}, {1,0,1,1}, {0,0.5,1,1},
                          {1,0.5,0,1}, {0.5,0,1,1}, {0,1,0,1}, {1,0.5,0,1})
+
     inited = true
 end
 
