@@ -272,7 +272,7 @@ function M.alloc(uid, startx, starty, startz)
 
     -- vertex buffer
     do
-        api_vbuf_map(vb.res, vb.start, vb.size)
+        vb.map()
         api_vbuf_set(vb.res, vb.start,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
                                          1,-1, 1,   0, 1, 0, 1,   0, 0,
                                          1, 1, 1,   0, 0, 1, 1,   0, 0,
@@ -281,20 +281,20 @@ function M.alloc(uid, startx, starty, startz)
                                          1,-1,-1,   0, 0, 0, 1,   0, 0,
                                          1, 1,-1,   1, 1, 0, 1,   0, 0,
                                         -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        api_vbuf_unmap(vb.res)
+        vb.unmap()
     end
 
     -- index buffer
     do
         local o = vb.start
-        api_ibuf_map(ib.res, ib.start, ib.size)
+        ib.map()
         api_ibuf_set(ib.res, ib.start,   o+0,o+1,o+2,  o+0,o+2,o+3,
                                          o+1,o+5,o+6,  o+1,o+6,o+2,
                                          o+5,o+4,o+7,  o+5,o+7,o+6,
                                          o+4,o+0,o+3,  o+4,o+3,o+7,
                                          o+3,o+2,o+6,  o+3,o+6,o+7,
                                          o+1,o+0,o+4,  o+1,o+4,o+5)
-        api_ibuf_unmap(ib.res)
+        ib.unmap()
     end
 
     -- collision shape

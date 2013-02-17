@@ -116,7 +116,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     -- vertex buffer
     do
-        api_vbuf_map(vb.res, vb.start, vb.size)
+        vb.map()
         for z = 0, self.res - 1 do
             local colmap
             local chunk = util.async_read(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)))
@@ -156,12 +156,12 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                 coroutine.yield(false)
             end
         end
-        api_vbuf_unmap(vb.res)
+        vb.unmap()
     end
 
     -- index buffer
     do
-        api_ibuf_map(ib.res, ib.start, ib.size)
+        ib.map()
         local o = vb.start
         for z = 0, self.res - 2 do
             for x = 0, self.res - 2 do
@@ -174,7 +174,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                 coroutine.yield(false)
             end
         end
-        api_ibuf_unmap(ib.res)
+        ib.unmap()
     end
 
     mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb.res, ib.res,

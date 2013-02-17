@@ -1,6 +1,7 @@
 local M = {}
 
-function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
+function M.alloc(title, res_size, res_count, pool_dims,
+                 res_alloc, res_free, res_map, res_unmap)
     local self = {}
     local shelves = {}
     local res = {}
@@ -55,6 +56,12 @@ function M.alloc(title, res_size, res_count, pool_dims, res_alloc, res_free)
             shelf.frees = shelf.frees + 1
             shelf.left = shelf.left + 1
             shelf.chunks[chunk.id] = chunk
+        end
+        function chunk.map()
+            res_map(chunk.res, chunk.start, chunk.size)
+        end
+        function chunk.unmap()
+            res_unmap(chunk.res)
         end
         return chunk
     end
