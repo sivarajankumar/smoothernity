@@ -17,6 +17,6 @@ M.IBUF_POOL = {[128] = 512, [65536] = 255}
 M.PBUF_SIZE = 1048576
 M.PBUF_COUNT = 1
 M.PBUF_POOL = {[1048576] = 1}
-M.TEX_POOL = {{10, 5}, {9, 5}, {8, 5}}
+M.TEX_POOL = {{8, 5}, {9, 5}, {10, 5}}
 
 return M

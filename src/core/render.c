@@ -220,7 +220,7 @@ int render_init(lua_State *lua, int width, int height)
     if (glewInit() != GLEW_OK)
         goto cleanup;
 
-    if (!GLEW_ARB_timer_query)
+    if (!GLEW_ARB_timer_query || !GLEW_EXT_texture_array || !GLEW_EXT_gpu_shader4)
         goto cleanup;
 
     g_render.width = width;
