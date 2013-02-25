@@ -9,4 +9,6 @@ add_library(physics physcpp.cpp colshape.cpp mstate.cpp
 
 target_link_libraries(physics util ${BULLET_LIBRARIES})
 
-add_definitions(-std=c++11 -pedantic-errors -Wall -Wextra)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_definitions(-std=c++11)
+endif()

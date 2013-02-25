@@ -1,6 +1,7 @@
 #include "physres.h"
 #include "colshape.hpp"
 #include "../util/util.hpp"
+#include "../platform/memory.h"
 #include <stdio.h>
 
 static const size_t COLSHAPE_SIZE = 128;
@@ -49,7 +50,7 @@ int colshape_init(int count)
         cs = colshape_get(i);
         cs->next = colshape_get(i + 1);
         cs->vacant = 1;
-        cs->data = (char*)util_malloc(alignof(colshape_u), sizeof(colshape_u));
+        cs->data = (char*)util_malloc(ALIGNOF(colshape_u), sizeof(colshape_u));
         if (cs->data == 0)
             goto cleanup;
     }

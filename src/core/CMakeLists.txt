@@ -22,7 +22,8 @@ target_link_libraries(main
                       ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT})
-
-add_definitions(-std=c11 -pedantic-errors -Wall -Wextra -Werror
-                -DGL_GLEXT_PROTOTYPES=1
-                -DGL_GLXEXT_PROTOTYPES=1)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_definitions(-std=c11
+                    -DGL_GLEXT_PROTOTYPES=1
+                    -DGL_GLXEXT_PROTOTYPES=1)
+endif()
