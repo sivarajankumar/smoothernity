@@ -259,7 +259,7 @@ int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
         veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
                            btVector3(dir[0], dir[1], dir[2]),
                            btVector3(axl[0], axl[1], axl[2]),
-                           sus_rest, radius, *veh->tuning, front);
+                           sus_rest, radius, *veh->tuning, front != 0);
         veh->veh->getWheelInfo(*wheeli).m_rollInfluence = roll;
     }
     catch (...)

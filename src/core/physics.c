@@ -60,7 +60,7 @@ static int api_physics_update(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    dt = lua_tonumber(lua, 1);
+    dt = (float)lua_tonumber(lua, 1);
     lua_pop(lua, 1);
     if (dt < 0.0f)
     {
@@ -214,7 +214,7 @@ static int api_physics_wld_tscale(lua_State *lua)
         return 0;
     }
     wldi = lua_tointeger(lua, 1);
-    tscale = lua_tonumber(lua, 2);
+    tscale = (float)lua_tonumber(lua, 2);
     lua_pop(lua, 2);
     if (tscale < 0.0f)
     {
@@ -322,7 +322,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua)
         return 0;
     }
 
-    r = lua_tonumber(lua, 1);
+    r = (float)lua_tonumber(lua, 1);
     lua_pop(lua, 1);
 
     if (r <= 0)
@@ -366,8 +366,8 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
     start = lua_tointeger(lua, 2);
     width = lua_tointeger(lua, 3);
     length = lua_tointeger(lua, 4);
-    hmin = lua_tonumber(lua, 5);
-    hmax = lua_tonumber(lua, 6);
+    hmin = (float)lua_tonumber(lua, 5);
+    hmax = (float)lua_tonumber(lua, 6);
     scale = vector_get(lua_tointeger(lua, 7));
     lua_pop(lua, 7);
 
@@ -523,9 +523,9 @@ static int api_physics_rb_alloc(lua_State *lua)
     wldi = lua_tointeger(lua, 1);
     csi = lua_tointeger(lua, 2);
     matrix = matrix_get(lua_tointeger(lua, 3));
-    mass = lua_tonumber(lua, 4);
-    frict = lua_tonumber(lua, 5);
-    roll_frict = lua_tonumber(lua, 6);
+    mass = (float)lua_tonumber(lua, 4);
+    frict = (float)lua_tonumber(lua, 5);
+    roll_frict = (float)lua_tonumber(lua, 6);
     lua_pop(lua, 6);
 
     if (matrix == 0)
@@ -611,15 +611,15 @@ static int api_physics_veh_alloc(lua_State *lua)
     shapei = lua_tointeger(lua, 2);
     inerti = lua_tointeger(lua, 3);
     matrix = matrix_get(lua_tointeger(lua, 4));
-    mass = lua_tonumber(lua, 5);
-    ch_frict = lua_tonumber(lua, 6);
-    ch_roll_frict = lua_tonumber(lua, 7);
-    sus_stif = lua_tonumber(lua, 8);
-    sus_comp = lua_tonumber(lua, 9);
-    sus_damp = lua_tonumber(lua, 10);
-    sus_trav = lua_tonumber(lua, 11);
-    sus_force = lua_tonumber(lua, 12);
-    slip_frict = lua_tonumber(lua, 13);
+    mass = (float)lua_tonumber(lua, 5);
+    ch_frict = (float)lua_tonumber(lua, 6);
+    ch_roll_frict = (float)lua_tonumber(lua, 7);
+    sus_stif = (float)lua_tonumber(lua, 8);
+    sus_comp = (float)lua_tonumber(lua, 9);
+    sus_damp = (float)lua_tonumber(lua, 10);
+    sus_trav = (float)lua_tonumber(lua, 11);
+    sus_force = (float)lua_tonumber(lua, 12);
+    slip_frict = (float)lua_tonumber(lua, 13);
     lua_pop(lua, 13);
 
     if (matrix == 0)
@@ -703,9 +703,9 @@ static int api_physics_veh_add_wheel(lua_State *lua)
     pos = vector_get(lua_tointeger(lua, 2));
     dir = vector_get(lua_tointeger(lua, 3));
     axl = vector_get(lua_tointeger(lua, 4));
-    sus_rest = lua_tonumber(lua, 5);
-    roll = lua_tonumber(lua, 6);
-    radius = lua_tonumber(lua, 7);
+    sus_rest = (float)lua_tonumber(lua, 5);
+    roll = (float)lua_tonumber(lua, 6);
+    radius = (float)lua_tonumber(lua, 7);
     front = lua_tointeger(lua, 8);
     lua_pop(lua, 8);
 
@@ -765,9 +765,9 @@ static int api_physics_veh_set_wheel(lua_State *lua)
     }
     vehi = lua_tointeger(lua, 1);
     wheel = lua_tointeger(lua, 2);
-    engine = lua_tonumber(lua, 3);
-    brake = lua_tonumber(lua, 4);
-    steer = lua_tonumber(lua, 5);
+    engine = (float)lua_tonumber(lua, 3);
+    brake = (float)lua_tonumber(lua, 4);
+    steer = (float)lua_tonumber(lua, 5);
     lua_pop(lua, 5);
 
     res = physcpp_veh_set_wheel(vehi, wheel, engine, brake, steer);

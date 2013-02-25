@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <SDL.h>
 #include "../util/util.h"
 #include "mpool.h"
 #include "timer.h"
@@ -171,7 +169,7 @@ static int main_get_float(lua_State *lua, const char *field, float *dest)
                 field);
         return 1;
     }
-    *dest = lua_tonumber(lua, -1);
+    *dest = (float)lua_tonumber(lua, -1);
     lua_pop(lua, 1);
     return 0;
 }
