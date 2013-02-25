@@ -181,7 +181,7 @@ static int api_matrix_update(lua_State *lua)
     }
 
     matrix = matrix_get(lua_tointeger(lua, 1));
-    dt = lua_tonumber(lua, 2);
+    dt = (float)lua_tonumber(lua, 2);
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
@@ -929,8 +929,8 @@ void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
     GLfloat axisx[3], axisy[3], axisz[3];
     GLfloat rcos, rsin;
 
-    rcos = cos(rotangle);
-    rsin = sin(rotangle);
+    rcos = cosf(rotangle);
+    rsin = sinf(rotangle);
     if (rotaxis == MATRIX_AXIS_X)
     {
         axisx[0] = 1; axisx[1] =     0; axisx[2] =    0; 
@@ -959,7 +959,7 @@ void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
 
 void matrix_inv(GLfloat *out, GLfloat *m)
 {
-    double inv[16], det;
+    float inv[16], det;
     int i;
 
     inv[0] = m[5]  * m[10] * m[15] - 

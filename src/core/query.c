@@ -217,7 +217,7 @@ static int api_query_result(lua_State *lua)
         return 0;
     }
     glGetQueryObjectui64v(query->query_id, GL_QUERY_RESULT, &result);
-    lua_pushnumber(lua, result);
+    lua_pushnumber(lua, (lua_Number)result);
     return 1;
 }
 
