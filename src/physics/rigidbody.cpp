@@ -3,6 +3,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "../util/util.hpp"
+#include "../platform/memory.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -46,7 +47,7 @@ int rigidbody_init(int count)
         rb->vacant = 1;
         try {
             rb->mstate = new mstate_c();
-            rb->data = (char*)util_malloc(alignof(btRigidBody), sizeof(btRigidBody));
+            rb->data = (char*)util_malloc(ALIGNOF(btRigidBody), sizeof(btRigidBody));
         } catch (...) {
             goto cleanup;
         }

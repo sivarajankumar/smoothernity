@@ -3,6 +3,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "../util/util.hpp"
+#include "../platform/memory.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -45,11 +46,11 @@ int vehicle_init(int count)
         veh->next = vehicle_get(i + 1);
         veh->vacant = 1;
         try {
-            veh->chassis_data = (char*)util_malloc(alignof(btRigidBody),
+            veh->chassis_data = (char*)util_malloc(ALIGNOF(btRigidBody),
                                                    sizeof(btRigidBody));
-            veh->ray_data = (char*)util_malloc(alignof(btDefaultVehicleRaycaster),
+            veh->ray_data = (char*)util_malloc(ALIGNOF(btDefaultVehicleRaycaster),
                                                sizeof(btDefaultVehicleRaycaster));
-            veh->veh_data = (char*)util_malloc(alignof(btRaycastVehicle),
+            veh->veh_data = (char*)util_malloc(ALIGNOF(btRaycastVehicle),
                                                sizeof(btRaycastVehicle));
             veh->mstate = new mstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
