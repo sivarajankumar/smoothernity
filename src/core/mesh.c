@@ -280,7 +280,7 @@ static int api_mesh_update(lua_State *lua)
     }
 
     group = lua_tointeger(lua, 1);
-    dt = lua_tonumber(lua, 2);
+    dt = (float)lua_tonumber(lua, 2);
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 

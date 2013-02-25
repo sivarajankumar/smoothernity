@@ -59,7 +59,7 @@ static int api_buf_set(lua_State *lua)
             lua_error(lua);
             return 0;
         }
-        buf->data[start + i] = lua_tonumber(lua, i + 3);
+        buf->data[start + i] = (float)lua_tonumber(lua, i + 3);
     }
 
     lua_pop(lua, len + 2);
