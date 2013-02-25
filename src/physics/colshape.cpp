@@ -17,20 +17,23 @@ struct colshapes_t
     colshape_t *vacant;
 };
 
-union colshape_u
-{
-    btBoxShape box;
-    btHeightfieldTerrainShape hf;
-    btCompoundShape comp;
-    btSphereShape sph;
-};
-
 static colshapes_t g_colshapes;
 
 int colshape_init(int count)
 {
+    size_t size_max, align_max;
     int i;
     colshape_t *cs;
+
+    #define FIND_SIZES(t) \
+        if (sizeof(t) > size_max) size_max = sizeof(t); \
+        if (ALIGNOF(t) > align_max) align_max = ALIGNOF(t);
+    size_max = align_max = 0;
+    FIND_SIZES(btBoxShape);
+    FIND_SIZES(btHeightfieldTerrainShape);
+    FIND_SIZES(btCompoundShape);
+    FIND_SIZES(btSphereShape);
+
     if (sizeof(colshape_t) > COLSHAPE_SIZE)
     {
         fprintf(stderr, "Invalid size:\nsizeof(colshape_t) == %i\n",
@@ -50,7 +53,7 @@ int colshape_init(int count)
         cs = colshape_get(i);
         cs->next = colshape_get(i + 1);
         cs->vacant = 1;
-        cs->data = (char*)util_malloc(ALIGNOF(colshape_u), sizeof(colshape_u));
+        cs->data = (char*)util_malloc(align_max, size_max);
         if (cs->data == 0)
             goto cleanup;
     }
