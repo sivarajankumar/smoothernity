@@ -153,7 +153,7 @@ static int api_vector_update(lua_State *lua)
     }
 
     vector = vector_get(lua_tointeger(lua, 1));
-    dt = lua_tonumber(lua, 2);
+    dt = (float)lua_tonumber(lua, 2);
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
@@ -189,10 +189,10 @@ static int api_vector_const(lua_State *lua)
     }
 
     vector = vector_get(lua_tointeger(lua, 1));
-    value[0] = lua_tonumber(lua, 2);
-    value[1] = lua_tonumber(lua, 3);
-    value[2] = lua_tonumber(lua, 4);
-    value[3] = lua_tonumber(lua, 5);
+    value[0] = (float)lua_tonumber(lua, 2);
+    value[1] = (float)lua_tonumber(lua, 3);
+    value[2] = (float)lua_tonumber(lua, 4);
+    value[3] = (float)lua_tonumber(lua, 5);
     lua_pop(lua, 5);
 
     if (vector == 0)
@@ -271,8 +271,8 @@ static int api_vector_cord(lua_State *lua)
 
     vector = vector_get(lua_tointeger(lua, 1));
     v0 = vector_get(lua_tointeger(lua, 2));
-    min = lua_tonumber(lua, 3);
-    max = lua_tonumber(lua, 4);
+    min = (float)lua_tonumber(lua, 3);
+    max = (float)lua_tonumber(lua, 4);
     lua_pop(lua, 4);
 
     if (vector == 0 || v0 == 0)
@@ -917,7 +917,7 @@ void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2)
 
 float vector_len(GLfloat *v)
 {
-    return sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2] + v[3]*v[3]);
+    return sqrtf(v[0]*v[0] + v[1]*v[1] + v[2]*v[2] + v[3]*v[3]);
 }
 
 void vector_wsum(GLfloat *out, float w1, GLfloat *v1, float w2, GLfloat *v2)

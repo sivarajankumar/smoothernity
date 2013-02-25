@@ -1,7 +1,7 @@
-include(FindLua51)
+include(FindGLEW)
 include(FindBullet)
 
-include_directories(${LUA_INCLUDE_DIR}
+include_directories(${GLEW_INCLUDE_DIRS}
                     ${BULLET_INCLUDE_DIRS})
 
 add_library(physics physcpp.cpp colshape.cpp mstate.cpp 
