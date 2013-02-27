@@ -45,9 +45,9 @@ struct storages_t
     int key_size;
     int data_size;
     char *pool;
-    thread_mutex_t *mutex;
-    thread_cond_t *engage;
-    thread_t *thread;
+    struct thread_mutex_t *mutex;
+    struct thread_cond_t *engage;
+    struct thread_t *thread;
     int quit;
     struct storage_t *vacant;
     struct storage_t *active_head;
@@ -92,12 +92,10 @@ static int storage_alloc(void)
     return ((char*)st - g_storages.pool) / STORAGE_SIZE;
 }
 
-static void* storage_thread(void *param)
+static void storage_thread(void)
 {
     FILE *f;
     struct storage_t **cur = &g_storages.current;
-    if (param != 0)
-        return 0;
     while (g_storages.quit == 0)
     {
         thread_mutex_lock(g_storages.mutex);
@@ -132,7 +130,6 @@ static void* storage_thread(void *param)
             }
         }
     }
-    return 0;
 }
 
 static int api_storage_update(lua_State *lua)
