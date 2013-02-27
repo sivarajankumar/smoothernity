@@ -1,8 +1,8 @@
 #include "storage.h"
 #include "../util/util.h"
+#include "../thread/thread.h"
 #include <string.h>
 #include <stdio.h>
-#include <pthread.h>
 
 static const size_t STORAGE_SIZE = 64;
 static const size_t STORAGE_KEY_ALIGN = 16;
@@ -45,9 +45,9 @@ struct storages_t
     int key_size;
     int data_size;
     char *pool;
-    pthread_mutex_t mutex;
-    pthread_cond_t engage;
-    pthread_t thread;
+    thread_mutex_t *mutex;
+    thread_cond_t *engage;
+    thread_t *thread;
     int quit;
     struct storage_t *vacant;
     struct storage_t *active_head;
@@ -100,23 +100,23 @@ static void* storage_thread(void *param)
         return 0;
     while (g_storages.quit == 0)
     {
-        pthread_mutex_lock(&g_storages.mutex);
-        pthread_cond_wait(&g_storages.engage, &g_storages.mutex);
+        thread_mutex_lock(g_storages.mutex);
+        thread_cond_wait(g_storages.engage, g_storages.mutex);
         if (*cur == 0)
-            pthread_mutex_unlock(&g_storages.mutex);
+            thread_mutex_unlock(g_storages.mutex);
         else
         {
-            pthread_mutex_unlock(&g_storages.mutex);
+            thread_mutex_unlock(g_storages.mutex);
             if ((*cur)->cmd == STORAGE_CMD_READ)
                 f = fopen((*cur)->key, "r");
             else if ((*cur)->cmd == STORAGE_CMD_WRITE)
                 f = fopen((*cur)->key, "w");
             if (f == 0)
             {
-                pthread_mutex_lock(&g_storages.mutex);
+                thread_mutex_lock(g_storages.mutex);
                 (*cur)->state = STORAGE_STATE_ERROR;
                 *cur = 0;
-                pthread_mutex_unlock(&g_storages.mutex);
+                thread_mutex_unlock(g_storages.mutex);
             }
             else
             {
@@ -125,10 +125,10 @@ static void* storage_thread(void *param)
                 else if ((*cur)->cmd == STORAGE_CMD_WRITE)
                     fwrite((*cur)->data, 1, (*cur)->size, f);
                 fclose(f);
-                pthread_mutex_lock(&g_storages.mutex);
+                thread_mutex_lock(g_storages.mutex);
                 (*cur)->state = ferror(f) ? STORAGE_STATE_ERROR : STORAGE_STATE_DONE;
                 *cur = 0;
-                pthread_mutex_unlock(&g_storages.mutex);
+                thread_mutex_unlock(g_storages.mutex);
             }
         }
     }
@@ -144,7 +144,7 @@ static int api_storage_update(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    pthread_mutex_lock(&g_storages.mutex);
+    thread_mutex_lock(g_storages.mutex);
     if (g_storages.current == 0)
     {
         for (st = g_storages.active_head; st; st = st->next)
@@ -153,12 +153,12 @@ static int api_storage_update(lua_State *lua)
             {
                 st->state = STORAGE_STATE_PROGRESS;
                 g_storages.current = st;
-                pthread_cond_signal(&g_storages.engage);
+                thread_cond_signal(g_storages.engage);
                 break;
             }
         }
     }
-    pthread_mutex_unlock(&g_storages.mutex);
+    thread_mutex_unlock(g_storages.mutex);
     return 0;
 }
 
@@ -262,16 +262,16 @@ static int api_storage_free(lua_State *lua)
     }
     st = storage_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    pthread_mutex_lock(&g_storages.mutex);
+    thread_mutex_lock(g_storages.mutex);
     if (st == 0 || (st->state != STORAGE_STATE_DONE &&
                     st->state != STORAGE_STATE_ERROR))
     {
-        pthread_mutex_unlock(&g_storages.mutex);
+        thread_mutex_unlock(g_storages.mutex);
         lua_pushstring(lua, "api_storage_free: invalid storage");
         lua_error(lua);
         return 0;
     }
-    pthread_mutex_unlock(&g_storages.mutex);
+    thread_mutex_unlock(g_storages.mutex);
     st->state = STORAGE_STATE_VACANT;
     ++g_storages.left;
     ++g_storages.frees;
@@ -300,16 +300,16 @@ static int api_storage_state(lua_State *lua)
     }
     st = storage_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    pthread_mutex_lock(&g_storages.mutex);
+    thread_mutex_lock(g_storages.mutex);
     if (st == 0)
     {
-        pthread_mutex_unlock(&g_storages.mutex);
+        thread_mutex_unlock(g_storages.mutex);
         lua_pushstring(lua, "api_storage_state: invalid storage");
         lua_error(lua);
         return 0;
     }
     lua_pushinteger(lua, (int)st->state);
-    pthread_mutex_unlock(&g_storages.mutex);
+    thread_mutex_unlock(g_storages.mutex);
     return 1;
 }
 
@@ -324,16 +324,16 @@ static int api_storage_data(lua_State *lua)
     }
     st = storage_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    pthread_mutex_lock(&g_storages.mutex);
+    thread_mutex_lock(g_storages.mutex);
     if (st == 0 || st->state != STORAGE_STATE_DONE)
     {
-        pthread_mutex_unlock(&g_storages.mutex);
+        thread_mutex_unlock(g_storages.mutex);
         lua_pushstring(lua, "api_storage_data: invalid storage");
         lua_error(lua);
         return 0;
     }
     lua_pushlstring(lua, st->data, st->size);
-    pthread_mutex_unlock(&g_storages.mutex);
+    thread_mutex_unlock(g_storages.mutex);
     return 1;
 }
 
@@ -377,17 +377,20 @@ int storage_init(lua_State *lua, int key_size, int data_size, int count)
         st->state = STORAGE_STATE_VACANT;
         st->cmd = STORAGE_CMD_NONE;
     }
-    if (pthread_mutex_init(&g_storages.mutex, 0) != 0)
+    g_storages.mutex = thread_mutex_create();
+    if (g_storages.mutex == 0)
         goto cleanup;
-    if (pthread_cond_init(&g_storages.engage, 0) != 0)
+    g_storages.engage = thread_cond_create();
+    if (g_storages.engage == 0)
     {
-        pthread_mutex_destroy(&g_storages.mutex);
+        thread_mutex_destroy(g_storages.mutex);
         goto cleanup;
     }
-    if (pthread_create(&g_storages.thread, 0, storage_thread, 0) != 0)
+    g_storages.thread = thread_create(storage_thread);
+    if (g_storages.thread == 0)
     {
-        pthread_mutex_destroy(&g_storages.mutex);
-        pthread_cond_destroy(&g_storages.engage);
+        thread_mutex_destroy(g_storages.mutex);
+        thread_cond_destroy(g_storages.engage);
         goto cleanup;
     }
     lua_register(lua, "api_storage_update", api_storage_update);
@@ -429,10 +432,10 @@ void storage_done(void)
            g_storages.count - g_storages.left_min, g_storages.count,
            g_storages.allocs, g_storages.frees);
     g_storages.quit = 1;
-    pthread_cond_signal(&g_storages.engage);
-    pthread_join(g_storages.thread, 0);
-    pthread_mutex_destroy(&g_storages.mutex);
-    pthread_cond_destroy(&g_storages.engage);
+    thread_cond_signal(g_storages.engage);
+    thread_destroy(g_storages.thread);
+    thread_mutex_destroy(g_storages.mutex);
+    thread_cond_destroy(g_storages.engage);
     for (i = 0; i < g_storages.count; ++i)
     {
         st = storage_get(i);
