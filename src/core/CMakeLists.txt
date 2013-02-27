@@ -16,6 +16,7 @@ add_executable(main
 target_link_libraries(main
                       physics
                       platform
+                      thread
                       util
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
