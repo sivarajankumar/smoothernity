@@ -2,7 +2,6 @@ include(FindLua51)
 include(FindSDL)
 include(FindOpenGL)
 include(FindGLEW)
-include(FindThreads)
 
 include_directories(${LUA_INCLUDE_DIR}
                     ${SDL_INCLUDE_DIR}
@@ -16,12 +15,12 @@ add_executable(main
 
 target_link_libraries(main
                       physics
+                      platform
                       util
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
                       ${GLEW_LIBRARIES}
-                      ${OPENGL_LIBRARIES}
-                      ${CMAKE_THREAD_LIBS_INIT})
+                      ${OPENGL_LIBRARIES})
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_definitions(-std=c11
                     -DGL_GLEXT_PROTOTYPES=1

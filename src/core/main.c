@@ -343,7 +343,12 @@ static int main_init(int argc, char **argv)
     }
 
     input_init(g_main.lua);
-    timer_init(g_main.lua);
+
+    if (timer_init(g_main.lua) != 0)
+    {
+        fprintf(stderr, "Cannot init timer\n"); 
+        return 1;
+    }
 
     if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
                      g_main.rigidbody_count, g_main.vehicle_count) != 0)
