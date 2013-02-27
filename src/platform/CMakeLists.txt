@@ -1,4 +1,4 @@
-if ("${PLATFORM}" STREQUAL "WIN32")
+if ("${PLATFORM}" STREQUAL "WINDOWS")
     add_library(platform timer_win.c)
 elseif ("${PLATFORM}" STREQUAL "LINUX")
     add_library(platform timer_posix.c)

@@ -17,6 +17,7 @@ int pfm_timer_init(void)
     if (QueryPerformanceCounter(&g_pfm_timer.time) == 0)
         return 1;
     SetThreadAffinityMask(GetCurrentThread(), oldmask);
+    return 0;
 }
 
 float pfm_timer_get(void)
@@ -26,6 +27,6 @@ float pfm_timer_get(void)
     oldmask = SetThreadAffinityMask(GetCurrentThread(), 1);
     QueryPerformanceCounter(&cur);
     SetThreadAffinityMask(GetCurrentThread(), oldmask);
-    return (double)(cur.QuadPart - g_pfm_timer.time.QuadPart)
-         / (double)g_pfm_timer.freq.QuadPart;
+    return (float)((double)(cur.QuadPart - g_pfm_timer.time.QuadPart)
+                 / (double)g_pfm_timer.freq.QuadPart);
 }
