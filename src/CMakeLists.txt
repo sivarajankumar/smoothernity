@@ -9,5 +9,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 endif()
 
 subdirs(core)
+subdirs(platform)
 subdirs(util)
 subdirs(physics)
