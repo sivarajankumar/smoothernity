@@ -113,7 +113,7 @@ function M.init()
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
                          COLOR_CPU_RDRAW, COLOR_CPU_RSWAP, COLOR_CPU_RDEFER)
 
-    ttest = textest.alloc(0, 0, 1)
+    --ttest = textest.alloc(0, 0, 1)
 
     inited = true
 end
@@ -127,7 +127,7 @@ function M.done()
     frbar.free()
     fpsbar.free()
     wt.free()
-    ttest.free()
+    --ttest.free()
     bar.done()
     wait.done()
     textest.done()
