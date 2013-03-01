@@ -27,6 +27,12 @@ function M.init()
     api_shprog_link(shtex)
 
     shdefault = api_shprog_alloc()
+    api_shprog_attach(shdefault, API_SHPROG_FRAGMENT,
+        'void main()\n' ..
+        '{\n' ..
+        '   gl_FragColor = gl_Color;\n' ..
+        '}\n'
+    )
     api_shprog_link(shdefault)
 end
 
