@@ -1,5 +1,6 @@
 #include "vbuf.h"
 #include "../util/util.h"
+#include "../thread/thread.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -19,7 +20,19 @@ struct vbufs_t g_vbufs;
 
 int vbuf_thread(void)
 {
-    return 0;
+    int i, count;
+    struct vbuf_t *vbuf;
+    count = 0;
+    thread_mutex_lock(g_vbufs.mutex);
+    for (i = 0; i < g_vbufs.count; ++i)
+    {
+        vbuf = vbuf_get(i);
+        if (vbuf->state == VBUF_MAPPING)
+        {
+        }
+    }
+    thread_mutex_unlock(g_vbufs.mutex);
+    return count;
 }
 
 static int api_vbuf_alloc(lua_State *lua)
@@ -298,6 +311,9 @@ int vbuf_init(lua_State *lua, int size, int count)
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
+    g_vbufs.mutex = thread_mutex_create();
+    if (g_vbufs.mutex == 0)
+        goto cleanup;
 
     lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
     lua_register(lua, "api_vbuf_free", api_vbuf_free);
@@ -325,6 +341,8 @@ void vbuf_done(void)
         glDeleteBuffers(1, &vbuf_get(i)->buf_id);
     util_free(g_vbufs.pool);
     g_vbufs.pool = 0;
+    if (g_vbufs.mutex)
+        thread_mutex_destroy(g_vbufs.mutex);
 }
 
 struct vbuf_t * vbuf_get(int vbufi)
