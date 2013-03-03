@@ -171,59 +171,6 @@ static int api_render_swap(lua_State *lua)
     return 0;
 }
 
-static int api_render_fog_off(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_render_fog_off: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    glDisable(GL_FOG);
-    return 0;
-}
-
-static int api_render_fog_lin(lua_State *lua)
-{
-    struct vector_t *color, *dist;
-    int neari, fari;
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4))
-    {
-        lua_pushstring(lua, "api_render_fog_lin: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    color = vector_get(lua_tointeger(lua, 1));
-    dist = vector_get(lua_tointeger(lua, 2));
-    neari = lua_tointeger(lua, 3);
-    fari = lua_tointeger(lua, 4);
-    lua_pop(lua, 4);
-
-    if (color == 0 || dist == 0)
-    {
-        lua_pushstring(lua, "api_render_fog_lin: invalid vector");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (neari < 0 || neari > 3 || fari < 0 || fari > 3)
-    {
-        lua_pushstring(lua, "api_render_fog_lin: invalid distance index");
-        lua_error(lua);
-        return 0;
-    }
-    glEnable(GL_FOG);
-    glFogi(GL_FOG_MODE, GL_LINEAR);
-    glFogfv(GL_FOG_COLOR, color->value);
-    glFogf(GL_FOG_START, dist->value[neari]);
-    glFogf(GL_FOG_END, dist->value[fari]);
-    glFogi(GL_FOG_COORD_SRC, GL_FRAGMENT_DEPTH);
-    return 0;
-}
-
 int render_init(lua_State *lua, int width, int height)
 {
     int bpp;
@@ -293,8 +240,6 @@ int render_init(lua_State *lua, int width, int height)
     lua_register(lua, "api_render_proj", api_render_proj);
     lua_register(lua, "api_render_mview", api_render_mview);
     lua_register(lua, "api_render_swap", api_render_swap);
-    lua_register(lua, "api_render_fog_off", api_render_fog_off);
-    lua_register(lua, "api_render_fog_lin", api_render_fog_lin);
 
     #define LUA_PUBLISH(x, y) \
         lua_pushinteger(lua, x); \
