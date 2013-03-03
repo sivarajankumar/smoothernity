@@ -3,8 +3,10 @@ local M = {}
 local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinmesh = require 'twin.mesh'
+local twinshuni = require 'twin.shuni'
 
 local ibuf, vbuf
 
@@ -26,8 +28,8 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             api_vector_free(s.vcol)
             api_matrix_free(s.mlocal)
             api_matrix_free(s.mfinal)
-            api_mesh_free(s.mesh)
-            api_shuni_free(s.ucol)
+            s.mesh.free()
+            s.ucol.free()
         end
     end
 
@@ -59,9 +61,9 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             stripe.mfinal = api_matrix_alloc()
             api_matrix_pos_scl_rot(stripe.mlocal, stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
             api_matrix_mul(stripe.mfinal, mroot, stripe.mlocal)
-            stripe.mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res,
-                                         shader.color(), stripe.mfinal, ibuf.start, ibuf.size)
-            stripe.ucol = api_shuni_alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
+            stripe.mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
+                                         shader.color(), stripe.mfinal)
+            stripe.ucol = twinshuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
             table.insert(stripes, stripe)
         end
     end
@@ -71,20 +73,20 @@ end
 
 function M.init()
     do
-        vbuf = poolvbuf.alloc(4)
-        vbuf.map()
-        api_vbuf_set(vbuf.res, vbuf.start, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
-                                           0, 0.5, 0,   1, 1, 1, 1,   0, 0,
-                                           1,-0.5, 0,   1, 1, 1, 1,   0, 0,
-                                           1, 0.5, 0,   1, 1, 1, 1,   0, 0)
-        vbuf.unmap()
+        vbuf = twinvbuf.alloc(4)
+        vbuf.prepare()
+        vbuf.set(0, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
+                    0, 0.5, 0,   1, 1, 1, 1,   0, 0,
+                    1,-0.5, 0,   1, 1, 1, 1,   0, 0,
+                    1, 0.5, 0,   1, 1, 1, 1,   0, 0)
+        vbuf.finalize()
     end
     do
-        ibuf = poolibuf.alloc(6)
+        ibuf = twinibuf.alloc(6)
         local o = vbuf.start
-        ibuf.map()
-        api_ibuf_set(ibuf.res, ibuf.start,  o+1,o+0,o+2,  o+1,o+2,o+3)
-        ibuf.unmap()
+        ibuf.prepare()
+        ibuf.set(0,  o+1,o+0,o+2,  o+1,o+2,o+3)
+        ibuf.finalize()
     end
 end
 

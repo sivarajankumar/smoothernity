@@ -5,9 +5,11 @@ local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
 local poolpbuf = require 'pool.pbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinmesh = require 'twin.mesh'
+local twinshuni = require 'twin.shuni'
 
 local TEX_UNIT = 0
 local TEX_LAYER = 0
@@ -21,37 +23,37 @@ function M.alloc(x, y, r)
 
     function self.free()
         api_matrix_free(mfinal)
-        api_mesh_free(mesh)
-        api_shuni_free(utexunit)
-        api_shuni_free(utexlayer)
+        mesh.free()
+        utexunit.free()
+        utexlayer.free()
     end
 
     do
         mfinal = util.matrix_pos_scl_stop(x,y,-0.5,  r,r,1)
-        mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res,
-                              shader.texture(), mfinal, ibuf.start, ibuf.size)
-        utexunit = api_shuni_alloc_int(shader.texture(), mesh, 'texunit', TEX_UNIT)
-        utexlayer = api_shuni_alloc_vector(shader.texture(), mesh, 'texlayer', vtexlayer)
+        mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
+                              shader.texture(), mfinal)
+        utexunit = twinshuni.alloc_int(shader.texture(), mesh, 'texunit', TEX_UNIT)
+        utexlayer = twinshuni.alloc_vector(shader.texture(), mesh, 'texlayer', vtexlayer)
     end
     return self
 end
 
 function M.init()
     do
-        vbuf = poolvbuf.alloc(4)
-        vbuf.map()
-        api_vbuf_set(vbuf.res, vbuf.start, -1,-1,0,  1,1,1,1,  0,0,
-                                            1,-1,0,  1,1,1,1,  1,0,
-                                            1, 1,0,  1,1,1,1,  1,1,
-                                           -1, 1,0,  1,1,1,1,  0,1)
-        vbuf.unmap()
+        vbuf = twinvbuf.alloc(4)
+        vbuf.prepare()
+        vbuf.set(0, -1,-1,0,  1,1,1,1,  0,0,
+                     1,-1,0,  1,1,1,1,  1,0,
+                     1, 1,0,  1,1,1,1,  1,1,
+                    -1, 1,0,  1,1,1,1,  0,1)
+        vbuf.finalize()
     end
     do
-        ibuf = poolibuf.alloc(6)
+        ibuf = twinibuf.alloc(6)
         local o = vbuf.start
-        ibuf.map()
-        api_ibuf_set(ibuf.res, ibuf.start, o+0,o+1,o+2,  o+0,o+2,o+3)
-        ibuf.unmap()
+        ibuf.prepare()
+        ibuf.set(0, o+0,o+1,o+2,  o+0,o+2,o+3)
+        ibuf.finalize()
     end
     do
         vtexlayer = util.vector_const(TEX_LAYER, 0, 0, 0)

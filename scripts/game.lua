@@ -15,12 +15,13 @@ local pause = require 'pause'
 local gui = require 'gui.gui'
 local quit = require 'quit'
 local ddraw = require 'ddraw'
+local meshes = require 'meshes'
 local key = require 'key'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
 local poolpbuf = require 'pool.pbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
 
 local LOGIC_TIME = 0.013
 local GC_STEP = 10
@@ -51,10 +52,11 @@ local function run_co(co, start_time, max_time)
 end
 
 function M.run()
+    meshes.init()
     poolbuf.init()
-    poolibuf.init(render)
-    poolvbuf.init(render)
-    poolpbuf.init(render)
+    twinibuf.init()
+    twinvbuf.init()
+    poolpbuf.init()
     shader.init()
     pwld.init()
     render.init()
@@ -180,17 +182,17 @@ function M.run()
         slowpok_time = work_time - slowpok_time
         work_time = rupdate_time - work_time
         rupdate_time = rdraw_time - rupdate_time
-        rdraw_time = api_timer() - rdraw_time - render.clear_time - render.swap_time - render.defer_time
+        rdraw_time = api_timer() - rdraw_time - render.clear_time - render.swap_time
         gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time,
-                      render.clear_time, rdraw_time, render.swap_time, render.defer_time)
+                      render.clear_time, rdraw_time, render.swap_time)
     end
 
     render.done()
     pwld.done()
     shader.done()
     poolpbuf.done()
-    poolvbuf.done()
-    poolibuf.done()
+    twinvbuf.done()
+    twinibuf.done()
     poolbuf.done()
 end
 

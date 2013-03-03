@@ -4,9 +4,9 @@ local cfg = require 'config'
 local util = require 'util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
+local twin = require 'twin.twin'
 local lod = require 'lod'
 local gui = require 'gui.gui'
-local deferred = require 'deferred'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -17,8 +17,7 @@ local FOG_FAR = 12800
 
 M.clear_time = 0
 M.swap_time = 0
-M.defer_time = 0
-local current, prof, def
+local current, prof
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
@@ -87,7 +86,6 @@ local function prof_scoped_alloc()
         for i, f in pairs(frames) do
             util.query_free(f.logic)
             util.query_free(f.draw)
-            util.query_free(f.defer)
         end
     end
 
@@ -115,35 +113,18 @@ local function prof_scoped_alloc()
         end
     end
 
-    function self.defer_begin()
-        local frame = frames[fid]
-        if frame ~= nil then
-            frame.defer = api_query_alloc_time()
-        end
-    end
-
-    function self.defer_end()
-        local frame = frames[fid]
-        if frame ~= nil then
-            api_query_end(frame.defer)
-        end
-    end
-
     function self.frame_end()
         qlogic = api_query_alloc_time()
         fid = fid + 1
         for i, f in pairs(frames) do
             if api_query_ready(f.logic) == 1
-            and api_query_ready(f.draw) == 1
-            and api_query_ready(f.defer) == 1 then
+            and api_query_ready(f.draw) == 1 then
                 local logic = api_query_result(f.logic) * 0.000000001
                 local draw = api_query_result(f.draw) * 0.000000001
-                local defer = api_query_result(f.defer) * 0.000000001
-                gui.frame_time(logic + draw + defer)
-                gui.gpu_times(logic, draw, defer)
+                gui.frame_time(logic + draw)
+                gui.gpu_times(logic, draw)
                 api_query_free(f.logic)
                 api_query_free(f.draw)
-                api_query_free(f.defer)
                 frames[i] = nil
             end
         end
@@ -186,26 +167,20 @@ local function visual_alloc()
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             api_render_proj(mproj3d)
-            api_mesh_draw(meshes.lod_group(lodi), draw_tag)
+            api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
             api_matrix_free(mproj3d)
         end
         api_render_fog_off()
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d)
         api_render_mview(mview2d)
-        api_mesh_draw(meshes.GROUP_GUI, draw_tag)
+        api_mesh_draw(meshes.GROUP_GUI.twin(twin.active()), draw_tag)
 
         M.swap_time = api_timer()
         api_render_swap()
         M.swap_time = api_timer() - M.swap_time
 
         prof.draw_end()
-
-        prof.defer_begin()
-        M.defer_time = api_timer()
-        def.run()
-        M.defer_time = api_timer() - M.defer_time
-        prof.defer_end()
 
         prof.frame_end()
 
@@ -219,9 +194,9 @@ local function visual_alloc()
         api_vector_update(self.vclrcol, dt, update_tag)
         api_matrix_update(self.mview3d, dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            api_mesh_update(meshes.lod_group(lodi), dt * self.tscale, update_tag)
+            api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
         end
-        api_mesh_update(meshes.GROUP_GUI, dt, update_tag)
+        api_mesh_update(meshes.GROUP_GUI.twin(twin.active()), dt, update_tag)
     end
 
     return self
@@ -253,10 +228,9 @@ local function eagle_alloc()
             else
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
-            api_mesh_draw(meshes.lod_group(lodi), draw_tag)
+            api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
         end
         api_render_swap()
-        def.run()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
@@ -266,7 +240,7 @@ local function eagle_alloc()
     function self.update(dt, update_tag)
         api_matrix_update(self.mview3d, dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            api_mesh_update(meshes.lod_group(lodi), dt * self.tscale, update_tag)
+            api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
         end
     end
 
@@ -295,7 +269,6 @@ local function debug_alloc()
         api_render_mview(self.mview3d)
         api_physics_wld_ddraw(pwld.wld)
         api_render_swap()
-        def.run()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
@@ -331,7 +304,6 @@ function M.init()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
     prof = prof_scoped_alloc()
-    def = deferred.alloc()
 end
 
 function M.done()
@@ -343,10 +315,6 @@ end
 
 function M.engage(what)
     current = what
-end
-
-function M.defer(cmd)
-    def.defer(cmd)
 end
 
 function M.update()
