@@ -1,6 +1,11 @@
 #include "render.h"
 #include "vector.h"
 #include "matrix.h"
+#include "ibuf.h"
+#include "vbuf.h"
+#include "pbuf.h"
+#include "tex.h"
+#include "../thread/thread.h"
 #include <SDL.h>
 #include <GL/glew.h>
 
@@ -10,9 +15,37 @@ struct render_t
     int width;
     int height;
     SDL_Surface *screen;
+    struct thread_mutex_t *mutex;
+    struct thread_cond_t *engage;
+    struct thread_t *thread;
+    int quit;
 };
 
 static struct render_t g_render;
+
+static void render_thread(void)
+{
+    int count;
+    while (g_render.quit == 0)
+    {
+        thread_mutex_lock(g_render.mutex);
+        thread_cond_wait(g_render.engage, g_render.mutex);
+        thread_mutex_unlock(g_render.mutex);
+        do
+        {
+            count = 0;
+            count += vbuf_thread();
+            count += ibuf_thread();
+            count += pbuf_thread();
+            count += tex_thread();
+        } while (count > 0);
+    }
+}
+
+void render_engage(void)
+{
+    thread_cond_signal(g_render.engage);
+}
 
 static int api_render_clear_color(lua_State *lua)
 {
@@ -227,6 +260,26 @@ int render_init(lua_State *lua, int width, int height)
     g_render.height = height;
     g_render.init = 1;
 
+    g_render.mutex = thread_mutex_create();
+    if (g_render.mutex == 0)
+        goto cleanup;
+    g_render.engage = thread_cond_create();
+    if (g_render.engage == 0)
+    {
+        thread_mutex_destroy(g_render.mutex);
+        g_render.mutex = 0;
+        goto cleanup;
+    }
+    g_render.thread = thread_create(render_thread);
+    if (g_render.thread == 0)
+    {
+        thread_mutex_destroy(g_render.mutex);
+        thread_cond_destroy(g_render.engage);
+        g_render.mutex = 0;
+        g_render.engage = 0;
+        goto cleanup;
+    }
+
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
@@ -262,6 +315,15 @@ void render_done(void)
     if (g_render.init == 0)
         return;
     g_render.init = 0;
+    g_render.quit = 1;
+    if (g_render.engage)
+        thread_cond_signal(g_render.engage);
+    if (g_render.thread)
+        thread_destroy(g_render.thread);
+    if (g_render.mutex)
+        thread_mutex_destroy(g_render.mutex);
+    if (g_render.engage)
+        thread_cond_destroy(g_render.engage);
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
 }
