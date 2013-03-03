@@ -6,7 +6,9 @@
 enum vbuf_e
 {
     VBUF_VACANT,
+    VBUF_UNMAPPING,
     VBUF_UNMAPPED,
+    VBUF_MAPPING,
     VBUF_MAPPED
 };
 
@@ -33,6 +35,7 @@ struct vbufs_t
     void *offset_color;
     char *pool;
     struct vbuf_t *vacant;
+    struct thread_mutex_t *mutex;
 };
 
 extern struct vbufs_t g_vbufs;
