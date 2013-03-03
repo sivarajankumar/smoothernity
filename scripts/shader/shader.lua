@@ -38,6 +38,7 @@ end
 
 function M.done()
     api_shprog_free(shcolor)
+    api_shprog_free(shtex)
     api_shprog_free(shdefault)
 end
 
