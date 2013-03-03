@@ -43,3 +43,8 @@ void pfm_render_select_ctx(struct pfm_render_ctx_t *ctx)
 {
     wglMakeCurrent(ctx->dc, ctx->glc);
 }
+
+void pfm_render_unselect_ctx(void)
+{
+    wglMakeCurrent(0, 0);
+}

@@ -6,6 +6,7 @@
 #include "pbuf.h"
 #include "tex.h"
 #include "../thread/thread.h"
+#include "../platform/render.h"
 #include <SDL.h>
 #include <GL/glew.h>
 
@@ -18,6 +19,7 @@ struct render_t
     struct thread_mutex_t *mutex;
     struct thread_cond_t *engage;
     struct thread_t *thread;
+    struct pfm_render_ctx_t *ctx;
     int quit;
 };
 
@@ -26,6 +28,7 @@ static struct render_t g_render;
 static void render_thread(void)
 {
     int count;
+    pfm_render_select_ctx(g_render.ctx);
     while (g_render.quit == 0)
     {
         thread_mutex_lock(g_render.mutex);
@@ -40,6 +43,7 @@ static void render_thread(void)
             count += tex_thread();
         } while (count > 0);
     }
+    pfm_render_unselect_ctx();
 }
 
 void render_engage(void)
@@ -207,25 +211,18 @@ int render_init(lua_State *lua, int width, int height)
     g_render.height = height;
     g_render.init = 1;
 
+    g_render.ctx = pfm_render_create_shared_ctx();
+    if (g_render.ctx == 0)
+        goto cleanup;
     g_render.mutex = thread_mutex_create();
     if (g_render.mutex == 0)
         goto cleanup;
     g_render.engage = thread_cond_create();
     if (g_render.engage == 0)
-    {
-        thread_mutex_destroy(g_render.mutex);
-        g_render.mutex = 0;
         goto cleanup;
-    }
     g_render.thread = thread_create(render_thread);
     if (g_render.thread == 0)
-    {
-        thread_mutex_destroy(g_render.mutex);
-        thread_cond_destroy(g_render.engage);
-        g_render.mutex = 0;
-        g_render.engage = 0;
         goto cleanup;
-    }
 
     glShadeModel(GL_SMOOTH);
     glCullFace(GL_BACK);
@@ -250,6 +247,15 @@ int render_init(lua_State *lua, int width, int height)
 
     return 0;
 cleanup:
+    if (g_render.ctx)
+        pfm_render_destroy_ctx(g_render.ctx);
+    g_render.ctx = 0;
+    if (g_render.mutex)
+        thread_mutex_destroy(g_render.mutex);
+    g_render.mutex = 0;
+    if (g_render.engage)
+        thread_cond_destroy(g_render.engage);
+    g_render.engage = 0;
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
     return 1;
@@ -269,6 +275,8 @@ void render_done(void)
         thread_mutex_destroy(g_render.mutex);
     if (g_render.engage)
         thread_cond_destroy(g_render.engage);
+    if (g_render.ctx)
+        pfm_render_destroy_ctx(g_render.ctx);
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
 }
