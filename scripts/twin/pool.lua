@@ -1,7 +1,6 @@
 local M = {}
 
 local cfg = require 'config'
-local util = require 'util'
 local pool = require 'pool.pool'
 local twin = require 'twin.twin'
 
@@ -10,7 +9,8 @@ function M.alloc(title, res_size, res_count, pool_dims,
     local self = {}
     local pools = {}
     for i = 0, cfg.TWINS - 1 do
-        pools[i] = pool.alloc(title, res_size, res_count / cfg.TWINS,
+        local name = string.format('%s (twin %i)', title, i)
+        pools[i] = pool.alloc(name, res_size, res_count / cfg.TWINS,
                               pool_dims, res_alloc, res_free, res_map, res_unmap)
     end
 
@@ -61,7 +61,6 @@ function M.alloc(title, res_size, res_count, pool_dims,
         function chunk.finalize()
             inactive().unmap()
             twin.swap()
-            util.sync_wait()
             inactive().map()
             for i, v in pairs(data) do
                 res_set(inactive().res, inactive().start + i, unpack(v))
