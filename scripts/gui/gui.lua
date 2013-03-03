@@ -20,7 +20,7 @@ local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
 local COLOR_CPU_RSWAP = color.ORANGE
 
 local MAX_FRAMES = 600
-local THRESH = 1
+local THRESH = 1.1
 
 local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, ttest
 local whole_frames = 0
