@@ -147,7 +147,6 @@ local function visual_alloc()
 
     function self.draw(draw_tag)
         local vclrdep = util.vector_const(1, 0, 0 ,0)
-        local vfogdist = util.vector_const(FOG_NEAR, FOG_FAR, 0, 0)
         local mproj2d = make_ortho()
         local mview2d = util.matrix_pos_stop(0, 0, 0)
 
@@ -159,7 +158,6 @@ local function visual_alloc()
         api_render_clear_color(self.vclrcol)
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
         M.clear_time = api_timer() - M.clear_time
-        api_render_fog_lin(self.vclrcol, vfogdist, 0, 1)
         api_render_mview(self.mview3d)
         for lodi = 0, lod.count - 1 do
             local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
@@ -170,7 +168,6 @@ local function visual_alloc()
             api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
             api_matrix_free(mproj3d)
         end
-        api_render_fog_off()
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d)
         api_render_mview(mview2d)
@@ -184,7 +181,6 @@ local function visual_alloc()
 
         prof.frame_end()
 
-        api_vector_free(vfogdist)
         api_vector_free(vclrdep)
         api_matrix_free(mproj2d)
         api_matrix_free(mview2d)
@@ -217,7 +213,6 @@ local function eagle_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
 
-        api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(vclrcol)
         api_render_proj(mproj3d)
@@ -261,7 +256,6 @@ local function debug_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
 
-        api_render_fog_off()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(vclrcol)
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
