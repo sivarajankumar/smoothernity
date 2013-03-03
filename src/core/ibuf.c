@@ -8,6 +8,11 @@ static const size_t IBUF_SIZE = 64;
 
 struct ibufs_t g_ibufs;
 
+int ibuf_thread(void)
+{
+    return 0;
+}
+
 static int api_ibuf_alloc(lua_State *lua)
 {
     struct ibuf_t *ibuf;

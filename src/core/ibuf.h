@@ -40,3 +40,4 @@ int ibuf_init(lua_State *lua, int size, int count);
 void ibuf_done(void);
 struct ibuf_t * ibuf_get(int);
 void ibuf_select(struct ibuf_t*);
+int ibuf_thread(void);

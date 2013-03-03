@@ -381,6 +381,7 @@ int storage_init(lua_State *lua, int key_size, int data_size, int count)
     if (g_storages.engage == 0)
     {
         thread_mutex_destroy(g_storages.mutex);
+        g_storages.mutex = 0;
         goto cleanup;
     }
     g_storages.thread = thread_create(storage_thread);
@@ -388,6 +389,8 @@ int storage_init(lua_State *lua, int key_size, int data_size, int count)
     {
         thread_mutex_destroy(g_storages.mutex);
         thread_cond_destroy(g_storages.engage);
+        g_storages.mutex = 0;
+        g_storages.engage = 0;
         goto cleanup;
     }
     lua_register(lua, "api_storage_update", api_storage_update);
@@ -429,10 +432,14 @@ void storage_done(void)
            g_storages.count - g_storages.left_min, g_storages.count,
            g_storages.allocs, g_storages.frees);
     g_storages.quit = 1;
-    thread_cond_signal(g_storages.engage);
-    thread_destroy(g_storages.thread);
-    thread_mutex_destroy(g_storages.mutex);
-    thread_cond_destroy(g_storages.engage);
+    if (g_storages.engage)
+        thread_cond_signal(g_storages.engage);
+    if (g_storages.thread)
+        thread_destroy(g_storages.thread);
+    if (g_storages.mutex)
+        thread_mutex_destroy(g_storages.mutex);
+    if (g_storages.engage)
+        thread_cond_destroy(g_storages.engage);
     for (i = 0; i < g_storages.count; ++i)
     {
         st = storage_get(i);

@@ -28,6 +28,11 @@ struct texs_t
 
 static struct texs_t g_texs;
 
+int tex_thread(void)
+{
+    return 0;
+}
+
 static struct tex_t * tex_get(int texi)
 {
     if (texi >= 0 && texi < g_texs.count)

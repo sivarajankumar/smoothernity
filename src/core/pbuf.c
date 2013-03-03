@@ -9,6 +9,11 @@ static const size_t PBUF_SIZE = 64;
 
 struct pbufs_t g_pbufs;
 
+int pbuf_thread(void)
+{
+    return 0;
+}
+
 struct pbuf_t * pbuf_get(int pbufi)
 {
     if (pbufi >= 0 && pbufi < g_pbufs.count)

@@ -17,6 +17,11 @@ struct vbuf_data_t
 
 struct vbufs_t g_vbufs;
 
+int vbuf_thread(void)
+{
+    return 0;
+}
+
 static int api_vbuf_alloc(lua_State *lua)
 {
     struct vbuf_t *vbuf;
