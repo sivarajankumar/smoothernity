@@ -1,10 +1,9 @@
---local game = require 'game'
-local draft = require 'draft'
+local game = require 'game'
 local cfg = require 'config'
 
 function configure()
-    return {mpool_sizes = function() return    128, 1024,  8192, 16384, 32768, 1048576, 4194304 end,
-            mpool_counts = function() return 30000, 4000,   500,   300,   100,       2,       2 end,
+    return {mpool_sizes = function() return    128,  1024,  8192, 16384, 32768, 1048576, 4194304 end,
+            mpool_counts = function() return 50000, 10000,   500,   300,   100,       4,       2 end,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             mesh_count = 1000,
@@ -43,8 +42,7 @@ function configure()
 end
 
 function run()
-    --xpcall(game.run,
-    xpcall(draft.run,
+    xpcall(game.run,
         function(msg)
             io.write(string.format('Main\n%s\nError: %s\n', debug.traceback(), msg))
         end)

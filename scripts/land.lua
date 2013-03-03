@@ -8,8 +8,9 @@ local meshes = require 'meshes'
 local quit = require 'quit'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinmesh = require 'twin.mesh'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -18,23 +19,23 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     self.res = lod.lods[lodi].res
     self.mmesh = api_matrix_alloc()
     self.hmap = {}
-    local vb = poolvbuf.alloc(self.res * self.res)
-    local ib = poolibuf.alloc(6 * (self.res - 1) * (self.res - 1))
+    local vb = twinvbuf.alloc(self.res * self.res)
+    local ib = twinibuf.alloc(6 * (self.res - 1) * (self.res - 1))
     local mesh
 
     function self.free()
-        api_mesh_free(mesh)
+        mesh.free()
         vb.free()
         ib.free()
         api_matrix_free(self.mmesh)
     end
 
     function self.hide()
-        api_mesh_group(mesh, meshes.GROUP_HIDDEN)
+        mesh.group(meshes.GROUP_HIDDEN)
     end
 
     function self.show()
-        api_mesh_group(mesh, meshes.lod_group(lodi))
+        mesh.group(meshes.GROUP_LODS[lodi])
     end
 
     function self.delete()
@@ -116,7 +117,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     -- vertex buffer
     do
-        vb.map()
+        vb.prepare()
         for z = 0, self.res - 1 do
             local colmap
             local chunk = util.async_read(util.uid_cache(string.format('%s_colmap_%i.lua', uid, z)))
@@ -147,21 +148,21 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
             end
             for x = 0, self.res - 1 do
                 local col = colmap[x]
-                api_vbuf_set(vb.res, vb.start + x + z * self.res,
-                             x - 0.5 * (self.res - 1),
-                             self.hmap[z][x],
-                             z - 0.5 * (self.res - 1),
-                             col.r, col.g, col.b, col.a,
-                             0, 0)
+                vb.set(x + z * self.res,
+                       x - 0.5 * (self.res - 1),
+                       self.hmap[z][x],
+                       z - 0.5 * (self.res - 1),
+                       col.r, col.g, col.b, col.a,
+                       0, 0)
                 coroutine.yield(false)
             end
         end
-        vb.unmap()
+        vb.finalize()
     end
 
     -- index buffer
     do
-        ib.map()
+        ib.prepare()
         local o = vb.start
         for z = 0, self.res - 2 do
             for x = 0, self.res - 2 do
@@ -169,16 +170,16 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                 local i01 = o + x + (z + 1) * self.res
                 local i10 = o + (x + 1) + z * self.res
                 local i11 = o + (x + 1) + (z + 1) * self.res
-                local i = ib.start + (x + z * (self.res - 1)) * 6
-                api_ibuf_set(ib.res, i,  i00,i01,i10,  i10,i01,i11)
+                local i = (x + z * (self.res - 1)) * 6
+                ib.set(i,  i00,i01,i10,  i10,i01,i11)
                 coroutine.yield(false)
             end
         end
-        ib.unmap()
+        ib.finalize()
     end
 
-    mesh = api_mesh_alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb.res, ib.res,
-                          shader.default(), self.mmesh, ib.start, ib.size)
+    mesh = twinmesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
+                          shader.default(), self.mmesh)
 
     return self
 end

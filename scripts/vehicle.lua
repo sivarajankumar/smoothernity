@@ -7,8 +7,9 @@ local cfg = require 'config'
 local gui = require 'gui.gui'
 local key = require 'key'
 local shader = require 'shader.shader'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinmesh = require 'twin.mesh'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -50,8 +51,8 @@ function M.alloc(uid, startx, starty, startz)
     local self = {}
 
     self.mchassis = api_matrix_alloc()
-    local vb = poolvbuf.alloc(8)
-    local ib = poolibuf.alloc(36)
+    local vb = twinvbuf.alloc(8)
+    local ib = twinibuf.alloc(36)
     local cs_inert, cs_shape_box, cs_shape, veh
     local wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
@@ -80,9 +81,9 @@ function M.alloc(uid, startx, starty, startz)
         for i = 0, 3 do
             api_matrix_free(mwheel_physic[i])
             api_matrix_free(mwheel[i])
-            api_mesh_free(mesh_wheel[i])
+            mesh_wheel[i].free()
         end
-        api_mesh_free(mesh_chassis)
+        mesh_chassis.free()
         api_matrix_free(mwheel_local)
         api_matrix_free(mchassis_local)
         api_matrix_free(mchassis_phys)
@@ -272,29 +273,29 @@ function M.alloc(uid, startx, starty, startz)
 
     -- vertex buffer
     do
-        vb.map()
-        api_vbuf_set(vb.res, vb.start,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
-                                         1,-1, 1,   0, 1, 0, 1,   0, 0,
-                                         1, 1, 1,   0, 0, 1, 1,   0, 0,
-                                        -1, 1, 1,   1, 1, 1, 1,   0, 0,
-                                        -1,-1,-1,   0, 1, 1, 1,   0, 0,
-                                         1,-1,-1,   0, 0, 0, 1,   0, 0,
-                                         1, 1,-1,   1, 1, 0, 1,   0, 0,
-                                        -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        vb.unmap()
+        vb.prepare()
+        vb.set(0,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                    1,-1, 1,   0, 1, 0, 1,   0, 0,
+                    1, 1, 1,   0, 0, 1, 1,   0, 0,
+                   -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                   -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                    1,-1,-1,   0, 0, 0, 1,   0, 0,
+                    1, 1,-1,   1, 1, 0, 1,   0, 0,
+                   -1, 1,-1,   1, 0, 1, 1,   0, 0)
+        vb.finalize()
     end
 
     -- index buffer
     do
         local o = vb.start
-        ib.map()
-        api_ibuf_set(ib.res, ib.start,   o+0,o+1,o+2,  o+0,o+2,o+3,
-                                         o+1,o+5,o+6,  o+1,o+6,o+2,
-                                         o+5,o+4,o+7,  o+5,o+7,o+6,
-                                         o+4,o+0,o+3,  o+4,o+3,o+7,
-                                         o+3,o+2,o+6,  o+3,o+6,o+7,
-                                         o+1,o+0,o+4,  o+1,o+4,o+5)
-        ib.unmap()
+        ib.prepare()
+        ib.set(0,   o+0,o+1,o+2,  o+0,o+2,o+3,
+                    o+1,o+5,o+6,  o+1,o+6,o+2,
+                    o+5,o+4,o+7,  o+5,o+7,o+6,
+                    o+4,o+0,o+3,  o+4,o+3,o+7,
+                    o+3,o+2,o+6,  o+3,o+6,o+7,
+                    o+1,o+0,o+4,  o+1,o+4,o+5)
+        ib.finalize()
     end
 
     -- collision shape
@@ -350,11 +351,11 @@ function M.alloc(uid, startx, starty, startz)
 
     -- visual
     do
-        mesh_chassis = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                      shader.default(), self.mchassis, ib.start, ib.size)
+        mesh_chassis = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                      shader.default(), self.mchassis)
         for i = 0, 3 do
-            mesh_wheel[i] = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                           shader.default(), mwheel[i], ib.start, ib.size)
+            mesh_wheel[i] = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                           shader.default(), mwheel[i])
         end
     end
 

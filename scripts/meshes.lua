@@ -1,14 +1,16 @@
 local M = {}
 
 local lod = require 'lod'
+local twinmesh = require 'twin.mesh'
 
-M.GROUP_HIDDEN = 0
-M.GROUP_GUI = 1
-M.GROUP_NEAR = 2
-M.GROUP_LODS = M.GROUP_NEAR
-
-function M.lod_group(lodi)
-    return M.GROUP_LODS + lod.count - 1 - lodi
+function M.init()
+    M.GROUP_HIDDEN = twinmesh.group()
+    M.GROUP_GUI = twinmesh.group()
+    M.GROUP_LODS = {}
+    for i = 0, lod.count - 1 do
+        M.GROUP_LODS[i] = twinmesh.group()
+    end
+    M.GROUP_NEAR = M.GROUP_LODS[lod.count - 1]
 end
 
 return M

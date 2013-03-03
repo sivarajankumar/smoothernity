@@ -10,7 +10,6 @@ local textest = require 'gui.textest'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
 local COLOR_GPU_DRAW = color.GREEN
-local COLOR_GPU_DEFER = color.CYAN
 local COLOR_CPU_CORE = color.RED
 local COLOR_CPU_CONTROL = color.YELLOW
 local COLOR_CPU_SLOWPOK = color.PURPLE
@@ -19,7 +18,6 @@ local COLOR_CPU_RUPDATE = color.ORANGE_D
 local COLOR_CPU_RCLEAR = color.PURPLE_D
 local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
 local COLOR_CPU_RSWAP = color.ORANGE
-local COLOR_CPU_RDEFER = COLOR_GPU_DEFER
 
 local MAX_FRAMES = 600
 local THRESH = 1
@@ -105,13 +103,13 @@ function M.init()
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW, COLOR_GPU_DEFER)
+                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW)
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          COLOR_CPU_CORE, COLOR_CPU_CONTROL, COLOR_CPU_SLOWPOK,
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
-                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP, COLOR_CPU_RDEFER)
+                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP)
 
     --ttest = textest.alloc(0, 0, 1)
 

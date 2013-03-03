@@ -4,8 +4,9 @@ local util = require 'util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
-local poolibuf = require 'pool.ibuf'
-local poolvbuf = require 'pool.vbuf'
+local twinibuf = require 'twin.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinmesh = require 'twin.mesh'
 
 local ibuf, vbuf, vrot, brot
 
@@ -21,22 +22,22 @@ function M.alloc(x, y, r)
         api_matrix_free(mfinal)
         api_vector_free(vpos)
         api_vector_free(vscl)
-        api_mesh_free(mesh)
+        mesh.free()
     end
 
     function self.show()
-        api_mesh_group(mesh, meshes.GROUP_GUI)
+        mesh.group(meshes.GROUP_GUI)
     end
 
     function self.hide()
-        api_mesh_group(mesh, meshes.GROUP_HIDDEN)
+        mesh.group(meshes.GROUP_HIDDEN)
     end
 
     vpos = util.vector_const(x, y, -0.5, 0)
     vscl = util.vector_const(r, r, 1, 0)
     api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
-    mesh = api_mesh_alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf.res, ibuf.res,
-                          shader.default(), mfinal, ibuf.start, ibuf.size)
+    mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
+                          shader.default(), mfinal)
     return self
 end
 
@@ -48,19 +49,19 @@ function M.init()
         local x2, y2 = cossin(90 + 120)
         local x3, y3 = cossin(90 + 120 + 120)
         local r, g, b, a = COLOR()
-        vbuf = poolvbuf.alloc(3)
-        vbuf.map()
-        api_vbuf_set(vbuf.res, vbuf.start, x1,y1, 0,   r, g, b, a,   0, 0,
-                                           x2,y2, 0,   r, g, b, a,   0, 0,
-                                           x3,y3, 0,   r, g, b, a,   0, 0)
-        vbuf.unmap()
+        vbuf = twinvbuf.alloc(3)
+        vbuf.prepare()
+        vbuf.set(0, x1,y1, 0,   r, g, b, a,   0, 0,
+                    x2,y2, 0,   r, g, b, a,   0, 0,
+                    x3,y3, 0,   r, g, b, a,   0, 0)
+        vbuf.finalize()
     end
     do
-        ibuf = poolibuf.alloc(3)
+        ibuf = twinibuf.alloc(3)
         local o = vbuf.start
-        ibuf.map()
-        api_ibuf_set(ibuf.res, ibuf.start, o+0,o+1,o+2)
-        ibuf.unmap()
+        ibuf.prepare()
+        ibuf.set(0, o+0,o+1,o+2)
+        ibuf.finalize()
     end
     do
         vrot = api_vector_alloc()

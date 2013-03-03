@@ -5,14 +5,15 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
-local poolvbuf = require 'pool.vbuf'
-local poolibuf = require 'pool.ibuf'
+local twinvbuf = require 'twin.vbuf'
+local twinibuf = require 'twin.ibuf'
+local twinmesh = require 'twin.mesh'
 
 function M.alloc(x, y, z)
     local self = {}
 
-    local vb = poolvbuf.alloc(8)
-    local ib = poolibuf.alloc(36)
+    local vb = twinvbuf.alloc(8)
+    local ib = twinibuf.alloc(36)
     local mbig = util.matrix_pos_stop(x, y, z)
     local mrb = api_matrix_alloc()
     local mloc = api_matrix_alloc()
@@ -39,37 +40,37 @@ function M.alloc(x, y, z)
         api_vector_free(vscl)
         brot.free()
         bpos.free()
-        api_mesh_free(mesh_big)
-        api_mesh_free(mesh_small)
+        mesh_big.free()
+        mesh_small.free()
         api_physics_rb_free(rb)
         api_physics_cs_free(cs)
     end
 
     -- vertex buffer
     do
-        vb.map()
-        api_vbuf_set(vb.res, vb.start,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
-                                         1,-1, 1,   0, 1, 0, 1,   0, 0,
-                                         1, 1, 1,   0, 0, 1, 1,   0, 0,
-                                        -1, 1, 1,   1, 1, 1, 1,   0, 0,
-                                        -1,-1,-1,   0, 1, 1, 1,   0, 0,
-                                         1,-1,-1,   0, 0, 0, 1,   0, 0,
-                                         1, 1,-1,   1, 1, 0, 1,   0, 0,
-                                        -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        vb.unmap()
+        vb.prepare()
+        vb.set(0,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
+                    1,-1, 1,   0, 1, 0, 1,   0, 0,
+                    1, 1, 1,   0, 0, 1, 1,   0, 0,
+                   -1, 1, 1,   1, 1, 1, 1,   0, 0,
+                   -1,-1,-1,   0, 1, 1, 1,   0, 0,
+                    1,-1,-1,   0, 0, 0, 1,   0, 0,
+                    1, 1,-1,   1, 1, 0, 1,   0, 0,
+                   -1, 1,-1,   1, 0, 1, 1,   0, 0)
+        vb.finalize()
     end
 
     -- index buffer
     do
-        ib.map()
+        ib.prepare()
         local o = vb.start
-        api_ibuf_set(ib.res, ib.start,  o+0,o+1,o+2,  o+0,o+2,o+3,
-                                        o+1,o+5,o+6,  o+1,o+6,o+2,
-                                        o+5,o+4,o+7,  o+5,o+7,o+6,
-                                        o+4,o+0,o+3,  o+4,o+3,o+7,
-                                        o+3,o+2,o+6,  o+3,o+6,o+7,
-                                        o+1,o+0,o+4,  o+1,o+4,o+5)
-        ib.unmap()
+        ib.set(0,  o+0,o+1,o+2,  o+0,o+2,o+3,
+                   o+1,o+5,o+6,  o+1,o+6,o+2,
+                   o+5,o+4,o+7,  o+5,o+7,o+6,
+                   o+4,o+0,o+3,  o+4,o+3,o+7,
+                   o+3,o+2,o+6,  o+3,o+6,o+7,
+                   o+1,o+0,o+4,  o+1,o+4,o+5)
+        ib.finalize()
     end
 
     -- matrices
@@ -96,10 +97,10 @@ function M.alloc(x, y, z)
 
     -- visual
     do
-        mesh_big = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                  shader.default(), mrb, ib.start, ib.size)
-        mesh_small = api_mesh_alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb.res, ib.res,
-                                    shader.default(), msmall, ib.start, ib.size)
+        mesh_big = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                  shader.default(), mrb)
+        mesh_small = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                    shader.default(), msmall)
     end
 
     return self
