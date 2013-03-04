@@ -70,6 +70,7 @@ struct main_t
 
 static struct main_t g_main;
 
+/* TODO: remove */
 static int api_main_gc_step(lua_State *lua)
 {
     int step;
@@ -298,11 +299,6 @@ static void main_done(void)
 
     if (g_main.lua)
         lua_close(g_main.lua);
-    if (g_main.mpool)
-    {
-        fprintf(stdout, "Main memory pool:\n");
-        mpool_destroy(g_main.mpool);
-    }
     if (g_main.main_mpool)
     {
         util_free(g_main.main_mpool);
@@ -331,6 +327,11 @@ static void main_done(void)
     sync_done();
     mesh_done();
     physics_done();
+    if (g_main.mpool)
+    {
+        fprintf(stdout, "\nMain memory pool:\n");
+        mpool_destroy(g_main.mpool);
+    }
     thread_done();
 }
 
@@ -358,7 +359,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
     lua_atpanic(g_main.lua, main_panic);
-    lua_gc(g_main.lua, LUA_GCSTOP, 0);
+    lua_gc(g_main.lua, LUA_GCSTOP, 0); /* TODO: remove */
 
     luaL_openlibs(g_main.lua);
 
@@ -376,7 +377,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (thread_init(g_main.thread_count, g_main.thread_mpool,
+    if (thread_init(g_main.lua, g_main.thread_count, g_main.thread_mpool,
                     g_main.thread_mpool + g_main.thread_mpool_len / 2,
                     g_main.thread_mpool_len / 2) != 0)
     {
@@ -491,7 +492,7 @@ static void main_loop(void)
         fprintf(stderr, "Cannot find run() function\n");
     else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
         fprintf(stderr, "Error while executing run() function: %s\n", lua_tostring(g_main.lua, -1));
-    printf("Game loop finish\n");
+    printf("Game loop finish\n\n");
 }
 
 int main(int argc, char **argv)

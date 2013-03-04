@@ -25,9 +25,11 @@ struct render_t
 
 static struct render_t g_render;
 
-static void render_thread(void)
+static void render_thread(void *data)
 {
     int count;
+    if (data != 0)
+        return;
     pfm_render_select_ctx(g_render.ctx);
     while (g_render.quit == 0)
     {
@@ -220,7 +222,7 @@ int render_init(lua_State *lua, int width, int height)
     g_render.engage = thread_cond_create();
     if (g_render.engage == 0)
         goto cleanup;
-    g_render.thread = thread_create(render_thread);
+    g_render.thread = thread_create(render_thread, 0);
     if (g_render.thread == 0)
         goto cleanup;
 
@@ -258,6 +260,7 @@ cleanup:
     g_render.engage = 0;
     SDL_ShowCursor(SDL_ENABLE);
     SDL_Quit();
+    g_render.init = 0;
     return 1;
 }
 

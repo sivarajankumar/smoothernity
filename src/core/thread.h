@@ -1,6 +1,7 @@
 #pragma once
 
-#include <string.h>
+#include <lua.h>
 
-int thread_init(int count, const int msizes[], const int mcounts[], int mlen);
+int thread_init(lua_State *lua, int count, const int msizes[],
+                const int mcounts[], int mlen);
 void thread_done(void);

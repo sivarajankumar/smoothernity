@@ -70,11 +70,11 @@ void thread_cond_signal(thread_cond_t *c)
 }
 
 extern "C"
-thread_t * thread_create(void (*fn)(void))
+thread_t * thread_create(void (*fn)(void*), void *arg)
 {
     thread_t *t;
     t = new thread_t();
-    t->th = new std::thread(fn);
+    t->th = new std::thread(fn, arg);
     return t;
 }
 

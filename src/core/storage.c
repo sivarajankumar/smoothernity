@@ -92,10 +92,12 @@ static int storage_alloc(void)
     return ((char*)st - g_storages.pool) / STORAGE_SIZE;
 }
 
-static void storage_thread(void)
+static void storage_thread(void *data)
 {
     FILE *f;
     struct storage_t **cur = &g_storages.current;
+    if (data != 0)
+        return;
     while (g_storages.quit == 0)
     {
         thread_mutex_lock(g_storages.mutex);
@@ -384,7 +386,7 @@ int storage_init(lua_State *lua, int key_size, int data_size, int count)
         g_storages.mutex = 0;
         goto cleanup;
     }
-    g_storages.thread = thread_create(storage_thread);
+    g_storages.thread = thread_create(storage_thread, 0);
     if (g_storages.thread == 0)
     {
         thread_mutex_destroy(g_storages.mutex);
