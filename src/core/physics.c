@@ -7,6 +7,13 @@
 #include "../physics/physres.h"
 #include <stdio.h>
 
+struct physics_t
+{
+    struct mpool_t *mpool;
+};
+
+static struct physics_t g_physics;
+
 static const char * physics_error_text(int res)
 {
     static char UNKNOWN[] = "unknown";
@@ -48,6 +55,11 @@ static const char * physics_error_text(int res)
         return INTERNAL;
     else
         return UNKNOWN;
+}
+
+static void * physics_malloc(size_t size)
+{
+    return mpool_alloc(g_physics.mpool, size);
 }
 
 static int api_physics_update(lua_State *lua)
@@ -837,9 +849,13 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
 }
 
 int physics_init(lua_State *lua, int wld_count, int cs_count,
-                 int rb_count, int veh_count)
+                 int rb_count, int veh_count,
+                 const int msizes[], const int mcounts[], int mlen)
 {
-    if (physcpp_init(mpool_alloc, mpool_free, wld_count,
+    g_physics.mpool = mpool_create(msizes, mcounts, mlen);
+    if (g_physics.mpool == 0)
+        return 1;
+    if (physcpp_init(physics_malloc, mpool_free, wld_count,
                      cs_count, rb_count, veh_count) != PHYSRES_OK)
     {
         return 1;
@@ -895,6 +911,9 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
 void physics_done(void)
 {
     physcpp_done();
+    fprintf(stdout, "Physics memory pool:\n");
+    if (g_physics.mpool)
+        mpool_destroy(g_physics.mpool);
 }
 
 int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout)

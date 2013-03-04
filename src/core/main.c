@@ -30,6 +30,8 @@ struct main_t
 {
     int *main_mpool;
     int main_mpool_len;
+    int *physics_mpool;
+    int physics_mpool_len;
     int screen_width;
     int screen_height;
     int mesh_count;
@@ -59,6 +61,7 @@ struct main_t
     int sync_count;
     int query_count;
     lua_State *lua;
+    struct mpool_t *mpool;
 };
 
 static struct main_t g_main;
@@ -99,13 +102,13 @@ static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
     else if (osize == 0 && nsize == 0)
         return 0;
     else if (osize == 0 && nsize > 0)
-        return mpool_alloc(nsize);
+        return mpool_alloc(g_main.mpool, nsize);
     else if (osize > 0 && nsize == 0)
     {
         mpool_free(ptr);
         return 0;
     }
-    newptr = mpool_alloc(nsize);
+    newptr = mpool_alloc(g_main.mpool, nsize);
     if (newptr == 0)
         return 0;
     else if (ptr)
@@ -239,6 +242,8 @@ static int main_configure(char *script)
 
     if (main_get_int_array(lua, "main_mpool", &g_main.main_mpool_len,
                            &g_main.main_mpool) != 0
+     || main_get_int_array(lua, "physics_mpool", &g_main.physics_mpool_len,
+                           &g_main.physics_mpool) != 0
      || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0)
     {
         goto cleanup;
@@ -252,6 +257,11 @@ cleanup:
     {
         util_free(g_main.main_mpool);
         g_main.main_mpool = 0;
+    }
+    if (g_main.physics_mpool)
+    {
+        util_free(g_main.physics_mpool);
+        g_main.physics_mpool = 0;
     }
     if (g_main.tex)
     {
@@ -276,10 +286,20 @@ static void main_done(void)
 
     if (g_main.lua)
         lua_close(g_main.lua);
+    if (g_main.mpool)
+    {
+        fprintf(stdout, "Main memory pool:\n");
+        mpool_destroy(g_main.mpool);
+    }
     if (g_main.main_mpool)
     {
         util_free(g_main.main_mpool);
         g_main.main_mpool = 0;
+    }
+    if (g_main.physics_mpool)
+    {
+        util_free(g_main.physics_mpool);
+        g_main.physics_mpool = 0;
     }
     if (g_main.tex)
     {
@@ -294,7 +314,6 @@ static void main_done(void)
     sync_done();
     mesh_done();
     physics_done();
-    mpool_done();
 }
 
 static int main_init(int argc, char **argv)
@@ -305,11 +324,12 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (mpool_init(g_main.main_mpool,
-                   g_main.main_mpool + g_main.main_mpool_len / 2,
-                   g_main.main_mpool_len / 2) != 0)
+    g_main.mpool = mpool_create(g_main.main_mpool,
+                                g_main.main_mpool + g_main.main_mpool_len / 2,
+                                g_main.main_mpool_len / 2);
+    if (g_main.mpool == 0)
     {
-        fprintf(stderr, "Cannot init memory pool\n");
+        fprintf(stderr, "Cannot create main memory pool\n");
         return 1;
     }
 
@@ -339,7 +359,10 @@ static int main_init(int argc, char **argv)
     }
 
     if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
-                     g_main.rigidbody_count, g_main.vehicle_count) != 0)
+                     g_main.rigidbody_count, g_main.vehicle_count,
+                     g_main.physics_mpool,
+                     g_main.physics_mpool + g_main.physics_mpool_len / 2,
+                     g_main.physics_mpool_len / 2) != 0)
     {
         fprintf(stderr, "Cannot init physics\n"); 
         return 1;
