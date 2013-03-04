@@ -174,8 +174,8 @@ static int api_pbuf_waiting(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, (int)(pbuf->state == PBUF_MAPPING
-                            || pbuf->state == PBUF_UNMAPPING));
+    lua_pushboolean(lua, pbuf->state == PBUF_MAPPING
+                      || pbuf->state == PBUF_UNMAPPING);
     return 1;
 }
 

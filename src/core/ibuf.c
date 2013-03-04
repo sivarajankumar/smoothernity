@@ -165,8 +165,8 @@ static int api_ibuf_waiting(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, (int)(ibuf->state == IBUF_MAPPING
-                            || ibuf->state == IBUF_UNMAPPING));
+    lua_pushboolean(lua, ibuf->state == IBUF_MAPPING
+                      || ibuf->state == IBUF_UNMAPPING);
     return 1;
 }
 
