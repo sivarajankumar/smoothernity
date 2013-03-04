@@ -174,8 +174,8 @@ static int api_vbuf_waiting(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, (int)(vbuf->state == VBUF_MAPPING
-                            || vbuf->state == VBUF_UNMAPPING));
+    lua_pushboolean(lua, vbuf->state == VBUF_MAPPING
+                      || vbuf->state == VBUF_UNMAPPING);
     return 1;
 }
 
