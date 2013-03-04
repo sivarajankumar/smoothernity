@@ -6,8 +6,11 @@
 enum ibuf_e
 {
     IBUF_VACANT,
+    IBUF_UNMAPPING,
     IBUF_UNMAPPED,
-    IBUF_MAPPED
+    IBUF_MAPPING,
+    IBUF_MAPPED,
+    IBUF_ERROR
 };
 
 struct ibuf_t
@@ -32,6 +35,7 @@ struct ibufs_t
     int frees;
     char *pool;
     struct ibuf_t *vacant;
+    struct thread_mutex_t *mutex;
 };
 
 extern struct ibufs_t g_ibufs;

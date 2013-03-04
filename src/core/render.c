@@ -266,6 +266,12 @@ void render_done(void)
     if (g_render.init == 0)
         return;
     g_render.init = 0;
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_Quit();
+}
+
+void render_thread_done(void)
+{
     g_render.quit = 1;
     if (g_render.engage)
         thread_cond_signal(g_render.engage);
@@ -277,6 +283,4 @@ void render_done(void)
         thread_cond_destroy(g_render.engage);
     if (g_render.ctx)
         pfm_render_destroy_ctx(g_render.ctx);
-    SDL_ShowCursor(SDL_ENABLE);
-    SDL_Quit();
 }

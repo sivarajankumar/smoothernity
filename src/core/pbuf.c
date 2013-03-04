@@ -1,5 +1,7 @@
 #include "pbuf.h"
+#include "render.h"
 #include "../util/util.h"
+#include "../thread/thread.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -11,7 +13,45 @@ struct pbufs_t g_pbufs;
 
 int pbuf_thread(void)
 {
-    return 0;
+    int i, count;
+    struct pbuf_t *pbuf;
+    count = 0;
+    thread_mutex_lock(g_pbufs.mutex);
+    for (i = 0; i < g_pbufs.count; ++i)
+    {
+        pbuf = pbuf_get(i);
+        if (pbuf->state == PBUF_MAPPING)
+        {
+            thread_mutex_unlock(g_pbufs.mutex);
+            ++count;
+            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
+            pbuf->mapped = glMapBufferRange(
+                GL_PIXEL_UNPACK_BUFFER,
+                (GLintptr)(pbuf->mapped_ofs * (int)PBUF_DATA_SIZE),
+                (GLsizeiptr)(pbuf->mapped_len * (int)PBUF_DATA_SIZE),
+                GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
+                GL_MAP_INVALIDATE_RANGE_BIT);
+            thread_mutex_lock(g_pbufs.mutex);
+            if (pbuf->mapped == 0)
+            {
+                fprintf(stderr, "pbuf_thread: mapping error\n");
+                pbuf->state = PBUF_ERROR;
+            }
+            else
+                pbuf->state = PBUF_MAPPED;
+        }
+        else if (pbuf->state == PBUF_UNMAPPING)
+        {
+            thread_mutex_unlock(g_pbufs.mutex);
+            ++count;
+            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
+            glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+            thread_mutex_lock(g_pbufs.mutex);
+            pbuf->state = PBUF_UNMAPPED;
+        }
+    }
+    thread_mutex_unlock(g_pbufs.mutex);
+    return count;
 }
 
 struct pbuf_t * pbuf_get(int pbufi)
@@ -81,20 +121,12 @@ static int api_pbuf_map(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
-    pbuf->mapped = glMapBufferRange(GL_PIXEL_UNPACK_BUFFER,
-                                    (GLintptr)(ofs * (int)PBUF_DATA_SIZE),
-                                    (GLsizeiptr)(len * (int)PBUF_DATA_SIZE),
-                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT);
-    if (pbuf->mapped == 0)
-    {
-        lua_pushstring(lua, "api_pbuf_map: mapping error");
-        lua_error(lua);
-        return 0;
-    }
+    thread_mutex_lock(g_pbufs.mutex);
     pbuf->mapped_ofs = ofs;
     pbuf->mapped_len = len;
-    pbuf->state = PBUF_MAPPED;
+    pbuf->state = PBUF_MAPPING;
+    thread_mutex_unlock(g_pbufs.mutex);
+    render_engage();
     return 0;
 }
 
@@ -115,13 +147,36 @@ static int api_pbuf_unmap(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
-    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+    thread_mutex_lock(g_pbufs.mutex);
     pbuf->mapped = 0;
     pbuf->mapped_ofs = 0;
     pbuf->mapped_len = 0;
-    pbuf->state = PBUF_UNMAPPED;
+    pbuf->state = PBUF_UNMAPPING;
+    thread_mutex_unlock(g_pbufs.mutex);
+    render_engage();
     return 0;
+}
+
+static int api_pbuf_waiting(lua_State *lua)
+{
+    struct pbuf_t *pbuf;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_pbuf_waiting: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    pbuf = pbuf_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (pbuf == 0)
+    {
+        lua_pushstring(lua, "api_pbuf_waiting: invalid pbuf");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, (int)(pbuf->state == PBUF_MAPPING
+                            || pbuf->state == PBUF_UNMAPPING));
+    return 1;
 }
 
 static int api_pbuf_free(lua_State *lua)
@@ -281,12 +336,16 @@ int pbuf_init(lua_State *lua, int size, int count)
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
+    g_pbufs.mutex = thread_mutex_create();
+    if (g_pbufs.mutex == 0)
+        goto cleanup;
 
     lua_register(lua, "api_pbuf_alloc", api_pbuf_alloc);
     lua_register(lua, "api_pbuf_free", api_pbuf_free);
     lua_register(lua, "api_pbuf_set", api_pbuf_set);
     lua_register(lua, "api_pbuf_map", api_pbuf_map);
     lua_register(lua, "api_pbuf_unmap", api_pbuf_unmap);
+    lua_register(lua, "api_pbuf_waiting", api_pbuf_waiting);
     lua_register(lua, "api_pbuf_left", api_pbuf_left);
 
     return 0;
@@ -308,4 +367,6 @@ void pbuf_done(void)
         glDeleteBuffers(1, &pbuf_get(i)->buf_id);
     util_free(g_pbufs.pool);
     g_pbufs.pool = 0;
+    if (g_pbufs.mutex)
+        thread_mutex_destroy(g_pbufs.mutex);
 }
