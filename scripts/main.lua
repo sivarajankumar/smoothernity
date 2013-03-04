@@ -9,6 +9,10 @@ function configure()
             physics_mpool = function() return
                 128,  8192, 1048576, 4194304,
                 200,    50,       2,       2 end,
+            thread_mpool = function() return
+                  128,  1024, 8192, 32768, 1048576,
+                50000, 11000,  600,   100,       2 end,
+            thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             mesh_count = 1000,
@@ -43,8 +47,7 @@ function configure()
             shuni_count = 1000,
             shprog_count = 10,
             sync_count = 10,
-            query_count = 100,
-            thread_count = cfg.THREAD_COUNT}
+            query_count = 100}
 end
 
 function run()

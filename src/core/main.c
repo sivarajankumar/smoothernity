@@ -32,6 +32,9 @@ struct main_t
     int main_mpool_len;
     int *physics_mpool;
     int physics_mpool_len;
+    int *thread_mpool;
+    int thread_mpool_len;
+    int thread_count;
     int screen_width;
     int screen_height;
     int mesh_count;
@@ -212,6 +215,7 @@ static int main_configure(char *script)
 
     if (main_get_int(lua, "screen_width", &g_main.screen_width) != 0
      || main_get_int(lua, "screen_height", &g_main.screen_height) != 0
+     || main_get_int(lua, "thread_count", &g_main.thread_count) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
      || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
@@ -244,6 +248,8 @@ static int main_configure(char *script)
                            &g_main.main_mpool) != 0
      || main_get_int_array(lua, "physics_mpool", &g_main.physics_mpool_len,
                            &g_main.physics_mpool) != 0
+     || main_get_int_array(lua, "thread_mpool", &g_main.thread_mpool_len,
+                           &g_main.thread_mpool) != 0
      || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0)
     {
         goto cleanup;
@@ -262,6 +268,11 @@ cleanup:
     {
         util_free(g_main.physics_mpool);
         g_main.physics_mpool = 0;
+    }
+    if (g_main.thread_mpool)
+    {
+        util_free(g_main.thread_mpool);
+        g_main.thread_mpool = 0;
     }
     if (g_main.tex)
     {
@@ -300,6 +311,11 @@ static void main_done(void)
     {
         util_free(g_main.physics_mpool);
         g_main.physics_mpool = 0;
+    }
+    if (g_main.thread_mpool)
+    {
+        util_free(g_main.thread_mpool);
+        g_main.thread_mpool = 0;
     }
     if (g_main.tex)
     {
