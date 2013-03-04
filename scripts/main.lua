@@ -38,12 +38,14 @@ function configure()
             shuni_count = 1000,
             shprog_count = 10,
             sync_count = 10,
-            query_count = 100}
+            query_count = 100,
+            thread_count = cfg.THREAD_COUNT}
 end
 
 function run()
     xpcall(game.run,
         function(msg)
-            io.write(string.format('Main\n%s\nError: %s\n', debug.traceback(), msg))
+            io.write(string.format('Main run\n%s\nError: %s\n',
+                                   debug.traceback(), msg))
         end)
 end
