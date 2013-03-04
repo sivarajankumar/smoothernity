@@ -28,9 +28,8 @@ static const size_t ARRAY_ALIGN = 16;
 
 struct main_t
 {
-    int *mpool_sizes;
-    int *mpool_counts;
-    int mpool_len;
+    int *main_mpool;
+    int main_mpool_len;
     int screen_width;
     int screen_height;
     int mesh_count;
@@ -238,10 +237,8 @@ static int main_configure(char *script)
         goto cleanup;
     }
 
-    if (main_get_int_array(lua, "mpool_sizes", &g_main.mpool_len,
-                           &g_main.mpool_sizes) != 0
-     || main_get_int_array(lua, "mpool_counts", &g_main.mpool_len,
-                           &g_main.mpool_counts) != 0
+    if (main_get_int_array(lua, "main_mpool", &g_main.main_mpool_len,
+                           &g_main.main_mpool) != 0
      || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0)
     {
         goto cleanup;
@@ -251,15 +248,10 @@ static int main_configure(char *script)
     lua_close(lua);
     return 0;
 cleanup:
-    if (g_main.mpool_sizes)
+    if (g_main.main_mpool)
     {
-        util_free(g_main.mpool_sizes);
-        g_main.mpool_sizes = 0;
-    }
-    if (g_main.mpool_counts)
-    {
-        util_free(g_main.mpool_counts);
-        g_main.mpool_counts = 0;
+        util_free(g_main.main_mpool);
+        g_main.main_mpool = 0;
     }
     if (g_main.tex)
     {
@@ -284,15 +276,10 @@ static void main_done(void)
 
     if (g_main.lua)
         lua_close(g_main.lua);
-    if (g_main.mpool_sizes)
+    if (g_main.main_mpool)
     {
-        util_free(g_main.mpool_sizes);
-        g_main.mpool_sizes = 0;
-    }
-    if (g_main.mpool_counts)
-    {
-        util_free(g_main.mpool_counts);
-        g_main.mpool_counts = 0;
+        util_free(g_main.main_mpool);
+        g_main.main_mpool = 0;
     }
     if (g_main.tex)
     {
@@ -318,9 +305,9 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (mpool_init(g_main.mpool_sizes,
-                   g_main.mpool_counts,
-                   g_main.mpool_len) != 0)
+    if (mpool_init(g_main.main_mpool,
+                   g_main.main_mpool + g_main.main_mpool_len / 2,
+                   g_main.main_mpool_len / 2) != 0)
     {
         fprintf(stderr, "Cannot init memory pool\n");
         return 1;
