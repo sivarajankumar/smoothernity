@@ -2,8 +2,10 @@ local game = require 'game'
 local cfg = require 'config'
 
 function configure()
-    return {mpool_sizes = function() return    128,  1024,  8192, 16384, 32768, 1048576, 4194304 end,
-            mpool_counts = function() return 50000, 11000,   600,   300,   100,       4,       2 end,
+    return {
+            main_mpool = function() return
+                  128,  1024, 8192, 16384, 32768, 1048576, 4194304,
+                50000, 11000,  600,   300,   100,       4,       2 end,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             mesh_count = 1000,
