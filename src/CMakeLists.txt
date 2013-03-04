@@ -5,7 +5,12 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_definitions(-pedantic-errors -Wall -Wextra -Werror
                     -DCOMPILER_IS_GNU)
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    add_definitions(-W3 -MT -DCOMPILER_IS_MSVC -D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-W3 -DCOMPILER_IS_MSVC -D_CRT_SECURE_NO_WARNINGS)
+    if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+        add_definitions(-MTd)
+    else()
+        add_definitions(-MT)
+    endif()
 endif()
 
 subdirs(core)
