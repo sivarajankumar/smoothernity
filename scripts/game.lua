@@ -51,6 +51,23 @@ local function run_co(co, start_time, max_time)
     end
 end
 
+local function thread_test()
+    -- TODO: remove begin
+    io.write('this is main\n')
+    for i = 0, cfg.THREAD_COUNT - 1 do
+        api_thread_run(i, string.format('(require "thread").run(%i)', i))
+    end
+    for i = 0, cfg.THREAD_COUNT - 1 do
+        io.write(api_thread_request(i, string.format('main to thread %i\n', i)))
+    end
+    for i = 0, cfg.THREAD_COUNT - 1 do
+        while api_thread_state(i) ~= API_THREAD_IDLE do
+            io.write(string.format('waiting for thread %i\n', i))
+        end
+    end
+    -- TODO: remove end
+end
+
 function M.run()
     meshes.init()
     poolbuf.init()
