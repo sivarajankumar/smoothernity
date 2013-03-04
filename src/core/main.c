@@ -23,6 +23,7 @@
 #include "shuni.h"
 #include "sync.h"
 #include "query.h"
+#include "thread.h"
 
 static const size_t ARRAY_ALIGN = 16;
 
@@ -330,6 +331,7 @@ static void main_done(void)
     sync_done();
     mesh_done();
     physics_done();
+    thread_done();
 }
 
 static int main_init(int argc, char **argv)
@@ -373,6 +375,14 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init timer\n"); 
         return 1;
     }
+
+    if (thread_init(g_main.thread_count, g_main.thread_mpool,
+                    g_main.thread_mpool + g_main.thread_mpool_len / 2,
+                    g_main.thread_mpool_len / 2) != 0)
+    {
+        fprintf(stderr, "Cannot init threads\n"); 
+        return 1;
+    } 
 
     if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
                      g_main.rigidbody_count, g_main.vehicle_count,

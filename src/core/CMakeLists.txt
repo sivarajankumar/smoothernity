@@ -9,7 +9,7 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${OPENGL_INCLUDE_DIR})
 
 add_executable(main
-               main.c mpool.c timer.c render.c physics.c
+               main.c mpool.c timer.c render.c physics.c thread.c
                vector.c input.c vbuf.c ibuf.c mesh.c matrix.c buf.c
                storage.c shuni.c shprog.c sync.c pbuf.c tex.c query.c)
 
