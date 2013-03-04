@@ -8,7 +8,8 @@ local ibufs
 function M.init()
     ibufs = twinpool.alloc('Index buffers', cfg.IBUF_SIZE, cfg.IBUF_COUNT,
                            cfg.IBUF_POOL, api_ibuf_alloc, api_ibuf_free,
-                           api_ibuf_set, api_ibuf_map, api_ibuf_unmap)
+                           api_ibuf_set, api_ibuf_map, api_ibuf_unmap,
+                           api_ibuf_waiting)
 end
 
 function M.done()

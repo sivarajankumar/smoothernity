@@ -1,4 +1,5 @@
 #include "vbuf.h"
+#include "render.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
 #include <stdio.h>
@@ -29,6 +30,32 @@ int vbuf_thread(void)
         vbuf = vbuf_get(i);
         if (vbuf->state == VBUF_MAPPING)
         {
+            thread_mutex_unlock(g_vbufs.mutex);
+            ++count;
+            glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+            vbuf->mapped = glMapBufferRange(
+                GL_ARRAY_BUFFER,
+                (GLintptr)(vbuf->mapped_ofs * (int)VBUF_DATA_SIZE),
+                (GLsizeiptr)(vbuf->mapped_len * (int)VBUF_DATA_SIZE),
+                GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
+                GL_MAP_INVALIDATE_RANGE_BIT);
+            thread_mutex_lock(g_vbufs.mutex);
+            if (vbuf->mapped == 0)
+            {
+                fprintf(stderr, "vbuf_thread: mapping error\n");
+                vbuf->state = VBUF_ERROR;
+            }
+            else
+                vbuf->state = VBUF_MAPPED;
+        }
+        else if (vbuf->state == VBUF_UNMAPPING)
+        {
+            thread_mutex_unlock(g_vbufs.mutex);
+            ++count;
+            glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            thread_mutex_lock(g_vbufs.mutex);
+            vbuf->state = VBUF_UNMAPPED;
         }
     }
     thread_mutex_unlock(g_vbufs.mutex);
@@ -94,21 +121,12 @@ static int api_vbuf_map(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
-    vbuf->mapped = glMapBufferRange(GL_ARRAY_BUFFER,
-                                    (GLintptr)(ofs * (int)VBUF_DATA_SIZE),
-                                    (GLsizeiptr)(len * (int)VBUF_DATA_SIZE),
-                                    GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
-                                    GL_MAP_INVALIDATE_RANGE_BIT);
-    if (vbuf->mapped == 0)
-    {
-        lua_pushstring(lua, "api_vbuf_map: mapping error");
-        lua_error(lua);
-        return 0;
-    }
+    thread_mutex_lock(g_vbufs.mutex);
     vbuf->mapped_ofs = ofs;
     vbuf->mapped_len = len;
-    vbuf->state = VBUF_MAPPED;
+    vbuf->state = VBUF_MAPPING;
+    thread_mutex_unlock(g_vbufs.mutex);
+    render_engage();
     return 0;
 }
 
@@ -129,13 +147,36 @@ static int api_vbuf_unmap(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+    thread_mutex_lock(g_vbufs.mutex);
     vbuf->mapped = 0;
     vbuf->mapped_ofs = 0;
     vbuf->mapped_len = 0;
-    vbuf->state = VBUF_UNMAPPED;
+    vbuf->state = VBUF_UNMAPPING;
+    thread_mutex_unlock(g_vbufs.mutex);
+    render_engage();
     return 0;
+}
+
+static int api_vbuf_waiting(lua_State *lua)
+{
+    struct vbuf_t *vbuf;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_vbuf_waiting: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    vbuf = vbuf_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (vbuf == 0)
+    {
+        lua_pushstring(lua, "api_vbuf_waiting: invalid vbuf");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushinteger(lua, (int)(vbuf->state == VBUF_MAPPING
+                            || vbuf->state == VBUF_UNMAPPING));
+    return 1;
 }
 
 static int api_vbuf_free(lua_State *lua)
@@ -320,6 +361,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     lua_register(lua, "api_vbuf_set", api_vbuf_set);
     lua_register(lua, "api_vbuf_map", api_vbuf_map);
     lua_register(lua, "api_vbuf_unmap", api_vbuf_unmap);
+    lua_register(lua, "api_vbuf_waiting", api_vbuf_waiting);
     lua_register(lua, "api_vbuf_left", api_vbuf_left);
 
     return 0;

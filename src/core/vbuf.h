@@ -9,7 +9,8 @@ enum vbuf_e
     VBUF_UNMAPPING,
     VBUF_UNMAPPED,
     VBUF_MAPPING,
-    VBUF_MAPPED
+    VBUF_MAPPED,
+    VBUF_ERROR
 };
 
 struct vbuf_t

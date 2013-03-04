@@ -6,8 +6,11 @@
 enum pbuf_e
 {
     PBUF_VACANT,
+    PBUF_UNMAPPING,
     PBUF_UNMAPPED,
-    PBUF_MAPPED
+    PBUF_MAPPING,
+    PBUF_MAPPED,
+    PBUF_ERROR
 };
 
 struct pbuf_t
@@ -35,6 +38,7 @@ struct pbufs_t
     int frees;
     char *pool;
     struct pbuf_t *vacant;
+    struct thread_mutex_t *mutex;
 };
 
 extern struct pbufs_t g_pbufs;
