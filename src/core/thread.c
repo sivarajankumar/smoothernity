@@ -86,6 +86,46 @@ static int thread_lua_panic(lua_State *lua)
     return 0;
 }
 
+static int api_thread_run(lua_State *lua)
+{
+    return 0;
+}
+
+static int api_thread_request(lua_State *lua)
+{
+    return 0;
+}
+
+static int api_thread_respond(lua_State *lua)
+{
+    return 0;
+}
+
+static int api_thread_state(lua_State *lua)
+{
+    return 0;
+}
+
+static void thread_reg_main(lua_State *lua)
+{
+    lua_register(lua, "api_thread_run", api_thread_run);
+    lua_register(lua, "api_thread_request", api_thread_request);
+    lua_register(lua, "api_thread_state", api_thread_state);
+
+    #define LUA_PUBLISH(x) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, "API_"#x);
+
+    LUA_PUBLISH(THREAD_IDLE);
+    LUA_PUBLISH(THREAD_RUNNING);
+    LUA_PUBLISH(THREAD_WAITING);
+}
+
+static void thread_reg(lua_State *lua)
+{
+    lua_register(lua, "api_thread_respond", api_thread_request);
+}
+
 int thread_init(lua_State *lua, int count, const int msizes[],
                 const int mcounts[], int mlen)
 {
@@ -123,7 +163,9 @@ int thread_init(lua_State *lua, int count, const int msizes[],
         thread->thread = thread_create(thread_loop, thread);
         if (thread == 0)
             goto cleanup;
+        thread_reg(thread->lua);
     }
+    thread_reg_main(lua);
     return 0;
 cleanup:
     g_threads.quit = 1;
