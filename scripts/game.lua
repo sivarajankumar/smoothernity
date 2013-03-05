@@ -59,6 +59,9 @@ local function thread_test()
     end
     for i = 0, cfg.THREAD_COUNT - 1 do
         while api_thread_state(i) ~= API_THREAD_RESPONDING do
+            if api_thread_state(i) == API_THREAD_ERROR then
+                error('thread error')
+            end
             io.write(string.format('waiting for thread %i to respond\n', i))
         end
     end
@@ -67,6 +70,9 @@ local function thread_test()
     end
     for i = 0, cfg.THREAD_COUNT - 1 do
         while api_thread_state(i) ~= API_THREAD_IDLE do
+            if api_thread_state(i) == API_THREAD_ERROR then
+                error('thread error')
+            end
             io.write(string.format('waiting for thread %i to stop\n', i))
         end
     end
@@ -74,6 +80,9 @@ local function thread_test()
 end
 
 function M.run()
+    -- TODO: remove begin
+    thread_test()
+    -- TODO: remove end
     meshes.init()
     poolbuf.init()
     twinibuf.init()

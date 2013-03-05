@@ -299,7 +299,7 @@ static void thread_reg_main(lua_State *lua)
 
 static void thread_reg(lua_State *lua)
 {
-    lua_register(lua, "api_thread_respond", api_thread_request);
+    lua_register(lua, "api_thread_respond", api_thread_respond);
 }
 
 int thread_init(lua_State *lua, int count, const int msizes[],
