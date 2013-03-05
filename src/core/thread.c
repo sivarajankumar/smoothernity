@@ -7,13 +7,13 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-static const size_t THREAD_DATA_SIZE = 32;
+static const size_t THREAD_DATA_SIZE = 64;
 
 enum thread_state_e
 {
     THREAD_IDLE,
     THREAD_RUNNING,
-    THREAD_WAITING,
+    THREAD_RESPONDING,
     THREAD_ERROR
 };
 
@@ -26,6 +26,10 @@ struct thread_data_t
     struct mpool_t *mpool;
     const char *fn;
     size_t fnsize;
+    const char *req;
+    size_t reqsize;
+    const char *resp;
+    size_t respsize;
     enum thread_state_e state;
 };
 
@@ -168,12 +172,92 @@ static int api_thread_run(lua_State *lua)
 
 static int api_thread_request(lua_State *lua)
 {
-    return 0;
+    struct thread_data_t *thread;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isstring(lua, 2))
+    {
+        lua_pushstring(lua, "api_thread_request: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    thread = thread_get(lua_tointeger(lua, 1));
+    if (thread == 0)
+    {
+        lua_pop(lua, 2);
+        lua_pushstring(lua, "api_thread_request: invalid thread");
+        lua_error(lua);
+        return 0;
+    }
+    thread_mutex_lock(thread->mutex);
+    if (thread->state != THREAD_RESPONDING)
+    {
+        thread_mutex_unlock(thread->mutex);
+        lua_pop(lua, 2);
+        lua_pushstring(lua, "api_thread_request: invalid state");
+        lua_error(lua);
+        return 0;
+    }
+    thread->req = lua_tolstring(lua, 2, &thread->reqsize);
+    lua_pushlstring(lua, thread->resp, thread->respsize);
+    thread_mutex_unlock(thread->mutex);
+
+    thread_mutex_lock(g_threads.mutex);
+    thread_cond_signal(thread->engage);
+    thread_cond_wait(g_threads.engage, g_threads.mutex);
+    thread_mutex_unlock(g_threads.mutex);
+    return 1;
 }
 
 static int api_thread_respond(lua_State *lua)
 {
-    return 0;
+    struct thread_data_t *thread;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isstring(lua, 2))
+    {
+        lua_pushstring(lua, "api_thread_respond: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    thread = thread_get(lua_tointeger(lua, 1));
+    if (thread == 0)
+    {
+        lua_pop(lua, 2);
+        lua_pushstring(lua, "api_thread_respond: invalid thread");
+        lua_error(lua);
+        return 0;
+    }
+    thread_mutex_lock(thread->mutex);
+    if (thread->state != THREAD_RUNNING)
+    {
+        thread_mutex_unlock(thread->mutex);
+        lua_pop(lua, 2);
+        lua_pushstring(lua, "api_thread_respond: invalid state");
+        lua_error(lua);
+        return 0;
+    }
+    thread->resp = lua_tolstring(lua, 2, &thread->respsize);
+    thread->state = THREAD_RESPONDING;
+    thread_cond_wait(thread->engage, thread->mutex);
+    lua_pop(lua, 2);
+    thread->resp = 0;
+    thread->respsize = 0;
+    if (thread->req == 0 || thread->reqsize == 0)
+    {
+        thread_mutex_unlock(thread->mutex);
+        lua_pushstring(lua, "api_thread_respond: invalid request");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushlstring(thread->lua, thread->req, thread->reqsize);
+    thread->req = 0;
+    thread->reqsize = 0;
+    thread->state = THREAD_RUNNING;
+    thread_mutex_unlock(thread->mutex);
+
+    thread_mutex_lock(g_threads.mutex);
+    thread_mutex_unlock(g_threads.mutex);
+    thread_cond_signal(g_threads.engage);
+    return 1;
 }
 
 static int api_thread_state(lua_State *lua)
@@ -209,7 +293,7 @@ static void thread_reg_main(lua_State *lua)
 
     LUA_PUBLISH(THREAD_IDLE);
     LUA_PUBLISH(THREAD_RUNNING);
-    LUA_PUBLISH(THREAD_WAITING);
+    LUA_PUBLISH(THREAD_RESPONDING);
     LUA_PUBLISH(THREAD_ERROR);
 }
 
