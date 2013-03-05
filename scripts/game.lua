@@ -58,11 +58,16 @@ local function thread_test()
         api_thread_run(i, string.format('(require "thread").run(%i)', i))
     end
     for i = 0, cfg.THREAD_COUNT - 1 do
+        while api_thread_state(i) ~= API_THREAD_RESPONDING do
+            io.write(string.format('waiting for thread %i to respond\n', i))
+        end
+    end
+    for i = 0, cfg.THREAD_COUNT - 1 do
         io.write(api_thread_request(i, string.format('main to thread %i\n', i)))
     end
     for i = 0, cfg.THREAD_COUNT - 1 do
         while api_thread_state(i) ~= API_THREAD_IDLE do
-            io.write(string.format('waiting for thread %i\n', i))
+            io.write(string.format('waiting for thread %i to stop\n', i))
         end
     end
     -- TODO: remove end
