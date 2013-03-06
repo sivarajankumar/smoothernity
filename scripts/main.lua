@@ -4,14 +4,14 @@ local cfg = require 'config'
 function configure()
     return {
             main_mpool = function() return
-                  128,  1024, 8192, 32768, 1048576,
-                50000, 11000,  600,   100,       2 end,
+                  128,  1024, 8192, 32768, 2097152,
+                50000, 11000,  600,   100,      10 end,
             physics_mpool = function() return
                 128,  8192, 1048576, 4194304,
                 200,    50,       2,       2 end,
             thread_mpool = function() return
-                128, 1024, 8192,
-                500,   50,   10 end,
+                128, 1024, 524288, 2097152,
+               3000, 1000,    500,      10 end,
             thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,

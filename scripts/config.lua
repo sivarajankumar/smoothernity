@@ -20,5 +20,6 @@ M.PBUF_SIZE = 1048576
 M.PBUF_COUNT = 1
 M.PBUF_POOL = {[1048576] = 1}
 M.TEX_POOL = {{8, 5}, {9, 5}, {10, 5}}
+M.NOISE_SIZE = 256
 
 return M

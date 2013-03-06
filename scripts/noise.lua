@@ -1,16 +1,17 @@
 local M = {}
 
+local cfg = require 'config'
 local util = require 'util'
+local thread = require 'thread'
 
-local LENGTH = 256
-local WIDTH = 256
+local th
 
 function M.alloc(uid)
     local self = {}
     local data = {}
 
     local function pick(z, x)
-        return data[math.floor(z) % LENGTH][math.floor(x) % WIDTH]
+        return data[math.floor(z) % cfg.NOISE_SIZE][math.floor(x) % cfg.NOISE_SIZE]
     end
 
     local function get_lerp(z, x)
@@ -53,33 +54,21 @@ function M.alloc(uid)
         return get_spline(z, x)
     end
 
-    for z = 0, LENGTH - 1 do
-        local chunk = util.async_read(util.uid_save(string.format('%s_%i.lua', uid, z)))
-        if chunk ~= '' then
-            data[z] = loadstring(chunk)()
-        else
-            data[z] = {}
-            for x = 0, WIDTH - 1 do
-                data[z][x] = math.random()
-            end
-            do
-                chunk = 'return {\n'
-                local first_x = true
-                for x, v in pairs(data[z]) do
-                    if not first_x then
-                        chunk = chunk .. ',\n'
-                    end
-                    first_x = false
-                    chunk = chunk .. string.format('    [%i] = %f', x, v)
-                    coroutine.yield(false)
-                end
-                chunk = chunk .. '\n}'
-                util.async_write(util.uid_save(string.format('%s_%i.lua', uid, z)), chunk)
-            end
-        end
-    end
+    util.wait_thread_responding(th)
+    th.request(uid)
+    util.wait_thread_responding(th)
+    data = loadstring(th.request(''))()
 
     return self
+end
+
+function M.init()
+    th = thread.alloc('noise_th')
+end
+
+function M.done()
+    util.wait_thread_idle(th)
+    th.free()
 end
 
 return M
