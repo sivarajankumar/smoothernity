@@ -67,29 +67,6 @@ struct main_t
 
 static struct main_t g_main;
 
-/* TODO: remove */
-static int api_main_gc_step(lua_State *lua)
-{
-    int step;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_main_gc_step: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    step = lua_tointeger(lua, 1);
-    lua_pop(lua, 1);
-    if (step <= 0)
-    {
-        lua_pushstring(lua, "api_main_gc_step: negative step");
-        lua_error(lua);
-        return 0;
-    }
-    lua_gc(g_main.lua, LUA_GCSTEP, step);
-    lua_gc(g_main.lua, LUA_GCSTOP, 0);
-    return 0;
-}
-
 static int main_panic(lua_State *lua)
 {
     fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
@@ -468,7 +445,6 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    lua_register(g_main.lua, "api_main_gc_step", api_main_gc_step);
     return 0;
 }
 
