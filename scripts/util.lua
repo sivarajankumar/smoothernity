@@ -18,6 +18,7 @@ function M.sync_read(uid)
 end
 
 function M.sync_write(uid, data)
+    -- TODO: delete files with data == ''
     local f = io.open(uid, 'w')
     f:write(data)
     f:close()
@@ -29,7 +30,7 @@ function M.wait_thread_idle(th)
         if api_timer() - t > MAX_WAIT_TIME then
             error('wait_thread_idle: too long\n')
         end
-        coroutine.yield(true)
+        coroutine.yield(false)
     end
 end
 
@@ -39,7 +40,7 @@ function M.wait_thread_responding(th)
         if api_timer() - t > MAX_WAIT_TIME then
             error('wait_thread_responding: too long\n')
         end
-        coroutine.yield(true)
+        coroutine.yield(false)
     end
 end
 
