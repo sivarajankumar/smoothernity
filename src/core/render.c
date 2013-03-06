@@ -177,7 +177,7 @@ static int api_render_swap(lua_State *lua)
     return 0;
 }
 
-int render_init(lua_State *lua, int width, int height)
+int render_init(lua_State *lua, int width, int height, int full_screen)
 {
     int bpp;
     int flags;
@@ -197,7 +197,10 @@ int render_init(lua_State *lua, int width, int height)
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    flags = SDL_OPENGL | SDL_FULLSCREEN;
+    flags = SDL_OPENGL;
+
+    if (full_screen)
+        flags |= SDL_FULLSCREEN;
 
     g_render.screen = SDL_SetVideoMode(width, height, bpp, flags);
     if (g_render.screen == 0)
