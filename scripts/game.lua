@@ -38,7 +38,7 @@ end
 
 local function run_co(co, start_time, max_time)
     while coroutine.status(co) ~= 'dead' do
-        api_main_gc_step(GC_STEP)
+        collectgarbage('step', GC_STEP)
         local res, arg = coroutine.resume(co)
         if res and arg then
             break
@@ -161,7 +161,7 @@ function M.run()
         local core_time = logic_time
         api_physics_update(cfg.FRAME_TIME)
         api_input_update()
-        api_main_gc_step(GC_STEP)
+        collectgarbage('step', GC_STEP)
 
         local control_time = api_timer()
         run_co(control, logic_time, 0)
