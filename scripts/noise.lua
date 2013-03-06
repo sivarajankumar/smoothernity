@@ -6,7 +6,7 @@ local thread = require 'thread'
 
 function M.alloc(uid)
     local self = {}
-    local data = {}
+    local data = {} -- TODO: use api_buf instead
 
     local function pick(z, x)
         return data[math.floor(z) % cfg.NOISE_SIZE][math.floor(x) % cfg.NOISE_SIZE]
