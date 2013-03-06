@@ -2,21 +2,24 @@ local M = {}
 
 local pwld = require 'physwld'
 local cfg = require 'config'
+local thread = require 'thread'
 
 local MAX_WAIT_TIME = 10
 
-function M.fread(name)
-    local f = io.open(name, 'r')
+function M.sync_read(uid)
+    local f = io.open(uid, 'r')
     if f then
         local s = f:read('*a')
         f:close()
         return s
+    else
+        return ''
     end
 end
 
-function M.fwrite(name, s)
-    local f = io.open(name, 'w')
-    f:write(s)
+function M.sync_write(uid, data)
+    local f = io.open(uid, 'w')
+    f:write(data)
     f:close()
 end
 
@@ -67,43 +70,28 @@ function M.sync_wait()
 end
 
 function M.async_read(uid)
-    local t = api_timer()
-    local s = api_storage_alloc_r(uid)
-    local res
-    while true do
-        api_storage_update()
-        if api_storage_state(s) == API_STORAGE_STATE_DONE then
-            res = api_storage_data(s)
-            break
-        elseif api_storage_state(s) == API_STORAGE_STATE_ERROR then
-            res = ''
-            break
-        end
-        if api_timer() - t > MAX_WAIT_TIME then
-            error('sync_wait: too long\n')
-        end
-        coroutine.yield(false)
-    end
-    api_storage_free(s)
+    local th = thread.alloc('util_th')
+    M.wait_thread_responding(th)
+    th.request('async_read')
+    M.wait_thread_responding(th)
+    th.request(uid)
+    M.wait_thread_responding(th)
+    local res = th.request('')
+    M.wait_thread_idle(th)
+    th.free()
     return res
 end
 
 function M.async_write(uid, data)
-    local t = api_timer()
-    local s = api_storage_alloc_w(uid, data)
-    while true do
-        api_storage_update()
-        if api_storage_state(s) == API_STORAGE_STATE_DONE
-        or api_storage_state(s) == API_STORAGE_STATE_ERROR
-        then
-            break
-        end
-        if api_timer() - t > MAX_WAIT_TIME then
-            error('sync_wait: too long\n')
-        end
-        coroutine.yield(false)
-    end
-    api_storage_free(s)
+    local th = thread.alloc('util_th')
+    M.wait_thread_responding(th)
+    th.request('async_write')
+    M.wait_thread_responding(th)
+    th.request(uid)
+    M.wait_thread_responding(th)
+    th.request(data)
+    M.wait_thread_idle(th)
+    th.free()
 end
 
 function M.uid_cache(uid)

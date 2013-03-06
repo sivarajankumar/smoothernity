@@ -4,12 +4,10 @@ local cfg = require 'config'
 local util = require 'util'
 
 function M.thread_run(thi)
-    local uid = api_thread_respond(thi, '')
-    local fname = util.uid_save(string.format('%s.lua', uid))
-
-    local data = util.fread(fname)
-    if not data then
-        local f = io.open(fname, 'w')
+    local uid = util.uid_save(string.format('%s.lua', api_thread_respond(thi, '')))
+    local data = util.sync_read(uid)
+    if data == '' then
+        local f = io.open(uid, 'w')
         f:write('return {\n')
         for z = 0, cfg.NOISE_SIZE - 1 do
             if z > 0 then
@@ -26,7 +24,7 @@ function M.thread_run(thi)
         end
         f:write('\n}\n')
         f:close()
-        data = util.fread(fname)
+        data = util.sync_read(uid)
     end
     api_thread_respond(thi, data)
 end

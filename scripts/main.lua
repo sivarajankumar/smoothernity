@@ -10,8 +10,8 @@ function configure()
                 128,  8192, 1048576, 4194304,
                 200,    50,       2,       2 end,
             thread_mpool = function() return
-                128, 1024, 524288, 2097152,
-               3000, 1000,    500,      10 end,
+                128, 1024, 2048, 4096, 16384, 65536, 131072, 262144, 524288, 2097152,
+               6000, 1000,  200,  200,   100,    10,      5,      5,      5,       5 end,
             thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
