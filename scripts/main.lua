@@ -1,7 +1,9 @@
+local M = {}
+
 local game = require 'game'
 local cfg = require 'config'
 
-function configure()
+function M.configure()
     return {
             main_mpool = function() return
                   128,  1024, 8192, 32768, 2097152,
@@ -47,10 +49,12 @@ function configure()
             query_count = 100}
 end
 
-function run()
+function M.run()
     xpcall(game.run,
         function(msg)
             io.write(string.format('Main run\n%s\nError: %s\n',
                                    debug.traceback(), msg))
         end)
 end
+
+return M

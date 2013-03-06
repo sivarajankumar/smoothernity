@@ -103,7 +103,8 @@ static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
 static int main_get_int_array(lua_State *lua, const char *field,
                               int *len, int **array)
 {
-    int i;
+    int i, oldtop;
+    oldtop = lua_gettop(lua);
     lua_getfield(lua, -1, field);
     if (!lua_isfunction(lua, -1) || lua_pcall(lua, 0, LUA_MULTRET, 0) != 0)
     {
@@ -111,7 +112,7 @@ static int main_get_int_array(lua_State *lua, const char *field,
                 field);
         return 1;
     }
-    *len = lua_gettop(lua) - 1;
+    *len = lua_gettop(lua) - oldtop;
     if (*len <= 0)
     {
         fprintf(stderr, "Invalid configure()[\"%s\"]() return value\n",
@@ -176,13 +177,18 @@ static int main_configure(char *script)
         fprintf(stderr, "Cannot run script: %s\n", lua_tostring(lua, -1));
         goto cleanup;
     }
-    lua_getglobal(lua, "configure");
+    if (!lua_istable(lua, -1))
+    {
+        fprintf(stderr, "Invalid return value of main module\n");
+        goto cleanup;
+    }
+    lua_getfield(lua, -1, "configure");
     if (!lua_isfunction(lua, -1) || lua_pcall(lua, 0, LUA_MULTRET, 0) != 0)
     {
         fprintf(stderr, "Cannot run configure() function: %s\n", lua_tostring(lua, -1));
         goto cleanup;
     }
-    if (lua_gettop(lua) != 1 || !lua_istable(lua, -1))
+    if (!lua_istable(lua, -1))
     {
         fprintf(stderr, "Invalid return value of configure() function\n");
         goto cleanup;
@@ -330,12 +336,6 @@ static int main_init(int argc, char **argv)
     lua_atpanic(g_main.lua, main_panic);
     luaL_openlibs(g_main.lua);
 
-    if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
-    {
-        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_main.lua, -1));
-        return 1;
-    }
-
     input_init(g_main.lua);
 
     if (timer_init(g_main.lua) != 0)
@@ -441,17 +441,29 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
+    if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
+    {
+        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_main.lua, -1));
+        return 1;
+    }
+
     return 0;
 }
 
 static void main_loop(void)
 {
     printf("Game loop start\n");
-    lua_getglobal(g_main.lua, "run");
-    if (!lua_isfunction(g_main.lua, -1))
-        fprintf(stderr, "Cannot find run() function\n");
-    else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
-        fprintf(stderr, "Error while executing run() function: %s\n", lua_tostring(g_main.lua, -1));
+    if (!lua_istable(g_main.lua, -1))
+        fprintf(stderr, "Invalid return value of main module\n");
+    else
+    {
+        lua_getfield(g_main.lua, -1, "run");
+        if (!lua_isfunction(g_main.lua, -1))
+            fprintf(stderr, "Cannot find run() function\n");
+        else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0) != 0)
+            fprintf(stderr, "Error while executing run() function: %s\n",
+                    lua_tostring(g_main.lua, -1));
+    }
     printf("Game loop finish\n\n");
 }
 
