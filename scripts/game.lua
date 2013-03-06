@@ -63,6 +63,8 @@ function M.run()
     pwld.init()
     render.init()
 
+    collectgarbage('stop')
+
     local wld, cbs, car, camc, camd, camsw
     local created = false
     local generated = false

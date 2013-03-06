@@ -328,8 +328,6 @@ static int main_init(int argc, char **argv)
         return 1;
     }
     lua_atpanic(g_main.lua, main_panic);
-    lua_gc(g_main.lua, LUA_GCSTOP, 0); /* TODO: remove */
-
     luaL_openlibs(g_main.lua);
 
     if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
