@@ -62,38 +62,6 @@ int vbuf_thread(void)
     return count;
 }
 
-static int api_vbuf_alloc(lua_State *lua)
-{
-    struct vbuf_t *vbuf;
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_vbuf_alloc: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (g_vbufs.vacant == 0)
-    {
-        lua_pushstring(lua, "api_vbuf_alloc: out of vbufs");
-        lua_error(lua);
-        return 0;
-    }
-
-    vbuf = g_vbufs.vacant;
-    g_vbufs.vacant = g_vbufs.vacant->next;
-
-    ++g_vbufs.allocs;
-    --g_vbufs.left;
-    if (g_vbufs.left < g_vbufs.left_min)
-        g_vbufs.left_min = g_vbufs.left;
-
-    vbuf->state = VBUF_UNMAPPED;
-    vbuf->next = 0;
-
-    lua_pushinteger(lua, ((char*)vbuf - g_vbufs.pool) / VBUF_SIZE);
-    return 1;
-}
-
 static int api_vbuf_map(lua_State *lua)
 {
     struct vbuf_t *vbuf;
@@ -177,35 +145,6 @@ static int api_vbuf_waiting(lua_State *lua)
     lua_pushboolean(lua, vbuf->state == VBUF_MAPPING
                       || vbuf->state == VBUF_UNMAPPING);
     return 1;
-}
-
-static int api_vbuf_free(lua_State *lua)
-{
-    struct vbuf_t *vbuf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_vbuf_free: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    vbuf = vbuf_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-
-    if (vbuf == 0 || vbuf->state != VBUF_UNMAPPED)
-    {
-        lua_pushstring(lua, "api_vbuf_free: invalid vbuf");
-        lua_error(lua);
-        return 0;
-    }
-
-    ++g_vbufs.left;
-    ++g_vbufs.frees;
-
-    vbuf->next = g_vbufs.vacant;
-    g_vbufs.vacant = vbuf;
-    vbuf->state = VBUF_VACANT;
-    return 0;
 }
 
 static int api_vbuf_set(lua_State *lua)
@@ -298,18 +237,6 @@ static int api_vbuf_set(lua_State *lua)
     return 0;
 }
 
-static int api_vbuf_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_vbuf_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_vbufs.left);
-    return 1;
-}
-
 int vbuf_init(lua_State *lua, int size, int count)
 {
     struct vbuf_data_t data;
@@ -334,21 +261,17 @@ int vbuf_init(lua_State *lua, int size, int count)
     memset(g_vbufs.pool, 0, VBUF_SIZE * count);
     g_vbufs.size = size;
     g_vbufs.count = count;
-    g_vbufs.left = count;
-    g_vbufs.left_min = count;
     g_vbufs.offset_pos = (char*)0 + ((char*)&data.pos - (char*)&data);
     g_vbufs.offset_tex = (char*)0 + ((char*)&data.tex - (char*)&data);
     g_vbufs.offset_color = (char*)0 + ((char*)&data.color - (char*)&data);
-    g_vbufs.vacant = vbuf_get(0);
     for (i = 0; i < count; ++i)
     {
         vbuf = vbuf_get(i);
-        vbuf->state = VBUF_VACANT;
-        vbuf->next = vbuf_get(i + 1);
+        vbuf->state = VBUF_UNMAPPED;
         glGenBuffers(1, &vbuf->buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
         glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
-                     0, GL_STREAM_DRAW);
+                     0, GL_DYNAMIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
     }
@@ -356,13 +279,10 @@ int vbuf_init(lua_State *lua, int size, int count)
     if (g_vbufs.mutex == 0)
         goto cleanup;
 
-    lua_register(lua, "api_vbuf_alloc", api_vbuf_alloc);
-    lua_register(lua, "api_vbuf_free", api_vbuf_free);
     lua_register(lua, "api_vbuf_set", api_vbuf_set);
     lua_register(lua, "api_vbuf_map", api_vbuf_map);
     lua_register(lua, "api_vbuf_unmap", api_vbuf_unmap);
     lua_register(lua, "api_vbuf_waiting", api_vbuf_waiting);
-    lua_register(lua, "api_vbuf_left", api_vbuf_left);
 
     return 0;
 cleanup:
@@ -376,9 +296,6 @@ void vbuf_done(void)
     int i;
     if (g_vbufs.pool == 0)
         return;
-    printf("Vertex buffers usage: %i/%i, allocs/frees: %i/%i\n",
-           g_vbufs.count - g_vbufs.left_min, g_vbufs.count,
-           g_vbufs.allocs, g_vbufs.frees);
     for (i = 0; i < g_vbufs.count; ++i)
         glDeleteBuffers(1, &vbuf_get(i)->buf_id);
     util_free(g_vbufs.pool);

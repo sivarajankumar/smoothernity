@@ -5,14 +5,16 @@ local pool = require 'pool.pool'
 local twin = require 'twin.twin'
 
 function M.alloc(title, res_size, res_count, pool_dims,
-                 res_alloc, res_free, res_set, res_map, res_unmap, res_waiting)
+                 res_set, res_map, res_unmap, res_waiting)
     local self = {}
     local pools = {}
+    local res_start = 0
     for i = 0, cfg.TWINS - 1 do
         local name = string.format('%s (twin %i)', title, i)
-        pools[i] = pool.alloc(name, res_size, res_count / cfg.TWINS,
-                              pool_dims, res_alloc, res_free, res_map, res_unmap,
-                              res_waiting)
+        local count = res_count / cfg.TWINS
+        pools[i] = pool.alloc(name, res_size, res_start, count,
+                              pool_dims, res_map, res_unmap, res_waiting)
+        res_start = res_start + count
     end
 
     function self.free()

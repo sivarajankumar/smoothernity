@@ -7,9 +7,8 @@ local vbufs
 
 function M.init()
     vbufs = twinpool.alloc('Vertex buffers', cfg.VBUF_SIZE, cfg.VBUF_COUNT,
-                           cfg.VBUF_POOL, api_vbuf_alloc, api_vbuf_free,
-                           api_vbuf_set, api_vbuf_map, api_vbuf_unmap,
-                           api_vbuf_waiting)
+                           cfg.VBUF_POOL, api_vbuf_set, api_vbuf_map,
+                           api_vbuf_unmap, api_vbuf_waiting)
 end
 
 function M.done()

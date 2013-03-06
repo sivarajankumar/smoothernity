@@ -1,7 +1,7 @@
 local M = {}
 
-function M.alloc(title, res_size, res_count, pool_dims,
-                 res_alloc, res_free, res_map, res_unmap, res_waiting)
+function M.alloc(title, res_size, res_start, res_count,
+                 pool_dims, res_map, res_unmap, res_waiting)
     local self = {}
     local shelves = {}
     local res = {}
@@ -82,9 +82,6 @@ function M.alloc(title, res_size, res_count, pool_dims,
             io.write(string.format('%s pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
                 title, s, shelf.count - shelf.left_min, shelf.count, shelf.allocs, shelf.frees))
         end
-        for ri, r in pairs(res) do
-            res_free(r)
-        end
     end
 
     function self.left(size)
@@ -117,8 +114,8 @@ function M.alloc(title, res_size, res_count, pool_dims,
         for s, c in pairs(pool_dims) do left[s] = c end
         for s in pairs(pool_dims) do table.insert(sizes, s) end
         table.sort(sizes, function(x, y) return x > y end)
-        for ri = 1, res_count do
-            res[ri] = res_alloc()
+        for ri = 0, res_count - 1 do
+            res[ri] = ri + res_start
             local start = 0
             for si, size in ipairs(sizes) do
                 while start + size <= res_size and left[size] > 0 do

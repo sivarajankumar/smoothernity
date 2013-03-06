@@ -5,7 +5,6 @@
 
 enum ibuf_e
 {
-    IBUF_VACANT,
     IBUF_UNMAPPING,
     IBUF_UNMAPPED,
     IBUF_MAPPING,
@@ -20,7 +19,6 @@ struct ibuf_t
     int mapped_len;
     GLvoid *mapped;
     enum ibuf_e state;
-    struct ibuf_t *next;
 };
 
 typedef GLuint ibuf_data_t;
@@ -29,12 +27,7 @@ struct ibufs_t
 {
     int size;
     int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
     char *pool;
-    struct ibuf_t *vacant;
     struct thread_mutex_t *mutex;
 };
 
