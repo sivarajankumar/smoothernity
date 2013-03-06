@@ -62,38 +62,6 @@ struct pbuf_t * pbuf_get(int pbufi)
         return 0;
 }
 
-static int api_pbuf_alloc(lua_State *lua)
-{
-    struct pbuf_t *pbuf;
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_pbuf_alloc: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (g_pbufs.vacant == 0)
-    {
-        lua_pushstring(lua, "api_pbuf_alloc: out of pbufs");
-        lua_error(lua);
-        return 0;
-    }
-
-    pbuf = g_pbufs.vacant;
-    g_pbufs.vacant = g_pbufs.vacant->next;
-
-    ++g_pbufs.allocs;
-    --g_pbufs.left;
-    if (g_pbufs.left < g_pbufs.left_min)
-        g_pbufs.left_min = g_pbufs.left;
-
-    pbuf->state = PBUF_UNMAPPED;
-    pbuf->next = 0;
-
-    lua_pushinteger(lua, ((char*)pbuf - g_pbufs.pool) / PBUF_SIZE);
-    return 1;
-}
-
 static int api_pbuf_map(lua_State *lua)
 {
     struct pbuf_t *pbuf;
@@ -179,35 +147,6 @@ static int api_pbuf_waiting(lua_State *lua)
     return 1;
 }
 
-static int api_pbuf_free(lua_State *lua)
-{
-    struct pbuf_t *pbuf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_pbuf_free: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    pbuf = pbuf_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-
-    if (pbuf == 0 || pbuf->state != PBUF_UNMAPPED)
-    {
-        lua_pushstring(lua, "api_pbuf_free: invalid pbuf");
-        lua_error(lua);
-        return 0;
-    }
-
-    ++g_pbufs.left;
-    ++g_pbufs.frees;
-
-    pbuf->next = g_pbufs.vacant;
-    g_pbufs.vacant = pbuf;
-    pbuf->state = PBUF_VACANT;
-    return 0;
-}
-
 static int api_pbuf_set(lua_State *lua)
 {
     int ofs, len, i, j, iofs;
@@ -286,18 +225,6 @@ static int api_pbuf_set(lua_State *lua)
     return 0;
 }
 
-static int api_pbuf_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_pbuf_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_pbufs.left);
-    return 1;
-}
-
 int pbuf_init(lua_State *lua, int size, int count)
 {
     struct pbuf_t *pbuf;
@@ -321,14 +248,10 @@ int pbuf_init(lua_State *lua, int size, int count)
     memset(g_pbufs.pool, 0, PBUF_SIZE * count);
     g_pbufs.size = size;
     g_pbufs.count = count;
-    g_pbufs.left = count;
-    g_pbufs.left_min = count;
-    g_pbufs.vacant = pbuf_get(0);
     for (i = 0; i < count; ++i)
     {
         pbuf = pbuf_get(i);
-        pbuf->state = PBUF_VACANT;
-        pbuf->next = pbuf_get(i + 1);
+        pbuf->state = PBUF_UNMAPPED;
         glGenBuffers(1, &pbuf->buf_id);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
         glBufferData(GL_PIXEL_UNPACK_BUFFER, PBUF_DATA_SIZE * size,
@@ -340,13 +263,10 @@ int pbuf_init(lua_State *lua, int size, int count)
     if (g_pbufs.mutex == 0)
         goto cleanup;
 
-    lua_register(lua, "api_pbuf_alloc", api_pbuf_alloc);
-    lua_register(lua, "api_pbuf_free", api_pbuf_free);
     lua_register(lua, "api_pbuf_set", api_pbuf_set);
     lua_register(lua, "api_pbuf_map", api_pbuf_map);
     lua_register(lua, "api_pbuf_unmap", api_pbuf_unmap);
     lua_register(lua, "api_pbuf_waiting", api_pbuf_waiting);
-    lua_register(lua, "api_pbuf_left", api_pbuf_left);
 
     return 0;
 cleanup:
@@ -360,9 +280,6 @@ void pbuf_done(void)
     int i;
     if (g_pbufs.pool == 0)
         return;
-    printf("Pixel buffers usage: %i/%i, allocs/frees: %i/%i\n",
-           g_pbufs.count - g_pbufs.left_min, g_pbufs.count,
-           g_pbufs.allocs, g_pbufs.frees);
     for (i = 0; i < g_pbufs.count; ++i)
         glDeleteBuffers(1, &pbuf_get(i)->buf_id);
     util_free(g_pbufs.pool);

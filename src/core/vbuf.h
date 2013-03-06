@@ -5,7 +5,6 @@
 
 enum vbuf_e
 {
-    VBUF_VACANT,
     VBUF_UNMAPPING,
     VBUF_UNMAPPED,
     VBUF_MAPPING,
@@ -20,22 +19,16 @@ struct vbuf_t
     int mapped_len;
     GLvoid *mapped;
     enum vbuf_e state;
-    struct vbuf_t *next;
 };
 
 struct vbufs_t
 {
     int size;
     int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
     void *offset_pos;
     void *offset_tex;
     void *offset_color;
     char *pool;
-    struct vbuf_t *vacant;
     struct thread_mutex_t *mutex;
 };
 
