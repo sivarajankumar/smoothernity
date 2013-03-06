@@ -459,13 +459,11 @@ static int api_vector_pick(lua_State *lua)
 static int api_vector_seq(lua_State *lua)
 {
     struct vector_t *vector;
-    struct buf_t *buf;
     int start, len, loop, ipl;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
-    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6))
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
     {
         lua_pushstring(lua, "api_vector_seq: incorrect argument");
         lua_error(lua);
@@ -473,23 +471,15 @@ static int api_vector_seq(lua_State *lua)
     }
 
     vector = vector_get(lua_tointeger(lua, 1));
-    buf = buf_get(lua_tointeger(lua, 2));
-    start = lua_tointeger(lua, 3);
-    len = lua_tointeger(lua, 4);
-    loop = lua_tointeger(lua, 5);
-    ipl = lua_tointeger(lua, 6);
-    lua_pop(lua, 6);
+    start = lua_tointeger(lua, 2);
+    len = lua_tointeger(lua, 3);
+    loop = lua_tointeger(lua, 4);
+    ipl = lua_tointeger(lua, 5);
+    lua_pop(lua, 5);
 
     if (vector == 0)
     {
         lua_pushstring(lua, "api_vector_seq: invalid vector");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (buf == 0)
-    {
-        lua_pushstring(lua, "api_vector_seq: invalid buffer");
         lua_error(lua);
         return 0;
     }
@@ -531,7 +521,6 @@ static int api_vector_seq(lua_State *lua)
     vector->seq_cur = start;
     vector->seq_len = len;
     vector->seq_loop = loop;
-    vector->seq_buf = buf;
     vector->seq_ipl = (enum vector_ipl_e)ipl;
 
     return 0;
@@ -690,12 +679,12 @@ int vector_nesting(struct vector_t *vector, int limit)
 
 static float vector_seq_dt(struct vector_t *v, int i)
 {
-    return v->seq_buf->data[i + 4];
+    return g_bufs.data[i + 4];
 }
 
 static float * vector_seq_value(struct vector_t *v, int i)
 {
-    return v->seq_buf->data + i;
+    return g_bufs.data + i;
 }
 
 static int vector_seq_next(struct vector_t *v, int i)

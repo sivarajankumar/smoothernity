@@ -75,11 +75,11 @@ function M.alloc(x, y, z)
 
     -- matrices
     do
-        api_buf_set(brot.res, brot.start,   0,0,0,0,3,   math.pi*2,0,0,0,0)
-        api_buf_set(bpos.res, bpos.start,   2,1, 2,0,1,   2,-1,-2,0,1,
-                                           -2,1,-2,0,1,  -2,-1, 2,0,1)
-        api_vector_seq(vrot, brot.res, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
-        api_vector_seq(vpos, bpos.res, bpos.start, 4, 1, API_VECTOR_IPL_SPLINE)
+        api_buf_set(brot.start,   0,0,0,0,3,   math.pi*2,0,0,0,0)
+        api_buf_set(bpos.start,   2,1, 2,0,1,   2,-1,-2,0,1,
+                                 -2,1,-2,0,1,  -2,-1, 2,0,1)
+        api_vector_seq(vrot, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
+        api_vector_seq(vpos, bpos.start, 4, 1, API_VECTOR_IPL_SPLINE)
         api_vector_const(vscl, 0.5, 0.5, 0.5, 0)
         api_matrix_pos_scl_rot(mloc, vpos, vscl, vrot, API_MATRIX_AXIS_Y, 0)
         api_matrix_mul(msmall, mrb, mloc)
