@@ -162,7 +162,6 @@ function M.run()
         api_physics_update(cfg.FRAME_TIME)
         api_input_update()
         api_main_gc_step(GC_STEP)
-        api_storage_update()
 
         local control_time = api_timer()
         run_co(control, logic_time, 0)

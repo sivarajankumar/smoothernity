@@ -18,7 +18,6 @@
 #include "matrix.h"
 #include "physics.h"
 #include "buf.h"
-#include "storage.h"
 #include "shprog.h"
 #include "shuni.h"
 #include "sync.h"
@@ -58,9 +57,6 @@ struct main_t
     int vehicle_count;
     int buf_size;
     int buf_count;
-    int storage_key_size;
-    int storage_data_size;
-    int storage_count;
     int shprog_count;
     int shuni_count;
     int sync_count;
@@ -237,9 +233,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "buf_count", &g_main.buf_count) != 0
-     || main_get_int(lua, "storage_key_size", &g_main.storage_key_size) != 0
-     || main_get_int(lua, "storage_data_size", &g_main.storage_data_size) != 0
-     || main_get_int(lua, "storage_count", &g_main.storage_count) != 0
      || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
      || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0
      || main_get_int(lua, "sync_count", &g_main.sync_count) != 0
@@ -323,7 +316,6 @@ static void main_done(void)
     }
 
     buf_done();
-    storage_done();
     vector_done();
     matrix_done();
     sync_done();
@@ -396,13 +388,6 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init physics\n"); 
         return 1;
     } 
-
-    if (storage_init(g_main.lua, g_main.storage_key_size,
-                     g_main.storage_data_size, g_main.storage_count) != 0)
-    {
-        fprintf(stderr, "Cannot init storages\n");
-        return 1;
-    }
 
     if (buf_init(g_main.lua, g_main.buf_size, g_main.buf_count) != 0)
     {
