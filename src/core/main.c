@@ -38,6 +38,7 @@ struct main_t
     int thread_count;
     int screen_width;
     int screen_height;
+    int full_screen;
     int mesh_count;
     int vbuf_size;
     int vbuf_count;
@@ -217,6 +218,7 @@ static int main_configure(char *script)
 
     if (main_get_int(lua, "screen_width", &g_main.screen_width) != 0
      || main_get_int(lua, "screen_height", &g_main.screen_height) != 0
+     || main_get_int(lua, "full_screen", &g_main.full_screen) != 0
      || main_get_int(lua, "thread_count", &g_main.thread_count) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
@@ -432,7 +434,8 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (render_init(g_main.lua, g_main.screen_width, g_main.screen_height) != 0)
+    if (render_init(g_main.lua, g_main.screen_width,
+                    g_main.screen_height, g_main.full_screen) != 0)
     {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
