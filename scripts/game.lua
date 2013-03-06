@@ -12,7 +12,6 @@ local world = require 'world'
 local render = require 'render'
 local pwld = require 'physwld'
 local pause = require 'pause'
-local noise = require 'noise'
 local gui = require 'gui.gui'
 local quit = require 'quit'
 local thread = require 'thread'
@@ -112,7 +111,6 @@ function M.run()
             local blink = blinker.alloc()
             gui.init()
             gui.wait_show()
-            noise.init()
             api_physics_wld_tscale(pwld.wld, 0)
             render.timescale(0)
             wld = world.alloc('world', START_X, START_Y, START_Z)
@@ -153,7 +151,6 @@ function M.run()
             wld.free()
             gui.done()
             blink.free()
-            noise.done()
         end)
 
     while coroutine.status(control) ~= 'dead'
