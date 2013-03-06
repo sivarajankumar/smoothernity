@@ -241,7 +241,7 @@ static int api_thread_respond(lua_State *lua)
     lua_pop(lua, 2);
     thread->resp = 0;
     thread->respsize = 0;
-    if (thread->req == 0 || thread->reqsize == 0)
+    if (thread->req == 0)
     {
         thread_mutex_unlock(thread->mutex);
         lua_pushstring(lua, "api_thread_respond: invalid request");

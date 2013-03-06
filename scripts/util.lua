@@ -5,6 +5,41 @@ local cfg = require 'config'
 
 local MAX_WAIT_TIME = 10
 
+function M.fread(name)
+    local f = io.open(name, 'r')
+    if f then
+        local s = f:read('*a')
+        f:close()
+        return s
+    end
+end
+
+function M.fwrite(name, s)
+    local f = io.open(name, 'w')
+    f:write(s)
+    f:close()
+end
+
+function M.wait_thread_idle(th)
+    local t = api_timer()
+    while not th.idle() do
+        if api_timer() - t > MAX_WAIT_TIME then
+            error('wait_thread_idle: too long\n')
+        end
+        coroutine.yield(true)
+    end
+end
+
+function M.wait_thread_responding(th)
+    local t = api_timer()
+    while not th.responding() do
+        if api_timer() - t > MAX_WAIT_TIME then
+            error('wait_thread_responding: too long\n')
+        end
+        coroutine.yield(true)
+    end
+end
+
 function M.query_free(q)
     while api_query_ready(q) == 0 do
     end
@@ -24,7 +59,7 @@ function M.sync_wait()
     local s = api_sync_alloc()
     while api_sync_ready(s) == 0 do
         if api_timer() - t > MAX_WAIT_TIME then
-            lua_error('sync_wait: too long\n')
+            error('sync_wait: too long\n')
         end
         coroutine.yield(true)
     end
@@ -45,7 +80,7 @@ function M.async_read(uid)
             break
         end
         if api_timer() - t > MAX_WAIT_TIME then
-            lua_error('sync_wait: too long\n')
+            error('sync_wait: too long\n')
         end
         coroutine.yield(false)
     end
@@ -64,7 +99,7 @@ function M.async_write(uid, data)
             break
         end
         if api_timer() - t > MAX_WAIT_TIME then
-            lua_error('sync_wait: too long\n')
+            error('sync_wait: too long\n')
         end
         coroutine.yield(false)
     end

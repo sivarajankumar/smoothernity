@@ -12,8 +12,10 @@ local world = require 'world'
 local render = require 'render'
 local pwld = require 'physwld'
 local pause = require 'pause'
+local noise = require 'noise'
 local gui = require 'gui.gui'
 local quit = require 'quit'
+local thread = require 'thread'
 local ddraw = require 'ddraw'
 local meshes = require 'meshes'
 local key = require 'key'
@@ -51,38 +53,8 @@ local function run_co(co, start_time, max_time)
     end
 end
 
-local function thread_test()
-    -- TODO: remove begin
-    io.write('this is main\n')
-    for i = 0, cfg.THREAD_COUNT - 1 do
-        api_thread_run(i, string.format('(require "thread").run(%i)', i))
-    end
-    for i = 0, cfg.THREAD_COUNT - 1 do
-        while api_thread_state(i) ~= API_THREAD_RESPONDING do
-            if api_thread_state(i) == API_THREAD_ERROR then
-                error('thread error')
-            end
-            io.write(string.format('waiting for thread %i to respond\n', i))
-        end
-    end
-    for i = 0, cfg.THREAD_COUNT - 1 do
-        io.write(api_thread_request(i, string.format('main to thread %i\n', i)))
-    end
-    for i = 0, cfg.THREAD_COUNT - 1 do
-        while api_thread_state(i) ~= API_THREAD_IDLE do
-            if api_thread_state(i) == API_THREAD_ERROR then
-                error('thread error')
-            end
-            io.write(string.format('waiting for thread %i to stop\n', i))
-        end
-    end
-    -- TODO: remove end
-end
-
 function M.run()
-    -- TODO: remove begin
-    thread_test()
-    -- TODO: remove end
+    thread.init()
     meshes.init()
     poolbuf.init()
     twinibuf.init()
@@ -140,6 +112,7 @@ function M.run()
             local blink = blinker.alloc()
             gui.init()
             gui.wait_show()
+            noise.init()
             api_physics_wld_tscale(pwld.wld, 0)
             render.timescale(0)
             wld = world.alloc('world', START_X, START_Y, START_Z)
@@ -180,6 +153,7 @@ function M.run()
             wld.free()
             gui.done()
             blink.free()
+            noise.done()
         end)
 
     while coroutine.status(control) ~= 'dead'
@@ -225,6 +199,7 @@ function M.run()
     twinvbuf.done()
     twinibuf.done()
     poolbuf.done()
+    thread.done()
 end
 
 return M
