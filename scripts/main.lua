@@ -17,7 +17,7 @@ function M.configure()
             thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
-            full_screen = 0,
+            full_screen = 1,
             mesh_count = 1000,
             vbuf_size = cfg.VBUF_SIZE,
             vbuf_count = cfg.VBUF_COUNT,
