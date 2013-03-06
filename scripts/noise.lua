@@ -4,8 +4,6 @@ local cfg = require 'config'
 local util = require 'util'
 local thread = require 'thread'
 
-local th
-
 function M.alloc(uid)
     local self = {}
     local data = {}
@@ -54,21 +52,15 @@ function M.alloc(uid)
         return get_spline(z, x)
     end
 
+    local th = thread.alloc('noise_th')
     util.wait_thread_responding(th)
     th.request(uid)
     util.wait_thread_responding(th)
     data = loadstring(th.request(''))()
-
-    return self
-end
-
-function M.init()
-    th = thread.alloc('noise_th')
-end
-
-function M.done()
     util.wait_thread_idle(th)
     th.free()
+
+    return self
 end
 
 return M
