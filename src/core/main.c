@@ -56,7 +56,6 @@ struct main_t
     int rigidbody_count;
     int vehicle_count;
     int buf_size;
-    int buf_count;
     int shprog_count;
     int shuni_count;
     int sync_count;
@@ -209,7 +208,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
-     || main_get_int(lua, "buf_count", &g_main.buf_count) != 0
      || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
      || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0
      || main_get_int(lua, "sync_count", &g_main.sync_count) != 0
@@ -366,7 +364,7 @@ static int main_init(int argc, char **argv)
         return 1;
     } 
 
-    if (buf_init(g_main.lua, g_main.buf_size, g_main.buf_count) != 0)
+    if (buf_init(g_main.lua, g_main.buf_size) != 0)
     {
         fprintf(stderr, "Cannot init buffers\n");
         return 1;

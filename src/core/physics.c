@@ -359,36 +359,27 @@ static int api_physics_cs_alloc_sphere(lua_State *lua)
 
 static int api_physics_cs_alloc_hmap(lua_State *lua)
 {
-    struct buf_t *hmap;
     struct vector_t *scale;
     int start, width, length, csi, res;
     float hmin, hmax;
 
-    if (lua_gettop(lua) != 7 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7))
+    || !lua_isnumber(lua, 6))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    hmap = buf_get(lua_tointeger(lua, 1));
-    start = lua_tointeger(lua, 2);
-    width = lua_tointeger(lua, 3);
-    length = lua_tointeger(lua, 4);
-    hmin = (float)lua_tonumber(lua, 5);
-    hmax = (float)lua_tonumber(lua, 6);
-    scale = vector_get(lua_tointeger(lua, 7));
-    lua_pop(lua, 7);
-
-    if (hmap == 0)
-    {
-        lua_pushstring(lua, "api_physics_cs_alloc_hmap: invalid buf");
-        lua_error(lua);
-        return 0;
-    }
+    start = lua_tointeger(lua, 1);
+    width = lua_tointeger(lua, 2);
+    length = lua_tointeger(lua, 3);
+    hmin = (float)lua_tonumber(lua, 4);
+    hmax = (float)lua_tonumber(lua, 5);
+    scale = vector_get(lua_tointeger(lua, 6));
+    lua_pop(lua, 6);
 
     if (scale == 0)
     {
@@ -420,7 +411,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
         return 0;
     }
     
-    res = physcpp_cs_alloc_hmap(&csi, hmap->data + start, width,
+    res = physcpp_cs_alloc_hmap(&csi, g_bufs.data + start, width,
                                 length, hmin, hmax, scale->value);
     if (res != PHYSRES_OK)
     {

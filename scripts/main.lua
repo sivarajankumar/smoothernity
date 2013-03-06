@@ -41,7 +41,6 @@ function configure()
             rigidbody_count = 100,
             vehicle_count = 10,
             buf_size = cfg.BUF_SIZE,
-            buf_count = cfg.BUF_COUNT,
             shuni_count = 1000,
             shprog_count = 10,
             sync_count = 10,

@@ -45,7 +45,6 @@ struct vector_t
     int seq_len;
     int seq_loop;
     enum vector_ipl_e seq_ipl;
-    struct buf_t *seq_buf;
 };
 
 int vector_init(lua_State *lua, int count, int nesting);

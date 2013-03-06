@@ -66,8 +66,8 @@ function M.init()
     do
         vrot = api_vector_alloc()
         brot = poolbuf.alloc(10)
-        api_buf_set(brot.res, brot.start,   0,0,0,0,PERIOD,   math.pi*2,0,0,0,0)
-        api_vector_seq(vrot, brot.res, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
+        api_buf_set(brot.start,   0,0,0,0,PERIOD,   math.pi*2,0,0,0,0)
+        api_vector_seq(vrot, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
     end
 end
 
