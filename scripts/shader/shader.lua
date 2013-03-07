@@ -1,22 +1,23 @@
 local M = {}
 
 local util = require 'util'
+local shprog = require 'shprog'
 
 local shcolor, shdefault, shtex
 
 function M.init()
-    shcolor = api_shprog_alloc()
-    api_shprog_attach(shcolor, API_SHPROG_FRAGMENT,
+    shcolor = shprog.alloc()
+    shcolor.attach_frag(
         'uniform vec4 color;\n' ..
         'void main()\n' ..
         '{\n' ..
         '   gl_FragColor = color * gl_Color;\n' ..
         '}\n'
     )
-    api_shprog_link(shcolor)
+    shcolor.link()
 
-    shtex = api_shprog_alloc()
-    api_shprog_attach(shtex, API_SHPROG_FRAGMENT,
+    shtex = shprog.alloc()
+    shtex.attach_frag(
         'uniform sampler2DArray texunit;\n' ..
         'uniform vec4 texlayer;\n' ..
         'void main()\n' ..
@@ -24,34 +25,34 @@ function M.init()
         '   gl_FragColor = vec4(1,1,1,1);\n' ..
         '}\n'
     )
-    api_shprog_link(shtex)
+    shtex.link()
 
-    shdefault = api_shprog_alloc()
-    api_shprog_attach(shdefault, API_SHPROG_FRAGMENT,
+    shdefault = shprog.alloc()
+    shdefault.attach_frag(
         'void main()\n' ..
         '{\n' ..
         '   gl_FragColor = gl_Color;\n' ..
         '}\n'
     )
-    api_shprog_link(shdefault)
+    shdefault.link(shdefault)
 end
 
 function M.done()
-    api_shprog_free(shcolor)
-    api_shprog_free(shtex)
-    api_shprog_free(shdefault)
+    shcolor.free()
+    shtex.free()
+    shdefault.free()
 end
 
 function M.default()
-    return shdefault
+    return shdefault.id()
 end
 
 function M.color()
-    return shcolor
+    return shcolor.id()
 end
 
 function M.texture()
-    return shtex
+    return shtex.id()
 end
 
 return M

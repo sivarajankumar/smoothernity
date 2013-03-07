@@ -44,7 +44,7 @@ function M.configure()
             vehicle_count = 10,
             buf_size = cfg.BUF_SIZE,
             shuni_count = 1000,
-            shprog_count = 10,
+            shprog_count = cfg.SHPROG_COUNT,
             sync_count = cfg.SYNC_COUNT,
             query_count = cfg.QUERY_COUNT}
 end
