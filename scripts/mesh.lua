@@ -9,8 +9,9 @@ local frees = 0
 
 local function make_mesh(mi)
     local self = {}
-    function self.alloc(...)
-        api_mesh_alloc(mi, ...)
+    function self.alloc(group, kind, vbuf, ibuf, shprog, matrix, ioffset, icount)
+        api_mesh_alloc(mi, group, kind, vbuf, ibuf, shprog.id(),
+                       matrix, ioffset, icount)
     end
     function self.free()
         frees = frees + 1

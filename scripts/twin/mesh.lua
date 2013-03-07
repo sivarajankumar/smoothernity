@@ -31,7 +31,7 @@ function M.alloc(group, kind, vbuf, ibuf, shader, matrix)
         end
     end
     function self.twin(i)
-        return meshes[i].id()
+        return meshes[i]
     end
     function self.free()
         for i = 0, cfg.TWINS - 1 do

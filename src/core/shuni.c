@@ -16,12 +16,7 @@ enum shuni_bind_e
 struct shunis_t
 {
     int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
     char *pool;
-    struct shuni_t *vacant;
 };
 
 static struct shunis_t g_shunis;
@@ -34,20 +29,9 @@ static struct shuni_t * shuni_get(int ishuni)
         return 0;
 }
 
-static int shuni_alloc(struct shprog_t *shprog, struct mesh_t *mesh)
+static void shuni_alloc(struct shuni_t *shuni, struct shprog_t *shprog,
+                        struct mesh_t *mesh)
 {
-    struct shuni_t *shuni;
-    if (g_shunis.vacant == 0)
-        return -1;
-
-    ++g_shunis.allocs;
-    --g_shunis.left;
-    if (g_shunis.left < g_shunis.left_min)
-        g_shunis.left_min = g_shunis.left;
-
-    shuni = g_shunis.vacant;
-    g_shunis.vacant = g_shunis.vacant->next;
-    shuni->next = 0;
     shuni->state = SHUNI_CREATED;
 
     shuni->shprog = shprog;
@@ -66,19 +50,6 @@ static int shuni_alloc(struct shprog_t *shprog, struct mesh_t *mesh)
             mesh->shunis->mesh_prev = shuni;
         mesh->shunis = shuni;
     }
-    return ((char*)shuni - g_shunis.pool) / SHUNI_SIZE;
-}
-
-static int api_shuni_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_shuni_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_shunis.left);
-    return 1;
 }
 
 static int api_shuni_free(lua_State *lua)
@@ -99,12 +70,7 @@ static int api_shuni_free(lua_State *lua)
         return 0;
     }
 
-    ++g_shunis.frees;
-    ++g_shunis.left;
-
     shuni->state = SHUNI_VACANT;
-    shuni->next = g_shunis.vacant;
-    g_shunis.vacant = shuni;
 
     if (shuni->shprog_prev)
         shuni->shprog_prev->shprog_next = shuni->shprog_next;
@@ -132,42 +98,36 @@ static int api_shuni_alloc_vector(lua_State *lua)
     struct shprog_t *shprog;
     struct mesh_t *mesh;
     struct vector_t *vector;
-    int meshi, ishuni;
+    int meshi;
     const char *name;
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3)
-    || !lua_isnumber(lua, 4))
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isstring(lua, 4) || !lua_isnumber(lua, 5))
     {
         lua_pushstring(lua, "api_shuni_alloc_vector: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    shprog = shprog_get(lua_tointeger(lua, 1));
-    meshi = lua_tointeger(lua, 2);
-    name = lua_tostring(lua, 3);
-    vector = vector_get(lua_tointeger(lua, 4));
-    lua_pop(lua, 4);
+    shuni = shuni_get(lua_tointeger(lua, 1));
+    shprog = shprog_get(lua_tointeger(lua, 2));
+    meshi = lua_tointeger(lua, 3);
+    name = lua_tostring(lua, 4);
+    vector = vector_get(lua_tointeger(lua, 5));
+    lua_pop(lua, 5);
     mesh = mesh_get(meshi);
-    if (shprog == 0 || shprog->state != SHPROG_LINKED
+    if (shuni == 0 || shuni->state != SHUNI_VACANT
+    || shprog == 0 || shprog->state != SHPROG_LINKED
     || (mesh == 0 && meshi != SHUNI_ALL_MESHES) || vector == 0)
     {
         lua_pushstring(lua, "api_shuni_alloc_vector: invalid object");
         lua_error(lua);
         return 0;
     }
-    ishuni = shuni_alloc(shprog, mesh);
-    shuni = shuni_get(ishuni);
-    if (shuni == 0)
-    {
-        lua_pushstring(lua, "api_shuni_alloc_vector: out of shunis");
-        lua_error(lua);
-        return 0;
-    }
+    shuni_alloc(shuni, shprog, mesh);
     shuni->loc_id = glGetUniformLocation(shprog->prog_id, name);
     shuni->state = SHUNI_VECTOR;
     shuni->argv[0] = vector;
-    lua_pushinteger(lua, ishuni);
-    return 1;
+    return 0;
 }
 
 static int api_shuni_alloc_int(lua_State *lua)
@@ -175,42 +135,36 @@ static int api_shuni_alloc_int(lua_State *lua)
     struct shuni_t *shuni;
     struct shprog_t *shprog;
     struct mesh_t *mesh;
-    int meshi, ishuni, argi;
+    int meshi, argi;
     const char *name;
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3)
-    || !lua_isnumber(lua, 4))
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isstring(lua, 4) || !lua_isnumber(lua, 5))
     {
         lua_pushstring(lua, "api_shuni_alloc_int: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    shprog = shprog_get(lua_tointeger(lua, 1));
-    meshi = lua_tointeger(lua, 2);
-    name = lua_tostring(lua, 3);
-    argi = lua_tointeger(lua, 4);
-    lua_pop(lua, 4);
+    shuni = shuni_get(lua_tointeger(lua, 1));
+    shprog = shprog_get(lua_tointeger(lua, 2));
+    meshi = lua_tointeger(lua, 3);
+    name = lua_tostring(lua, 4);
+    argi = lua_tointeger(lua, 5);
+    lua_pop(lua, 5);
     mesh = mesh_get(meshi);
-    if (shprog == 0 || shprog->state != SHPROG_LINKED
+    if (shuni == 0 || shuni->state != SHUNI_VACANT
+    || shprog == 0 || shprog->state != SHPROG_LINKED
     || (mesh == 0 && meshi != SHUNI_ALL_MESHES))
     {
         lua_pushstring(lua, "api_shuni_alloc_int: invalid object");
         lua_error(lua);
         return 0;
     }
-    ishuni = shuni_alloc(shprog, mesh);
-    shuni = shuni_get(ishuni);
-    if (shuni == 0)
-    {
-        lua_pushstring(lua, "api_shuni_alloc_int: out of shunis");
-        lua_error(lua);
-        return 0;
-    }
+    shuni_alloc(shuni, shprog, mesh);
     shuni->loc_id = glGetUniformLocation(shprog->prog_id, name);
     shuni->state = SHUNI_INTEGER;
     shuni->argi[0] = argi;
-    lua_pushinteger(lua, ishuni);
-    return 1;
+    return 0;
 }
 
 int shuni_init(lua_State *lua, int count)
@@ -228,16 +182,11 @@ int shuni_init(lua_State *lua, int count)
         return 1;
     memset(g_shunis.pool, 0, SHUNI_SIZE * count);
     g_shunis.count = count;
-    g_shunis.left = count;
-    g_shunis.left_min = count;
-    g_shunis.vacant = shuni_get(0);
     for (i = 0; i < count; ++i)
     {
         shuni = shuni_get(i);
-        shuni->next = shuni_get(i + 1);
         shuni->state = SHUNI_VACANT;
     }
-    lua_register(lua, "api_shuni_left", api_shuni_left);
     lua_register(lua, "api_shuni_alloc_vector", api_shuni_alloc_vector);
     lua_register(lua, "api_shuni_alloc_int", api_shuni_alloc_int);
     lua_register(lua, "api_shuni_free", api_shuni_free);
@@ -252,12 +201,8 @@ int shuni_init(lua_State *lua, int count)
 
 void shuni_done(void)
 {
-    if (g_shunis.pool == 0)
-        return;
-    printf("Shader uniforms usage: %i/%i, allocs/frees: %i/%i\n",
-           g_shunis.count - g_shunis.left_min, g_shunis.count,
-           g_shunis.allocs, g_shunis.frees);
-    util_free(g_shunis.pool);
+    if (g_shunis.pool)
+        util_free(g_shunis.pool);
     g_shunis.pool = 0;
 }
 

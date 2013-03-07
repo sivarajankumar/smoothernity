@@ -22,7 +22,6 @@ struct shuni_t
     struct mesh_t *mesh;
     struct vector_t *argv[SHUNI_ARGVS];
     int argi[SHUNI_ARGIS];
-    struct shuni_t *next;
     struct shuni_t *shprog_prev;
     struct shuni_t *shprog_next;
     struct shuni_t *mesh_prev;

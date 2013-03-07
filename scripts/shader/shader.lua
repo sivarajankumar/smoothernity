@@ -44,15 +44,15 @@ function M.done()
 end
 
 function M.default()
-    return shdefault.id()
+    return shdefault
 end
 
 function M.color()
-    return shcolor.id()
+    return shcolor
 end
 
 function M.texture()
-    return shtex.id()
+    return shtex
 end
 
 return M
