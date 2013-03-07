@@ -7,6 +7,7 @@ local meshes = require 'meshes'
 local twin = require 'twin.twin'
 local lod = require 'lod'
 local gui = require 'gui.gui'
+local query = require 'query'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -80,7 +81,7 @@ local function prof_scoped_alloc()
 
     function self.free()
         if qlogic ~= nil then
-            api_query_end(qlogic)
+            qlogic.end_time()
             util.query_free(qlogic)
         end
         for i, f in pairs(frames) do
@@ -91,7 +92,7 @@ local function prof_scoped_alloc()
 
     function self.frame_begin()
         if qlogic ~= nil then
-            api_query_end(qlogic)
+            qlogic.end_time()
             local frame = {}
             frame.logic = qlogic
             qlogic = nil
@@ -102,29 +103,30 @@ local function prof_scoped_alloc()
     function self.draw_begin()
         local frame = frames[fid]
         if frame ~= nil then
-            frame.draw = api_query_alloc_time()
+            frame.draw = query.alloc()
+            frame.draw.begin_time()
         end
     end
 
     function self.draw_end()
         local frame = frames[fid]
         if frame ~= nil then
-            api_query_end(frame.draw)
+            frame.draw.end_time()
         end
     end
 
     function self.frame_end()
-        qlogic = api_query_alloc_time()
+        qlogic = query.alloc()
+        qlogic.begin_time()
         fid = fid + 1
         for i, f in pairs(frames) do
-            if api_query_ready(f.logic) == 1
-            and api_query_ready(f.draw) == 1 then
-                local logic = api_query_result(f.logic) * 0.000000001
-                local draw = api_query_result(f.draw) * 0.000000001
+            if f.logic.idle() and f.draw.idle() then
+                local logic = f.logic.result() * 0.000000001
+                local draw = f.draw.result() * 0.000000001
                 gui.frame_time(logic + draw)
                 gui.gpu_times(logic, draw)
-                api_query_free(f.logic)
-                api_query_free(f.draw)
+                f.logic.free()
+                f.draw.free()
                 frames[i] = nil
             end
         end

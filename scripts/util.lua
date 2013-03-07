@@ -45,9 +45,9 @@ function M.wait_thread_responding(th)
 end
 
 function M.query_free(q)
-    while api_query_ready(q) == 0 do
+    while not q.idle() do
     end
-    api_query_free(q)
+    q.free()
 end
 
 function M.sum(...)
