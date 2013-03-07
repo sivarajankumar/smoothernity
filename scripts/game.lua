@@ -18,6 +18,7 @@ local query = require 'query'
 local thread = require 'thread'
 local ddraw = require 'ddraw'
 local meshes = require 'meshes'
+local sync = require 'sync'
 local key = require 'key'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'
@@ -55,6 +56,7 @@ end
 
 function M.run()
     query.init()
+    sync.init()
     thread.init()
     meshes.init()
     poolbuf.init()
@@ -200,6 +202,7 @@ function M.run()
     twinibuf.done()
     poolbuf.done()
     query.done()
+    sync.done()
     thread.done()
 end
 

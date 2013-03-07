@@ -45,7 +45,7 @@ function M.configure()
             buf_size = cfg.BUF_SIZE,
             shuni_count = 1000,
             shprog_count = 10,
-            sync_count = 10,
+            sync_count = cfg.SYNC_COUNT,
             query_count = cfg.QUERY_COUNT}
 end
 
