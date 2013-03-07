@@ -46,7 +46,7 @@ function M.configure()
             shuni_count = 1000,
             shprog_count = 10,
             sync_count = 10,
-            query_count = 100}
+            query_count = cfg.QUERY_COUNT}
 end
 
 function M.run()

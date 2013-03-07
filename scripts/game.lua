@@ -14,6 +14,7 @@ local pwld = require 'physwld'
 local pause = require 'pause'
 local gui = require 'gui.gui'
 local quit = require 'quit'
+local query = require 'query'
 local thread = require 'thread'
 local ddraw = require 'ddraw'
 local meshes = require 'meshes'
@@ -53,6 +54,7 @@ local function run_co(co, start_time, max_time)
 end
 
 function M.run()
+    query.init()
     thread.init()
     meshes.init()
     poolbuf.init()
@@ -197,6 +199,7 @@ function M.run()
     twinvbuf.done()
     twinibuf.done()
     poolbuf.done()
+    query.done()
     thread.done()
 end
 
