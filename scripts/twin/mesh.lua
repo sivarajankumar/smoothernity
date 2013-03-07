@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local mesh = require 'mesh'
 local next_group = 0
 
 function M.group()
@@ -20,21 +21,21 @@ function M.alloc(group, kind, vbuf, ibuf, shader, matrix)
     local self = {}
     local meshes = {}
     for i = 0, cfg.TWINS - 1 do
-        meshes[i] = api_mesh_alloc(group.twin(i), kind, vbuf.twin(i),
-                                   ibuf.twin(i), shader, matrix,
-                                   ibuf.start, ibuf.size)
+        meshes[i] = mesh.alloc(group.twin(i), kind, vbuf.twin(i),
+                               ibuf.twin(i), shader, matrix,
+                               ibuf.start, ibuf.size)
     end
     function self.group(group)
         for i = 0, cfg.TWINS - 1 do
-            api_mesh_group(meshes[i], group.twin(i))
+            meshes[i].group(group.twin(i))
         end
     end
     function self.twin(i)
-        return meshes[i]
+        return meshes[i].id()
     end
     function self.free()
         for i = 0, cfg.TWINS - 1 do
-            api_mesh_free(meshes[i])
+            meshes[i].free()
         end
     end
     return self

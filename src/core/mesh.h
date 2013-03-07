@@ -23,13 +23,8 @@ struct mesh_t
 
 struct meshes_t
 {
-    int left;
-    int left_min;
     int count;
-    int allocs;
-    int frees;
     char *pool;
-    struct mesh_t *vacant;
     struct mesh_t *active; /* sorted */
 };
 

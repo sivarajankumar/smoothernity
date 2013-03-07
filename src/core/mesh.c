@@ -37,30 +37,31 @@ static int api_mesh_alloc(lua_State *lua)
     struct mesh_t *mesh, *mvbuf, *mibuf, *mshprog;
     int type, group, ioffset, icount;
 
-    if (lua_gettop(lua) != 8 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 9 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
     || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7)
-    || !lua_isnumber(lua, 8))
+    || !lua_isnumber(lua, 8) || !lua_isnumber(lua, 9))
     {
         lua_pushstring(lua, "api_mesh_alloc: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    group = lua_tointeger(lua, 1);
-    type = lua_tointeger(lua, 2);
-    vbuf = vbuf_get(lua_tointeger(lua, 3));
-    ibuf = ibuf_get(lua_tointeger(lua, 4));
-    shprog = shprog_get(lua_tointeger(lua, 5));
-    matrix = matrix_get(lua_tointeger(lua, 6));
-    ioffset = lua_tointeger(lua, 7);
-    icount = lua_tointeger(lua, 8);
-    lua_pop(lua, 8);
+    mesh = mesh_get(lua_tointeger(lua, 1));
+    group = lua_tointeger(lua, 2);
+    type = lua_tointeger(lua, 3);
+    vbuf = vbuf_get(lua_tointeger(lua, 4));
+    ibuf = ibuf_get(lua_tointeger(lua, 5));
+    shprog = shprog_get(lua_tointeger(lua, 6));
+    matrix = matrix_get(lua_tointeger(lua, 7));
+    ioffset = lua_tointeger(lua, 8);
+    icount = lua_tointeger(lua, 9);
+    lua_pop(lua, 9);
 
-    if (g_meshes.vacant == 0)
+    if (mesh == 0 || mesh->vacant == 0)
     {
-        lua_pushstring(lua, "api_mesh_alloc: out of meshes");
+        lua_pushstring(lua, "api_mesh_alloc: invalid mesh");
         lua_error(lua);
         return 0;
     }
@@ -87,13 +88,7 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    ++g_meshes.allocs;
-    --g_meshes.left;
-    if (g_meshes.left < g_meshes.left_min)
-        g_meshes.left_min = g_meshes.left;
-    mesh = g_meshes.vacant;
     mesh->vacant = 0;
-    g_meshes.vacant = g_meshes.vacant->next;
 
     if (mesh->prev)
         mesh->prev->next = mesh->next;
@@ -175,9 +170,7 @@ static int api_mesh_alloc(lua_State *lua)
             }
         }
     }
-
-    lua_pushinteger(lua, ((char*)mesh - g_meshes.pool) / MESH_SIZE);
-    return 1;
+    return 0;
 }
 
 static int api_mesh_group(lua_State *lua)
@@ -228,8 +221,6 @@ static int api_mesh_free(lua_State *lua)
         return 0;
     }
 
-    ++g_meshes.left;
-    ++g_meshes.frees;
     mesh->vacant = 1;
 
     if (mesh->prev)
@@ -239,29 +230,13 @@ static int api_mesh_free(lua_State *lua)
     if (g_meshes.active == mesh)
         g_meshes.active = mesh->next;
 
-    if (g_meshes.vacant)
-        g_meshes.vacant->prev = mesh;
     mesh->prev = 0;
-    mesh->next = g_meshes.vacant;
-    g_meshes.vacant = mesh;
-
+    mesh->next = 0;
     mesh->ibuf = 0;
     mesh->vbuf = 0;
     mesh->shprog = 0;
     mesh->matrix = 0;
     return 0;
-}
-
-static int api_mesh_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_mesh_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_meshes.left);
-    return 1;
 }
 
 static int api_mesh_update(lua_State *lua)
@@ -381,10 +356,7 @@ int mesh_init(lua_State *lua, int count)
     if (g_meshes.pool == 0)
         return 1;
     memset(g_meshes.pool, 0, MESH_SIZE * count);
-    g_meshes.left = count;
-    g_meshes.left_min = count;
     g_meshes.count = count;
-    g_meshes.vacant = mesh_get(0);
     for (i = 0; i < count; ++i)
     {
         mesh = mesh_get(i);
@@ -398,7 +370,6 @@ int mesh_init(lua_State *lua, int count)
     lua_register(lua, "api_mesh_alloc", api_mesh_alloc);
     lua_register(lua, "api_mesh_group", api_mesh_group);
     lua_register(lua, "api_mesh_free", api_mesh_free);
-    lua_register(lua, "api_mesh_left", api_mesh_left);
 
     #define LUA_PUBLISH(x) \
         lua_pushinteger(lua, x); \
@@ -413,11 +384,7 @@ int mesh_init(lua_State *lua, int count)
 
 void mesh_done(void)
 {
-    if (g_meshes.pool == 0)
-        return;
-    printf("Meshes usage: %i/%i, allocs/frees: %i/%i\n",
-           g_meshes.count - g_meshes.left_min, g_meshes.count,
-           g_meshes.allocs, g_meshes.frees);
-    util_free(g_meshes.pool);
+    if (g_meshes.pool)
+        util_free(g_meshes.pool);
     g_meshes.pool = 0;
 }
