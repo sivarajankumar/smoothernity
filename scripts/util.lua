@@ -3,6 +3,7 @@ local M = {}
 local pwld = require 'physwld'
 local cfg = require 'config'
 local thread = require 'thread'
+local sync = require 'sync'
 
 local MAX_WAIT_TIME = 10
 
@@ -60,14 +61,14 @@ end
 
 function M.sync_wait()
     local t = api_timer()
-    local s = api_sync_alloc()
-    while api_sync_ready(s) == 0 do
+    local s = sync.alloc()
+    while not s.ready() do
         if api_timer() - t > MAX_WAIT_TIME then
             error('sync_wait: too long\n')
         end
         coroutine.yield(true)
     end
-    api_sync_free(s)
+    s.free()
 end
 
 function M.async_read(uid)
