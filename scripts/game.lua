@@ -15,6 +15,7 @@ local pause = require 'pause'
 local gui = require 'gui.gui'
 local quit = require 'quit'
 local query = require 'query'
+local mesh = require 'mesh'
 local shprog = require 'shprog'
 local thread = require 'thread'
 local ddraw = require 'ddraw'
@@ -57,6 +58,7 @@ end
 
 function M.run()
     shprog.init()
+    mesh.init()
     query.init()
     sync.init()
     thread.init()
@@ -205,6 +207,7 @@ function M.run()
     poolbuf.done()
     shprog.done()
     query.done()
+    mesh.done()
     sync.done()
     thread.done()
 end

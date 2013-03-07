@@ -18,7 +18,7 @@ function M.configure()
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             full_screen = 1,
-            mesh_count = 1000,
+            mesh_count = cfg.MESH_COUNT,
             vbuf_size = cfg.VBUF_SIZE,
             vbuf_count = cfg.VBUF_COUNT,
             ibuf_size = cfg.IBUF_SIZE,
