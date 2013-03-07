@@ -17,6 +17,7 @@ local quit = require 'quit'
 local query = require 'query'
 local mesh = require 'mesh'
 local shprog = require 'shprog'
+local shuni = require 'shuni'
 local thread = require 'thread'
 local ddraw = require 'ddraw'
 local meshes = require 'meshes'
@@ -58,6 +59,7 @@ end
 
 function M.run()
     shprog.init()
+    shuni.init()
     mesh.init()
     query.init()
     sync.init()
@@ -206,6 +208,7 @@ function M.run()
     twinibuf.done()
     poolbuf.done()
     shprog.done()
+    shuni.done()
     query.done()
     mesh.done()
     sync.done()
