@@ -22,5 +22,6 @@ M.TEX_POOL = {{8, 5}, {9, 5}, {10, 5}}
 M.NOISE_SIZE = 256
 M.QUERY_COUNT = 100
 M.SYNC_COUNT = 10
+M.SHPROG_COUNT = 10
 
 return M

@@ -14,7 +14,6 @@ struct shprog_t
 {
     GLuint prog_id;
     enum shprog_e state;
-    struct shprog_t *next;
     struct shuni_t *shunis;
 };
 
