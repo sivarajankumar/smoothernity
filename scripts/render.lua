@@ -5,7 +5,7 @@ local util = require 'core.util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 local twin = require 'core.twin.twin'
-local lod = require 'lod'
+local lod = require 'game.lod'
 local gui = require 'game.gui.gui'
 local query = require 'query'
 

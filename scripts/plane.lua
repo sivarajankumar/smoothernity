@@ -1,6 +1,6 @@
 local M = {}
 
-local lod = require 'lod'
+local lod = require 'game.lod'
 local cfg = require 'config'
 local util = require 'core.util'
 local quit = require 'quit'
