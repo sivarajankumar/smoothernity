@@ -1,6 +1,6 @@
 local M = {}
 
-local pwld = require 'physwld'
+local pwld = require 'game.physwld'
 local render = require 'render'
 local key = require 'core.key'
 

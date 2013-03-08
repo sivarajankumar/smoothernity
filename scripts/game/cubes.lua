@@ -1,7 +1,7 @@
 local M = {}
 
 local util = require 'core.util'
-local pwld = require 'physwld'
+local pwld = require 'game.physwld'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
