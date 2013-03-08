@@ -7,7 +7,7 @@ local meshes = require 'game.meshes'
 local twin = require 'core.twin.twin'
 local lod = require 'game.lod'
 local gui = require 'game.gui.gui'
-local query = require 'query'
+local query = require 'core.query'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
