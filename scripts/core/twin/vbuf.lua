@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local twinpool = require 'twin.pool'
+local twinpool = require 'core.twin.pool'
 
 local vbufs
 

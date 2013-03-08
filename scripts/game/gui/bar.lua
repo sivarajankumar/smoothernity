@@ -3,10 +3,10 @@ local M = {}
 local util = require 'core.util'
 local meshes = require 'meshes'
 local shader = require 'game.shader'
-local twinibuf = require 'twin.ibuf'
-local twinvbuf = require 'twin.vbuf'
-local twinmesh = require 'twin.mesh'
-local twinshuni = require 'twin.shuni'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
+local twinmesh = require 'core.twin.mesh'
+local twinshuni = require 'core.twin.shuni'
 
 local ibuf, vbuf
 

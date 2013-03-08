@@ -8,9 +8,9 @@ local meshes = require 'meshes'
 local quit = require 'quit'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
-local twinibuf = require 'twin.ibuf'
-local twinvbuf = require 'twin.vbuf'
-local twinmesh = require 'twin.mesh'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
+local twinmesh = require 'core.twin.mesh'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}

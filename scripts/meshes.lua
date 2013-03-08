@@ -1,7 +1,7 @@
 local M = {}
 
 local lod = require 'lod'
-local twinmesh = require 'twin.mesh'
+local twinmesh = require 'core.twin.mesh'
 
 function M.init()
     M.GROUP_HIDDEN = twinmesh.group()
