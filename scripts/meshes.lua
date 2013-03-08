@@ -1,6 +1,6 @@
 local M = {}
 
-local lod = require 'lod'
+local lod = require 'game.lod'
 local twinmesh = require 'core.twin.mesh'
 
 function M.init()

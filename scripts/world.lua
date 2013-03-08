@@ -6,7 +6,7 @@ local noise = require 'noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
 local util = require 'core.util'
-local lod = require 'lod'
+local lod = require 'game.lod'
 
 local SCENE = 50
 
