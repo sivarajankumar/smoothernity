@@ -1,6 +1,6 @@
 local M = {}
 
-local game = require 'game'
+local game = require 'game.game'
 local cfg = require 'config'
 
 function M.configure()
