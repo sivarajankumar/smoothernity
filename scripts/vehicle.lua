@@ -2,7 +2,7 @@ local M = {}
 
 local util = require 'core.util'
 local pwld = require 'physwld'
-local meshes = require 'meshes'
+local meshes = require 'game.meshes'
 local cfg = require 'config'
 local gui = require 'game.gui.gui'
 local key = require 'core.key'
