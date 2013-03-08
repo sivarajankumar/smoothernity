@@ -2,7 +2,7 @@ local M = {}
 
 local cfg = require 'config'
 local util = require 'core.util'
-local blinker = require 'blinker'
+local blinker = require 'game.blinker'
 local cubes = require 'cubes'
 local vehicle = require 'vehicle'
 local camcord = require 'game.camera.cord'
