@@ -1,6 +1,6 @@
 local M = {}
 
-local key = require 'key'
+local key = require 'core.key'
 
 local quit = false
 local keyobj = key.alloc(function() return API_INPUT_KEY_ESCAPE end,
