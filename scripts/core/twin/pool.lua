@@ -2,7 +2,7 @@ local M = {}
 
 local cfg = require 'config'
 local pool = require 'core.pool.pool'
-local twin = require 'twin.twin'
+local twin = require 'core.twin.twin'
 
 function M.alloc(title, res_size, res_count, pool_dims,
                  res_set, res_map, res_unmap, res_waiting)

@@ -5,9 +5,9 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
-local twinvbuf = require 'twin.vbuf'
-local twinibuf = require 'twin.ibuf'
-local twinmesh = require 'twin.mesh'
+local twinvbuf = require 'core.twin.vbuf'
+local twinibuf = require 'core.twin.ibuf'
+local twinmesh = require 'core.twin.mesh'
 
 function M.alloc(x, y, z)
     local self = {}

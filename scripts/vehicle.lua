@@ -7,9 +7,9 @@ local cfg = require 'config'
 local gui = require 'game.gui.gui'
 local key = require 'key'
 local shader = require 'game.shader'
-local twinibuf = require 'twin.ibuf'
-local twinvbuf = require 'twin.vbuf'
-local twinmesh = require 'twin.mesh'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
+local twinmesh = require 'core.twin.mesh'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2

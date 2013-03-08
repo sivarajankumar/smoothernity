@@ -5,10 +5,10 @@ local util = require 'core.util'
 local meshes = require 'meshes'
 local shader = require 'game.shader'
 local poolpbuf = require 'core.pool.pbuf'
-local twinibuf = require 'twin.ibuf'
-local twinvbuf = require 'twin.vbuf'
-local twinmesh = require 'twin.mesh'
-local twinshuni = require 'twin.shuni'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
+local twinmesh = require 'core.twin.mesh'
+local twinshuni = require 'core.twin.shuni'
 
 local TEX_UNIT = 0
 local TEX_LAYER = 0

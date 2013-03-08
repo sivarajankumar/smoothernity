@@ -26,8 +26,8 @@ local key = require 'key'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
 local poolpbuf = require 'core.pool.pbuf'
-local twinibuf = require 'twin.ibuf'
-local twinvbuf = require 'twin.vbuf'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
 
 local LOGIC_TIME = 0.013
 local GC_STEP = 10
