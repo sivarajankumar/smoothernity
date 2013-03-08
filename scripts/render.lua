@@ -6,7 +6,7 @@ local pwld = require 'physwld'
 local meshes = require 'meshes'
 local twin = require 'twin.twin'
 local lod = require 'lod'
-local gui = require 'gui.gui'
+local gui = require 'game.gui.gui'
 local query = require 'query'
 
 local DEBUG_ZFAR = 200

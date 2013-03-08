@@ -1,12 +1,12 @@
 local M = {}
 
-local bar = require 'gui.bar'
-local wait = require 'gui.wait'
+local bar = require 'game.gui.bar'
+local wait = require 'game.gui.wait'
 local util = require 'core.util'
 local cfg = require 'config'
-local prof = require 'gui.prof'
+local prof = require 'game.gui.prof'
 local color = require 'color'
-local textest = require 'gui.textest'
+local textest = require 'game.gui.textest'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
 local COLOR_GPU_DRAW = color.GREEN
