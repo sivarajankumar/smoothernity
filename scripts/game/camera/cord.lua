@@ -1,7 +1,7 @@
 local M = {}
 
 local util = require 'core.util'
-local pwld = require 'physwld'
+local pwld = require 'game.physwld'
 local cfg = require 'config'
 
 CORD_MIN = 20

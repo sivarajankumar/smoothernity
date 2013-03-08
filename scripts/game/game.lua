@@ -10,7 +10,7 @@ local camdev = require 'game.camera.dev'
 local camswitch = require 'game.camera.switcher'
 local world = require 'world'
 local render = require 'render'
-local pwld = require 'physwld'
+local pwld = require 'game.physwld'
 local pause = require 'game.pause'
 local gui = require 'game.gui.gui'
 local quit = require 'quit'
@@ -79,7 +79,7 @@ function M.run()
     local created = false
     local generated = false
 
-    util.set_gravity(0, -10, 0)
+    pwld.set_gravity(0, -10, 0)
     render.engage(render.visual)
 
     local control = coroutine.create(
