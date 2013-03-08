@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local pool = require 'pool.pool'
+local pool = require 'core.pool.pool'
 
 local pbufs
 

@@ -1,7 +1,7 @@
 local M = {}
 
 local render = require 'render'
-local poolbuf = require 'pool.buf'
+local poolbuf = require 'core.pool.buf'
 
 function M.alloc()
     local self = {}
