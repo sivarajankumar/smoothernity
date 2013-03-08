@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require 'util'
+local util = require 'core.util'
 
 function M.alloc(x, y, z)
     local self = {}

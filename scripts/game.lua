@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local util = require 'util'
+local util = require 'core.util'
 local blinker = require 'blinker'
 local cubes = require 'cubes'
 local vehicle = require 'vehicle'

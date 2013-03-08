@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require 'util'
+local util = require 'core.util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local twinibuf = require 'twin.ibuf'

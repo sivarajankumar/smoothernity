@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local util = require 'util'
+local util = require 'core.util'
 local meshes = require 'meshes'
 local shader = require 'shader.shader'
 local poolbuf = require 'pool.buf'

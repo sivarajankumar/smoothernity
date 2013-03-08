@@ -1,6 +1,5 @@
 local M = {}
 
-local util = require 'util'
 local shprog = require 'shprog'
 
 local shcolor, shdefault, shtex

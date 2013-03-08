@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local util = require 'util'
+local util = require 'core.util'
 
 function M.thread_run(thi)
     local uid = util.uid_save(string.format('%s.lua', api_thread_respond(thi, '')))
