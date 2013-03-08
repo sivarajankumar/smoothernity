@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local mesh = require 'mesh'
+local mesh = require 'core.mesh'
 local next_group = 0
 
 function M.group()
