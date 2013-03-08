@@ -75,7 +75,7 @@ function M.sync_wait()
 end
 
 function M.async_read(uid)
-    local th = thread.alloc('util_th')
+    local th = thread.alloc('core.util_th')
     M.wait_thread_responding(th)
     th.request('async_read')
     M.wait_thread_responding(th)
@@ -88,7 +88,7 @@ function M.async_read(uid)
 end
 
 function M.async_write(uid, data)
-    local th = thread.alloc('util_th')
+    local th = thread.alloc('core.util_th')
     M.wait_thread_responding(th)
     th.request('async_write')
     M.wait_thread_responding(th)

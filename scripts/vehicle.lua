@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require 'util'
+local util = require 'core.util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 local cfg = require 'config'

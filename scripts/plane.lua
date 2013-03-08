@@ -2,7 +2,7 @@ local M = {}
 
 local lod = require 'lod'
 local cfg = require 'config'
-local util = require 'util'
+local util = require 'core.util'
 local quit = require 'quit'
 
 local BUFFER = 20

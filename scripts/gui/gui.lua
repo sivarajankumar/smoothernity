@@ -2,7 +2,7 @@ local M = {}
 
 local bar = require 'gui.bar'
 local wait = require 'gui.wait'
-local util = require 'util'
+local util = require 'core.util'
 local cfg = require 'config'
 local prof = require 'gui.prof'
 local color = require 'color'

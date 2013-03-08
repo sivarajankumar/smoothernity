@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local util = require 'util'
+local util = require 'core.util'
 local pwld = require 'physwld'
 local meshes = require 'meshes'
 local twin = require 'twin.twin'

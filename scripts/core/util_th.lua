@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require 'util'
+local util = require 'core.util'
 
 function M.thread_run(thi)
     local fns = {}

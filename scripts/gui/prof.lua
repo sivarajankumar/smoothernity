@@ -1,7 +1,7 @@
 local M = {}
 
 local bar = require 'gui.bar'
-local util = require 'util'
+local util = require 'core.util'
 
 local BORDER = 0.05
 local COLOR_BACK = {0, 0, 0, 1}
