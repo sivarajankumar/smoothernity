@@ -5,7 +5,7 @@ local wait = require 'game.gui.wait'
 local util = require 'core.util'
 local cfg = require 'config'
 local prof = require 'game.gui.prof'
-local color = require 'color'
+local color = require 'game.color'
 local textest = require 'game.gui.textest'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
