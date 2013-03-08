@@ -19,10 +19,13 @@ function M.sync_read(uid)
 end
 
 function M.sync_write(uid, data)
-    -- TODO: delete files with data == ''
-    local f = io.open(uid, 'w')
-    f:write(data)
-    f:close()
+    if data == '' then
+        api_shell_rmfile(uid)
+    else
+        local f = io.open(uid, 'w')
+        f:write(data)
+        f:close()
+    end
 end
 
 function M.wait_thread_idle(th)
