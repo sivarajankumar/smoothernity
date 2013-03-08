@@ -1,6 +1,6 @@
 local M = {}
 
-local bar = require 'gui.bar'
+local bar = require 'game.gui.bar'
 local util = require 'core.util'
 
 local BORDER = 0.05
