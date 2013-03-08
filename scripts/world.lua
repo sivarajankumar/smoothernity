@@ -1,6 +1,6 @@
 local M = {}
 
-local plane = require 'plane'
+local plane = require 'game.plane'
 local land = require 'game.land' 
 local noise = require 'game.noise'
 local pwld = require 'game.physwld'
