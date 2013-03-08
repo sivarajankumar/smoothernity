@@ -2,7 +2,7 @@ local M = {}
 
 local pwld = require 'physwld'
 local render = require 'render'
-local key = require 'key'
+local key = require 'core.key'
 
 local pause = false
 local keyobj = key.alloc(function() return API_INPUT_KEY_P end,
