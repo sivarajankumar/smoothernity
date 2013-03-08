@@ -52,7 +52,7 @@ function M.alloc(uid)
         return get_spline(z, x)
     end
 
-    local th = thread.alloc('noise_th')
+    local th = thread.alloc('game.noise_th')
     util.wait_thread_responding(th)
     th.request(uid)
     util.wait_thread_responding(th)

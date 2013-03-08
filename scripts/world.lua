@@ -2,7 +2,7 @@ local M = {}
 
 local plane = require 'plane'
 local land = require 'game.land' 
-local noise = require 'noise'
+local noise = require 'game.noise'
 local pwld = require 'physwld'
 local cfg = require 'config'
 local util = require 'core.util'
