@@ -17,7 +17,7 @@ local quit = require 'game.quit'
 local query = require 'core.query'
 local mesh = require 'core.mesh'
 local shprog = require 'core.shprog'
-local shuni = require 'shuni'
+local shuni = require 'core.shuni'
 local thread = require 'thread'
 local ddraw = require 'game.ddraw'
 local meshes = require 'game.meshes'
@@ -72,8 +72,6 @@ function M.run()
     shader.init()
     pwld.init()
     render.init()
-
-    collectgarbage('stop')
 
     local wld, cbs, car, camc, camd, camsw
     local created = false
@@ -164,6 +162,8 @@ function M.run()
             gui.done()
             blink.free()
         end)
+
+    collectgarbage('stop')
 
     while coroutine.status(control) ~= 'dead'
        or coroutine.status(slowpok) ~= 'dead'

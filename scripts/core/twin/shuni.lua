@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local shuni = require 'shuni'
+local shuni = require 'core.shuni'
 
 function M.alloc_vector(shprog, mesh, name, vec)
     local self = {}
