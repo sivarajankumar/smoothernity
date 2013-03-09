@@ -62,29 +62,31 @@ static void * physics_malloc(size_t size)
     return mpool_alloc(g_physics.mpool, size);
 }
 
-static int api_physics_update(lua_State *lua)
+static int api_physics_wld_update(lua_State *lua)
 {
     float dt;
-    int res;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    int wldi, res;
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
-        lua_pushstring(lua, "api_physics_update: incorrect argument");
+        lua_pushstring(lua, "api_physics_wld_update: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    dt = (float)lua_tonumber(lua, 1);
-    lua_pop(lua, 1);
+    wldi = lua_tointeger(lua, 1);
+    dt = (float)lua_tonumber(lua, 2);
+    lua_pop(lua, 2);
     if (dt < 0.0f)
     {
-        lua_pushstring(lua, "api_physics_update: negative dt");
+        lua_pushstring(lua, "api_physics_wld_update: negative dt");
         lua_error(lua);
         return 0;
     }
-    res = physcpp_wld_update(dt);
+    res = physcpp_wld_update(wldi, dt);
     if (res != PHYSRES_OK)
     {
-        fprintf(stderr, "api_physics_update: %s\n", physics_error_text(res));
-        lua_pushstring(lua, "api_physics_update: physics error");
+        fprintf(stderr, "api_physics_wld_update: %s\n", physics_error_text(res));
+        lua_pushstring(lua, "api_physics_wld_update: physics error");
         lua_error(lua);
         return 0;
     }
@@ -93,15 +95,14 @@ static int api_physics_update(lua_State *lua)
 
 static int api_physics_left(lua_State *lua)
 {
-    int wld_left, cs_left, rb_left, veh_left;
+    int cs_left, rb_left, veh_left;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_physics_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_left(&wld_left, &cs_left, &rb_left, &veh_left);
-    lua_pushinteger(lua, wld_left);
+    physcpp_left(&cs_left, &rb_left, &veh_left);
     lua_pushinteger(lua, cs_left);
     lua_pushinteger(lua, rb_left);
     lua_pushinteger(lua, veh_left);
@@ -208,79 +209,6 @@ static int api_physics_wld_ddraw_mode(lua_State *lua)
     {
         fprintf(stderr, "api_physics_wld_ddraw_mode: %s\n", physics_error_text(res));
         lua_pushstring(lua, "api_physics_wld_ddraw_mode: error");
-        lua_error(lua);
-        return 0;
-    }
-    return 0;
-}
-
-static int api_physics_wld_tscale(lua_State *lua)
-{
-    int res, wldi;
-    float tscale;
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2))
-    {
-        lua_pushstring(lua, "api_physics_wld_tscale: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    wldi = lua_tointeger(lua, 1);
-    tscale = (float)lua_tonumber(lua, 2);
-    lua_pop(lua, 2);
-    if (tscale < 0.0f)
-    {
-        lua_pushstring(lua, "api_physics_wld_tscale: negative time scale");
-        lua_error(lua);
-        return 0;
-    }
-    res = physcpp_wld_tscale(wldi, tscale);
-    if (res != PHYSRES_OK)
-    {
-        fprintf(stderr, "api_physics_wld_tscale: %s\n", physics_error_text(res));
-        lua_pushstring(lua, "api_physics_wld_tscale: error");
-        lua_error(lua);
-        return 0;
-    }
-    return 0;
-}
-
-static int api_physics_wld_alloc(lua_State *lua)
-{
-    int res, wldi;
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_physics_wld_alloc: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    res = physcpp_wld_alloc(&wldi);
-    if (res != PHYSRES_OK)
-    {
-        fprintf(stderr, "api_physics_wld_alloc: %s\n", physics_error_text(res));
-        lua_pushstring(lua, "api_physics_wld_alloc: error");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, wldi);
-    return 1;
-}
-
-static int api_physics_wld_free(lua_State *lua)
-{
-    int res;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_physics_wld_free: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    res = physcpp_wld_free(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-    if (res != PHYSRES_OK)
-    {
-        fprintf(stderr, "api_physics_wld_free: %s\n", physics_error_text(res));
-        lua_pushstring(lua, "api_physics_wld_free: error");
         lua_error(lua);
         return 0;
     }
@@ -851,15 +779,12 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
     {
         return 1;
     }
-    lua_register(lua, "api_physics_update", api_physics_update);
     lua_register(lua, "api_physics_left", api_physics_left);
     lua_register(lua, "api_physics_wld_ddraw", api_physics_wld_ddraw);
-    lua_register(lua, "api_physics_wld_alloc", api_physics_wld_alloc);
-    lua_register(lua, "api_physics_wld_free", api_physics_wld_free);
-    lua_register(lua, "api_physics_wld_tscale", api_physics_wld_tscale);
     lua_register(lua, "api_physics_wld_ddraw_mode", api_physics_wld_ddraw_mode);
     lua_register(lua, "api_physics_wld_gravity", api_physics_wld_gravity);
     lua_register(lua, "api_physics_wld_move", api_physics_wld_move);
+    lua_register(lua, "api_physics_wld_update", api_physics_wld_update);
     lua_register(lua, "api_physics_cs_alloc_box", api_physics_cs_alloc_box);
     lua_register(lua, "api_physics_cs_alloc_sphere", api_physics_cs_alloc_sphere);
     lua_register(lua, "api_physics_cs_alloc_hmap", api_physics_cs_alloc_hmap);

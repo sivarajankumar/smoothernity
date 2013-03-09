@@ -49,45 +49,21 @@ void physcpp_done(void)
 }
 
 extern "C"
-void physcpp_left(int *wld_left, int *cs_left, int *rb_left, int *veh_left)
+void physcpp_left(int *cs_left, int *rb_left, int *veh_left)
 {
-    *wld_left = world_left();
     *cs_left = colshape_left();
     *rb_left = rigidbody_left();
     *veh_left = vehicle_left();
 }
 
 extern "C"
-int physcpp_wld_update(float dt)
-{
-    return world_update(dt);
-}
-
-extern "C"
-int physcpp_wld_alloc(int *wldi)
-{
-    return world_alloc(wldi);
-}
-
-extern "C"
-int physcpp_wld_free(int wldi)
+int physcpp_wld_update(int wldi, float dt)
 {
     world_t *wld;
     wld = world_get(wldi);
     if (wld == 0)
         return PHYSRES_INVALID_WLD;
-    return world_free(wld);
-}
-
-extern "C"
-int physcpp_wld_tscale(int wldi, float tscale)
-{
-    world_t *wld;
-    wld = world_get(wldi);
-    if (wld == 0)
-        return PHYSRES_INVALID_WLD;
-    wld->time_scale = tscale;
-    return PHYSRES_OK;
+    return world_update(wld, dt);
 }
 
 extern "C"

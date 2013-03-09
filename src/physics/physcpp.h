@@ -3,11 +3,8 @@
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int wld_count, int cs_count, int rb_count, int veh_count);
 void physcpp_done(void);
-void physcpp_left(int *wld_left, int *cs_left, int *rb_left, int *veh_left);
-int physcpp_wld_update(float dt);
-int physcpp_wld_alloc(int *wldi);
-int physcpp_wld_free(int wldi);
-int physcpp_wld_tscale(int wldi, float);
+void physcpp_left(int *cs_left, int *rb_left, int *veh_left);
+int physcpp_wld_update(int wldi, float dt);
 int physcpp_wld_ddraw(int wldi);
 int physcpp_wld_ddraw_mode(int wldi, int mode);
 int physcpp_wld_gravity(int wldi, float *v);

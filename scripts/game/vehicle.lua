@@ -322,7 +322,7 @@ function M.alloc(uid, startx, starty, startz)
             fx, fy, fz, tx, ty, tz = loadstring(chunk)()
         end
         local m = util.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, 0, 1, 0)
-        veh = api_physics_veh_alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
+        veh = api_physics_veh_alloc(pwld.wld.id(), cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
                                     CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)
         api_matrix_free(m)

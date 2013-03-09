@@ -125,7 +125,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
     api_vector_wsum(vcast_sky, vcam_ofs_weights, vcam_from, vcast_sky_ofs, vzero, vzero)
     api_matrix_pos_scl_rot(mcast_sky, vcast_sky, vone, vzero, API_MATRIX_AXIS_X, 0)
     api_matrix_pos_scl_rot(mcast_ground, vcam_from, vone, vzero, API_MATRIX_AXIS_X, 0)
-    api_vector_cast(vcast_from, pwld.wld, sphere, mcast_sky, mcast_ground)
+    api_vector_cast(vcast_from, pwld.wld.id(), sphere, mcast_sky, mcast_ground)
     api_vector_update(vcast_from, 0, API_VECTOR_FORCED_UPDATE)
 
     util.vector_copy(vcam_from_smooth, vcast_from)

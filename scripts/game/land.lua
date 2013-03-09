@@ -233,7 +233,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
                                           basz + move.z + 0.5*common.size)
         cs = api_physics_cs_alloc_hmap(buf.start, common.res, common.res,
                                        -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
-        rb = api_physics_rb_alloc(pwld.wld, cs, mpos, 0, 1, 1)
+        rb = api_physics_rb_alloc(pwld.wld.id(), cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
         api_matrix_free(mpos)
     end

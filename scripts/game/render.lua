@@ -263,7 +263,7 @@ local function debug_alloc()
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj3d)
         api_render_mview(self.mview3d)
-        api_physics_wld_ddraw(pwld.wld)
+        pwld.wld.ddraw()
         api_render_swap()
 
         api_vector_free(vclrcol)
