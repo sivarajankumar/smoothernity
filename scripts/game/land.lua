@@ -11,6 +11,7 @@ local poolbuf = require 'core.pool.buf'
 local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
+local rigidbody = require 'core.rigidbody'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -197,7 +198,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     function self.free()
         api_matrix_free(mvis)
         api_matrix_free(mrb)
-        api_physics_rb_free(rb)
+        rb.free()
         api_physics_cs_free(cs)
         buf.free()
         common.free()
@@ -233,14 +234,14 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
                                           basz + move.z + 0.5*common.size)
         cs = api_physics_cs_alloc_hmap(buf.start, common.res, common.res,
                                        -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
-        rb = api_physics_rb_alloc(pwld.wld.id(), cs, mpos, 0, 1, 1)
+        rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
         api_matrix_free(mpos)
     end
 
     -- visual
     do
-        api_matrix_rigid_body(mrb, rb)
+        api_matrix_rigid_body(mrb, rb.id())
         api_matrix_mul(common.mmesh, mrb, mvis)
     end
 

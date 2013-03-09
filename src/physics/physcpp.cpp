@@ -49,10 +49,9 @@ void physcpp_done(void)
 }
 
 extern "C"
-void physcpp_left(int *cs_left, int *rb_left, int *veh_left)
+void physcpp_left(int *cs_left, int *veh_left)
 {
     *cs_left = colshape_left();
-    *rb_left = rigidbody_left();
     *veh_left = vehicle_left();
 }
 
@@ -174,18 +173,22 @@ int physcpp_cs_free(int csi)
 }
 
 extern "C"
-int physcpp_rb_alloc(int *rbi, int wldi, int csi, float *matrix,
+int physcpp_rb_alloc(int rbi, int wldi, int csi, float *matrix,
                      float mass, float frict, float roll_frict)
 {
     world_t *wld;
     colshape_t *cs;
+    rigidbody_t *rb;
     wld = world_get(wldi);
     cs = colshape_get(csi);
+    rb = rigidbody_get(rbi);
     if (wld == 0)
         return PHYSRES_INVALID_WLD;
     if (cs == 0)
         return PHYSRES_INVALID_CS;
-    return rigidbody_alloc(rbi, wld, cs, matrix,
+    if (rb == 0)
+        return PHYSRES_INVALID_RB;
+    return rigidbody_alloc(rb, wld, cs, matrix,
                            mass, frict, roll_frict);
 }
 

@@ -8,6 +8,7 @@ local poolbuf = require 'core.pool.buf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinibuf = require 'core.twin.ibuf'
 local twinmesh = require 'core.twin.mesh'
+local rigidbody = require 'core.rigidbody'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -42,7 +43,7 @@ function M.alloc(x, y, z)
         bpos.free()
         mesh_big.free()
         mesh_small.free()
-        api_physics_rb_free(rb)
+        rb.free()
         api_physics_cs_free(cs)
     end
 
@@ -90,8 +91,8 @@ function M.alloc(x, y, z)
         local size = api_vector_alloc()
         api_vector_const(size, 1, 1, 1, 0)
         cs = api_physics_cs_alloc_box(size)
-        rb = api_physics_rb_alloc(pwld.wld.id(), cs, mbig, 1000, 1, 1)
-        api_matrix_rigid_body(mrb, rb)
+        rb = rigidbody.alloc(pwld.wld, cs, mbig, 1000, 1, 1)
+        api_matrix_rigid_body(mrb, rb.id())
         api_vector_free(size)
     end
 
