@@ -3,7 +3,7 @@ local M = {}
 local lod = require 'game.lod'
 local cfg = require 'config'
 local util = require 'core.util'
-local quit = require 'quit'
+local quit = require 'game.quit'
 
 local BUFFER = 20
 local REST = 400
