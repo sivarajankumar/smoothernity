@@ -1,7 +1,7 @@
 local M = {}
 
 local pwld = require 'game.physwld'
-local render = require 'render'
+local render = require 'game.render'
 local key = require 'core.key'
 
 local pause = false

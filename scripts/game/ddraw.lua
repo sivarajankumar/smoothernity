@@ -1,6 +1,6 @@
 local M = {}
 
-local render = require 'render'
+local render = require 'game.render'
 local pwld = require 'game.physwld'
 
 local MODE_VISUAL = 0

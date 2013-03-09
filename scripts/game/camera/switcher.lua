@@ -1,6 +1,6 @@
 local M = {}
 
-local render = require 'render'
+local render = require 'game.render'
 
 function M.alloc(camc, camd)
     local self = {}
