@@ -1,6 +1,6 @@
 local M = {}
 
-local shprog = require 'shprog'
+local shprog = require 'core.shprog'
 
 local shcolor, shdefault, shtex
 
