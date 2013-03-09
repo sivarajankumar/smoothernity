@@ -95,18 +95,17 @@ static int api_physics_wld_update(lua_State *lua)
 
 static int api_physics_left(lua_State *lua)
 {
-    int cs_left, rb_left, veh_left;
+    int cs_left, veh_left;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_physics_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_left(&cs_left, &rb_left, &veh_left);
+    physcpp_left(&cs_left, &veh_left);
     lua_pushinteger(lua, cs_left);
-    lua_pushinteger(lua, rb_left);
     lua_pushinteger(lua, veh_left);
-    return 4;
+    return 2;
 }
 
 static int api_physics_wld_ddraw(lua_State *lua)
@@ -438,26 +437,27 @@ static int api_physics_cs_free(lua_State *lua)
 static int api_physics_rb_alloc(lua_State *lua)
 {
     struct matrix_t *matrix;
-    int wldi, csi, rbi, res;
+    int rbi, wldi, csi, res;
     float mass, frict, roll_frict;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 7 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6))
+    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7))
     {
         lua_pushstring(lua, "api_physics_rb_alloc: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    wldi = lua_tointeger(lua, 1);
-    csi = lua_tointeger(lua, 2);
-    matrix = matrix_get(lua_tointeger(lua, 3));
-    mass = (float)lua_tonumber(lua, 4);
-    frict = (float)lua_tonumber(lua, 5);
-    roll_frict = (float)lua_tonumber(lua, 6);
-    lua_pop(lua, 6);
+    rbi = lua_tointeger(lua, 1);
+    wldi = lua_tointeger(lua, 2);
+    csi = lua_tointeger(lua, 3);
+    matrix = matrix_get(lua_tointeger(lua, 4));
+    mass = (float)lua_tonumber(lua, 5);
+    frict = (float)lua_tonumber(lua, 6);
+    roll_frict = (float)lua_tonumber(lua, 7);
+    lua_pop(lua, 7);
 
     if (matrix == 0)
     {
@@ -480,7 +480,7 @@ static int api_physics_rb_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_rb_alloc(&rbi, wldi, csi, matrix->value, mass, frict, roll_frict);
+    res = physcpp_rb_alloc(rbi, wldi, csi, matrix->value, mass, frict, roll_frict);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, "api_physics_rb_alloc: %s\n", physics_error_text(res));
@@ -488,9 +488,7 @@ static int api_physics_rb_alloc(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, rbi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_rb_free(lua_State *lua)

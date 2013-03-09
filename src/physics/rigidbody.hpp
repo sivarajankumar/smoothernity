@@ -10,7 +10,6 @@ struct rigidbody_t
     btRigidBody *body;
     mstate_c *mstate;
     char *data;
-    rigidbody_t *next;
     int vacant;
     world_t *wld;
     colshape_t *cs;
@@ -20,8 +19,7 @@ struct rigidbody_t
 
 int rigidbody_init(int count);
 void rigidbody_done(void);
-int rigidbody_left(void);
-int rigidbody_alloc(int *rbi, world_t*, colshape_t*, float *matrix, 
+int rigidbody_alloc(rigidbody_t *rb, world_t*, colshape_t*, float *matrix, 
                     float mass, float frict, float roll_frict);
 int rigidbody_free(rigidbody_t*);
 rigidbody_t * rigidbody_get(int);

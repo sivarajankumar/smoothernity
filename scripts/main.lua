@@ -40,7 +40,7 @@ function M.configure()
             matrix_nesting = 20,
             world_count = cfg.WORLD_COUNT,
             colshape_count = 100,
-            rigidbody_count = 100,
+            rigidbody_count = cfg.RIGIDBODY_COUNT,
             vehicle_count = 10,
             buf_size = cfg.BUF_SIZE,
             shuni_count = cfg.SHUNI_COUNT,

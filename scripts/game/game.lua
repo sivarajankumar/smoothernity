@@ -10,6 +10,7 @@ local camdev = require 'game.camera.dev'
 local camswitch = require 'game.camera.switcher'
 local world = require 'game.world'
 local corewld = require 'core.world'
+local rigidbody = require 'core.rigidbody'
 local render = require 'game.render'
 local pwld = require 'game.physwld'
 local pause = require 'game.pause'
@@ -60,6 +61,7 @@ end
 
 function M.run()
     corewld.init()
+    rigidbody.init()
     shprog.init()
     shuni.init()
     mesh.init()
@@ -215,6 +217,7 @@ function M.run()
     mesh.done()
     sync.done()
     thread.done()
+    rigidbody.done()
     corewld.done()
 end
 
