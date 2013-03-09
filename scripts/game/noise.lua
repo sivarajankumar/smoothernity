@@ -2,7 +2,7 @@ local M = {}
 
 local cfg = require 'config'
 local util = require 'core.util'
-local thread = require 'thread'
+local thread = require 'core.thread'
 
 function M.alloc(uid)
     local self = {}

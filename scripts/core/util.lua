@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local thread = require 'thread'
+local thread = require 'core.thread'
 local sync = require 'core.sync'
 
 local MAX_WAIT_TIME = 10
