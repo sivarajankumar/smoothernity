@@ -1,6 +1,6 @@
 local M = {}
 
-local render = require 'render'
+local render = require 'game.render'
 local poolbuf = require 'core.pool.buf'
 
 function M.alloc()
