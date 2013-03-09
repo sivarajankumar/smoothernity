@@ -1,18 +1,12 @@
 local M = {}
+local corewld = require 'core.world'
 
 function M.init()
-    M.wld = api_physics_wld_alloc()
+    M.wld = corewld.alloc()
 end
 
 function M.done()
-    api_physics_wld_free(M.wld)
-end
-
-function M.set_gravity(x, y, z)
-    local grav = api_vector_alloc()
-    api_vector_const(grav, x, y, z, 0)
-    api_physics_wld_gravity(M.wld, grav)
-    api_vector_free(grav)
+    M.wld.free()
 end
 
 return M

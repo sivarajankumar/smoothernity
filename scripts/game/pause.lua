@@ -9,11 +9,11 @@ local keyobj = key.alloc(function() return API_INPUT_KEY_P end,
                          function()
                             if pause then
                                 pause = false
-                                api_physics_wld_tscale(pwld.wld, 1)
+                                pwld.wld.tscale(1)
                                 render.timescale(1)
                             else
                                 pause = true
-                                api_physics_wld_tscale(pwld.wld, 0)
+                                pwld.wld.tscale(0)
                                 render.timescale(0)
                             end
                          end, function() end)

@@ -99,7 +99,7 @@ function M.alloc(uid, centx, centy, centz)
         if dx ~= 0 or dy ~= 0 or dz ~= 0 then
             local dv = api_vector_alloc()
             api_vector_const(dv, dx, dy, dz, 0)
-            api_physics_wld_move(pwld.wld, dv)
+            pwld.wld.move(dv)
             car.move(dv)
             camc.move(dv)
             api_vector_free(dv)

@@ -20,7 +20,7 @@ function M.update()
             elseif mode == MODE_EAGLE then
                 mode = MODE_DEBUG
                 render.engage(render.debug)
-                api_physics_wld_ddraw_mode(pwld.wld, API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
+                pwld.wld.ddraw_mode(API_PHYSICS_DRAW_WIREFRAME + API_PHYSICS_DRAW_AABB)
             elseif mode == MODE_DEBUG then
                 mode = MODE_VISUAL
                 render.engage(render.visual)

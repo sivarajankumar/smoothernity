@@ -9,6 +9,7 @@ local camcord = require 'game.camera.cord'
 local camdev = require 'game.camera.dev'
 local camswitch = require 'game.camera.switcher'
 local world = require 'game.world'
+local corewld = require 'core.world'
 local render = require 'game.render'
 local pwld = require 'game.physwld'
 local pause = require 'game.pause'
@@ -58,6 +59,7 @@ local function run_co(co, start_time, max_time)
 end
 
 function M.run()
+    corewld.init()
     shprog.init()
     shuni.init()
     mesh.init()
@@ -77,7 +79,7 @@ function M.run()
     local created = false
     local generated = false
 
-    pwld.set_gravity(0, -10, 0)
+    pwld.wld.gravity(0, -10, 0)
     render.engage(render.visual)
 
     local control = coroutine.create(
@@ -121,7 +123,7 @@ function M.run()
             local blink = blinker.alloc()
             gui.init()
             gui.wait_show()
-            api_physics_wld_tscale(pwld.wld, 0)
+            pwld.wld.tscale(0)
             render.timescale(0)
             wld = world.alloc('world', START_X, START_Y, START_Z)
             local sx, sy, sz = start_pos(wld)
@@ -133,7 +135,7 @@ function M.run()
             wld.attach(car.mchassis)
             created = true
             wld.generate()
-            api_physics_wld_tscale(pwld.wld, 1)
+            pwld.wld.tscale(1)
             render.timescale(1)
             gui.wait_hide()
             generated = true
@@ -148,7 +150,7 @@ function M.run()
                 coroutine.yield(true)
             end
             gui.wait_show()
-            api_physics_wld_tscale(pwld.wld, 0)
+            pwld.wld.tscale(0)
             render.timescale(0)
             car.save(wld)
             camc.save()
@@ -171,7 +173,7 @@ function M.run()
     do
         local logic_time = api_timer()
         local core_time = logic_time
-        api_physics_update(cfg.FRAME_TIME)
+        pwld.wld.update(cfg.FRAME_TIME)
         api_input_update()
         collectgarbage('step', GC_STEP)
 
@@ -213,6 +215,7 @@ function M.run()
     mesh.done()
     sync.done()
     thread.done()
+    corewld.done()
 end
 
 return M
