@@ -19,7 +19,6 @@ struct colshape_t
     colshape_t *comp_children;
     colshape_t *comp_next;
     colshape_t *comp_prev;
-    colshape_t *next;
     int vacant;
     vehicle_t *vehs;
     rigidbody_t *rbs;
@@ -27,13 +26,11 @@ struct colshape_t
 
 int colshape_init(int count);
 void colshape_done(void);
-int colshape_left(void);
-int colshape_alloc(int*);
 int colshape_free(colshape_t*);
 colshape_t * colshape_get(int);
-int colshape_make_box(colshape_t *col, float *size);
-int colshape_make_sphere(colshape_t *col, float r);
-int colshape_make_hmap(colshape_t *col, float *hmap, int width, int length,
-                       float hmin, float hmax, float *scale);
-int colshape_make_comp(colshape_t *col);
+int colshape_alloc_box(colshape_t *col, float *size);
+int colshape_alloc_sphere(colshape_t *col, float r);
+int colshape_alloc_hmap(colshape_t *col, float *hmap, int width, int length,
+                        float hmin, float hmax, float *scale);
+int colshape_alloc_comp(colshape_t *col);
 int colshape_comp_add(colshape_t*, float *matrix, colshape_t *child);

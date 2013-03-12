@@ -9,6 +9,7 @@ local twinvbuf = require 'core.twin.vbuf'
 local twinibuf = require 'core.twin.ibuf'
 local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
+local colshape = require 'core.colshape'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -44,7 +45,7 @@ function M.alloc(x, y, z)
         mesh_big.free()
         mesh_small.free()
         rb.free()
-        api_physics_cs_free(cs)
+        cs.free()
     end
 
     -- vertex buffer
@@ -90,7 +91,7 @@ function M.alloc(x, y, z)
     do
         local size = api_vector_alloc()
         api_vector_const(size, 1, 1, 1, 0)
-        cs = api_physics_cs_alloc_box(size)
+        cs = colshape.alloc_box(size)
         rb = rigidbody.alloc(pwld.wld, cs, mbig, 1000, 1, 1)
         api_matrix_rigid_body(mrb, rb.id())
         api_vector_free(size)

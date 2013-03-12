@@ -12,6 +12,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
+local colshape = require 'core.colshape'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -199,7 +200,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         api_matrix_free(mvis)
         api_matrix_free(mrb)
         rb.free()
-        api_physics_cs_free(cs)
+        cs.free()
         buf.free()
         common.free()
     end
@@ -232,8 +233,8 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
                                           basy + move.y,
                                           basz + move.z + 0.5*common.size)
-        cs = api_physics_cs_alloc_hmap(buf.start, common.res, common.res,
-                                       -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
+        cs = colshape.alloc_hmap(buf.start, common.res, common.res,
+                                 -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
         api_matrix_free(mpos)

@@ -49,9 +49,8 @@ void physcpp_done(void)
 }
 
 extern "C"
-void physcpp_left(int *cs_left, int *veh_left)
+void physcpp_left(int *veh_left)
 {
-    *cs_left = colshape_left();
     *veh_left = vehicle_left();
 }
 
@@ -110,45 +109,44 @@ int physcpp_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout)
 }
 
 extern "C"
-int physcpp_cs_alloc_box(int *csi, float *size)
+int physcpp_cs_alloc_box(int csi, float *size)
 {
-    int res;
-    res = colshape_alloc(csi);
-    if (res != PHYSRES_OK)
-        return res;
-    return colshape_make_box(colshape_get(*csi), size);
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0)
+        return PHYSRES_INVALID_CS;
+    return colshape_alloc_box(cs, size);
 }
 
 extern "C"
-int physcpp_cs_alloc_sphere(int *csi, float r)
+int physcpp_cs_alloc_sphere(int csi, float r)
 {
-    int res;
-    res = colshape_alloc(csi);
-    if (res != PHYSRES_OK)
-        return res;
-    return colshape_make_sphere(colshape_get(*csi), r);
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0)
+        return PHYSRES_INVALID_CS;
+    return colshape_alloc_sphere(cs, r);
 }
 
 extern "C"
-int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
+int physcpp_cs_alloc_hmap(int csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale)
 {
-    int res;
-    res = colshape_alloc(csi);
-    if (res != PHYSRES_OK)
-        return res;
-    return colshape_make_hmap(colshape_get(*csi), hmap, width,
-                              length, hmin, hmax, scale);
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0)
+        return PHYSRES_INVALID_CS;
+    return colshape_alloc_hmap(cs, hmap, width, length, hmin, hmax, scale);
 }
 
 extern "C"
-int physcpp_cs_alloc_comp(int *csi)
+int physcpp_cs_alloc_comp(int csi)
 {
-    int res;
-    res = colshape_alloc(csi);
-    if (res != PHYSRES_OK)
-        return res;
-    return colshape_make_comp(colshape_get(*csi));
+    colshape_t *cs;
+    cs = colshape_get(csi);
+    if (cs == 0)
+        return PHYSRES_INVALID_CS;
+    return colshape_alloc_comp(cs);
 }
 
 extern "C"

@@ -10,6 +10,7 @@ local shader = require 'game.shader'
 local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
+local colshape = require 'core.colshape'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -94,9 +95,9 @@ function M.alloc(uid, startx, starty, startz)
         vb.free()
         ib.free()
         api_physics_veh_free(veh)
-        api_physics_cs_free(cs_shape_box)
-        api_physics_cs_free(cs_shape)
-        api_physics_cs_free(cs_inert)
+        cs_shape_box.free()
+        cs_shape.free()
+        cs_inert.free()
     end
 
     function self.move(vofs)
@@ -303,10 +304,10 @@ function M.alloc(uid, startx, starty, startz)
         local size = api_vector_alloc()
         local ofs = util.matrix_pos_stop(0, CH_OFFSET_Y, 0)
         api_vector_const(size, 0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
-        cs_inert = api_physics_cs_alloc_box(size)
-        cs_shape_box = api_physics_cs_alloc_box(size)
-        cs_shape = api_physics_cs_alloc_comp()
-        api_physics_cs_comp_add(cs_shape, ofs, cs_shape_box)
+        cs_inert = colshape.alloc_box(size)
+        cs_shape_box = colshape.alloc_box(size)
+        cs_shape = colshape.alloc_comp()
+        cs_shape.comp_add(ofs, cs_shape_box)
         api_vector_free(size)
         api_matrix_free(ofs)
     end
@@ -322,7 +323,7 @@ function M.alloc(uid, startx, starty, startz)
             fx, fy, fz, tx, ty, tz = loadstring(chunk)()
         end
         local m = util.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, 0, 1, 0)
-        veh = api_physics_veh_alloc(pwld.wld.id(), cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
+        veh = api_physics_veh_alloc(pwld.wld.id(), cs_shape.id(), cs_inert.id(), m, CH_MASS, CH_FRICT,
                                     CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                                     SUS_TRAV, SUS_FORCE, SLIP_FRICT)
         api_matrix_free(m)
