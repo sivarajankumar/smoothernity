@@ -93,20 +93,6 @@ static int api_physics_wld_update(lua_State *lua)
     return 0;
 }
 
-static int api_physics_left(lua_State *lua)
-{
-    int veh_left;
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_physics_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    physcpp_left(&veh_left);
-    lua_pushinteger(lua, veh_left);
-    return 1;
-}
-
 static int api_physics_wld_ddraw(lua_State *lua)
 {
     int wldi, res;
@@ -517,7 +503,7 @@ static int api_physics_veh_alloc(lua_State *lua)
     float mass, ch_frict, ch_roll_frict, sus_stif, sus_comp;
     float sus_damp, sus_trav, sus_force, slip_frict;
 
-    if (lua_gettop(lua) != 13)
+    if (lua_gettop(lua) != 14)
     {
         lua_pushstring(lua, "api_physics_veh_alloc: incorrect argument");
         lua_error(lua);
@@ -534,20 +520,21 @@ static int api_physics_veh_alloc(lua_State *lua)
         }
     }
 
-    wldi = lua_tointeger(lua, 1);
-    shapei = lua_tointeger(lua, 2);
-    inerti = lua_tointeger(lua, 3);
-    matrix = matrix_get(lua_tointeger(lua, 4));
-    mass = (float)lua_tonumber(lua, 5);
-    ch_frict = (float)lua_tonumber(lua, 6);
-    ch_roll_frict = (float)lua_tonumber(lua, 7);
-    sus_stif = (float)lua_tonumber(lua, 8);
-    sus_comp = (float)lua_tonumber(lua, 9);
-    sus_damp = (float)lua_tonumber(lua, 10);
-    sus_trav = (float)lua_tonumber(lua, 11);
-    sus_force = (float)lua_tonumber(lua, 12);
-    slip_frict = (float)lua_tonumber(lua, 13);
-    lua_pop(lua, 13);
+    vehi = lua_tointeger(lua, 1);
+    wldi = lua_tointeger(lua, 2);
+    shapei = lua_tointeger(lua, 3);
+    inerti = lua_tointeger(lua, 4);
+    matrix = matrix_get(lua_tointeger(lua, 5));
+    mass = (float)lua_tonumber(lua, 6);
+    ch_frict = (float)lua_tonumber(lua, 7);
+    ch_roll_frict = (float)lua_tonumber(lua, 8);
+    sus_stif = (float)lua_tonumber(lua, 9);
+    sus_comp = (float)lua_tonumber(lua, 10);
+    sus_damp = (float)lua_tonumber(lua, 11);
+    sus_trav = (float)lua_tonumber(lua, 12);
+    sus_force = (float)lua_tonumber(lua, 13);
+    slip_frict = (float)lua_tonumber(lua, 14);
+    lua_pop(lua, 14);
 
     if (matrix == 0)
     {
@@ -570,7 +557,7 @@ static int api_physics_veh_alloc(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_veh_alloc(&vehi, wldi, shapei, inerti, matrix->value, mass,
+    res = physcpp_veh_alloc(vehi, wldi, shapei, inerti, matrix->value, mass,
                             ch_frict, ch_roll_frict, sus_stif, sus_comp,
                             sus_damp, sus_trav, sus_force, slip_frict);
     if (res != PHYSRES_OK)
@@ -580,9 +567,7 @@ static int api_physics_veh_alloc(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, vehi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_veh_free(lua_State *lua)
@@ -775,7 +760,6 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
     {
         return 1;
     }
-    lua_register(lua, "api_physics_left", api_physics_left);
     lua_register(lua, "api_physics_wld_ddraw", api_physics_wld_ddraw);
     lua_register(lua, "api_physics_wld_ddraw_mode", api_physics_wld_ddraw_mode);
     lua_register(lua, "api_physics_wld_gravity", api_physics_wld_gravity);

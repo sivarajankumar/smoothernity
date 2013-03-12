@@ -11,6 +11,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local colshape = require 'core.colshape'
+local vehicle = require 'core.vehicle'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -55,7 +56,7 @@ function M.alloc(uid, startx, starty, startz)
     local vb = twinvbuf.alloc(8)
     local ib = twinibuf.alloc(36)
     local cs_inert, cs_shape_box, cs_shape, veh
-    local wheel_fr, wheel_fl, wheel_br, wheel_bl
+    local wheels, wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
                                       0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
     local mchassis_phys = api_matrix_alloc()
@@ -79,7 +80,7 @@ function M.alloc(uid, startx, starty, startz)
                                  function() end)
 
     function self.free()
-        for i = 0, 3 do
+        for i, w in pairs(wheels) do
             api_matrix_free(mwheel_physic[i])
             api_matrix_free(mwheel[i])
             mesh_wheel[i].free()
@@ -94,7 +95,7 @@ function M.alloc(uid, startx, starty, startz)
         api_vector_free(vpos)
         vb.free()
         ib.free()
-        api_physics_veh_free(veh)
+        veh.free()
         cs_shape_box.free()
         cs_shape.free()
         cs_inert.free()
@@ -219,20 +220,21 @@ function M.alloc(uid, startx, starty, startz)
             do
                 local acc = util.lerp(freedom, 0, 1, 0, accel)
                 local brk = util.lerp(freedom, 0, 1, BRAKE_RESTRAIN, 0)
-                api_physics_veh_set_wheel(veh, wheel_fl, acc, brk, -steer)
-                api_physics_veh_set_wheel(veh, wheel_fr, acc, brk, -steer)
-                api_physics_veh_set_wheel(veh, wheel_bl, 0, brake + brk, 0)
-                api_physics_veh_set_wheel(veh, wheel_br, 0, brake + brk, 0)
+                wheel_fl.set(acc, brk, -steer)
+                wheel_fr.set(acc, brk, -steer)
+                wheel_bl.set(0, brake + brk, 0)
+                wheel_br.set(0, brake + brk, 0)
             end
         end
 
         -- recovery
         do
-            local wheels = 0
-            for i = 0, 3 do
-                wheels = wheels + api_physics_veh_wheel_contact(veh, i)
-            end
-            if wheels == 4 then
+            local count = 0
+            count = count + wheel_fl.contact()
+            count = count + wheel_fr.contact()
+            count = count + wheel_bl.contact()
+            count = count + wheel_br.contact()
+            if count == 4 then
                 recov_frames = recov_frames + 1
             else
                 recov_frames = 0
@@ -247,7 +249,7 @@ function M.alloc(uid, startx, starty, startz)
             if recov_pressed == 0 then
                 if api_input_key(API_INPUT_KEY_R) == 1 then
                     recov_pressed = 1
-                    api_physics_veh_transform(veh, mrecov)
+                    veh.transform(mrecov)
                 end
             elseif recov_pressed == 1 then
                 if api_input_key(API_INPUT_KEY_R) == 0 then
@@ -264,8 +266,8 @@ function M.alloc(uid, startx, starty, startz)
         api_vector_const(pos, posx, posy, posz, 0)
         api_vector_const(axl, -1, 0, 0, 0)
         api_vector_const(dir, 0, -1, 0, 0)
-        local wheel = api_physics_veh_add_wheel(veh, pos, dir, axl, SUS_REST,
-                                                ROLL_INF, WHEEL_RADIUS, front)
+        local wheel = veh.add_wheel(pos, dir, axl, SUS_REST,
+                                    ROLL_INF, WHEEL_RADIUS, front)
         api_vector_free(pos)
         api_vector_free(dir)
         api_vector_free(axl)
@@ -323,24 +325,25 @@ function M.alloc(uid, startx, starty, startz)
             fx, fy, fz, tx, ty, tz = loadstring(chunk)()
         end
         local m = util.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, 0, 1, 0)
-        veh = api_physics_veh_alloc(pwld.wld.id(), cs_shape.id(), cs_inert.id(), m, CH_MASS, CH_FRICT,
-                                    CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
-                                    SUS_TRAV, SUS_FORCE, SLIP_FRICT)
+        veh = vehicle.alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
+                            CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
+                            SUS_TRAV, SUS_FORCE, SLIP_FRICT)
         api_matrix_free(m)
         wheel_fr = add_wheel( WHEEL_POS_X, WHEEL_POS_Y, WHEEL_POS_Z, 1)
         wheel_fl = add_wheel(-WHEEL_POS_X, WHEEL_POS_Y, WHEEL_POS_Z, 1)
         wheel_br = add_wheel( WHEEL_POS_X, WHEEL_POS_Y,-WHEEL_POS_Z, 0)
         wheel_bl = add_wheel(-WHEEL_POS_X, WHEEL_POS_Y,-WHEEL_POS_Z, 0)
+        wheels = {wheel_fr, wheel_fl, wheel_bl, wheel_br}
     end
 
     -- matrices
     do
-        api_matrix_vehicle_chassis(mchassis_phys, veh)
+        api_matrix_vehicle_chassis(mchassis_phys, veh.id())
         api_matrix_mul(self.mchassis, mchassis_phys, mchassis_local)
-        for i = 0, 3 do
+        for i, w in pairs(wheels) do
             mwheel_physic[i] = api_matrix_alloc()
             mwheel[i] = api_matrix_alloc()
-            api_matrix_vehicle_wheel(mwheel_physic[i], veh, i)
+            api_matrix_vehicle_wheel(mwheel_physic[i], veh.id(), w.id())
             api_matrix_mul(mwheel[i], mwheel_physic[i], mwheel_local)
         end
         api_matrix_copy(mrecov, mchassis_phys)
@@ -354,7 +357,7 @@ function M.alloc(uid, startx, starty, startz)
     do
         mesh_chassis = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
                                       shader.default(), self.mchassis)
-        for i = 0, 3 do
+        for i, w in pairs(wheels) do
             mesh_wheel[i] = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
                                            shader.default(), mwheel[i])
         end

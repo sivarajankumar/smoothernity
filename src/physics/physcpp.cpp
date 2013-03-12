@@ -49,12 +49,6 @@ void physcpp_done(void)
 }
 
 extern "C"
-void physcpp_left(int *veh_left)
-{
-    *veh_left = vehicle_left();
-}
-
-extern "C"
 int physcpp_wld_update(int wldi, float dt)
 {
     world_t *wld;
@@ -221,21 +215,25 @@ int physcpp_wld_gravity(int wldi, float *v)
 }
 
 extern "C"
-int physcpp_veh_alloc(int *vehi, int wldi, int shapei, int inerti, float *tm,
+int physcpp_veh_alloc(int vehi, int wldi, int shapei, int inerti, float *tm,
                       float mass, float ch_frict, float ch_roll_frict,
                       float sus_stif, float sus_comp, float sus_damp,
                       float sus_trav, float sus_force, float slip_frict)
 {
     world_t *wld;
     colshape_t *shape, *inert;
+    vehicle_t *veh;
     wld = world_get(wldi);
     shape = colshape_get(shapei);
     inert = colshape_get(inerti);
+    veh = vehicle_get(vehi);
     if (wld == 0)
         return PHYSRES_INVALID_WLD;
     if (shape == 0 || inert == 0)
         return PHYSRES_INVALID_CS;
-    return vehicle_alloc(vehi, wld, shape, inert, tm, mass,
+    if (veh == 0)
+        return PHYSRES_INVALID_VEH;
+    return vehicle_alloc(veh, wld, shape, inert, tm, mass,
                          ch_frict, ch_roll_frict, sus_stif, sus_comp,
                          sus_damp, sus_trav, sus_force, slip_frict);
 }
