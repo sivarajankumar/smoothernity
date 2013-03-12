@@ -3,18 +3,18 @@
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int wld_count, int cs_count, int rb_count, int veh_count);
 void physcpp_done(void);
-void physcpp_left(int *cs_left, int *veh_left);
+void physcpp_left(int *veh_left);
 int physcpp_wld_update(int wldi, float dt);
 int physcpp_wld_ddraw(int wldi);
 int physcpp_wld_ddraw_mode(int wldi, int mode);
 int physcpp_wld_gravity(int wldi, float *v);
 int physcpp_wld_move(int wldi, float*);
 int physcpp_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout);
-int physcpp_cs_alloc_box(int *csi, float *size);
-int physcpp_cs_alloc_sphere(int *csi, float r);
-int physcpp_cs_alloc_hmap(int *csi, float *hmap, int width, int length,
+int physcpp_cs_alloc_box(int csi, float *size);
+int physcpp_cs_alloc_sphere(int csi, float r);
+int physcpp_cs_alloc_hmap(int csi, float *hmap, int width, int length,
                           float hmin, float hmax, float *scale);
-int physcpp_cs_alloc_comp(int *csi);
+int physcpp_cs_alloc_comp(int csi);
 int physcpp_cs_comp_add(int parenti, float *matrix, int childi);
 int physcpp_cs_free(int csi);
 int physcpp_rb_alloc(int rbi, int wldi, int csi, float *matrix,

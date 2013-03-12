@@ -9,12 +9,7 @@ static const size_t COLSHAPE_SIZE = 128;
 struct colshapes_t
 {
     int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
     char *pool;
-    colshape_t *vacant;
 };
 
 static colshapes_t g_colshapes;
@@ -45,13 +40,9 @@ int colshape_init(int count)
         return PHYSRES_CANNOT_INIT;
     memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
     g_colshapes.count = count;
-    g_colshapes.left = count;
-    g_colshapes.left_min = count;
-    g_colshapes.vacant = colshape_get(0);
     for (i = 0; i < count; ++i)
     {
         cs = colshape_get(i);
-        cs->next = colshape_get(i + 1);
         cs->vacant = 1;
         cs->data = (char*)util_malloc(align_max, size_max);
         if (cs->data == 0)
@@ -75,9 +66,6 @@ void colshape_done(void)
     colshape_t *cs;
     if (g_colshapes.pool == 0)
         return;
-    printf("Collision shapes usage: %i/%i, allocs/frees: %i/%i\n",
-           g_colshapes.count - g_colshapes.left_min, g_colshapes.count,
-           g_colshapes.allocs, g_colshapes.frees);
     for (i = 0; i < g_colshapes.count; ++i)
     {
         cs = colshape_get(i);
@@ -86,28 +74,6 @@ void colshape_done(void)
     }
     util_free(g_colshapes.pool);
     g_colshapes.pool = 0;
-}
-
-int colshape_left(void)
-{
-    return g_colshapes.left;
-}
-
-int colshape_alloc(int *csi)
-{
-    colshape_t *colshape;
-    if (g_colshapes.vacant == 0)
-        return PHYSRES_OUT_OF_CS;
-    ++g_colshapes.allocs;
-    --g_colshapes.left;
-    if (g_colshapes.left < g_colshapes.left_min)
-        g_colshapes.left_min = g_colshapes.left;
-    colshape = g_colshapes.vacant;
-    g_colshapes.vacant = g_colshapes.vacant->next;
-    colshape->vacant = 0;
-    colshape->next = 0;
-    *csi = ((char*)colshape - g_colshapes.pool) / COLSHAPE_SIZE;
-    return PHYSRES_OK;
 }
 
 colshape_t * colshape_get(int colshapei)
@@ -124,8 +90,6 @@ int colshape_free(colshape_t *cs)
         return PHYSRES_INVALID_CS;
     if (cs->comp_children || cs->vehs || cs->rbs)
         return PHYSRES_CS_HAS_REFS;
-    ++g_colshapes.left;
-    ++g_colshapes.frees;
     cs->vacant = 1;
     if (cs->comp)
     {
@@ -157,39 +121,46 @@ int colshape_free(colshape_t *cs)
     cs->shape_box = 0;
     cs->shape_hmap = 0;
     cs->shape_comp = 0;
-    cs->next = g_colshapes.vacant;
-    g_colshapes.vacant = cs;
     return PHYSRES_OK;
 }
 
-int colshape_make_box(colshape_t *colshape, float *size)
+int colshape_alloc_box(colshape_t *cs, float *size)
 {
+    if (cs->vacant == 0)
+        return PHYSRES_INVALID_CS;
+    cs->vacant = 0;
     try {
-        colshape->shape_box = new (colshape->data)
+        cs->shape_box = new (cs->data)
             btBoxShape(btVector3(size[0], size[1], size[2]));
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
-    colshape->shape = colshape->shape_box;
-    colshape->shape_convex = colshape->shape_box;
+    cs->shape = cs->shape_box;
+    cs->shape_convex = cs->shape_box;
     return PHYSRES_OK;
 }
 
-int colshape_make_sphere(colshape_t *colshape, float r)
+int colshape_alloc_sphere(colshape_t *cs, float r)
 {
+    if (cs->vacant == 0)
+        return PHYSRES_INVALID_CS;
+    cs->vacant = 0;
     try {
-        colshape->shape_sphere = new (colshape->data) btSphereShape(r);
+        cs->shape_sphere = new (cs->data) btSphereShape(r);
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
-    colshape->shape = colshape->shape_sphere;
-    colshape->shape_convex = colshape->shape_sphere;
+    cs->shape = cs->shape_sphere;
+    cs->shape_convex = cs->shape_sphere;
     return PHYSRES_OK;
 }
 
-int colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
+int colshape_alloc_hmap(colshape_t *cs, float *hmap, int width, int length,
                        float hmin, float hmax, float *scale)
 {
+    if (cs->vacant == 0)
+        return PHYSRES_INVALID_CS;
+    cs->vacant = 0;
     try {
         cs->shape_hmap = new (cs->data)
             btHeightfieldTerrainShape(width, length, hmap, 1,
@@ -202,14 +173,17 @@ int colshape_make_hmap(colshape_t *cs, float *hmap, int width, int length,
     return PHYSRES_OK;
 }
 
-int colshape_make_comp(colshape_t *colshape)
+int colshape_alloc_comp(colshape_t *cs)
 {
+    if (cs->vacant == 0)
+        return PHYSRES_INVALID_CS;
+    cs->vacant = 0;
     try {
-        colshape->shape_comp = new (colshape->data) btCompoundShape();
+        cs->shape_comp = new (cs->data) btCompoundShape();
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
-    colshape->shape = colshape->shape_comp;
+    cs->shape = cs->shape_comp;
     return PHYSRES_OK;
 }
 

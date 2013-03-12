@@ -2,6 +2,7 @@ local M = {}
 
 local util = require 'core.util'
 local pwld = require 'game.physwld'
+local colshape = require 'core.colshape'
 local cfg = require 'config'
 
 CORD_MIN = 20
@@ -66,7 +67,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
         api_vector_free(vzero)
         api_vector_free(vone)
         api_vector_free(vup)
-        api_physics_cs_free(sphere)
+        sphere.free()
     end
 
     function self.move(vofs)
@@ -89,7 +90,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
         local sx, sy = util.camera_dims()
         local sr = math.sqrt(sx*sx + sy*sy)
         local r = math.sqrt(sr*sr + cfg.CAMERA_DIST*cfg.CAMERA_DIST)
-        sphere = api_physics_cs_alloc_sphere(r * SPHERE_SCALE)
+        sphere = colshape.alloc_sphere(r * SPHERE_SCALE)
     end
 
     api_vector_const(vzero, 0, 0, 0, 0)
@@ -125,7 +126,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
     api_vector_wsum(vcast_sky, vcam_ofs_weights, vcam_from, vcast_sky_ofs, vzero, vzero)
     api_matrix_pos_scl_rot(mcast_sky, vcast_sky, vone, vzero, API_MATRIX_AXIS_X, 0)
     api_matrix_pos_scl_rot(mcast_ground, vcam_from, vone, vzero, API_MATRIX_AXIS_X, 0)
-    api_vector_cast(vcast_from, pwld.wld.id(), sphere, mcast_sky, mcast_ground)
+    api_vector_cast(vcast_from, pwld.wld.id(), sphere.id(), mcast_sky, mcast_ground)
     api_vector_update(vcast_from, 0, API_VECTOR_FORCED_UPDATE)
 
     util.vector_copy(vcam_from_smooth, vcast_from)

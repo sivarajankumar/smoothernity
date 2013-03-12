@@ -39,7 +39,7 @@ function M.configure()
             matrix_count = 1000,
             matrix_nesting = 20,
             world_count = cfg.WORLD_COUNT,
-            colshape_count = 100,
+            colshape_count = cfg.COLSHAPE_COUNT,
             rigidbody_count = cfg.RIGIDBODY_COUNT,
             vehicle_count = 10,
             buf_size = cfg.BUF_SIZE,

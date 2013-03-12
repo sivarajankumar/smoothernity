@@ -13,7 +13,7 @@ local function make_rigidbody(ri)
         allocs = allocs + 1
         left = left - 1
         left_min = math.min(left, left_min)
-        api_physics_rb_alloc(ri, wld.id(), cs, tm, mass, frict, roll_frict)
+        api_physics_rb_alloc(ri, wld.id(), cs.id(), tm, mass, frict, roll_frict)
     end
     function self.free()
         frees = frees + 1

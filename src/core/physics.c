@@ -95,17 +95,16 @@ static int api_physics_wld_update(lua_State *lua)
 
 static int api_physics_left(lua_State *lua)
 {
-    int cs_left, veh_left;
+    int veh_left;
     if (lua_gettop(lua) != 0)
     {
         lua_pushstring(lua, "api_physics_left: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    physcpp_left(&cs_left, &veh_left);
-    lua_pushinteger(lua, cs_left);
+    physcpp_left(&veh_left);
     lua_pushinteger(lua, veh_left);
-    return 2;
+    return 1;
 }
 
 static int api_physics_wld_ddraw(lua_State *lua)
@@ -219,15 +218,17 @@ static int api_physics_cs_alloc_box(lua_State *lua)
     struct vector_t *size;
     int csi, res;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_box: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    size = vector_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
+    csi = lua_tointeger(lua, 1);
+    size = vector_get(lua_tointeger(lua, 2));
+    lua_pop(lua, 2);
 
     if (size == 0)
     {
@@ -236,7 +237,7 @@ static int api_physics_cs_alloc_box(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_cs_alloc_box(&csi, size->value);
+    res = physcpp_cs_alloc_box(csi, size->value);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, "api_physics_cs_alloc_box: %s\n", physics_error_text(res));
@@ -244,9 +245,7 @@ static int api_physics_cs_alloc_box(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, csi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_cs_alloc_sphere(lua_State *lua)
@@ -254,15 +253,17 @@ static int api_physics_cs_alloc_sphere(lua_State *lua)
     float r;
     int csi, res;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_sphere: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    r = (float)lua_tonumber(lua, 1);
-    lua_pop(lua, 1);
+    csi = lua_tointeger(lua, 1);
+    r = (float)lua_tonumber(lua, 2);
+    lua_pop(lua, 2);
 
     if (r <= 0)
     {
@@ -271,7 +272,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua)
         return 0;
     }
 
-    res = physcpp_cs_alloc_sphere(&csi, r);
+    res = physcpp_cs_alloc_sphere(csi, r);
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, "api_physics_cs_alloc_sphere: %s\n", physics_error_text(res));
@@ -279,9 +280,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, csi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_cs_alloc_hmap(lua_State *lua)
@@ -290,23 +289,24 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
     int start, width, length, csi, res;
     float hmin, hmax;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1)
+    if (lua_gettop(lua) != 7 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
     || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)
-    || !lua_isnumber(lua, 6))
+    || !lua_isnumber(lua, 6) || !lua_isnumber(lua, 7))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    start = lua_tointeger(lua, 1);
-    width = lua_tointeger(lua, 2);
-    length = lua_tointeger(lua, 3);
-    hmin = (float)lua_tonumber(lua, 4);
-    hmax = (float)lua_tonumber(lua, 5);
-    scale = vector_get(lua_tointeger(lua, 6));
-    lua_pop(lua, 6);
+    csi = lua_tointeger(lua, 1);
+    start = lua_tointeger(lua, 2);
+    width = lua_tointeger(lua, 3);
+    length = lua_tointeger(lua, 4);
+    hmin = (float)lua_tonumber(lua, 5);
+    hmax = (float)lua_tonumber(lua, 6);
+    scale = vector_get(lua_tointeger(lua, 7));
+    lua_pop(lua, 7);
 
     if (scale == 0)
     {
@@ -338,7 +338,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
         return 0;
     }
     
-    res = physcpp_cs_alloc_hmap(&csi, g_bufs.data + start, width,
+    res = physcpp_cs_alloc_hmap(csi, g_bufs.data + start, width,
                                 length, hmin, hmax, scale->value);
     if (res != PHYSRES_OK)
     {
@@ -347,23 +347,23 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, csi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_cs_alloc_comp(lua_State *lua)
 {
-    int csi, res;
+    int res;
 
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_physics_cs_alloc_comp: incorrect argument");
         lua_error(lua);
         return 0;
     }
 
-    res = physcpp_cs_alloc_comp(&csi);
+    res = physcpp_cs_alloc_comp(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+
     if (res != PHYSRES_OK)
     {
         fprintf(stderr, "api_physics_cs_alloc_comp: %s\n", physics_error_text(res));
@@ -371,9 +371,7 @@ static int api_physics_cs_alloc_comp(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-
-    lua_pushinteger(lua, csi);
-    return 1;
+    return 0;
 }
 
 static int api_physics_cs_comp_add(lua_State *lua)
