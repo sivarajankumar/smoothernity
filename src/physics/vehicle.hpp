@@ -15,7 +15,6 @@ struct vehicle_t
     char *chassis_data;
     char *ray_data;
     char *veh_data;
-    vehicle_t *next;
     int vacant;
     world_t *wld;
     colshape_t *shape;
@@ -28,8 +27,7 @@ struct vehicle_t
 
 int vehicle_init(int count);
 void vehicle_done(void);
-int vehicle_left(void);
-int vehicle_alloc(int *vehi, world_t*, colshape_t *shape,
+int vehicle_alloc(vehicle_t *veh, world_t*, colshape_t *shape,
                   colshape_t *inert, float *matrix, float mass,
                   float ch_frict, float ch_rfrict, float sus_stif,
                   float sus_comp, float sus_damp, float sus_trav,

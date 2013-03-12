@@ -58,10 +58,10 @@ local function alloc()
     if left == 0 then
         error('out of colshapes')
     end
-    for csi, r in pairs(colshapes) do
+    for csi, cs in pairs(colshapes) do
         colshapes[csi] = nil
-        r.alloc()
-        return r
+        cs.alloc()
+        return cs
     end
 end
 

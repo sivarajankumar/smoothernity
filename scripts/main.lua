@@ -41,7 +41,7 @@ function M.configure()
             world_count = cfg.WORLD_COUNT,
             colshape_count = cfg.COLSHAPE_COUNT,
             rigidbody_count = cfg.RIGIDBODY_COUNT,
-            vehicle_count = 10,
+            vehicle_count = cfg.VEHICLE_COUNT,
             buf_size = cfg.BUF_SIZE,
             shuni_count = cfg.SHUNI_COUNT,
             shprog_count = cfg.SHPROG_COUNT,

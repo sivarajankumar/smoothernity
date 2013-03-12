@@ -11,13 +11,8 @@ static const size_t VEHICLE_SIZE = 256;
 
 struct vehicles_t
 {
-    int left;
-    int left_min;
     int count;
-    int allocs;
-    int frees;
     char *pool;
-    vehicle_t *vacant;
 };
 
 static vehicles_t g_vehicles;
@@ -36,14 +31,10 @@ int vehicle_init(int count)
     if (g_vehicles.pool == 0)
         return PHYSRES_CANNOT_INIT;
     memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
-    g_vehicles.left = count;
-    g_vehicles.left_min = count;
     g_vehicles.count = count;
-    g_vehicles.vacant = vehicle_get(0);
     for (i = 0; i < count; ++i)
     {
         veh = vehicle_get(i);
-        veh->next = vehicle_get(i + 1);
         veh->vacant = 1;
         try {
             veh->chassis_data = (char*)util_malloc(ALIGNOF(btRigidBody),
@@ -85,9 +76,6 @@ void vehicle_done(void)
     vehicle_t *veh;
     if (g_vehicles.pool == 0)
         return;
-    printf("Vehicles usage: %i/%i, allocs/frees: %i/%i\n",
-           g_vehicles.count - g_vehicles.left_min, g_vehicles.count,
-           g_vehicles.allocs, g_vehicles.frees);
     for (i = 0; i < g_vehicles.count; ++i)
     {
         veh = vehicle_get(i);
@@ -106,11 +94,6 @@ void vehicle_done(void)
     g_vehicles.pool = 0;
 }
 
-int vehicle_left(void)
-{
-    return g_vehicles.left;
-}
-
 vehicle_t * vehicle_get(int vehi)
 {
     if (vehi >= 0 && vehi < g_vehicles.count)
@@ -123,11 +106,7 @@ int vehicle_free(vehicle_t *veh)
 {
     if (veh->vacant == 1)
         return PHYSRES_INVALID_VEH;
-    ++g_vehicles.left;
-    ++g_vehicles.frees;
     veh->vacant = 1;
-    veh->next = g_vehicles.vacant;
-    g_vehicles.vacant = veh;
 
     if (veh->shape->vehs == veh)
         veh->shape->vehs = veh->shape_next;
@@ -178,25 +157,17 @@ int vehicle_free(vehicle_t *veh)
     return PHYSRES_OK;
 }
 
-int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
+int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
                   colshape_t *inert, float *matrix, float mass, float ch_frict,
                   float ch_roll_frict, float sus_stif, float sus_comp,
                   float sus_damp, float sus_trav, float sus_force,
                   float slip_frict)
 {
-    vehicle_t *veh;
-    if (g_vehicles.vacant == 0)
-        return PHYSRES_OUT_OF_VEH;
+    if (veh->vacant == 0)
+        return PHYSRES_INVALID_VEH;
     if (shape->shape == 0 || inert->shape == 0)
         return PHYSRES_INVALID_CS;
-    ++g_vehicles.allocs;
-    --g_vehicles.left;
-    if (g_vehicles.left < g_vehicles.left_min)
-        g_vehicles.left_min = g_vehicles.left;
-    veh = g_vehicles.vacant;
-    g_vehicles.vacant = g_vehicles.vacant->next;
     veh->vacant = 0;
-    veh->next = 0;
 
     veh->shape = shape;
     if (shape->vehs)
@@ -244,8 +215,6 @@ int vehicle_alloc(int *vehi, world_t *wld, colshape_t *shape,
     {
         return PHYSRES_INTERNAL;
     }
-
-    *vehi = ((char*)veh - g_vehicles.pool) / VEHICLE_SIZE;
     return PHYSRES_OK;
 }
 
