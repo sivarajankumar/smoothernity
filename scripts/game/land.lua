@@ -13,13 +13,14 @@ local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
+local matrix = require 'core.matrix'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
 
     self.size = lod.lods[lodi].size
     self.res = lod.lods[lodi].res
-    self.mmesh = api_matrix_alloc()
+    self.mmesh = matrix.alloc()
     self.hmap = {}
     local vb = twinvbuf.alloc(self.res * self.res)
     local ib = twinibuf.alloc(6 * (self.res - 1) * (self.res - 1))
@@ -29,7 +30,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         mesh.free()
         vb.free()
         ib.free()
-        api_matrix_free(self.mmesh)
+        self.mmesh.free()
     end
 
     function self.hide()
@@ -193,12 +194,12 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
     local buf = poolbuf.alloc(common.res * common.res)
     local mvis = util.matrix_scl_stop(scale, 1, scale)
-    local mrb = api_matrix_alloc()
+    local mrb = matrix.alloc()
     local cs, rb
 
     function self.free()
-        api_matrix_free(mvis)
-        api_matrix_free(mrb)
+        mvis.free()
+        mrb.free()
         rb.free()
         cs.free()
         buf.free()
@@ -237,13 +238,13 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
                                  -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
         api_vector_free(vsize)
-        api_matrix_free(mpos)
+        mpos.free()
     end
 
     -- visual
     do
-        api_matrix_rigid_body(mrb, rb.id())
-        api_matrix_mul(common.mmesh, mrb, mvis)
+        mrb.rigid_body(rb)
+        common.mmesh.mul(mrb, mvis)
     end
 
     common.hmap = nil
@@ -277,8 +278,8 @@ function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
                                            basy + move.y,
                                            basz + move.z + 0.5*common.size,
                                            scale, 1, scale)
-        api_matrix_copy(common.mmesh, m)
-        api_matrix_free(m)
+        common.mmesh.copy(m)
+        m.free()
     end
 
     common.hmap = nil

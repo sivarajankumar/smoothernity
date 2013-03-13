@@ -27,7 +27,7 @@ enum vector_e
 
 struct vector_t
 {
-    GLfloat value[4]; /* must come first to ensure alignment */
+    GLfloat value[4]; /* must go first to ensure alignment */
     enum vector_e type;
     int update_tag;
     int vacant;

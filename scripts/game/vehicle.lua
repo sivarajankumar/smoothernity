@@ -12,6 +12,7 @@ local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local colshape = require 'core.colshape'
 local vehicle = require 'core.vehicle'
+local matrix = require 'core.matrix'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -52,19 +53,19 @@ local SAVE_OFS_Y = 5
 function M.alloc(uid, startx, starty, startz)
     local self = {}
 
-    self.mchassis = api_matrix_alloc()
+    self.mchassis = matrix.alloc()
     local vb = twinvbuf.alloc(8)
     local ib = twinibuf.alloc(36)
     local cs_inert, cs_shape_box, cs_shape, veh
     local wheels, wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
                                       0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z)
-    local mchassis_phys = api_matrix_alloc()
+    local mchassis_phys = matrix.alloc()
     local mwheel_local = util.matrix_scl_stop(WHEEL_RADIUS, WHEEL_RADIUS, WHEEL_RADIUS)
     local mwheel_physic = {}
     local mwheel = {}
-    local mrecov_next = api_matrix_alloc()
-    local mrecov = api_matrix_alloc()
+    local mrecov_next = matrix.alloc()
+    local mrecov = matrix.alloc()
     local mesh_chassis
     local mesh_wheel = {}
     local accel, brake, steer = 0, 0, 0
@@ -81,17 +82,17 @@ function M.alloc(uid, startx, starty, startz)
 
     function self.free()
         for i, w in pairs(wheels) do
-            api_matrix_free(mwheel_physic[i])
-            api_matrix_free(mwheel[i])
+            mwheel_physic[i].free()
+            mwheel[i].free()
             mesh_wheel[i].free()
         end
         mesh_chassis.free()
-        api_matrix_free(mwheel_local)
-        api_matrix_free(mchassis_local)
-        api_matrix_free(mchassis_phys)
-        api_matrix_free(self.mchassis)
-        api_matrix_free(mrecov_next)
-        api_matrix_free(mrecov)
+        mwheel_local.free()
+        mchassis_local.free()
+        mchassis_phys.free()
+        self.mchassis.free()
+        mrecov_next.free()
+        mrecov.free()
         api_vector_free(vpos)
         vb.free()
         ib.free()
@@ -116,11 +117,11 @@ function M.alloc(uid, startx, starty, startz)
         local vfrom = api_vector_alloc()
         local vto = api_vector_alloc()
         local mfwd = util.matrix_pos_stop(0, 0, -1)
-        local mto = api_matrix_alloc()
-        api_matrix_mul(mto, self.mchassis, mfwd)
-        api_vector_mpos(vfrom, self.mchassis)
+        local mto = matrix.alloc()
+        mto.mul(self.mchassis, mfwd)
+        api_vector_mpos(vfrom, self.mchassis.id())
         api_vector_update(vfrom, 0, API_VECTOR_FORCED_UPDATE)
-        api_vector_mpos(vto, mto)
+        api_vector_mpos(vto, mto.id())
         api_vector_update(vto, 0, API_VECTOR_FORCED_UPDATE)
         local fx, fy, fz = api_vector_get(vfrom)
         local tx, ty, tz = api_vector_get(vto)
@@ -131,8 +132,8 @@ function M.alloc(uid, startx, starty, startz)
             string.format('return %f, %f, %f, %f, %f, %f', fx,sy,fz, tx,sy,tz))
         api_vector_free(vfrom)
         api_vector_free(vto)
-        api_matrix_free(mfwd)
-        api_matrix_free(mto)
+        mfwd.free()
+        mto.free()
     end
 
     function self.update()
@@ -140,7 +141,7 @@ function M.alloc(uid, startx, starty, startz)
         do
             local vprev = api_vector_alloc()
             util.vector_copy(vprev, vpos)
-            api_vector_mpos(vpos, self.mchassis)
+            api_vector_mpos(vpos, self.mchassis.id())
             api_vector_update(vpos, 0, API_VECTOR_FORCED_UPDATE)
             local speed = util.vector_dist(vprev, vpos) / cfg.FRAME_TIME
             freedom_speed = util.lerp(speed, SPEED_MIN, SPEED_MAX, 1, 0)
@@ -241,9 +242,9 @@ function M.alloc(uid, startx, starty, startz)
             end
             if recov_frames >= RECOVERY_FRAMES then
                 recov_frames = 0
-                api_matrix_copy(mrecov, mrecov_next)
-                api_matrix_copy(mrecov_next, mchassis_phys)
-                api_matrix_update(mrecov_next, 0, API_MATRIX_FORCED_UPDATE)
+                mrecov.copy(mrecov_next)
+                mrecov_next.copy(mchassis_phys)
+                mrecov_next.update(0, API_MATRIX_FORCED_UPDATE)
                 util.matrix_move_global(mrecov_next, 0, RECOVERY_OFS_Y, 0)
             end
             if recov_pressed == 0 then
@@ -311,7 +312,7 @@ function M.alloc(uid, startx, starty, startz)
         cs_shape = colshape.alloc_comp()
         cs_shape.comp_add(ofs, cs_shape_box)
         api_vector_free(size)
-        api_matrix_free(ofs)
+        ofs.free()
     end
 
     -- vehicle
@@ -328,7 +329,7 @@ function M.alloc(uid, startx, starty, startz)
         veh = vehicle.alloc(pwld.wld, cs_shape, cs_inert, m, CH_MASS, CH_FRICT,
                             CH_ROLL_FRICT, SUS_STIF, SUS_COMP, SUS_DAMP,
                             SUS_TRAV, SUS_FORCE, SLIP_FRICT)
-        api_matrix_free(m)
+        m.free()
         wheel_fr = add_wheel( WHEEL_POS_X, WHEEL_POS_Y, WHEEL_POS_Z, 1)
         wheel_fl = add_wheel(-WHEEL_POS_X, WHEEL_POS_Y, WHEEL_POS_Z, 1)
         wheel_br = add_wheel( WHEEL_POS_X, WHEEL_POS_Y,-WHEEL_POS_Z, 0)
@@ -338,18 +339,18 @@ function M.alloc(uid, startx, starty, startz)
 
     -- matrices
     do
-        api_matrix_vehicle_chassis(mchassis_phys, veh.id())
-        api_matrix_mul(self.mchassis, mchassis_phys, mchassis_local)
+        mchassis_phys.vehicle_chassis(veh)
+        self.mchassis.mul(mchassis_phys, mchassis_local)
         for i, w in pairs(wheels) do
-            mwheel_physic[i] = api_matrix_alloc()
-            mwheel[i] = api_matrix_alloc()
-            api_matrix_vehicle_wheel(mwheel_physic[i], veh.id(), w.id())
-            api_matrix_mul(mwheel[i], mwheel_physic[i], mwheel_local)
+            mwheel_physic[i] = matrix.alloc()
+            mwheel_physic[i].vehicle_wheel(w)
+            mwheel[i] = matrix.alloc()
+            mwheel[i].mul(mwheel_physic[i], mwheel_local)
         end
-        api_matrix_copy(mrecov, mchassis_phys)
-        api_matrix_update(mrecov, 0, API_MATRIX_FORCED_UPDATE)
-        api_matrix_stop(mrecov)
-        api_vector_mpos(vpos, self.mchassis)
+        mrecov.copy(mchassis_phys)
+        mrecov.update(0, API_MATRIX_FORCED_UPDATE)
+        mrecov.stop()
+        api_vector_mpos(vpos, self.mchassis.id())
         api_vector_update(vpos, 0, API_VECTOR_FORCED_UPDATE)
     end
 

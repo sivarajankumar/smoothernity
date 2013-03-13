@@ -11,11 +11,12 @@ local function make_mesh(mi)
     local self = {}
     function self.alloc(group, kind, vbuf, ibuf, shprog, matrix, ioffset, icount)
         api_mesh_alloc(mi, group, kind, vbuf, ibuf, shprog.id(),
-                       matrix, ioffset, icount)
+                       matrix.id(), ioffset, icount)
     end
     function self.free()
         frees = frees + 1
         left = left + 1
+        meshes[mi] = self
         api_mesh_free(mi)
     end
     function self.group(g)

@@ -8,12 +8,12 @@ function M.alloc(x, y, z)
     self.matrix = util.matrix_pos_stop(x, y, z)
 
     function self.free()
-        api_matrix_free(self.matrix)
+        self.matrix.free()
     end
 
     function self.moveto(where)
-        api_matrix_copy(self.matrix, where)
-        api_matrix_stop(self.matrix)
+        self.matrix.copy(where)
+        self.matrix.stop()
     end
 
     function self.update()

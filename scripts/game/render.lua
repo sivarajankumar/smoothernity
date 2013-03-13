@@ -8,6 +8,7 @@ local twin = require 'core.twin.twin'
 local lod = require 'game.lod'
 local gui = require 'game.gui.gui'
 local query = require 'core.query'
+local matrix = require 'core.matrix'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -22,7 +23,7 @@ local current, prof
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
-    local mproj = api_matrix_alloc()
+    local mproj = matrix.alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
     local sx, sy = util.camera_dims()
@@ -32,16 +33,16 @@ local function make_frustum(znear, zfar, dist)
     api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
     api_vector_const(vz, znear, zfar, 0, 0)
 
-    api_matrix_frustum(mproj, vbounds, vz, 0, 1)
-    api_matrix_update(mproj, 0, API_MATRIX_FORCED_UPDATE)
-    api_matrix_stop(mproj)
+    mproj.frustum(vbounds, vz, 0, 1)
+    mproj.update(0, API_MATRIX_FORCED_UPDATE)
+    mproj.stop()
     api_vector_free(vbounds)
     api_vector_free(vz)
     return mproj
 end
 
 local function make_ortho()
-    local mproj = api_matrix_alloc()
+    local mproj = matrix.alloc()
     local vbounds = api_vector_alloc()
     local vz = api_vector_alloc()
     local sx, sy = util.camera_dims()
@@ -49,25 +50,9 @@ local function make_ortho()
     api_vector_const(vbounds, -sx, sx, -sy, sy)
     api_vector_const(vz, ORTHO_ZNEAR, ORTHO_ZFAR, 0, 0)
 
-    api_matrix_ortho(mproj, vbounds, vz, 0, 1)
-    api_matrix_update(mproj, 0, API_MATRIX_FORCED_UPDATE)
-    api_matrix_stop(mproj)
-    api_vector_free(vbounds)
-    api_vector_free(vz)
-    return mproj
-end
-
-local function make_screen()
-    local mproj = api_matrix_alloc()
-    local vbounds = api_vector_alloc()
-    local vz = api_vector_alloc()
-
-    api_vector_const(vbounds, 0, cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT, 0)
-    api_vector_const(vz, -1, 1, 0, 0)
-
-    api_matrix_ortho(mproj, vbounds, vz, 0, 1)
-    api_matrix_update(mproj, 0, API_MATRIX_FORCED_UPDATE)
-    api_matrix_stop(mproj)
+    mproj.ortho(vbounds, vz, 0, 1)
+    mproj.update(0, API_MATRIX_FORCED_UPDATE)
+    mproj.stop()
     api_vector_free(vbounds)
     api_vector_free(vz)
     return mproj
@@ -143,7 +128,7 @@ local function visual_alloc()
     self.tscale = 1
 
     function self.free()
-        api_matrix_free(self.mview3d)
+        self.mview3d.free()
         api_vector_free(self.vclrcol)
     end
 
@@ -160,19 +145,19 @@ local function visual_alloc()
         api_render_clear_color(self.vclrcol)
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
         M.clear_time = api_timer() - M.clear_time
-        api_render_mview(self.mview3d)
+        api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
             local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
             if lodi > 0 then
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
-            api_render_proj(mproj3d)
+            api_render_proj(mproj3d.id())
             api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
-            api_matrix_free(mproj3d)
+            mproj3d.free()
         end
         api_render_clear(API_RENDER_CLEAR_DEPTH)
-        api_render_proj(mproj2d)
-        api_render_mview(mview2d)
+        api_render_proj(mproj2d.id())
+        api_render_mview(mview2d.id())
         api_mesh_draw(meshes.GROUP_GUI.twin(twin.active()), draw_tag)
 
         M.swap_time = api_timer()
@@ -184,13 +169,13 @@ local function visual_alloc()
         prof.frame_end()
 
         api_vector_free(vclrdep)
-        api_matrix_free(mproj2d)
-        api_matrix_free(mview2d)
+        mproj2d.free()
+        mview2d.free()
     end
 
     function self.update(dt, update_tag)
         api_vector_update(self.vclrcol, dt, update_tag)
-        api_matrix_update(self.mview3d, dt, update_tag)
+        self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
             api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
         end
@@ -207,7 +192,7 @@ local function eagle_alloc()
     self.tscale = 1
 
     function self.free()
-        api_matrix_free(self.mview3d)
+        self.mview3d.free()
     end
 
     function self.draw(draw_tag)
@@ -217,8 +202,8 @@ local function eagle_alloc()
 
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(vclrcol)
-        api_render_proj(mproj3d)
-        api_render_mview(self.mview3d)
+        api_render_proj(mproj3d.id())
+        api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
             if lodi == 0 then
                 api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
@@ -231,11 +216,11 @@ local function eagle_alloc()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
-        api_matrix_free(mproj3d)
+        mproj3d.free()
     end
 
     function self.update(dt, update_tag)
-        api_matrix_update(self.mview3d, dt, update_tag)
+        self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
             api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
         end
@@ -250,7 +235,7 @@ local function debug_alloc()
     self.mview3d = util.matrix_pos_stop(0, 0, 0)
 
     function self.free()
-        api_matrix_free(self.mview3d)
+        self.mview3d.free()
     end
 
     function self.draw(draw_tag)
@@ -261,33 +246,33 @@ local function debug_alloc()
         api_render_clear_depth(vclrdep, 0)
         api_render_clear_color(vclrcol)
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
-        api_render_proj(mproj3d)
-        api_render_mview(self.mview3d)
+        api_render_proj(mproj3d.id())
+        api_render_mview(self.mview3d.id())
         pwld.wld.ddraw()
         api_render_swap()
 
         api_vector_free(vclrcol)
         api_vector_free(vclrdep)
-        api_matrix_free(mproj3d)
+        mproj3d.free()
     end
 
     function self.update(dt, update_tag)
-        api_matrix_update(self.mview3d, dt, update_tag)
+        self.mview3d.update(dt, update_tag)
     end
 
     return self
 end
 
 function M.camera_stop()
-    api_matrix_stop(M.visual.mview3d)
-    api_matrix_stop(M.debug.mview3d)
-    api_matrix_stop(M.eagle.mview3d)
+    M.visual.mview3d.stop()
+    M.debug.mview3d.stop()
+    M.eagle.mview3d.stop()
 end
 
 function M.camera(m)
-    api_matrix_inv(M.visual.mview3d, m)
-    api_matrix_inv(M.debug.mview3d, m)
-    api_matrix_inv(M.eagle.mview3d, m)
+    M.visual.mview3d.inv(m)
+    M.debug.mview3d.inv(m)
+    M.eagle.mview3d.inv(m)
 end
 
 function M.timescale(t)

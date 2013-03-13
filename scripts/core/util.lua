@@ -3,6 +3,7 @@ local M = {}
 local cfg = require 'config'
 local thread = require 'core.thread'
 local sync = require 'core.sync'
+local matrix = require 'core.matrix'
 
 local MAX_WAIT_TIME = 10
 
@@ -160,16 +161,16 @@ function M.lerp(t, t0, t1, v0, v1)
 end
 
 function M.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, ux, uy, uz)
-    local m = api_matrix_alloc()
+    local m = matrix.alloc()
     local from = api_vector_alloc()
     local to = api_vector_alloc()
     local up = api_vector_alloc()
     api_vector_const(from, fx, fy, fz, 0)
     api_vector_const(to, tx, ty, tz, 0)
     api_vector_const(up, ux, uy, uz, 0)
-    api_matrix_from_to_up(m, from, to, up)
-    api_matrix_update(m, 0, API_MATRIX_FORCED_UPDATE)
-    api_matrix_stop(m)
+    m.from_to_up(from, to, up)
+    m.update(0, API_MATRIX_FORCED_UPDATE)
+    m.stop()
     api_vector_free(from)
     api_vector_free(to)
     api_vector_free(up)
@@ -177,16 +178,16 @@ function M.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, ux, uy, uz)
 end
 
 function M.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
-    local m = api_matrix_alloc()
+    local m = matrix.alloc()
     local pos = api_vector_alloc()
     local scl = api_vector_alloc()
     local rot = api_vector_alloc()
     api_vector_const(pos, px, py, pz, 0)
     api_vector_const(scl, sx, sy, sz, 0)
     api_vector_const(rot, angle, 0, 0, 0)
-    api_matrix_pos_scl_rot(m, pos, scl, rot, axis, 0)
-    api_matrix_update(m, 0, API_MATRIX_FORCED_UPDATE)
-    api_matrix_stop(m)
+    m.pos_scl_rot(pos, scl, rot, axis, 0)
+    m.update(0, API_MATRIX_FORCED_UPDATE)
+    m.stop()
     api_vector_free(pos)
     api_vector_free(scl)
     api_vector_free(rot)
@@ -215,20 +216,20 @@ end
 
 function M.matrix_move_global(m, x, y, z)
     local dm = M.matrix_pos_stop(x, y, z)
-    api_matrix_mul_stop(m, dm, m)
-    api_matrix_free(dm)
+    m.mul_stop(dm, m)
+    dm.free()
 end
 
 function M.matrix_move_local(m, x, y, z)
     local dm = M.matrix_pos_stop(x, y, z)
-    api_matrix_mul_stop(m, m, dm)
-    api_matrix_free(dm)
+    m.mul_stop(m, dm)
+    dm.free()
 end
 
 function M.matrix_rotate_local(m, axis, angle)
     local dm = M.matrix_rot_stop(axis, angle)
-    api_matrix_mul_stop(m, m, dm)
-    api_matrix_free(dm)
+    m.mul_stop(m, dm)
+    dm.free()
 end
 
 return M

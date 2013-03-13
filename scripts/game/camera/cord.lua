@@ -4,6 +4,7 @@ local util = require 'core.util'
 local pwld = require 'game.physwld'
 local colshape = require 'core.colshape'
 local cfg = require 'config'
+local coremtx = require 'core.matrix'
 
 CORD_MIN = 20
 CORD_MAX = 20
@@ -18,7 +19,7 @@ TO_RUBBER_XZ = 0.05
 function M.alloc(uid, mstarttgt, startx, starty, startz)
     local self = {}
 
-    self.matrix = api_matrix_alloc()
+    self.matrix = coremtx.alloc()
     local vtgt_center = api_vector_alloc()
     local vtgt_center_xz = api_vector_alloc()
     local vcam_to = api_vector_alloc()
@@ -36,15 +37,15 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
     local vcast_from = api_vector_alloc()
     local vcast_sky_ofs = api_vector_alloc()
     local vcast_sky = api_vector_alloc()
-    local mcast_sky = api_matrix_alloc()
-    local mcast_ground = api_matrix_alloc()
+    local mcast_sky = coremtx.alloc()
+    local mcast_ground = coremtx.alloc()
     local vzero = api_vector_alloc()
     local vone = api_vector_alloc()
     local vup = api_vector_alloc()
     local sphere
 
     function self.free()
-        api_matrix_free(self.matrix)
+        self.matrix.free()
         api_vector_free(vtgt_center)
         api_vector_free(vtgt_center_xz)
         api_vector_free(vcam_to)
@@ -62,8 +63,8 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
         api_vector_free(vcast_from)
         api_vector_free(vcast_sky_ofs)
         api_vector_free(vcast_sky)
-        api_matrix_free(mcast_sky)
-        api_matrix_free(mcast_ground)
+        mcast_sky.free()
+        mcast_ground.free()
         api_vector_free(vzero)
         api_vector_free(vone)
         api_vector_free(vup)
@@ -115,7 +116,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
         x, y, z = loadstring(chunk)()
     end
 
-    api_vector_mpos(vtgt_center, mstarttgt)
+    api_vector_mpos(vtgt_center, mstarttgt.id())
     api_vector_pick(vtgt_center_xz, vtgt_center, vzero, vtgt_center, vzero)
 
     api_vector_const(vcam_from_xz, x, 0, z, 0)
@@ -124,9 +125,9 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
     api_vector_pick(vcam_from, vcam_from_xz, vcam_from_y, vcam_from_xz, vzero)
 
     api_vector_wsum(vcast_sky, vcam_ofs_weights, vcam_from, vcast_sky_ofs, vzero, vzero)
-    api_matrix_pos_scl_rot(mcast_sky, vcast_sky, vone, vzero, API_MATRIX_AXIS_X, 0)
-    api_matrix_pos_scl_rot(mcast_ground, vcam_from, vone, vzero, API_MATRIX_AXIS_X, 0)
-    api_vector_cast(vcast_from, pwld.wld.id(), sphere.id(), mcast_sky, mcast_ground)
+    mcast_sky.pos_scl_rot(vcast_sky, vone, vzero, API_MATRIX_AXIS_X, 0)
+    mcast_ground.pos_scl_rot(vcam_from, vone, vzero, API_MATRIX_AXIS_X, 0)
+    api_vector_cast(vcast_from, pwld.wld.id(), sphere.id(), mcast_sky.id(), mcast_ground.id())
     api_vector_update(vcast_from, 0, API_VECTOR_FORCED_UPDATE)
 
     util.vector_copy(vcam_from_smooth, vcast_from)
@@ -138,7 +139,7 @@ function M.alloc(uid, mstarttgt, startx, starty, startz)
     util.vector_copy(vcam_to_smooth, vcam_to)
     api_vector_rubber(vcam_to_smooth, vcam_to, vcam_to_rubber)
 
-    api_matrix_from_to_up(self.matrix, vcam_from_smooth, vcam_to_smooth, vup)
+    self.matrix.from_to_up(vcam_from_smooth, vcam_to_smooth, vup)
 
     return self
 end

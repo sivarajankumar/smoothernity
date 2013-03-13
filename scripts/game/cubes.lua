@@ -10,6 +10,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
+local matrix = require 'core.matrix'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -17,9 +18,9 @@ function M.alloc(x, y, z)
     local vb = twinvbuf.alloc(8)
     local ib = twinibuf.alloc(36)
     local mbig = util.matrix_pos_stop(x, y, z)
-    local mrb = api_matrix_alloc()
-    local mloc = api_matrix_alloc()
-    local msmall = api_matrix_alloc()
+    local mrb = matrix.alloc()
+    local mloc = matrix.alloc()
+    local msmall = matrix.alloc()
     local brot = poolbuf.alloc(10)
     local bpos = poolbuf.alloc(20)
     local vrot = api_vector_alloc()
@@ -33,10 +34,10 @@ function M.alloc(x, y, z)
     function self.free()
         vb.free()
         ib.free()
-        api_matrix_free(mrb)
-        api_matrix_free(mbig)
-        api_matrix_free(mloc)
-        api_matrix_free(msmall)
+        mrb.free()
+        mbig.free()
+        mloc.free()
+        msmall.free()
         api_vector_free(vrot)
         api_vector_free(vpos)
         api_vector_free(vscl)
@@ -83,8 +84,8 @@ function M.alloc(x, y, z)
         api_vector_seq(vrot, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
         api_vector_seq(vpos, bpos.start, 4, 1, API_VECTOR_IPL_SPLINE)
         api_vector_const(vscl, 0.5, 0.5, 0.5, 0)
-        api_matrix_pos_scl_rot(mloc, vpos, vscl, vrot, API_MATRIX_AXIS_Y, 0)
-        api_matrix_mul(msmall, mrb, mloc)
+        mloc.pos_scl_rot(vpos, vscl, vrot, API_MATRIX_AXIS_Y, 0)
+        msmall.mul(mrb, mloc)
     end
 
     -- physics
@@ -93,7 +94,7 @@ function M.alloc(x, y, z)
         api_vector_const(size, 1, 1, 1, 0)
         cs = colshape.alloc_box(size)
         rb = rigidbody.alloc(pwld.wld, cs, mbig, 1000, 1, 1)
-        api_matrix_rigid_body(mrb, rb.id())
+        mrb.rigid_body(rb)
         api_vector_free(size)
     end
 

@@ -7,7 +7,7 @@ function M.configure()
     return {
             main_mpool = function() return
                   128,  1024, 8192, 32768, 2097152,
-                60000, 11000,  600,   100,      10 end,
+                80000, 12000,  600,   100,      10 end,
             physics_mpool = function() return
                 128,  8192, 1048576, 4194304,
                 200,    50,       2,       2 end,
@@ -36,7 +36,7 @@ function M.configure()
             end,
             vector_count = 300,
             vector_nesting = 20,
-            matrix_count = 1000,
+            matrix_count = cfg.MATRIX_COUNT,
             matrix_nesting = 20,
             world_count = cfg.WORLD_COUNT,
             colshape_count = cfg.COLSHAPE_COUNT,

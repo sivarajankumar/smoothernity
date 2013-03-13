@@ -18,6 +18,7 @@ local function make_shuni(si)
     function self.free()
         frees = frees + 1
         left = left + 1
+        shunis[si] = self
         api_shuni_free(si)
     end
     function self.id()
