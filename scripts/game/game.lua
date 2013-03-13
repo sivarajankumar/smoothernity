@@ -14,6 +14,7 @@ local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local coreveh = require 'core.vehicle'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 local render = require 'game.render'
 local pwld = require 'game.physwld'
 local pause = require 'game.pause'
@@ -63,8 +64,9 @@ local function run_co(co, start_time, max_time)
 end
 
 function M.run()
-    corewld.init()
     matrix.init()
+    vector.init()
+    corewld.init()
     coreveh.init()
     colshape.init()
     rigidbody.init()
@@ -226,8 +228,9 @@ function M.run()
     rigidbody.done()
     colshape.done()
     coreveh.done()
-    matrix.done()
     corewld.done()
+    matrix.done()
+    vector.done()
 end
 
 return M

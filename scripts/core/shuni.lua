@@ -10,7 +10,7 @@ local frees = 0
 local function make_shuni(si)
     local self = {}
     function self.alloc_vector(shprog, mesh, name, vec)
-        api_shuni_alloc_vector(si, shprog.id(), mesh.id(), name, vec)
+        api_shuni_alloc_vector(si, shprog.id(), mesh.id(), name, vec.id())
     end
     function self.alloc_int(shprog, mesh, name, int)
         api_shuni_alloc_int(si, shprog.id(), mesh.id(), name, int)

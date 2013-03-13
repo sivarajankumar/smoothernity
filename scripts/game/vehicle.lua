@@ -13,6 +13,7 @@ local twinmesh = require 'core.twin.mesh'
 local colshape = require 'core.colshape'
 local vehicle = require 'core.vehicle'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 local CH_OFFSET_Y = 1.0
 local CH_SIZE_X = 2
@@ -74,7 +75,7 @@ function M.alloc(uid, startx, starty, startz)
     local freedom = 1
     local freedom_speed = 1
     local freedom_move = 1
-    local vpos = api_vector_alloc()
+    local vpos = vector.alloc()
     local cruise = false
     local cruise_key = key.alloc(function() return API_INPUT_KEY_C end,
                                  function() cruise = not cruise end,
@@ -93,7 +94,7 @@ function M.alloc(uid, startx, starty, startz)
         self.mchassis.free()
         mrecov_next.free()
         mrecov.free()
-        api_vector_free(vpos)
+        vpos.free()
         vb.free()
         ib.free()
         veh.free()
@@ -103,7 +104,7 @@ function M.alloc(uid, startx, starty, startz)
     end
 
     function self.move(vofs)
-        local x, y, z, w = api_vector_get(vofs)
+        local x, y, z, w = vofs.get()
         util.matrix_move_global(mrecov, x, y, z)
         util.matrix_move_global(mrecov_next, x, y, z)
         util.vector_move(vpos, vofs)
@@ -114,24 +115,24 @@ function M.alloc(uid, startx, starty, startz)
     end
 
     function self.save(wld)
-        local vfrom = api_vector_alloc()
-        local vto = api_vector_alloc()
+        local vfrom = vector.alloc()
+        local vto = vector.alloc()
         local mfwd = util.matrix_pos_stop(0, 0, -1)
         local mto = matrix.alloc()
         mto.mul(self.mchassis, mfwd)
-        api_vector_mpos(vfrom, self.mchassis.id())
-        api_vector_update(vfrom, 0, API_VECTOR_FORCED_UPDATE)
-        api_vector_mpos(vto, mto.id())
-        api_vector_update(vto, 0, API_VECTOR_FORCED_UPDATE)
-        local fx, fy, fz = api_vector_get(vfrom)
-        local tx, ty, tz = api_vector_get(vto)
+        vfrom.mpos(self.mchassis)
+        vfrom.update(0, API_VECTOR_FORCED_UPDATE)
+        vto.mpos(mto)
+        vto.update(0, API_VECTOR_FORCED_UPDATE)
+        local fx, fy, fz = vfrom.get()
+        local tx, ty, tz = vto.get()
         local wx, wy, wz = wld.scene_to_world(fx, fy, fz)
         wy = wld.height(wz, wx) + SAVE_OFS_Y
         local sx, sy, sz = wld.world_to_scene(wx, wy, wz)
         util.async_write(util.uid_save(string.format('%s.lua', uid)),
             string.format('return %f, %f, %f, %f, %f, %f', fx,sy,fz, tx,sy,tz))
-        api_vector_free(vfrom)
-        api_vector_free(vto)
+        vfrom.free()
+        vto.free()
         mfwd.free()
         mto.free()
     end
@@ -139,13 +140,13 @@ function M.alloc(uid, startx, starty, startz)
     function self.update()
         -- restrict speed
         do
-            local vprev = api_vector_alloc()
+            local vprev = vector.alloc()
             util.vector_copy(vprev, vpos)
-            api_vector_mpos(vpos, self.mchassis.id())
-            api_vector_update(vpos, 0, API_VECTOR_FORCED_UPDATE)
+            vpos.mpos(self.mchassis)
+            vpos.update(0, API_VECTOR_FORCED_UPDATE)
             local speed = util.vector_dist(vprev, vpos) / cfg.FRAME_TIME
             freedom_speed = util.lerp(speed, SPEED_MIN, SPEED_MAX, 1, 0)
-            api_vector_free(vprev)
+            vprev.free()
         end
 
         -- update freedom
@@ -261,17 +262,14 @@ function M.alloc(uid, startx, starty, startz)
     end
 
     local function add_wheel(posx, posy, posz, front)
-        local dir = api_vector_alloc()
-        local axl = api_vector_alloc()
-        local pos = api_vector_alloc()
-        api_vector_const(pos, posx, posy, posz, 0)
-        api_vector_const(axl, -1, 0, 0, 0)
-        api_vector_const(dir, 0, -1, 0, 0)
+        local pos = util.vector_const(posx, posy, posz, 0)
+        local dir = util.vector_const(0, -1, 0, 0)
+        local axl = util.vector_const(-1, 0, 0, 0)
         local wheel = veh.add_wheel(pos, dir, axl, SUS_REST,
                                     ROLL_INF, WHEEL_RADIUS, front)
-        api_vector_free(pos)
-        api_vector_free(dir)
-        api_vector_free(axl)
+        pos.free()
+        dir.free()
+        axl.free()
         return wheel
     end
 
@@ -304,14 +302,13 @@ function M.alloc(uid, startx, starty, startz)
 
     -- collision shape
     do
-        local size = api_vector_alloc()
+        local size = util.vector_const(0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
         local ofs = util.matrix_pos_stop(0, CH_OFFSET_Y, 0)
-        api_vector_const(size, 0.5*CH_SIZE_X, 0.5*CH_SIZE_Y, 0.5*CH_SIZE_Z, 0)
         cs_inert = colshape.alloc_box(size)
         cs_shape_box = colshape.alloc_box(size)
         cs_shape = colshape.alloc_comp()
         cs_shape.comp_add(ofs, cs_shape_box)
-        api_vector_free(size)
+        size.free()
         ofs.free()
     end
 
@@ -350,8 +347,8 @@ function M.alloc(uid, startx, starty, startz)
         mrecov.copy(mchassis_phys)
         mrecov.update(0, API_MATRIX_FORCED_UPDATE)
         mrecov.stop()
-        api_vector_mpos(vpos, self.mchassis.id())
-        api_vector_update(vpos, 0, API_VECTOR_FORCED_UPDATE)
+        vpos.mpos(self.mchassis)
+        vpos.update(0, API_VECTOR_FORCED_UPDATE)
     end
 
     -- visual

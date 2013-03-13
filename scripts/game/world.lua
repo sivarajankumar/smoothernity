@@ -7,6 +7,7 @@ local pwld = require 'game.physwld'
 local cfg = require 'config'
 local util = require 'core.util'
 local lod = require 'game.lod'
+local vector = require 'core.vector'
 
 local SCENE = 50
 
@@ -34,11 +35,11 @@ function M.alloc(uid, centx, centy, centz)
     local planes = {}
     local nse = noise.alloc(string.format('%s_noise', uid))
     local move = move_alloc(string.format('%s_move', uid))
-    local vplayer = api_vector_alloc()
+    local vplayer = vector.alloc()
     local generating = false
 
     function self.free()
-        api_vector_free(vplayer)
+        vplayer.free()
         for k, v in pairs(planes) do
             v.free()
         end
@@ -53,13 +54,13 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.attach(mplayer)
-        api_vector_mpos(vplayer, mplayer.id())
+        vplayer.mpos(mplayer)
     end
 
     function self.generate()
         generating = true
-        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
-        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
+        vplayer.update(0, API_VECTOR_FORCED_UPDATE)
+        local wx, wy, wz = self.scene_to_world(vplayer.get())
         for lodi = lod.count - 1, 0, -1 do
             planes[lodi].generate(wx, wy, wz)
         end
@@ -73,8 +74,8 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.move(car, camc)
-        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
-        local x, y, z = api_vector_get(vplayer)
+        vplayer.update(0, API_VECTOR_FORCED_UPDATE)
+        local x, y, z = vplayer.get()
         local wx, wy, wz = self.scene_to_world(x, y, z)
 
         local dx, dy, dz = 0, 0, 0
@@ -97,12 +98,12 @@ function M.alloc(uid, centx, centy, centz)
             dz = dz - SCENE
         end
         if dx ~= 0 or dy ~= 0 or dz ~= 0 then
-            local dv = api_vector_alloc()
-            api_vector_const(dv, dx, dy, dz, 0)
+            local dv = vector.alloc()
+            dv.const(dx, dy, dz, 0)
             pwld.wld.move(dv)
             car.move(dv)
             camc.move(dv)
-            api_vector_free(dv)
+            dv.free()
 
             move.x = move.x + dx
             move.y = move.y + dy
@@ -115,16 +116,16 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.showhide()
-        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
-        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
+        vplayer.update(0, API_VECTOR_FORCED_UPDATE)
+        local wx, wy, wz = self.scene_to_world(vplayer.get())
         for k, v in pairs(planes) do
             v.showhide(wx, wy, wz)
         end
     end
 
     function self.gen_progress()
-        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
-        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
+        vplayer.update(0, API_VECTOR_FORCED_UPDATE)
+        local wx, wy, wz = self.scene_to_world(vplayer.get())
         local sum = 0
         for k, v in pairs(planes) do
             sum = sum + v.gen_progress(wx, wy, wz)
@@ -134,8 +135,8 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.edge_dist()
-        api_vector_update(vplayer, 0, API_VECTOR_FORCED_UPDATE)
-        local wx, wy, wz = self.scene_to_world(api_vector_get(vplayer))
+        vplayer.update(0, API_VECTOR_FORCED_UPDATE)
+        local wx, wy, wz = self.scene_to_world(vplayer.get())
         local min_dist = 1
         for k, v in pairs(planes) do
             min_dist = math.min(min_dist, v.edge_dist(wx, wy, wz))

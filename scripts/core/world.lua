@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local util = require 'core.util'
 
 local worlds = {}
 local left, left_min
@@ -24,10 +25,9 @@ local function make_world(wi)
         return wi
     end
     function self.gravity(x, y, z)
-        local grav = api_vector_alloc()
-        api_vector_const(grav, x, y, z, 0)
-        api_physics_wld_gravity(wi, grav)
-        api_vector_free(grav)
+        local grav = util.vector_const(x, y, z, 0)
+        api_physics_wld_gravity(wi, grav.id())
+        grav.free()
     end
     function self.ddraw()
         api_physics_wld_ddraw(wi)

@@ -4,6 +4,7 @@ local cfg = require 'config'
 local thread = require 'core.thread'
 local sync = require 'core.sync'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 local MAX_WAIT_TIME = 10
 
@@ -113,33 +114,32 @@ function M.camera_dims()
 end
 
 function M.vector_const(x, y, z, w)
-    local v = api_vector_alloc()
-    api_vector_const(v, x, y, z, w)
+    local v = vector.alloc()
+    v.const(x, y, z, w)
     return v
 end
 
 function M.vector_dist(v1, v2)
-    local x1, y1, z1, w1 = api_vector_get(v1)
-    local x2, y2, z2, w2 = api_vector_get(v2)
+    local x1, y1, z1, w1 = v1.get()
+    local x2, y2, z2, w2 = v2.get()
     local x, y, z = x1 - x2, y1 - y2, z1 - z2
     return math.sqrt(x*x + y*y + z*z)
 end
 
 function M.vector_copy(v, src)
-    local x, y, z, w = api_vector_get(src)
-    api_vector_const(v, x, y, z, w)
+    v.const(src.get())
 end
 
 function M.vector_move(v, vofs)
-    local x, y, z, w = api_vector_get(v)
-    local dx, dy, dz, dw = api_vector_get(vofs)
-    api_vector_const(v, x + dx, y + dy, z + dz, w + dw)
+    local x, y, z, w = v.get()
+    local dx, dy, dz, dw = vofs.get()
+    v.const(x + dx, y + dy, z + dz, w + dw)
 end
 
 function M.vector_move_xz(v, vofs)
-    local x, y, z, w = api_vector_get(v)
-    local dx, dy, dz, dw = api_vector_get(vofs)
-    api_vector_const(v, x + dx, y, z + dz, w)
+    local x, y, z, w = v.get()
+    local dx, dy, dz, dw = vofs.get()
+    v.const(x + dx, y, z + dz, w)
 end
 
 function M.spline(t, t1, t2, v0, v1, v2, v3)
@@ -162,35 +162,35 @@ end
 
 function M.matrix_from_to_up_stop(fx, fy, fz, tx, ty, tz, ux, uy, uz)
     local m = matrix.alloc()
-    local from = api_vector_alloc()
-    local to = api_vector_alloc()
-    local up = api_vector_alloc()
-    api_vector_const(from, fx, fy, fz, 0)
-    api_vector_const(to, tx, ty, tz, 0)
-    api_vector_const(up, ux, uy, uz, 0)
+    local from = vector.alloc()
+    local to = vector.alloc()
+    local up = vector.alloc()
+    from.const(fx, fy, fz, 0)
+    to.const(tx, ty, tz, 0)
+    up.const(ux, uy, uz, 0)
     m.from_to_up(from, to, up)
     m.update(0, API_MATRIX_FORCED_UPDATE)
     m.stop()
-    api_vector_free(from)
-    api_vector_free(to)
-    api_vector_free(up)
+    from.free()
+    to.free()
+    up.free()
     return m
 end
 
 function M.matrix_pos_scl_rot_stop(px, py, pz, sx, sy, sz, axis, angle)
     local m = matrix.alloc()
-    local pos = api_vector_alloc()
-    local scl = api_vector_alloc()
-    local rot = api_vector_alloc()
-    api_vector_const(pos, px, py, pz, 0)
-    api_vector_const(scl, sx, sy, sz, 0)
-    api_vector_const(rot, angle, 0, 0, 0)
+    local pos = vector.alloc()
+    local scl = vector.alloc()
+    local rot = vector.alloc()
+    pos.const(px, py, pz, 0)
+    scl.const(sx, sy, sz, 0)
+    rot.const(angle, 0, 0, 0)
     m.pos_scl_rot(pos, scl, rot, axis, 0)
     m.update(0, API_MATRIX_FORCED_UPDATE)
     m.stop()
-    api_vector_free(pos)
-    api_vector_free(scl)
-    api_vector_free(rot)
+    pos.free()
+    scl.free()
+    rot.free()
     return m
 end
 

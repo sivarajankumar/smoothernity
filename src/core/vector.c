@@ -17,13 +17,8 @@ enum vectors_e
 struct vectors_t
 {
     int count;
-    int left;
-    int left_min;
-    int allocs;
-    int frees;
     int nesting;
     char *pool;
-    struct vector_t *vacant;
 };
 
 static struct vectors_t g_vectors;
@@ -35,79 +30,6 @@ static void vector_clear_args(struct vector_t *vector)
         vector->argv[i] = 0;
     for (i = 0; i < VECTOR_ARGMS; ++i)
         vector->argm[i] = 0;
-}
-
-static int api_vector_alloc(lua_State *lua)
-{
-    struct vector_t *vector;
-
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_vector_alloc: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (g_vectors.vacant == 0)
-    {
-        lua_pushstring(lua, "api_vector_alloc: out of vectors");
-        lua_error(lua);
-        return 0;
-    }
-
-    ++g_vectors.allocs;
-    --g_vectors.left;
-    if (g_vectors.left < g_vectors.left_min)
-        g_vectors.left_min = g_vectors.left;
-    vector = g_vectors.vacant;
-    g_vectors.vacant = g_vectors.vacant->next;
-
-    memset(vector, 0, sizeof(struct vector_t));
-
-    lua_pushinteger(lua, ((char*)vector - g_vectors.pool) / VECTOR_SIZE);
-    return 1;
-}
-
-static int api_vector_free(lua_State *lua)
-{
-    struct vector_t *vector;
-
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_vector_free: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector = vector_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-
-    if (vector == 0 || vector->vacant)
-    {
-        lua_pushstring(lua, "api_vector_free: invalid vector");
-        lua_error(lua);
-        return 0;
-    }
-
-    vector->vacant = 1;
-    ++g_vectors.frees;
-    ++g_vectors.left;
-
-    vector->next = g_vectors.vacant;
-    g_vectors.vacant = vector;
-    return 0;
-}
-
-static int api_vector_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_vector_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_vectors.left);
-    return 1;
 }
 
 static int api_vector_get(lua_State *lua)
@@ -583,8 +505,6 @@ static int api_vector_cast(lua_State *lua)
 
 int vector_init(lua_State *lua, int count, int nesting)
 {
-    int i;
-    struct vector_t *vector;
     if (sizeof(struct vector_t) > VECTOR_SIZE)
     {
         fprintf(stderr, "Invalid size:\nsizeof(struct vector_t) == %i\n",
@@ -596,19 +516,7 @@ int vector_init(lua_State *lua, int count, int nesting)
         return 1;
     memset(g_vectors.pool, 0, VECTOR_SIZE * count);
     g_vectors.count = count;
-    g_vectors.left = count;
-    g_vectors.left_min = count;
     g_vectors.nesting = nesting;
-    g_vectors.vacant = vector_get(0);
-    for (i = 0; i < count; ++i)
-    {
-        vector = vector_get(i);
-        vector->next = vector_get(i + 1);
-        vector->vacant = 1;
-    }
-    lua_register(lua, "api_vector_alloc", api_vector_alloc);
-    lua_register(lua, "api_vector_free", api_vector_free);
-    lua_register(lua, "api_vector_left", api_vector_left);
     lua_register(lua, "api_vector_get", api_vector_get);
     lua_register(lua, "api_vector_update", api_vector_update);
     lua_register(lua, "api_vector_const", api_vector_const);
@@ -634,9 +542,6 @@ void vector_done(void)
 {
     if (g_vectors.pool == 0)
         return;
-    printf("Vectors usage: %i/%i, allocs/frees: %i/%i\n",
-           g_vectors.count - g_vectors.left_min, g_vectors.count,
-           g_vectors.allocs, g_vectors.frees);
     util_free(g_vectors.pool);
     g_vectors.pool = 0;
 }

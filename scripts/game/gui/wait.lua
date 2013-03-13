@@ -8,6 +8,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 local ibuf, vbuf, vrot, brot
 
@@ -21,8 +22,8 @@ function M.alloc(x, y, r)
 
     function self.free()
         mfinal.free()
-        api_vector_free(vpos)
-        api_vector_free(vscl)
+        vpos.free()
+        vscl.free()
         mesh.free()
     end
 
@@ -65,10 +66,10 @@ function M.init()
         ibuf.finalize()
     end
     do
-        vrot = api_vector_alloc()
+        vrot = vector.alloc()
         brot = poolbuf.alloc(10)
         api_buf_set(brot.start,   0,0,0,0,PERIOD,   math.pi*2,0,0,0,0)
-        api_vector_seq(vrot, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
+        vrot.seq(brot, 2, 1, API_VECTOR_IPL_LINEAR)
     end
 end
 
@@ -76,7 +77,7 @@ function M.done()
     vbuf.free()
     ibuf.free()
     brot.free()
-    api_vector_free(vrot)
+    vrot.free()
 end
 
 return M

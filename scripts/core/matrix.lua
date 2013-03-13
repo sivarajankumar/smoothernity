@@ -41,16 +41,16 @@ local function make_matrix(mi)
         api_matrix_inv(mi, m0.id())
     end
     function self.frustum(v0, v1, zneari, zfari)
-        api_matrix_frustum(mi, v0, v1, zneari, zfari)
+        api_matrix_frustum(mi, v0.id(), v1.id(), zneari, zfari)
     end
     function self.ortho(v0, v1, zneari, zfari)
-        api_matrix_ortho(mi, v0, v1, zneari, zfari)
+        api_matrix_ortho(mi, v0.id(), v1.id(), zneari, zfari)
     end
     function self.pos_scl_rot(pos, scl, rot, rotaxis, rotanglei)
-        api_matrix_pos_scl_rot(mi, pos, scl, rot, rotaxis, rotanglei)
+        api_matrix_pos_scl_rot(mi, pos.id(), scl.id(), rot.id(), rotaxis, rotanglei)
     end
     function self.from_to_up(from, to, up)
-        api_matrix_from_to_up(mi, from, to, up)
+        api_matrix_from_to_up(mi, from.id(), to.id(), up.id())
     end
     function self.rigid_body(rb)
         api_matrix_rigid_body(mi, rb.id())

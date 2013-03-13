@@ -22,11 +22,11 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
 
     function self.free()
         mroot.free()
-        api_vector_free(vzero)
+        vzero.free()
         for i, s in ipairs(stripes) do
-            api_vector_free(s.vpos)
-            api_vector_free(s.vscl)
-            api_vector_free(s.vcol)
+            s.vpos.free()
+            s.vscl.free()
+            s.vcol.free()
             s.mlocal.free()
             s.mfinal.free()
             s.mesh.free()
@@ -43,8 +43,8 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             if sum > 0 then
                 nv = v / sum
             end
-            api_vector_const(stripe.vpos, x, 0, FRONT_Z, 0)
-            api_vector_const(stripe.vscl, nv, 1, 1, 0)
+            stripe.vpos.const(x, 0, FRONT_Z, 0)
+            stripe.vscl.const(nv, 1, 1, 0)
             x = x + nv
         end
     end
