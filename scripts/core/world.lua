@@ -39,7 +39,7 @@ local function make_world(wi)
         tscl = t
     end
     function self.move(dv)
-        api_physics_wld_move(wi, dv)
+        api_physics_wld_move(wi, dv.id())
     end
     function self.update(dt)
         if tscl > 0 then
