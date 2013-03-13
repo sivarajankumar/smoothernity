@@ -34,7 +34,7 @@ function M.configure()
                 end
                 return unpack(t)
             end,
-            vector_count = 300,
+            vector_count = cfg.VECTOR_COUNT,
             vector_nesting = 20,
             matrix_count = cfg.MATRIX_COUNT,
             matrix_nesting = 20,

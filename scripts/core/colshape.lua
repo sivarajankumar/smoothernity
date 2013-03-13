@@ -21,13 +21,13 @@ local function make_colshape(csi)
         api_physics_cs_free(csi)
     end
     function self.alloc_box(size)
-        api_physics_cs_alloc_box(csi, size)
+        api_physics_cs_alloc_box(csi, size.id())
     end
     function self.alloc_sphere(r)
         api_physics_cs_alloc_sphere(csi, r)
     end
-    function self.alloc_hmap(start, width, length, hmin, hmax, scale)
-        api_physics_cs_alloc_hmap(csi, start, width, length, hmin, hmax, scale)
+    function self.alloc_hmap(buf, width, length, hmin, hmax, scale)
+        api_physics_cs_alloc_hmap(csi, buf.start, width, length, hmin, hmax, scale.id())
     end
     function self.alloc_comp()
         api_physics_cs_alloc_comp(csi)

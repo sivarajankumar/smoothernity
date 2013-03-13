@@ -9,6 +9,7 @@ local lod = require 'game.lod'
 local gui = require 'game.gui.gui'
 local query = require 'core.query'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -24,37 +25,37 @@ local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
     local mproj = matrix.alloc()
-    local vbounds = api_vector_alloc()
-    local vz = api_vector_alloc()
+    local vbounds = vector.alloc()
+    local vz = vector.alloc()
     local sx, sy = util.camera_dims()
     local ymax = sy * znear / dist
     local xmax = sx * znear / dist
 
-    api_vector_const(vbounds, -xmax, xmax, -ymax, ymax)
-    api_vector_const(vz, znear, zfar, 0, 0)
+    vbounds.const(-xmax, xmax, -ymax, ymax)
+    vz.const(znear, zfar, 0, 0)
 
     mproj.frustum(vbounds, vz, 0, 1)
     mproj.update(0, API_MATRIX_FORCED_UPDATE)
     mproj.stop()
-    api_vector_free(vbounds)
-    api_vector_free(vz)
+    vbounds.free()
+    vz.free()
     return mproj
 end
 
 local function make_ortho()
     local mproj = matrix.alloc()
-    local vbounds = api_vector_alloc()
-    local vz = api_vector_alloc()
+    local vbounds = vector.alloc()
+    local vz = vector.alloc()
     local sx, sy = util.camera_dims()
 
-    api_vector_const(vbounds, -sx, sx, -sy, sy)
-    api_vector_const(vz, ORTHO_ZNEAR, ORTHO_ZFAR, 0, 0)
+    vbounds.const(-sx, sx, -sy, sy)
+    vz.const(ORTHO_ZNEAR, ORTHO_ZFAR, 0, 0)
 
     mproj.ortho(vbounds, vz, 0, 1)
     mproj.update(0, API_MATRIX_FORCED_UPDATE)
     mproj.stop()
-    api_vector_free(vbounds)
-    api_vector_free(vz)
+    vbounds.free()
+    vz.free()
     return mproj
 end
 
@@ -129,7 +130,7 @@ local function visual_alloc()
 
     function self.free()
         self.mview3d.free()
-        api_vector_free(self.vclrcol)
+        self.vclrcol.free()
     end
 
     function self.draw(draw_tag)
@@ -141,8 +142,8 @@ local function visual_alloc()
         prof.draw_begin()
 
         M.clear_time = api_timer()
-        api_render_clear_depth(vclrdep, 0)
-        api_render_clear_color(self.vclrcol)
+        api_render_clear_depth(vclrdep.id(), 0)
+        api_render_clear_color(self.vclrcol.id())
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
         M.clear_time = api_timer() - M.clear_time
         api_render_mview(self.mview3d.id())
@@ -168,13 +169,13 @@ local function visual_alloc()
 
         prof.frame_end()
 
-        api_vector_free(vclrdep)
+        vclrdep.free()
         mproj2d.free()
         mview2d.free()
     end
 
     function self.update(dt, update_tag)
-        api_vector_update(self.vclrcol, dt, update_tag)
+        self.vclrcol.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
             api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
@@ -200,8 +201,8 @@ local function eagle_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
 
-        api_render_clear_depth(vclrdep, 0)
-        api_render_clear_color(vclrcol)
+        api_render_clear_depth(vclrdep.id(), 0)
+        api_render_clear_color(vclrcol.id())
         api_render_proj(mproj3d.id())
         api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
@@ -214,8 +215,8 @@ local function eagle_alloc()
         end
         api_render_swap()
 
-        api_vector_free(vclrcol)
-        api_vector_free(vclrdep)
+        vclrcol.free()
+        vclrdep.free()
         mproj3d.free()
     end
 
@@ -243,16 +244,16 @@ local function debug_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
 
-        api_render_clear_depth(vclrdep, 0)
-        api_render_clear_color(vclrcol)
+        api_render_clear_depth(vclrdep.id(), 0)
+        api_render_clear_color(vclrcol.id())
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj3d.id())
         api_render_mview(self.mview3d.id())
         pwld.wld.ddraw()
         api_render_swap()
 
-        api_vector_free(vclrcol)
-        api_vector_free(vclrdep)
+        vclrcol.free()
+        vclrdep.free()
         mproj3d.free()
     end
 

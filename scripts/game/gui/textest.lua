@@ -83,7 +83,7 @@ end
 function M.done()
     vbuf.free()
     ibuf.free()
-    api_vector_free(vtexlayer)
+    vtexlayer.free()
 end
 
 return M

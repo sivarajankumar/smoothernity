@@ -26,8 +26,8 @@ local function make_vehicle(vehi)
     end
     function self.add_wheel(pos, dir, axl, sus_rest, roll, radius, front)
         local wheel = {}
-        local wheeli = api_physics_veh_add_wheel(vehi, pos, dir, axl, sus_rest,
-                                                 roll, radius, front)
+        local wheeli = api_physics_veh_add_wheel(vehi, pos.id(), dir.id(), axl.id(),
+                                                 sus_rest, roll, radius, front)
         function wheel.set(engine, brake, steer)
             api_physics_veh_set_wheel(vehi, wheeli, engine, brake, steer)
         end

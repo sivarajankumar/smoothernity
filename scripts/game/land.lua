@@ -14,6 +14,7 @@ local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -223,8 +224,8 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     -- physics
     do
-        local vsize = api_vector_alloc()
-        api_vector_const(vsize, scale, 1, scale, 0)
+        local vsize = vector.alloc()
+        vsize.const(scale, 1, scale, 0)
         for z = 0, common.res - 1 do
             for x = 0, common.res - 1 do
                 api_buf_set(buf.start + x + z * common.res, common.hmap[z][x])
@@ -234,10 +235,10 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
                                           basy + move.y,
                                           basz + move.z + 0.5*common.size)
-        cs = colshape.alloc_hmap(buf.start, common.res, common.res,
+        cs = colshape.alloc_hmap(buf, common.res, common.res,
                                  -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
-        api_vector_free(vsize)
+        vsize.free()
         mpos.free()
     end
 

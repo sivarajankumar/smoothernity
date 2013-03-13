@@ -30,8 +30,6 @@ struct vector_t
     GLfloat value[4]; /* must go first to ensure alignment */
     enum vector_e type;
     int update_tag;
-    int vacant;
-    struct vector_t *next;
     struct vector_t *argv[VECTOR_ARGVS];
     struct matrix_t *argm[VECTOR_ARGMS];
 

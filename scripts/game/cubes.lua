@@ -11,6 +11,7 @@ local twinmesh = require 'core.twin.mesh'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
+local vector = require 'core.vector'
 
 function M.alloc(x, y, z)
     local self = {}
@@ -23,9 +24,9 @@ function M.alloc(x, y, z)
     local msmall = matrix.alloc()
     local brot = poolbuf.alloc(10)
     local bpos = poolbuf.alloc(20)
-    local vrot = api_vector_alloc()
-    local vpos = api_vector_alloc()
-    local vscl = api_vector_alloc()
+    local vrot = vector.alloc()
+    local vpos = vector.alloc()
+    local vscl = vector.alloc()
     local mesh_big
     local mesh_small
     local cs
@@ -38,9 +39,9 @@ function M.alloc(x, y, z)
         mbig.free()
         mloc.free()
         msmall.free()
-        api_vector_free(vrot)
-        api_vector_free(vpos)
-        api_vector_free(vscl)
+        vrot.free()
+        vpos.free()
+        vscl.free()
         brot.free()
         bpos.free()
         mesh_big.free()
@@ -81,21 +82,21 @@ function M.alloc(x, y, z)
         api_buf_set(brot.start,   0,0,0,0,3,   math.pi*2,0,0,0,0)
         api_buf_set(bpos.start,   2,1, 2,0,1,   2,-1,-2,0,1,
                                  -2,1,-2,0,1,  -2,-1, 2,0,1)
-        api_vector_seq(vrot, brot.start, 2, 1, API_VECTOR_IPL_LINEAR)
-        api_vector_seq(vpos, bpos.start, 4, 1, API_VECTOR_IPL_SPLINE)
-        api_vector_const(vscl, 0.5, 0.5, 0.5, 0)
+        vrot.seq(brot, 2, 1, API_VECTOR_IPL_LINEAR)
+        vpos.seq(bpos, 4, 1, API_VECTOR_IPL_SPLINE)
+        vscl.const(0.5, 0.5, 0.5, 0)
         mloc.pos_scl_rot(vpos, vscl, vrot, API_MATRIX_AXIS_Y, 0)
         msmall.mul(mrb, mloc)
     end
 
     -- physics
     do
-        local size = api_vector_alloc()
-        api_vector_const(size, 1, 1, 1, 0)
+        local size = vector.alloc()
+        size.const(1, 1, 1, 0)
         cs = colshape.alloc_box(size)
         rb = rigidbody.alloc(pwld.wld, cs, mbig, 1000, 1, 1)
         mrb.rigid_body(rb)
-        api_vector_free(size)
+        size.free()
     end
 
     -- visual
