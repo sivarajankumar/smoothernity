@@ -15,6 +15,7 @@ local function make_shprog(si)
     function self.free()
         frees = frees + 1
         left = left + 1
+        shprogs[si] = self
         api_shprog_free(si)
     end
     function self.attach_frag(data)

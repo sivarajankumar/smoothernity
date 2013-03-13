@@ -14,6 +14,12 @@ local function make_colshape(csi)
         left = left - 1
         left_min = math.min(left, left_min)
     end
+    function self.free()
+        frees = frees + 1
+        left = left + 1
+        colshapes[csi] = self
+        api_physics_cs_free(csi)
+    end
     function self.alloc_box(size)
         api_physics_cs_alloc_box(csi, size)
     end
@@ -27,12 +33,7 @@ local function make_colshape(csi)
         api_physics_cs_alloc_comp(csi)
     end
     function self.comp_add(tm, child)
-        api_physics_cs_comp_add(csi, tm, child.id())
-    end
-    function self.free()
-        frees = frees + 1
-        left = left + 1
-        api_physics_cs_free(csi)
+        api_physics_cs_comp_add(csi, tm.id(), child.id())
     end
     function self.id()
         return csi

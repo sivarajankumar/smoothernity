@@ -53,7 +53,7 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.attach(mplayer)
-        api_vector_mpos(vplayer, mplayer)
+        api_vector_mpos(vplayer, mplayer.id())
     end
 
     function self.generate()

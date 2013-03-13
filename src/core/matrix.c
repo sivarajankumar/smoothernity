@@ -16,13 +16,8 @@ enum matrices_e
 struct matrices_t
 {
     int count;
-    int left;
-    int left_min;
     int nesting;
-    int allocs;
-    int frees;
     char *pool;
-    struct matrix_t *vacant;
 };
 
 static struct matrices_t g_matrices;
@@ -36,82 +31,9 @@ static void matrix_clear_args(struct matrix_t *matrix)
         matrix->argm[i] = 0;
 }
 
-static int api_matrix_alloc(lua_State *lua)
-{
-    struct matrix_t *matrix;
-
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_matrix_alloc: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (g_matrices.vacant == 0)
-    {
-        lua_pushstring(lua, "api_matrix_alloc: out of matrices");
-        lua_error(lua);
-        return 0;
-    }
-
-    ++g_matrices.allocs;
-    --g_matrices.left;
-    if (g_matrices.left < g_matrices.left_min)
-        g_matrices.left_min = g_matrices.left;
-    matrix = g_matrices.vacant;
-    g_matrices.vacant = g_matrices.vacant->next;
-
-    memset(matrix, 0, MATRIX_SIZE);
-
-    lua_pushinteger(lua, ((char*)matrix - g_matrices.pool) / MATRIX_SIZE);
-    return 1;
-}
-
-static int api_matrix_free(lua_State *lua)
-{
-    struct matrix_t *matrix;
-
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_matrix_free: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-
-    if (matrix == 0 || matrix->vacant)
-    {
-        lua_pushstring(lua, "api_matrix_free: invalid matrix");
-        lua_error(lua);
-        return 0;
-    }
-
-    matrix->vacant = 1;
-    ++g_matrices.left;
-    ++g_matrices.frees;
-
-    matrix->next = g_matrices.vacant;
-    g_matrices.vacant = matrix;
-    return 0;
-}
-
-static int api_matrix_left(lua_State *lua)
-{
-    if (lua_gettop(lua) != 0)
-    {
-        lua_pushstring(lua, "api_matrix_left: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushinteger(lua, g_matrices.left);
-    return 1;
-}
-
 static int api_matrix_copy(lua_State *lua)
 {
-    struct matrix_t *matrix, *msrc, *mnext;
+    struct matrix_t *matrix, *msrc;
 
     if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2))
@@ -132,9 +54,7 @@ static int api_matrix_copy(lua_State *lua)
         return 0;
     }
 
-    mnext = matrix->next;
     memcpy(matrix, msrc, MATRIX_SIZE);
-    matrix->next = mnext;
     return 0;
 }
 
@@ -664,8 +584,6 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
 
 int matrix_init(lua_State *lua, int count, int nesting)
 {
-    int i;
-    struct matrix_t *matrix;
     if (sizeof(struct matrix_t) > MATRIX_SIZE)
     {
         fprintf(stderr, "Invalid size:\nsizeof(struct matrix_t) == %i\n",
@@ -677,19 +595,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
         return 1;
     memset(g_matrices.pool, 0, MATRIX_SIZE * count);
     g_matrices.count = count;
-    g_matrices.left = count;
-    g_matrices.left_min = g_matrices.left;
     g_matrices.nesting = nesting;
-    g_matrices.vacant = matrix_get(0);
-    for (i = 0; i < count; ++i)
-    {
-        matrix = matrix_get(i);
-        matrix->next = matrix_get(i + 1);
-        matrix->vacant = 1;
-    }
-    lua_register(lua, "api_matrix_alloc", api_matrix_alloc);
-    lua_register(lua, "api_matrix_free", api_matrix_free);
-    lua_register(lua, "api_matrix_left", api_matrix_left);
     lua_register(lua, "api_matrix_copy", api_matrix_copy);
     lua_register(lua, "api_matrix_stop", api_matrix_stop);
     lua_register(lua, "api_matrix_update", api_matrix_update);
@@ -720,9 +626,6 @@ void matrix_done(void)
 {
     if (g_matrices.pool == 0)
         return;
-    printf("Matrices usage: %i/%i, allocs/frees: %i/%i\n",
-           g_matrices.count - g_matrices.left_min, g_matrices.count,
-           g_matrices.allocs, g_matrices.frees);
     util_free(g_matrices.pool);
     g_matrices.pool = 0;
 }

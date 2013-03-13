@@ -15,6 +15,7 @@ local function make_sync(si)
     function self.free()
         frees = frees + 1
         left = left + 1
+        syncs[si] = self
         api_sync_free(si)
     end
     function self.ready()

@@ -13,15 +13,16 @@ local function make_vehicle(vehi)
         allocs = allocs + 1
         left = left - 1
         left_min = math.min(left, left_min)
-        api_physics_veh_alloc(vehi, wld.id(), ch_cs.id(), ch_inert.id(), tm, ...)
+        api_physics_veh_alloc(vehi, wld.id(), ch_cs.id(), ch_inert.id(), tm.id(), ...)
     end
     function self.free()
         frees = frees + 1
         left = left + 1
+        vehicles[vehi] = self
         api_physics_veh_free(vehi)
     end
     function self.transform(tm)
-        api_physics_veh_transform(vehi, tm)
+        api_physics_veh_transform(vehi, tm.id())
     end
     function self.add_wheel(pos, dir, axl, sus_rest, roll, radius, front)
         local wheel = {}
@@ -35,6 +36,9 @@ local function make_vehicle(vehi)
         end
         function wheel.id()
             return wheeli
+        end
+        function wheel.veh_id()
+            return vehi
         end
         return wheel
     end

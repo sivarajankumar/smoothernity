@@ -7,6 +7,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local twinshuni = require 'core.twin.shuni'
+local matrix = require 'core.matrix'
 
 local ibuf, vbuf
 
@@ -20,14 +21,14 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
     local stripes = {}
 
     function self.free()
-        api_matrix_free(mroot)
+        mroot.free()
         api_vector_free(vzero)
         for i, s in ipairs(stripes) do
             api_vector_free(s.vpos)
             api_vector_free(s.vscl)
             api_vector_free(s.vcol)
-            api_matrix_free(s.mlocal)
-            api_matrix_free(s.mfinal)
+            s.mlocal.free()
+            s.mfinal.free()
             s.mesh.free()
             s.ucol.free()
         end
@@ -57,10 +58,10 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             stripe.vpos = util.vector_const(0, 0, FRONT_Z, 0)
             stripe.vscl = util.vector_const(0, 1, 1, 0)
             stripe.vcol = util.vector_const(unpack(col))
-            stripe.mlocal = api_matrix_alloc()
-            stripe.mfinal = api_matrix_alloc()
-            api_matrix_pos_scl_rot(stripe.mlocal, stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
-            api_matrix_mul(stripe.mfinal, mroot, stripe.mlocal)
+            stripe.mlocal = matrix.alloc()
+            stripe.mfinal = matrix.alloc()
+            stripe.mlocal.pos_scl_rot(stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
+            stripe.mfinal.mul(mroot, stripe.mlocal)
             stripe.mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
                                          shader.color(), stripe.mfinal)
             stripe.ucol = twinshuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)

@@ -13,6 +13,7 @@ local corewld = require 'core.world'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local coreveh = require 'core.vehicle'
+local matrix = require 'core.matrix'
 local render = require 'game.render'
 local pwld = require 'game.physwld'
 local pause = require 'game.pause'
@@ -63,6 +64,7 @@ end
 
 function M.run()
     corewld.init()
+    matrix.init()
     coreveh.init()
     colshape.init()
     rigidbody.init()
@@ -224,6 +226,7 @@ function M.run()
     rigidbody.done()
     colshape.done()
     coreveh.done()
+    matrix.done()
     corewld.done()
 end
 

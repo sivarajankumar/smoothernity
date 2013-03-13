@@ -18,6 +18,7 @@ local function make_world(wi)
     function self.free()
         frees = frees + 1
         left = left + 1
+        worlds[wi] = self
     end
     function self.id()
         return wi

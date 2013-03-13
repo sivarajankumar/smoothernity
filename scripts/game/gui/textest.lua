@@ -9,6 +9,7 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
 local twinshuni = require 'core.twin.shuni'
+local matrix = require 'core.matrix'
 
 local TEX_UNIT = 0
 local TEX_LAYER = 0
@@ -21,7 +22,7 @@ function M.alloc(x, y, r)
     local mesh, mfinal, utexunit, utexlayer
 
     function self.free()
-        api_matrix_free(mfinal)
+        mfinal.free()
         mesh.free()
         utexunit.free()
         utexlayer.free()

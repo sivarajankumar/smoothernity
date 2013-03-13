@@ -7,6 +7,7 @@ local poolbuf = require 'core.pool.buf'
 local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 local twinmesh = require 'core.twin.mesh'
+local matrix = require 'core.matrix'
 
 local ibuf, vbuf, vrot, brot
 
@@ -16,10 +17,10 @@ local PERIOD = 1
 function M.alloc(x, y, r)
     local self = {}
     local mesh, vpos, vscl
-    local mfinal = api_matrix_alloc()
+    local mfinal = matrix.alloc()
 
     function self.free()
-        api_matrix_free(mfinal)
+        mfinal.free()
         api_vector_free(vpos)
         api_vector_free(vscl)
         mesh.free()
@@ -35,7 +36,7 @@ function M.alloc(x, y, r)
 
     vpos = util.vector_const(x, y, -0.5, 0)
     vscl = util.vector_const(r, r, 1, 0)
-    api_matrix_pos_scl_rot(mfinal, vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
+    mfinal.pos_scl_rot(vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
     mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
                           shader.default(), mfinal)
     return self
