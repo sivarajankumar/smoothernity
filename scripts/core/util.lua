@@ -24,8 +24,12 @@ function M.sync_write(uid, data)
         api_shell_rmfile(uid)
     else
         local f = io.open(uid, 'w')
-        f:write(data)
-        f:close()
+        if f then
+            f:write(data)
+            f:close()
+        else
+            io.write(string.format('cannot write "%s"\n', uid))
+        end
     end
 end
 
