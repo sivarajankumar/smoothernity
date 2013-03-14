@@ -3,30 +3,38 @@ local M = {}
 local cfg = require 'config'
 local util = require 'core.util'
 
+local NUMS_PER_ROW = 10
+
 function M.thread_run(thi)
     local uid = util.uid_save(string.format('%s.lua', api_thread_respond(thi, '')))
+    local start = api_thread_respond(thi, '')
     local data = util.sync_read(uid)
     if data == '' then
         local f = io.open(uid, 'w')
-        f:write('return {\n')
-        for z = 0, cfg.NOISE_SIZE - 1 do
-            if z > 0 then
-                f:write(',\n')
+        f:write('return {')
+        local cnt = 0
+        for i = 1, cfg.NOISE_SIZE * cfg.NOISE_SIZE do
+            if cnt >= NUMS_PER_ROW then
+                cnt = 0
             end
-            f:write(string.format('    [%i] = {\n', z))
-            for x = 0, cfg.NOISE_SIZE - 1 do
-                if x > 0 then
-                    f:write(',\n')
-                end
-                f:write(string.format('        [%i] = %f', x, math.random()))
+            if i > 1 then
+                f:write(', ')
             end
-            f:write('\n    }')
+            if cnt == 0 then
+                f:write('\n    ')
+            end
+            cnt = cnt + 1
+            local v = math.random()
+            api_buf_set(start + i - 1, v)
+            f:write(string.format('%f', v))
         end
         f:write('\n}\n')
         f:close()
-        data = util.sync_read(uid)
+    else
+        for i, v in pairs(loadstring(data)()) do
+            api_buf_set(start + i - 1, v)
+        end
     end
-    api_thread_respond(thi, data)
 end
 
 return M
