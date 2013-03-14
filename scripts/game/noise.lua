@@ -12,9 +12,8 @@ function M.alloc(uid)
         buf.free()
     end
     function self.get(z, x)
-        local v = api_buf_get(buf.start, API_BUF_IPL_SPLINE,
-                              cfg.NOISE_SIZE, cfg.NOISE_SIZE, z, x)
-        return util.clamp(v, 0, 1)
+        return api_buf_get(buf.start, API_BUF_IPL_SPLINE,
+                          cfg.NOISE_SIZE, cfg.NOISE_SIZE, z, x)
     end
     local th = thread.alloc('game.noise_th')
     util.wait_thread_responding(th)
