@@ -39,6 +39,7 @@ function M.alloc(uid, centx, centy, centz)
     local generating = false
 
     function self.free()
+        nse.free()
         vplayer.free()
         for k, v in pairs(planes) do
             v.free()
