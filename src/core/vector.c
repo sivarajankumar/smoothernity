@@ -2,6 +2,7 @@
 #include "matrix.h"
 #include "buf.h"
 #include "physics.h"
+#include "interp.h"
 #include "../util/util.h"
 #include <math.h>
 #include <string.h>
@@ -731,7 +732,7 @@ static void vector_update_seq(struct vector_t *v, float dt)
     static const int SEQ_SKIP_MAX = 5;
     int i, i0, i1, i2, i3;
     GLfloat *v0, *v1, *v2, *v3;
-    float t, tt, ttt;
+    float t;
 
     v->seq_t += dt;
     for (i = 0; i < SEQ_SKIP_MAX; ++i)
@@ -745,11 +746,9 @@ static void vector_update_seq(struct vector_t *v, float dt)
     {
         v0 = vector_seq_value(v, v->seq_cur);
         v1 = vector_seq_value(v, vector_seq_next(v, v->seq_cur));
+        t = v->seq_t / vector_seq_dt(v, v->seq_cur);
         for (i = 0; i < 4; ++i)
-        {
-            v->value[i] = v0[i] + ((v1[i] - v0[i]) * v->seq_t
-                                   / vector_seq_dt(v, v->seq_cur));
-        }
+            v->value[i] = interp_linear(t, v0[i], v1[i]);
     }
     else if (v->seq_ipl == VECTOR_IPL_SPLINE)
     {
@@ -764,17 +763,8 @@ static void vector_update_seq(struct vector_t *v, float dt)
         v3 = vector_seq_value(v, i3);
 
         t = v->seq_t / vector_seq_dt(v, v->seq_cur);
-        tt = t * t;
-        ttt = tt * t;
-
         for (i = 0; i < 4; ++i)
-        {
-            v->value[i] = 2.0f * v1[i];
-            v->value[i] += t * (-v0[i] + v2[i]);
-            v->value[i] += tt * (2.0f*v0[i] - 5.0f*v1[i] + 4.0f*v2[i] - v3[i]);
-            v->value[i] += ttt * (-v0[i] + 3.0f*v1[i] - 3.0f*v2[i] + v3[i]);
-            v->value[i] *= 0.5f;
-        }
+            v->value[i] = interp_spline(t, v0[i], v1[i], v2[i], v3[i]);
     }
 }
 
