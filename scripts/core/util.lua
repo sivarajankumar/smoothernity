@@ -159,8 +159,12 @@ function M.spline(t, t1, t2, v0, v1, v2, v3)
     return v
 end
 
+function M.clamp(x, min, max)
+    return math.min(max, math.max(min, x))
+end
+
 function M.lerp(t, t0, t1, v0, v1)
-    t = math.min(t1, math.max(t0, t))
+    t = M.clamp(t, t0, t1)
     return v0 + ((v1 - v0) * (t - t0) / (t1 - t0))
 end
 
