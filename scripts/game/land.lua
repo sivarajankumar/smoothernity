@@ -86,7 +86,10 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         else
             r, g, b = 0.1, 0.1, 0.1
         end
-        return r, g, b, 1
+        return util.clamp(r, 0, 1),
+               util.clamp(g, 0, 1),
+               util.clamp(b, 0, 1),
+               1
     end
 
     -- height map
