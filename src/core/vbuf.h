@@ -3,12 +3,14 @@
 #include <lua.h>
 #include <GL/glew.h>
 
-enum vbuf_e
+enum vbuf_state_e
 {
+    VBUF_IDLE,
     VBUF_UNMAPPING,
-    VBUF_UNMAPPED,
     VBUF_MAPPING,
     VBUF_MAPPED,
+    VBUF_COPYING_FROM,
+    VBUF_COPYING_TO,
     VBUF_ERROR
 };
 
@@ -17,8 +19,11 @@ struct vbuf_t
     GLuint buf_id;
     int mapped_ofs;
     int mapped_len;
+    int copy_ofs;
+    int copy_len;
+    struct vbuf_t *copy_to;
     GLvoid *mapped;
-    enum vbuf_e state;
+    enum vbuf_state_e state;
 };
 
 struct vbufs_t
