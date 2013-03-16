@@ -5,10 +5,12 @@
 
 enum ibuf_e
 {
+    IBUF_IDLE,
     IBUF_UNMAPPING,
-    IBUF_UNMAPPED,
     IBUF_MAPPING,
     IBUF_MAPPED,
+    IBUF_COPYING_FROM,
+    IBUF_COPYING_TO,
     IBUF_ERROR
 };
 
@@ -17,6 +19,9 @@ struct ibuf_t
     GLuint buf_id;
     int mapped_ofs;
     int mapped_len;
+    int copy_ofs;
+    int copy_len;
+    struct ibuf_t *copy_to;
     GLvoid *mapped;
     enum ibuf_e state;
 };

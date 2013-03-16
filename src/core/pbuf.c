@@ -27,8 +27,8 @@ int pbuf_thread(void)
             glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
             pbuf->mapped = glMapBufferRange(
                 GL_PIXEL_UNPACK_BUFFER,
-                (GLintptr)(pbuf->mapped_ofs * (int)PBUF_DATA_SIZE),
-                (GLsizeiptr)(pbuf->mapped_len * (int)PBUF_DATA_SIZE),
+                (GLintptr)((struct pbuf_data_t*)0 + pbuf->mapped_ofs),
+                (GLsizeiptr)((struct pbuf_data_t*)0 + pbuf->mapped_len),
                 GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
                 GL_MAP_INVALIDATE_RANGE_BIT);
             thread_mutex_lock(g_pbufs.mutex);

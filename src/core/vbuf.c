@@ -35,8 +35,8 @@ int vbuf_thread(void)
             glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
             vbuf->mapped = glMapBufferRange(
                 GL_ARRAY_BUFFER,
-                (GLintptr)(vbuf->mapped_ofs * (int)VBUF_DATA_SIZE),
-                (GLsizeiptr)(vbuf->mapped_len * (int)VBUF_DATA_SIZE),
+                (GLintptr)((struct vbuf_data_t*)0 + vbuf->mapped_ofs),
+                (GLsizeiptr)((struct vbuf_data_t*)0 + vbuf->mapped_len),
                 GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
                 GL_MAP_INVALIDATE_RANGE_BIT);
             thread_mutex_lock(g_vbufs.mutex);
@@ -55,7 +55,21 @@ int vbuf_thread(void)
             glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
             glUnmapBuffer(GL_ARRAY_BUFFER);
             thread_mutex_lock(g_vbufs.mutex);
-            vbuf->state = VBUF_UNMAPPED;
+            vbuf->state = VBUF_IDLE;
+        }
+        else if (vbuf->state == VBUF_COPYING_FROM)
+        {
+            thread_mutex_unlock(g_vbufs.mutex);
+            ++count;
+            glBindBuffer(GL_COPY_READ_BUFFER, vbuf->buf_id);
+            glBindBuffer(GL_COPY_WRITE_BUFFER, vbuf->copy_to->buf_id);
+            glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
+                (GLintptr)((struct vbuf_data_t*)0 + vbuf->copy_ofs),
+                (GLintptr)((struct vbuf_data_t*)0 + vbuf->copy_to->copy_ofs),
+                (GLsizeiptr)((struct vbuf_data_t*)0 + vbuf->copy_len));
+            thread_mutex_lock(g_vbufs.mutex);
+            vbuf->state = VBUF_IDLE;
+            vbuf->copy_to->state = VBUF_IDLE;
         }
     }
     thread_mutex_unlock(g_vbufs.mutex);
@@ -77,7 +91,7 @@ static int api_vbuf_map(lua_State *lua)
     ofs = lua_tointeger(lua, 2);
     len = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
-    if (vbuf == 0 || vbuf->state != VBUF_UNMAPPED)
+    if (vbuf == 0 || vbuf->state != VBUF_IDLE)
     {
         lua_pushstring(lua, "api_vbuf_map: invalid vbuf");
         lua_error(lua);
@@ -125,6 +139,49 @@ static int api_vbuf_unmap(lua_State *lua)
     return 0;
 }
 
+static int api_vbuf_copy(lua_State *lua)
+{
+    struct vbuf_t *vbuf_from, *vbuf_to;
+    int ofs_from, ofs_to, len;
+    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1)
+    || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)
+    || !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5))
+    {
+        lua_pushstring(lua, "api_vbuf_copy: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    vbuf_from = vbuf_get(lua_tointeger(lua, 1));
+    vbuf_to = vbuf_get(lua_tointeger(lua, 2));
+    ofs_from = lua_tointeger(lua, 3);
+    ofs_to = lua_tointeger(lua, 4);
+    len = lua_tointeger(lua, 5);
+    lua_pop(lua, 5);
+    if (vbuf_from == 0 || vbuf_from->state != VBUF_IDLE
+    ||  vbuf_to == 0 || vbuf_to->state != VBUF_IDLE)
+    {
+        lua_pushstring(lua, "api_vbuf_copy: invalid vbuf");
+        lua_error(lua);
+        return 0;
+    }
+    if (len <= 0 || ofs_from < 0 || ofs_from > g_vbufs.size - len
+    || ofs_to < 0 || ofs_to > g_vbufs.size - len)
+    {
+        lua_pushstring(lua, "api_vbuf_copy: invalid range");
+        lua_error(lua);
+        return 0;
+    }
+    thread_mutex_lock(g_vbufs.mutex);
+    vbuf_from->copy_ofs = ofs_from;
+    vbuf_from->copy_len = len;
+    vbuf_from->state = VBUF_COPYING_FROM;
+    vbuf_to->copy_ofs = ofs_to;
+    vbuf_to->state = VBUF_COPYING_TO;
+    thread_mutex_unlock(g_vbufs.mutex);
+    render_engage();
+    return 0;
+}
+
 static int api_vbuf_waiting(lua_State *lua)
 {
     struct vbuf_t *vbuf;
@@ -143,7 +200,9 @@ static int api_vbuf_waiting(lua_State *lua)
         return 0;
     }
     lua_pushboolean(lua, vbuf->state == VBUF_MAPPING
-                      || vbuf->state == VBUF_UNMAPPING);
+                      || vbuf->state == VBUF_UNMAPPING
+                      || vbuf->state == VBUF_COPYING_FROM
+                      || vbuf->state == VBUF_COPYING_TO);
     return 1;
 }
 
@@ -267,7 +326,7 @@ int vbuf_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         vbuf = vbuf_get(i);
-        vbuf->state = VBUF_UNMAPPED;
+        vbuf->state = VBUF_IDLE;
         glGenBuffers(1, &vbuf->buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
         glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
@@ -280,6 +339,7 @@ int vbuf_init(lua_State *lua, int size, int count)
         goto cleanup;
 
     lua_register(lua, "api_vbuf_set", api_vbuf_set);
+    lua_register(lua, "api_vbuf_copy", api_vbuf_copy);
     lua_register(lua, "api_vbuf_map", api_vbuf_map);
     lua_register(lua, "api_vbuf_unmap", api_vbuf_unmap);
     lua_register(lua, "api_vbuf_waiting", api_vbuf_waiting);
