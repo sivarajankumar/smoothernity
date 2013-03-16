@@ -2,6 +2,9 @@
 #include "mpool.h"
 #include "shell.h"
 #include "buf.h"
+#include "ibuf.h"
+#include "vbuf.h"
+#include "pbuf.h"
 #include "../thread/thread.h"
 #include "../util/util.h"
 #include <stdio.h>
@@ -304,6 +307,9 @@ static void thread_reg(lua_State *lua)
     lua_register(lua, "api_thread_respond", api_thread_respond);
     shell_reg_thread(lua);
     buf_reg_thread(lua);
+    vbuf_reg_thread(lua);
+    ibuf_reg_thread(lua);
+    pbuf_reg_thread(lua);
 }
 
 int thread_init(lua_State *lua, int count, const int msizes[],

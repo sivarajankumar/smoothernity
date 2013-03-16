@@ -40,6 +40,7 @@ extern struct ibufs_t g_ibufs;
 
 int ibuf_init(lua_State *lua, int size, int count);
 void ibuf_done(void);
+void ibuf_reg_thread(lua_State *lua);
 struct ibuf_t * ibuf_get(int);
 void ibuf_select(struct ibuf_t*);
 int ibuf_thread(void);

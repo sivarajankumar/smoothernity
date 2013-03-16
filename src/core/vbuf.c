@@ -225,8 +225,10 @@ static int api_vbuf_set(lua_State *lua)
     ofs = lua_tointeger(lua, 2);
     len = (lua_gettop(lua) - 2) / VBUF_DATA_ATTRS;
 
+    thread_mutex_lock(g_vbufs.mutex);
     if (vbuf == 0 || vbuf->state != VBUF_MAPPED)
     {
+        thread_mutex_unlock(g_vbufs.mutex);
         lua_pushstring(lua, "api_vbuf_set: invalid vbuf");
         lua_error(lua);
         return 0;
@@ -234,6 +236,7 @@ static int api_vbuf_set(lua_State *lua)
 
     if (ofs < vbuf->mapped_ofs || ofs > vbuf->mapped_ofs + vbuf->mapped_len - len)
     {
+        thread_mutex_unlock(g_vbufs.mutex);
         lua_pushstring(lua, "api_vbuf_set: data out of range");
         lua_error(lua);
         return 0;
@@ -241,6 +244,7 @@ static int api_vbuf_set(lua_State *lua)
 
     if ((lua_gettop(lua) - 2) % VBUF_DATA_ATTRS != 0)
     {
+        thread_mutex_unlock(g_vbufs.mutex);
         lua_pushstring(lua, "api_vbuf_set: incorrect data count");
         lua_error(lua);
         return 0;
@@ -253,6 +257,7 @@ static int api_vbuf_set(lua_State *lua)
         {
             if (!lua_isnumber(lua, iofs + j))
             {
+                thread_mutex_unlock(g_vbufs.mutex);
                 lua_pushstring(lua, "api_vbuf_set: incorrect data type");
                 lua_error(lua);
                 return 0;
@@ -271,6 +276,7 @@ static int api_vbuf_set(lua_State *lua)
         if (r < 0.0f || r > 1.0f || g < 0.0f || g > 1.0f 
          || b < 0.0f || b > 1.0f || a < 0.0f || a > 1.0f)
         {
+            thread_mutex_unlock(g_vbufs.mutex);
             lua_pushstring(lua, "api_vbuf_set: color out of range");
             lua_error(lua);
             return 0;
@@ -292,8 +298,14 @@ static int api_vbuf_set(lua_State *lua)
         data->color[3] = (GLubyte) (a * 255.0f);
     }
 
+    thread_mutex_unlock(g_vbufs.mutex);
     lua_pop(lua, 3 + (len * VBUF_DATA_ATTRS));
     return 0;
+}
+
+void vbuf_reg_thread(lua_State *lua)
+{
+    lua_register(lua, "api_vbuf_set", api_vbuf_set);
 }
 
 int vbuf_init(lua_State *lua, int size, int count)

@@ -166,8 +166,10 @@ static int api_pbuf_set(lua_State *lua)
     ofs = lua_tointeger(lua, 2);
     len = (lua_gettop(lua) - 2) / PBUF_DATA_ATTRS;
 
+    thread_mutex_lock(g_pbufs.mutex);
     if (pbuf == 0 || pbuf->state != PBUF_MAPPED)
     {
+        thread_mutex_unlock(g_pbufs.mutex);
         lua_pushstring(lua, "api_pbuf_set: invalid pbuf");
         lua_error(lua);
         return 0;
@@ -175,6 +177,7 @@ static int api_pbuf_set(lua_State *lua)
 
     if (ofs < pbuf->mapped_ofs || ofs > pbuf->mapped_ofs + pbuf->mapped_len - len)
     {
+        thread_mutex_unlock(g_pbufs.mutex);
         lua_pushstring(lua, "api_pbuf_set: data out of range");
         lua_error(lua);
         return 0;
@@ -182,6 +185,7 @@ static int api_pbuf_set(lua_State *lua)
 
     if ((lua_gettop(lua) - 2) % PBUF_DATA_ATTRS != 0)
     {
+        thread_mutex_unlock(g_pbufs.mutex);
         lua_pushstring(lua, "api_pbuf_set: incorrect data count");
         lua_error(lua);
         return 0;
@@ -194,6 +198,7 @@ static int api_pbuf_set(lua_State *lua)
         {
             if (!lua_isnumber(lua, iofs + j))
             {
+                thread_mutex_unlock(g_pbufs.mutex);
                 lua_pushstring(lua, "api_pbuf_set: incorrect data type");
                 lua_error(lua);
                 return 0;
@@ -207,6 +212,7 @@ static int api_pbuf_set(lua_State *lua)
         if (r < 0.0f || r > 1.0f || g < 0.0f || g > 1.0f 
          || b < 0.0f || b > 1.0f || a < 0.0f || a > 1.0f)
         {
+            thread_mutex_unlock(g_pbufs.mutex);
             lua_pushstring(lua, "api_pbuf_set: color out of range");
             lua_error(lua);
             return 0;
@@ -221,8 +227,14 @@ static int api_pbuf_set(lua_State *lua)
         data->color[3] = (GLubyte) (a * 255.0f);
     }
 
+    thread_mutex_unlock(g_pbufs.mutex);
     lua_pop(lua, 3 + (len * PBUF_DATA_ATTRS));
     return 0;
+}
+
+void pbuf_reg_thread(lua_State *lua)
+{
+    lua_register(lua, "api_pbuf_set", api_pbuf_set);
 }
 
 int pbuf_init(lua_State *lua, int size, int count)

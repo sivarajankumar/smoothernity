@@ -41,6 +41,7 @@ extern struct vbufs_t g_vbufs;
 
 int vbuf_init(lua_State *lua, int size, int count);
 void vbuf_done(void);
+void vbuf_reg_thread(lua_State *lua);
 struct vbuf_t * vbuf_get(int vbuf);
 void vbuf_select(struct vbuf_t *);
 int vbuf_thread(void);

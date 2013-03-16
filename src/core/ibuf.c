@@ -214,8 +214,10 @@ static int api_ibuf_set(lua_State *lua)
     ofs = lua_tointeger(lua, 2);
     len = lua_gettop(lua) - 2;
 
+    thread_mutex_lock(g_ibufs.mutex);
     if (ibuf == 0 || ibuf->state != IBUF_MAPPED)
     {
+        thread_mutex_unlock(g_ibufs.mutex);
         lua_pushstring(lua, "api_ibuf_set: invalid ibuf");
         lua_error(lua);
         return 0;
@@ -223,6 +225,7 @@ static int api_ibuf_set(lua_State *lua)
 
     if (ofs < ibuf->mapped_ofs || ofs > ibuf->mapped_ofs + ibuf->mapped_len - len)
     {
+        thread_mutex_unlock(g_ibufs.mutex);
         lua_pushstring(lua, "api_ibuf_set: data out of range");
         lua_error(lua);
         return 0;
@@ -233,6 +236,7 @@ static int api_ibuf_set(lua_State *lua)
     {
         if (!lua_isnumber(lua, 3 + i))
         {
+            thread_mutex_unlock(g_ibufs.mutex);
             lua_pushstring(lua, "api_ibuf_set: incorrect data type");
             lua_error(lua);
             return 0;
@@ -240,6 +244,7 @@ static int api_ibuf_set(lua_State *lua)
         index = lua_tointeger(lua, 3 + i);
         if (index < 0 || index >= g_vbufs.size)
         {
+            thread_mutex_unlock(g_ibufs.mutex);
             lua_pushstring(lua, "api_ibuf_set: index out of range");
             lua_error(lua);
             return 0;
@@ -247,8 +252,14 @@ static int api_ibuf_set(lua_State *lua)
         data[ofs - ibuf->mapped_ofs + i] = index;
     }
 
+    thread_mutex_unlock(g_ibufs.mutex);
     lua_pop(lua, lua_gettop(lua));
     return 0;
+}
+
+void ibuf_reg_thread(lua_State *lua)
+{
+    lua_register(lua, "api_ibuf_set", api_ibuf_set);
 }
 
 int ibuf_init(lua_State *lua, int size, int count)
