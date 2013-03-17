@@ -1,4 +1,5 @@
 #include "pbuf.h"
+#include "sync.h"
 #include "render.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
@@ -46,6 +47,7 @@ int pbuf_thread(void)
             ++count;
             glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
             glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+            sync_wait();
             thread_mutex_lock(g_pbufs.mutex);
             pbuf->state = PBUF_UNMAPPED;
         }
