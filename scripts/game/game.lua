@@ -104,7 +104,6 @@ function M.run()
                 car.update()
                 camd.update()
                 camsw.update()
-                wld.move(car, camc)
                 wld.showhide()
                 if generated then
                     pause.control()
@@ -159,6 +158,7 @@ function M.run()
             do
                 coroutine.yield(true)
             end
+            created = false
             gui.wait_show()
             pwld.wld.tscale(0)
             render.timescale(0)
@@ -183,6 +183,11 @@ function M.run()
     do
         local logic_time = api_timer()
         local core_time = logic_time
+
+        if created then
+            wld.move(car, camc)
+        end
+
         pwld.wld.update(cfg.FRAME_TIME)
         api_input_update()
         collectgarbage('step', GC_STEP)
