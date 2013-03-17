@@ -26,7 +26,7 @@ function M.alloc(size)
 end
 
 function M.restore(state)
-    return twinpool.restore(state, vbuf_api)
+    return twinpool.restore_chunk(state, vbuf_api)
 end
 
 return M

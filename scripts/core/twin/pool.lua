@@ -13,8 +13,8 @@ function M.sizes(twin_size, copy_size)
     return unpack(t)
 end
 
-function M.restore(state, res_api)
-    return pool.restore(state, res_api)
+function M.restore_chunk(state, res_api)
+    return pool.restore_chunk(state, res_api)
 end
 
 function M.alloc(title, twin_size, copy_size, pool_dims, res_api)

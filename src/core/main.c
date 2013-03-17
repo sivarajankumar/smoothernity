@@ -482,7 +482,7 @@ static void main_loop(void)
             fprintf(stderr, "Error while executing run() function: %s\n",
                     lua_tostring(g_main.lua, -1));
     }
-    printf("Game loop finish\n\n");
+    printf("Game loop finish\n");
 }
 
 int main(int argc, char **argv)
