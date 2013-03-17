@@ -131,3 +131,10 @@ void sync_done(void)
     g_syncs.pool = 0;
 }
 
+void sync_wait(void)
+{
+    GLsync sync;
+    sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+    glClientWaitSync(sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1000000000);
+    glDeleteSync(sync);
+}

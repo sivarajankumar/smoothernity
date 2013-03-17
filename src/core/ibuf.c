@@ -1,5 +1,5 @@
 #include "ibuf.h"
-#include "vbuf.h"
+#include "sync.h"
 #include "render.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
@@ -45,6 +45,7 @@ int ibuf_thread(void)
             ++count;
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
             glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+            sync_wait();
             thread_mutex_lock(g_ibufs.mutex);
             ibuf->state = IBUF_IDLE;
         }
@@ -58,21 +59,13 @@ int ibuf_thread(void)
                 (GLintptr)((ibuf_data_t*)0 + ibuf->copy_ofs),
                 (GLintptr)((ibuf_data_t*)0 + ibuf->copy_to->copy_ofs),
                 (GLsizeiptr)((ibuf_data_t*)0 + ibuf->copy_len));
+            sync_wait();
             thread_mutex_lock(g_ibufs.mutex);
-            if (glGetError() != GL_NO_ERROR)
-            {
-                fprintf(stderr, "ibuf_thread: copying error\n");
-                ibuf->state = IBUF_ERROR;
-                ibuf->copy_to->state = IBUF_ERROR;
-            }
-            else
-            {
-                ibuf->state = IBUF_IDLE;
-                ibuf->copy_to->state = IBUF_IDLE;
-            }
             ibuf->copy_ofs = 0;
             ibuf->copy_len = 0;
+            ibuf->state = IBUF_IDLE;
             ibuf->copy_to->copy_ofs = 0;
+            ibuf->copy_to->state = IBUF_IDLE;
         }
     }
     thread_mutex_unlock(g_ibufs.mutex);

@@ -43,7 +43,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_set, res_map,
             chunks[i] = pools[i].alloc(size)
         end
 
-        local data = {}
         local copy
         local chunk = {}
         chunk.size = chunks[0].size
@@ -65,27 +64,17 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_set, res_map,
 
         function chunk.set(i, ...)
             res_set(copy.res, copy.start + i, ...)
-            --res_set(inactive().res, inactive().start + i, ...)
-            --data[i] = {...}
         end
 
         function chunk.prepare()
             copy = copy_pool.alloc(size)
             copy.map()
-            --inactive().map()
         end
 
         function chunk.finalize()
-            --inactive().unmap()
             copy.unmap()
             copy.copy(inactive())
             twin.swap()
-            --inactive().map()
-            --for i, v in pairs(data) do
-            --    res_set(inactive().res, inactive().start + i, unpack(v))
-            --end
-            --inactive().unmap()
-            --data = {}
             copy.copy(inactive())
             copy.free()
             copy = nil
