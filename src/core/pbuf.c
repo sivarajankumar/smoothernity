@@ -11,11 +11,6 @@ static const size_t PBUF_SIZE = 64;
 
 struct pbufs_t g_pbufs;
 
-int pbuf_thread(void)
-{
-    return 0;
-}
-
 struct pbuf_t * pbuf_get(int pbufi)
 {
     if (pbufi >= 0 && pbufi < g_pbufs.count)
@@ -98,28 +93,6 @@ static int api_pbuf_unmap(lua_State *lua)
     glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
     thread_mutex_unlock(g_pbufs.mutex);
     return 0;
-}
-
-static int api_pbuf_waiting(lua_State *lua)
-{
-    struct pbuf_t *pbuf;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_pbuf_waiting: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    pbuf = pbuf_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-    if (pbuf == 0)
-    {
-        lua_pushstring(lua, "api_pbuf_waiting: invalid pbuf");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushboolean(lua, pbuf->state == PBUF_MAPPING
-                      || pbuf->state == PBUF_UNMAPPING);
-    return 1;
 }
 
 static int api_pbuf_set(lua_State *lua)
@@ -253,7 +226,6 @@ int pbuf_init(lua_State *lua, int size, int count)
     lua_register(lua, "api_pbuf_set", api_pbuf_set);
     lua_register(lua, "api_pbuf_map", api_pbuf_map);
     lua_register(lua, "api_pbuf_unmap", api_pbuf_unmap);
-    lua_register(lua, "api_pbuf_waiting", api_pbuf_waiting);
 
     return 0;
 cleanup:

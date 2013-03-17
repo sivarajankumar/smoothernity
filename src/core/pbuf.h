@@ -5,9 +5,7 @@
 
 enum pbuf_e
 {
-    PBUF_UNMAPPING,
     PBUF_UNMAPPED,
-    PBUF_MAPPING,
     PBUF_MAPPED,
     PBUF_ERROR
 };
@@ -40,4 +38,3 @@ int pbuf_init(lua_State *lua, int size, int count);
 void pbuf_done(void);
 void pbuf_reg_thread(lua_State *lua);
 struct pbuf_t * pbuf_get(int);
-int pbuf_thread(void);

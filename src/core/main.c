@@ -271,7 +271,6 @@ cleanup:
 
 static void main_done(void)
 {
-    render_thread_done();
     vbuf_done();
     ibuf_done();
     pbuf_done();
