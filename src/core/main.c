@@ -39,9 +39,9 @@ struct main_t
     int screen_height;
     int full_screen;
     int mesh_count;
-    int vbuf_size;
+    int *vbuf;
     int vbuf_count;
-    int ibuf_size;
+    int *ibuf;
     int ibuf_count;
     int pbuf_size;
     int pbuf_count;
@@ -199,10 +199,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "full_screen", &g_main.full_screen) != 0
      || main_get_int(lua, "thread_count", &g_main.thread_count) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
-     || main_get_int(lua, "vbuf_size", &g_main.vbuf_size) != 0
-     || main_get_int(lua, "vbuf_count", &g_main.vbuf_count) != 0
-     || main_get_int(lua, "ibuf_size", &g_main.ibuf_size) != 0
-     || main_get_int(lua, "ibuf_count", &g_main.ibuf_count) != 0
      || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
      || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
@@ -228,7 +224,9 @@ static int main_configure(char *script)
                            &g_main.physics_mpool) != 0
      || main_get_int_array(lua, "thread_mpool", &g_main.thread_mpool_len,
                            &g_main.thread_mpool) != 0
-     || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0)
+     || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0
+     || main_get_int_array(lua, "ibuf", &g_main.ibuf_count, &g_main.ibuf) != 0
+     || main_get_int_array(lua, "vbuf", &g_main.vbuf_count, &g_main.vbuf) != 0)
     {
         goto cleanup;
     }
@@ -251,6 +249,16 @@ cleanup:
     {
         util_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
+    }
+    if (g_main.ibuf)
+    {
+        util_free(g_main.ibuf);
+        g_main.ibuf = 0;
+    }
+    if (g_main.vbuf)
+    {
+        util_free(g_main.vbuf);
+        g_main.vbuf = 0;
     }
     if (g_main.tex)
     {
@@ -289,6 +297,16 @@ static void main_done(void)
     {
         util_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
+    }
+    if (g_main.ibuf)
+    {
+        util_free(g_main.ibuf);
+        g_main.ibuf = 0;
+    }
+    if (g_main.vbuf)
+    {
+        util_free(g_main.vbuf);
+        g_main.vbuf = 0;
     }
     if (g_main.tex)
     {
@@ -405,13 +423,13 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (vbuf_init(g_main.lua, g_main.vbuf_size, g_main.vbuf_count) != 0)
+    if (vbuf_init(g_main.lua, g_main.vbuf, g_main.vbuf_count) != 0)
     {
         fprintf(stderr, "Cannot init vertex buffers\n");
         return 1;
     }
 
-    if (ibuf_init(g_main.lua, g_main.ibuf_size, g_main.ibuf_count) != 0)
+    if (ibuf_init(g_main.lua, g_main.ibuf, g_main.ibuf_count) != 0)
     {
         fprintf(stderr, "Cannot init index buffers\n");
         return 1;

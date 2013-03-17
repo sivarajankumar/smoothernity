@@ -68,8 +68,20 @@ int vbuf_thread(void)
                 (GLintptr)((struct vbuf_data_t*)0 + vbuf->copy_to->copy_ofs),
                 (GLsizeiptr)((struct vbuf_data_t*)0 + vbuf->copy_len));
             thread_mutex_lock(g_vbufs.mutex);
-            vbuf->state = VBUF_IDLE;
-            vbuf->copy_to->state = VBUF_IDLE;
+            if (glGetError() != GL_NO_ERROR)
+            {
+                fprintf(stderr, "vbuf_thread: copying error\n");
+                vbuf->state = VBUF_ERROR;
+                vbuf->copy_to->state = VBUF_ERROR;
+            }
+            else
+            {
+                vbuf->copy_ofs = 0;
+                vbuf->copy_len = 0;
+                vbuf->state = VBUF_IDLE;
+                vbuf->copy_to->copy_ofs = 0;
+                vbuf->copy_to->state = VBUF_IDLE;
+            }
         }
     }
     thread_mutex_unlock(g_vbufs.mutex);
@@ -97,7 +109,7 @@ static int api_vbuf_map(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (len <= 0 || ofs < 0 || ofs > g_vbufs.size - len)
+    if (len <= 0 || ofs < 0 || ofs > vbuf->size - len)
     {
         lua_pushstring(lua, "api_vbuf_map: invalid range");
         lua_error(lua);
@@ -164,14 +176,15 @@ static int api_vbuf_copy(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (len <= 0 || ofs_from < 0 || ofs_from > g_vbufs.size - len
-    || ofs_to < 0 || ofs_to > g_vbufs.size - len)
+    if (len <= 0 || ofs_from < 0 || ofs_from > vbuf_from->size - len
+    || ofs_to < 0 || ofs_to > vbuf_to->size - len)
     {
         lua_pushstring(lua, "api_vbuf_copy: invalid range");
         lua_error(lua);
         return 0;
     }
     thread_mutex_lock(g_vbufs.mutex);
+    vbuf_from->copy_to = vbuf_to;
     vbuf_from->copy_ofs = ofs_from;
     vbuf_from->copy_len = len;
     vbuf_from->state = VBUF_COPYING_FROM;
@@ -308,29 +321,33 @@ void vbuf_reg_thread(lua_State *lua)
     lua_register(lua, "api_vbuf_set", api_vbuf_set);
 }
 
-int vbuf_init(lua_State *lua, int size, int count)
+int vbuf_init(lua_State *lua, int *sizes, int count)
 {
     struct vbuf_data_t data;
     struct vbuf_t *vbuf;
     int i;
     if (sizeof(struct vbuf_t) > VBUF_SIZE
-    ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE
-    ||  (size & (size - 1)) != 0)
+    ||  sizeof(struct vbuf_data_t) != VBUF_DATA_SIZE)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct vbuf_t) == %i\n"
-                        "sizeof(struct vbuf_data_t) == %i\n"
-                        "size == %i\n",
+                        "sizeof(struct vbuf_data_t) == %i\n",
                 (int)sizeof(struct vbuf_t),
-                (int)sizeof(struct vbuf_data_t),
-                size);
+                (int)sizeof(struct vbuf_data_t));
         return 1;
+    }
+    for (i = 0; i < count; ++i)
+    {
+        if ((sizes[i] & (sizes[i] - 1)) != 0)
+        {
+            fprintf(stderr, "Invalid sizes:\nsize == %i\n", sizes[i]);
+            return 1;
+        }
     }
     g_vbufs.pool = util_malloc(VBUF_SIZE, VBUF_SIZE * count);
     if (g_vbufs.pool == 0)
         return 1;
     memset(g_vbufs.pool, 0, VBUF_SIZE * count);
-    g_vbufs.size = size;
     g_vbufs.count = count;
     g_vbufs.offset_pos = (char*)0 + ((char*)&data.pos - (char*)&data);
     g_vbufs.offset_tex = (char*)0 + ((char*)&data.tex - (char*)&data);
@@ -338,10 +355,11 @@ int vbuf_init(lua_State *lua, int size, int count)
     for (i = 0; i < count; ++i)
     {
         vbuf = vbuf_get(i);
+        vbuf->size = sizes[i];
         vbuf->state = VBUF_IDLE;
         glGenBuffers(1, &vbuf->buf_id);
         glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
-        glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * size,
+        glBufferData(GL_ARRAY_BUFFER, VBUF_DATA_SIZE * vbuf->size,
                      0, GL_DYNAMIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;

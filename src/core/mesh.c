@@ -80,8 +80,8 @@ static int api_mesh_alloc(lua_State *lua)
         return 0;
     }
 
-    if (ioffset < 0 || ioffset >= g_ibufs.size
-    ||  icount <= 0 || icount >= g_ibufs.size - ioffset)
+    if (ioffset < 0 || ioffset >= ibuf->size
+    ||  icount <= 0 || icount > ibuf->size - ioffset)
     {
         lua_pushstring(lua, "api_mesh_alloc: number out of range");
         lua_error(lua);

@@ -2,6 +2,7 @@ local M = {}
 
 local game = require 'game.game'
 local cfg = require 'config'
+local pool = require 'core.twin.pool'
 
 function M.configure()
     return {
@@ -17,12 +18,10 @@ function M.configure()
             thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
-            full_screen = 1,
+            full_screen = 0,
             mesh_count = cfg.MESH_COUNT,
-            vbuf_size = cfg.VBUF_SIZE,
-            vbuf_count = cfg.VBUF_COUNT,
-            ibuf_size = cfg.IBUF_SIZE,
-            ibuf_count = cfg.IBUF_COUNT,
+            vbuf = function() return pool.sizes(cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE) end,
+            ibuf = function() return pool.sizes(cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE) end,
             pbuf_size = cfg.PBUF_SIZE,
             pbuf_count = cfg.PBUF_COUNT,
             tex = function()

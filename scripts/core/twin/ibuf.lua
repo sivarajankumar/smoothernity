@@ -6,9 +6,9 @@ local twinpool = require 'core.twin.pool'
 local ibufs
 
 function M.init()
-    ibufs = twinpool.alloc('Index buffers', cfg.IBUF_SIZE, cfg.IBUF_COUNT,
-                           cfg.IBUF_POOL, api_ibuf_set, api_ibuf_map,
-                           api_ibuf_unmap, api_ibuf_waiting)
+    ibufs = twinpool.alloc('Index buffers', cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE,
+                           cfg.IBUF_POOL, api_ibuf_set, api_ibuf_map, api_ibuf_unmap,
+                           api_ibuf_copy, api_ibuf_waiting)
 end
 
 function M.done()
