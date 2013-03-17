@@ -14,7 +14,7 @@ function M.configure()
                 200,    50,       2,       2 end,
             thread_mpool = function() return
                 128, 1024, 2048, 4096, 16384, 65536, 131072, 262144, 524288, 2097152,
-              11000, 2000,  200,  200,   200,    10,      5,      5,      5,       5 end,
+              30000, 2000,  200,  200,   400,    10,      5,      5,      5,       5 end,
             thread_count = cfg.THREAD_COUNT,
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
