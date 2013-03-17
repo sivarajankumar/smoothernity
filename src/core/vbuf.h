@@ -17,6 +17,7 @@ enum vbuf_state_e
 struct vbuf_t
 {
     GLuint buf_id;
+    int size;
     int mapped_ofs;
     int mapped_len;
     int copy_ofs;
@@ -28,7 +29,6 @@ struct vbuf_t
 
 struct vbufs_t
 {
-    int size;
     int count;
     void *offset_pos;
     void *offset_tex;
@@ -39,7 +39,7 @@ struct vbufs_t
 
 extern struct vbufs_t g_vbufs;
 
-int vbuf_init(lua_State *lua, int size, int count);
+int vbuf_init(lua_State *lua, int *sizes, int count);
 void vbuf_done(void);
 void vbuf_reg_thread(lua_State *lua);
 struct vbuf_t * vbuf_get(int vbuf);

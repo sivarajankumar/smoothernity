@@ -4,23 +4,33 @@ local cfg = require 'config'
 local pool = require 'core.pool.pool'
 local twin = require 'core.twin.twin'
 
-function M.alloc(title, res_size, res_count, pool_dims,
-                 res_set, res_map, res_unmap, res_waiting)
+function M.sizes(twin_size, copy_size)
+    local t = {}
+    for i = 1, cfg.TWINS do
+        table.insert(t, twin_size)
+    end
+    table.insert(t, copy_size)
+    return unpack(t)
+end
+
+function M.alloc(title, twin_size, copy_size, pool_dims, res_set, res_map,
+                 res_unmap, res_copy, res_waiting)
     local self = {}
     local pools = {}
-    local res_start = 0
     for i = 0, cfg.TWINS - 1 do
-        local name = string.format('%s (twin %i)', title, i)
-        local count = res_count / cfg.TWINS
-        pools[i] = pool.alloc(name, res_size, res_start, count,
-                              pool_dims, res_map, res_unmap, res_waiting)
-        res_start = res_start + count
+        pools[i] = pool.alloc(string.format('%s (twin %i)', title, i),
+                              twin_size, i, 1, pool_dims,
+                              res_map, res_unmap, res_copy, res_waiting)
     end
+    local copy_pool = pool.alloc(string.format('%s copy', title),
+                                 copy_size, cfg.TWINS, 1, {[copy_size] = 1},
+                                 res_map, res_unmap, res_copy, res_waiting)
 
     function self.free()
         for i = 0, cfg.TWINS - 1 do
             pools[i].free()
         end
+        copy_pool.free()
     end
 
     function self.left(size)
@@ -34,6 +44,7 @@ function M.alloc(title, res_size, res_count, pool_dims,
         end
 
         local data = {}
+        local copy
         local chunk = {}
         chunk.size = chunks[0].size
         chunk.start = chunks[0].start
@@ -53,24 +64,31 @@ function M.alloc(title, res_size, res_count, pool_dims,
         end
 
         function chunk.set(i, ...)
-            res_set(inactive().res, inactive().start + i, ...)
-            data[i] = {...}
+            res_set(copy.res, copy.start + i, ...)
+            --res_set(inactive().res, inactive().start + i, ...)
+            --data[i] = {...}
         end
 
         function chunk.prepare()
-            inactive().map()
+            copy = copy_pool.alloc(size)
+            copy.map()
+            --inactive().map()
         end
 
         function chunk.finalize()
-            inactive().unmap()
+            --inactive().unmap()
+            copy.unmap()
+            copy.copy(inactive())
             twin.swap()
-            inactive().map()
-            for i, v in pairs(data) do
-                res_set(inactive().res, inactive().start + i, unpack(v))
-                coroutine.yield(false)
-            end
-            inactive().unmap()
-            data = {}
+            --inactive().map()
+            --for i, v in pairs(data) do
+            --    res_set(inactive().res, inactive().start + i, unpack(v))
+            --end
+            --inactive().unmap()
+            --data = {}
+            copy.copy(inactive())
+            copy.free()
+            copy = nil
         end
 
         return chunk

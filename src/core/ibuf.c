@@ -59,8 +59,20 @@ int ibuf_thread(void)
                 (GLintptr)((ibuf_data_t*)0 + ibuf->copy_to->copy_ofs),
                 (GLsizeiptr)((ibuf_data_t*)0 + ibuf->copy_len));
             thread_mutex_lock(g_ibufs.mutex);
-            ibuf->state = IBUF_IDLE;
-            ibuf->copy_to->state = IBUF_IDLE;
+            if (glGetError() != GL_NO_ERROR)
+            {
+                fprintf(stderr, "ibuf_thread: copying error\n");
+                ibuf->state = IBUF_ERROR;
+                ibuf->copy_to->state = IBUF_ERROR;
+            }
+            else
+            {
+                ibuf->state = IBUF_IDLE;
+                ibuf->copy_to->state = IBUF_IDLE;
+            }
+            ibuf->copy_ofs = 0;
+            ibuf->copy_len = 0;
+            ibuf->copy_to->copy_ofs = 0;
         }
     }
     thread_mutex_unlock(g_ibufs.mutex);
@@ -88,7 +100,7 @@ static int api_ibuf_map(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (len <= 0 || ofs < 0 || ofs > g_ibufs.size - len)
+    if (len <= 0 || ofs < 0 || ofs > ibuf->size - len)
     {
         lua_pushstring(lua, "api_ibuf_map: invalid range");
         lua_error(lua);
@@ -155,14 +167,15 @@ static int api_ibuf_copy(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (len <= 0 || ofs_from < 0 || ofs_from > g_ibufs.size - len
-    || ofs_to < 0 || ofs_to > g_ibufs.size - len)
+    if (len <= 0 || ofs_from < 0 || ofs_from > ibuf_from->size - len
+    || ofs_to < 0 || ofs_to > ibuf_to->size - len)
     {
         lua_pushstring(lua, "api_ibuf_copy: invalid range");
         lua_error(lua);
         return 0;
     }
     thread_mutex_lock(g_ibufs.mutex);
+    ibuf_from->copy_to = ibuf_to;
     ibuf_from->copy_ofs = ofs_from;
     ibuf_from->copy_len = len;
     ibuf_from->state = IBUF_COPYING_FROM;
@@ -242,13 +255,6 @@ static int api_ibuf_set(lua_State *lua)
             return 0;
         }
         index = lua_tointeger(lua, 3 + i);
-        if (index < 0 || index >= g_vbufs.size)
-        {
-            thread_mutex_unlock(g_ibufs.mutex);
-            lua_pushstring(lua, "api_ibuf_set: index out of range");
-            lua_error(lua);
-            return 0;
-        }
         data[ofs - ibuf->mapped_ofs + i] = index;
     }
 
@@ -262,33 +268,37 @@ void ibuf_reg_thread(lua_State *lua)
     lua_register(lua, "api_ibuf_set", api_ibuf_set);
 }
 
-int ibuf_init(lua_State *lua, int size, int count)
+int ibuf_init(lua_State *lua, int *sizes, int count)
 {
     int i;
     struct ibuf_t *ibuf;
-    if (sizeof(struct ibuf_t) > IBUF_SIZE
-    ||  (size & (size - 1)) != 0)
+    if (sizeof(struct ibuf_t) > IBUF_SIZE)
     {
-        fprintf(stderr, "Invalid sizes:\n"
-                        "sizeof(struct ibuf_t) == %i\n"
-                        "size == %i\n",
-                (int)sizeof(struct ibuf_t),
-                size);
+        fprintf(stderr, "Invalid sizes:\nsizeof(struct ibuf_t) == %i\n",
+                (int)sizeof(struct ibuf_t));
         return 1;
+    }
+    for (i = 0; i < count; ++i)
+    {
+        if ((sizes[i] & (sizes[i] - 1)) != 0)
+        {
+            fprintf(stderr, "Invalid sizes:\nsize == %i\n", sizes[i]);
+            return 1;
+        }
     }
     g_ibufs.pool = util_malloc(IBUF_SIZE, IBUF_SIZE * count);
     if (g_ibufs.pool == 0)
         return 1;
     memset(g_ibufs.pool, 0, IBUF_SIZE * count);
-    g_ibufs.size = size;
     g_ibufs.count = count;
     for (i = 0; i < count; ++i)
     {
         ibuf = ibuf_get(i);
         ibuf->state = IBUF_IDLE;
+        ibuf->size = sizes[i];
         glGenBuffers(1, &ibuf->buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * size,
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ibuf_data_t) * ibuf->size,
                      0, GL_DYNAMIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;
