@@ -1,6 +1,5 @@
 #include "vbuf.h"
 #include "render.h"
-#include "sync.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
 #include <stdio.h>
@@ -55,27 +54,8 @@ int vbuf_thread(void)
             ++count;
             glBindBuffer(GL_ARRAY_BUFFER, vbuf->buf_id);
             glUnmapBuffer(GL_ARRAY_BUFFER);
-            sync_wait();
             thread_mutex_lock(g_vbufs.mutex);
             vbuf->state = VBUF_IDLE;
-        }
-        else if (vbuf->state == VBUF_COPYING_FROM)
-        {
-            thread_mutex_unlock(g_vbufs.mutex);
-            ++count;
-            glBindBuffer(GL_COPY_READ_BUFFER, vbuf->buf_id);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, vbuf->copy_to->buf_id);
-            glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
-                (GLintptr)((struct vbuf_data_t*)0 + vbuf->copy_ofs),
-                (GLintptr)((struct vbuf_data_t*)0 + vbuf->copy_to->copy_ofs),
-                (GLsizeiptr)((struct vbuf_data_t*)0 + vbuf->copy_len));
-            sync_wait();
-            thread_mutex_lock(g_vbufs.mutex);
-            vbuf->copy_ofs = 0;
-            vbuf->copy_len = 0;
-            vbuf->state = VBUF_IDLE;
-            vbuf->copy_to->copy_ofs = 0;
-            vbuf->copy_to->state = VBUF_IDLE;
         }
     }
     thread_mutex_unlock(g_vbufs.mutex);
@@ -177,15 +157,12 @@ static int api_vbuf_copy(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_vbufs.mutex);
-    vbuf_from->copy_to = vbuf_to;
-    vbuf_from->copy_ofs = ofs_from;
-    vbuf_from->copy_len = len;
-    vbuf_from->state = VBUF_COPYING_FROM;
-    vbuf_to->copy_ofs = ofs_to;
-    vbuf_to->state = VBUF_COPYING_TO;
-    thread_mutex_unlock(g_vbufs.mutex);
-    render_engage();
+    glBindBuffer(GL_COPY_READ_BUFFER, vbuf_from->buf_id);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, vbuf_to->buf_id);
+    glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
+        (GLintptr)((struct vbuf_data_t*)0 + ofs_from),
+        (GLintptr)((struct vbuf_data_t*)0 + ofs_to),
+        (GLsizeiptr)((struct vbuf_data_t*)0 + len));
     return 0;
 }
 
@@ -207,9 +184,7 @@ static int api_vbuf_waiting(lua_State *lua)
         return 0;
     }
     lua_pushboolean(lua, vbuf->state == VBUF_MAPPING
-                      || vbuf->state == VBUF_UNMAPPING
-                      || vbuf->state == VBUF_COPYING_FROM
-                      || vbuf->state == VBUF_COPYING_TO);
+                      || vbuf->state == VBUF_UNMAPPING);
     return 1;
 }
 

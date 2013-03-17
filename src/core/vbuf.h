@@ -9,8 +9,6 @@ enum vbuf_state_e
     VBUF_UNMAPPING,
     VBUF_MAPPING,
     VBUF_MAPPED,
-    VBUF_COPYING_FROM,
-    VBUF_COPYING_TO,
     VBUF_ERROR
 };
 
@@ -20,9 +18,6 @@ struct vbuf_t
     int size;
     int mapped_ofs;
     int mapped_len;
-    int copy_ofs;
-    int copy_len;
-    struct vbuf_t *copy_to;
     GLvoid *mapped;
     enum vbuf_state_e state;
 };
