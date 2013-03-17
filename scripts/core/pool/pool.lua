@@ -1,7 +1,25 @@
 local M = {}
 
-function M.alloc(title, res_size, res_start, res_count, pool_dims,
-                 res_set, res_map, res_unmap, res_copy, res_waiting)
+local function make_base_chunk(size, start, res, res_api)
+    local self = {}
+    self.size = size
+    self.start = start
+    self.res = res
+    function self.set(i, ...)
+        res_api.set(res, start + i, ...)
+    end
+    function self.store()
+        return string.format("{%i, %i, %i}", size, start, res)
+    end
+    return self
+end
+
+function M.restore_chunk(state, res_api)
+    size, start, res = unpack(state)
+    return make_base_chunk(size, start, res, res_api)
+end
+
+function M.alloc(title, res_size, res_start, res_count, pool_dims, res_api)
     local self = {}
     local shelves = {}
     local res = {}
@@ -41,11 +59,8 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims,
     end
 
     local function make_chunk(size, start, r)
-        local chunk = {}
+        local chunk = make_base_chunk(size, start, r, res_api)
         local shelf = shelves[size]
-        chunk.size = 0
-        chunk.start = start
-        chunk.res = r
         chunk.id = shelf.left
         function chunk.free()
             if shelf.chunks[chunk.id] ~= nil then
@@ -58,25 +73,22 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims,
             shelf.chunks[chunk.id] = chunk
         end
         function chunk.map()
-            res_map(chunk.res, chunk.start, chunk.size)
-            while res_waiting(chunk.res) do
+            res_api.map(chunk.res, chunk.start, chunk.size)
+            while res_api.waiting(chunk.res) do
                 coroutine.yield(true)
             end
         end
         function chunk.unmap()
-            res_unmap(chunk.res)
-            while res_waiting(chunk.res) do
+            res_api.unmap(chunk.res)
+            while res_api.waiting(chunk.res) do
                 coroutine.yield(true)
             end
         end
         function chunk.copy(chunk_to)
-            res_copy(chunk.res, chunk_to.res, chunk.start, chunk_to.start, chunk_to.size)
-            while res_waiting(chunk.res) do
+            res_api.copy(chunk.res, chunk_to.res, chunk.start, chunk_to.start, chunk_to.size)
+            while res_api.waiting(chunk.res) do
                 coroutine.yield(true)
             end
-        end
-        function chunk.set(i, ...)
-            res_set(chunk.res, chunk.start + i, ...)
         end
         return chunk
     end

@@ -15,6 +15,7 @@ local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
+local thread = require 'core.thread'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -92,39 +93,16 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                1
     end
 
-    -- height map
-    do
-        for z = 0, self.res - 1 do
-            local chunk = util.async_read(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)))
-            local row = {}
-            if chunk ~= '' then
-                row = loadstring(chunk)()
-            else
-                row = {}
-                for x = 0, self.res - 1 do
-                    row[x] = util.lerp(height_noise(z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
-                    coroutine.yield(false)
-                end
-                if not quit.requested() then
-                    chunk = 'return {\n'
-                    local first_x = true
-                    for x, v in pairs(row) do
-                        if not first_x then
-                            chunk = chunk .. ',\n'
-                        end
-                        first_x = false
-                        chunk = chunk .. string.format('    [%i] = %f', x, v)
-                        coroutine.yield(false)
-                    end
-                    chunk = chunk .. '\n}'
-                    util.async_write(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)), chunk)
-                end
-            end
-            for x, v in pairs(row) do
-                self.hmap.set(x + z * self.res, v)
-            end
-        end
-    end
+    local th = thread.alloc('game.land_th')
+    util.wait_thread_responding(th)
+    th.request(string.format('return "%s", %s, %s, %i, %f, %f, %f',
+                             uid, noise.store(), self.hmap.store(), lodi, basx, basy, basz))
+    util.wait_thread_responding(th)
+    th.request('make_hmap')
+    util.wait_thread_responding(th)
+    th.request('finish')
+    util.wait_thread_idle(th)
+    th.free()
 
     -- vertex buffer
     do
