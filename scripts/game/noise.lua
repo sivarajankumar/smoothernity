@@ -28,9 +28,9 @@ function M.alloc(uid)
         return string.format("%i", buf.start)
     end
     local th = thread.alloc('game.noise_th')
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, false)
     th.request(string.format('return "%s", %s', uid, buf.store()))
-    util.wait_thread_idle(th)
+    util.wait_thread_idle(th, true)
     th.free()
     return self
 end
