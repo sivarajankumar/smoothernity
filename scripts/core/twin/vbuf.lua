@@ -10,7 +10,6 @@ vbuf_api.set = api_vbuf_set
 vbuf_api.map = api_vbuf_map
 vbuf_api.unmap = api_vbuf_unmap
 vbuf_api.copy = api_vbuf_copy
-vbuf_api.waiting = api_vbuf_waiting
 
 function M.init()
     vbufs = twinpool.alloc('Vertex buffers', cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE, cfg.VBUF_POOL, vbuf_api)

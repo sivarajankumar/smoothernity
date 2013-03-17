@@ -3,7 +3,7 @@ include(FindGLEW)
 include_directories(${GLEW_INCLUDE_DIRS})
 
 if ("${PLATFORM}" STREQUAL "WINDOWS")
-    add_library(platform timer_win.c render_win.c shell_win.c)
+    add_library(platform timer_win.c shell_win.c)
 elseif ("${PLATFORM}" STREQUAL "LINUX")
     add_library(platform timer_posix.c)
 endif()

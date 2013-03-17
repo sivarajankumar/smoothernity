@@ -74,21 +74,12 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims, res_api)
         end
         function chunk.map()
             res_api.map(chunk.res, chunk.start, chunk.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
         end
         function chunk.unmap()
             res_api.unmap(chunk.res)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
         end
         function chunk.copy(chunk_to)
             res_api.copy(chunk.res, chunk_to.res, chunk.start, chunk_to.start, chunk_to.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
         end
         return chunk
     end
