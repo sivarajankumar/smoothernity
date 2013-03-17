@@ -3,6 +3,7 @@ local M = {}
 local cfg = require 'config'
 local pool = require 'core.pool.pool'
 local twin = require 'core.twin.twin'
+local util = require 'core.util'
 
 function M.sizes(twin_size, copy_size)
     local t = {}
@@ -80,6 +81,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
             copy.unmap()
             copy.copy(inactive())
             twin.swap()
+            util.sync_wait()
             copy.copy(inactive())
             copy.free()
             copy = nil

@@ -13,45 +13,7 @@ struct pbufs_t g_pbufs;
 
 int pbuf_thread(void)
 {
-    int i, count;
-    struct pbuf_t *pbuf;
-    count = 0;
-    thread_mutex_lock(g_pbufs.mutex);
-    for (i = 0; i < g_pbufs.count; ++i)
-    {
-        pbuf = pbuf_get(i);
-        if (pbuf->state == PBUF_MAPPING)
-        {
-            thread_mutex_unlock(g_pbufs.mutex);
-            ++count;
-            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
-            pbuf->mapped = glMapBufferRange(
-                GL_PIXEL_UNPACK_BUFFER,
-                (GLintptr)((struct pbuf_data_t*)0 + pbuf->mapped_ofs),
-                (GLsizeiptr)((struct pbuf_data_t*)0 + pbuf->mapped_len),
-                GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
-                GL_MAP_INVALIDATE_RANGE_BIT);
-            thread_mutex_lock(g_pbufs.mutex);
-            if (pbuf->mapped == 0)
-            {
-                fprintf(stderr, "pbuf_thread: mapping error\n");
-                pbuf->state = PBUF_ERROR;
-            }
-            else
-                pbuf->state = PBUF_MAPPED;
-        }
-        else if (pbuf->state == PBUF_UNMAPPING)
-        {
-            thread_mutex_unlock(g_pbufs.mutex);
-            ++count;
-            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
-            glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
-            thread_mutex_lock(g_pbufs.mutex);
-            pbuf->state = PBUF_UNMAPPED;
-        }
-    }
-    thread_mutex_unlock(g_pbufs.mutex);
-    return count;
+    return 0;
 }
 
 struct pbuf_t * pbuf_get(int pbufi)
@@ -92,9 +54,21 @@ static int api_pbuf_map(lua_State *lua)
     thread_mutex_lock(g_pbufs.mutex);
     pbuf->mapped_ofs = ofs;
     pbuf->mapped_len = len;
-    pbuf->state = PBUF_MAPPING;
+    pbuf->state = PBUF_MAPPED;
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
+    pbuf->mapped = glMapBufferRange(
+        GL_PIXEL_UNPACK_BUFFER,
+        (GLintptr)((struct pbuf_data_t*)0 + pbuf->mapped_ofs),
+        (GLsizeiptr)((struct pbuf_data_t*)0 + pbuf->mapped_len),
+        GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
+        GL_MAP_INVALIDATE_RANGE_BIT);
     thread_mutex_unlock(g_pbufs.mutex);
-    render_engage();
+    if (pbuf->mapped == 0)
+    {
+        lua_pushstring(lua, "api_pbuf_map: mapping error");
+        lua_error(lua);
+        return 0;
+    }
     return 0;
 }
 
@@ -119,9 +93,10 @@ static int api_pbuf_unmap(lua_State *lua)
     pbuf->mapped = 0;
     pbuf->mapped_ofs = 0;
     pbuf->mapped_len = 0;
-    pbuf->state = PBUF_UNMAPPING;
+    pbuf->state = PBUF_UNMAPPED;
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
+    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
     thread_mutex_unlock(g_pbufs.mutex);
-    render_engage();
     return 0;
 }
 
