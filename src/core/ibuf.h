@@ -9,8 +9,6 @@ enum ibuf_e
     IBUF_UNMAPPING,
     IBUF_MAPPING,
     IBUF_MAPPED,
-    IBUF_COPYING_FROM,
-    IBUF_COPYING_TO,
     IBUF_ERROR
 };
 
@@ -20,9 +18,6 @@ struct ibuf_t
     int size;
     int mapped_ofs;
     int mapped_len;
-    int copy_ofs;
-    int copy_len;
-    struct ibuf_t *copy_to;
     GLvoid *mapped;
     enum ibuf_e state;
 };

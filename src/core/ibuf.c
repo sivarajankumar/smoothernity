@@ -1,5 +1,4 @@
 #include "ibuf.h"
-#include "sync.h"
 #include "render.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
@@ -45,27 +44,8 @@ int ibuf_thread(void)
             ++count;
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
             glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-            sync_wait();
             thread_mutex_lock(g_ibufs.mutex);
             ibuf->state = IBUF_IDLE;
-        }
-        else if (ibuf->state == IBUF_COPYING_FROM)
-        {
-            thread_mutex_unlock(g_ibufs.mutex);
-            ++count;
-            glBindBuffer(GL_COPY_READ_BUFFER, ibuf->buf_id);
-            glBindBuffer(GL_COPY_WRITE_BUFFER, ibuf->copy_to->buf_id);
-            glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
-                (GLintptr)((ibuf_data_t*)0 + ibuf->copy_ofs),
-                (GLintptr)((ibuf_data_t*)0 + ibuf->copy_to->copy_ofs),
-                (GLsizeiptr)((ibuf_data_t*)0 + ibuf->copy_len));
-            sync_wait();
-            thread_mutex_lock(g_ibufs.mutex);
-            ibuf->copy_ofs = 0;
-            ibuf->copy_len = 0;
-            ibuf->state = IBUF_IDLE;
-            ibuf->copy_to->copy_ofs = 0;
-            ibuf->copy_to->state = IBUF_IDLE;
         }
     }
     thread_mutex_unlock(g_ibufs.mutex);
@@ -167,15 +147,12 @@ static int api_ibuf_copy(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_ibufs.mutex);
-    ibuf_from->copy_to = ibuf_to;
-    ibuf_from->copy_ofs = ofs_from;
-    ibuf_from->copy_len = len;
-    ibuf_from->state = IBUF_COPYING_FROM;
-    ibuf_to->copy_ofs = ofs_to;
-    ibuf_to->state = IBUF_COPYING_TO;
-    thread_mutex_unlock(g_ibufs.mutex);
-    render_engage();
+    glBindBuffer(GL_COPY_READ_BUFFER, ibuf_from->buf_id);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, ibuf_to->buf_id);
+    glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
+        (GLintptr)((ibuf_data_t*)0 + ofs_from),
+        (GLintptr)((ibuf_data_t*)0 + ofs_to),
+        (GLsizeiptr)((ibuf_data_t*)0 + len));
     return 0;
 }
 
@@ -197,9 +174,7 @@ static int api_ibuf_waiting(lua_State *lua)
         return 0;
     }
     lua_pushboolean(lua, ibuf->state == IBUF_MAPPING
-                      || ibuf->state == IBUF_UNMAPPING
-                      || ibuf->state == IBUF_COPYING_FROM
-                      || ibuf->state == IBUF_COPYING_TO);
+                      || ibuf->state == IBUF_UNMAPPING);
     return 1;
 }
 

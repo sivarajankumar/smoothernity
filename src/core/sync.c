@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <GL/glew.h>
+#include <SDL.h>
 
 static const size_t SYNC_SIZE = 32;
 
@@ -129,12 +130,4 @@ void sync_done(void)
         return;
     util_free(g_syncs.pool);
     g_syncs.pool = 0;
-}
-
-void sync_wait(void)
-{
-    GLsync sync;
-    sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
-    glClientWaitSync(sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1000000000);
-    glDeleteSync(sync);
 }
