@@ -33,23 +33,23 @@ function M.sync_write(uid, data)
     end
 end
 
-function M.wait_thread_idle(th)
+function M.wait_thread_idle(th, skip_frame)
     local t = api_timer()
     while not th.idle() do
         if api_timer() - t > MAX_WAIT_TIME then
             error('wait_thread_idle: too long\n')
         end
-        coroutine.yield(false)
+        coroutine.yield(skip_frame)
     end
 end
 
-function M.wait_thread_responding(th)
+function M.wait_thread_responding(th, skip_frame)
     local t = api_timer()
     while not th.responding() do
         if api_timer() - t > MAX_WAIT_TIME then
             error('wait_thread_responding: too long\n')
         end
-        coroutine.yield(false)
+        coroutine.yield(skip_frame)
     end
 end
 
@@ -81,26 +81,26 @@ end
 
 function M.async_read(uid)
     local th = thread.alloc('core.util_th')
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     th.request('async_read')
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     th.request(uid)
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     local res = th.request('')
-    M.wait_thread_idle(th)
+    M.wait_thread_idle(th, false)
     th.free()
     return res
 end
 
 function M.async_write(uid, data)
     local th = thread.alloc('core.util_th')
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     th.request('async_write')
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     th.request(uid)
-    M.wait_thread_responding(th)
+    M.wait_thread_responding(th, false)
     th.request(data)
-    M.wait_thread_idle(th)
+    M.wait_thread_idle(th, false)
     th.free()
 end
 

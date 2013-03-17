@@ -49,32 +49,32 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     end
 
     local th = thread.alloc('game.land_th')
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, false)
 
     th.request(string.format('return "%s", %s, %s, %i, %f, %f, %f',
                              uid, noise.store(), self.hmap.store(),
                              lodi, basx, basy, basz))
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, false)
 
     th.request('make_hmap')
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, true)
 
     vb.prepare()
     th.request('make_vb')
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, false)
     th.request(string.format('return %s', vb.store()))
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, true)
     vb.finalize()
 
     ib.prepare()
     th.request('make_ib')
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, false)
     th.request(string.format('return %s, %i', ib.store(), vb.start))
-    util.wait_thread_responding(th)
+    util.wait_thread_responding(th, true)
     ib.finalize()
 
     th.request('finish')
-    util.wait_thread_idle(th)
+    util.wait_thread_idle(th, false)
 
     th.free()
 
