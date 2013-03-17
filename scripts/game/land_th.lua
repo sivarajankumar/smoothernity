@@ -5,6 +5,8 @@ local noise = require 'game.noise'
 local lod = require 'game.lod'
 local util = require 'core.util'
 local poolbuf = require 'core.pool.buf'
+local twinibuf = require 'core.twin.ibuf'
+local twinvbuf = require 'core.twin.vbuf'
 
 function M.thread_run(thi)
     local uid, noise_state, hmap_state, lodi, basx, basy, basz =
@@ -47,8 +49,7 @@ function M.thread_run(thi)
         end
         return util.clamp(r, 0, 1),
                util.clamp(g, 0, 1),
-               util.clamp(b, 0, 1),
-               1
+               util.clamp(b, 0, 1)
     end
 
     local function keep_going()
@@ -84,6 +85,63 @@ function M.thread_run(thi)
         else
             for i, v in pairs(loadstring(data)()) do
                 hmap.set(i - 1, v)
+            end
+        end
+        keep_going()
+    end
+
+    function funcs.make_vb()
+        local vb_state = loadstring(api_thread_respond(thi, ''))()
+        local vb = twinvbuf.restore(vb_state)
+        local fname = util.uid_cache(string.format('%s_colmap.lua', uid))
+        local data = util.sync_read(fname)
+        if data == '' then
+            local f = io.open(fname, 'w')
+            f:write('return {')
+            local cnt = 0
+            for z = 0, res - 1 do
+                for x = 0, res - 1 do
+                    if cnt >= cfg.SAVE_NUMS_PER_ROW then
+                        cnt = 0
+                    end
+                    if z > 0 or x > 0 then
+                        f:write(', ')
+                    end
+                    if cnt == 0 then
+                        f:write('\n    ')
+                    end
+                    cnt = cnt + 1
+                    local r, g, b = color(z, x)
+                    local h = api_buf_get(hmap.start, API_BUF_IPL_NEAREST, res, res, x, z)
+                    vb.set(x+z*res, x-0.5*(res-1), h, z-0.5*(res-1), r, g, b, 1, 0, 0)
+                    f:write(string.format('{%.3f, %.3f, %.3f}', r, g, b))
+                end
+            end
+            f:write('\n}\n')
+            f:close()
+        else
+            for i, v in pairs(loadstring(data)()) do
+                local r, g, b = unpack(v)
+                local x = (i - 1) % res
+                local z = ((i - 1) - x) / res
+                local h = api_buf_get(hmap.start, API_BUF_IPL_NEAREST, res, res, x, z)
+                vb.set(i - 1, x-0.5*(res-1), h, z-0.5*(res-1), r, g, b, 1, 0, 0)
+            end
+        end
+        keep_going()
+    end
+
+    function funcs.make_ib()
+        local ib_state, o = loadstring(api_thread_respond(thi, ''))()
+        local ib = twinibuf.restore(ib_state)
+        for z = 0, res - 2 do
+            for x = 0, res - 2 do
+                local i00 = o + x + z * res
+                local i01 = o + x + (z + 1) * res
+                local i10 = o + (x + 1) + z * res
+                local i11 = o + (x + 1) + (z + 1) * res
+                local i = (x + z * (res - 1)) * 6
+                ib.set(i,  i00,i01,i10,  i10,i01,i11)
             end
         end
         keep_going()
