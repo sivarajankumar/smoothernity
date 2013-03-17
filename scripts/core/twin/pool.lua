@@ -20,11 +20,11 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_set, res_map,
     for i = 0, cfg.TWINS - 1 do
         pools[i] = pool.alloc(string.format('%s (twin %i)', title, i),
                               twin_size, i, 1, pool_dims,
-                              res_map, res_unmap, res_copy, res_waiting)
+                              res_set, res_map, res_unmap, res_copy, res_waiting)
     end
     local copy_pool = pool.alloc(string.format('%s copy', title),
                                  copy_size, cfg.TWINS, 1, {[copy_size] = 1},
-                                 res_map, res_unmap, res_copy, res_waiting)
+                                 res_set, res_map, res_unmap, res_copy, res_waiting)
 
     function self.free()
         for i = 0, cfg.TWINS - 1 do
@@ -63,7 +63,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_set, res_map,
         end
 
         function chunk.set(i, ...)
-            res_set(copy.res, copy.start + i, ...)
+            copy.set(i, ...)
         end
 
         function chunk.prepare()

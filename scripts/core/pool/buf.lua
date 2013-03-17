@@ -6,7 +6,9 @@ local pool = require 'core.pool.pool'
 local bufs
 
 function M.init()
-    bufs = pool.alloc('Buffers', cfg.BUF_SIZE, 0, 1, cfg.BUF_POOL, nil, nil, nil, nil)
+    bufs = pool.alloc('Buffers', cfg.BUF_SIZE, 0, 1, cfg.BUF_POOL,
+        function (res, i, ...) api_buf_set(i, ...) end,
+        nil, nil, nil, nil)
 end
 
 function M.done()

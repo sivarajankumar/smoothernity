@@ -1,7 +1,7 @@
 local M = {}
 
 function M.alloc(title, res_size, res_start, res_count, pool_dims,
-                 res_map, res_unmap, res_copy, res_waiting)
+                 res_set, res_map, res_unmap, res_copy, res_waiting)
     local self = {}
     local shelves = {}
     local res = {}
@@ -74,6 +74,9 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims,
             while res_waiting(chunk.res) do
                 coroutine.yield(true)
             end
+        end
+        function chunk.set(i, ...)
+            res_set(chunk.res, chunk.start + i, ...)
         end
         return chunk
     end

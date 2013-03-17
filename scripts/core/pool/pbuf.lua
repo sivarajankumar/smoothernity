@@ -7,7 +7,7 @@ local pbufs
 
 function M.init()
     pbufs = pool.alloc('Pixel buffers', cfg.PBUF_SIZE, 0, cfg.PBUF_COUNT, cfg.PBUF_POOL,
-                       api_pbuf_map, api_pbuf_unmap, nil, api_pbuf_waiting)
+                       api_pbuf_set, api_pbuf_map, api_pbuf_unmap, nil, api_pbuf_waiting)
 end
 
 function M.done()

@@ -22,7 +22,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     self.size = lod.lods[lodi].size
     self.res = lod.lods[lodi].res
     self.mmesh = matrix.alloc()
-    self.hmap = {}
+    self.hmap = poolbuf.alloc(self.res * self.res)
     local vb = twinvbuf.alloc(self.res * self.res)
     local ib = twinibuf.alloc(6 * (self.res - 1) * (self.res - 1))
     local mesh
@@ -96,18 +96,19 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     do
         for z = 0, self.res - 1 do
             local chunk = util.async_read(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)))
+            local row = {}
             if chunk ~= '' then
-                self.hmap[z] = loadstring(chunk)()
+                row = loadstring(chunk)()
             else
-                self.hmap[z] = {}
+                row = {}
                 for x = 0, self.res - 1 do
-                    self.hmap[z][x] = util.lerp(height_noise(z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
+                    row[x] = util.lerp(height_noise(z, x), 0, 1, -0.5, 0.5) * cfg.LAND_HEIGHT
                     coroutine.yield(false)
                 end
                 if not quit.requested() then
                     chunk = 'return {\n'
                     local first_x = true
-                    for x, v in pairs(self.hmap[z]) do
+                    for x, v in pairs(row) do
                         if not first_x then
                             chunk = chunk .. ',\n'
                         end
@@ -118,6 +119,9 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                     chunk = chunk .. '\n}'
                     util.async_write(util.uid_cache(string.format('%s_hmap_%i.lua', uid, z)), chunk)
                 end
+            end
+            for x, v in pairs(row) do
+                self.hmap.set(x + z * self.res, v)
             end
         end
     end
@@ -157,7 +161,7 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                 local col = colmap[x]
                 vb.set(x + z * self.res,
                        x - 0.5 * (self.res - 1),
-                       self.hmap[z][x],
+                       api_buf_get(self.hmap.start, API_BUF_IPL_NEAREST, self.res, self.res, x, z),
                        z - 0.5 * (self.res - 1),
                        col.r, col.g, col.b, col.a,
                        0, 0)
@@ -196,7 +200,6 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     local common = common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
-    local buf = poolbuf.alloc(common.res * common.res)
     local mvis = util.matrix_scl_stop(scale, 1, scale)
     local mrb = matrix.alloc()
     local cs, rb
@@ -206,7 +209,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         mrb.free()
         rb.free()
         cs.free()
-        buf.free()
+        common.hmap.free()
         common.free()
     end
 
@@ -227,18 +230,12 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     -- physics
     do
-        local vsize = vector.alloc()
-        vsize.const(scale, 1, scale, 0)
-        for z = 0, common.res - 1 do
-            for x = 0, common.res - 1 do
-                api_buf_set(buf.start + x + z * common.res, common.hmap[z][x])
-                coroutine.yield(false)
-            end
-        end
         local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
                                           basy + move.y,
                                           basz + move.z + 0.5*common.size)
-        cs = colshape.alloc_hmap(buf, common.res, common.res,
+        local vsize = vector.alloc()
+        vsize.const(scale, 1, scale, 0)
+        cs = colshape.alloc_hmap(common.hmap, common.res, common.res,
                                  -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
         rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
         vsize.free()
@@ -250,8 +247,6 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         mrb.rigid_body(rb)
         common.mmesh.mul(mrb, mvis)
     end
-
-    common.hmap = nil
 
     return self
 end
@@ -286,7 +281,7 @@ function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
         m.free()
     end
 
-    common.hmap = nil
+    common.hmap.free()
 
     self.move()
     return self
