@@ -16,6 +16,7 @@ local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
+local twin = require 'core.twin.twin'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -48,35 +49,31 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
+    vb.prepare()
+    ib.prepare()
+
+    while thread.left() == 0 do
+        coroutine.yield(true)
+    end
+
     local th = thread.alloc('game.land_th')
     util.wait_thread_responding(th, false)
-
-    th.request(string.format('return "%s", %s, %s, %i, %f, %f, %f',
+    th.request(string.format('return "%s", %s, %s, %s, %s, %i, %i, %f, %f, %f',
                              uid, noise.store(), self.hmap.store(),
-                             lodi, basx, basy, basz))
-    util.wait_thread_responding(th, false)
-
-    th.request('make_hmap')
-    util.wait_thread_responding(th, true)
-
-    vb.prepare()
-    th.request('make_vb')
-    util.wait_thread_responding(th, false)
-    th.request(string.format('return %s', vb.store()))
-    util.wait_thread_responding(th, true)
-    vb.finalize()
-
-    ib.prepare()
-    th.request('make_ib')
-    util.wait_thread_responding(th, false)
-    th.request(string.format('return %s, %i', ib.store(), vb.start))
-    util.wait_thread_responding(th, true)
-    ib.finalize()
-
-    th.request('finish')
+                             vb.store(), ib.store(), vb.start, lodi, basx, basy, basz))
     util.wait_thread_idle(th, false)
-
     th.free()
+
+    -- ugly, ugly, ugly
+    twin.lock()
+    vb.finalize1()
+    ib.finalize1()
+    util.sync_wait()
+    twin.swap()
+    vb.finalize2()
+    ib.finalize2()
+    util.sync_wait()
+    twin.unlock()
 
     mesh = twinmesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
                           shader.default(), self.mmesh)

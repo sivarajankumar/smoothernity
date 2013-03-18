@@ -8,6 +8,7 @@ local cfg = require 'config'
 local util = require 'core.util'
 local lod = require 'game.lod'
 local vector = require 'core.vector'
+local worker = require 'core.worker'
 
 local SCENE = 50
 
@@ -62,9 +63,11 @@ function M.alloc(uid, centx, centy, centz)
         generating = true
         vplayer.update(0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(vplayer.get())
+        local wrk = worker.alloc()
         for lodi = lod.count - 1, 0, -1 do
-            planes[lodi].generate(wx, wy, wz)
+            planes[lodi].generate(wrk, wx, wy, wz)
         end
+        wrk.run()
         generating = false
     end
 
