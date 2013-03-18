@@ -218,6 +218,7 @@ function M.run()
         rdraw_time = api_timer() - rdraw_time - render.clear_time - render.swap_time
         gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time,
                       render.clear_time, rdraw_time, render.swap_time)
+        gui.thread_times(api_thread_timings())
     end
 
     render.done()
