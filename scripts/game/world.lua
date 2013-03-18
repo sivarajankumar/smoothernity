@@ -76,7 +76,7 @@ function M.alloc(uid, centx, centy, centz)
         end
         if not wrk.prepare.empty() then
             wrk.create.run()
-            wrk.prepare.run()
+            wrk.prepare.run(10)
             wrk.generate.run()
             wrk.finalize1.run(10)
             util.sync_wait()
