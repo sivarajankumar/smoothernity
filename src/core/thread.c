@@ -6,6 +6,7 @@
 #include "vbuf.h"
 #include "pbuf.h"
 #include "../thread/thread.h"
+#include "../platform/timer.h"
 #include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
@@ -24,6 +25,8 @@ enum thread_state_e
 
 struct thread_data_t
 {
+    float time;
+    float time_begin;
     struct thread_mutex_t *mutex;
     struct thread_cond_t *engage;
     struct thread_t *thread;
@@ -74,9 +77,11 @@ static void thread_loop(void *data)
             thread_mutex_unlock(g_threads.mutex);
             thread_cond_signal(g_threads.engage);
 
+            thread->time_begin = pfm_timer_get();
             thread_mutex_unlock(thread->mutex);
             res = lua_pcall(thread->lua, 0, LUA_MULTRET, 0);
             thread_mutex_lock(thread->mutex);
+            thread->time += pfm_timer_get() - thread->time_begin;
 
             if (res == 0)
                 thread->state = THREAD_IDLE;
@@ -175,6 +180,30 @@ static int api_thread_run(lua_State *lua)
     return 0;
 }
 
+static int api_thread_timings(lua_State *lua)
+{
+    int i;
+    struct thread_data_t *thread;
+    if (lua_gettop(lua) != 0)
+    {
+        lua_pushstring(lua, "api_thread_timings: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    for (i = 0; i < g_threads.count; ++i)
+    {
+        thread = thread_get(i);
+        thread_mutex_lock(thread->mutex);
+        if (thread->state == THREAD_RUNNING)
+            thread->time += pfm_timer_get() - thread->time_begin;
+        lua_pushnumber(lua, thread->time);
+        thread->time = 0;
+        thread->time_begin = pfm_timer_get();
+        thread_mutex_unlock(thread->mutex);
+    }
+    return g_threads.count;
+}
+
 static int api_thread_request(lua_State *lua)
 {
     struct thread_data_t *thread;
@@ -242,6 +271,7 @@ static int api_thread_respond(lua_State *lua)
     }
     thread->resp = lua_tolstring(lua, 2, &thread->respsize);
     thread->state = THREAD_RESPONDING;
+    thread->time += pfm_timer_get() - thread->time_begin;
     thread_cond_wait(thread->engage, thread->mutex);
     lua_pop(lua, 2);
     thread->resp = 0;
@@ -257,6 +287,7 @@ static int api_thread_respond(lua_State *lua)
     thread->req = 0;
     thread->reqsize = 0;
     thread->state = THREAD_RUNNING;
+    thread->time_begin = pfm_timer_get();
     thread_mutex_unlock(thread->mutex);
 
     thread_mutex_lock(g_threads.mutex);
@@ -290,6 +321,7 @@ static void thread_reg_main(lua_State *lua)
 {
     lua_register(lua, "api_thread_run", api_thread_run);
     lua_register(lua, "api_thread_request", api_thread_request);
+    lua_register(lua, "api_thread_timings", api_thread_timings);
     lua_register(lua, "api_thread_state", api_thread_state);
 
     #define LUA_PUBLISH(x) \
