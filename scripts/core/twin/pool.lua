@@ -3,13 +3,16 @@ local M = {}
 local cfg = require 'config'
 local pool = require 'core.pool.pool'
 local twin = require 'core.twin.twin'
+local util = require 'core.util'
 
 function M.sizes(twin_size, copy_size)
     local t = {}
     for i = 1, cfg.TWINS do
         table.insert(t, twin_size)
     end
-    table.insert(t, copy_size)
+    for i = 1, cfg.COPIES do
+        table.insert(t, copy_size)
+    end
     return unpack(t)
 end
 
@@ -25,7 +28,8 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                               twin_size, i, 1, pool_dims, res_api)
     end
     local copy_pool = pool.alloc(string.format('%s copy', title),
-                                 copy_size, cfg.TWINS, 1, {[copy_size] = 1}, res_api)
+                                 copy_size, cfg.TWINS, cfg.COPIES,
+                                 {[copy_size] = cfg.COPIES}, res_api)
 
     function self.free()
         for i = 0, cfg.TWINS - 1 do
@@ -36,6 +40,10 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
 
     function self.left(size)
         return pools[0].left(size)
+    end
+
+    function self.copies_left(size)
+        return copy_pool.left(size)
     end
 
     function self.alloc(size)
@@ -77,9 +85,19 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         end
 
         function chunk.finalize()
+            chunk.finalize1()
+            util.sync_wait()
+            twin.swap()
+            chunk.finalize2()
+            util.sync_wait()
+        end
+
+        function chunk.finalize1()
             copy.unmap()
             copy.copy(inactive())
-            twin.swap()
+        end
+
+        function chunk.finalize2()
             copy.copy(inactive())
             copy.free()
             copy = nil

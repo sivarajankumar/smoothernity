@@ -9,14 +9,15 @@ local twinibuf = require 'core.twin.ibuf'
 local twinvbuf = require 'core.twin.vbuf'
 
 function M.thread_run(thi)
-    local uid, noise_state, hmap_state, lodi, basx, basy, basz =
+    local uid, noise_state, hmap_state, vb_state, ib_state, vb_start, lodi, basx, basy, basz =
         loadstring(api_thread_respond(thi, ''))()
 
-    local funcs = {}
     local size = lod.lods[lodi].size
     local res = lod.lods[lodi].res
     local nse = noise.restore(noise_state)
     local hmap = poolbuf.restore(hmap_state)
+    local vb = twinvbuf.restore(vb_state)
+    local ib = twinibuf.restore(ib_state)
 
     local function to_world(z, x)
         return basz + (z * size / (res-1)),
@@ -52,11 +53,8 @@ function M.thread_run(thi)
                util.clamp(b, 0, 1)
     end
 
-    local function keep_going()
-        funcs[api_thread_respond(thi, '')]()
-    end
-
-    function funcs.make_hmap()
+    -- height map
+    do
         local fname = util.uid_cache(string.format('%s_hmap.lua', uid))
         local data = util.sync_read(fname)
         if data == '' then
@@ -87,12 +85,10 @@ function M.thread_run(thi)
                 hmap.set(i - 1, v)
             end
         end
-        keep_going()
     end
 
-    function funcs.make_vb()
-        local vb_state = loadstring(api_thread_respond(thi, ''))()
-        local vb = twinvbuf.restore(vb_state)
+    -- vertex buffer
+    do
         local fname = util.uid_cache(string.format('%s_colmap.lua', uid))
         local data = util.sync_read(fname)
         if data == '' then
@@ -128,12 +124,11 @@ function M.thread_run(thi)
                 vb.set(i - 1, x-0.5*(res-1), h, z-0.5*(res-1), r, g, b, 1, 0, 0)
             end
         end
-        keep_going()
     end
 
-    function funcs.make_ib()
-        local ib_state, o = loadstring(api_thread_respond(thi, ''))()
-        local ib = twinibuf.restore(ib_state)
+    -- index buffer
+    do
+        local o = vb_start
         for z = 0, res - 2 do
             for x = 0, res - 2 do
                 local i00 = o + x + z * res
@@ -144,13 +139,7 @@ function M.thread_run(thi)
                 ib.set(i,  i00,i01,i10,  i10,i01,i11)
             end
         end
-        keep_going()
     end
-
-    function funcs.finish()
-    end
-
-    keep_going()
 end
 
 return M

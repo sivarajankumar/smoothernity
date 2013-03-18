@@ -51,6 +51,10 @@ function M.done()
                            allocs, frees))
 end
 
+function M.left()
+    return left
+end
+
 function M.alloc(mod)
     if left == 0 then
         error('out of threads')

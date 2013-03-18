@@ -8,7 +8,7 @@ function M.configure()
     return {
             main_mpool = function() return
                   128,  1024, 8192, 32768, 2097152,
-               100000, 12000,  600,   100,      10 end,
+               110000, 12000,  600,   100,      10 end,
             physics_mpool = function() return
                 128,  8192, 1048576, 4194304,
                 200,    50,       2,       2 end,
