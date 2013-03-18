@@ -5,7 +5,9 @@
 
 enum vbuf_state_e
 {
-    VBUF_UNMAPPED,
+    VBUF_IDLE,
+    VBUF_UNMAPPING,
+    VBUF_MAPPING,
     VBUF_MAPPED,
     VBUF_ERROR
 };
@@ -37,3 +39,4 @@ void vbuf_done(void);
 void vbuf_reg_thread(lua_State *lua);
 struct vbuf_t * vbuf_get(int vbuf);
 void vbuf_select(struct vbuf_t *);
+int vbuf_thread(void);

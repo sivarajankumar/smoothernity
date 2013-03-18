@@ -9,6 +9,49 @@ static const size_t IBUF_SIZE = 64;
 
 struct ibufs_t g_ibufs;
 
+int ibuf_thread(void)
+{
+    int i, count;
+    struct ibuf_t *ibuf;
+    count = 0;
+    thread_mutex_lock(g_ibufs.mutex);
+    for (i = 0; i < g_ibufs.count; ++i)
+    {
+        ibuf = ibuf_get(i);
+        if (ibuf->state == IBUF_MAPPING)
+        {
+            thread_mutex_unlock(g_ibufs.mutex);
+            ++count;
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+            ibuf->mapped = glMapBufferRange(
+                GL_ELEMENT_ARRAY_BUFFER,
+                (GLintptr)((ibuf_data_t*)0 + ibuf->mapped_ofs),
+                (GLsizeiptr)((ibuf_data_t*)0 + ibuf->mapped_len),
+                GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
+                GL_MAP_INVALIDATE_RANGE_BIT);
+            thread_mutex_lock(g_ibufs.mutex);
+            if (ibuf->mapped == 0)
+            {
+                fprintf(stderr, "ibuf_thread: mapping error\n");
+                ibuf->state = IBUF_ERROR;
+            }
+            else
+                ibuf->state = IBUF_MAPPED;
+        }
+        else if (ibuf->state == IBUF_UNMAPPING)
+        {
+            thread_mutex_unlock(g_ibufs.mutex);
+            ++count;
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
+            glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+            thread_mutex_lock(g_ibufs.mutex);
+            ibuf->state = IBUF_IDLE;
+        }
+    }
+    thread_mutex_unlock(g_ibufs.mutex);
+    return count;
+}
+
 static int api_ibuf_map(lua_State *lua)
 {
     struct ibuf_t *ibuf;
@@ -24,7 +67,7 @@ static int api_ibuf_map(lua_State *lua)
     ofs = lua_tointeger(lua, 2);
     len = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
-    if (ibuf == 0 || ibuf->state != IBUF_UNMAPPED)
+    if (ibuf == 0 || ibuf->state != IBUF_IDLE)
     {
         lua_pushstring(lua, "api_ibuf_map: invalid ibuf");
         lua_error(lua);
@@ -39,21 +82,9 @@ static int api_ibuf_map(lua_State *lua)
     thread_mutex_lock(g_ibufs.mutex);
     ibuf->mapped_ofs = ofs;
     ibuf->mapped_len = len;
-    ibuf->state = IBUF_MAPPED;
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-    ibuf->mapped = glMapBufferRange(
-        GL_ELEMENT_ARRAY_BUFFER,
-        (GLintptr)((int)sizeof(ibuf_data_t) * ibuf->mapped_ofs),
-        (GLsizeiptr)((int)sizeof(ibuf_data_t) * ibuf->mapped_len),
-        GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
-        GL_MAP_INVALIDATE_RANGE_BIT);
+    ibuf->state = IBUF_MAPPING;
     thread_mutex_unlock(g_ibufs.mutex);
-    if (ibuf->mapped == 0)
-    {
-        lua_pushstring(lua, "api_ibuf_map: mapping error");
-        lua_error(lua);
-        return 0;
-    }
+    render_engage();
     return 0;
 }
 
@@ -78,10 +109,9 @@ static int api_ibuf_unmap(lua_State *lua)
     ibuf->mapped = 0;
     ibuf->mapped_ofs = 0;
     ibuf->mapped_len = 0;
-    ibuf->state = IBUF_UNMAPPED;
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
-    glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+    ibuf->state = IBUF_UNMAPPING;
     thread_mutex_unlock(g_ibufs.mutex);
+    render_engage();
     return 0;
 }
 
@@ -103,8 +133,8 @@ static int api_ibuf_copy(lua_State *lua)
     ofs_to = lua_tointeger(lua, 4);
     len = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
-    if (ibuf_from == 0 || ibuf_from->state != IBUF_UNMAPPED
-    ||  ibuf_to == 0 || ibuf_to->state != IBUF_UNMAPPED)
+    if (ibuf_from == 0 || ibuf_from->state != IBUF_IDLE
+    ||  ibuf_to == 0 || ibuf_to->state != IBUF_IDLE)
     {
         lua_pushstring(lua, "api_ibuf_copy: invalid ibuf");
         lua_error(lua);
@@ -120,10 +150,32 @@ static int api_ibuf_copy(lua_State *lua)
     glBindBuffer(GL_COPY_READ_BUFFER, ibuf_from->buf_id);
     glBindBuffer(GL_COPY_WRITE_BUFFER, ibuf_to->buf_id);
     glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER,
-        (GLintptr)((int)sizeof(ibuf_data_t) * ofs_from),
-        (GLintptr)((int)sizeof(ibuf_data_t) * ofs_to),
-        (GLsizeiptr)((int)sizeof(ibuf_data_t) * len));
+        (GLintptr)((ibuf_data_t*)0 + ofs_from),
+        (GLintptr)((ibuf_data_t*)0 + ofs_to),
+        (GLsizeiptr)((ibuf_data_t*)0 + len));
     return 0;
+}
+
+static int api_ibuf_waiting(lua_State *lua)
+{
+    struct ibuf_t *ibuf;
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    {
+        lua_pushstring(lua, "api_ibuf_waiting: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    ibuf = ibuf_get(lua_tointeger(lua, 1));
+    lua_pop(lua, 1);
+    if (ibuf == 0)
+    {
+        lua_pushstring(lua, "api_ibuf_waiting: invalid ibuf");
+        lua_error(lua);
+        return 0;
+    }
+    lua_pushboolean(lua, ibuf->state == IBUF_MAPPING
+                      || ibuf->state == IBUF_UNMAPPING);
+    return 1;
 }
 
 static int api_ibuf_set(lua_State *lua)
@@ -210,7 +262,7 @@ int ibuf_init(lua_State *lua, int *sizes, int count)
     for (i = 0; i < count; ++i)
     {
         ibuf = ibuf_get(i);
-        ibuf->state = IBUF_UNMAPPED;
+        ibuf->state = IBUF_IDLE;
         ibuf->size = sizes[i];
         glGenBuffers(1, &ibuf->buf_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuf->buf_id);
@@ -227,6 +279,7 @@ int ibuf_init(lua_State *lua, int *sizes, int count)
     lua_register(lua, "api_ibuf_copy", api_ibuf_copy);
     lua_register(lua, "api_ibuf_map", api_ibuf_map);
     lua_register(lua, "api_ibuf_unmap", api_ibuf_unmap);
+    lua_register(lua, "api_ibuf_waiting", api_ibuf_waiting);
 
     return 0;
 cleanup:
