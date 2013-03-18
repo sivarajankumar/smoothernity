@@ -5,6 +5,7 @@
 #include "ibuf.h"
 #include "vbuf.h"
 #include "pbuf.h"
+#include "timer.h"
 #include "../thread/thread.h"
 #include "../platform/timer.h"
 #include "../util/util.h"
@@ -342,6 +343,7 @@ static void thread_reg(lua_State *lua)
     vbuf_reg_thread(lua);
     ibuf_reg_thread(lua);
     pbuf_reg_thread(lua);
+    timer_reg_thread(lua);
 }
 
 int thread_init(lua_State *lua, int count, const int msizes[],
