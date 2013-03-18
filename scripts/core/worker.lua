@@ -3,8 +3,13 @@ local M = {}
 function M.alloc()
     local self = {}
     local cs = {}
+    local empty = true
     function self.plan(func)
+        empty = false
         table.insert(cs, coroutine.create(func))
+    end
+    function self.empty()
+        return empty
     end
     function self.run()
         local keep_going = true
@@ -29,6 +34,7 @@ function M.alloc()
             end
             coroutine.yield(skip_frame)
         end
+        empty = true
     end
     return self
 end
