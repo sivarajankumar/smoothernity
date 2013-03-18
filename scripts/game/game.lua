@@ -143,7 +143,10 @@ function M.run()
             camsw = camswitch.alloc(camc, camd)
             wld.attach(car.mchassis)
             created = true
+            local t = api_timer()
             wld.generate()
+            t = api_timer() - t
+            io.write(string.format('generation time: %f\n', t))
             pwld.wld.tscale(1)
             render.timescale(1)
             gui.wait_hide()
