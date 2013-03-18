@@ -16,7 +16,6 @@ local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
-local twin = require 'core.twin.twin'
 
 local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
@@ -49,6 +48,18 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
+    function self.finalize1()
+        vb.finalize1()
+        ib.finalize1()
+    end
+
+    function self.finalize2()
+        vb.finalize2()
+        ib.finalize2()
+        mesh = twinmesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
+                              shader.default(), self.mmesh)
+    end
+
     vb.prepare()
     ib.prepare()
 
@@ -63,21 +74,6 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                              vb.store(), ib.store(), vb.start, lodi, basx, basy, basz))
     util.wait_thread_idle(th, false)
     th.free()
-
-    -- ugly, ugly, ugly
-    twin.lock()
-    vb.finalize1()
-    ib.finalize1()
-    util.sync_wait()
-    twin.swap()
-    vb.finalize2()
-    ib.finalize2()
-    util.sync_wait()
-    twin.unlock()
-
-    mesh = twinmesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
-                          shader.default(), self.mmesh)
-
     return self
 end
 
@@ -112,6 +108,14 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     function self.delete()
         common.delete()
+    end
+
+    function self.finalize1()
+        common.finalize1()
+    end
+
+    function self.finalize2()
+        common.finalize2()
     end
 
     -- physics
@@ -155,6 +159,14 @@ function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
 
     function self.delete()
         common.delete()
+    end
+
+    function self.finalize1()
+        common.finalize1()
+    end
+
+    function self.finalize2()
+        common.finalize2()
     end
 
     function self.move()
