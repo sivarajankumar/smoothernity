@@ -9,6 +9,7 @@ local pbuf_api = {}
 pbuf_api.set = api_pbuf_set
 pbuf_api.map = api_pbuf_map
 pbuf_api.unmap = api_pbuf_unmap
+pbuf_api.waiting = api_pbuf_waiting
 
 function M.init()
     pbufs = pool.alloc('Pixel buffers', cfg.PBUF_SIZE, 0, cfg.PBUF_COUNT, cfg.PBUF_POOL, pbuf_api)

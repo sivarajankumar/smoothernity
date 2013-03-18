@@ -5,7 +5,9 @@
 
 enum ibuf_e
 {
-    IBUF_UNMAPPED,
+    IBUF_IDLE,
+    IBUF_UNMAPPING,
+    IBUF_MAPPING,
     IBUF_MAPPED,
     IBUF_ERROR
 };
@@ -36,3 +38,4 @@ void ibuf_done(void);
 void ibuf_reg_thread(lua_State *lua);
 struct ibuf_t * ibuf_get(int);
 void ibuf_select(struct ibuf_t*);
+int ibuf_thread(void);
