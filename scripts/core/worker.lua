@@ -11,8 +11,9 @@ function M.alloc()
     function self.empty()
         return empty
     end
-    function self.run()
+    function self.run(max_steps)
         local keep_going = true
+        local step = 0
         while keep_going do
             local skip_frame = false
             keep_going = false
@@ -30,7 +31,13 @@ function M.alloc()
                     io.write('Worker coroutine\n', debug.traceback(v), '\n')
                     error(arg)
                 end
-                coroutine.yield(false)
+                step = step + 1
+                if max_steps ~= nil and step > max_steps then
+                    step = 0
+                    coroutine.yield(true)
+                else
+                    coroutine.yield(false)
+                end
             end
             coroutine.yield(skip_frame)
         end
