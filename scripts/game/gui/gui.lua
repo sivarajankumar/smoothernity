@@ -74,7 +74,7 @@ end
 
 function M.thread_times(...)
     if inited then
-        threadprof.set(util.sum(...) / cfg.THREAD_COUNT)
+        threadprof.set(util.sum(...) / cfg.CPU_CORES)
     end
 end
 
