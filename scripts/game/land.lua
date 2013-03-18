@@ -48,6 +48,24 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
+    function self.prepare()
+        vb.prepare()
+        ib.prepare()
+    end
+
+    function self.generate()
+        while thread.left() == 0 do
+            coroutine.yield(true)
+        end
+        local th = thread.alloc('game.land_th')
+        util.wait_thread_responding(th, false)
+        th.request(string.format('return "%s", %s, %s, %s, %s, %i, %i, %f, %f, %f',
+                                 uid, noise.store(), self.hmap.store(),
+                                 vb.store(), ib.store(), vb.start, lodi, basx, basy, basz))
+        util.wait_thread_idle(th, true)
+        th.free()
+    end
+
     function self.finalize1()
         vb.finalize1()
         ib.finalize1()
@@ -60,20 +78,6 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
                               shader.default(), self.mmesh)
     end
 
-    vb.prepare()
-    ib.prepare()
-
-    while thread.left() == 0 do
-        coroutine.yield(true)
-    end
-
-    local th = thread.alloc('game.land_th')
-    util.wait_thread_responding(th, false)
-    th.request(string.format('return "%s", %s, %s, %s, %s, %i, %i, %f, %f, %f',
-                             uid, noise.store(), self.hmap.store(),
-                             vb.store(), ib.store(), vb.start, lodi, basx, basy, basz))
-    util.wait_thread_idle(th, false)
-    th.free()
     return self
 end
 
@@ -110,6 +114,14 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         common.delete()
     end
 
+    function self.prepare()
+        common.prepare()
+    end
+
+    function self.generate()
+        common.generate()
+    end
+
     function self.finalize1()
         common.finalize1()
     end
@@ -118,24 +130,26 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
         common.finalize2()
     end
 
-    -- physics
-    do
-        local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
-                                          basy + move.y,
-                                          basz + move.z + 0.5*common.size)
-        local vsize = vector.alloc()
-        vsize.const(scale, 1, scale, 0)
-        cs = colshape.alloc_hmap(common.hmap, common.res, common.res,
-                                 -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
-        rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
-        vsize.free()
-        mpos.free()
-    end
+    function self.activate()
+        -- physics
+        do
+            local mpos = util.matrix_pos_stop(basx + move.x + 0.5*common.size,
+                                              basy + move.y,
+                                              basz + move.z + 0.5*common.size)
+            local vsize = vector.alloc()
+            vsize.const(scale, 1, scale, 0)
+            cs = colshape.alloc_hmap(common.hmap, common.res, common.res,
+                                     -0.5 * cfg.LAND_HEIGHT, 0.5 * cfg.LAND_HEIGHT, vsize)
+            rb = rigidbody.alloc(pwld.wld, cs, mpos, 0, 1, 1)
+            vsize.free()
+            mpos.free()
+        end
 
-    -- visual
-    do
-        mrb.rigid_body(rb)
-        common.mmesh.mul(mrb, mvis)
+        -- visual
+        do
+            mrb.rigid_body(rb)
+            common.mmesh.mul(mrb, mvis)
+        end
     end
 
     return self
@@ -161,12 +175,25 @@ function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
         common.delete()
     end
 
+    function self.prepare()
+        common.prepare()
+    end
+
+    function self.generate()
+        common.generate()
+    end
+
     function self.finalize1()
         common.finalize1()
     end
 
     function self.finalize2()
         common.finalize2()
+    end
+
+    function self.activate()
+        common.hmap.free()
+        self.move()
     end
 
     function self.move()
@@ -179,9 +206,6 @@ function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
         m.free()
     end
 
-    common.hmap.free()
-
-    self.move()
     return self
 end
 
