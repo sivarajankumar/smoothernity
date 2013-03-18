@@ -22,7 +22,7 @@ local COLOR_CPU_RSWAP = color.ORANGE
 local MAX_FRAMES = 600
 local THRESH = 1.1
 
-local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, ttest
+local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, threadprof, ttest
 local whole_frames = 0
 local move_frames = 0
 local inited = false
@@ -72,6 +72,12 @@ function M.cpu_times(...)
     end
 end
 
+function M.thread_times(...)
+    if inited then
+        threadprof.set(util.sum(...) / cfg.THREAD_COUNT)
+    end
+end
+
 function M.init()
     bar.init()
     wait.init()
@@ -111,6 +117,10 @@ function M.init()
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
                          COLOR_CPU_RDRAW, COLOR_CPU_RSWAP)
 
+    posy = posy + sizey + 0.05
+    threadprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
+                            COLOR_CPU_WORK)
+
     --ttest = textest.alloc(0, 0, 1)
 
     inited = true
@@ -120,6 +130,7 @@ function M.done()
     inited = false
     gpuprof.free()
     cpuprof.free()
+    threadprof.free()
     genbar.free()
     edgebar.free()
     frbar.free()
