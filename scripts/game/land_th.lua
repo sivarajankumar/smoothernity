@@ -5,7 +5,7 @@ local noise = require 'game.noise'
 local lod = require 'game.lod'
 local util = require 'core.util'
 local poolbuf = require 'core.pool.buf'
-local render = require 'core.render'
+local render = require 'core.render.render'
 
 function M.thread_run(thi)
     local uid, noise_state, hmap_state, vb_state, ib_state, lodi, basx, basy, basz =

@@ -60,7 +60,10 @@ function M.init()
         local sizelog, layers = unpack(cfg.TEX_POOL[TEX_UNIT+1])
         local size = math.pow(2, sizelog)
         pbuf = poolpbuf.alloc(size * size)
-        pbuf.map()
+        api_pbuf_map(pbuf.res, pbuf.start, pbuf.size)
+        while api_pbuf_waiting(pbuf.res) do
+            coroutine.yield(true)
+        end
         for y = 0, size-1 do
             for x = 0, size-1 do
                 local r = ((x + y) % 16) / 16
@@ -72,7 +75,10 @@ function M.init()
                 coroutine.yield(false)
             end
         end
-        pbuf.unmap()
+        api_pbuf_unmap(pbuf.res)
+        while api_pbuf_waiting(pbuf.res) do
+            coroutine.yield(true)
+        end
         api_tex_set(TEX_UNIT, pbuf.res, pbuf.start, TEX_LAYER, TEX_MIP, 0, 0, size, size)
         pbuf.free()
     end
