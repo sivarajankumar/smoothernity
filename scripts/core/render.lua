@@ -1,16 +1,27 @@
 local M = {}
 
 local cfg = require 'config'
-local pool = require 'core.twin.pool'
 local mesh = require 'core.twin.mesh'
 local twinpool = require 'core.twin.pool'
 local pool = require 'core.pool.pool'
 
+local SWITCH_THRESH = 10
+
 local vbufs, ibufs
 
 function M.init()
-    vbufs = twinpool.alloc('Vertex buffers', cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE, cfg.VBUF_POOL)
-    ibufs = twinpool.alloc('Index buffers', cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE, cfg.IBUF_POOL)
+    local vbuf_api = {}
+    vbuf_api.map = api_vbuf_map
+    vbuf_api.unmap = api_vbuf_unmap
+    vbuf_api.copy = api_vbuf_copy
+
+    local ibuf_api = {}
+    ibuf_api.map = api_ibuf_map
+    ibuf_api.unmap = api_ibuf_unmap
+    ibuf_api.copy = api_ibuf_copy
+
+    vbufs = twinpool.alloc('Vertex buffers', cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE, cfg.VBUF_POOL, vbuf_api)
+    ibufs = twinpool.alloc('Index buffers', cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE, cfg.IBUF_POOL, ibuf_api)
 end
 
 function M.done()
@@ -46,7 +57,7 @@ function M.vbuf_alloc(size)
         api_vbuf_set(self.copy.res, self.copy.start + i, ...)
     end
     function self.store()
-        assert(state == 'prepared')
+        assert(self.state == 'prepared')
         return self.copy.store()
     end
     return self
@@ -63,7 +74,7 @@ function M.ibuf_alloc(size, vbuf)
         api_ibuf_set(self.copy.res, self.copy.start + i, unpack(args))
     end
     function self.store()
-        assert(state == 'prepared')
+        assert(self.state == 'prepared')
         return string.format('{%s, %i}', self.copy.store(), vbuf.start)
     end
     return self
@@ -77,54 +88,27 @@ function M.mesh_alloc(group, kind, vbuf, ibuf, shader, matrix)
     return mesh.alloc(group, kind, vbuf, ibuf, shader, matrix)
 end
 
-function M.draw_meshes(group, draw_tag)
+function M.mesh_draw(group, draw_tag)
     api_mesh_draw(group.twin(twin.active()), draw_tag)
 end
 
+function M.mesh_update(group, dt, update_tag)
+    api_mesh_update(group.twin(twin.active()), dt, update_tag)
+end
+
 local function update_bufs()
-
-        function chunk.prepare()
-            copy = copy_pool.alloc(size)
-            copy.map()
+    vbufs.update()
+    ibufs.update()
+    if vbufs.ready_to_switch() and ibufs.ready_to_switch() then
+        switch_count = switch_count + 1
+        if switch_count >= SWITCH_THRESH then
+            vbufs.switch()
+            ibufs.switch()
+            twin.switch()
         end
-
-        function chunk.finalize()
-            chunk.finalize1()
-            util.sync_wait()
-            twin.swap()
-            chunk.finalize2()
-            util.sync_wait()
-        end
-
-        function chunk.finalize1()
-            copy.unmap()
-            copy.copy(inactive())
-        end
-
-        function chunk.finalize2()
-            copy.copy(inactive())
-            copy.free()
-            copy = nil
-        end
-
-        function chunk.map()
-            res_api.map(chunk.res, chunk.start, chunk.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
-        end
-        function chunk.unmap()
-            res_api.unmap(chunk.res)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
-        end
-        function chunk.copy(chunk_to)
-            res_api.copy(chunk.res, chunk_to.res, chunk.start, chunk_to.start, chunk_to.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
-        end
+    else
+        switch_count = 0
+    end
 end
 
 function M.finish_frame()

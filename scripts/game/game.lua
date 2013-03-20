@@ -32,8 +32,6 @@ local key = require 'core.key'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
 local poolpbuf = require 'core.pool.pbuf'
-local twinibuf = require 'core.twin.ibuf'
-local twinvbuf = require 'core.twin.vbuf'
 
 local LOGIC_TIME = 0.013
 local GC_STEP = 10
@@ -78,8 +76,6 @@ function M.run()
     thread.init()
     meshes.init()
     poolbuf.init()
-    twinibuf.init()
-    twinvbuf.init()
     poolpbuf.init()
     shader.init()
     pwld.init()
@@ -225,8 +221,6 @@ function M.run()
     pwld.done()
     shader.done()
     poolpbuf.done()
-    twinvbuf.done()
-    twinibuf.done()
     poolbuf.done()
     shprog.done()
     shuni.done()

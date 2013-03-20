@@ -12,7 +12,7 @@ function M.inactive()
     return (counter + 1) % cfg.TWINS
 end
 
-function M.swap()
+function M.switch()
     counter = M.inactive()
 end
 
