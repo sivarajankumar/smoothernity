@@ -1,25 +1,22 @@
 local M = {}
 
-local function make_base_chunk(size, start, res, res_api)
+local function make_base_chunk(size, start, res)
     local self = {}
     self.size = size
     self.start = start
     self.res = res
-    function self.set(i, ...)
-        res_api.set(res, start + i, ...)
-    end
     function self.store()
         return string.format("{%i, %i, %i}", size, start, res)
     end
     return self
 end
 
-function M.restore_chunk(state, res_api)
-    size, start, res = unpack(state)
-    return make_base_chunk(size, start, res, res_api)
+function M.restore_chunk(state)
+    local size, start, res = unpack(state)
+    return make_base_chunk(size, start, res)
 end
 
-function M.alloc(title, res_size, res_start, res_count, pool_dims, res_api)
+function M.alloc(title, res_size, res_start, res_count, pool_dims)
     local self = {}
     local shelves = {}
     local res = {}
@@ -59,7 +56,7 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims, res_api)
     end
 
     local function make_chunk(size, start, r)
-        local chunk = make_base_chunk(size, start, r, res_api)
+        local chunk = make_base_chunk(size, start, r)
         local shelf = shelves[size]
         chunk.id = shelf.left
         function chunk.free()
@@ -71,24 +68,6 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims, res_api)
             shelf.frees = shelf.frees + 1
             shelf.left = shelf.left + 1
             shelf.chunks[chunk.id] = chunk
-        end
-        function chunk.map()
-            res_api.map(chunk.res, chunk.start, chunk.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
-        end
-        function chunk.unmap()
-            res_api.unmap(chunk.res)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
-        end
-        function chunk.copy(chunk_to)
-            res_api.copy(chunk.res, chunk_to.res, chunk.start, chunk_to.start, chunk_to.size)
-            while res_api.waiting(chunk.res) do
-                coroutine.yield(true)
-            end
         end
         return chunk
     end
