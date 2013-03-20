@@ -158,6 +158,9 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
 
     function pool.copy_sync()
         assert(pool.copy_sync_ready())
+        assert(util.empty(cloning))
+        assert(util.empty(clone_synching))
+        assert(util.empty(clone_synched))
         for k, v in pairs(copy_synching) do
             copy_synching[k] = nil
             copy_synched[k] = v
@@ -168,6 +171,9 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
 
     function pool.clone_sync()
         assert(pool.clone_sync_ready())
+        assert(util.empty(copying))
+        assert(util.empty(copy_synching))
+        assert(util.empty(copy_synched))
         for k, v in pairs(clone_synching) do
             clone_synching[k] = nil
             clone_synched[k] = v
