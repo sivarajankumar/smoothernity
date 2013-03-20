@@ -36,11 +36,8 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
     local finalizing = {}
     local unmapping = {}
     local copying = {}
-    local copy_synching = {}
-    local copy_synched = {}
-    local cloning = {}
-    local clone_synching = {}
-    local clone_synched = {}
+    local synching = {}
+    local synched = {}
     local finalized = {}
     local next_id = 0
 
@@ -91,87 +88,60 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 break
             end
         end
-        for k, v in pairs(clone_synched) do
-            clone_synched[k] = nil
-            finalized[k] = v
-            v.state = 'finalized'
-            v.copy.free()
-            v.copy = nil
+        for k, v in pairs(unmapping) do
+            if not res_api.waiting(v.copy.res) then
+                unmapping[k] = nil
+                synched[k] = v
+                v.state = 'synched'
+            end
+        end
+        for k, v in pairs(synched) do
+            if v.twins_done == cfg.TWINS then
+                synched[k] = nil
+                finalized[k] = v
+                v.state = 'finalized'
+                v.copy.free()
+                v.copy = nil
+            end
         end
     end
 
     function pool.update_copy(twin_inactive)
         local count = 0
-        for k, v in pairs(unmapping) do
-            if not res_api.waiting(v.copy.res) then
-                if count < MAX_COPY then
-                    count = count + 1
-                    unmapping[k] = nil
-                    copying[k] = v
-                    v.state = 'copying'
-                    res_api.copy(v.copy.res, v.twin(twin_inactive),
-                                 v.copy.start, v.start, v.size)
-                else
-                    break
-                end
-            end
-        end
-        for k, v in pairs(copying) do
-            if not res_api.waiting(v.copy.res) then
-                copying[k] = nil
-                copy_synching[k] = v
-                v.state = 'copy_synching'
-            end
-        end
-    end
-
-    function pool.update_clone(twin_inactive)
-        local count = 0
-        for k, v in pairs(copy_synched) do
-            if count < MAX_COPY then
+        for k, v in pairs(synched) do
+            if count < MAX_COPY and v.twins_done < cfg.TWINS then
                 count = count + 1
-                copy_synched[k] = nil
-                cloning[k] = v
-                v.state = 'cloning'
+                synched[k] = nil
+                copying[k] = v
+                v.state = 'copying'
                 res_api.copy(v.copy.res, v.twin(twin_inactive),
                              v.copy.start, v.start, v.size)
             else
                 break
             end
         end
-        for k, v in pairs(cloning) do
+        for k, v in pairs(copying) do
             if not res_api.waiting(v.copy.res) then
-                cloning[k] = nil
-                clone_synching[k] = v
-                v.state = 'clone_synching'
+                copying[k] = nil
+                synching[k] = v
+                v.state = 'synching'
             end
         end
     end
 
-    function pool.copy_sync()
-        assert(pool.copy_sync_ready())
-        for k, v in pairs(copy_synching) do
-            copy_synching[k] = nil
-            copy_synched[k] = v
-            v.state = 'copy_synched'
+    function pool.sync_copy()
+        assert(pool.sync_copy_ready())
+        for k, v in pairs(synching) do
+            assert(v.twins_done < cfg.TWINS)
+            synching[k] = nil
+            synched[k] = v
+            v.state = 'synched'
+            v.twins_done = v.twins_done + 1
         end
     end
 
-    function pool.clone_sync()
-        assert(pool.clone_sync_ready())
-        for k, v in pairs(clone_synching) do
-            clone_synching[k] = nil
-            clone_synched[k] = v
-            v.state = 'clone_synched'
-        end
-    end
-
-    function pool.copy_sync_ready()
-        return util.empty(copying) and not util.empty(copy_synching)
-    end
-
-    function pool.clone_sync_ready()
-        return util.empty(cloning) and not util.empty(clone_synching)
+    function pool.sync_copy_ready()
+        return util.empty(copying) and not util.empty(synching)
     end
 
     function pool.alloc(size)
@@ -184,6 +154,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         chunk.size = twins[0].size
         chunk.start = twins[0].start
         chunk.copy = nil
+        chunk.twins_done = 0
 
         local id = next_id
         next_id = next_id + 1
