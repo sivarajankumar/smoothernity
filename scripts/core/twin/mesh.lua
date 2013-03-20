@@ -20,6 +20,8 @@ end
 function M.alloc(group, kind, vbuf, ibuf, shader, matrix)
     local self = {}
     local meshes = {}
+    assert(vbuf.state == 'finalized')
+    assert(ibuf.state == 'finalized')
     for i = 0, cfg.TWINS - 1 do
         meshes[i] = mesh.alloc(group.twin(i), kind, vbuf.twin(i),
                                ibuf.twin(i), shader, matrix,

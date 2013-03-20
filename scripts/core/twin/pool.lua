@@ -1,7 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local pool = require 'core.pool.pool'
+local corepool = require 'core.corepool.corepool'
 local twin = require 'core.twin.twin'
 local util = require 'core.util'
 
@@ -16,52 +16,46 @@ function M.sizes(twin_size, copy_size)
     return unpack(t)
 end
 
-function M.restore_chunk(state, res_api)
-    return pool.restore_chunk(state, res_api)
-end
-
-function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
-    local self = {}
+function M.alloc(title, twin_size, copy_size, pool_dims)
+    local pool = {}
     local pools = {}
     for i = 0, cfg.TWINS - 1 do
-        pools[i] = pool.alloc(string.format('%s (twin %i)', title, i),
-                              twin_size, i, 1, pool_dims, res_api)
+        pools[i] = corepool.alloc(string.format('%s (twin %i)', title, i),
+                                  twin_size, i, 1, pool_dims)
     end
-    local copy_pool = pool.alloc(string.format('%s copy', title),
-                                 copy_size, cfg.TWINS, cfg.COPIES,
-                                 {[copy_size] = cfg.COPIES}, res_api)
+    local copy_pool = corepool.alloc(string.format('%s copy', title),
+                                     copy_size, cfg.TWINS, cfg.COPIES,
+                                     {[copy_size] = cfg.COPIES})
 
-    function self.free()
+    function pool.free()
         for i = 0, cfg.TWINS - 1 do
             pools[i].free()
         end
         copy_pool.free()
     end
 
-    function self.left(size)
+    function pool.left(size)
         return pools[0].left(size)
     end
 
-    function self.copies_left(size)
+    function pool.copies_left(size)
         return copy_pool.left(size)
     end
 
-    function self.alloc(size)
+    function pool.alloc(size)
         local chunks = {}
         for i = 0, cfg.TWINS - 1 do
             chunks[i] = pools[i].alloc(size)
         end
 
-        local copy
+        local state = 'preparing'
         local chunk = {}
         chunk.size = chunks[0].size
         chunk.start = chunks[0].start
-
-        local function inactive()
-            return chunks[twin.inactive()]
-        end
+        chunk.copy = nil
 
         function chunk.free()
+            assert(state == 'finalized')
             for i = 0, cfg.TWINS - 1 do
                 chunks[i].free()
             end
@@ -71,42 +65,19 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
             return chunks[i].res
         end
 
-        function chunk.store()
-            return copy.store()
-        end
-
-        function chunk.set(i, ...)
-            copy.set(i, ...)
-        end
-
-        function chunk.prepare()
-            copy = copy_pool.alloc(size)
-            copy.map()
+        function chunk.state()
+            return state
         end
 
         function chunk.finalize()
-            chunk.finalize1()
-            util.sync_wait()
-            twin.swap()
-            chunk.finalize2()
-            util.sync_wait()
-        end
-
-        function chunk.finalize1()
-            copy.unmap()
-            copy.copy(inactive())
-        end
-
-        function chunk.finalize2()
-            copy.copy(inactive())
-            copy.free()
-            copy = nil
+            assert(state == 'prepared')
+            state = 'finalizing'
         end
 
         return chunk
     end
 
-    return self
+    return pool
 end
 
 return M
