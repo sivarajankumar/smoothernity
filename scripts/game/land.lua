@@ -5,7 +5,6 @@ local pwld = require 'game.physwld'
 local cfg = require 'config'
 local lod = require 'game.lod'
 local meshes = require 'game.meshes'
-local quit = require 'game.quit'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
 local render = require 'core.render.render'
@@ -16,7 +15,7 @@ local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
 
-local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
+local function common_alloc(uid, noise, lodi, basx, basy, basz)
     local self = {}
 
     self.size = lod.lods[lodi].size
@@ -73,7 +72,7 @@ end
 function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     local self = {}
 
-    local common = common_alloc(uid, noise, move, lodi, basx, basy, basz)
+    local common = common_alloc(uid, noise, lodi, basx, basy, basz)
     local scale = common.size / (common.res - 1)
     local mvis = util.matrix_scl_stop(scale, 1, scale)
     local mrb = matrix.alloc()
@@ -119,7 +118,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
 end
 
 function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
-    local self = common_alloc(uid, noise, move, lodi, basx, basy, basz)
+    local self = common_alloc(uid, noise, lodi, basx, basy, basz)
 
     function self.move()
         local scale = self.size / (self.res - 1)
