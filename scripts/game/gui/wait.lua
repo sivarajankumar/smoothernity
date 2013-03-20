@@ -54,10 +54,7 @@ function M.init()
         vbuf = render.vbuf_alloc(3)
         ibuf = render.ibuf_alloc(3, vbuf)
 
-        vbuf.prepare()
-        ibuf.prepare()
         util.wait_state(true, 'prepared', vbuf, ibuf)
-
         vbuf.set(0, x1,y1, 0,   r, g, b, a,   0, 0,
                     x2,y2, 0,   r, g, b, a,   0, 0,
                     x3,y3, 0,   r, g, b, a,   0, 0)
