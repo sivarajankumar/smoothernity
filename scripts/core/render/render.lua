@@ -5,7 +5,7 @@ local renderpool = require 'core.render.pool'
 local pool = require 'core.pool.pool'
 local coresync = require 'core.sync'
 
-local SWITCH_THRESH = 1
+local SWITCH_THRESH = 10
 
 local vbufs, ibufs, sync
 local twin = 0
@@ -115,13 +115,16 @@ local function update_bufs()
             switch_count = 0
         end
     elseif switch_state == 'copy_synching' then
-        if sync.ready() then
+        if sync.ready() or switch_count >= SWITCH_THRESH then
+            switch_count = 0
             vbufs.copy_sync()
             ibufs.copy_sync()
             twin = M.twin_inactive()
             sync.free()
             sync = nil
             switch_state = 'cloning'
+        else
+            switch_count = switch_count + 1
         end
     elseif switch_state == 'cloning' then
         vbufs.update_clone(M.twin_inactive())
@@ -137,12 +140,15 @@ local function update_bufs()
             switch_count = 0
         end
     elseif switch_state == 'clone_synching' then
-        if sync.ready() then
+        if sync.ready() or switch_count >= SWITCH_THRESH then
+            switch_count = 0
             vbufs.clone_sync()
             ibufs.clone_sync()
             sync.free()
             sync = nil
             switch_state = 'copying'
+        else
+            switch_count = switch_count + 1
         end
     end
 end
