@@ -18,13 +18,14 @@ function M.reduce_and(func, args)
 end
 
 function M.wait_state(skip_frame, state, ...)
+    io.write(string.format('waiting state "%s"\n', state))
     while not M.reduce_and(function(x) return x.state == state end, {...}) do
         coroutine.yield(skip_frame)
     end
 end
 
 function M.empty(t)
-    return M.reduce_and(function(...) return true end, t)
+    return M.reduce_and(function(...) return false end, t)
 end
 
 function M.sync_read(uid)

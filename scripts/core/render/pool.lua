@@ -57,7 +57,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         return copy_pool.left(size)
     end
 
-    function pool.update(twin_inactive)
+    function pool.update_map()
         local count = 0
         for k, v in pairs(preparing) do
             if count < MAX_MAP then
@@ -65,6 +65,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 preparing[k] = nil
                 mapping[k] = v
                 v.state = 'mapping'
+                io.write(string.format('%i -> mapping\n', k))
                 v.copy = copy_pool.alloc(v.size)
                 res_api.map(v.copy.res, v.copy.start, v.copy.size)
             else
@@ -76,6 +77,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 mapping[k] = nil
                 prepared[k] = v
                 v.state = 'prepared'
+                io.write(string.format('%i -> prepared\n', k))
             end
         end
         for k, v in pairs(finalizing) do
@@ -84,11 +86,16 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 finalizing[k] = nil
                 unmapping[k] = v
                 v.state = 'unmapping'
+                io.write(string.format('%i -> unmapping\n', k))
                 res_api.unmap(v.copy.res)
             else
                 break
             end
         end
+    end
+
+    function pool.update_copy(twin_inactive)
+        local count = 0
         for k, v in pairs(unmapping) do
             if not res_api.waiting(v.copy.res) then
                 if count < MAX_COPY then
@@ -96,6 +103,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                     unmapping[k] = nil
                     copying[k] = v
                     v.state = 'copying'
+                    io.write(string.format('%i -> copying\n', k))
                     res_api.copy(v.copy.res, v.twin(twin_inactive),
                                  v.copy.start, v.start, v.size)
                 else
@@ -108,6 +116,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 copying[k] = nil
                 paused[k] = v
                 v.state = 'paused'
+                io.write(string.format('%i -> paused\n', k))
             end
         end
         for k, v in pairs(unpaused) do
@@ -116,6 +125,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 unpaused[k] = nil
                 cloning[k] = v
                 v.state = 'cloning'
+                io.write(string.format('%i -> cloning\n', k))
                 res_api.copy(v.copy.res, v.twin(twin_inactive),
                              v.copy.start, v.start, v.size)
             else
@@ -127,6 +137,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 cloning[k] = nil
                 finalized[k] = v
                 v.state = 'finalized'
+                io.write(string.format('%i -> finalized\n', k))
                 v.copy.free()
                 v.copy = nil
             end
@@ -139,11 +150,17 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
             paused[k] = nil
             unpaused[k] = v
             v.state = 'unpaused'
+            io.write(string.format('%i -> unpaused\n', k))
         end
     end
 
     function pool.ready_to_switch()
-        return util.empty(copying) and util.empty(cloning) and not util.empty(paused)
+        io.write(string.format('copying empty: %s, cloning empty: %s, paused empty: %s\n',
+                               tostring(util.empty(copying)),
+                               tostring(util.empty(cloning)),
+                               tostring(util.empty(paused))))
+        return util.empty(copying) and util.empty(cloning) and
+               util.empty(unpaused) and not util.empty(paused)
     end
 
     function pool.alloc(size)
@@ -160,12 +177,14 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         local id = next_id
         next_id = next_id + 1
 
+        io.write(string.format('%i -> preparing\n', id))
         chunk.state = 'preparing'
         preparing[id] = chunk
 
         function chunk.free()
             assert(chunk.state == 'finalized')
             chunk.state = 'vacant'
+            io.write(string.format('%i -> vacant\n', id))
             finalized[id] = nil
             for i = 0, cfg.TWINS - 1 do
                 twins[i].free()
@@ -179,6 +198,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         function chunk.finalize()
             assert(chunk.state == 'prepared')
             chunk.state = 'finalizing'
+            io.write(string.format('%i -> finalizing\n', id))
             prepared[id] = nil
             finalizing[id] = chunk
         end
