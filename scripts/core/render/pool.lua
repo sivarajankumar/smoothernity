@@ -36,9 +36,11 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
     local finalizing = {}
     local unmapping = {}
     local copying = {}
-    local paused = {}
-    local unpaused = {}
+    local copy_synching = {}
+    local copy_synched = {}
     local cloning = {}
+    local clone_synching = {}
+    local clone_synched = {}
     local finalized = {}
     local next_id = 0
 
@@ -57,7 +59,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         return copy_pool.left(size)
     end
 
-    function pool.update_map()
+    function pool.update()
         local count = 0
         for k, v in pairs(preparing) do
             if count < MAX_MAP then
@@ -92,6 +94,14 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 break
             end
         end
+        for k, v in pairs(clone_synched) do
+            clone_synched[k] = nil
+            finalized[k] = v
+            v.state = 'finalized'
+            io.write(string.format('%i -> finalized\n', k))
+            v.copy.free()
+            v.copy = nil
+        end
     end
 
     function pool.update_copy(twin_inactive)
@@ -114,15 +124,19 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         for k, v in pairs(copying) do
             if not res_api.waiting(v.copy.res) then
                 copying[k] = nil
-                paused[k] = v
-                v.state = 'paused'
-                io.write(string.format('%i -> paused\n', k))
+                copy_synching[k] = v
+                v.state = 'copy_synching'
+                io.write(string.format('%i -> copy_synching\n', k))
             end
         end
-        for k, v in pairs(unpaused) do
+    end
+
+    function pool.update_clone(twin_inactive)
+        local count = 0
+        for k, v in pairs(copy_synched) do
             if count < MAX_COPY then
                 count = count + 1
-                unpaused[k] = nil
+                copy_synched[k] = nil
                 cloning[k] = v
                 v.state = 'cloning'
                 io.write(string.format('%i -> cloning\n', k))
@@ -135,32 +149,45 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         for k, v in pairs(cloning) do
             if not res_api.waiting(v.copy.res) then
                 cloning[k] = nil
-                finalized[k] = v
-                v.state = 'finalized'
-                io.write(string.format('%i -> finalized\n', k))
-                v.copy.free()
-                v.copy = nil
+                clone_synching[k] = v
+                v.state = 'clone_synching'
+                io.write(string.format('%i -> clone_synching\n', k))
             end
         end
     end
 
-    function pool.switch()
-        assert(pool.ready_to_switch())
-        for k, v in pairs(paused) do
-            paused[k] = nil
-            unpaused[k] = v
-            v.state = 'unpaused'
-            io.write(string.format('%i -> unpaused\n', k))
+    function pool.copy_sync()
+        assert(pool.copy_sync_ready())
+        for k, v in pairs(copy_synching) do
+            copy_synching[k] = nil
+            copy_synched[k] = v
+            v.state = 'copy_synched'
+            io.write(string.format('%i -> copy_synched\n', k))
         end
     end
 
-    function pool.ready_to_switch()
-        io.write(string.format('copying empty: %s, cloning empty: %s, paused empty: %s\n',
+    function pool.clone_sync()
+        assert(pool.clone_sync_ready())
+        for k, v in pairs(clone_synching) do
+            clone_synching[k] = nil
+            clone_synched[k] = v
+            v.state = 'clone_synched'
+            io.write(string.format('%i -> clone_synched\n', k))
+        end
+    end
+
+    function pool.copy_sync_ready()
+        io.write(string.format('copying empty: %s, copy_synching empty: %s\n',
                                tostring(util.empty(copying)),
+                               tostring(util.empty(copy_synching))))
+        return util.empty(copying) and not util.empty(copy_synching)
+    end
+
+    function pool.clone_sync_ready()
+        io.write(string.format('cloning empty: %s, clone_synching empty: %s\n',
                                tostring(util.empty(cloning)),
-                               tostring(util.empty(paused))))
-        return util.empty(copying) and util.empty(cloning) and
-               util.empty(unpaused) and not util.empty(paused)
+                               tostring(util.empty(clone_synching))))
+        return util.empty(cloning) and not util.empty(clone_synching)
     end
 
     function pool.alloc(size)
