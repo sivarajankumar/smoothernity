@@ -51,10 +51,7 @@ function M.alloc(x, y, z)
 
     -- resources
     do
-        vb.prepare()
-        ib.prepare()
         util.wait_state(true, 'prepared', vb, ib)
-
         vb.set(0,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
                     1,-1, 1,   0, 1, 0, 1,   0, 0,
                     1, 1, 1,   0, 0, 1, 1,   0, 0,

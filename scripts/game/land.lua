@@ -47,8 +47,6 @@ local function common_alloc(uid, noise, move, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
-    vb.prepare()
-    ib.prepare()
     util.wait_state(true, 'prepared', vb, ib)
 
     while thread.left() == 0 do
