@@ -6,7 +6,7 @@ local util = require 'core.util'
 local quit = require 'game.quit'
 
 local BUFFER = 20
-local REST = 400
+local REST = 50
 
 function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
