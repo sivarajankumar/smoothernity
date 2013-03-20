@@ -1,8 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
-local corepool = require 'core.corepool.corepool'
-local twin = require 'core.twin.twin'
+local corepool = require 'core.pool.pool'
 local util = require 'core.util'
 
 local MAX_MAP = 20
@@ -58,7 +57,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         return copy_pool.left(size)
     end
 
-    function pool.update()
+    function pool.update(twin_inactive)
         local count = 0
         for k, v in pairs(preparing) do
             if count < MAX_MAP then
@@ -97,7 +96,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                     unmapping[k] = nil
                     copying[k] = v
                     v.state = 'copying'
-                    res_api.copy(v.copy.res, v.twin(twin.inactive()),
+                    res_api.copy(v.copy.res, v.twin(twin_inactive),
                                  v.copy.start, v.start, v.size)
                 else
                     break
@@ -117,7 +116,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 unpaused[k] = nil
                 cloning[k] = v
                 v.state = 'cloning'
-                res_api.copy(v.copy.res, v.twin(twin.inactive()),
+                res_api.copy(v.copy.res, v.twin(twin_inactive),
                              v.copy.start, v.start, v.size)
             else
                 break

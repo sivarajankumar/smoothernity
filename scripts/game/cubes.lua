@@ -5,9 +5,8 @@ local pwld = require 'game.physwld'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
-local twinvbuf = require 'core.twin.vbuf'
-local twinibuf = require 'core.twin.ibuf'
-local twinmesh = require 'core.twin.mesh'
+local render = require 'core.render.render'
+local mesh = require 'core.render.mesh'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
@@ -16,8 +15,8 @@ local vector = require 'core.vector'
 function M.alloc(x, y, z)
     local self = {}
 
-    local vb = twinvbuf.alloc(8)
-    local ib = twinibuf.alloc(36)
+    local vb = render.vbuf_alloc(8)
+    local ib = render.ibuf_alloc(36, vb)
     local mbig = util.matrix_pos_stop(x, y, z)
     local mrb = matrix.alloc()
     local mloc = matrix.alloc()
@@ -50,9 +49,12 @@ function M.alloc(x, y, z)
         cs.free()
     end
 
-    -- vertex buffer
+    -- resources
     do
         vb.prepare()
+        ib.prepare()
+        util.wait_state(true, 'prepared', vb, ib)
+
         vb.set(0,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
                     1,-1, 1,   0, 1, 0, 1,   0, 0,
                     1, 1, 1,   0, 0, 1, 1,   0, 0,
@@ -61,20 +63,16 @@ function M.alloc(x, y, z)
                     1,-1,-1,   0, 0, 0, 1,   0, 0,
                     1, 1,-1,   1, 1, 0, 1,   0, 0,
                    -1, 1,-1,   1, 0, 1, 1,   0, 0)
-        vb.finalize()
-    end
+        ib.set(0,  0,1,2,  0,2,3,
+                   1,5,6,  1,6,2,
+                   5,4,7,  5,7,6,
+                   4,0,3,  4,3,7,
+                   3,2,6,  3,6,7,
+                   1,0,4,  1,4,5)
 
-    -- index buffer
-    do
-        ib.prepare()
-        local o = vb.start
-        ib.set(0,  o+0,o+1,o+2,  o+0,o+2,o+3,
-                   o+1,o+5,o+6,  o+1,o+6,o+2,
-                   o+5,o+4,o+7,  o+5,o+7,o+6,
-                   o+4,o+0,o+3,  o+4,o+3,o+7,
-                   o+3,o+2,o+6,  o+3,o+6,o+7,
-                   o+1,o+0,o+4,  o+1,o+4,o+5)
+        vb.finalize()
         ib.finalize()
+        util.wait_state(true, 'finalized', vb, ib)
     end
 
     -- matrices
@@ -101,10 +99,10 @@ function M.alloc(x, y, z)
 
     -- visual
     do
-        mesh_big = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                  shader.default(), mrb)
-        mesh_small = twinmesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                    shader.default(), msmall)
+        mesh_big = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                              shader.default(), mrb)
+        mesh_small = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                shader.default(), msmall)
     end
 
     return self
