@@ -9,7 +9,8 @@ local gui = require 'game.gui.gui'
 local query = require 'core.query'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
-local render = require 'core.render'
+local mesh = require 'core.render.mesh'
+local render = require 'core.render.render'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -153,16 +154,16 @@ local function visual_alloc()
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             api_render_proj(mproj3d.id())
-            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
+            mesh.draw(meshes.GROUP_LODS[lodi], draw_tag)
             mproj3d.free()
         end
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d.id())
         api_render_mview(mview2d.id())
-        render.mesh_draw(meshes.GROUP_GUI, draw_tag)
+        mesh.draw(meshes.GROUP_GUI, draw_tag)
 
         M.swap_time = api_timer()
-        api_render_swap()
+        render.finish_frame()
         M.swap_time = api_timer() - M.swap_time
 
         prof.draw_end()
@@ -178,9 +179,9 @@ local function visual_alloc()
         self.vclrcol.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
+            mesh.update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
-        render.mesh_update(meshes.GROUP_GUI, dt, update_tag)
+        mesh.update(meshes.GROUP_GUI, dt, update_tag)
     end
 
     return self
@@ -211,9 +212,9 @@ local function eagle_alloc()
             else
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
-            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
+            mesh.draw(meshes.GROUP_LODS[lodi], draw_tag)
         end
-        api_render_swap()
+        render.finish_frame()
 
         vclrcol.free()
         vclrdep.free()
@@ -223,7 +224,7 @@ local function eagle_alloc()
     function self.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
+            mesh.update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
     end
 
@@ -250,7 +251,7 @@ local function debug_alloc()
         api_render_proj(mproj3d.id())
         api_render_mview(self.mview3d.id())
         pwld.wld.ddraw()
-        api_render_swap()
+        render.finish_frame()
 
         vclrcol.free()
         vclrdep.free()

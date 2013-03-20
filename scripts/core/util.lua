@@ -8,6 +8,21 @@ local vector = require 'core.vector'
 
 local MAX_WAIT_TIME = 10
 
+function M.reduce_and(func, args)
+    for k, v in pairs(args) do
+        if not func(args) then
+            return false
+        end
+    end
+    return true
+end
+
+function M.wait_state(skip_frame, state, ...)
+    while not M.reduce_and(function(x) x.state == state end, {...}) do
+        coroutine.yield(skip_frame)
+    end
+end
+
 function M.empty(t) do
     for k, v in pairs(t) do
         return false
