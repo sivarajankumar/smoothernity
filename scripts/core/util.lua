@@ -18,7 +18,6 @@ function M.reduce_and(func, args)
 end
 
 function M.wait_state(skip_frame, state, ...)
-    io.write(string.format('waiting state "%s"\n', state))
     while not M.reduce_and(function(x) return x.state == state end, {...}) do
         coroutine.yield(skip_frame)
     end

@@ -101,14 +101,9 @@ end
 local function update_bufs()
     vbufs.update()
     ibufs.update()
-    io.write(string.format('switch_state: %s\n', switch_state))
     if switch_state == 'copying' then
         vbufs.update_copy(M.twin_inactive())
         ibufs.update_copy(M.twin_inactive())
-        io.write(string.format('ibufs ready: %s, vbufs ready: %s, switch_count: %i\n',
-                                tostring(ibufs.copy_sync_ready()),
-                                tostring(vbufs.copy_sync_ready()),
-                                switch_count))
         if vbufs.copy_sync_ready() and ibufs.copy_sync_ready() then
             switch_count = switch_count + 1
             if switch_count >= SWITCH_THRESH then
@@ -131,10 +126,6 @@ local function update_bufs()
     elseif switch_state == 'cloning' then
         vbufs.update_clone(M.twin_inactive())
         ibufs.update_clone(M.twin_inactive())
-        io.write(string.format('ibufs ready: %s, vbufs ready: %s, switch_count: %i\n',
-                                tostring(ibufs.clone_sync_ready()),
-                                tostring(vbufs.clone_sync_ready()),
-                                switch_count))
         if vbufs.clone_sync_ready() and ibufs.clone_sync_ready() then
             switch_count = switch_count + 1
             if switch_count >= SWITCH_THRESH then

@@ -67,7 +67,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 preparing[k] = nil
                 mapping[k] = v
                 v.state = 'mapping'
-                io.write(string.format('%i -> mapping\n', k))
                 v.copy = copy_pool.alloc(v.size)
                 res_api.map(v.copy.res, v.copy.start, v.copy.size)
             else
@@ -79,7 +78,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 mapping[k] = nil
                 prepared[k] = v
                 v.state = 'prepared'
-                io.write(string.format('%i -> prepared\n', k))
             end
         end
         for k, v in pairs(finalizing) do
@@ -88,7 +86,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 finalizing[k] = nil
                 unmapping[k] = v
                 v.state = 'unmapping'
-                io.write(string.format('%i -> unmapping\n', k))
                 res_api.unmap(v.copy.res)
             else
                 break
@@ -98,7 +95,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
             clone_synched[k] = nil
             finalized[k] = v
             v.state = 'finalized'
-            io.write(string.format('%i -> finalized\n', k))
             v.copy.free()
             v.copy = nil
         end
@@ -113,7 +109,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                     unmapping[k] = nil
                     copying[k] = v
                     v.state = 'copying'
-                    io.write(string.format('%i -> copying\n', k))
                     res_api.copy(v.copy.res, v.twin(twin_inactive),
                                  v.copy.start, v.start, v.size)
                 else
@@ -126,7 +121,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 copying[k] = nil
                 copy_synching[k] = v
                 v.state = 'copy_synching'
-                io.write(string.format('%i -> copy_synching\n', k))
             end
         end
     end
@@ -139,7 +133,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 copy_synched[k] = nil
                 cloning[k] = v
                 v.state = 'cloning'
-                io.write(string.format('%i -> cloning\n', k))
                 res_api.copy(v.copy.res, v.twin(twin_inactive),
                              v.copy.start, v.start, v.size)
             else
@@ -151,48 +144,33 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
                 cloning[k] = nil
                 clone_synching[k] = v
                 v.state = 'clone_synching'
-                io.write(string.format('%i -> clone_synching\n', k))
             end
         end
     end
 
     function pool.copy_sync()
         assert(pool.copy_sync_ready())
-        assert(util.empty(cloning))
-        assert(util.empty(clone_synching))
-        assert(util.empty(clone_synched))
         for k, v in pairs(copy_synching) do
             copy_synching[k] = nil
             copy_synched[k] = v
             v.state = 'copy_synched'
-            io.write(string.format('%i -> copy_synched\n', k))
         end
     end
 
     function pool.clone_sync()
         assert(pool.clone_sync_ready())
-        assert(util.empty(copying))
-        assert(util.empty(copy_synching))
-        assert(util.empty(copy_synched))
         for k, v in pairs(clone_synching) do
             clone_synching[k] = nil
             clone_synched[k] = v
             v.state = 'clone_synched'
-            io.write(string.format('%i -> clone_synched\n', k))
         end
     end
 
     function pool.copy_sync_ready()
-        io.write(string.format('copying empty: %s, copy_synching empty: %s\n',
-                               tostring(util.empty(copying)),
-                               tostring(util.empty(copy_synching))))
         return util.empty(copying) and not util.empty(copy_synching)
     end
 
     function pool.clone_sync_ready()
-        io.write(string.format('cloning empty: %s, clone_synching empty: %s\n',
-                               tostring(util.empty(cloning)),
-                               tostring(util.empty(clone_synching))))
         return util.empty(cloning) and not util.empty(clone_synching)
     end
 
@@ -210,14 +188,12 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         local id = next_id
         next_id = next_id + 1
 
-        io.write(string.format('%i -> preparing\n', id))
         chunk.state = 'preparing'
         preparing[id] = chunk
 
         function chunk.free()
             assert(chunk.state == 'finalized')
             chunk.state = 'vacant'
-            io.write(string.format('%i -> vacant\n', id))
             finalized[id] = nil
             for i = 0, cfg.TWINS - 1 do
                 twins[i].free()
@@ -231,7 +207,6 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         function chunk.finalize()
             assert(chunk.state == 'prepared')
             chunk.state = 'finalizing'
-            io.write(string.format('%i -> finalizing\n', id))
             prepared[id] = nil
             finalizing[id] = chunk
         end
