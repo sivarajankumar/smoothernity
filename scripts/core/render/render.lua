@@ -129,9 +129,13 @@ local function update_bufs()
     end
 end
 
-function M.finish_frame()
+function M.finish_frame(prof)
+    prof.upload_begin()
     update_bufs()
+    prof.upload_end()
+    prof.swap_begin()
     api_render_swap()
+    prof.swap_end()
 end
 
 return M

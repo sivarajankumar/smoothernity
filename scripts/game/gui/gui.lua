@@ -9,15 +9,19 @@ local color = require 'game.color'
 local textest = require 'game.gui.textest'
 
 local COLOR_GPU_LOGIC = color.BLUE_L
+local COLOR_GPU_CLEAR = color.PURPLE_D
 local COLOR_GPU_DRAW = color.GREEN
+local COLOR_GPU_UPLOAD = color.YELLOW
+local COLOR_GPU_SWAP = color.ORANGE
 local COLOR_CPU_CORE = color.RED
 local COLOR_CPU_CONTROL = color.YELLOW
 local COLOR_CPU_SLOWPOK = color.PURPLE
 local COLOR_CPU_WORK = COLOR_GPU_LOGIC
 local COLOR_CPU_RUPDATE = color.ORANGE_D
-local COLOR_CPU_RCLEAR = color.PURPLE_D
+local COLOR_CPU_RCLEAR = COLOR_GPU_CLEAR
 local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
-local COLOR_CPU_RSWAP = color.ORANGE
+local COLOR_CPU_RUPLOAD = COLOR_GPU_UPLOAD
+local COLOR_CPU_RSWAP = COLOR_GPU_SWAP
 
 local MAX_FRAMES = 600
 local THRESH = 1.1
@@ -81,7 +85,7 @@ end
 function M.init()
     bar.init()
     wait.init()
-    textest.init()
+    --textest.init()
 
     local sx, sy = util.camera_dims()
     local sizex, sizey = 0.5, 0.05
@@ -109,13 +113,14 @@ function M.init()
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
     gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         COLOR_GPU_LOGIC, COLOR_GPU_DRAW)
+                         COLOR_GPU_LOGIC, COLOR_GPU_CLEAR, COLOR_GPU_DRAW,
+                         COLOR_GPU_UPLOAD, COLOR_GPU_SWAP)
 
     posy = posy + sizey + 0.05
     cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                          COLOR_CPU_CORE, COLOR_CPU_CONTROL, COLOR_CPU_SLOWPOK,
                          COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
-                         COLOR_CPU_RDRAW, COLOR_CPU_RSWAP)
+                         COLOR_CPU_RDRAW, COLOR_CPU_RUPLOAD, COLOR_CPU_RSWAP)
 
     posy = posy + sizey + 0.05
     threadprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
@@ -139,7 +144,7 @@ function M.done()
     --ttest.free()
     bar.done()
     wait.done()
-    textest.done()
+    --textest.done()
 end
 
 return M

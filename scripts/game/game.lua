@@ -211,9 +211,9 @@ function M.run()
         slowpok_time = work_time - slowpok_time
         work_time = rupdate_time - work_time
         rupdate_time = rdraw_time - rupdate_time
-        rdraw_time = api_timer() - rdraw_time - render.clear_time - render.swap_time
         gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time,
-                      render.clear_time, rdraw_time, render.swap_time)
+                      render.prof.cpu.clear, render.prof.cpu.draw, render.prof.cpu.upload,
+                      render.prof.cpu.swap)
         gui.thread_times(api_thread_timings())
     end
 

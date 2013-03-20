@@ -19,9 +19,8 @@ local ORTHO_ZFAR = 1
 local FOG_NEAR = 10000
 local FOG_FAR = 12800
 
-M.clear_time = 0
-M.swap_time = 0
-local current, prof
+M.prof = nil
+local current
 local frame_tag = 1000
 
 local function make_frustum(znear, zfar, dist)
@@ -66,6 +65,12 @@ local function prof_scoped_alloc()
     local qlogic
     local fid = 0
 
+    self.cpu = {}
+    self.cpu.clear = 0
+    self.cpu.draw = 0
+    self.cpu.upload = 0
+    self.cpu.swap = 0
+
     function self.free()
         if qlogic ~= nil then
             qlogic.end_time()
@@ -73,7 +78,10 @@ local function prof_scoped_alloc()
         end
         for i, f in pairs(frames) do
             util.query_free(f.logic)
+            util.query_free(f.clear)
             util.query_free(f.draw)
+            util.query_free(f.upload)
+            util.query_free(f.swap)
         end
     end
 
@@ -87,7 +95,25 @@ local function prof_scoped_alloc()
         end
     end
 
+    function self.clear_begin()
+        self.cpu.clear = api_timer()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.clear = query.alloc()
+            frame.clear.begin_time()
+        end
+    end
+
+    function self.clear_end()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.clear.end_time()
+        end
+        self.cpu.clear = api_timer() - self.cpu.clear
+    end
+
     function self.draw_begin()
+        self.cpu.draw = api_timer()
         local frame = frames[fid]
         if frame ~= nil then
             frame.draw = query.alloc()
@@ -100,6 +126,41 @@ local function prof_scoped_alloc()
         if frame ~= nil then
             frame.draw.end_time()
         end
+        self.cpu.draw = api_timer() - self.cpu.draw
+    end
+
+    function self.upload_begin()
+        self.cpu.upload = api_timer()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.upload = query.alloc()
+            frame.upload.begin_time()
+        end
+    end
+
+    function self.upload_end()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.upload.end_time()
+        end
+        self.cpu.upload = api_timer() - self.cpu.upload
+    end
+
+    function self.swap_begin()
+        self.cpu.swap = api_timer()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.swap = query.alloc()
+            frame.swap.begin_time()
+        end
+    end
+
+    function self.swap_end()
+        local frame = frames[fid]
+        if frame ~= nil then
+            frame.swap.end_time()
+        end
+        self.cpu.swap = api_timer() - self.cpu.swap
     end
 
     function self.frame_end()
@@ -107,13 +168,21 @@ local function prof_scoped_alloc()
         qlogic.begin_time()
         fid = fid + 1
         for i, f in pairs(frames) do
-            if f.logic.idle() and f.draw.idle() then
+            if f.logic.idle() and f.draw.idle() and
+               f.clear.idle() and f.upload.idle() and f.swap.idle()
+            then
                 local logic = f.logic.result() * 0.000000001
+                local clear = f.clear.result() * 0.000000001
                 local draw = f.draw.result() * 0.000000001
-                gui.frame_time(logic + draw)
-                gui.gpu_times(logic, draw)
+                local upload = f.upload.result() * 0.000000001
+                local swap = f.swap.result() * 0.000000001
+                gui.frame_time(logic + clear + draw + upload + swap)
+                gui.gpu_times(logic, clear, draw, upload, swap)
                 f.logic.free()
+                f.clear.free()
                 f.draw.free()
+                f.upload.free()
+                f.swap.free()
                 frames[i] = nil
             end
         end
@@ -139,14 +208,15 @@ local function visual_alloc()
         local mproj2d = make_ortho()
         local mview2d = util.matrix_pos_stop(0, 0, 0)
 
-        prof.frame_begin()
-        prof.draw_begin()
+        M.prof.frame_begin()
 
-        M.clear_time = api_timer()
+        M.prof.clear_begin()
         api_render_clear_depth(vclrdep.id(), 0)
         api_render_clear_color(self.vclrcol.id())
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
-        M.clear_time = api_timer() - M.clear_time
+        M.prof.clear_end()
+
+        M.prof.draw_begin()
         api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
             local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
@@ -161,14 +231,11 @@ local function visual_alloc()
         api_render_proj(mproj2d.id())
         api_render_mview(mview2d.id())
         mesh.draw(meshes.GROUP_GUI, draw_tag)
+        M.prof.draw_end()
 
-        M.swap_time = api_timer()
-        render.finish_frame()
-        M.swap_time = api_timer() - M.swap_time
+        render.finish_frame(M.prof)
 
-        prof.draw_end()
-
-        prof.frame_end()
+        M.prof.frame_end()
 
         vclrdep.free()
         mproj2d.free()
@@ -287,14 +354,14 @@ function M.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
-    prof = prof_scoped_alloc()
+    M.prof = prof_scoped_alloc()
 end
 
 function M.done()
     M.visual.free()
     M.debug.free()
     M.eagle.free()
-    prof.free()
+    M.prof.free()
     render.done()
 end
 
