@@ -1,23 +1,18 @@
 local M = {}
+local util = require 'core.util'
 
 function M.alloc()
     local self = {}
     local cs = {}
-    local empty = true
+    local next_id = 0
     function self.plan(func)
-        empty = false
-        table.insert(cs, coroutine.create(func))
-    end
-    function self.empty()
-        return empty
+        cs[next_id] = coroutine.create(func)
+        next_id = next_id + 1
     end
     function self.run()
-        local keep_going = true
-        while keep_going do
+        while not util.empty(cs) do
             local skip_frame = false
-            keep_going = false
             for k, v in pairs(cs) do
-                keep_going = true
                 local res, arg = coroutine.resume(v)
                 if res then
                     if arg then
