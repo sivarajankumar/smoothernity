@@ -8,6 +8,13 @@ local vector = require 'core.vector'
 
 local MAX_WAIT_TIME = 10
 
+function M.empty(t) do
+    for k, v in pairs(t) do
+        return false
+    end
+    return true
+end
+
 function M.sync_read(uid)
     local f = io.open(uid, 'r')
     if f then

@@ -4,12 +4,12 @@ local cfg = require 'config'
 local util = require 'core.util'
 local pwld = require 'game.physwld'
 local meshes = require 'game.meshes'
-local twin = require 'core.twin.twin'
 local lod = require 'game.lod'
 local gui = require 'game.gui.gui'
 local query = require 'core.query'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
+local render = require 'core.render'
 
 local DEBUG_ZFAR = 200
 local EAGLE_ZFAR = 20000
@@ -153,13 +153,13 @@ local function visual_alloc()
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             api_render_proj(mproj3d.id())
-            api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
+            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
             mproj3d.free()
         end
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d.id())
         api_render_mview(mview2d.id())
-        api_mesh_draw(meshes.GROUP_GUI.twin(twin.active()), draw_tag)
+        render.mesh_draw(meshes.GROUP_GUI, draw_tag)
 
         M.swap_time = api_timer()
         api_render_swap()
@@ -178,9 +178,9 @@ local function visual_alloc()
         self.vclrcol.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
+            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
-        api_mesh_update(meshes.GROUP_GUI.twin(twin.active()), dt, update_tag)
+        render.mesh_update(meshes.GROUP_GUI, dt, update_tag)
     end
 
     return self
@@ -211,7 +211,7 @@ local function eagle_alloc()
             else
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
-            api_mesh_draw(meshes.GROUP_LODS[lodi].twin(twin.active()), draw_tag)
+            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
         end
         api_render_swap()
 
@@ -223,7 +223,7 @@ local function eagle_alloc()
     function self.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            api_mesh_update(meshes.GROUP_LODS[lodi].twin(twin.active()), dt * self.tscale, update_tag)
+            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
     end
 
@@ -282,6 +282,7 @@ function M.timescale(t)
 end
 
 function M.init()
+    render.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
@@ -293,6 +294,7 @@ function M.done()
     M.debug.free()
     M.eagle.free()
     prof.free()
+    render.done()
 end
 
 function M.engage(what)

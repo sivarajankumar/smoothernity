@@ -5,6 +5,10 @@ local corepool = require 'core.corepool.corepool'
 local twin = require 'core.twin.twin'
 local util = require 'core.util'
 
+local MAX_MAP = 20
+local MAX_UNMAP = 20
+local MAX_COPY = 20
+
 function M.sizes(twin_size, copy_size)
     local t = {}
     for i = 1, cfg.TWINS do
@@ -16,7 +20,7 @@ function M.sizes(twin_size, copy_size)
     return unpack(t)
 end
 
-function M.alloc(title, twin_size, copy_size, pool_dims)
+function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
     local pool = {}
     local pools = {}
     for i = 0, cfg.TWINS - 1 do
@@ -26,6 +30,18 @@ function M.alloc(title, twin_size, copy_size, pool_dims)
     local copy_pool = corepool.alloc(string.format('%s copy', title),
                                      copy_size, cfg.TWINS, cfg.COPIES,
                                      {[copy_size] = cfg.COPIES})
+
+    local preparing = {}
+    local mapping = {}
+    local prepared = {}
+    local finalizing = {}
+    local unmapping = {}
+    local copying = {}
+    local paused = {}
+    local unpaused = {}
+    local cloning = {}
+    local finalized = {}
+    local next_id = 0
 
     function pool.free()
         for i = 0, cfg.TWINS - 1 do
@@ -42,36 +58,130 @@ function M.alloc(title, twin_size, copy_size, pool_dims)
         return copy_pool.left(size)
     end
 
+    function pool.update()
+        local count = 0
+        for k, v in pairs(preparing) do
+            if count < MAX_MAP then
+                count = count + 1
+                preparing[k] = nil
+                mapping[k] = v
+                v.state = 'mapping'
+                v.copy = copy_pool.alloc(v.size)
+                res_api.map(v.copy.res, v.copy.start, v.copy.size)
+            else
+                break
+            end
+        end
+        for k, v in pairs(mapping) do
+            if not res_api.waiting(v.copy.res) then
+                mapping[k] = nil
+                prepared[k] = v
+                v.state = 'prepared'
+            end
+        end
+        for k, v in pairs(finalizing) do
+            if count < MAX_UNMAP then
+                count = count + 1
+                finalizing[k] = nil
+                unmapping[k] = v
+                v.state = 'unmapping'
+                res_api.unmap(v.copy.res)
+            else
+                break
+            end
+        end
+        for k, v in pairs(unmapping) do
+            if not res_api.waiting(v.copy.res) then
+                if count < MAX_COPY then
+                    count = count + 1
+                    unmapping[k] = nil
+                    copying[k] = v
+                    v.state = 'copying'
+                    res_api.copy(v.copy.res, v.twin(twin.inactive()),
+                                 v.copy.start, v.start, v.size)
+                else
+                    break
+                end
+            end
+        end
+        for k, v in pairs(copying) do
+            if not res_api.waiting(v.copy.res) then
+                copying[k] = nil
+                paused[k] = v
+                v.state = 'paused'
+            end
+        end
+        for k, v in pairs(unpaused) do
+            if count < MAX_COPY then
+                count = count + 1
+                unpaused[k] = nil
+                cloning[k] = v
+                v.state = 'cloning'
+                res_api.copy(v.copy.res, v.twin(twin.inactive()),
+                             v.copy.start, v.start, v.size)
+            else
+                break
+            end
+        end
+        for k, v in pairs(cloning) do
+            if not res_api.waiting(v.copy.res) then
+                cloning[k] = nil
+                finalized[k] = v
+                v.state = 'finalized'
+                v.copy.free()
+                v.copy = nil
+            end
+        end
+    end
+
+    function pool.switch()
+        assert(pool.ready_to_switch())
+        for k, v in pairs(paused) do
+            paused[k] = nil
+            unpaused[k] = v
+            v.state = 'unpaused'
+        end
+    end
+
+    function pool.ready_to_switch()
+        return util.empty(copying) and util.empty(cloning) and not util.empty(paused)
+    end
+
     function pool.alloc(size)
-        local chunks = {}
+        local twins = {}
         for i = 0, cfg.TWINS - 1 do
-            chunks[i] = pools[i].alloc(size)
+            twins[i] = pools[i].alloc(size)
         end
 
-        local state = 'preparing'
         local chunk = {}
-        chunk.size = chunks[0].size
-        chunk.start = chunks[0].start
+        chunk.size = twins[0].size
+        chunk.start = twins[0].start
         chunk.copy = nil
 
+        local id = next_id
+        next_id = next_id + 1
+
+        chunk.state = 'preparing'
+        preparing[id] = chunk
+
         function chunk.free()
-            assert(state == 'finalized')
+            assert(chunk.state == 'finalized')
+            chunk.state = 'vacant'
+            finalized[id] = nil
             for i = 0, cfg.TWINS - 1 do
-                chunks[i].free()
+                twins[i].free()
             end
         end
 
         function chunk.twin(i)
-            return chunks[i].res
-        end
-
-        function chunk.state()
-            return state
+            return twins[i].res
         end
 
         function chunk.finalize()
-            assert(state == 'prepared')
-            state = 'finalizing'
+            assert(chunk.state == 'prepared')
+            chunk.state = 'finalizing'
+            prepared[id] = nil
+            finalizing[id] = chunk
         end
 
         return chunk
