@@ -104,7 +104,6 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
         -- generate
         do
             local gx, gy, gz = world_to_grid(genx, 0, genz)
-            add_land(wrk, gz, gx)
             for z = zmin, zmax do
                 for x = xmin, xmax do
                     add_land(wrk, z, x)
