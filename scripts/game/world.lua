@@ -9,7 +9,6 @@ local util = require 'core.util'
 local lod = require 'game.lod'
 local vector = require 'core.vector'
 local worker = require 'core.worker'
-local twin = require 'core.twin.twin'
 
 local SCENE = 50
 
@@ -64,27 +63,11 @@ function M.alloc(uid, centx, centy, centz)
         generating = true
         vplayer.update(0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(vplayer.get())
-        local wrk = {}
-        wrk.create = worker.alloc()
-        wrk.prepare = worker.alloc()
-        wrk.generate = worker.alloc()
-        wrk.finalize1 = worker.alloc()
-        wrk.finalize2 = worker.alloc()
-        wrk.activate = worker.alloc()
+        local wrk = worker.alloc()
         for lodi = lod.count - 1, 0, -1 do
             planes[lodi].generate(wrk, wx, wy, wz)
         end
-        if not wrk.prepare.empty() then
-            wrk.create.run()
-            wrk.prepare.run(10)
-            wrk.generate.run()
-            wrk.finalize1.run(10)
-            util.sync_wait()
-            twin.swap()
-            wrk.finalize2.run(10)
-            util.sync_wait()
-            wrk.activate.run()
-        end
+        wrk.run()
         generating = false
     end
 

@@ -46,20 +46,10 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
         end
         if lands[z][x] == nil and not quit.requested() then
             local wx, wy, wz = grid_to_world(x, 0, z)
-            local land
-            wrk.create.plan(
+            wrk.plan(
                 function()
-                    land = landalloc(string.format('%s_land_%i_%i', uid, z, x),
-                                     noise, move, lodi, wx, wy, wz)
-                end)
-            wrk.prepare.plan(function() land.prepare() end)
-            wrk.generate.plan(function() land.generate() end)
-            wrk.finalize1.plan(function() land.finalize1() end)
-            wrk.finalize2.plan(function() land.finalize2() end)
-            wrk.activate.plan(
-                function()
-                    land.activate()
-                    lands[z][x] = land
+                    lands[z][x] = landalloc(string.format('%s_land_%i_%i', uid, z, x),
+                                            noise, move, lodi, wx, wy, wz)
                 end)
         end
     end

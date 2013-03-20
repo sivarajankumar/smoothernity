@@ -2,7 +2,7 @@ local M = {}
 
 local game = require 'game.game'
 local cfg = require 'config'
-local pool = require 'core.twin.pool'
+local pool = require 'core.render.pool'
 
 function M.configure()
     return {

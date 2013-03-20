@@ -1,14 +1,14 @@
 local M = {}
 
 local lod = require 'game.lod'
-local twinmesh = require 'core.twin.mesh'
+local mesh = require 'core.render.mesh'
 
 function M.init()
-    M.GROUP_HIDDEN = twinmesh.group()
-    M.GROUP_GUI = twinmesh.group()
+    M.GROUP_HIDDEN = mesh.group()
+    M.GROUP_GUI = mesh.group()
     M.GROUP_LODS = {}
     for i = 0, lod.count - 1 do
-        M.GROUP_LODS[i] = twinmesh.group()
+        M.GROUP_LODS[i] = mesh.group()
     end
     M.GROUP_NEAR = M.GROUP_LODS[lod.count - 1]
 end

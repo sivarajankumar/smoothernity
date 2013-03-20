@@ -3,10 +3,9 @@ local M = {}
 local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader'
-local twinibuf = require 'core.twin.ibuf'
-local twinvbuf = require 'core.twin.vbuf'
-local twinmesh = require 'core.twin.mesh'
-local twinshuni = require 'core.twin.shuni'
+local render = require 'core.render.render'
+local shuni = require 'core.render.shuni'
+local rendermesh = require 'core.render.mesh'
 local matrix = require 'core.matrix'
 
 local ibuf, vbuf
@@ -62,9 +61,9 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             stripe.mfinal = matrix.alloc()
             stripe.mlocal.pos_scl_rot(stripe.vpos, stripe.vscl, vzero, API_MATRIX_AXIS_X, 0)
             stripe.mfinal.mul(mroot, stripe.mlocal)
-            stripe.mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
-                                         shader.color(), stripe.mfinal)
-            stripe.ucol = twinshuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
+            stripe.mesh = rendermesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
+                                           shader.color(), stripe.mfinal)
+            stripe.ucol = shuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
             table.insert(stripes, stripe)
         end
     end
@@ -73,22 +72,22 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
 end
 
 function M.init()
-    do
-        vbuf = twinvbuf.alloc(4)
+        vbuf = render.vbuf_alloc(4)
+        ibuf = render.ibuf_alloc(6, vbuf)
+
         vbuf.prepare()
+        ibuf.prepare()
+        util.wait_state(true, 'prepared', vbuf, ibuf)
+
         vbuf.set(0, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
                     0, 0.5, 0,   1, 1, 1, 1,   0, 0,
                     1,-0.5, 0,   1, 1, 1, 1,   0, 0,
                     1, 0.5, 0,   1, 1, 1, 1,   0, 0)
-        vbuf.finalize()
-    end
-    do
-        ibuf = twinibuf.alloc(6)
-        local o = vbuf.start
-        ibuf.prepare()
-        ibuf.set(0,  o+1,o+0,o+2,  o+1,o+2,o+3)
+        ibuf.set(0,  1,0,2,  1,2,3)
+
         ibuf.finalize()
-    end
+        vbuf.finalize()
+        util.wait_state(true, 'finalized', vbuf, ibuf)
 end
 
 function M.done()
