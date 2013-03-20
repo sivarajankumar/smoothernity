@@ -10,7 +10,7 @@ local SWITCH_THRESH = 1
 local vbufs, ibufs, sync
 local twin = 0
 local switch_count = 0
-local switching = false
+local switch_state = 'copying'
 
 function M.twin_active()
     return twin
@@ -99,33 +99,59 @@ function M.ibuf_alloc(size, vbuf)
 end
 
 local function update_bufs()
-    vbufs.update_map()
-    ibufs.update_map()
-    if switching then
-        io.write('switching\n')
-        if sync.ready() then
-            switching = false
-            sync.free()
-            sync = nil
-            vbufs.switch()
-            ibufs.switch()
-            twin = M.twin_inactive()
-        end
-    else
+    vbufs.update()
+    ibufs.update()
+    io.write(string.format('switch_state: %s\n', switch_state))
+    if switch_state == 'copying' then
         vbufs.update_copy(M.twin_inactive())
         ibufs.update_copy(M.twin_inactive())
         io.write(string.format('ibufs ready: %s, vbufs ready: %s, switch_count: %i\n',
-                                tostring(ibufs.ready_to_switch()),
-                                tostring(vbufs.ready_to_switch()),
+                                tostring(ibufs.copy_sync_ready()),
+                                tostring(vbufs.copy_sync_ready()),
                                 switch_count))
-        if vbufs.ready_to_switch() and ibufs.ready_to_switch() then
+        if vbufs.copy_sync_ready() and ibufs.copy_sync_ready() then
             switch_count = switch_count + 1
             if switch_count >= SWITCH_THRESH then
-                switching = true
+                switch_count = 0
+                switch_state = 'copy_synching'
                 sync = coresync.alloc()
             end
         else
             switch_count = 0
+        end
+    elseif switch_state == 'copy_synching' then
+        if sync.ready() then
+            vbufs.copy_sync()
+            ibufs.copy_sync()
+            twin = M.twin_inactive()
+            sync.free()
+            sync = nil
+            switch_state = 'cloning'
+        end
+    elseif switch_state == 'cloning' then
+        vbufs.update_clone(M.twin_inactive())
+        ibufs.update_clone(M.twin_inactive())
+        io.write(string.format('ibufs ready: %s, vbufs ready: %s, switch_count: %i\n',
+                                tostring(ibufs.clone_sync_ready()),
+                                tostring(vbufs.clone_sync_ready()),
+                                switch_count))
+        if vbufs.clone_sync_ready() and ibufs.clone_sync_ready() then
+            switch_count = switch_count + 1
+            if switch_count >= SWITCH_THRESH then
+                switch_count = 0
+                switch_state = 'clone_synching'
+                sync = coresync.alloc()
+            end
+        else
+            switch_count = 0
+        end
+    elseif switch_state == 'clone_synching' then
+        if sync.ready() then
+            vbufs.clone_sync()
+            ibufs.clone_sync()
+            sync.free()
+            sync = nil
+            switch_state = 'copying'
         end
     end
 end
