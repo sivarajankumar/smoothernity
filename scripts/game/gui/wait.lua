@@ -4,9 +4,8 @@ local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
-local twinibuf = require 'core.twin.ibuf'
-local twinvbuf = require 'core.twin.vbuf'
-local twinmesh = require 'core.twin.mesh'
+local render = require 'core.render.render'
+local rendermesh = require 'core.render.mesh'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 
@@ -38,8 +37,8 @@ function M.alloc(x, y, r)
     vpos = util.vector_const(x, y, -0.5, 0)
     vscl = util.vector_const(r, r, 1, 0)
     mfinal.pos_scl_rot(vpos, vscl, vrot, API_MATRIX_AXIS_Z, 0)
-    mesh = twinmesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
-                          shader.default(), mfinal)
+    mesh = rendermesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
+                            shader.default(), mfinal)
     return self
 end
 
@@ -51,19 +50,22 @@ function M.init()
         local x2, y2 = cossin(90 + 120)
         local x3, y3 = cossin(90 + 120 + 120)
         local r, g, b, a = COLOR()
-        vbuf = twinvbuf.alloc(3)
+
+        vbuf = render.vbuf_alloc(3)
+        ibuf = render.ibuf_alloc(3, vbuf)
+
         vbuf.prepare()
+        ibuf.prepare()
+        util.wait_state(true, 'prepared', vbuf, ibuf)
+
         vbuf.set(0, x1,y1, 0,   r, g, b, a,   0, 0,
                     x2,y2, 0,   r, g, b, a,   0, 0,
                     x3,y3, 0,   r, g, b, a,   0, 0)
+        ibuf.set(0, 0,1,2)
+
         vbuf.finalize()
-    end
-    do
-        ibuf = twinibuf.alloc(3)
-        local o = vbuf.start
-        ibuf.prepare()
-        ibuf.set(0, o+0,o+1,o+2)
         ibuf.finalize()
+        util.wait_state(true, 'finalized', vbuf, ibuf)
     end
     do
         vrot = vector.alloc()

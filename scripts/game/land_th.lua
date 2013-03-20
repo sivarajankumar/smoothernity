@@ -5,19 +5,18 @@ local noise = require 'game.noise'
 local lod = require 'game.lod'
 local util = require 'core.util'
 local poolbuf = require 'core.pool.buf'
-local twinibuf = require 'core.twin.ibuf'
-local twinvbuf = require 'core.twin.vbuf'
+local render = require 'core.render'
 
 function M.thread_run(thi)
-    local uid, noise_state, hmap_state, vb_state, ib_state, vb_start, lodi, basx, basy, basz =
+    local uid, noise_state, hmap_state, vb_state, ib_state, lodi, basx, basy, basz =
         loadstring(api_thread_respond(thi, ''))()
 
     local size = lod.lods[lodi].size
     local res = lod.lods[lodi].res
     local nse = noise.restore(noise_state)
     local hmap = poolbuf.restore(hmap_state)
-    local vb = twinvbuf.restore(vb_state)
-    local ib = twinibuf.restore(ib_state)
+    local vb = render.vbuf_restore(vb_state)
+    local ib = render.ibuf_restore(ib_state)
 
     local function to_world(z, x)
         return basz + (z * size / (res-1)),
@@ -128,13 +127,12 @@ function M.thread_run(thi)
 
     -- index buffer
     do
-        local o = vb_start
         for z = 0, res - 2 do
             for x = 0, res - 2 do
-                local i00 = o + x + z * res
-                local i01 = o + x + (z + 1) * res
-                local i10 = o + (x + 1) + z * res
-                local i11 = o + (x + 1) + (z + 1) * res
+                local i00 = x + z * res
+                local i01 = x + (z + 1) * res
+                local i10 = (x + 1) + z * res
+                local i11 = (x + 1) + (z + 1) * res
                 local i = (x + z * (res - 1)) * 6
                 ib.set(i,  i00,i01,i10,  i10,i01,i11)
             end
