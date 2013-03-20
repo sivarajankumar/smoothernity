@@ -37,7 +37,6 @@ function M.alloc(uid, centx, centy, centz)
     local nse = noise.alloc(string.format('%s_noise', uid))
     local move = move_alloc(string.format('%s_move', uid))
     local vplayer = vector.alloc()
-    local generating = false
 
     function self.free()
         nse.free()
@@ -60,7 +59,6 @@ function M.alloc(uid, centx, centy, centz)
     end
 
     function self.generate()
-        generating = true
         vplayer.update(0, API_VECTOR_FORCED_UPDATE)
         local wx, wy, wz = self.scene_to_world(vplayer.get())
         local wrk = worker.alloc()
@@ -68,7 +66,6 @@ function M.alloc(uid, centx, centy, centz)
             planes[lodi].generate(wrk, wx, wy, wz)
         end
         wrk.run()
-        generating = false
     end
 
     function self.height(z, x)
