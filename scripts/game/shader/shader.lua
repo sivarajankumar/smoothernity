@@ -7,15 +7,15 @@ local shcolor, shdefault, shtex
 
 function M.init()
     shcolor = shprog.alloc()
-    shcolor.attach_frag(util.sync_read('./game/shader/color.fp'))
+    shcolor.attach_frag(util.sync_read('./game/shader/color.frag'))
     shcolor.link()
 
     shtex = shprog.alloc()
-    shtex.attach_frag(util.sync_read('./game/shader/tex.fp'))
+    shtex.attach_frag(util.sync_read('./game/shader/tex.frag'))
     shtex.link()
 
     shdefault = shprog.alloc()
-    shdefault.attach_frag(util.sync_read('./game/shader/default.fp'))
+    shdefault.attach_frag(util.sync_read('./game/shader/default.frag'))
     shdefault.link(shdefault)
 end
 

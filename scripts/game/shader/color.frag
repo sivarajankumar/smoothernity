@@ -3,3 +3,4 @@ void main()
 {
    gl_FragColor = color * gl_Color;
 }
+
