@@ -9,8 +9,8 @@ local SWITCH_THRESH = 10
 
 local vbufs, ibufs, sync
 local twin = 0
-local switch_count = 0
-local switch_state = 'copying'
+local upload_count = 0
+local upload_state = 'copying'
 
 function M.twin_active()
     return twin
@@ -98,33 +98,33 @@ function M.ibuf_alloc(size, vbuf)
     return self
 end
 
-local function update_bufs()
+local function upload()
     vbufs.update()
     ibufs.update()
-    if switch_state == 'copying' then
+    if upload_state == 'copying' then
         vbufs.update_copy(M.twin_inactive())
         ibufs.update_copy(M.twin_inactive())
         if vbufs.sync_copy_ready() and ibufs.sync_copy_ready() then
-            switch_count = switch_count + 1
-            if switch_count >= SWITCH_THRESH then
-                switch_count = 0
-                switch_state = 'synching'
+            upload_count = upload_count + 1
+            if upload_count >= SWITCH_THRESH then
+                upload_count = 0
+                upload_state = 'synching'
                 sync = coresync.alloc()
             end
         else
-            switch_count = 0
+            upload_count = 0
         end
-    elseif switch_state == 'synching' then
-        if sync.ready() or switch_count >= SWITCH_THRESH then
-            switch_count = 0
+    elseif upload_state == 'synching' then
+        if sync.ready() or upload_count >= SWITCH_THRESH then
+            upload_count = 0
             vbufs.sync_copy()
             ibufs.sync_copy()
             twin = M.twin_inactive()
             sync.free()
             sync = nil
-            switch_state = 'copying'
+            upload_state = 'copying'
         else
-            switch_count = switch_count + 1
+            upload_count = upload_count + 1
         end
     end
 end
@@ -132,7 +132,7 @@ end
 function M.finish_frame(prof)
     prof.cpu.rupload.start()
     prof.gpu.rupload.start()
-    update_bufs()
+    upload()
     prof.gpu.rupload.finish()
     prof.cpu.rupload.finish()
 
