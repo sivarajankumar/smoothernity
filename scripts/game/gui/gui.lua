@@ -70,7 +70,7 @@ end
 function M.init()
     bar.init()
     wait.init()
-    --textest.init()
+    textest.init()
 
     local sx, sy = util.camera_dims()
     local sizex, sizey = 0.5, 0.05
@@ -108,7 +108,7 @@ function M.init()
     threadprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                                prof.thread_color())
 
-    --ttest = textest.alloc(0, 0, 1)
+    ttest = textest.alloc(0, 0, 1)
 
     inited = true
 end
@@ -123,10 +123,10 @@ function M.done()
     frbar.free()
     fpsbar.free()
     wt.free()
-    --ttest.free()
+    ttest.free()
     bar.done()
     wait.done()
-    --textest.done()
+    textest.done()
 end
 
 return M
