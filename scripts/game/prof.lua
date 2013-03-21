@@ -1,7 +1,8 @@
 local M = {}
 
 local util = require 'core.util'
-local gui = require 'game.gui.gui'
+local color = require 'game.color'
+local query = require 'core.query'
 
 local fids = {}
 local last_fid = 0
@@ -21,11 +22,12 @@ end
 local function cpu_timer_alloc(color)
     local self = {}
     self.time = 0
+    self.color = color
     function self.start()
         self.time = api_timer()
     end
     function self.finish()
-        self.time = api_timer() - time
+        self.time = api_timer() - self.time
     end
     return self
 end
@@ -35,7 +37,7 @@ local function gpu_timer_alloc(color)
     local queries = {}
     self.color = color
     function self.free()
-        for k, v in queries do
+        for k, v in pairs(queries) do
             util.query_free(v)
         end
     end
@@ -48,12 +50,13 @@ local function gpu_timer_alloc(color)
         queries[last_fid].end_time()
     end
     function self.ready(fid)
-        return queries[fid].idle()
+        return queries[fid] ~= nil and queries[fid].idle()
     end
     function self.pop(fid)
         local res = queries[fid].result()
         queries[fid].free()
         queries[fid] = nil
+        return res
     end
     return self
 end
@@ -89,15 +92,12 @@ function M.init()
 end
 
 function M.done()
-    for k, v in pairs(M.cpu) do
-        v.free()
-    end
     for k, v in pairs(M.gpu) do
         v.free()
     end
 end
 
-function M.update()
+function M.update(gui)
     last_fid = last_fid + 1
     fids[last_fid] = true
     for fid, _ in pairs(fids) do
@@ -111,3 +111,5 @@ function M.update()
     gui.cpu_times(util.map(function(v) return v.time end, cpu_timers()))
     gui.thread_times(api_thread_timings())
 end
+
+return M
