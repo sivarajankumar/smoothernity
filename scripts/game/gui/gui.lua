@@ -5,7 +5,6 @@ local wait = require 'game.gui.wait'
 local util = require 'core.util'
 local cfg = require 'config'
 local guiprof = require 'game.gui.prof'
-local color = require 'game.color'
 local textest = require 'game.gui.textest'
 local prof = require 'game.prof'
 

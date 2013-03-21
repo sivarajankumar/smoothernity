@@ -215,7 +215,7 @@ function M.run()
 
         render.draw()
 
-        prof.update()
+        prof.update(gui)
     end
 
     render.done()

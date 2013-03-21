@@ -26,7 +26,7 @@ function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
         pools[i] = corepool.alloc(string.format('%s (twin %i)', title, i),
                                   twin_size, i, 1, pool_dims)
     end
-    local copy_pool = corepool.alloc(string.format('%s copy', title),
+    local copy_pool = corepool.alloc(string.format('%s (copy)', title),
                                      copy_size, cfg.TWINS, cfg.COPIES,
                                      {[copy_size] = cfg.COPIES})
 
