@@ -2,7 +2,7 @@ local M = {}
 
 local util = require 'core.util'
 local meshes = require 'game.meshes'
-local shader = require 'game.shader'
+local shader = require 'game.shader.shader'
 local poolbuf = require 'core.pool.buf'
 local render = require 'core.render.render'
 local rendermesh = require 'core.render.mesh'
