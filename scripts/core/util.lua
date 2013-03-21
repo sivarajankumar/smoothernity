@@ -17,6 +17,14 @@ function M.reduce_and(func, args)
     return true
 end
 
+function M.map(func, args)
+    local res = {}
+    for k, v in pairs(args) do
+        res[k] = func(v)
+    end
+    return res
+end
+
 function M.wait_state(skip_frame, state, ...)
     while not M.reduce_and(function(x) return x.state == state end, {...}) do
         coroutine.yield(skip_frame)

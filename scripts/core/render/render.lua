@@ -130,12 +130,17 @@ local function update_bufs()
 end
 
 function M.finish_frame(prof)
-    prof.upload_begin()
+    prof.cpu.rupload.start()
+    prof.gpu.rupload.start()
     update_bufs()
-    prof.upload_end()
-    prof.swap_begin()
+    prof.gpu.rupload.finish()
+    prof.cpu.rupload.finish()
+
+    prof.cpu.rswap.start()
+    prof.gpu.rswap.start()
     api_render_swap()
-    prof.swap_end()
+    prof.gpu.rswap.finish()
+    prof.cpu.rswap.finish()
 end
 
 return M

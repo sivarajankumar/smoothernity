@@ -4,24 +4,10 @@ local bar = require 'game.gui.bar'
 local wait = require 'game.gui.wait'
 local util = require 'core.util'
 local cfg = require 'config'
-local prof = require 'game.gui.prof'
+local guiprof = require 'game.gui.prof'
 local color = require 'game.color'
 local textest = require 'game.gui.textest'
-
-local COLOR_GPU_LOGIC = color.BLUE_L
-local COLOR_GPU_CLEAR = color.PURPLE_D
-local COLOR_GPU_DRAW = color.GREEN
-local COLOR_GPU_UPLOAD = color.YELLOW
-local COLOR_GPU_SWAP = color.ORANGE
-local COLOR_CPU_CORE = color.RED
-local COLOR_CPU_CONTROL = color.YELLOW
-local COLOR_CPU_SLOWPOK = color.PURPLE
-local COLOR_CPU_WORK = COLOR_GPU_LOGIC
-local COLOR_CPU_RUPDATE = color.ORANGE_D
-local COLOR_CPU_RCLEAR = COLOR_GPU_CLEAR
-local COLOR_CPU_RDRAW = COLOR_GPU_DRAW
-local COLOR_CPU_RUPLOAD = COLOR_GPU_UPLOAD
-local COLOR_CPU_RSWAP = COLOR_GPU_SWAP
+local prof = require 'game.prof'
 
 local MAX_FRAMES = 600
 local THRESH = 1.1
@@ -64,15 +50,15 @@ function M.frame_time(value)
     fpsbar.set(x, 1 - x)
 end
 
-function M.gpu_times(...)
+function M.gpu_times(args)
     if inited then
-        gpuprof.set(...)
+        gpuprof.set(unpack(args))
     end
 end
 
-function M.cpu_times(...)
+function M.cpu_times(args)
     if inited then
-        cpuprof.set(...)
+        cpuprof.set(unpack(args))
     end
 end
 
@@ -112,19 +98,16 @@ function M.init()
     sizex, sizey = 0.5, 0.15
     posx, posy = sx - sizex - 0.1, -sy + 0.1
 
-    gpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         COLOR_GPU_LOGIC, COLOR_GPU_CLEAR, COLOR_GPU_DRAW,
-                         COLOR_GPU_UPLOAD, COLOR_GPU_SWAP)
+    gpuprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
+                            prof.gpu_colors())
 
     posy = posy + sizey + 0.05
-    cpuprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                         COLOR_CPU_CORE, COLOR_CPU_CONTROL, COLOR_CPU_SLOWPOK,
-                         COLOR_CPU_WORK, COLOR_CPU_RUPDATE, COLOR_CPU_RCLEAR,
-                         COLOR_CPU_RDRAW, COLOR_CPU_RUPLOAD, COLOR_CPU_RSWAP)
+    cpuprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
+                            prof.cpu_colors())
 
     posy = posy + sizey + 0.05
-    threadprof = prof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
-                            COLOR_CPU_WORK)
+    threadprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
+                               prof.thread_color())
 
     --ttest = textest.alloc(0, 0, 1)
 
