@@ -32,6 +32,7 @@ local key = require 'core.key'
 local shader = require 'game.shader'
 local poolbuf = require 'core.pool.buf'
 local poolpbuf = require 'core.pool.pbuf'
+local prof = require 'game.prof'
 
 local LOGIC_TIME = 0.013
 local GC_STEP = 10
@@ -79,6 +80,7 @@ function M.run()
     poolpbuf.init()
     shader.init()
     pwld.init()
+    prof.init()
     render.init()
 
     local wld, cbs, car, camc, camd, camsw
@@ -181,43 +183,43 @@ function M.run()
        or coroutine.status(work) ~= 'dead'
     do
         local logic_time = api_timer()
-        local core_time = logic_time
 
+        prof.gpu.logic.start()
+
+        prof.cpu.core.start()
         if created then
             wld.move(car, camc)
         end
-
         pwld.wld.update(cfg.FRAME_TIME)
         api_input_update()
         collectgarbage('step', GC_STEP)
+        prof.cpu.core.finish()
 
-        local control_time = api_timer()
+        prof.cpu.control.start()
         run_co(control, logic_time, 0)
+        prof.cpu.control.finish()
 
-        local slowpok_time = api_timer()
+        prof.cpu.slowpok.start()
         run_co(slowpok, logic_time, 0)
+        prof.cpu.slowpok.finish()
 
-        local work_time = api_timer()
+        prof.cpu.work.start()
         run_co(work, logic_time, LOGIC_TIME)
+        prof.cpu.work.finish()
 
-        local rupdate_time = api_timer()
+        prof.cpu.rupdate.start()
         render.update()
+        prof.cpu.rupdate.finish()
 
-        local rdraw_time = api_timer()
+        prof.gpu.logic.finish()
+
         render.draw()
 
-        core_time = control_time - core_time
-        control_time = slowpok_time - control_time
-        slowpok_time = work_time - slowpok_time
-        work_time = rupdate_time - work_time
-        rupdate_time = rdraw_time - rupdate_time
-        gui.cpu_times(core_time, control_time, slowpok_time, work_time, rupdate_time,
-                      render.prof.cpu.clear, render.prof.cpu.draw, render.prof.cpu.upload,
-                      render.prof.cpu.swap)
-        gui.thread_times(api_thread_timings())
+        prof.update()
     end
 
     render.done()
+    prof.done()
     pwld.done()
     shader.done()
     poolpbuf.done()

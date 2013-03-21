@@ -30,7 +30,7 @@ local function make_query(qi)
         api_query_end(qi)
     end
     function self.result()
-        return api_query_result(qi)
+        return api_query_result(qi) * 0.000000001
     end
     return self
 end
