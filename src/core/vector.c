@@ -583,12 +583,12 @@ int vector_nesting(struct vector_t *vector, int limit)
         return limit;
 }
 
-static float vector_seq_dt(struct vector_t *v, int i)
+static float vector_seq_dt(int i)
 {
     return g_bufs.data[i + 4];
 }
 
-static float * vector_seq_value(struct vector_t *v, int i)
+static float * vector_seq_value(int i)
 {
     return g_bufs.data + i;
 }
@@ -737,16 +737,16 @@ static void vector_update_seq(struct vector_t *v, float dt)
     v->seq_t += dt;
     for (i = 0; i < SEQ_SKIP_MAX; ++i)
     {
-        if (v->seq_t < vector_seq_dt(v, v->seq_cur))
+        if (v->seq_t < vector_seq_dt(v->seq_cur))
             break;
-        v->seq_t -= vector_seq_dt(v, v->seq_cur);
+        v->seq_t -= vector_seq_dt(v->seq_cur);
         v->seq_cur = vector_seq_next(v, v->seq_cur);
     }
     if (v->seq_ipl == VECTOR_IPL_LINEAR)
     {
-        v0 = vector_seq_value(v, v->seq_cur);
-        v1 = vector_seq_value(v, vector_seq_next(v, v->seq_cur));
-        t = v->seq_t / vector_seq_dt(v, v->seq_cur);
+        v0 = vector_seq_value(v->seq_cur);
+        v1 = vector_seq_value(vector_seq_next(v, v->seq_cur));
+        t = v->seq_t / vector_seq_dt(v->seq_cur);
         for (i = 0; i < 4; ++i)
             v->value[i] = interp_linear(t, v0[i], v1[i]);
     }
@@ -757,12 +757,12 @@ static void vector_update_seq(struct vector_t *v, float dt)
         i2 = vector_seq_next(v, v->seq_cur);
         i3 = vector_seq_next(v, i2);
 
-        v0 = vector_seq_value(v, i0);
-        v1 = vector_seq_value(v, i1);
-        v2 = vector_seq_value(v, i2);
-        v3 = vector_seq_value(v, i3);
+        v0 = vector_seq_value(i0);
+        v1 = vector_seq_value(i1);
+        v2 = vector_seq_value(i2);
+        v3 = vector_seq_value(i3);
 
-        t = v->seq_t / vector_seq_dt(v, v->seq_cur);
+        t = v->seq_t / vector_seq_dt(v->seq_cur);
         for (i = 0; i < 4; ++i)
             v->value[i] = interp_spline(t, v0[i], v1[i], v2[i], v3[i]);
     }

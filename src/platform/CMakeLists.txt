@@ -5,7 +5,7 @@ include_directories(${GLEW_INCLUDE_DIRS})
 if ("${PLATFORM}" STREQUAL "WINDOWS")
     add_library(platform timer_win.c render_win.c shell_win.c)
 elseif ("${PLATFORM}" STREQUAL "LINUX")
-    add_library(platform timer_posix.c)
+    add_library(platform timer_posix.c render_posix.c shell_posix.c)
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

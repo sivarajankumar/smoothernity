@@ -47,7 +47,7 @@ static float buf_get_linear(int start, int width, int length, float x, float y)
 
 static float buf_get_spline(int start, int width, int length, float x, float y)
 {
-    float fx, fy, cx, cy;
+    float fx, fy;
     float v00, v01, v02, v03;
     float v10, v11, v12, v13;
     float v20, v21, v22, v23;
@@ -55,8 +55,6 @@ static float buf_get_spline(int start, int width, int length, float x, float y)
     float v0y, v1y, v2y, v3y;
     fx = floorf(x);
     fy = floorf(y);
-    cx = ceilf(x);
-    cy = ceilf(y);
     v00 = buf_get_nearest(start, width, length, (int)(fx - 1.0f), (int)(fy - 1.0f));
     v01 = buf_get_nearest(start, width, length, (int)(fx - 1.0f), (int)fy);
     v02 = buf_get_nearest(start, width, length, (int)(fx - 1.0f), (int)(fy + 1.0f));

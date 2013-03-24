@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static const size_t MPOOL_SIZE = 16;
+static const size_t MPOOL_SIZE = 32;
 static const size_t MPOOL_CHUNK_SIZE = 32;
 static const size_t MPOOL_SHELF_SIZE = 64;
 static const size_t MPOOL_DATA_ALIGN = 16;
