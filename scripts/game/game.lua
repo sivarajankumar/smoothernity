@@ -22,6 +22,7 @@ local gui = require 'game.gui.gui'
 local quit = require 'game.quit'
 local query = require 'core.query'
 local mesh = require 'core.mesh'
+local tex = require 'core.tex'
 local shprog = require 'core.shprog'
 local shuni = require 'core.shuni'
 local thread = require 'core.thread'
@@ -81,6 +82,7 @@ function M.run()
     shader.init()
     pwld.init()
     prof.init()
+    tex.init()
     render.init()
 
     local wld, cbs, car, camc, camd, camsw
@@ -219,6 +221,7 @@ function M.run()
     end
 
     render.done()
+    tex.done()
     prof.done()
     pwld.done()
     shader.done()
