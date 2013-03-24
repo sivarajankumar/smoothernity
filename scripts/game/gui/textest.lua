@@ -57,8 +57,7 @@ function M.init()
         vtexlayer = util.vector_const(TEX_LAYER, 0, 0, 0)
     end
     do
-        local sizelog, layers = unpack(cfg.TEX_POOL[TEX_UNIT+1])
-        local size = math.pow(2, sizelog)
+        local size, layers = unpack(cfg.TEX_POOL[TEX_UNIT+1])
         pbuf = poolpbuf.alloc(size * size)
         api_pbuf_map(pbuf.res, pbuf.start, pbuf.size)
         while api_pbuf_waiting(pbuf.res) do

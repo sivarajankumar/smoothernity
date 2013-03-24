@@ -16,7 +16,7 @@ struct tex_init_t
 struct tex_t
 {
     GLuint tex_id;
-    int size; /* log2 */
+    int size;
     int layers;
 };
 
@@ -39,6 +39,14 @@ static struct tex_t * tex_get(int texi)
         return (struct tex_t*)(g_texs.pool + TEX_SIZE * texi);
     else
         return 0;
+}
+
+static int log2(int v)
+{
+    int res = 0;
+    while (v >>= 1)
+        ++res;
+    return res;
 }
 
 static int api_tex_set(lua_State *lua)
@@ -73,7 +81,7 @@ static int api_tex_set(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (mip < 0 || mip > tex->size)
+    if (mip < 0 || mip > log2(tex->size))
     {
         lua_pushstring(lua, "api_tex_set: invalid mip");
         lua_error(lua);
@@ -85,8 +93,8 @@ static int api_tex_set(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (xsize <= 0 || xofs < 0 || xofs > (1 << tex->size) - xsize
-    ||  ysize <= 0 || yofs < 0 || yofs > (1 << tex->size) - ysize)
+    if (xsize <= 0 || xofs < 0 || xofs > tex->size - xsize
+    ||  ysize <= 0 || yofs < 0 || yofs > tex->size - ysize)
     {
         lua_pushstring(lua, "api_tex_set: invalid xy range");
         lua_error(lua);
@@ -162,14 +170,19 @@ int tex_init(lua_State *lua, int *sizes, int len)
     for (i = 0; i < g_texs.count; ++i)
     {
         tinit = (struct tex_init_t*)sizes + i;
+        if ((tinit->size & (tinit->size-1)) != 0)
+        {
+            fprintf(stderr, "Invalid sizes:\nsize == %i\n", tinit->size);
+            goto cleanup;
+        }
         tex = tex_get(i);
         tex->size = tinit->size;
         tex->layers = tinit->layers;
         glGenTextures(1, &tex->tex_id);
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, tex->tex_id);
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, tex->size + 1, GL_RGBA8,
-                       1 << tex->size, 1 << tex->size, tex->layers);
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, log2(tex->size) + 1, GL_RGBA8,
+                       tex->size, tex->size, tex->layers);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER,
                         GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
