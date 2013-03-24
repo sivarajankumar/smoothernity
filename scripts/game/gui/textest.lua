@@ -9,12 +9,12 @@ local render = require 'core.render.render'
 local shuni = require 'core.render.shuni'
 local rendermesh = require 'core.render.mesh'
 local matrix = require 'core.matrix'
+local coretex = require 'core.tex'
 
-local TEX_UNIT = 0
-local TEX_LAYER = 0
 local TEX_MIP = 0
+local TEX_SIZE = 256
 
-local ibuf, vbuf, vtexlayer
+local ibuf, vbuf, tex, vtexlayer
 
 function M.alloc(x, y, r)
     local self = {}
@@ -31,7 +31,7 @@ function M.alloc(x, y, r)
         mfinal = util.matrix_pos_scl_stop(x,y,-0.5,  r,r,1)
         mesh = rendermesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
                                 shader.texture(), mfinal)
-        utexunit = shuni.alloc_int(shader.texture(), mesh, 'texunit', TEX_UNIT)
+        utexunit = shuni.alloc_int(shader.texture(), mesh, 'texunit', tex.unit())
         utexlayer = shuni.alloc_vector(shader.texture(), mesh, 'texlayer', vtexlayer)
     end
     return self
@@ -54,22 +54,22 @@ function M.init()
         util.wait_state(true, 'finalized', vbuf, ibuf)
     end
     do
-        vtexlayer = util.vector_const(TEX_LAYER, 0, 0, 0)
+        tex = coretex.alloc(TEX_SIZE)
+        vtexlayer = util.vector_const(tex.layer(), 0, 0, 0)
     end
     do
-        local size, layers = unpack(cfg.TEX_POOL[TEX_UNIT+1])
-        pbuf = poolpbuf.alloc(size * size)
+        pbuf = poolpbuf.alloc(tex.size() * tex.size())
         api_pbuf_map(pbuf.res, pbuf.start, pbuf.size)
         while api_pbuf_waiting(pbuf.res) do
             coroutine.yield(true)
         end
-        for y = 0, size-1 do
-            for x = 0, size-1 do
+        for y = 0, tex.size()-1 do
+            for x = 0, tex.size()-1 do
                 local r = ((x + y) % 16) / 16
                 local g = ((x + y) % 32) / 32
                 local b = ((x + y) % 64) / 64
                 local a = 1
-                api_pbuf_set(pbuf.res, pbuf.start + x + y*size,
+                api_pbuf_set(pbuf.res, pbuf.start + x + y*tex.size(),
                              r, g, b, a)
                 coroutine.yield(false)
             end
@@ -78,7 +78,8 @@ function M.init()
         while api_pbuf_waiting(pbuf.res) do
             coroutine.yield(true)
         end
-        api_tex_set(TEX_UNIT, pbuf.res, pbuf.start, TEX_LAYER, TEX_MIP, 0, 0, size, size)
+        api_tex_set(tex.unit(), pbuf.res, pbuf.start, tex.layer(),
+                    TEX_MIP, 0, 0, tex.size(), tex.size())
         pbuf.free()
     end
 end
@@ -86,6 +87,7 @@ end
 function M.done()
     vbuf.free()
     ibuf.free()
+    tex.free()
     vtexlayer.free()
 end
 
