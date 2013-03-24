@@ -4,7 +4,7 @@ static struct timeval g_pfm_timer;
 
 int pfm_timer_init(void)
 {
-    gettimeofday(&g_timer, 0);
+    gettimeofday(&g_pfm_timer, 0);
     return 0;
 }
 

@@ -14,7 +14,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-static const size_t THREAD_DATA_SIZE = 64;
+static const size_t THREAD_DATA_SIZE = 128;
 
 enum thread_state_e
 {
