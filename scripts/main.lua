@@ -3,6 +3,7 @@ local M = {}
 local game = require 'game.game'
 local cfg = require 'config'
 local pool = require 'core.render.pool'
+local tex = require 'core.tex'
 
 function M.configure()
     return {
@@ -24,15 +25,7 @@ function M.configure()
             ibuf = function() return pool.sizes(cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE) end,
             pbuf_size = cfg.PBUF_SIZE,
             pbuf_count = cfg.PBUF_COUNT,
-            tex = function()
-                local t = {}
-                for i, p in ipairs(cfg.TEX_POOL) do
-                    local size, layers = unpack(p)
-                    table.insert(t, size)
-                    table.insert(t, layers)
-                end
-                return unpack(t)
-            end,
+            tex = tex.sizes_layers,
             vector_count = cfg.VECTOR_COUNT,
             vector_nesting = 20,
             matrix_count = cfg.MATRIX_COUNT,

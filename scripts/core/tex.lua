@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local util = require 'core.util'
 
 local shelves = {}
 
@@ -41,10 +42,19 @@ local function make_tex(shelf, id, unit, layer)
     return self
 end
 
+function M.sizes_layers()
+    local t = {}
+    for _, s in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
+        table.insert(t, s)
+        table.insert(t, cfg.TEX_POOL[s])
+    end
+    return unpack(t)
+end
+
 function M.init()
     local id = 0
-    for k, v in pairs(cfg.TEX_POOL) do
-        local size, layers = unpack(v)
+    for k, size in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
+        local layers = cfg.TEX_POOL[size]
         local unit = k - 1
         if shelves[size] == nil then
             shelves[size] = make_shelf(size)
@@ -61,10 +71,7 @@ function M.init()
 end
 
 function M.done()
-    local sizes = {}
-    for s in pairs(shelves) do table.insert(sizes, s) end
-    table.sort(sizes)
-    for _, s in ipairs(sizes) do
+    for _, s in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
         local shelf = shelves[s]
         io.write(string.format('Textures pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
             s, shelf.count - shelf.left_min, shelf.count, shelf.allocs, shelf.frees))
