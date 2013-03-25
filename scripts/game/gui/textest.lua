@@ -4,10 +4,10 @@ local cfg = require 'config'
 local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
-local poolpbuf = require 'core.pool.pbuf'
 local rendershuni = require 'core.render.shuni'
 local rendermesh = require 'core.render.mesh'
 local renderibuf = require 'core.render.ibuf'
+local renderpbuf = require 'core.render.pbuf'
 local rendervbuf = require 'core.render.vbuf'
 local matrix = require 'core.matrix'
 local coretex = require 'core.tex'
@@ -59,9 +59,9 @@ function M.init()
         vtexlayer = util.vector_const(tex.layer(), 0, 0, 0)
     end
     do
-        pbuf = poolpbuf.alloc(tex.size() * tex.size())
-        api_pbuf_map(pbuf.res, pbuf.start, pbuf.size)
-        while api_pbuf_waiting(pbuf.res) do
+        pbuf = renderpbuf.alloc(tex.size() * tex.size())
+        api_pbuf_map(pbuf.id(), 0, tex.size() * tex.size())
+        while api_pbuf_waiting(pbuf.id()) do
             coroutine.yield(true)
         end
         for y = 0, tex.size()-1 do
@@ -70,16 +70,15 @@ function M.init()
                 local g = ((x + y) % 32) / 32
                 local b = ((x + y) % 64) / 64
                 local a = 1
-                api_pbuf_set(pbuf.res, pbuf.start + x + y*tex.size(),
-                             r, g, b, a)
+                pbuf.set(x, y, r, g, b, a)
                 coroutine.yield(false)
             end
         end
-        api_pbuf_unmap(pbuf.res)
-        while api_pbuf_waiting(pbuf.res) do
+        api_pbuf_unmap(pbuf.id())
+        while api_pbuf_waiting(pbuf.id()) do
             coroutine.yield(true)
         end
-        api_tex_set(tex.unit(), pbuf.res, pbuf.start, tex.layer(),
+        api_tex_set(tex.unit(), pbuf.id(), 0, tex.layer(),
                     TEX_MIP, 0, 0, tex.size(), tex.size())
         pbuf.free()
     end
