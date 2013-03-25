@@ -149,7 +149,7 @@ function M.alloc(title, pool_dims, res_api)
     end
 
     function pool.sync_copy_ready()
-        return util.empty(copying) and not util.empty(synching)
+        return util.empty(copying)
     end
 
     function pool.alloc(size)
