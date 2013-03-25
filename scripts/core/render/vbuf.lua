@@ -56,6 +56,10 @@ function M.sync_copy_ready()
     return vbufs.sync_copy_ready()
 end
 
+function M.need_sync()
+    return vbufs.need_sync()
+end
+
 function M.sync_copy()
     vbufs.sync_copy()
 end

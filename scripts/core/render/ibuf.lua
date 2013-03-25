@@ -65,6 +65,10 @@ function M.sync_copy_ready()
     return ibufs.sync_copy_ready()
 end
 
+function M.need_sync()
+    return ibufs.need_sync()
+end
+
 function M.sync_copy()
     ibufs.sync_copy()
 end
