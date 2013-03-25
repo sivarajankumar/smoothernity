@@ -31,7 +31,7 @@ end
 
 local function make_base_pbuf(size, id)
     local self = {}
-    local side = math.sqrt(shelf.size)
+    local side = math.sqrt(size)
     function self.set(x, y, ...)
         api_pbuf_set(id, x + y*side, ...)
     end
