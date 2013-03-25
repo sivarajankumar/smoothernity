@@ -16,6 +16,14 @@ function M.restore_chunk(state)
     return make_base_chunk(size, start, res)
 end
 
+function M.size(pool_dims)
+    local size = 0
+    for k, v in pairs(pool_dims) do
+        size = size + k * v
+    end
+    return size
+end
+
 function M.alloc(title, res_size, res_start, res_count, pool_dims)
     local self = {}
     local shelves = {}

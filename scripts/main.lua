@@ -2,6 +2,7 @@ local M = {}
 
 local game = require 'game.game'
 local cfg = require 'config'
+local buf = require 'core.pool.buf'
 local ibuf = require 'core.render.ibuf'
 local vbuf = require 'core.render.vbuf'
 local tex = require 'core.tex'
@@ -35,7 +36,7 @@ function M.configure()
             colshape_count = cfg.COLSHAPE_COUNT,
             rigidbody_count = cfg.RIGIDBODY_COUNT,
             vehicle_count = cfg.VEHICLE_COUNT,
-            buf_size = cfg.BUF_SIZE,
+            buf_size = buf.size(),
             shuni_count = cfg.SHUNI_COUNT,
             shprog_count = cfg.SHPROG_COUNT,
             sync_count = cfg.SYNC_COUNT,

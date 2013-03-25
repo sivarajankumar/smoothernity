@@ -6,11 +6,15 @@ local pool = require 'core.pool.pool'
 local bufs
 
 function M.init()
-    bufs = pool.alloc('Buffers', cfg.BUF_SIZE, 0, 1, cfg.BUF_POOL)
+    bufs = pool.alloc('Buffers', M.size(), 0, 1, cfg.BUF_POOL)
 end
 
 function M.done()
     bufs.free()
+end
+
+function M.size()
+    return pool.size(cfg.BUF_POOL)
 end
 
 function M.alloc(size)
