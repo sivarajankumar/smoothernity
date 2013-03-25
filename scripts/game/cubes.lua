@@ -5,8 +5,9 @@ local pwld = require 'game.physwld'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
 local poolbuf = require 'core.pool.buf'
-local render = require 'core.render.render'
-local mesh = require 'core.render.mesh'
+local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
@@ -15,8 +16,8 @@ local vector = require 'core.vector'
 function M.alloc(x, y, z)
     local self = {}
 
-    local vb = render.vbuf_alloc(8)
-    local ib = render.ibuf_alloc(36, vb)
+    local vb = rendervbuf.alloc(8)
+    local ib = renderibuf.alloc(36, vb)
     local mbig = util.matrix_pos_stop(x, y, z)
     local mrb = matrix.alloc()
     local mloc = matrix.alloc()
@@ -96,10 +97,10 @@ function M.alloc(x, y, z)
 
     -- visual
     do
-        mesh_big = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                              shader.default(), mrb)
-        mesh_small = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                shader.default(), msmall)
+        mesh_big = rendermesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                    shader.default(), mrb)
+        mesh_small = rendermesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                      shader.default(), msmall)
     end
 
     return self

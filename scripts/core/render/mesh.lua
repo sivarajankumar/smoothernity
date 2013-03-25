@@ -44,12 +44,4 @@ function M.alloc(group, kind, vbuf, ibuf, shader, matrix)
     return self
 end
 
-function M.draw(group, draw_tag)
-    api_mesh_draw(group.twin(render.twin_active()), draw_tag)
-end
-
-function M.update(group, dt, update_tag)
-    api_mesh_update(group.twin(render.twin_active()), dt, update_tag)
-end
-
 return M

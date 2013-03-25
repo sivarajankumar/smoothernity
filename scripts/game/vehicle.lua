@@ -7,8 +7,9 @@ local cfg = require 'config'
 local gui = require 'game.gui.gui'
 local key = require 'core.key'
 local shader = require 'game.shader.shader'
-local render = require 'core.render.render'
-local mesh = require 'core.render.mesh'
+local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local colshape = require 'core.colshape'
 local vehicle = require 'core.vehicle'
 local matrix = require 'core.matrix'
@@ -54,8 +55,8 @@ function M.alloc(uid, startx, starty, startz)
     local self = {}
 
     self.mchassis = matrix.alloc()
-    local vb = render.vbuf_alloc(8)
-    local ib = render.ibuf_alloc(36, vb)
+    local vb = rendervbuf.alloc(8)
+    local ib = renderibuf.alloc(36, vb)
     local cs_inert, cs_shape_box, cs_shape, veh
     local wheels, wheel_fr, wheel_fl, wheel_br, wheel_bl
     local mchassis_local = util.matrix_pos_scl_stop(0, CH_OFFSET_Y, 0,
@@ -348,11 +349,11 @@ function M.alloc(uid, startx, starty, startz)
 
     -- visual
     do
-        mesh_chassis = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                  shader.default(), self.mchassis)
+        mesh_chassis = rendermesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                        shader.default(), self.mchassis)
         for i, w in pairs(wheels) do
-            mesh_wheel[i] = mesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
-                                       shader.default(), mwheel[i])
+            mesh_wheel[i] = rendermesh.alloc(meshes.GROUP_NEAR, API_MESH_TRIANGLES, vb, ib,
+                                             shader.default(), mwheel[i])
         end
     end
 

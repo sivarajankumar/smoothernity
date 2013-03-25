@@ -5,9 +5,10 @@ local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
 local poolpbuf = require 'core.pool.pbuf'
-local render = require 'core.render.render'
-local shuni = require 'core.render.shuni'
+local rendershuni = require 'core.render.shuni'
 local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local matrix = require 'core.matrix'
 local coretex = require 'core.tex'
 
@@ -31,16 +32,16 @@ function M.alloc(x, y, r)
         mfinal = util.matrix_pos_scl_stop(x,y,-0.5,  r,r,1)
         mesh = rendermesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
                                 shader.texture(), mfinal)
-        utexunit = shuni.alloc_int(shader.texture(), mesh, 'texunit', tex.unit())
-        utexlayer = shuni.alloc_vector(shader.texture(), mesh, 'texlayer', vtexlayer)
+        utexunit = rendershuni.alloc_int(shader.texture(), mesh, 'texunit', tex.unit())
+        utexlayer = rendershuni.alloc_vector(shader.texture(), mesh, 'texlayer', vtexlayer)
     end
     return self
 end
 
 function M.init()
     do
-        vbuf = render.vbuf_alloc(4)
-        ibuf = render.ibuf_alloc(6, vbuf)
+        vbuf = rendervbuf.alloc(4)
+        ibuf = renderibuf.alloc(6, vbuf)
 
         util.wait_state(true, 'prepared', vbuf, ibuf)
         vbuf.set(0, -1,-1,0,  1,1,1,1,  0,0,

@@ -17,6 +17,8 @@ local key = require 'core.key'
 local buf = require 'core.pool.buf'
 local pbuf = require 'core.pool.pbuf'
 local render = require 'core.render.render'
+local ibuf = require 'core.render.ibuf'
+local vbuf = require 'core.render.vbuf'
 
 function M.init()
     matrix.init()
@@ -33,6 +35,8 @@ function M.init()
     thread.init()
     buf.init()
     pbuf.init()
+    ibuf.init()
+    vbuf.init()
     tex.init()
     render.init()
 end
@@ -52,6 +56,8 @@ function M.done()
     thread.done()
     buf.done()
     pbuf.done()
+    ibuf.done()
+    vbuf.done()
     tex.done()
     render.done()
 end
