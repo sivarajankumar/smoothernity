@@ -108,7 +108,7 @@ function M.init()
     threadprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                                prof.thread_color())
 
-    ttest = textest.alloc(0, 0, 1)
+    ttest = textest.alloc(0, 0.8, 0.1)
 
     inited = true
 end

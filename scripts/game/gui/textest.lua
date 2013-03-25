@@ -12,7 +12,7 @@ local rendertex = require 'core.render.tex'
 local matrix = require 'core.matrix'
 
 local TEX_MIP = 0
-local TEX_SIZE = 256
+local TEX_SIZE = 32
 
 local ibuf, vbuf, tex
 
