@@ -113,7 +113,38 @@ function M.sync_copy()
 end
 
 function M.restore(state)
-    return pbuf.restore(state)
+    local self = {}
+    local mips = {}
+    local max_mip = 0
+
+    function self.mips()
+        return max_mip
+    end
+
+    function self.mip(i)
+        return mips[i]
+    end
+
+    local function make_mip(level, copy)
+        local mip = {}
+        function mip.set(...)
+            copy.set(...)
+        end
+        function mip.size()
+            return copy.side()
+        end
+        function mip.level()
+            return level
+        end
+        return mip
+    end
+
+    local copies = util.map(function(x) return pbuf.restore(x) end, state)
+    for k, v in pairs(copies) do
+        max_mip = math.max(max_mip, k)
+        mips[k] = make_mip(k, v)
+    end
+    return self
 end
 
 function M.alloc(size)
@@ -151,6 +182,12 @@ function M.alloc(size)
         return util.reduce_and(function(x) return x.state == 'finalized' end, mips)
     end
 
+    function self.store()
+        assert(self.prepared())
+        local states = util.map(function(x) return x.copy.store() end, mips)
+        return string.format('{%s}', table.concat(states, ', ', 0, self.mips()))
+    end
+
     function self.finalize()
         for _, v in pairs(mips) do
             v.finalize()
@@ -186,11 +223,6 @@ function M.alloc(size)
         function mip.set(...)
             assert(mip.state == 'prepared')
             mip.copy.set(...)
-        end
-
-        function mip.store()
-            assert(mip.state == 'prepared')
-            return mip.copy.store()
         end
 
         function mip.size()
