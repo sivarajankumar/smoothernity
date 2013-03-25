@@ -100,7 +100,7 @@ static int api_tex_set(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (ofs < 0 || ofs > g_pbufs.size - xsize*ysize)
+    if (ofs < 0 || ofs > pbuf->size - xsize*ysize)
     {
         lua_pushstring(lua, "api_tex_set: invalid pbuf offset");
         lua_error(lua);

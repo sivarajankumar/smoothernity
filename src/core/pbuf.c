@@ -9,6 +9,13 @@ static const int PBUF_DATA_ATTRS = 4;
 static const size_t PBUF_DATA_SIZE = 4;
 static const size_t PBUF_SIZE = 64;
 
+struct pbufs_t
+{
+    int count;
+    char *pool;
+    struct thread_mutex_t *mutex;
+};
+
 struct pbufs_t g_pbufs;
 
 int pbuf_thread(void)
@@ -83,7 +90,7 @@ static int api_pbuf_map(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (len <= 0 || ofs < 0 || ofs > g_pbufs.size - len)
+    if (len <= 0 || ofs < 0 || ofs > pbuf->size - len)
     {
         lua_pushstring(lua, "api_pbuf_map: invalid range");
         lua_error(lua);
@@ -237,36 +244,41 @@ void pbuf_reg_thread(lua_State *lua)
     lua_register(lua, "api_pbuf_set", api_pbuf_set);
 }
 
-int pbuf_init(lua_State *lua, int size, int count)
+int pbuf_init(lua_State *lua, int *sizes, int count)
 {
     struct pbuf_t *pbuf;
     int i;
     if (sizeof(struct pbuf_t) > PBUF_SIZE
-    ||  sizeof(struct pbuf_data_t) != PBUF_DATA_SIZE
-    ||  (size & (size - 1)) != 0)
+    ||  sizeof(struct pbuf_data_t) != PBUF_DATA_SIZE)
     {
         fprintf(stderr, "Invalid sizes:\n"
                         "sizeof(struct pbuf_t) == %i\n"
-                        "sizeof(struct pbuf_data_t) == %i\n"
-                        "size == %i\n",
+                        "sizeof(struct pbuf_data_t) == %i\n",
                 (int)sizeof(struct pbuf_t),
-                (int)sizeof(struct pbuf_data_t),
-                size);
+                (int)sizeof(struct pbuf_data_t));
         return 1;
+    }
+    for (i = 0; i < count; ++i)
+    {
+        if ((sizes[i] & (sizes[i] - 1)) != 0)
+        {
+            fprintf(stderr, "Invalid sizes:\nsize == %i\n", sizes[i]);
+            return 1;
+        }
     }
     g_pbufs.pool = util_malloc(PBUF_SIZE, PBUF_SIZE * count);
     if (g_pbufs.pool == 0)
         return 1;
     memset(g_pbufs.pool, 0, PBUF_SIZE * count);
-    g_pbufs.size = size;
     g_pbufs.count = count;
     for (i = 0; i < count; ++i)
     {
         pbuf = pbuf_get(i);
         pbuf->state = PBUF_UNMAPPED;
+        pbuf->size = sizes[i];
         glGenBuffers(1, &pbuf->buf_id);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbuf->buf_id);
-        glBufferData(GL_PIXEL_UNPACK_BUFFER, PBUF_DATA_SIZE * size,
+        glBufferData(GL_PIXEL_UNPACK_BUFFER, PBUF_DATA_SIZE * pbuf->size,
                      0, GL_DYNAMIC_DRAW);
         if (glGetError() != GL_NO_ERROR)
             goto cleanup;

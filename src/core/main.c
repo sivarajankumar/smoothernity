@@ -43,7 +43,7 @@ struct main_t
     int vbuf_count;
     int *ibuf;
     int ibuf_count;
-    int pbuf_size;
+    int *pbuf;
     int pbuf_count;
     int *tex;
     int tex_len;
@@ -199,8 +199,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "full_screen", &g_main.full_screen) != 0
      || main_get_int(lua, "thread_count", &g_main.thread_count) != 0
      || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
-     || main_get_int(lua, "pbuf_size", &g_main.pbuf_size) != 0
-     || main_get_int(lua, "pbuf_count", &g_main.pbuf_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
@@ -226,6 +224,7 @@ static int main_configure(char *script)
                            &g_main.thread_mpool) != 0
      || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0
      || main_get_int_array(lua, "ibuf", &g_main.ibuf_count, &g_main.ibuf) != 0
+     || main_get_int_array(lua, "pbuf", &g_main.pbuf_count, &g_main.pbuf) != 0
      || main_get_int_array(lua, "vbuf", &g_main.vbuf_count, &g_main.vbuf) != 0)
     {
         goto cleanup;
@@ -254,6 +253,11 @@ cleanup:
     {
         util_free(g_main.ibuf);
         g_main.ibuf = 0;
+    }
+    if (g_main.pbuf)
+    {
+        util_free(g_main.pbuf);
+        g_main.pbuf = 0;
     }
     if (g_main.vbuf)
     {
@@ -302,6 +306,11 @@ static void main_done(void)
     {
         util_free(g_main.ibuf);
         g_main.ibuf = 0;
+    }
+    if (g_main.pbuf)
+    {
+        util_free(g_main.pbuf);
+        g_main.pbuf = 0;
     }
     if (g_main.vbuf)
     {
@@ -435,7 +444,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (pbuf_init(g_main.lua, g_main.pbuf_size, g_main.pbuf_count) != 0)
+    if (pbuf_init(g_main.lua, g_main.pbuf, g_main.pbuf_count) != 0)
     {
         fprintf(stderr, "Cannot init pixel buffers\n");
         return 1;
