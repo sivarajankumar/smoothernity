@@ -8,11 +8,23 @@ local vector = require 'core.vector'
 
 local MAX_WAIT_TIME = 10
 
-function M.sorted_keys(src)
+function M.keys(src)
     local t = {}
-    for k in pairs(src) do
+    for k, _ in pairs(src) do
         table.insert(t, k)
     end
+    return t
+end
+
+function M.values(src)
+    local t = {}
+    for _, v in pairs(src) do
+        table.insert(t, v)
+    end
+    return t
+end
+
+function M.sorted(t)
     table.sort(t)
     return t
 end

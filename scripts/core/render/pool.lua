@@ -8,27 +8,39 @@ local MAX_MAP = 20
 local MAX_UNMAP = 20
 local MAX_COPY = 20
 
-function M.sizes(twin_size, copy_size)
+local function twin_size(pool_dims)
+    local size = 0
+    for k, v in pairs(pool_dims) do
+        size = size + k * v
+    end
+    return size
+end
+
+local function copy_size(pool_dims)
+    return math.max(unpack(util.keys(pool_dims)))
+end
+
+function M.sizes(pool_dims)
     local t = {}
     for i = 1, cfg.TWINS do
-        table.insert(t, twin_size)
+        table.insert(t, twin_size(pool_dims))
     end
     for i = 1, cfg.COPIES do
-        table.insert(t, copy_size)
+        table.insert(t, copy_size(pool_dims))
     end
     return unpack(t)
 end
 
-function M.alloc(title, twin_size, copy_size, pool_dims, res_api)
+function M.alloc(title, pool_dims, res_api)
     local pool = {}
     local pools = {}
     for i = 0, cfg.TWINS - 1 do
         pools[i] = corepool.alloc(string.format('%s (twin %i)', title, i),
-                                  twin_size, i, 1, pool_dims)
+                                  twin_size(pool_dims), i, 1, pool_dims)
     end
     local copy_pool = corepool.alloc(string.format('%s (copy)', title),
-                                     copy_size, cfg.TWINS, cfg.COPIES,
-                                     {[copy_size] = cfg.COPIES})
+                                     copy_size(pool_dims), cfg.TWINS, cfg.COPIES,
+                                     {[copy_size(pool_dims)] = cfg.COPIES})
 
     local preparing = {}
     local mapping = {}

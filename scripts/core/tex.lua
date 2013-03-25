@@ -44,7 +44,7 @@ end
 
 function M.sizes_layers()
     local t = {}
-    for _, s in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
+    for _, s in ipairs(util.sorted(util.keys(cfg.TEX_POOL))) do
         table.insert(t, s)
         table.insert(t, cfg.TEX_POOL[s])
     end
@@ -53,7 +53,7 @@ end
 
 function M.init()
     local id = 0
-    for k, size in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
+    for k, size in ipairs(util.sorted(util.keys(cfg.TEX_POOL))) do
         local layers = cfg.TEX_POOL[size]
         local unit = k - 1
         if shelves[size] == nil then
@@ -71,7 +71,7 @@ function M.init()
 end
 
 function M.done()
-    for _, s in ipairs(util.sorted_keys(cfg.TEX_POOL)) do
+    for _, s in ipairs(util.sorted(util.keys(cfg.TEX_POOL))) do
         local shelf = shelves[s]
         io.write(string.format('Textures pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
             s, shelf.count - shelf.left_min, shelf.count, shelf.allocs, shelf.frees))
