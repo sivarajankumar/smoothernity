@@ -128,7 +128,7 @@ function M.alloc(size)
     end
 
     function self.mips()
-        return math.log(size, 2)
+        return util.log2(size)
     end
 
     function self.twin(i)
@@ -204,7 +204,7 @@ function M.alloc(size)
         twins[i] = tex.alloc(size)
     end
 
-    for i = 0, self.mips() - 1 do
+    for i = 0, self.mips() do
         mips[i] = make_mip(i)
     end
 

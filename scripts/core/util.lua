@@ -8,6 +8,19 @@ local vector = require 'core.vector'
 
 local MAX_WAIT_TIME = 10
 
+function M.log2(v)
+    local res = 0
+    while true do
+        v = math.floor(v / 2)
+        if v > 0 then
+            res = res + 1
+        else
+            break
+        end
+    end
+    return res
+end
+
 function M.keys(src)
     local t = {}
     for k, _ in pairs(src) do
