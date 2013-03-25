@@ -1,8 +1,9 @@
 local M = {}
 
 local cfg = require 'config'
-local pbuf = require 'render.pbuf'
+local pbuf = require 'core.render.pbuf'
 local tex = require 'core.tex'
+local util = require 'core.util'
 
 local MAX_MAP = 20
 local MAX_UNMAP = 20
