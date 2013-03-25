@@ -9,11 +9,7 @@ local MAX_UNMAP = 20
 local MAX_COPY = 20
 
 local function twin_size(pool_dims)
-    local size = 0
-    for k, v in pairs(pool_dims) do
-        size = size + k * v
-    end
-    return size
+    return corepool.size(pool_dims)
 end
 
 local function copy_size(pool_dims)
