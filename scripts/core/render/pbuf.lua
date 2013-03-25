@@ -69,7 +69,8 @@ function M.restore(state)
 end
 
 function M.init()
-    for id, size in ipairs({M.sizes()}) do
+    for k, size in ipairs({M.sizes()}) do
+        local id = k - 1
         if shelves[size] == nil then
             shelves[size] = make_shelf(size)
         end

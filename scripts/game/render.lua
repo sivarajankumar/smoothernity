@@ -134,19 +134,28 @@ local function eagle_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, EAGLE_ZFAR, cfg.CAMERA_DIST)
 
+        prof.cpu.rclear.start()
+        prof.gpu.rclear.start()
         api_render_clear_depth(vclrdep.id(), 0)
         api_render_clear_color(vclrcol.id())
+        api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+        prof.gpu.rclear.finish()
+        prof.cpu.rclear.finish()
+
+        prof.cpu.rdraw.start()
+        prof.gpu.rdraw.start()
         api_render_proj(mproj3d.id())
         api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
-            if lodi == 0 then
-                api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
-            else
+            if lodi > 0 then
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
         end
-        render.finish_frame()
+        prof.gpu.rdraw.finish()
+        prof.cpu.rdraw.finish()
+
+        render.finish_frame(prof)
 
         vclrcol.free()
         vclrdep.free()
@@ -177,13 +186,23 @@ local function debug_alloc()
         local vclrdep = util.vector_const(1, 0, 0 ,0)
         local mproj3d = make_frustum(cfg.CAMERA_DIST, DEBUG_ZFAR, cfg.CAMERA_DIST)
 
+        prof.cpu.rclear.start()
+        prof.gpu.rclear.start()
         api_render_clear_depth(vclrdep.id(), 0)
         api_render_clear_color(vclrcol.id())
         api_render_clear(API_RENDER_CLEAR_COLOR + API_RENDER_CLEAR_DEPTH)
+        prof.gpu.rclear.finish()
+        prof.cpu.rclear.finish()
+
+        prof.cpu.rdraw.start()
+        prof.gpu.rdraw.start()
         api_render_proj(mproj3d.id())
         api_render_mview(self.mview3d.id())
         pwld.wld.ddraw()
-        render.finish_frame()
+        prof.gpu.rdraw.finish()
+        prof.cpu.rdraw.finish()
+
+        render.finish_frame(prof)
 
         vclrcol.free()
         vclrdep.free()
