@@ -29,10 +29,26 @@ local function make_shelf(size)
     return self
 end
 
-local function make_pbuf(shelf, id)
+local function make_base_pbuf(size, id)
     local self = {}
-    local side = math.floor(math.sqrt(shelf.size))
-    assert(math.floor(side*side) == shelf.size)
+    local side = math.sqrt(shelf.size)
+    function self.set(x, y, ...)
+        api_pbuf_set(id, x + y*side, ...)
+    end
+    function self.id()
+        return id
+    end
+    function self.side()
+        return side
+    end
+    function self.store()
+        return string.format("{%i, %i}", size, id)
+    end
+    return self
+end
+
+local function make_pbuf(shelf, id)
+    local self = make_base_pbuf(shelf.size, id)
     function self.alloc()
         shelf.allocs = shelf.allocs + 1
         shelf.left = shelf.left - 1
@@ -44,13 +60,12 @@ local function make_pbuf(shelf, id)
         shelf.left = shelf.left + 1
         shelf.chunks[id] = self
     end
-    function self.set(x, y, ...)
-        api_pbuf_set(id, x + y*side, ...)
-    end
-    function self.id()
-        return id
-    end
     return self
+end
+
+function M.restore(state)
+    local size, id = unpack(state)
+    return make_base_pbuf(size, id)
 end
 
 function M.init()

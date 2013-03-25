@@ -4,6 +4,7 @@ local cfg = require 'config'
 local coresync = require 'core.sync'
 local ibuf = require 'core.render.ibuf'
 local vbuf = require 'core.render.vbuf'
+local tex = require 'core.render.tex'
 
 local UPLOAD_THRESH = 10
 
@@ -23,10 +24,15 @@ end
 local function upload()
     vbuf.update()
     ibuf.update()
+    tex.update()
     if upload_state == 'copying' then
         vbuf.update_copy(twin_inactive())
         ibuf.update_copy(twin_inactive())
-        if vbuf.sync_copy_ready() and ibuf.sync_copy_ready() then
+        tex.update_copy(twin_inactive())
+        if vbuf.sync_copy_ready()
+        and ibuf.sync_copy_ready()
+        and tex.sync_copy_ready()
+        then
             upload_count = upload_count + 1
             if upload_count >= UPLOAD_THRESH then
                 upload_count = 0
@@ -41,6 +47,7 @@ local function upload()
             upload_count = 0
             vbuf.sync_copy()
             ibuf.sync_copy()
+            tex.sync_copy()
             twin = twin_inactive()
             sync.free()
             sync = nil

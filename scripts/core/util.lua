@@ -46,8 +46,14 @@ function M.map(func, args)
     return res
 end
 
-function M.wait_state(skip_frame, state, ...)
-    while not M.reduce_and(function(x) return x.state == state end, {...}) do
+function M.wait_prepared(skip_frame, ...)
+    while not M.reduce_and(function(x) return x.prepared() end, {...}) do
+        coroutine.yield(skip_frame)
+    end
+end
+
+function M.wait_finalized(skip_frame, ...)
+    while not M.reduce_and(function(x) return x.finalized() end, {...}) do
         coroutine.yield(skip_frame)
     end
 end

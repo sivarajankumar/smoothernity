@@ -47,7 +47,7 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
-    util.wait_state(true, 'prepared', vb, ib)
+    util.wait_prepared(true, vb, ib)
 
     while thread.left() == 0 do
         coroutine.yield(true)
@@ -62,7 +62,7 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
 
     vb.finalize()
     ib.finalize()
-    util.wait_state(true, 'finalized', vb, ib)
+    util.wait_finalized(true, vb, ib)
 
     mesh = rendermesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
                             shader.default(), self.mmesh)

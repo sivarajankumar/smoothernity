@@ -55,7 +55,7 @@ function M.init()
         vbuf = rendervbuf.alloc(3)
         ibuf = renderibuf.alloc(3, vbuf)
 
-        util.wait_state(true, 'prepared', vbuf, ibuf)
+        util.wait_prepared(true, vbuf, ibuf)
         vbuf.set(0, x1,y1, 0,   r, g, b, a,   0, 0,
                     x2,y2, 0,   r, g, b, a,   0, 0,
                     x3,y3, 0,   r, g, b, a,   0, 0)
@@ -63,7 +63,7 @@ function M.init()
 
         vbuf.finalize()
         ibuf.finalize()
-        util.wait_state(true, 'finalized', vbuf, ibuf)
+        util.wait_finalized(true, vbuf, ibuf)
     end
     do
         vrot = vector.alloc()

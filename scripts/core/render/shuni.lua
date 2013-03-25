@@ -31,4 +31,20 @@ function M.alloc_int(shprog, mesh, name, int)
     return self
 end
 
+function M.alloc_tex(shprog, mesh, tex, name_unit, name_layer)
+    local self = {}
+    local shunis = {}
+    assert(tex.finalized())
+    for i = 0, cfg.TWINS - 1 do
+        table.insert(shunis, shuni.alloc_int(shprog, mesh.twin(i), name_unit, tex.twin(i).unit()))
+        table.insert(shunis, shuni.alloc_int(shprog, mesh.twin(i), name_layer, tex.twin(i).layer()))
+    end
+    function self.free()
+        for _, v in pairs(shunis) do
+            v.free()
+        end
+    end
+    return self
+end
+
 return M
