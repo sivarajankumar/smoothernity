@@ -52,7 +52,7 @@ function M.alloc(x, y, z)
 
     -- resources
     do
-        util.wait_state(true, 'prepared', vb, ib)
+        util.wait_prepared(true, vb, ib)
         vb.set(0,  -1,-1, 1,   1, 0, 0, 1,   0, 0,
                     1,-1, 1,   0, 1, 0, 1,   0, 0,
                     1, 1, 1,   0, 0, 1, 1,   0, 0,
@@ -70,7 +70,7 @@ function M.alloc(x, y, z)
 
         vb.finalize()
         ib.finalize()
-        util.wait_state(true, 'finalized', vb, ib)
+        util.wait_finalized(true, vb, ib)
     end
 
     -- matrices

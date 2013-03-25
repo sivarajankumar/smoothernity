@@ -190,6 +190,14 @@ function M.alloc(title, pool_dims, res_api)
             finalizing[id] = chunk
         end
 
+        function chunk.prepared()
+            return chunk.state == 'prepared'
+        end
+
+        function chunk.finalized()
+            return chunk.state == 'finalized'
+        end
+
         return chunk
     end
 
