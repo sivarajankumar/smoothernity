@@ -9,31 +9,16 @@ local camcord = require 'game.camera.cord'
 local camdev = require 'game.camera.dev'
 local camswitch = require 'game.camera.switcher'
 local world = require 'game.world'
-local corewld = require 'core.world'
-local rigidbody = require 'core.rigidbody'
-local colshape = require 'core.colshape'
-local coreveh = require 'core.vehicle'
-local matrix = require 'core.matrix'
-local vector = require 'core.vector'
 local render = require 'game.render'
 local pwld = require 'game.physwld'
 local pause = require 'game.pause'
 local gui = require 'game.gui.gui'
 local quit = require 'game.quit'
-local query = require 'core.query'
-local mesh = require 'core.mesh'
-local tex = require 'core.tex'
-local shprog = require 'core.shprog'
-local shuni = require 'core.shuni'
-local thread = require 'core.thread'
 local ddraw = require 'game.ddraw'
 local meshes = require 'game.meshes'
-local sync = require 'core.sync'
-local key = require 'core.key'
-local shader = require 'game.shader.shader'
-local poolbuf = require 'core.pool.buf'
-local poolpbuf = require 'core.pool.pbuf'
 local prof = require 'game.prof'
+local shader = require 'game.shader.shader'
+local core = require 'core.core'
 
 local LOGIC_TIME = 0.013
 local GC_STEP = 10
@@ -64,25 +49,11 @@ local function run_co(co, start_time, max_time)
 end
 
 function M.run()
-    matrix.init()
-    vector.init()
-    corewld.init()
-    coreveh.init()
-    colshape.init()
-    rigidbody.init()
-    shprog.init()
-    shuni.init()
-    mesh.init()
-    query.init()
-    sync.init()
-    thread.init()
+    core.init()
     meshes.init()
-    poolbuf.init()
-    poolpbuf.init()
     shader.init()
     pwld.init()
     prof.init()
-    tex.init()
     render.init()
 
     local wld, cbs, car, camc, camd, camsw
@@ -221,24 +192,10 @@ function M.run()
     end
 
     render.done()
-    tex.done()
     prof.done()
     pwld.done()
     shader.done()
-    poolpbuf.done()
-    poolbuf.done()
-    shprog.done()
-    shuni.done()
-    query.done()
-    mesh.done()
-    sync.done()
-    thread.done()
-    rigidbody.done()
-    colshape.done()
-    coreveh.done()
-    corewld.done()
-    matrix.done()
-    vector.done()
+    core.done()
 end
 
 return M
