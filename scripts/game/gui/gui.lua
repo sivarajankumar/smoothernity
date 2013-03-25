@@ -5,13 +5,12 @@ local wait = require 'game.gui.wait'
 local util = require 'core.util'
 local cfg = require 'config'
 local guiprof = require 'game.gui.prof'
-local textest = require 'game.gui.textest'
 local prof = require 'game.prof'
 
 local MAX_FRAMES = 600
 local THRESH = 1.1
 
-local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, threadprof, ttest
+local genbar, edgebar, frbar, fpsbar, wt, gpuprof, cpuprof, threadprof
 local whole_frames = 0
 local move_frames = 0
 local inited = false
@@ -70,7 +69,6 @@ end
 function M.init()
     bar.init()
     wait.init()
-    textest.init()
 
     local sx, sy = util.camera_dims()
     local sizex, sizey = 0.5, 0.05
@@ -108,8 +106,6 @@ function M.init()
     threadprof = guiprof.alloc(posx, posy, posx + sizex, posy + sizey, cfg.FRAME_TIME,
                                prof.thread_color())
 
-    ttest = textest.alloc(0, 0.8, 0.1)
-
     inited = true
 end
 
@@ -123,10 +119,8 @@ function M.done()
     frbar.free()
     fpsbar.free()
     wt.free()
-    ttest.free()
     bar.done()
     wait.done()
-    textest.done()
 end
 
 return M

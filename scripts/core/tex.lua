@@ -39,6 +39,9 @@ local function make_tex(shelf, id, unit, layer)
     function self.layer()
         return layer
     end
+    function self.wrap(method)
+        api_tex_wrap(unit, method)
+    end
     return self
 end
 
@@ -80,8 +83,12 @@ end
 
 function M.alloc(size)
     local shelf = shelves[size]
-    assert(shelf ~= nil)
-    assert(shelf.left > 0)
+    if shelf == nil then
+        error(string.format('no shelf for size %i\n', size))
+    end
+    if shelf.left <= 0 then
+        error(string.format('out of chunks in shelf %i\n', size))
+    end
     for k, v in pairs(shelf.chunks) do
         v.alloc()
         return v
