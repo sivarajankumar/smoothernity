@@ -18,8 +18,6 @@ local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
 
-local TEX_SIZE = 32
-
 local function common_alloc(uid, noise, lodi, basx, basy, basz)
     local self = {}
 
@@ -29,7 +27,7 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
     self.hmap = poolbuf.alloc(self.res * self.res)
     local vb = rendervbuf.alloc(self.res * self.res)
     local ib = renderibuf.alloc(6 * (self.res - 1) * (self.res - 1), vb)
-    local tex = rendertex.alloc(TEX_SIZE)
+    local tex = rendertex.alloc(lod.lods[lodi].texres)
     local mesh, utex
 
     function self.free()
@@ -54,6 +52,7 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
+    tex.wrap(API_TEX_MIRRORED_REPEAT)
     util.wait_prepared(true, vb, ib, tex)
 
     while thread.left() == 0 do

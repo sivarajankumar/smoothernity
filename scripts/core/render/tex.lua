@@ -175,6 +175,12 @@ function M.alloc(size)
         return mips[i]
     end
 
+    function self.wrap(method)
+        for i = 0, cfg.TWINS - 1 do
+            twins[i].wrap(method)
+        end
+    end
+
     function self.prepared()
         return util.reduce_and(function(x) return x.state == 'prepared' end, mips)
     end
