@@ -7,7 +7,6 @@ local meshes = require 'game.meshes'
 local lod = require 'game.lod'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
-local mesh = require 'core.render.mesh'
 local render = require 'core.render.render'
 local prof = require 'game.prof'
 
@@ -91,13 +90,13 @@ local function visual_alloc()
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
             api_render_proj(mproj3d.id())
-            mesh.draw(meshes.GROUP_LODS[lodi], draw_tag)
+            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
             mproj3d.free()
         end
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d.id())
         api_render_mview(mview2d.id())
-        mesh.draw(meshes.GROUP_GUI, draw_tag)
+        render.mesh_draw(meshes.GROUP_GUI, draw_tag)
         prof.gpu.rdraw.finish()
         prof.cpu.rdraw.finish()
 
@@ -112,9 +111,9 @@ local function visual_alloc()
         self.vclrcol.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            mesh.update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
+            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
-        mesh.update(meshes.GROUP_GUI, dt, update_tag)
+        render.mesh_update(meshes.GROUP_GUI, dt, update_tag)
     end
 
     return self
@@ -145,7 +144,7 @@ local function eagle_alloc()
             else
                 api_render_clear(API_RENDER_CLEAR_DEPTH)
             end
-            mesh.draw(meshes.GROUP_LODS[lodi], draw_tag)
+            render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
         end
         render.finish_frame()
 
@@ -157,7 +156,7 @@ local function eagle_alloc()
     function self.update(dt, update_tag)
         self.mview3d.update(dt, update_tag)
         for lodi = 0, lod.count - 1 do
-            mesh.update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
+            render.mesh_update(meshes.GROUP_LODS[lodi], dt * self.tscale, update_tag)
         end
     end
 

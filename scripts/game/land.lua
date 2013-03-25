@@ -7,8 +7,9 @@ local lod = require 'game.lod'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
 local poolbuf = require 'core.pool.buf'
-local render = require 'core.render.render'
 local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
@@ -22,8 +23,8 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
     self.res = lod.lods[lodi].res
     self.mmesh = matrix.alloc()
     self.hmap = poolbuf.alloc(self.res * self.res)
-    local vb = render.vbuf_alloc(self.res * self.res)
-    local ib = render.ibuf_alloc(6 * (self.res - 1) * (self.res - 1), vb)
+    local vb = rendervbuf.alloc(self.res * self.res)
+    local ib = renderibuf.alloc(6 * (self.res - 1) * (self.res - 1), vb)
     local mesh
 
     function self.free()

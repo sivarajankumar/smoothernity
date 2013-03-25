@@ -4,8 +4,9 @@ local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
 local poolbuf = require 'core.pool.buf'
-local render = require 'core.render.render'
 local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 
@@ -51,8 +52,8 @@ function M.init()
         local x3, y3 = cossin(90 + 120 + 120)
         local r, g, b, a = COLOR()
 
-        vbuf = render.vbuf_alloc(3)
-        ibuf = render.ibuf_alloc(3, vbuf)
+        vbuf = rendervbuf.alloc(3)
+        ibuf = renderibuf.alloc(3, vbuf)
 
         util.wait_state(true, 'prepared', vbuf, ibuf)
         vbuf.set(0, x1,y1, 0,   r, g, b, a,   0, 0,

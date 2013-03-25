@@ -5,7 +5,8 @@ local noise = require 'game.noise'
 local lod = require 'game.lod'
 local util = require 'core.util'
 local poolbuf = require 'core.pool.buf'
-local render = require 'core.render.render'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 
 function M.thread_run(thi)
     local uid, noise_state, hmap_state, vb_state, ib_state, lodi, basx, basy, basz =
@@ -15,8 +16,8 @@ function M.thread_run(thi)
     local res = lod.lods[lodi].res
     local nse = noise.restore(noise_state)
     local hmap = poolbuf.restore(hmap_state)
-    local vb = render.vbuf_restore(vb_state)
-    local ib = render.ibuf_restore(ib_state)
+    local vb = rendervbuf.restore(vb_state)
+    local ib = renderibuf.restore(ib_state)
 
     local function to_world(z, x)
         return basz + (z * size / (res-1)),

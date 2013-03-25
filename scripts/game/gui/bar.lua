@@ -3,9 +3,10 @@ local M = {}
 local util = require 'core.util'
 local meshes = require 'game.meshes'
 local shader = require 'game.shader.shader'
-local render = require 'core.render.render'
-local shuni = require 'core.render.shuni'
+local rendershuni = require 'core.render.shuni'
 local rendermesh = require 'core.render.mesh'
+local renderibuf = require 'core.render.ibuf'
+local rendervbuf = require 'core.render.vbuf'
 local matrix = require 'core.matrix'
 
 local ibuf, vbuf
@@ -63,7 +64,7 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
             stripe.mfinal.mul(mroot, stripe.mlocal)
             stripe.mesh = rendermesh.alloc(meshes.GROUP_GUI, API_MESH_TRIANGLES, vbuf, ibuf,
                                            shader.color(), stripe.mfinal)
-            stripe.ucol = shuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
+            stripe.ucol = rendershuni.alloc_vector(shader.color(), stripe.mesh, 'color', stripe.vcol)
             table.insert(stripes, stripe)
         end
     end
@@ -72,8 +73,8 @@ function M.alloc(xmin, ymin, xmax, ymax, ...)
 end
 
 function M.init()
-        vbuf = render.vbuf_alloc(4)
-        ibuf = render.ibuf_alloc(6, vbuf)
+        vbuf = rendervbuf.alloc(4)
+        ibuf = renderibuf.alloc(6, vbuf)
 
         util.wait_state(true, 'prepared', vbuf, ibuf)
         vbuf.set(0, 0,-0.5, 0,   1, 1, 1, 1,   0, 0,
