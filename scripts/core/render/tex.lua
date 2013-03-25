@@ -78,8 +78,8 @@ function M.update_copy(twin)
             synched[k] = nil
             copying[k] = v
             v.state = 'copying'
-            api_tex_set(v.twin(twin).unit(), v.copy.id(), v.twin(twin).layer(),
-                        v.mip(), 0, 0, v.size(), v.size())
+            api_tex_set(v.twin(twin).unit(), v.copy.id(), 0, v.twin(twin).layer(),
+                        v.level(), 0, 0, v.size(), v.size())
         else
             break
         end
@@ -94,7 +94,7 @@ function M.update_copy(twin)
 end
 
 function M.sync_copy_ready()
-    return util.empty(copying) and not util.empty(synching)
+    return util.empty(copying)
 end
 
 function M.sync_copy()
@@ -119,12 +119,16 @@ function M.alloc(size)
     local mips = {}
 
     function self.free()
-        for i = 0, math.log(size, 2) do
-            mips[i].free()
+        for _, v in pairs(mips) do
+            v.free()
         end
         for i = 0, cfg.TWINS - 1 do
             twins[i].free()
         end
+    end
+
+    function self.mips()
+        return math.log(size, 2)
     end
 
     function self.twin(i)
@@ -136,11 +140,17 @@ function M.alloc(size)
     end
 
     function self.prepared()
-        return util.reduce_and(function(x) return x.state == 'prepared' end, self.mips)
+        return util.reduce_and(function(x) return x.state == 'prepared' end, mips)
     end
 
     function self.finalized()
-        return util.reduce_and(function(x) return x.state == 'finalized' end, self.mips)
+        return util.reduce_and(function(x) return x.state == 'finalized' end, mips)
+    end
+
+    function self.finalize()
+        for _, v in pairs(mips) do
+            v.finalize()
+        end
     end
 
     local function make_mip(level)
@@ -180,7 +190,11 @@ function M.alloc(size)
         end
 
         function mip.size()
-            return twins[0].size / math.pow(2, level)
+            return twins[0].size() / math.pow(2, level)
+        end
+
+        function mip.level()
+            return level
         end
 
         return mip
@@ -190,7 +204,7 @@ function M.alloc(size)
         twins[i] = tex.alloc(size)
     end
 
-    for i = 0, math.log(size, 2) do
+    for i = 0, self.mips() - 1 do
         mips[i] = make_mip(i)
     end
 
