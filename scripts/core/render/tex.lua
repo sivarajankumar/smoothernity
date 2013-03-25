@@ -97,6 +97,10 @@ function M.sync_copy_ready()
     return util.empty(copying)
 end
 
+function M.need_sync()
+    return not util.empty(synching)
+end
+
 function M.sync_copy()
     assert(M.sync_copy_ready())
     for k, v in pairs(synching) do

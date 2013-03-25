@@ -152,6 +152,10 @@ function M.alloc(title, pool_dims, res_api)
         return util.empty(copying)
     end
 
+    function pool.need_sync()
+        return not util.empty(synching)
+    end
+
     function pool.alloc(size)
         local twins = {}
         for i = 0, cfg.TWINS - 1 do

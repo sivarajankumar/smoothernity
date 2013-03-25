@@ -51,6 +51,15 @@ function M.reduce_and(func, args)
     return true
 end
 
+function M.reduce_or(func, args)
+    for k, v in pairs(args) do
+        if func(v) then
+            return true
+        end
+    end
+    return false
+end
+
 function M.map(func, args)
     local res = {}
     for k, v in pairs(args) do

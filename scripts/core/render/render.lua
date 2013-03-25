@@ -5,6 +5,7 @@ local coresync = require 'core.sync'
 local ibuf = require 'core.render.ibuf'
 local vbuf = require 'core.render.vbuf'
 local tex = require 'core.render.tex'
+local util = require 'core.util'
 
 local UPLOAD_THRESH = 10
 
@@ -29,9 +30,8 @@ local function upload()
         vbuf.update_copy(twin_inactive())
         ibuf.update_copy(twin_inactive())
         tex.update_copy(twin_inactive())
-        if vbuf.sync_copy_ready()
-        and ibuf.sync_copy_ready()
-        and tex.sync_copy_ready()
+        if util.reduce_and(function(x) return x.sync_copy_ready() end, {vbuf, ibuf, tex})
+        and util.reduce_or(function(x) return x.need_sync() end, {vbuf, ibuf, tex})
         then
             upload_count = upload_count + 1
             if upload_count >= UPLOAD_THRESH then
