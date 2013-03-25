@@ -12,12 +12,15 @@ function M.init()
     ibuf_api.unmap = api_ibuf_unmap
     ibuf_api.copy = api_ibuf_copy
     ibuf_api.waiting = api_ibuf_waiting
-    ibufs = renderpool.alloc('Index buffers', cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE,
-                             cfg.IBUF_POOL, ibuf_api)
+    ibufs = renderpool.alloc('Index buffers', cfg.IBUF_POOL, ibuf_api)
 end
 
 function M.done()
     ibufs.free()
+end
+
+function M.sizes()
+    return renderpool.sizes(cfg.IBUF_POOL)
 end
 
 function M.restore(state)

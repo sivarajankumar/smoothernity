@@ -2,7 +2,8 @@ local M = {}
 
 local game = require 'game.game'
 local cfg = require 'config'
-local pool = require 'core.render.pool'
+local ibuf = require 'core.render.ibuf'
+local vbuf = require 'core.render.vbuf'
 local tex = require 'core.tex'
 
 function M.configure()
@@ -21,8 +22,8 @@ function M.configure()
             screen_height = cfg.SCREEN_HEIGHT,
             full_screen = 1,
             mesh_count = cfg.MESH_COUNT,
-            vbuf = function() return pool.sizes(cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE) end,
-            ibuf = function() return pool.sizes(cfg.IBUF_TWIN_SIZE, cfg.IBUF_COPY_SIZE) end,
+            vbuf = vbuf.sizes,
+            ibuf = ibuf.sizes,
             pbuf_size = cfg.PBUF_SIZE,
             pbuf_count = cfg.PBUF_COUNT,
             tex = tex.sizes_layers,

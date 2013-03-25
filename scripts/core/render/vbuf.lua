@@ -12,12 +12,15 @@ function M.init()
     vbuf_api.unmap = api_vbuf_unmap
     vbuf_api.copy = api_vbuf_copy
     vbuf_api.waiting = api_vbuf_waiting
-    vbufs = renderpool.alloc('Vertex buffers', cfg.VBUF_TWIN_SIZE, cfg.VBUF_COPY_SIZE,
-                             cfg.VBUF_POOL, vbuf_api)
+    vbufs = renderpool.alloc('Vertex buffers', cfg.VBUF_POOL, vbuf_api)
 end
 
 function M.done()
     vbufs.free()
+end
+
+function M.sizes()
+    return renderpool.sizes(cfg.VBUF_POOL)
 end
 
 function M.restore(state)
