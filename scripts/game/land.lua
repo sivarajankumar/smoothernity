@@ -10,11 +10,15 @@ local poolbuf = require 'core.pool.buf'
 local rendermesh = require 'core.render.mesh'
 local renderibuf = require 'core.render.ibuf'
 local rendervbuf = require 'core.render.vbuf'
+local rendershuni = require 'core.render.shuni'
+local rendertex = require 'core.render.tex'
 local rigidbody = require 'core.rigidbody'
 local colshape = require 'core.colshape'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
+
+local TEX_SIZE = 32
 
 local function common_alloc(uid, noise, lodi, basx, basy, basz)
     local self = {}
@@ -25,12 +29,15 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
     self.hmap = poolbuf.alloc(self.res * self.res)
     local vb = rendervbuf.alloc(self.res * self.res)
     local ib = renderibuf.alloc(6 * (self.res - 1) * (self.res - 1), vb)
-    local mesh
+    local tex = rendertex.alloc(TEX_SIZE)
+    local mesh, utex
 
     function self.free()
         mesh.free()
+        utex.free()
         vb.free()
         ib.free()
+        tex.free()
         self.mmesh.free()
     end
 
@@ -47,25 +54,27 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
     end
 
-    util.wait_prepared(true, vb, ib)
+    util.wait_prepared(true, vb, ib, tex)
 
     while thread.left() == 0 do
         coroutine.yield(true)
     end
     local th = thread.alloc('game.land_th')
     util.wait_thread_responding(th, false)
-    th.request(string.format('return "%s", %s, %s, %s, %s, %i, %f, %f, %f',
-                             uid, noise.store(), self.hmap.store(),
-                             vb.store(), ib.store(), lodi, basx, basy, basz))
+    th.request(string.format('return "%s", %s, %s, %s, %s, %s, %i, %f, %f, %f',
+                             uid, noise.store(), self.hmap.store(), vb.store(),
+                             ib.store(), tex.store(), lodi, basx, basy, basz))
     util.wait_thread_idle(th, true)
     th.free()
 
     vb.finalize()
     ib.finalize()
-    util.wait_finalized(true, vb, ib)
+    tex.finalize()
+    util.wait_finalized(true, vb, ib, tex)
 
     mesh = rendermesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
-                            shader.default(), self.mmesh)
+                            shader.texture(), self.mmesh)
+    utex = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit', 'texlayer')
 
     return self
 end

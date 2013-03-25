@@ -141,8 +141,9 @@ function M.restore(state)
 
     local copies = util.map(function(x) return pbuf.restore(x) end, state)
     for k, v in pairs(copies) do
-        max_mip = math.max(max_mip, k)
-        mips[k] = make_mip(k, v)
+        local level = k - 1
+        max_mip = math.max(max_mip, level)
+        mips[level] = make_mip(level, v)
     end
     return self
 end
