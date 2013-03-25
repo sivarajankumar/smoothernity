@@ -216,7 +216,6 @@ function M.timescale(t)
 end
 
 function M.init()
-    render.init()
     M.visual = visual_alloc()
     M.debug = debug_alloc()
     M.eagle = eagle_alloc()
@@ -226,7 +225,6 @@ function M.done()
     M.visual.free()
     M.debug.free()
     M.eagle.free()
-    render.done()
 end
 
 function M.engage(what)
