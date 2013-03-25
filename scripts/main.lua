@@ -4,6 +4,7 @@ local game = require 'game.game'
 local cfg = require 'config'
 local buf = require 'core.pool.buf'
 local ibuf = require 'core.render.ibuf'
+local pbuf = require 'core.render.pbuf'
 local vbuf = require 'core.render.vbuf'
 local tex = require 'core.tex'
 
@@ -25,8 +26,7 @@ function M.configure()
             mesh_count = cfg.MESH_COUNT,
             vbuf = vbuf.sizes,
             ibuf = ibuf.sizes,
-            pbuf_size = cfg.PBUF_SIZE,
-            pbuf_count = cfg.PBUF_COUNT,
+            pbuf = pbuf.sizes,
             tex = tex.sizes_layers,
             vector_count = cfg.VECTOR_COUNT,
             vector_nesting = 20,

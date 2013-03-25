@@ -5,20 +5,34 @@ local util = require 'core.util'
 
 local shelves = {}
 
+function M.sizes()
+    local t = {}
+    local size = math.max(unpack(util.keys(cfg.TEX_POOL)))
+    while size > 0 do
+        for i = 1, cfg.COPIES do
+            table.insert(t, size * size)
+        end
+        size = math.floor(size / 2)
+    end
+    return unpack(t)
+end
+
 local function make_shelf(size)
     local self = {}
-    self.count = 0
-    self.left = 0
-    self.left_min = 0
+    self.size = size
     self.allocs = 0
     self.frees = 0
-    self.size = size
+    self.left = 0
+    self.left_min = 0
+    self.count = 0
     self.chunks = {}
     return self
 end
 
-local function make_tex(shelf, id, unit, layer)
+local function make_pbuf(shelf, id)
     local self = {}
+    local side = math.floor(math.sqrt(shelf.size))
+    assert(math.floor(side*side) == shelf.size)
     function self.alloc()
         shelf.allocs = shelf.allocs + 1
         shelf.left = shelf.left - 1
@@ -30,50 +44,32 @@ local function make_tex(shelf, id, unit, layer)
         shelf.left = shelf.left + 1
         shelf.chunks[id] = self
     end
-    function self.size()
-        return shelf.size
+    function self.set(x, y, ...)
+        api_pbuf_set(id, x + y*side, ...)
     end
-    function self.unit()
-        return unit
-    end
-    function self.layer()
-        return layer
+    function self.id()
+        return id
     end
     return self
 end
 
-function M.sizes_layers()
-    local t = {}
-    for _, s in ipairs(util.sorted(util.keys(cfg.TEX_POOL))) do
-        table.insert(t, s)
-        table.insert(t, cfg.TEX_POOL[s])
-    end
-    return unpack(t)
-end
-
 function M.init()
-    local id = 0
-    for k, size in ipairs(util.sorted(util.keys(cfg.TEX_POOL))) do
-        local layers = cfg.TEX_POOL[size]
-        local unit = k - 1
+    for id, size in ipairs({M.sizes()}) do
         if shelves[size] == nil then
             shelves[size] = make_shelf(size)
         end
         local shelf = shelves[size]
-        for layer = 0, layers - 1 do
-            id = id + 1
-            shelf.chunks[id] = make_tex(shelf, id, unit, layer)
-            shelf.count = shelf.count + 1
-            shelf.left = shelf.left + 1
-            shelf.left_min = shelf.left_min + 1
-        end
+        shelf.chunks[id] = make_pbuf(shelf, id)
+        shelf.count = shelf.count + 1
+        shelf.left = shelf.left + 1
+        shelf.left_min = shelf.left_min + 1
     end
 end
 
 function M.done()
     for _, s in ipairs(util.sorted(util.keys(shelves))) do
         local shelf = shelves[s]
-        io.write(string.format('Textures pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
+        io.write(string.format('Pixel buffers pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
             s, shelf.count - shelf.left_min, shelf.count, shelf.allocs, shelf.frees))
     end
 end
