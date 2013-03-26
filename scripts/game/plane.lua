@@ -8,6 +8,14 @@ local quit = require 'game.quit'
 local BUFFER = 20
 local REST = 200
 
+-- TODO:
+-- Store single continuous texture for the whole plane.
+-- Every land chunk should use the same big texture.
+-- When it's time to move generation window, use glCopyImageSubData to move texture image.
+-- Also adjustment to the existing chunks' texture coordinates should be made using shaders.
+-- This way, arbitrary texture can be used for the terrain without visible seams
+-- between land chunks even in case of mip-mapping.
+
 function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
     local self = {}
 
