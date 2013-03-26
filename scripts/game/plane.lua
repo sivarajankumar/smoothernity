@@ -40,6 +40,12 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
         return math.sqrt(c*c + cd*cd)
     end
 
+    local function get_land(z, x)
+        if lands[z] ~= nil then
+            return lands[z][x]
+        end
+    end
+
     local function add_land(wrk, z, x)
         if lands[z] == nil then
             lands[z] = {}
@@ -49,7 +55,7 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
             wrk.plan(
                 function()
                     lands[z][x] = landalloc(string.format('%s_land_%i_%i', uid, z, x),
-                                            noise, move, lodi, wx, wy, wz)
+                                            noise, move, lodi, wx, wy, wz, x, 0, z, get_land)
                 end)
         end
     end
@@ -88,9 +94,9 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
                 local empty = true
                 for x, lnd in pairs(xs) do
                     if x < xmin or x > xmax or z < zmin or z > zmax then
+                        xs[x] = nil
                         lnd.delete()
                         lnd.free()
-                        xs[x] = nil
                     else
                         empty = false
                     end

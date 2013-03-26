@@ -18,7 +18,7 @@ local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local thread = require 'core.thread'
 
-local function common_alloc(uid, noise, lodi, basx, basy, basz)
+local function common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gridz, get_land)
     local self = {}
 
     self.size = lod.lods[lodi].size
@@ -28,15 +28,22 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
     local vb = rendervbuf.alloc(self.res * self.res)
     local ib = renderibuf.alloc(6 * (self.res - 1) * (self.res - 1), vb)
     local tex = rendertex.alloc(lod.lods[lodi].texres)
-    local mesh, utex
+    local mesh, utex00, utex01, utex10, utex11
 
     function self.free()
         mesh.free()
-        utex.free()
+        utex00.free()
+        utex01.free()
+        utex10.free()
+        utex11.free()
         vb.free()
         ib.free()
         tex.free()
         self.mmesh.free()
+    end
+
+    function self.tex()
+        return tex
     end
 
     function self.hide()
@@ -47,9 +54,51 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
         mesh.group(meshes.GROUP_LODS[lodi])
     end
 
+    local function notify()
+        for _, land in pairs({get_land(gridz + 1, gridx),
+                              get_land(gridz, gridx + 1),
+                              get_land(gridz + 1, gridx +1)})
+        do
+            if land then
+                land.handshake()
+            end
+        end
+    end
+
     function self.delete()
-        util.async_write(util.uid_cache(string.format('%s_hmap.lua', uid, z)), '')
-        util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid, z)), '')
+        notify()
+        util.async_write(util.uid_cache(string.format('%s_hmap.lua', uid)), '')
+        util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid)), '')
+    end
+
+    function self.handshake()
+        local land01 = get_land(gridz - 1, gridx)
+        local land10 = get_land(gridz, gridx - 1)
+        local land11 = get_land(gridz - 1, gridx - 1)
+        if utex01 then
+            utex01.free()
+        end
+        if utex10 then
+            utex10.free()
+        end
+        if utex11 then
+            utex11.free()
+        end
+        if land01 then
+            utex01 = rendershuni.alloc_tex(shader.texture(), mesh, land01.tex(), 'texunit01', 'texlayer01')
+        else
+            utex01 = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit01', 'texlayer01')
+        end
+        if land10 then
+            utex10 = rendershuni.alloc_tex(shader.texture(), mesh, land10.tex(), 'texunit10', 'texlayer10')
+        else
+            utex10 = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit10', 'texlayer10')
+        end
+        if land11 then
+            utex11 = rendershuni.alloc_tex(shader.texture(), mesh, land11.tex(), 'texunit11', 'texlayer11')
+        else
+            utex11 = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit11', 'texlayer11')
+        end
     end
 
     tex.wrap(API_TEX_MIRRORED_REPEAT)
@@ -73,15 +122,18 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz)
 
     mesh = rendermesh.alloc(meshes.GROUP_HIDDEN, API_MESH_TRIANGLES, vb, ib,
                             shader.texture(), self.mmesh)
-    utex = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit', 'texlayer')
+    utex00 = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit00', 'texlayer00')
+
+    self.handshake()
+    notify()
 
     return self
 end
 
-function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
+function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz, gridx, gridy, gridz, get_land)
     local self = {}
 
-    local common = common_alloc(uid, noise, lodi, basx, basy, basz)
+    local common = common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gridz, get_land)
     local scale = common.size / (common.res - 1)
     local mvis = util.matrix_scl_stop(scale, 1, scale)
     local mrb = matrix.alloc()
@@ -90,6 +142,8 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     self.hide = common.hide
     self.show = common.show
     self.delete = common.delete
+    self.tex = common.tex
+    self.handshake = common.handshake
 
     function self.free()
         mvis.free()
@@ -126,8 +180,8 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz)
     return self
 end
 
-function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz)
-    local self = common_alloc(uid, noise, lodi, basx, basy, basz)
+function M.vis_alloc(uid, noise, move, lodi, basx, basy, basz, gridx, gridy, gridz, get_land)
+    local self = common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gridz, get_land)
 
     function self.move()
         local scale = self.size / (self.res - 1)
