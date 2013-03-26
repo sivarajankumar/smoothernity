@@ -121,6 +121,25 @@ static int api_render_clear(lua_State *lua)
     return 0;
 }
 
+static int api_render_blend(lua_State *lua)
+{
+    if (lua_gettop(lua) != 1 || !lua_isboolean(lua, 1))
+    {
+        lua_pushstring(lua, "api_render_blend: incorrect argument");
+        lua_error(lua);
+        return 0;
+    }
+    if (lua_toboolean(lua, 1))
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+    else
+        glDisable(GL_BLEND);
+    lua_pop(lua, 1);
+    return 0;
+}
+
 static int api_render_proj(lua_State *lua)
 {
     struct matrix_t *m;
@@ -239,6 +258,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     lua_register(lua, "api_render_clear_color", api_render_clear_color);
     lua_register(lua, "api_render_clear_depth", api_render_clear_depth);
     lua_register(lua, "api_render_clear", api_render_clear);
+    lua_register(lua, "api_render_blend", api_render_blend);
     lua_register(lua, "api_render_proj", api_render_proj);
     lua_register(lua, "api_render_mview", api_render_mview);
     lua_register(lua, "api_render_swap", api_render_swap);

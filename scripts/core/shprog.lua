@@ -21,6 +21,9 @@ local function make_shprog(si)
     function self.attach_frag(data)
         api_shprog_attach(si, API_SHPROG_FRAGMENT, data)
     end
+    function self.attach_vertex(data)
+        api_shprog_attach(si, API_SHPROG_VERTEX, data)
+    end
     function self.link()
         api_shprog_link(si)
     end

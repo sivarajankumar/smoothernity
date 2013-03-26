@@ -9,6 +9,7 @@ uniform int texlayer10;
 uniform int texlayer11;
 
 const float OVERLAP = 0.3;
+const float FADE_Z = 0.9;
 
 void main()
 {
@@ -23,4 +24,5 @@ void main()
     vec4 colorx1 = color01*weight[0] + color11*(1.0 - weight[0]);
     vec4 colorz  = colorx0*weight[1] + colorx1*(1.0 - weight[1]);
     gl_FragColor = colorz;
+    /*gl_FragColor.a = 1.0 - smoothstep(FADE_Z, 1.0, gl_FragCoord.z);*/
 }
