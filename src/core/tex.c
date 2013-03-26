@@ -41,7 +41,7 @@ static struct tex_t * tex_get(int texi)
         return 0;
 }
 
-static int log2(int v)
+static int mylog2(int v)
 {
     int res = 0;
     while (v >>= 1)
@@ -81,7 +81,7 @@ static int api_tex_set(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    if (mip < 0 || mip > log2(tex->size))
+    if (mip < 0 || mip > mylog2(tex->size))
     {
         lua_pushstring(lua, "api_tex_set: invalid mip");
         lua_error(lua);
@@ -181,7 +181,7 @@ int tex_init(lua_State *lua, int *sizes, int len)
         glGenTextures(1, &tex->tex_id);
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, tex->tex_id);
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, log2(tex->size) + 1, GL_RGBA8,
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, mylog2(tex->size) + 1, GL_RGBA8,
                        tex->size, tex->size, tex->layers);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER,
                         GL_LINEAR_MIPMAP_LINEAR);
