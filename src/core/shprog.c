@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 static const size_t SHPROG_SIZE = 32;
-#define LOG_SIZE 1024
+#define LOG_SIZE 2048
 
 struct shprogs_t
 {
@@ -107,7 +107,7 @@ static int api_shprog_attach(lua_State *lua)
     {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
         if (log_len >= LOG_SIZE)
-            fprintf(stderr, "Log size is to small: %i\n", (int)log_len);
+            fprintf(stderr, "Log size is too small: %i\n", (int)log_len);
         else
         {
             glGetShaderInfoLog(shader, log_len, &res, log);

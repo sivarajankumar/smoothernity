@@ -56,6 +56,7 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
                 function()
                     lands[z][x] = landalloc(string.format('%s_land_%i_%i', uid, z, x),
                                             noise, move, lodi, wx, wy, wz, x, 0, z, get_land)
+                    lands[z][x].notify()
                 end)
         end
     end
@@ -95,6 +96,7 @@ function M.alloc(uid, noise, move, lodi, landalloc, centx, centy, centz)
                 for x, lnd in pairs(xs) do
                     if x < xmin or x > xmax or z < zmin or z > zmax then
                         xs[x] = nil
+                        lnd.notify()
                         lnd.delete()
                         lnd.free()
                     else
