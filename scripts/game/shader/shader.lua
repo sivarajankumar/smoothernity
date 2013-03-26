@@ -12,6 +12,7 @@ function M.init()
 
     shtex = shprog.alloc()
     shtex.attach_frag(util.sync_read('./game/shader/tex.frag'))
+    shtex.attach_vertex(util.sync_read('./game/shader/tex.vert'))
     shtex.link()
 
     shdefault = shprog.alloc()

@@ -83,6 +83,7 @@ local function visual_alloc()
 
         prof.cpu.rdraw.start()
         prof.gpu.rdraw.start()
+        api_render_blend(true)
         api_render_mview(self.mview3d.id())
         for lodi = 0, lod.count - 1 do
             local mproj3d = make_frustum(lod.lods[lodi].clip_near, lod.lods[lodi].clip_far, cfg.CAMERA_DIST)
@@ -93,6 +94,7 @@ local function visual_alloc()
             render.mesh_draw(meshes.GROUP_LODS[lodi], draw_tag)
             mproj3d.free()
         end
+        api_render_blend(false)
         api_render_clear(API_RENDER_CLEAR_DEPTH)
         api_render_proj(mproj2d.id())
         api_render_mview(mview2d.id())
