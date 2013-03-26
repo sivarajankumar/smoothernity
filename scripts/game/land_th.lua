@@ -109,7 +109,7 @@ function M.thread_run(thi)
         for z = 0, res - 1 do
             for x = 0, res - 1 do
                 local h = api_buf_get(hmap.start, API_BUF_IPL_NEAREST, res, res, x, z)
-                vb.set(x + res*z, x-0.5*(res-1), h, z-0.5*(res-1), 1, 1, 1, 1, x / res, z / res)
+                vb.set(x + res*z, x-0.5*(res-1), h, z-0.5*(res-1), 1, 1, 1, 1, x / (res - 1), z / (res - 1))
             end
         end
     end
