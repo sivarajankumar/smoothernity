@@ -54,7 +54,7 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gr
         mesh.group(meshes.GROUP_LODS[lodi])
     end
 
-    local function notify()
+    function self.notify()
         for _, land in pairs({get_land(gridz + 1, gridx),
                               get_land(gridz, gridx + 1),
                               get_land(gridz + 1, gridx +1)})
@@ -66,7 +66,6 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gr
     end
 
     function self.delete()
-        notify()
         util.async_write(util.uid_cache(string.format('%s_hmap.lua', uid)), '')
         util.async_write(util.uid_cache(string.format('%s_colmap.lua', uid)), '')
     end
@@ -125,7 +124,6 @@ local function common_alloc(uid, noise, lodi, basx, basy, basz, gridx, gridy, gr
     utex00 = rendershuni.alloc_tex(shader.texture(), mesh, tex, 'texunit00', 'texlayer00')
 
     self.handshake()
-    notify()
 
     return self
 end
@@ -144,6 +142,7 @@ function M.phys_alloc(uid, noise, move, lodi, basx, basy, basz, gridx, gridy, gr
     self.delete = common.delete
     self.tex = common.tex
     self.handshake = common.handshake
+    self.notify = common.notify
 
     function self.free()
         mvis.free()
