@@ -8,8 +8,9 @@ local poolbuf = require 'core.pool.buf'
 local function alloc_common(buf_start)
     local self = {}
     function self.get(z, x)
-        return api_buf_get(buf_start, API_BUF_IPL_SPLINE,
-                          cfg.NOISE_SIZE, cfg.NOISE_SIZE, z, x)
+        v = api_buf_get(buf_start, API_BUF_IPL_SPLINE,
+                        cfg.NOISE_SIZE, cfg.NOISE_SIZE, z, x)
+        return util.clamp(v, 0, 1)
     end
     return self
 end
