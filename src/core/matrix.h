@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lua.h"
-#include "GL/glew.h"
 
 #define MATRIX_ARGVS 3
 #define MATRIX_ARGMS 2
@@ -30,7 +29,7 @@ enum matrix_axis_e
 
 struct matrix_t
 {
-    GLfloat value[16]; /* must go first to ensure alignment */
+    float value[16]; /* must go first to ensure alignment */
     enum matrix_e type;
     int update_tag;
     enum matrix_axis_e rotaxis;
@@ -50,14 +49,14 @@ struct matrix_t * matrix_get(int);
 int matrix_update(struct matrix_t *matrix, float dt,
                   int update_tag, int force);
 int matrix_nesting(struct matrix_t *matrix, int limit);
-void matrix_inv(GLfloat *out, GLfloat *m);
-void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2);
-void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
-                        enum matrix_axis_e rotaxis, GLfloat rotangle);
-void matrix_pos_axes(GLfloat *out, GLfloat *pos, GLfloat *ax,
-                     GLfloat *ay, GLfloat *az);
-void matrix_from_to_up(GLfloat *out, GLfloat *from, GLfloat *to, GLfloat *up);
-void matrix_frustum(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
-                    GLfloat top, GLfloat znear, GLfloat zfar);
-void matrix_ortho(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
-                  GLfloat top, GLfloat znear, GLfloat zfar);
+void matrix_inv(float *out, float *m);
+void matrix_mul(float *out, float *m1, float *m2);
+void matrix_pos_scl_rot(float *out, float *pos, float *scl,
+                        enum matrix_axis_e rotaxis, float rotangle);
+void matrix_pos_axes(float *out, float *pos, float *ax,
+                     float *ay, float *az);
+void matrix_from_to_up(float *out, float *from, float *to, float *up);
+void matrix_frustum(float *out, float left, float right, float bottom,
+                    float top, float znear, float zfar);
+void matrix_ortho(float *out, float left, float right, float bottom,
+                  float top, float znear, float zfar);

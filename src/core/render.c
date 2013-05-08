@@ -1,5 +1,6 @@
 #include "render.h"
 #include <stdio.h>
+#include <GL/glew.h>
 
 struct render_t
 {
@@ -17,6 +18,11 @@ void render_engage(void)
 
 int render_init(lua_State *lua, int width, int height, int full_screen)
 {
+    if (sizeof(float) != sizeof(GLfloat))
+    {
+        fprintf(stderr, "render_init: float<->GLfloat not supported\n");
+        return 1;
+    }
     if (full_screen)
         printf("render_init: full screen TODO\n");
     g_render.width = width;
