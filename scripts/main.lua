@@ -3,10 +3,6 @@ local M = {}
 local game = require 'game.game'
 local cfg = require 'config'
 local buf = require 'core.pool.buf'
-local ibuf = require 'core.render.ibuf'
-local pbuf = require 'core.render.pbuf'
-local vbuf = require 'core.render.vbuf'
-local tex = require 'core.tex'
 
 function M.configure()
     return {
@@ -23,11 +19,6 @@ function M.configure()
             screen_width = cfg.SCREEN_WIDTH,
             screen_height = cfg.SCREEN_HEIGHT,
             full_screen = 1,
-            mesh_count = cfg.MESH_COUNT,
-            vbuf = vbuf.sizes,
-            ibuf = ibuf.sizes,
-            pbuf = pbuf.sizes,
-            tex = tex.sizes_layers,
             vector_count = cfg.VECTOR_COUNT,
             vector_nesting = 20,
             matrix_count = cfg.MATRIX_COUNT,
@@ -36,11 +27,7 @@ function M.configure()
             colshape_count = cfg.COLSHAPE_COUNT,
             rigidbody_count = cfg.RIGIDBODY_COUNT,
             vehicle_count = cfg.VEHICLE_COUNT,
-            buf_size = buf.size(),
-            shuni_count = cfg.SHUNI_COUNT,
-            shprog_count = cfg.SHPROG_COUNT,
-            sync_count = cfg.SYNC_COUNT,
-            query_count = cfg.QUERY_COUNT}
+            buf_size = buf.size()}
 end
 
 function M.run()
