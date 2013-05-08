@@ -9,19 +9,10 @@
 #include "timer.h"
 #include "render.h"
 #include "input.h"
-#include "ibuf.h"
-#include "vbuf.h"
-#include "pbuf.h"
-#include "tex.h"
-#include "mesh.h"
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
 #include "buf.h"
-#include "shprog.h"
-#include "shuni.h"
-#include "sync.h"
-#include "query.h"
 #include "thread.h"
 
 static const size_t ARRAY_ALIGN = 16;
@@ -38,15 +29,6 @@ struct main_t
     int screen_width;
     int screen_height;
     int full_screen;
-    int mesh_count;
-    int *vbuf;
-    int vbuf_count;
-    int *ibuf;
-    int ibuf_count;
-    int *pbuf;
-    int pbuf_count;
-    int *tex;
-    int tex_len;
     int vector_count;
     int vector_nesting;
     int matrix_count;
@@ -56,10 +38,6 @@ struct main_t
     int rigidbody_count;
     int vehicle_count;
     int buf_size;
-    int shprog_count;
-    int shuni_count;
-    int sync_count;
-    int query_count;
     lua_State *lua;
     struct mpool_t *mpool;
 };
@@ -198,7 +176,6 @@ static int main_configure(char *script)
      || main_get_int(lua, "screen_height", &g_main.screen_height) != 0
      || main_get_int(lua, "full_screen", &g_main.full_screen) != 0
      || main_get_int(lua, "thread_count", &g_main.thread_count) != 0
-     || main_get_int(lua, "mesh_count", &g_main.mesh_count) != 0
      || main_get_int(lua, "vector_count", &g_main.vector_count) != 0
      || main_get_int(lua, "vector_nesting", &g_main.vector_nesting) != 0
      || main_get_int(lua, "matrix_count", &g_main.matrix_count) != 0
@@ -207,11 +184,7 @@ static int main_configure(char *script)
      || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
-     || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
-     || main_get_int(lua, "shuni_count", &g_main.shuni_count) != 0
-     || main_get_int(lua, "shprog_count", &g_main.shprog_count) != 0
-     || main_get_int(lua, "sync_count", &g_main.sync_count) != 0
-     || main_get_int(lua, "query_count", &g_main.query_count) != 0)
+     || main_get_int(lua, "buf_size", &g_main.buf_size) != 0)
     {
         goto cleanup;
     }
@@ -221,11 +194,7 @@ static int main_configure(char *script)
      || main_get_int_array(lua, "physics_mpool", &g_main.physics_mpool_len,
                            &g_main.physics_mpool) != 0
      || main_get_int_array(lua, "thread_mpool", &g_main.thread_mpool_len,
-                           &g_main.thread_mpool) != 0
-     || main_get_int_array(lua, "tex", &g_main.tex_len, &g_main.tex) != 0
-     || main_get_int_array(lua, "ibuf", &g_main.ibuf_count, &g_main.ibuf) != 0
-     || main_get_int_array(lua, "pbuf", &g_main.pbuf_count, &g_main.pbuf) != 0
-     || main_get_int_array(lua, "vbuf", &g_main.vbuf_count, &g_main.vbuf) != 0)
+                           &g_main.thread_mpool) != 0)
     {
         goto cleanup;
     }
@@ -249,26 +218,6 @@ cleanup:
         util_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
     }
-    if (g_main.ibuf)
-    {
-        util_free(g_main.ibuf);
-        g_main.ibuf = 0;
-    }
-    if (g_main.pbuf)
-    {
-        util_free(g_main.pbuf);
-        g_main.pbuf = 0;
-    }
-    if (g_main.vbuf)
-    {
-        util_free(g_main.vbuf);
-        g_main.vbuf = 0;
-    }
-    if (g_main.tex)
-    {
-        util_free(g_main.tex);
-        g_main.tex = 0;
-    }
     lua_close(lua);
     return 1;
 }
@@ -276,13 +225,6 @@ cleanup:
 static void main_done(void)
 {
     render_thread_done();
-    vbuf_done();
-    ibuf_done();
-    pbuf_done();
-    tex_done();
-    shuni_done();
-    shprog_done();
-    query_done();
     render_done();
 
     if (g_main.lua)
@@ -302,32 +244,10 @@ static void main_done(void)
         util_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
     }
-    if (g_main.ibuf)
-    {
-        util_free(g_main.ibuf);
-        g_main.ibuf = 0;
-    }
-    if (g_main.pbuf)
-    {
-        util_free(g_main.pbuf);
-        g_main.pbuf = 0;
-    }
-    if (g_main.vbuf)
-    {
-        util_free(g_main.vbuf);
-        g_main.vbuf = 0;
-    }
-    if (g_main.tex)
-    {
-        util_free(g_main.tex);
-        g_main.tex = 0;
-    }
 
     buf_done();
     vector_done();
     matrix_done();
-    sync_done();
-    mesh_done();
     physics_done();
     if (g_main.mpool)
     {
@@ -407,66 +327,12 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (mesh_init(g_main.lua, g_main.mesh_count) != 0)
-    {
-        fprintf(stderr, "Cannot init meshes\n");
-        return 1;
-    }
-
-    if (sync_init(g_main.lua, g_main.sync_count) != 0)
-    {
-        fprintf(stderr, "Cannot init syncs\n");
-        return 1;
-    }
-
     if (render_init(g_main.lua, g_main.screen_width,
                     g_main.screen_height, g_main.full_screen) != 0)
     {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
-
-    if (query_init(g_main.lua, g_main.query_count) != 0)
-    {
-        fprintf(stderr, "Cannot init queries\n");
-        return 1;
-    }
-
-    if (vbuf_init(g_main.lua, g_main.vbuf, g_main.vbuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init vertex buffers\n");
-        return 1;
-    }
-
-    if (ibuf_init(g_main.lua, g_main.ibuf, g_main.ibuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init index buffers\n");
-        return 1;
-    }
-
-    if (pbuf_init(g_main.lua, g_main.pbuf, g_main.pbuf_count) != 0)
-    {
-        fprintf(stderr, "Cannot init pixel buffers\n");
-        return 1;
-    }
-
-    if (tex_init(g_main.lua, g_main.tex, g_main.tex_len) != 0)
-    {
-        fprintf(stderr, "Cannot init textures\n");
-        return 1;
-    }
-
-    if (shprog_init(g_main.lua, g_main.shprog_count) != 0)
-    {
-        fprintf(stderr, "Cannot init shader programs\n");
-        return 1;
-    }
-
-    if (shuni_init(g_main.lua, g_main.shuni_count) != 0)
-    {
-        fprintf(stderr, "Cannot init shader uniforms\n");
-        return 1;
-    }
 
     if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
     {
