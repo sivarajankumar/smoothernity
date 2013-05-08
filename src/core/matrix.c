@@ -165,7 +165,7 @@ static int api_matrix_mul(lua_State *lua)
 static int api_matrix_mul_stop(lua_State *lua)
 {
     struct matrix_t *matrix, *m0, *m1;
-    GLfloat m[16];
+    float m[16];
 
     if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
     || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3))
@@ -192,7 +192,7 @@ static int api_matrix_mul_stop(lua_State *lua)
     matrix_clear_args(matrix);
     matrix->update_tag = 0;
     matrix->type = MATRIX_CONST;
-    memcpy(matrix->value, m, 16 * sizeof(GLfloat));
+    memcpy(matrix->value, m, 16 * sizeof(float));
 
     return 0;
 }
@@ -668,7 +668,7 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
 
 static int matrix_update_mul(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *m0, *m1;
+    float *m0, *m1;
     if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
         return 1;
     if (matrix_update(m->argm[1], dt, m->update_tag, force) != 0)
@@ -681,7 +681,7 @@ static int matrix_update_mul(struct matrix_t *m, float dt, int force)
 
 static int matrix_update_inv(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *m0;
+    float *m0;
     if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
         return 1;
     m0 = m->argm[0]->value;
@@ -691,7 +691,7 @@ static int matrix_update_inv(struct matrix_t *m, float dt, int force)
 
 static int matrix_update_frustum(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *v0, *v1;
+    float *v0, *v1;
     if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
         return 1;
     if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
@@ -705,7 +705,7 @@ static int matrix_update_frustum(struct matrix_t *m, float dt, int force)
 
 static int matrix_update_ortho(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *v0, *v1;
+    float *v0, *v1;
     if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
         return 1;
     if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
@@ -719,7 +719,7 @@ static int matrix_update_ortho(struct matrix_t *m, float dt, int force)
 
 static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *v0, *v1, *v2;
+    float *v0, *v1, *v2;
     if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
         return 1;
     if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
@@ -736,7 +736,7 @@ static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force)
 
 static int matrix_update_from_to_up(struct matrix_t *m, float dt, int force)
 {
-    GLfloat *v0, *v1, *v2;
+    float *v0, *v1, *v2;
     if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
         return 1;
     if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
@@ -779,7 +779,7 @@ int matrix_update(struct matrix_t *m, float dt,
     return 0;
 }
 
-void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
+void matrix_mul(float *out, float *m1, float *m2)
 {
     out[0] = m1[0]*m2[0] + m1[4]*m2[1] + m1[ 8]*m2[2] + m1[12]*m2[3];
     out[1] = m1[1]*m2[0] + m1[5]*m2[1] + m1[ 9]*m2[2] + m1[13]*m2[3];
@@ -802,10 +802,10 @@ void matrix_mul(GLfloat *out, GLfloat *m1, GLfloat *m2)
     out[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
 }
 
-void matrix_from_to_up(GLfloat *out, GLfloat *from, GLfloat *to, GLfloat *up)
+void matrix_from_to_up(float *out, float *from, float *to, float *up)
 {
     static const float THRESHOLD = 0.1f;
-    GLfloat diff[4], az[4], ax[4], ay[4];
+    float diff[4], az[4], ax[4], ay[4];
     float len;
     vector_wsum(diff, 1, to, -1, from);
     len = vector_len(diff);
@@ -817,8 +817,8 @@ void matrix_from_to_up(GLfloat *out, GLfloat *from, GLfloat *to, GLfloat *up)
     matrix_pos_axes(out, from, ax, ay, az);
 }
 
-void matrix_pos_axes(GLfloat *out, GLfloat *pos, GLfloat *ax,
-                     GLfloat *ay, GLfloat *az)
+void matrix_pos_axes(float *out, float *pos, float *ax,
+                     float *ay, float *az)
 {
     out[ 0] =  ax[0]; out[ 1] =  ax[1]; out[ 2] =  ax[2]; out[ 3] = 0;
     out[ 4] =  ay[0]; out[ 5] =  ay[1]; out[ 6] =  ay[2]; out[ 7] = 0;
@@ -826,11 +826,11 @@ void matrix_pos_axes(GLfloat *out, GLfloat *pos, GLfloat *ax,
     out[12] = pos[0]; out[13] = pos[1]; out[14] = pos[2]; out[15] = 1;
 }
 
-void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
-                        enum matrix_axis_e rotaxis, GLfloat rotangle)
+void matrix_pos_scl_rot(float *out, float *pos, float *scl,
+                        enum matrix_axis_e rotaxis, float rotangle)
 {
-    GLfloat axisx[3], axisy[3], axisz[3];
-    GLfloat rcos, rsin;
+    float axisx[3], axisy[3], axisz[3];
+    float rcos, rsin;
 
     rcos = cosf(rotangle);
     rsin = sinf(rotangle);
@@ -860,7 +860,7 @@ void matrix_pos_scl_rot(GLfloat *out, GLfloat *pos, GLfloat *scl,
     matrix_pos_axes(out, pos, axisx, axisy, axisz);
 }
 
-void matrix_inv(GLfloat *out, GLfloat *m)
+void matrix_inv(float *out, float *m)
 {
     float inv[16], det;
     int i;
@@ -988,10 +988,10 @@ void matrix_inv(GLfloat *out, GLfloat *m)
         out[i] = inv[i] * det;
 }
 
-void matrix_frustum(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
-                    GLfloat top, GLfloat znear, GLfloat zfar)
+void matrix_frustum(float *out, float left, float right, float bottom,
+                    float top, float znear, float zfar)
 {
-    GLfloat temp, temp2, temp3, temp4;
+    float temp, temp2, temp3, temp4;
     temp = 2.0f * znear;
     temp2 = right - left;
     temp3 = top - bottom;
@@ -1018,8 +1018,8 @@ void matrix_frustum(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
     out[15] = 0;
 }
 
-void matrix_ortho(GLfloat *out, GLfloat left, GLfloat right, GLfloat bottom,
-                  GLfloat top, GLfloat znear, GLfloat zfar)
+void matrix_ortho(float *out, float left, float right, float bottom,
+                  float top, float znear, float zfar)
 {
     out[0] = 2.0f / (right - left);
     out[1] = 0;

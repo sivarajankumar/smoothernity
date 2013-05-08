@@ -25,6 +25,11 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int wld_count, int cs_count, int rb_count, int veh_count)
 {
     int res;
+    if (sizeof(float) != sizeof(btScalar))
+    {
+        fprintf(stderr, "physcpp_init: float<->btScalar not supported\n");
+        return PHYSRES_CANNOT_INIT;
+    }
     g_physcpp.memalloc = memalloc;
     btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     res = world_init(wld_count);

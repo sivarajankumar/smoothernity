@@ -1,7 +1,6 @@
 #pragma once
 
 #include <lua.h>
-#include <GL/glew.h>
 
 #define VECTOR_ARGVS 5
 #define VECTOR_ARGMS 2
@@ -27,7 +26,7 @@ enum vector_e
 
 struct vector_t
 {
-    GLfloat value[4]; /* must go first to ensure alignment */
+    float value[4]; /* must go first to ensure alignment */
     enum vector_e type;
     int update_tag;
     struct vector_t *argv[VECTOR_ARGVS];
@@ -50,6 +49,6 @@ void vector_done(void);
 struct vector_t * vector_get(int);
 int vector_update(struct vector_t *vector, float dt, int update_tag, int force);
 int vector_nesting(struct vector_t *vector, int limit);
-void vector_cross(GLfloat *out, GLfloat *v1, GLfloat *v2);
-float vector_len(GLfloat *v);
-void vector_wsum(GLfloat *out, float w1, GLfloat *v1, float w2, GLfloat *v2);
+void vector_cross(float *out, float *v1, float *v2);
+float vector_len(float *v);
+void vector_wsum(float *out, float w1, float *v1, float w2, float *v2);
