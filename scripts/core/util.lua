@@ -2,7 +2,6 @@ local M = {}
 
 local cfg = require 'config'
 local thread = require 'core.thread'
-local sync = require 'core.sync'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 
@@ -68,18 +67,6 @@ function M.map(func, args)
     return res
 end
 
-function M.wait_prepared(skip_frame, ...)
-    while not M.reduce_and(function(x) return x.prepared() end, {...}) do
-        coroutine.yield(skip_frame)
-    end
-end
-
-function M.wait_finalized(skip_frame, ...)
-    while not M.reduce_and(function(x) return x.finalized() end, {...}) do
-        coroutine.yield(skip_frame)
-    end
-end
-
 function M.empty(t)
     return M.reduce_and(function(...) return false end, t)
 end
@@ -129,30 +116,12 @@ function M.wait_thread_responding(th, skip_frame)
     end
 end
 
-function M.query_free(q)
-    while not q.idle() do
-    end
-    q.free()
-end
-
 function M.sum(...)
     local s = 0
     for _, v in ipairs({...}) do
         s = s + v
     end
     return s
-end
-
-function M.sync_wait()
-    local t = api_timer()
-    local s = sync.alloc()
-    while not s.ready() do
-        if api_timer() - t > MAX_WAIT_TIME then
-            error('sync_wait: too long\n')
-        end
-        coroutine.yield(true)
-    end
-    s.free()
 end
 
 function M.async_read(uid)
