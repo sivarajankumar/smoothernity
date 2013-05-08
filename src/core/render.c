@@ -1,4 +1,5 @@
 #include "render.h"
+#include <stdio.h>
 
 struct render_t
 {
@@ -18,10 +19,11 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
 {
     if (full_screen)
         printf("render_init: full screen TODO\n");
-
     g_render.width = width;
     g_render.height = height;
     g_render.init = 1;
+    if (lua)
+        printf("render_init: lua mapping TODO\n");
     return 0;
 }
 
