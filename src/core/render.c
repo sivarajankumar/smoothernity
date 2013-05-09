@@ -112,6 +112,10 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     if (glewInit() != GLEW_OK)
         goto cleanup;
 
+    printf("render_init: GL: %s, GLSL: %s\n",
+           glGetString(GL_VERSION),
+           glGetString(GL_SHADING_LANGUAGE_VERSION));
+
     g_render.width = width;
     g_render.height = height;
     g_render.init = 1;
