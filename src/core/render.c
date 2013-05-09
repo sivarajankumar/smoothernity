@@ -44,7 +44,7 @@ static int api_render_clear_depth(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    glClearDepthf((float)lua_tonumber(lua, 1));
+    glClearDepthf((GLfloat)lua_tonumber(lua, 1));
     lua_pop(lua, 1);
     return 0;
 }
