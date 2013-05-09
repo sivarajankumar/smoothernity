@@ -1,4 +1,4 @@
-include(FindGLEW)
+find_package(GLEW REQUIRED)
 
 include_directories(${GLEW_INCLUDE_DIRS})
 

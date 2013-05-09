@@ -1,10 +1,10 @@
-include(FindLua51)
-include(FindSDL)
-include(FindOpenGL)
-include(FindGLEW)
+find_package(Lua51 REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 
 include_directories(${LUA_INCLUDE_DIR}
-                    ${SDL_INCLUDE_DIR}
+                    ${SDL2_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
                     ${OPENGL_INCLUDE_DIR})
 
@@ -18,9 +18,10 @@ target_link_libraries(main
                       thread
                       util
                       ${LUA_LIBRARIES}
-                      ${SDL_LIBRARY}
+                      ${SDL2_LIBRARY}
                       ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES})
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_definitions(-std=c11
                     -DGL_GLEXT_PROTOTYPES=1

@@ -1,5 +1,5 @@
-include(FindGLEW)
-include(FindBullet)
+find_package(GLEW REQUIRED)
+find_package(Bullet REQUIRED)
 
 include_directories(${GLEW_INCLUDE_DIRS}
                     ${BULLET_INCLUDE_DIRS})
