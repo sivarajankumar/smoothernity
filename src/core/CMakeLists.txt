@@ -1,10 +1,10 @@
 find_package(Lua51 REQUIRED)
-find_package(SDL2 REQUIRED)
+find_package(SDL REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
 include_directories(${LUA_INCLUDE_DIR}
-                    ${SDL2_INCLUDE_DIR}
+                    ${SDL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
                     ${OPENGL_INCLUDE_DIR})
 
@@ -18,7 +18,7 @@ target_link_libraries(main
                       thread
                       util
                       ${LUA_LIBRARIES}
-                      ${SDL2_LIBRARY}
+                      ${SDL_LIBRARY}
                       ${GLEW_LIBRARIES}
                       ${OPENGL_LIBRARIES})
 

@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(SMOOTHERNITY)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_definitions(-Wall -Wextra -DCOMPILER_IS_GNU)
+    add_definitions(-pedantic-errors -Wall -Wextra -DCOMPILER_IS_GNU)
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     add_definitions(-W3 -DCOMPILER_IS_MSVC -D_CRT_SECURE_NO_WARNINGS)
     if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")

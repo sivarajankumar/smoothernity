@@ -225,7 +225,6 @@ cleanup:
 
 static void main_done(void)
 {
-    render_thread_done();
     render_done();
 
     if (g_main.lua)
