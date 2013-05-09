@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
@@ -255,6 +256,8 @@ static void main_done(void)
         mpool_destroy(g_main.mpool);
     }
     thread_done();
+
+    SDL_Quit();
 }
 
 static int main_init(int argc, char **argv)
@@ -262,6 +265,12 @@ static int main_init(int argc, char **argv)
     if (main_configure(argv[argc-1]) != 0)
     {
         fprintf(stderr, "Cannot init main\n");
+        return 1;
+    }
+
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    {
+        fprintf(stderr, "Cannot init SDL\n");
         return 1;
     }
 
