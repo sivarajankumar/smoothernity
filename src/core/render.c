@@ -99,7 +99,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    flags = SDL_OPENGL;
+    flags = SDL_OPENGL | SDL_DOUBLEBUF;
     if (full_screen)
     {
         SDL_ShowCursor(SDL_DISABLE);
