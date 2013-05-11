@@ -21,6 +21,9 @@ local function make_prog(si)
     function self.attach_frag(data)
         api_prog_attach(si, API_PROG_FRAGMENT, data)
     end
+    function self.attach_vert(data)
+        api_prog_attach(si, API_PROG_VERTEX, data)
+    end
     function self.link()
         api_prog_link(si)
     end
