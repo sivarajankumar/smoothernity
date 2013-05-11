@@ -29,24 +29,93 @@ static struct prog_t * prog_get(int iprog)
         return 0;
 }
 
+static int prog_attach(struct prog_t *prog, GLenum type, size_t data_len, const char *data)
+{
+    static char log[LOG_SIZE];
+    GLuint shader;
+    GLint gldata_len, res, log_len;
+
+    shader = glCreateShader(type);
+    gldata_len = (GLint)data_len;
+    glShaderSource(shader, 1, &data, &gldata_len);
+    glCompileShader(shader);
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &res);
+    if (res == GL_FALSE)
+    {
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
+        if (log_len >= LOG_SIZE)
+            fprintf(stderr, "Log size is too small: %i\n", (int)log_len);
+        else
+        {
+            glGetShaderInfoLog(shader, log_len, &res, log);
+            fprintf(stderr, "Log:\n%s\n", log);
+        }
+        glDeleteShader(shader);
+        return 1;
+    }
+    glAttachShader(prog->prog_id, shader);
+    glDeleteShader(shader);
+    if (glGetError() != GL_NO_ERROR)
+        return 1;
+    return 0;
+}
+
 static int api_prog_alloc(lua_State *lua)
 {
+    /*
+     * OpenGL ES 3.0 supports only 1 shader executable of each type.
+     * For the sake of portability, enforce every program to contain
+     * exactly 2 shaders: vertex and fragment.
+     */
     struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
+    size_t vert_len, frag_len;
+    const char *vert, *frag;
+    static char log[LOG_SIZE];
+    GLint res, len;
+
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
+    || !lua_isstring(lua, 2) || !lua_isstring(lua, 3))
     {
         lua_pushstring(lua, "api_prog_alloc: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    prog = prog_get(lua_tointeger(lua, 1 ));
-    lua_pop(lua, 1);
+    prog = prog_get(lua_tointeger(lua, 1));
+    vert = lua_tolstring(lua, 2, &vert_len);
+    frag = lua_tolstring(lua, 3, &frag_len);
+    lua_pop(lua, 3);
+
     if (prog == 0 || prog->prog_id != 0)
     {
         lua_pushstring(lua, "api_prog_alloc: invalid prog");
         lua_error(lua);
         return 0;
     }
+
     prog->prog_id = glCreateProgram();
+    if (prog_attach(prog, GL_VERTEX_SHADER, vert_len, vert) != 0
+    ||  prog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag) != 0)
+    {
+        lua_pushstring(lua, "api_prog_alloc: cannot attach shaders");
+        lua_error(lua);
+        return 0;
+    }
+    glLinkProgram(prog->prog_id);
+    glGetProgramiv(prog->prog_id, GL_LINK_STATUS, &res);
+    if (res == GL_FALSE)
+    {
+        glGetProgramiv(prog->prog_id, GL_INFO_LOG_LENGTH, &len);
+        if (len >= LOG_SIZE)
+            fprintf(stderr, "Log size is too small: %i\n", (int)len);
+        else
+        {
+            glGetProgramInfoLog(prog->prog_id, len, &res, log);
+            fprintf(stderr, "Log:\n%s\n", log);
+        }
+        lua_pushstring(lua, "api_prog_alloc: link error");
+        lua_error(lua);
+        return 0;
+    }
     return 0;
 }
 
@@ -72,119 +141,9 @@ static int api_prog_free(lua_State *lua)
     return 0;
 }
 
-static int api_prog_attach(lua_State *lua)
-{
-    static char log[LOG_SIZE];
-    struct prog_t *prog;
-    int type;
-    size_t data_len;
-    const char *data;
-    GLuint shader;
-    GLint gldata_len, res, log_len;
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
-    || !lua_isnumber(lua, 2) || !lua_isstring(lua, 3))
-    {
-        lua_pushstring(lua, "api_prog_attach: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    prog = prog_get(lua_tointeger(lua, 1));
-    type = lua_tointeger(lua, 2);
-    data = lua_tolstring(lua, 3, &data_len);
-    lua_pop(lua, 3);
-    if (prog == 0 || prog->prog_id == 0)
-    {
-        lua_pushstring(lua, "api_prog_attach: invalid prog");
-        lua_error(lua);
-        return 0;
-    }
-    if (type != (int)GL_VERTEX_SHADER && type != (int)GL_FRAGMENT_SHADER)
-    {
-        lua_pushstring(lua, "api_prog_attach: invalid type");
-        lua_error(lua);
-        return 0;
-    }
-    glGetProgramiv(prog->prog_id, GL_LINK_STATUS, &res);
-    if (res == GL_TRUE)
-    {
-        lua_pushstring(lua, "api_prog_attach: prog is linked");
-        lua_error(lua);
-        return 0;
-    }
-    shader = glCreateShader((GLenum)type);
-    gldata_len = (GLint)data_len;
-    glShaderSource(shader, 1, &data, &gldata_len);
-    glCompileShader(shader);
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &res);
-    if (res == GL_FALSE)
-    {
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
-        if (log_len >= LOG_SIZE)
-            fprintf(stderr, "Log size is too small: %i\n", (int)log_len);
-        else
-        {
-            glGetShaderInfoLog(shader, log_len, &res, log);
-            fprintf(stderr, "Log:\n%s\n", log);
-        }
-        glDeleteShader(shader);
-        lua_pushstring(lua, "api_prog_attach: compile error");
-        lua_error(lua);
-        return 0;
-    }
-    glAttachShader(prog->prog_id, shader);
-    glDeleteShader(shader);
-    if (glGetError() != GL_NO_ERROR)
-    {
-        lua_pushstring(lua, "api_prog_attach: GL error");
-        lua_error(lua);
-        return 0;
-    }
-    return 0;
-}
-
-static int api_prog_link(lua_State *lua)
-{
-    static char log[LOG_SIZE];
-    GLint res, len;
-    struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
-        lua_pushstring(lua, "api_prog_link: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    prog = prog_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-    if (prog == 0 || prog->prog_id == 0)
-    {
-        lua_pushstring(lua, "api_prog_link: invalid prog");
-        lua_error(lua);
-        return 0;
-    }
-
-    glLinkProgram(prog->prog_id);
-    glGetProgramiv(prog->prog_id, GL_LINK_STATUS, &res);
-    if (res == GL_FALSE)
-    {
-        glGetProgramiv(prog->prog_id, GL_INFO_LOG_LENGTH, &len);
-        if (len >= LOG_SIZE)
-            fprintf(stderr, "Log size is too small: %i\n", (int)len);
-        else
-        {
-            glGetProgramInfoLog(prog->prog_id, len, &res, log);
-            fprintf(stderr, "Log:\n%s\n", log);
-        }
-        lua_pushstring(lua, "api_prog_link: link error");
-        lua_error(lua);
-        return 0;
-    }
-    return 0;
-}
-
 static int api_prog_use(lua_State *lua)
 {
     struct prog_t *prog;
-    GLint res;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
         lua_pushstring(lua, "api_prog_use: incorrect argument");
@@ -196,13 +155,6 @@ static int api_prog_use(lua_State *lua)
     if (prog == 0 || prog->prog_id == 0)
     {
         lua_pushstring(lua, "api_prog_use: invalid prog");
-        lua_error(lua);
-        return 0;
-    }
-    glGetProgramiv(prog->prog_id, GL_LINK_STATUS, &res);
-    if (res == GL_FALSE)
-    {
-        lua_pushstring(lua, "api_prog_use: prog is not linked");
         lua_error(lua);
         return 0;
     }
@@ -226,17 +178,7 @@ int prog_init(lua_State *lua, int count)
 
     lua_register(lua, "api_prog_alloc", api_prog_alloc);
     lua_register(lua, "api_prog_free", api_prog_free);
-    lua_register(lua, "api_prog_attach", api_prog_attach); 
-    lua_register(lua, "api_prog_link", api_prog_link);
     lua_register(lua, "api_prog_use", api_prog_use);
-
-    #define LUA_PUBLISH(x, y) \
-        lua_pushinteger(lua, x); \
-        lua_setglobal(lua, y);
-
-    LUA_PUBLISH(GL_VERTEX_SHADER, "API_PROG_VERTEX");
-    LUA_PUBLISH(GL_FRAGMENT_SHADER, "API_PROG_FRAGMENT");
-
     return 0;
 }
 
