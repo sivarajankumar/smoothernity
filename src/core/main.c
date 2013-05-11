@@ -15,6 +15,7 @@
 #include "physics.h"
 #include "buf.h"
 #include "thread.h"
+#include "prog.h"
 
 static const size_t ARRAY_ALIGN = 16;
 
@@ -39,6 +40,7 @@ struct main_t
     int rigidbody_count;
     int vehicle_count;
     int buf_size;
+    int prog_count;
     lua_State *lua;
     struct mpool_t *mpool;
 };
@@ -185,7 +187,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "colshape_count", &g_main.colshape_count) != 0
      || main_get_int(lua, "rigidbody_count", &g_main.rigidbody_count) != 0
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
-     || main_get_int(lua, "buf_size", &g_main.buf_size) != 0)
+     || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
+     || main_get_int(lua, "prog_count", &g_main.prog_count) != 0)
     {
         goto cleanup;
     }
@@ -225,6 +228,7 @@ cleanup:
 
 static void main_done(void)
 {
+    prog_done();
     render_done();
 
     if (g_main.lua)
@@ -341,6 +345,12 @@ static int main_init(int argc, char **argv)
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
+
+    if (prog_init(g_main.lua, g_main.prog_count) != 0)
+    {
+        fprintf(stderr, "Cannot init shader programs\n"); 
+        return 1;
+    }
 
     if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
     {
