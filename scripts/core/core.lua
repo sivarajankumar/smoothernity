@@ -4,6 +4,7 @@ local modules = {
     require 'core.colshape',
     require 'core.matrix',
     require 'core.pool.buf',
+    require 'core.prog',
     require 'core.rigidbody',
     require 'core.thread',
     require 'core.vector',
