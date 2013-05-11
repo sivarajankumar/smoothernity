@@ -27,7 +27,8 @@ function M.configure()
             colshape_count = cfg.COLSHAPE_COUNT,
             rigidbody_count = cfg.RIGIDBODY_COUNT,
             vehicle_count = cfg.VEHICLE_COUNT,
-            buf_size = buf.size()}
+            buf_size = buf.size(),
+            prog_count = cfg.PROG_COUNT}
 end
 
 function M.run()
