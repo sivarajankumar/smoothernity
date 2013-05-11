@@ -4,6 +4,11 @@
 #include <SDL.h>
 #include <GL/glew.h>
 
+/*
+ * Wherever possible, target functionality intersection between
+ * OpenGL ES 3.0, OpenGL 4.3 and OpenGL 3.0.
+ */
+
 struct render_t
 {
     int init;
