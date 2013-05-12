@@ -17,6 +17,12 @@
 #include "thread.h"
 #include "prog.h"
 
+/*
+ * SDL declares main().
+ * Without the following #undef, compilation on Windows fails.
+ */
+#undef main
+
 static const size_t ARRAY_ALIGN = 16;
 
 struct main_t
