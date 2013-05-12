@@ -5,8 +5,10 @@
 #include <GL/glew.h>
 
 /*
- * Wherever possible, target functionality intersection between
- * OpenGL ES 3.0, OpenGL 4.3 and OpenGL 3.0.
+ * Wherever possible, target non-depricated functionality
+ * intersection between:
+ * - OpenGL ES 3.0, OpenGL 4.3 and OpenGL 3.0;
+ * - GLSL ES 3.00, GLSL 4.30 and GLSL 1.30.
  */
 
 struct render_t
