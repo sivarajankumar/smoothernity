@@ -10,10 +10,9 @@ FRAME_TIME = 1 / 60
 
 function M.run()
     core.init()
-
     local tag = 0
     local blink = blinker.alloc()
-    local prg = util.prog_from_file('./game/shader/basic')
+    local prg = util.prog_from_files('./game/shader/basic')
     collectgarbage('stop')
     while not quit.requested()
     do

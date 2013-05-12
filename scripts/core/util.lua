@@ -72,9 +72,9 @@ function M.empty(t)
     return M.reduce_and(function(...) return false end, t)
 end
 
-function M.prog_from_file(name)
-    return prog.alloc(M.sync_read(name .. '.vert'),
-                      M.sync_read(name .. '.frag'))
+function M.prog_from_files(prefix)
+    return prog.alloc(M.sync_read(prefix .. '.vert'),
+                      M.sync_read(prefix .. '.frag'))
 end
 
 function M.sync_read(uid)
