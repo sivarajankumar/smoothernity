@@ -3,6 +3,7 @@
 #include "shell.h"
 #include "buf.h"
 #include "timer.h"
+#include "rbuf.h"
 #include "../thread/thread.h"
 #include "../platform/timer.h"
 #include "../util/util.h"
@@ -338,6 +339,7 @@ static void thread_reg(lua_State *lua)
     shell_reg_thread(lua);
     buf_reg_thread(lua);
     timer_reg_thread(lua);
+    rbuf_reg_thread(lua);
 }
 
 int thread_init(lua_State *lua, int count, const int msizes[],
