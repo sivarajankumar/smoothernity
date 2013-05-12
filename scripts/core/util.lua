@@ -4,6 +4,7 @@ local cfg = require 'config'
 local thread = require 'core.thread'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
+local prog = require 'core.prog'
 
 local MAX_WAIT_TIME = 10
 
@@ -69,6 +70,11 @@ end
 
 function M.empty(t)
     return M.reduce_and(function(...) return false end, t)
+end
+
+function M.prog_from_file(name)
+    return prog.alloc(M.sync_read(name .. '.vert'),
+                      M.sync_read(name .. '.frag'))
 end
 
 function M.sync_read(uid)
