@@ -10,7 +10,7 @@ local frees = 0
 local function make_prog(progi)
     local self = {}
     function self.alloc(vert, frag)
-        api_prog_alloc(progi)
+        api_prog_alloc(progi, vert, frag)
     end
     function self.free()
         frees = frees + 1
@@ -29,7 +29,7 @@ end
 
 function M.init()
     for progi = 0, cfg.PROG_COUNT - 1 do
-        progs[progi] = make_prog(si)
+        progs[progi] = make_prog(progi)
     end
     left = cfg.PROG_COUNT
     left_min = cfg.PROG_COUNT
