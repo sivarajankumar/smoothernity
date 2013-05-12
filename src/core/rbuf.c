@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static const size_t RBUF_SIZE = 64;
+static const size_t RBUF_SIZE = 32;
 
 struct rbufs_t
 {
