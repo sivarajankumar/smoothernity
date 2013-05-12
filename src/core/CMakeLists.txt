@@ -1,5 +1,5 @@
 find_package(Lua51 REQUIRED)
-find_package(SDL REQUIRED)
+find_package(SDL 1.2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
