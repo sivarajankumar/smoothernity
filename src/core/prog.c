@@ -8,6 +8,13 @@
 
 static const size_t PROG_SIZE = 4;
 
+/*
+ * In order to ensure maximum shader programs' portability,
+ * the minimum requirements of all target architectures must be met.
+ */
+
+static const int MAX_VERTEX_ATTRIBS = 16; 
+
 struct prog_t
 {
     GLuint prog_id;
@@ -113,6 +120,36 @@ static int api_prog_alloc(lua_State *lua)
             fprintf(stderr, "Log:\n%s\n", log);
         }
         lua_pushstring(lua, "api_prog_alloc: link error");
+        lua_error(lua);
+        return 0;
+    }
+    /*
+     * FIXME
+     * For some reason, the number of active attributes is counted improperly.
+     * It returns 1 instead of 2 for the following program:
+     * Vertex:
+     *     #version 130
+     *     in vec4 pos_in;
+     *     in vec4 col_in;
+     *     smooth out vec4 col_out;
+     *     void main()
+     *     {
+     *         col_out = col_in;
+     *         gl_Position = pos_in;
+     *     }
+     * Fragment:
+     *     #version 130
+     *     smooth in vec4 col_in;
+     *     out vec4 col_out;
+     *     void main()
+     *     {
+     *         col_out = col_in;
+     *     }
+     */
+    glGetProgramiv(prog->prog_id, GL_ACTIVE_ATTRIBUTES, &res);
+    if (res > (GLint)MAX_VERTEX_ATTRIBS)
+    {
+        lua_pushstring(lua, "api_prog_alloc: too many active attributes");
         lua_error(lua);
         return 0;
     }
