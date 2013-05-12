@@ -9,7 +9,6 @@ GC_STEP = 10
 FRAME_TIME = 1 / 60
 
 function M.run()
-    io.write('Game run init\n')
     core.init()
 
     local tag = 0
@@ -32,7 +31,6 @@ function M.run()
     prg.free()
     blink.free()
     core.done()
-    io.write('Game run done\n')
 end
 
 return M
