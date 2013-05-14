@@ -55,6 +55,7 @@ static void thread_loop(void *data)
 {
     int res;
     struct thread_data_t *thread = data;
+    thread_mutex_unlock(thread->mutex);
     thread_mutex_lock(thread->mutex);
     while (g_threads.quit == 0)
     {
@@ -376,6 +377,7 @@ int thread_init(lua_State *lua, int count, const int msizes[],
         thread->engage = thread_cond_create();
         if (thread->engage == 0)
             goto cleanup;
+        thread_mutex_lock(thread->mutex);
         thread->thread = thread_create(thread_loop, thread);
         if (thread == 0)
             goto cleanup;
