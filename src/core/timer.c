@@ -38,3 +38,4 @@ int timer_init(lua_State *lua)
     timer_reg_thread(lua);
     return pfm_timer_init();
 }
+

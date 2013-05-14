@@ -269,3 +269,4 @@ void input_init(lua_State *lua)
     LUA_PUBLISH(INPUT_KEY_Y);
     LUA_PUBLISH(INPUT_KEY_Z);
 }
+

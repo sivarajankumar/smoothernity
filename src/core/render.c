@@ -159,3 +159,4 @@ void render_done(void)
     SDL_ShowCursor(SDL_ENABLE);
     g_render.init = 0;
 }
+
