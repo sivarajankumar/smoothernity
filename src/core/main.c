@@ -279,7 +279,14 @@ static void main_done(void)
 
 static int main_init(int argc, char **argv)
 {
-    if (main_configure(argv[argc-1]) != 0)
+    char *script;
+    if (argc < 2)
+    {
+        fprintf(stderr, "Usage: %s <script.lua>\n", argv[0]);
+        return 1;
+    }
+    script = argv[1];
+    if (main_configure(script) != 0)
     {
         fprintf(stderr, "Cannot configure engine\n");
         return 1;
@@ -378,7 +385,7 @@ static int main_init(int argc, char **argv)
         return 1;
     }
 
-    if (luaL_dofile(g_main.lua, argv[argc-1]) != 0)
+    if (luaL_dofile(g_main.lua, script) != 0)
     {
         fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_main.lua, -1));
         return 1;
