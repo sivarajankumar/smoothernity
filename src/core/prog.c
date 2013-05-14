@@ -1,17 +1,12 @@
 #include "prog.h"
 #include "../util/util.h"
-#include <GL/glew.h>
 #include <string.h>
 #include <stdio.h>
 
 #define LOG_SIZE 2048
 
 static const size_t PROG_SIZE = 4;
-
-struct prog_t
-{
-    GLuint prog_id;
-};
+static const int PROG_NONE = -1;
 
 struct progs_t
 {
@@ -21,7 +16,7 @@ struct progs_t
 
 static struct progs_t g_progs;
 
-static struct prog_t * prog_get(int iprog)
+struct prog_t * prog_get(int iprog)
 {
     if (iprog >= 0 && iprog < g_progs.count)
         return (struct prog_t*)(g_progs.pool + PROG_SIZE * iprog);
@@ -143,6 +138,7 @@ static int api_prog_free(lua_State *lua)
 
 static int api_prog_use(lua_State *lua)
 {
+    int iprog;
     struct prog_t *prog;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
     {
@@ -150,15 +146,21 @@ static int api_prog_use(lua_State *lua)
         lua_error(lua);
         return 0;
     }
-    prog = prog_get(lua_tointeger(lua, 1));
+    iprog = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
-    if (prog == 0 || prog->prog_id == 0)
+    if (iprog == PROG_NONE)
+        glUseProgram(0);
+    else
     {
-        lua_pushstring(lua, "api_prog_use: invalid prog");
-        lua_error(lua);
-        return 0;
+        prog = prog_get(iprog);
+        if (prog == 0 || prog->prog_id == 0)
+        {
+            lua_pushstring(lua, "api_prog_use: invalid prog");
+            lua_error(lua);
+            return 0;
+        }
+        glUseProgram(prog->prog_id);
     }
-    glUseProgram(prog->prog_id);
     return 0;
 }
 
@@ -179,6 +181,12 @@ int prog_init(lua_State *lua, int count)
     lua_register(lua, "api_prog_alloc", api_prog_alloc);
     lua_register(lua, "api_prog_free", api_prog_free);
     lua_register(lua, "api_prog_use", api_prog_use);
+
+    #define LUA_PUBLISH(x, y) \
+        lua_pushinteger(lua, x); \
+        lua_setglobal(lua, y);
+
+    LUA_PUBLISH(PROG_NONE, "API_PROG_NONE");
     return 0;
 }
 
