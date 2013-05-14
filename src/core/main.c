@@ -200,7 +200,7 @@ static int main_configure(char *script)
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "prog_count", &g_main.prog_count) != 0
      || main_get_int(lua, "rbuf_count", &g_main.rbuf_count) != 0
-     || main_get_int(lua, "vao_count", &g_main.rbuf_count) != 0)
+     || main_get_int(lua, "vao_count", &g_main.vao_count) != 0)
     {
         goto cleanup;
     }

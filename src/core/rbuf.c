@@ -1,4 +1,5 @@
 #include "rbuf.h"
+#include "vao.h"
 #include "../util/util.h"
 #include "../thread/thread.h"
 #include <stdio.h>
@@ -22,12 +23,10 @@ static int safe_bind_buf(struct rbuf_t *rbuf)
      * glBindBuffer with target GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER.
      * So, to be on a safe side, it's better to ensure that no VAO is bound.
      */
-    GLint vao_id;
     if (rbuf->target == GL_ARRAY_BUFFER
     || rbuf->target == GL_ELEMENT_ARRAY_BUFFER)
     {
-        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao_id);
-        if (vao_id != 0)
+        if (vao_bound())
             return 1;
     }
     glBindBuffer(rbuf->target, rbuf->buf_id);
