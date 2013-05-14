@@ -24,7 +24,7 @@ static int api_vao_alloc(lua_State *lua)
     /*
      * No VAO must be currently bound.
      * Every attribute is a 4D floating-point vector.
-     * Attributes are stored in vertex buffer sequentially,
+     * Attributes are stored in vertex buffer sequentially
      * in the same order as attribute names arguments.
      * First attribute is stored at the very beginning of the buffer.
      */
