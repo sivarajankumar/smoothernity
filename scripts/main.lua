@@ -29,7 +29,8 @@ function M.configure()
             vehicle_count = cfg.VEHICLE_COUNT,
             buf_size = buf.size(),
             prog_count = cfg.PROG_COUNT,
-            rbuf_count = cfg.RBUF_COUNT}
+            rbuf_count = cfg.RBUF_COUNT,
+            vao_count = cfg.VAO_COUNT}
 end
 
 function M.run()

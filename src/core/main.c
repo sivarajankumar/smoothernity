@@ -17,6 +17,7 @@
 #include "thread.h"
 #include "prog.h"
 #include "rbuf.h"
+#include "vao.h"
 
 /*
  * SDL declares main().
@@ -49,6 +50,7 @@ struct main_t
     int buf_size;
     int prog_count;
     int rbuf_count;
+    int vao_count;
     lua_State *lua;
     struct mpool_t *mpool;
 };
@@ -197,7 +199,8 @@ static int main_configure(char *script)
      || main_get_int(lua, "vehicle_count", &g_main.vehicle_count) != 0
      || main_get_int(lua, "buf_size", &g_main.buf_size) != 0
      || main_get_int(lua, "prog_count", &g_main.prog_count) != 0
-     || main_get_int(lua, "rbuf_count", &g_main.rbuf_count) != 0)
+     || main_get_int(lua, "rbuf_count", &g_main.rbuf_count) != 0
+     || main_get_int(lua, "vao_count", &g_main.rbuf_count) != 0)
     {
         goto cleanup;
     }
@@ -237,6 +240,7 @@ cleanup:
 
 static void main_done(void)
 {
+    vao_done();
     prog_done();
     rbuf_done();
     render_done();
@@ -277,7 +281,7 @@ static int main_init(int argc, char **argv)
 {
     if (main_configure(argv[argc-1]) != 0)
     {
-        fprintf(stderr, "Cannot init main\n");
+        fprintf(stderr, "Cannot configure engine\n");
         return 1;
     }
 
@@ -365,6 +369,12 @@ static int main_init(int argc, char **argv)
     if (rbuf_init(g_main.lua, g_main.rbuf_count) != 0)
     {
         fprintf(stderr, "Cannot init render buffers\n"); 
+        return 1;
+    }
+
+    if (vao_init(g_main.lua, g_main.vao_count) != 0)
+    {
+        fprintf(stderr, "Cannot init vertex array objects\n");
         return 1;
     }
 
