@@ -11,6 +11,8 @@
  * - GLSL ES 3.00, GLSL 4.30 and GLSL 1.30.
  */
 
+static const GLint MIN_GL_VERSION = 3;
+
 struct render_t
 {
     int init;
@@ -85,9 +87,9 @@ static int api_render_swap(lua_State *lua)
 
 int render_init(lua_State *lua, int width, int height, int full_screen)
 {
-    int bpp;
-    int flags;
+    int bpp, flags;
     const SDL_VideoInfo *info;
+    GLint version;
 
     if (sizeof(float) != sizeof(GLfloat))
     {
@@ -122,6 +124,10 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     printf("render_init: GL: %s, GLSL: %s\n",
            glGetString(GL_VERSION),
            glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+    glGetIntegerv(GL_MAJOR_VERSION, &version);
+    if (version < MIN_GL_VERSION)
+        goto cleanup;
 
     g_render.width = width;
     g_render.height = height;
