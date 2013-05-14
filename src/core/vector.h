@@ -52,3 +52,4 @@ int vector_nesting(struct vector_t *vector, int limit);
 void vector_cross(float *out, float *v1, float *v2);
 float vector_len(float *v);
 void vector_wsum(float *out, float w1, float *v1, float w2, float *v2);
+

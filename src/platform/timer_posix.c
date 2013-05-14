@@ -16,3 +16,4 @@ float pfm_timer_get(void)
         (float)(((cur.tv_sec - g_pfm_timer.tv_sec) * 1000000) +
                  (cur.tv_usec - g_pfm_timer.tv_usec));
 }
+

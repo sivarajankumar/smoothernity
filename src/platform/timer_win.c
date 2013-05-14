@@ -24,3 +24,4 @@ float pfm_timer_get(void)
     return (float)((double)(cur.QuadPart - g_pfm_timer.time.QuadPart)
                  / (double)g_pfm_timer.freq.QuadPart);
 }
+

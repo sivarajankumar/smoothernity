@@ -811,3 +811,4 @@ void vector_wsum(float *out, float w1, float *v1, float w2, float *v2)
     out[2] = w1*v1[2] + w2*v2[2];
     out[3] = w1*v1[3] + w2*v2[3];
 }
+

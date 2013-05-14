@@ -18,3 +18,4 @@ void shell_reg_thread(lua_State *lua)
 {
     lua_register(lua, "api_shell_rmfile", api_shell_rmfile);
 }
+

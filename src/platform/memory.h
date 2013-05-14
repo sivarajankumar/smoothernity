@@ -7,3 +7,4 @@
 #ifdef COMPILER_IS_MSVC
     #define ALIGNOF __alignof
 #endif
+
