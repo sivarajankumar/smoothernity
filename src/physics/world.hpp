@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ddraw.hpp"
-#include <btBulletDynamicsCommon.h>
+#include "btBulletDynamicsCommon.h"
 
 struct colshape_t;
 

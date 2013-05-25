@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lua.h>
+#include "lua.h"
 
 #define VECTOR_ARGVS 5
 #define VECTOR_ARGMS 2

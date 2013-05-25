@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lua.h>
+#include "lua.h"
 
 int physics_init(lua_State *lua, int wld_count, int cs_count,
                  int rb_count, int veh_count,

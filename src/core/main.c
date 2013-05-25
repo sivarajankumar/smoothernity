@@ -1,10 +1,7 @@
-#include <SDL.h>
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include "SDL.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 #include "../util/util.h"
 #include "mpool.h"
 #include "timer.h"
@@ -18,6 +15,9 @@
 #include "prog.h"
 #include "rbuf.h"
 #include "vao.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 /*
  * SDL declares main().

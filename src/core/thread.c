@@ -9,8 +9,8 @@
 #include "../util/util.h"
 #include <stdio.h>
 #include <string.h>
-#include <lauxlib.h>
-#include <lualib.h>
+#include "lauxlib.h"
+#include "lualib.h"
 
 static const size_t THREAD_DATA_SIZE = 128;
 

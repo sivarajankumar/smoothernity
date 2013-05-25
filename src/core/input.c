@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include "SDL.h"
 #include "input.h"
 
 enum input_key_e

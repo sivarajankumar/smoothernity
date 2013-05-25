@@ -1,6 +1,6 @@
 #include "timer.h"
 #include "../platform/timer.h"
-#include <SDL.h>
+#include "SDL.h"
 
 static int api_timer(lua_State *lua)
 {
