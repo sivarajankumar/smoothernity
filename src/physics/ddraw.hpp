@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_DDRAW_HPP
+#define PHYSICS_DDRAW_HPP
 
 #include "btBulletDynamicsCommon.h"
 
@@ -18,3 +19,6 @@ public:
 private:
     int mode;
 };
+
+#endif /* PHYSICS_DDRAW_HPP */
+

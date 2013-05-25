@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_RIGIDBODY_HPP
+#define PHYSICS_RIGIDBODY_HPP
 
 #include "mstate.hpp"
 
@@ -24,3 +25,6 @@ int rigidbody_alloc(rigidbody_t *rb, world_t*, colshape_t*, float *matrix,
 int rigidbody_free(rigidbody_t*);
 rigidbody_t * rigidbody_get(int);
 int rigidbody_fetch_tm(rigidbody_t*, float*);
+
+#endif /* PHYSICS_RIGIDBODY_HPP */
+

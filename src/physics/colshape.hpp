@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_COLSHAPE_HPP
+#define PHYSICS_COLSHAPE_HPP
 
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
@@ -34,3 +35,6 @@ int colshape_alloc_hmap(colshape_t *col, float *hmap, int width, int length,
                         float hmin, float hmax, float *scale);
 int colshape_alloc_comp(colshape_t *col);
 int colshape_comp_add(colshape_t*, float *matrix, colshape_t *child);
+
+#endif /* PHYSICS_COLSHAPE_HPP */
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_MATRIX_H
+#define CORE_MATRIX_H
 
 #include "lua.h"
 
@@ -60,4 +61,6 @@ void matrix_frustum(float *out, float left, float right, float bottom,
                     float top, float znear, float zfar);
 void matrix_ortho(float *out, float left, float right, float bottom,
                   float top, float znear, float zfar);
+
+#endif /* CORE_MATRIX_H */
 

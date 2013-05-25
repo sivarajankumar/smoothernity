@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_PHYSCPP_H
+#define PHYSICS_PHYSCPP_H
 
 int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
                  int wld_count, int cs_count, int rb_count, int veh_count);
@@ -34,3 +35,6 @@ int physcpp_veh_fetch_chassis_tm(int vehi, float *matrix);
 int physcpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix);
 int physcpp_veh_transform(int vehi, float *matrix);
 int physcpp_veh_wheel_contact(int vehi, int wheel, int *in_contact);
+
+#endif /* PHYSICS_PHYSCPP_H */
+
