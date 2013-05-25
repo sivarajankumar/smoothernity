@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_WORLD_HPP
+#define PHYSICS_WORLD_HPP
 
 #include "ddraw.hpp"
 #include "btBulletDynamicsCommon.h"
@@ -24,3 +25,6 @@ int world_ddraw_mode(world_t*, int);
 int world_move(world_t*, float*);
 int world_gravity(world_t*, float*);
 int world_cast(world_t*, colshape_t*, float *mfrom, float *mto, float *vout);
+
+#endif /* PHYSICS_WORLD_HPP */
+

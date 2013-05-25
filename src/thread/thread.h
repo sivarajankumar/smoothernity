@@ -1,4 +1,5 @@
-#pragma once
+#ifndef THREAD_THREAD_H
+#define THREAD_THREAD_H
 
 struct thread_mutex_t;
 struct thread_cond_t;
@@ -16,4 +17,6 @@ void thread_cond_signal(struct thread_cond_t*);
 
 struct thread_t * thread_create(void (*)(void*), void*);
 void thread_destroy(struct thread_t*);
+
+#endif /* THREAD_THREAD_H */
 

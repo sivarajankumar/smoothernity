@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_PHYSRES_H
+#define PHYSICS_PHYSRES_H
 
 enum physres_e
 {
@@ -17,3 +18,6 @@ enum physres_e
     PHYSRES_WLD_HAS_REFS,
     PHYSRES_INTERNAL
 };
+
+#endif /* PHYSICS_PHYSRES_H */
+

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_MSTATE_HPP
+#define PHYSICS_MSTATE_HPP
 
 #include "btBulletDynamicsCommon.h"
 
@@ -12,3 +13,6 @@ public:
 
     btTransform m;
 };
+
+#endif /* PHYSICS_MSTATE_HPP */
+

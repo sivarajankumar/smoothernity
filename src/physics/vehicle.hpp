@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PHYSICS_VEHICLE_HPP
+#define PHYSICS_VEHICLE_HPP
 
 #include "mstate.hpp"
 
@@ -42,3 +43,6 @@ int vehicle_fetch_chassis_tm(vehicle_t*, float*);
 int vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
 int vehicle_transform(vehicle_t*, float*);
 int vehicle_wheel_contact(vehicle_t*, int, int *in_contact);
+
+#endif /* PHYSICS_VEHICLE_HPP */
+
