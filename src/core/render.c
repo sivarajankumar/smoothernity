@@ -1,8 +1,8 @@
 #include "render.h"
 #include "vector.h"
 #include <stdio.h>
-#include <SDL.h>
-#include <GL/glew.h>
+#include "SDL.h"
+#include "GL/glew.h"
 
 /*
  * Wherever possible, target non-depricated functionality

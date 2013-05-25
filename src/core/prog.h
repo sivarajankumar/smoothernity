@@ -1,7 +1,7 @@
 #pragma once
 
-#include <lua.h>
-#include <GL/glew.h>
+#include "lua.h"
+#include "GL/glew.h"
 
 struct prog_t
 {

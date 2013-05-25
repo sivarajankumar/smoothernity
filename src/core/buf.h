@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lua.h>
+#include "lua.h"
 
 struct bufs_t
 {

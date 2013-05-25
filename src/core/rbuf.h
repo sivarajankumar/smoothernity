@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <lua.h>
+#include "GL/glew.h"
+#include "lua.h"
 
 struct rbuf_t
 {
