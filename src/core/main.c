@@ -25,6 +25,10 @@
  */
 #undef main
 
+#if !__STDC_IEC_559__
+    #error "Implementation doesn't support IEC 60559 floating point arithmetic"
+#endif
+
 static const size_t ARRAY_ALIGN = 16;
 
 struct main_t
