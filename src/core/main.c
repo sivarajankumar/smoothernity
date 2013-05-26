@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <setjmp.h>
 
 /*
  * SDL declares main().
@@ -56,6 +57,7 @@ struct main_t
     int rbuf_count;
     int vao_count;
     lua_State *lua;
+    jmp_buf panic;
     struct mpool_t *mpool;
 };
 
@@ -64,7 +66,7 @@ static struct main_t g_main;
 static int main_panic(lua_State *lua)
 {
     fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
-    return 0;
+    longjmp(g_main.panic, 1);
 }
 
 static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
@@ -418,8 +420,11 @@ static void main_loop(void)
 int main(int argc, char **argv)
 {
     printf("Engine start\n");
-    if (main_init(argc, argv) == 0)
-        main_loop();
+    if (!setjmp(g_main.panic))
+    {
+        if (main_init(argc, argv) == 0)
+            main_loop();
+    }
     main_done();
     printf("Engine finish\n");
     return 0;
