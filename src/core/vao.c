@@ -11,7 +11,7 @@ int vao_bound(void)
 {
     GLint vao_id;
     glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao_id);
-    return vao_id != 0;
+    return !!vao_id;
 }
 
 static struct vao_t * vao_get(int ivao)
@@ -46,26 +46,26 @@ static int api_vao_alloc(lua_State *lua)
     vbuf = rbuf_get(lua_tointeger(lua, 3));
     ibuf = rbuf_get(lua_tointeger(lua, 4));
 
-    if (vao == 0 || vao->vao_id != 0)
+    if (!vao || vao->vao_id)
     {
         lua_pushstring(lua, "api_vao_alloc: invalid vao");
         lua_error(lua);
         return 0;
     }
-    if (prog == 0 || prog->prog_id == 0)
+    if (!prog || !prog->prog_id)
     {
         lua_pushstring(lua, "api_vao_alloc: invalid prog");
         lua_error(lua);
         return 0;
     }
-    if (vbuf == 0 || vbuf->buf_id == 0
+    if (!vbuf || !vbuf->buf_id
     || vbuf->target != GL_ARRAY_BUFFER || vbuf->item != GL_FLOAT)
     {
         lua_pushstring(lua, "api_vao_alloc: invalid vertex buffer");
         lua_error(lua);
         return 0;
     }
-    if (ibuf == 0 || ibuf->buf_id == 0
+    if (!ibuf || !ibuf->buf_id
     || ibuf->target != GL_ELEMENT_ARRAY_BUFFER || ibuf->item != GL_INT)
     {
         lua_pushstring(lua, "api_vao_alloc: invalid index buffer");
