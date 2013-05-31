@@ -56,13 +56,13 @@ static void thread_loop(void *data)
     struct thread_data_t *thread = data;
     thread_mutex_unlock(thread->mutex);
     thread_mutex_lock(thread->mutex);
-    while (g_threads.quit == 0)
+    while (!g_threads.quit)
     {
         thread_cond_wait(thread->engage, thread->mutex);
-        if (thread->state == THREAD_IDLE && thread->fn != 0)
+        if (thread->state == THREAD_IDLE && thread->fn)
         {
             if (luaL_loadbuffer(thread->lua, thread->fn,
-                                thread->fnsize, "threadfn") != 0)
+                                thread->fnsize, "threadfn"))
             {
                 fprintf(stderr, "thread_loop load: %s\n",
                         lua_tostring(thread->lua, -1));
@@ -82,7 +82,7 @@ static void thread_loop(void *data)
             thread_mutex_lock(thread->mutex);
             thread->time += pfm_timer_get() - thread->time_begin;
 
-            if (res == 0)
+            if (!res)
                 thread->state = THREAD_IDLE;
             else
             {
@@ -107,17 +107,16 @@ static void * thread_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
 {
     struct mpool_t *mpool = ud;
     void *newptr;
-    if (osize == 0 && nsize == 0)
+    if (!osize && !nsize)
         return 0;
-    else if (osize == 0 && nsize > 0)
+    else if (!osize && nsize)
         return mpool_alloc(mpool, nsize);
-    else if (osize > 0 && nsize == 0)
+    else if (osize && !nsize)
     {
         mpool_free(ptr);
         return 0;
     }
-    newptr = mpool_alloc(mpool, nsize);
-    if (newptr == 0)
+    if (!(newptr = mpool_alloc(mpool, nsize)))
         return 0;
     else if (ptr)
     {
@@ -147,7 +146,7 @@ static int api_thread_run(lua_State *lua)
         return 0;
     }
     thread = thread_get(lua_tointeger(lua, 1));
-    if (thread == 0)
+    if (!thread)
     {
         lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_run: invalid thread");
@@ -183,7 +182,7 @@ static int api_thread_timings(lua_State *lua)
 {
     int i;
     struct thread_data_t *thread;
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua))
     {
         lua_pushstring(lua, "api_thread_timings: incorrect argument");
         lua_error(lua);
@@ -214,7 +213,7 @@ static int api_thread_request(lua_State *lua)
         return 0;
     }
     thread = thread_get(lua_tointeger(lua, 1));
-    if (thread == 0)
+    if (!thread)
     {
         lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_request: invalid thread");
@@ -252,7 +251,7 @@ static int api_thread_respond(lua_State *lua)
         return 0;
     }
     thread = thread_get(lua_tointeger(lua, 1));
-    if (thread == 0)
+    if (!thread)
     {
         lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_respond: invalid thread");
@@ -275,7 +274,7 @@ static int api_thread_respond(lua_State *lua)
     lua_pop(lua, 2);
     thread->resp = 0;
     thread->respsize = 0;
-    if (thread->req == 0)
+    if (!thread->req)
     {
         thread_mutex_unlock(thread->mutex);
         lua_pushstring(lua, "api_thread_respond: invalid request");
@@ -306,7 +305,7 @@ static int api_thread_state(lua_State *lua)
     }
     thread = thread_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    if (thread == 0)
+    if (!thread)
     {
         lua_pushstring(lua, "api_thread_state: invalid thread");
         lua_error(lua);
@@ -353,7 +352,7 @@ int thread_init(lua_State *lua, int count, const int msizes[],
         return 1;
     }
     g_threads.pool = util_malloc(THREAD_DATA_SIZE, THREAD_DATA_SIZE * count);
-    if (g_threads.pool == 0)
+    if (!g_threads.pool)
         return 1;
     memset(g_threads.pool, 0, THREAD_DATA_SIZE * count);
     g_threads.count = count;
@@ -361,31 +360,31 @@ int thread_init(lua_State *lua, int count, const int msizes[],
     {
         thread = thread_get(i);
         thread->mpool = mpool_create(msizes, mcounts, mlen);
-        if (thread->mpool == 0)
+        if (!thread->mpool)
             goto cleanup;
         thread->lua = lua_newstate(thread_lua_alloc, thread->mpool);
-        if (thread->lua == 0)
+        if (!thread->lua)
             goto cleanup;
         lua_atpanic(thread->lua, thread_lua_panic);
         luaL_openlibs(thread->lua);
         thread->state = THREAD_IDLE;
         thread->mutex = thread_mutex_create();
-        if (thread->mutex == 0)
+        if (!thread->mutex)
             goto cleanup;
         thread->engage = thread_cond_create();
-        if (thread->engage == 0)
+        if (!thread->engage)
             goto cleanup;
         thread_mutex_lock(thread->mutex);
         thread->thread = thread_create(thread_loop, thread);
-        if (thread == 0)
+        if (!thread)
             goto cleanup;
         thread_reg(thread->lua);
     }
     g_threads.mutex = thread_mutex_create();
-    if (g_threads.mutex == 0)
+    if (!g_threads.mutex)
         goto cleanup;
     g_threads.engage = thread_cond_create();
-    if (g_threads.engage == 0)
+    if (!g_threads.engage)
         goto cleanup;
     thread_reg_main(lua);
     return 0;
@@ -420,7 +419,7 @@ void thread_done(void)
 {
     int i;
     struct thread_data_t *thread;
-    if (g_threads.pool == 0)
+    if (!g_threads.pool)
         return;
     g_threads.quit = 1;
     for (i = 0; i < g_threads.count; ++i)
