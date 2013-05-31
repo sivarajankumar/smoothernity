@@ -433,7 +433,7 @@ void thread_done(void)
         thread_mutex_destroy(thread->mutex);
         thread_cond_destroy(thread->engage);
         lua_close(thread->lua);
-        fprintf(stdout, "\nThread %i memory pool:\n", i);
+        fprintf(stderr, "\nThread %i memory pool:\n", i);
         mpool_destroy(thread->mpool);
     }
     util_free(g_threads.pool);

@@ -279,7 +279,7 @@ static void main_done(void)
     physics_done();
     if (g_main.mpool)
     {
-        fprintf(stdout, "\nMain memory pool:\n");
+        fprintf(stderr, "\nMain memory pool:\n");
         mpool_destroy(g_main.mpool);
     }
     thread_done();
