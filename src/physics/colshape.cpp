@@ -36,7 +36,7 @@ int colshape_init(int count)
         return PHYSRES_CANNOT_INIT;
     }
     g_colshapes.pool = (char*)util_malloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
-    if (g_colshapes.pool == 0)
+    if (!g_colshapes.pool)
         return PHYSRES_CANNOT_INIT;
     memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
     g_colshapes.count = count;
@@ -45,7 +45,7 @@ int colshape_init(int count)
         cs = colshape_get(i);
         cs->vacant = 1;
         cs->data = (char*)util_malloc(align_max, size_max);
-        if (cs->data == 0)
+        if (!cs->data)
             goto cleanup;
     }
     return PHYSRES_OK;
@@ -64,7 +64,7 @@ void colshape_done(void)
 {
     int i;
     colshape_t *cs;
-    if (g_colshapes.pool == 0)
+    if (!g_colshapes.pool)
         return;
     for (i = 0; i < g_colshapes.count; ++i)
     {
@@ -126,7 +126,7 @@ int colshape_free(colshape_t *cs)
 
 int colshape_alloc_box(colshape_t *cs, float *size)
 {
-    if (cs->vacant == 0)
+    if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
@@ -142,7 +142,7 @@ int colshape_alloc_box(colshape_t *cs, float *size)
 
 int colshape_alloc_sphere(colshape_t *cs, float r)
 {
-    if (cs->vacant == 0)
+    if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
@@ -158,7 +158,7 @@ int colshape_alloc_sphere(colshape_t *cs, float r)
 int colshape_alloc_hmap(colshape_t *cs, float *hmap, int width, int length,
                        float hmin, float hmax, float *scale)
 {
-    if (cs->vacant == 0)
+    if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
@@ -175,7 +175,7 @@ int colshape_alloc_hmap(colshape_t *cs, float *hmap, int width, int length,
 
 int colshape_alloc_comp(colshape_t *cs)
 {
-    if (cs->vacant == 0)
+    if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
@@ -189,8 +189,8 @@ int colshape_alloc_comp(colshape_t *cs)
 
 int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
 {
-    if (parent->shape_comp == 0 || child->shape == 0
-     || child->shape_comp != 0 || child->comp != 0)
+    if (!parent->shape_comp || !child->shape
+    || child->shape_comp || child->comp)
     {
         return PHYSRES_INVALID_CS;
     }
