@@ -47,7 +47,7 @@ static int api_matrix_copy(lua_State *lua)
     msrc = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (matrix == 0 || msrc == 0)
+    if (!matrix || !msrc)
     {
         lua_pushstring(lua, "api_matrix_copy: invalid matrix");
         lua_error(lua);
@@ -72,7 +72,7 @@ static int api_matrix_stop(lua_State *lua)
     matrix = matrix_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_matrix_stop: invalid matrix");
         lua_error(lua);
@@ -105,14 +105,14 @@ static int api_matrix_update(lua_State *lua)
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_matrix_update: invalid matrix");
         lua_error(lua);
         return 0;
     }
     force = update_tag == MATRIX_FORCED_UPDATE;
-    if (matrix_update(matrix, dt, update_tag, force) != 0)
+    if (matrix_update(matrix, dt, update_tag, force))
     {
         lua_pushstring(lua, "api_matrix_update: update error");
         lua_error(lua);
@@ -138,7 +138,7 @@ static int api_matrix_mul(lua_State *lua)
     m1 = matrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
-    if (matrix == 0 || m0 == 0 || m1 == 0)
+    if (!matrix || !m0 || !m1)
     {
         lua_pushstring(lua, "api_matrix_mul: invalid matrix");
         lua_error(lua);
@@ -152,7 +152,7 @@ static int api_matrix_mul(lua_State *lua)
     matrix->argm[0] = m0;
     matrix->argm[1] = m1;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_mul: nesting is too deep");
         lua_error(lua);
@@ -180,7 +180,7 @@ static int api_matrix_mul_stop(lua_State *lua)
     m1 = matrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
-    if (matrix == 0 || m0 == 0 || m1 == 0)
+    if (!matrix || !m0 || !m1)
     {
         lua_pushstring(lua, "api_matrix_mul_stop: invalid matrix");
         lua_error(lua);
@@ -213,7 +213,7 @@ static int api_matrix_inv(lua_State *lua)
     m0 = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (matrix == 0 || m0 == 0)
+    if (!matrix || !m0)
     {
         lua_pushstring(lua, "api_matrix_inv: invalid matrix");
         lua_error(lua);
@@ -226,7 +226,7 @@ static int api_matrix_inv(lua_State *lua)
     matrix->type = MATRIX_INV;
     matrix->argm[0] = m0;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_inv: nesting is too deep");
         lua_error(lua);
@@ -258,7 +258,7 @@ static int api_matrix_frustum(lua_State *lua)
     zfari = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
 
-    if (matrix == 0 || v0 == 0 || v1 == 0)
+    if (!matrix || !v0 || !v1)
     {
         lua_pushstring(lua, "api_matrix_frustum: invalid objects");
         lua_error(lua);
@@ -282,7 +282,7 @@ static int api_matrix_frustum(lua_State *lua)
     matrix->zneari = zneari;
     matrix->zfari = zfari;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_frustum: nesting is too deep");
         lua_error(lua);
@@ -314,7 +314,7 @@ static int api_matrix_ortho(lua_State *lua)
     zfari = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
 
-    if (matrix == 0 || v0 == 0 || v1 == 0)
+    if (!matrix || !v0 || !v1)
     {
         lua_pushstring(lua, "api_matrix_ortho: invalid objects");
         lua_error(lua);
@@ -338,7 +338,7 @@ static int api_matrix_ortho(lua_State *lua)
     matrix->zneari = zneari;
     matrix->zfari = zfari;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_ortho: nesting is too deep");
         lua_error(lua);
@@ -372,7 +372,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
     rotanglei = lua_tointeger(lua, 6);
     lua_pop(lua, 6);
 
-    if (matrix == 0 || v0 == 0 || v1 == 0 || v2 == 0)
+    if (!matrix || !v0 || !v1 || !v2)
     {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: invalid objects");
         lua_error(lua);
@@ -404,7 +404,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua)
     matrix->rotaxis = (enum matrix_axis_e)rotaxis;
     matrix->rotanglei = rotanglei;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: nesting is too deep");
         lua_error(lua);
@@ -434,7 +434,7 @@ static int api_matrix_from_to_up(lua_State *lua)
     v2 = vector_get(lua_tointeger(lua, 4));
     lua_pop(lua, 4);
 
-    if (matrix == 0 || v0 == 0 || v1 == 0 || v2 == 0)
+    if (!matrix || !v0 || !v1 || !v2)
     {
         lua_pushstring(lua, "api_matrix_from_to_up: invalid objects");
         lua_error(lua);
@@ -449,7 +449,7 @@ static int api_matrix_from_to_up(lua_State *lua)
     matrix->argv[1] = v1;
     matrix->argv[2] = v2;
 
-    if (matrix_nesting(matrix, g_matrices.nesting) == 0)
+    if (!matrix_nesting(matrix, g_matrices.nesting))
     {
         lua_pushstring(lua, "api_matrix_from_to_up: nesting is too deep");
         lua_error(lua);
@@ -476,7 +476,7 @@ static int api_matrix_rigid_body(lua_State *lua)
     rbi = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_matrix_rigid_body: invalid matrix");
         lua_error(lua);
@@ -489,7 +489,7 @@ static int api_matrix_rigid_body(lua_State *lua)
     matrix->type = MATRIX_RIGID_BODY;
     matrix->rigid_body = rbi;
 
-    if (physics_rb_fetch_tm(rbi, matrix->value) != 0)
+    if (physics_rb_fetch_tm(rbi, matrix->value))
     {
         lua_pushstring(lua, "api_matrix_rigid_body: invalid rigid body");
         lua_error(lua);
@@ -516,7 +516,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua)
     vehi = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid matrix");
         lua_error(lua);
@@ -529,7 +529,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua)
     matrix->type = MATRIX_VEHICLE_CHASSIS;
     matrix->vehicle = vehi;
 
-    if (physics_veh_fetch_chassis_tm(vehi, matrix->value) != 0)
+    if (physics_veh_fetch_chassis_tm(vehi, matrix->value))
     {
         lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid vehicle");
         lua_error(lua);
@@ -557,7 +557,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
     wheel = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_matrix_vehicle_wheel: invalid matrix");
         lua_error(lua);
@@ -571,7 +571,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua)
     matrix->vehicle = vehi;
     matrix->wheel = wheel;
 
-    if (physics_veh_fetch_wheel_tm(vehi, wheel, matrix->value) != 0)
+    if (physics_veh_fetch_wheel_tm(vehi, wheel, matrix->value))
     {
         lua_pushstring(lua, "api_matrix_vehicle_wheel: "
                             "invalid vehicle or wheel");
@@ -591,7 +591,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
         return 1;
     }
     g_matrices.pool = util_malloc(MATRIX_SIZE, MATRIX_SIZE * count);
-    if (g_matrices.pool == 0)
+    if (!g_matrices.pool)
         return 1;
     memset(g_matrices.pool, 0, MATRIX_SIZE * count);
     g_matrices.count = count;
@@ -624,7 +624,7 @@ int matrix_init(lua_State *lua, int count, int nesting)
 
 void matrix_done(void)
 {
-    if (g_matrices.pool == 0)
+    if (!g_matrices.pool)
         return;
     util_free(g_matrices.pool);
     g_matrices.pool = 0;
@@ -646,7 +646,7 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         min = limit;
         for (i = 0; i < MATRIX_ARGVS; ++i)
         {
-            if (matrix->argv[i] == 0)
+            if (!matrix->argv[i])
                 continue;
             cur = vector_nesting(matrix->argv[i], limit - 1);
             if (cur < min)
@@ -654,7 +654,7 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
         }
         for (i = 0; i < MATRIX_ARGMS; ++i)
         {
-            if (matrix->argm[i] == 0)
+            if (!matrix->argm[i])
                 continue;
             cur = matrix_nesting(matrix->argm[i], limit - 1);
             if (cur < min)
@@ -669,9 +669,9 @@ int matrix_nesting(struct matrix_t *matrix, int limit)
 static int matrix_update_mul(struct matrix_t *m, float dt, int force)
 {
     float *m0, *m1;
-    if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
+    if (matrix_update(m->argm[0], dt, m->update_tag, force))
         return 1;
-    if (matrix_update(m->argm[1], dt, m->update_tag, force) != 0)
+    if (matrix_update(m->argm[1], dt, m->update_tag, force))
         return 1;
     m0 = m->argm[0]->value;
     m1 = m->argm[1]->value;
@@ -682,7 +682,7 @@ static int matrix_update_mul(struct matrix_t *m, float dt, int force)
 static int matrix_update_inv(struct matrix_t *m, float dt, int force)
 {
     float *m0;
-    if (matrix_update(m->argm[0], dt, m->update_tag, force) != 0)
+    if (matrix_update(m->argm[0], dt, m->update_tag, force))
         return 1;
     m0 = m->argm[0]->value;
     matrix_inv(m->value, m0);
@@ -692,9 +692,9 @@ static int matrix_update_inv(struct matrix_t *m, float dt, int force)
 static int matrix_update_frustum(struct matrix_t *m, float dt, int force)
 {
     float *v0, *v1;
-    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[0], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[1], dt, m->update_tag, force))
         return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -706,9 +706,9 @@ static int matrix_update_frustum(struct matrix_t *m, float dt, int force)
 static int matrix_update_ortho(struct matrix_t *m, float dt, int force)
 {
     float *v0, *v1;
-    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[0], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[1], dt, m->update_tag, force))
         return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -720,11 +720,11 @@ static int matrix_update_ortho(struct matrix_t *m, float dt, int force)
 static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force)
 {
     float *v0, *v1, *v2;
-    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[0], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[1], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[2], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[2], dt, m->update_tag, force))
         return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -737,11 +737,11 @@ static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force)
 static int matrix_update_from_to_up(struct matrix_t *m, float dt, int force)
 {
     float *v0, *v1, *v2;
-    if (vector_update(m->argv[0], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[0], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[1], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[1], dt, m->update_tag, force))
         return 1;
-    if (vector_update(m->argv[2], dt, m->update_tag, force) != 0)
+    if (vector_update(m->argv[2], dt, m->update_tag, force))
         return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -755,7 +755,7 @@ int matrix_update(struct matrix_t *m, float dt,
 {
     if (m->type == MATRIX_CONST)
         return 0;
-    if (force == 0 && m->update_tag == update_tag)
+    if (!force && m->update_tag == update_tag)
         return 0;
     m->update_tag = update_tag;
     if (m->type == MATRIX_MUL)
@@ -979,7 +979,7 @@ void matrix_inv(float *out, float *m)
 
     det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
 
-    if (det == 0)
+    if (!det)
         return;
 
     det = 1.0f / det;
