@@ -807,7 +807,7 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
 void physics_done(void)
 {
     physcpp_done();
-    fprintf(stdout, "\nPhysics memory pool:\n");
+    fprintf(stderr, "\nPhysics memory pool:\n");
     if (g_physics.mpool)
         mpool_destroy(g_physics.mpool);
 }

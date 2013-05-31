@@ -34,6 +34,7 @@ function M.configure()
 end
 
 function M.run()
+    io.output(io.stderr)
     xpcall(game.run,
         function(msg)
             io.write(string.format('Main run\n%s\nError: %s\n',
