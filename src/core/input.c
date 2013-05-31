@@ -105,7 +105,7 @@ static int api_input_update(lua_State *lua)
 {
     char value;
     SDL_Event event;
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua))
     {
         lua_pushstring(lua, "api_input_update: incorrect argument");
         lua_error(lua);
