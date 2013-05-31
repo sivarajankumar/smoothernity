@@ -184,14 +184,14 @@ void buf_reg_thread(lua_State *lua)
 
 int buf_init(lua_State *lua, int size)
 {
-    if ((size & (size - 1)) != 0)
+    if (size & (size - 1))
     {
         fprintf(stderr, "Invalid size:\nsize == %i\n", size);
         return 1;
     }
     g_bufs.size = size;
     g_bufs.data = util_malloc(BUF_DATA_ALIGN, sizeof(float) * size);
-    if (g_bufs.data == 0)
+    if (!g_bufs.data)
         return 1;
     memset(g_bufs.data, 0, sizeof(float) * size);
     buf_reg_thread(lua);
@@ -200,7 +200,7 @@ int buf_init(lua_State *lua, int size)
 
 void buf_done(void)
 {
-    if (g_bufs.data == 0)
+    if (!g_bufs.data)
         return;
     util_free(g_bufs.data);
     g_bufs.data = 0;
