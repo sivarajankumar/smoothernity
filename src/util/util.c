@@ -5,7 +5,7 @@ void * util_malloc(size_t align, size_t size)
     void *mem;
     void **ptr;
     size_t addr;
-    if ((align & (align - 1)) != 0)
+    if (align & (align - 1))
         return 0;
     mem = malloc(size + align + sizeof(void*));
     addr = (char*)mem - (char*)0;

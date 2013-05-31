@@ -10,9 +10,9 @@ static struct pfm_timer_t g_pfm_timer;
 
 int pfm_timer_init(void)
 {
-    if (QueryPerformanceFrequency(&g_pfm_timer.freq) == 0)
+    if (!QueryPerformanceFrequency(&g_pfm_timer.freq))
         return 1;
-    if (QueryPerformanceCounter(&g_pfm_timer.time) == 0)
+    if (!QueryPerformanceCounter(&g_pfm_timer.time))
         return 1;
     return 0;
 }
