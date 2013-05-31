@@ -28,7 +28,7 @@ int vehicle_init(int count)
         return PHYSRES_CANNOT_INIT;
     }
     g_vehicles.pool = (char*)util_malloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
-    if (g_vehicles.pool == 0)
+    if (!g_vehicles.pool)
         return PHYSRES_CANNOT_INIT;
     memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
     g_vehicles.count = count;
@@ -74,7 +74,7 @@ void vehicle_done(void)
 {
     int i;
     vehicle_t *veh;
-    if (g_vehicles.pool == 0)
+    if (!g_vehicles.pool)
         return;
     for (i = 0; i < g_vehicles.count; ++i)
     {
@@ -163,9 +163,9 @@ int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
                   float sus_damp, float sus_trav, float sus_force,
                   float slip_frict)
 {
-    if (veh->vacant == 0)
+    if (!veh->vacant)
         return PHYSRES_INVALID_VEH;
-    if (shape->shape == 0 || inert->shape == 0)
+    if (!shape->shape || !inert->shape)
         return PHYSRES_INVALID_CS;
     veh->vacant = 0;
 
@@ -228,7 +228,7 @@ int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
         veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
                            btVector3(dir[0], dir[1], dir[2]),
                            btVector3(axl[0], axl[1], axl[2]),
-                           sus_rest, radius, *veh->tuning, front != 0);
+                           sus_rest, radius, *veh->tuning, front);
         veh->veh->getWheelInfo(*wheeli).m_rollInfluence = roll;
     }
     catch (...)
