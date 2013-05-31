@@ -30,6 +30,10 @@
     #error "Implementation doesn't support IEC 60559 floating point arithmetic"
 #endif
 
+#ifndef LUA_NUMBER_DOUBLE
+    #error "Lua number must have type double"
+#endif
+
 static const size_t ARRAY_ALIGN = 16;
 
 struct main_t
