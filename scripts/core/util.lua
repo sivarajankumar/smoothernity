@@ -90,7 +90,7 @@ end
 
 function M.sync_write(uid, data)
     if data == '' then
-        api_shell_rmfile(uid)
+        os.remove(uid)
     else
         local f = io.open(uid, 'w')
         if f then

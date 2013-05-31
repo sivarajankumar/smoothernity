@@ -1,6 +1,5 @@
 #include "thread.h"
 #include "mpool.h"
-#include "shell.h"
 #include "buf.h"
 #include "timer.h"
 #include "rbuf.h"
@@ -337,7 +336,6 @@ static void thread_reg_main(lua_State *lua)
 static void thread_reg(lua_State *lua)
 {
     lua_register(lua, "api_thread_respond", api_thread_respond);
-    shell_reg_thread(lua);
     buf_reg_thread(lua);
     timer_reg_thread(lua);
     rbuf_reg_thread(lua);
