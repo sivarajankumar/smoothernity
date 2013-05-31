@@ -80,7 +80,7 @@ static int api_prog_alloc(lua_State *lua)
     frag = lua_tolstring(lua, 3, &frag_len);
     lua_pop(lua, 3);
 
-    if (prog == 0 || prog->prog_id != 0)
+    if (!prog || prog->prog_id)
     {
         lua_pushstring(lua, "api_prog_alloc: invalid prog");
         lua_error(lua);
@@ -88,8 +88,8 @@ static int api_prog_alloc(lua_State *lua)
     }
 
     prog->prog_id = glCreateProgram();
-    if (prog_attach(prog, GL_VERTEX_SHADER, vert_len, vert) != 0
-    ||  prog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag) != 0)
+    if (prog_attach(prog, GL_VERTEX_SHADER, vert_len, vert)
+    ||  prog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag))
     {
         lua_pushstring(lua, "api_prog_alloc: cannot attach shaders");
         lua_error(lua);
@@ -125,7 +125,7 @@ static int api_prog_free(lua_State *lua)
     }
     prog = prog_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    if (prog == 0 || prog->prog_id == 0)
+    if (!prog || !prog->prog_id)
     {
         lua_pushstring(lua, "api_prog_free: invalid prog");
         lua_error(lua);
@@ -153,7 +153,7 @@ static int api_prog_use(lua_State *lua)
     else
     {
         prog = prog_get(iprog);
-        if (prog == 0 || prog->prog_id == 0)
+        if (!prog || !prog->prog_id)
         {
             lua_pushstring(lua, "api_prog_use: invalid prog");
             lua_error(lua);
@@ -173,7 +173,7 @@ int prog_init(lua_State *lua, int count)
         return 1;
     }
     g_progs.pool = util_malloc(PROG_SIZE, PROG_SIZE * count);
-    if (g_progs.pool == 0)
+    if (!g_progs.pool)
         return 1;
     memset(g_progs.pool, 0, PROG_SIZE * count);
     g_progs.count = count;
@@ -193,11 +193,11 @@ int prog_init(lua_State *lua, int count)
 void prog_done(void)
 {
     int i;
-    if (g_progs.pool == 0)
+    if (!g_progs.pool)
         return;
     for (i = 0; i < g_progs.count; ++i)
     {
-        if (prog_get(i)->prog_id != 0)
+        if (prog_get(i)->prog_id)
         {
             fprintf(stderr, "prog_done: some progs are still active\n");
             break;
