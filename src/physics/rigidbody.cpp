@@ -28,7 +28,7 @@ int rigidbody_init(int count)
         return PHYSRES_CANNOT_INIT;
     }
     g_rigidbodies.pool = (char*)util_malloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
-    if (g_rigidbodies.pool == 0)
+    if (!g_rigidbodies.pool)
         return PHYSRES_CANNOT_INIT;
     memset(g_rigidbodies.pool, 0, RIGIDBODY_SIZE * count);
     g_rigidbodies.count = count;
@@ -62,7 +62,7 @@ void rigidbody_done(void)
 {
     int i;
     rigidbody_t *rb;
-    if (g_rigidbodies.pool == 0)
+    if (!g_rigidbodies.pool)
         return;
     for (i = 0; i < g_rigidbodies.count; ++i)
     {
@@ -121,9 +121,9 @@ int rigidbody_free(rigidbody_t *rb)
 int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs, float *matrix,
                     float mass, float frict, float roll_frict)
 {
-    if (rb->vacant == 0)
+    if (!rb->vacant)
         return PHYSRES_INVALID_RB;
-    if (cs->shape == 0)
+    if (!cs->shape)
         return PHYSRES_INVALID_CS;
     rb->vacant = 0;
 
