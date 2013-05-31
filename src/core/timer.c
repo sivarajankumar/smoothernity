@@ -4,7 +4,7 @@
 
 static int api_timer(lua_State *lua)
 {
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua))
     {
         lua_pushstring(lua, "api_timer: incorrect argument");
         lua_error(lua);
