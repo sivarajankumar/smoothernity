@@ -93,7 +93,13 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
 
     if (sizeof(float) != sizeof(GLfloat))
     {
-        fprintf(stderr, "render_init: float<->GLfloat not supported\n");
+        fprintf(stderr, "render_init: float<->GLfloat is not supported\n");
+        goto cleanup;
+    }
+
+    if (sizeof(int) != sizeof(GLint))
+    {
+        fprintf(stderr, "render_init: int<->GLint is not supported\n");
         goto cleanup;
     }
 

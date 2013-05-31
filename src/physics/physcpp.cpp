@@ -27,7 +27,7 @@ int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
     int res;
     if (sizeof(float) != sizeof(btScalar))
     {
-        fprintf(stderr, "physcpp_init: float<->btScalar not supported\n");
+        fprintf(stderr, "physcpp_init: float<->btScalar is not supported\n");
         return PHYSRES_CANNOT_INIT;
     }
     g_physcpp.memalloc = memalloc;
