@@ -52,7 +52,7 @@ static int api_rbuf_map(lua_State *lua)
     len = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (rbuf == 0 || rbuf->buf_id == 0 || rbuf->mapped != 0)
+    if (!rbuf || !rbuf->buf_id || rbuf->mapped)
     {
         lua_pushstring(lua, "api_rbuf_map: invalid rbuf");
         lua_error(lua);
@@ -68,7 +68,7 @@ static int api_rbuf_map(lua_State *lua)
     thread_mutex_lock(g_rbufs.mutex);
     rbuf->mapped_ofs = ofs;
     rbuf->mapped_len = len;
-    if (safe_bind_buf(rbuf) != 0)
+    if (safe_bind_buf(rbuf))
     {
         lua_pushstring(lua, "api_rbuf_map: cannot bind buffer");
         lua_error(lua);
@@ -87,7 +87,7 @@ static int api_rbuf_map(lua_State *lua)
     rbuf->mapped = glMapBufferRange(rbuf->target, glofs, gllen,
         GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
         GL_MAP_INVALIDATE_RANGE_BIT);
-    if (rbuf->mapped == 0)
+    if (!rbuf->mapped)
     {
         lua_pushstring(lua, "api_rbuf_map: cannot map buffer");
         lua_error(lua);
@@ -110,7 +110,7 @@ static int api_rbuf_unmap(lua_State *lua)
     rbuf = rbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (rbuf == 0 || rbuf->buf_id == 0 || rbuf->mapped == 0)
+    if (!rbuf || !rbuf->buf_id || !rbuf->mapped)
     {
         lua_pushstring(lua, "api_rbuf_unmap: invalid rbuf");
         lua_error(lua);
@@ -121,7 +121,7 @@ static int api_rbuf_unmap(lua_State *lua)
     rbuf->mapped = 0;
     rbuf->mapped_ofs = 0;
     rbuf->mapped_len = 0;
-    if (safe_bind_buf(rbuf) != 0)
+    if (safe_bind_buf(rbuf))
     {
         lua_pushstring(lua, "api_rbuf_unmap: cannot bind buffer");
         lua_error(lua);
@@ -149,7 +149,7 @@ static int api_rbuf_set(lua_State *lua)
     len = lua_gettop(lua) - 2;
 
     thread_mutex_lock(g_rbufs.mutex);
-    if (rbuf == 0 || rbuf->buf_id == 0 || rbuf->mapped == 0)
+    if (!rbuf || !rbuf->buf_id || !rbuf->mapped)
     {
         thread_mutex_unlock(g_rbufs.mutex);
         lua_pushstring(lua, "api_rbuf_set: invalid rbuf");
@@ -207,7 +207,7 @@ static int api_rbuf_alloc(lua_State *lua)
     usage = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
 
-    if (rbuf == 0 || rbuf->buf_id != 0)
+    if (!rbuf || rbuf->buf_id)
     {
         lua_pushstring(lua, "api_rbuf_alloc: invalid rbuf");
         lua_error(lua);
@@ -247,7 +247,7 @@ static int api_rbuf_alloc(lua_State *lua)
     rbuf->target = (GLenum)target;
     rbuf->item = (GLenum)item;
     glGenBuffers(1, &rbuf->buf_id);
-    if (safe_bind_buf(rbuf) != 0)
+    if (safe_bind_buf(rbuf))
     {
         lua_pushstring(lua, "api_rbuf_alloc: cannot bind buffer");
         lua_error(lua);
@@ -281,7 +281,7 @@ static int api_rbuf_free(lua_State *lua)
     rbuf = rbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (rbuf == 0 || rbuf->buf_id == 0 || rbuf->mapped != 0)
+    if (!rbuf || !rbuf->buf_id || rbuf->mapped)
     {
         lua_pushstring(lua, "api_rbuf_free: invalid rbuf");
         lua_error(lua);
@@ -309,12 +309,12 @@ int rbuf_init(lua_State *lua, int count)
         return 1;
     }
     g_rbufs.pool = util_malloc(RBUF_SIZE, RBUF_SIZE * count);
-    if (g_rbufs.pool == 0)
+    if (!g_rbufs.pool)
         return 1;
     memset(g_rbufs.pool, 0, RBUF_SIZE * count);
     g_rbufs.count = count;
     g_rbufs.mutex = thread_mutex_create();
-    if (g_rbufs.mutex == 0)
+    if (!g_rbufs.mutex)
         goto cleanup;
 
     lua_register(lua, "api_rbuf_alloc", api_rbuf_alloc);
@@ -350,11 +350,11 @@ cleanup:
 void rbuf_done(void)
 {
     int i;
-    if (g_rbufs.pool == 0)
+    if (!g_rbufs.pool)
         return;
     for (i = 0; i < g_rbufs.count; ++i)
     {
-        if (rbuf_get(i)->buf_id != 0)
+        if (rbuf_get(i)->buf_id)
         {
             fprintf(stderr, "rbuf_done: some buffers are still active\n");
             break;
