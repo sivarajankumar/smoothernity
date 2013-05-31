@@ -196,15 +196,16 @@ void mpool_destroy(struct mpool_t *mpool)
     struct mpool_shelf_t *shelf;
     if (mpool->shelves == 0)
         return;
-    printf("Largest requested memory chunk: %i B\n", mpool->largest_size);
+    fprintf(stderr, "Largest requested memory chunk: %i B\n",
+            mpool->largest_size);
     for (i = 0; i < mpool->shelves_len; ++i)
     {
         shelf = mpool_get_shelf(mpool, i);
-        printf("Memory pool %i B chunks usage: %i/%i, allocs/frees: %i/%i "
-               "(%i fails)\n",
-               shelf->size,
-               shelf->count - shelf->left_min, shelf->count,
-               shelf->allocs, shelf->frees, shelf->alloc_fails);
+        fprintf(stderr, "Memory pool %i B chunks usage: %i/%i, "
+                "allocs/frees: %i/%i (%i fails)\n",
+                shelf->size,
+                shelf->count - shelf->left_min, shelf->count,
+                shelf->allocs, shelf->frees, shelf->alloc_fails);
         for (j = 0; j < shelf->count; ++j)
             util_free(mpool_get_chunk(j, shelf)->data);
         util_free(shelf->chunks);

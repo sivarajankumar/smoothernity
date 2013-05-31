@@ -127,9 +127,9 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     if (glewInit() != GLEW_OK)
         goto cleanup;
 
-    printf("render_init: GL: %s, GLSL: %s\n",
-           glGetString(GL_VERSION),
-           glGetString(GL_SHADING_LANGUAGE_VERSION));
+    fprintf(stderr, "render_init: GL: %s, GLSL: %s\n",
+            glGetString(GL_VERSION),
+            glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     glGetIntegerv(GL_MAJOR_VERSION, &version);
     if (version < MIN_GL_VERSION)

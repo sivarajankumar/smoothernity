@@ -406,7 +406,7 @@ static int main_init(int argc, char **argv)
 
 static void main_loop(void)
 {
-    printf("Game loop start\n");
+    fprintf(stderr, "Game loop start\n");
     if (!lua_istable(g_main.lua, -1))
         fprintf(stderr, "Invalid return value of main module\n");
     else
@@ -418,19 +418,19 @@ static void main_loop(void)
             fprintf(stderr, "Error while executing run() function: %s\n",
                     lua_tostring(g_main.lua, -1));
     }
-    printf("Game loop finish\n");
+    fprintf(stderr, "Game loop finish\n");
 }
 
 int main(int argc, char **argv)
 {
-    printf("Engine start\n");
+    fprintf(stderr, "Engine start\n");
     if (!setjmp(g_main.panic))
     {
         if (main_init(argc, argv) == 0)
             main_loop();
     }
     main_done();
-    printf("Engine finish\n");
+    fprintf(stderr, "Engine finish\n");
     return 0;
 }
 
