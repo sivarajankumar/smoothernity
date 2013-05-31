@@ -71,7 +71,7 @@ void * mpool_alloc(struct mpool_t *mpool, size_t size)
                 (int)size);
         return 0;
     }
-    if (shelf->vacant == 0)
+    if (!shelf->vacant)
     {
         fprintf(stderr, "mpool_alloc: out of chunks in shelf %i\n",
                 shelf->size);
@@ -92,7 +92,7 @@ void mpool_free(void *ptr)
 {
     struct mpool_chunk_t *chunk;
     struct mpool_shelf_t *shelf;
-    if (ptr == 0)
+    if (!ptr)
         return;
     chunk = *(struct mpool_chunk_t**)(((char*)ptr) - MPOOL_DATA_ALIGN);
     shelf = chunk->shelf;
@@ -125,11 +125,11 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len)
         return 0;
     }
     mpool = util_malloc(MPOOL_SIZE, MPOOL_SIZE);
-    if (mpool == 0)
+    if (!mpool)
         return 0;
     memset(mpool, 0, MPOOL_SIZE);
     mpool->shelves = util_malloc(MPOOL_SHELF_SIZE, MPOOL_SHELF_SIZE * len);
-    if (mpool->shelves == 0)
+    if (!mpool->shelves)
         goto cleanup;
     memset(mpool->shelves, 0, MPOOL_SHELF_SIZE * len);
     mpool->shelves_len = len;
@@ -139,7 +139,7 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len)
             goto cleanup;
         size = sizes[i];
         count = counts[i];
-        if ((size & (size - 1)) != 0)
+        if (size & (size - 1))
         {
             fprintf(stderr, "Invalid shelf size == %i\n", size);
             goto cleanup;
@@ -150,7 +150,7 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len)
         shelf->left = count;
         shelf->left_min = count;
         shelf->chunks = util_malloc(MPOOL_CHUNK_SIZE, MPOOL_CHUNK_SIZE * count);
-        if (shelf->chunks == 0)
+        if (!shelf->chunks)
             goto cleanup;
         memset(shelf->chunks, 0, MPOOL_CHUNK_SIZE * count);
         for (j = 0; j < counts[i]; ++j)
@@ -160,7 +160,7 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len)
             chunk->next = mpool_get_chunk(j + 1, shelf);
             /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
             chunk->data = util_malloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
-            if (chunk->data == 0)
+            if (!chunk->data)
                 goto cleanup;
             *(void**)(chunk->data) = chunk;
         }
@@ -194,7 +194,7 @@ void mpool_destroy(struct mpool_t *mpool)
 {
     int i, j;
     struct mpool_shelf_t *shelf;
-    if (mpool->shelves == 0)
+    if (!mpool->shelves)
         return;
     fprintf(stderr, "Largest requested memory chunk: %i B\n",
             mpool->largest_size);
