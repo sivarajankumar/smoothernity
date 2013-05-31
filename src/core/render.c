@@ -34,7 +34,7 @@ static int api_render_clear_color(lua_State *lua)
     }
     vec = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    if (vec == 0)
+    if (!vec)
     {
         lua_pushstring(lua, "api_render_clear_color: invalid vector");
         lua_error(lua);
@@ -75,7 +75,7 @@ static int api_render_clear(lua_State *lua)
 
 static int api_render_swap(lua_State *lua)
 {
-    if (lua_gettop(lua) != 0)
+    if (lua_gettop(lua))
     {
         lua_pushstring(lua, "api_render_swap: incorrect argument");
         lua_error(lua);
@@ -104,7 +104,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     }
 
     info = SDL_GetVideoInfo();
-    if (info == 0)
+    if (!info)
         goto cleanup;
 
     bpp = info->vfmt->BitsPerPixel;
@@ -121,7 +121,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
         flags |= SDL_FULLSCREEN;
     }
 
-    if (SDL_SetVideoMode(width, height, bpp, flags) == 0)
+    if (!SDL_SetVideoMode(width, height, bpp, flags))
         goto cleanup;
 
     if (glewInit() != GLEW_OK)
@@ -160,7 +160,7 @@ cleanup:
 
 void render_done(void)
 {
-    if (g_render.init == 0)
+    if (!g_render.init)
         return;
     SDL_ShowCursor(SDL_ENABLE);
     g_render.init = 0;
