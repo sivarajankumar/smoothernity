@@ -47,7 +47,7 @@ static int api_vector_get(lua_State *lua)
     vector = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
-    if (vector == 0)
+    if (!vector)
     {
         lua_pushstring(lua, "api_vector_get: invalid vector");
         lua_error(lua);
@@ -80,7 +80,7 @@ static int api_vector_update(lua_State *lua)
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (vector == 0)
+    if (!vector)
     {
         lua_pushstring(lua, "api_vector_update: invalid vector");
         lua_error(lua);
@@ -88,7 +88,7 @@ static int api_vector_update(lua_State *lua)
     }
 
     force = update_tag == VECTOR_FORCED_UPDATE;
-    if (vector_update(vector, dt, update_tag, force) != 0)
+    if (vector_update(vector, dt, update_tag, force))
     {
         lua_pushstring(lua, "api_vector_update: update error");
         lua_error(lua);
@@ -118,7 +118,7 @@ static int api_vector_const(lua_State *lua)
     value[3] = (float)lua_tonumber(lua, 5);
     lua_pop(lua, 5);
 
-    if (vector == 0)
+    if (!vector)
     {
         lua_pushstring(lua, "api_vector_const: invalid vector");
         lua_error(lua);
@@ -154,7 +154,7 @@ static int api_vector_rubber(lua_State *lua)
     v1 = vector_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
-    if (vector == 0 || v0 == 0 || v1 == 0)
+    if (!vector || !v0 || !v1)
     {
         lua_pushstring(lua, "api_vector_rubber: invalid vector");
         lua_error(lua);
@@ -168,7 +168,7 @@ static int api_vector_rubber(lua_State *lua)
     vector->argv[0] = v0;
     vector->argv[1] = v1;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_rubber: nesting is too deep");
         lua_error(lua);
@@ -198,7 +198,7 @@ static int api_vector_cord(lua_State *lua)
     max = (float)lua_tonumber(lua, 4);
     lua_pop(lua, 4);
 
-    if (vector == 0 || v0 == 0)
+    if (!vector || !v0)
     {
         lua_pushstring(lua, "api_vector_cord: invalid vector");
         lua_error(lua);
@@ -227,7 +227,7 @@ static int api_vector_cord(lua_State *lua)
     vector->cord_max = max;
     vector->argv[0] = v0;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_cord: nesting is too deep");
         lua_error(lua);
@@ -254,14 +254,14 @@ static int api_vector_mpos(lua_State *lua)
     m0 = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (vector == 0)
+    if (!vector)
     {
         lua_pushstring(lua, "api_vector_mpos: invalid vector");
         lua_error(lua);
         return 0;
     }
 
-    if (m0 == 0)
+    if (!m0)
     {
         lua_pushstring(lua, "api_vector_mpos: invalid matrix");
         lua_error(lua);
@@ -274,7 +274,7 @@ static int api_vector_mpos(lua_State *lua)
     vector->type = VECTOR_MPOS;
     vector->argm[0] = m0;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_mpos: nesting is too deep");
         lua_error(lua);
@@ -306,7 +306,7 @@ static int api_vector_wsum(lua_State *lua)
     v4 = vector_get(lua_tointeger(lua, 6));
     lua_pop(lua, 6);
 
-    if (vector == 0 || v0 == 0 || v1 == 0 || v2 == 0 || v3 == 0 || v4 == 0)
+    if (!vector || !v0 || !v1 || !v2 || !v3 || !v4)
     {
         lua_pushstring(lua, "api_vector_wsum: invalid vector");
         lua_error(lua);
@@ -323,7 +323,7 @@ static int api_vector_wsum(lua_State *lua)
     vector->argv[3] = v3;
     vector->argv[4] = v4;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_wsum: nesting is too deep");
         lua_error(lua);
@@ -353,7 +353,7 @@ static int api_vector_pick(lua_State *lua)
     v3 = vector_get(lua_tointeger(lua, 5));
     lua_pop(lua, 5);
 
-    if (vector == 0 || v0 == 0 || v1 == 0 || v2 == 0 || v3 == 0)
+    if (!vector || !v0 || !v1 || !v2 || !v3)
     {
         lua_pushstring(lua, "api_vector_pick: invalid vector");
         lua_error(lua);
@@ -369,7 +369,7 @@ static int api_vector_pick(lua_State *lua)
     vector->argv[2] = v2;
     vector->argv[3] = v3;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_pick: nesting is too deep");
         lua_error(lua);
@@ -396,11 +396,11 @@ static int api_vector_seq(lua_State *lua)
     vector = vector_get(lua_tointeger(lua, 1));
     start = lua_tointeger(lua, 2);
     len = lua_tointeger(lua, 3);
-    loop = lua_tointeger(lua, 4);
+    loop = !!lua_tointeger(lua, 4);
     ipl = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
 
-    if (vector == 0)
+    if (!vector)
     {
         lua_pushstring(lua, "api_vector_seq: invalid vector");
         lua_error(lua);
@@ -417,13 +417,6 @@ static int api_vector_seq(lua_State *lua)
     if (len < 2 || len > (g_bufs.size - start) / 5)
     {
         lua_pushstring(lua, "api_vector_seq: len out of range");
-        lua_error(lua);
-        return 0;
-    }
-
-    if (loop != 0 && loop != 1)
-    {
-        lua_pushstring(lua, "api_vector_seq: invalid loop value");
         lua_error(lua);
         return 0;
     }
@@ -471,7 +464,7 @@ static int api_vector_cast(lua_State *lua)
     m1 = matrix_get(lua_tointeger(lua, 5));
     lua_pop(lua, 5);
 
-    if (vector == 0 || m0 == 0 || m1 == 0)
+    if (!vector || !m0 || !m1)
     {
         lua_pushstring(lua, "api_vector_cast: invalid object");
         lua_error(lua);
@@ -487,14 +480,14 @@ static int api_vector_cast(lua_State *lua)
     vector->cast_wldi = wldi;
     vector->cast_csi = csi;
 
-    if (vector_nesting(vector, g_vectors.nesting) == 0)
+    if (!vector_nesting(vector, g_vectors.nesting))
     {
         lua_pushstring(lua, "api_vector_cast: nesting is too deep");
         lua_error(lua);
         return 0;
     }
 
-    if (physics_wld_cast(wldi, csi, m0->value, m1->value, vector->value) != 0)
+    if (physics_wld_cast(wldi, csi, m0->value, m1->value, vector->value))
     {
         lua_pushstring(lua, "api_vector_cast: invalid physics object");
         lua_error(lua);
@@ -513,7 +506,7 @@ int vector_init(lua_State *lua, int count, int nesting)
         return 1;
     }
     g_vectors.pool = util_malloc(VECTOR_SIZE, VECTOR_SIZE * count);
-    if (g_vectors.pool == 0)
+    if (!g_vectors.pool)
         return 1;
     memset(g_vectors.pool, 0, VECTOR_SIZE * count);
     g_vectors.count = count;
@@ -541,7 +534,7 @@ int vector_init(lua_State *lua, int count, int nesting)
 
 void vector_done(void)
 {
-    if (g_vectors.pool == 0)
+    if (!g_vectors.pool)
         return;
     util_free(g_vectors.pool);
     g_vectors.pool = 0;
@@ -563,7 +556,7 @@ int vector_nesting(struct vector_t *vector, int limit)
         min = limit;
         for (i = 0; i < VECTOR_ARGVS; ++i)
         {
-            if (vector->argv[i] == 0)
+            if (!vector->argv[i])
                 continue;
             cur = vector_nesting(vector->argv[i], limit - 1);
             if (cur < min)
@@ -571,7 +564,7 @@ int vector_nesting(struct vector_t *vector, int limit)
         }
         for (i = 0; i < VECTOR_ARGMS; ++i)
         {
-            if (vector->argm[i] == 0)
+            if (!vector->argm[i])
                 continue;
             cur = matrix_nesting(vector->argm[i], limit - 1);
             if (cur < min)
@@ -615,15 +608,13 @@ static int vector_seq_prev(struct vector_t *v, int i)
 
 static int vector_update_rubber(struct vector_t *v, float dt, int force)
 {
-    int i;
     float *v0, *v1;
-    if (vector_update(v->argv[0], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[1], dt, v->update_tag, force) != 0)
-        return 1;
+    for (int i = 0; i < 2; ++i)
+        if (vector_update(v->argv[i], dt, v->update_tag, force))
+            return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
-    for (i = 0; i < 4; ++i)
+    for (int i = 0; i < 4; ++i)
         v->value[i] += (v0[i] - v->value[i]) * v1[i];
     return 0;
 }
@@ -635,7 +626,7 @@ static int vector_update_cord(struct vector_t *v, float dt, int force)
     float diff[4];
     float *v0;
 
-    if (vector_update(v->argv[0], dt, v->update_tag, force) != 0)
+    if (vector_update(v->argv[0], dt, v->update_tag, force))
         return 1;
     v0 = v->argv[0]->value;
 
@@ -656,7 +647,7 @@ static int vector_update_cord(struct vector_t *v, float dt, int force)
 static int vector_update_mpos(struct vector_t *v, float dt, int force)
 {
     float *m0;
-    if (matrix_update(v->argm[0], dt, v->update_tag, force) != 0)
+    if (matrix_update(v->argm[0], dt, v->update_tag, force))
         return 1;
     m0 = v->argm[0]->value;
     v->value[0] = m0[12];
@@ -668,42 +659,27 @@ static int vector_update_mpos(struct vector_t *v, float dt, int force)
 
 static int vector_update_wsum(struct vector_t *v, float dt, int force)
 {
-    int i;
     float *v0, *v1, *v2, *v3, *v4;
-    if (vector_update(v->argv[0], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[1], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[2], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[3], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[4], dt, v->update_tag, force) != 0)
-        return 1;
+    for (int i = 0; i < 5; ++i)
+        if (vector_update(v->argv[i], dt, v->update_tag, force))
+            return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
     v2 = v->argv[2]->value;
     v3 = v->argv[3]->value;
     v4 = v->argv[4]->value;
-    for (i = 0; i < 4; ++i)
-    {
+    for (int i = 0; i < 4; ++i)
         v->value[i] = (v0[0] * v1[i]) + (v0[1] * v2[i]) +
                       (v0[2] * v3[i]) + (v0[3] * v4[i]);
-    }
     return 0;
 }
 
 static int vector_update_pick(struct vector_t *v, float dt, int force)
 {
     float *v0, *v1, *v2, *v3;
-    if (vector_update(v->argv[0], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[1], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[2], dt, v->update_tag, force) != 0)
-        return 1;
-    if (vector_update(v->argv[3], dt, v->update_tag, force) != 0)
-        return 1;
+    for (int i = 0; i < 4; ++i)
+        if (vector_update(v->argv[i], dt, v->update_tag, force))
+            return 1;
     v0 = v->argv[0]->value;
     v1 = v->argv[1]->value;
     v2 = v->argv[2]->value;
@@ -718,10 +694,9 @@ static int vector_update_pick(struct vector_t *v, float dt, int force)
 static int vector_update_cast(struct vector_t *v, float dt, int force)
 {
     float *m0, *m1;
-    if (matrix_update(v->argm[0], dt, v->update_tag, force) != 0)
-        return 1;
-    if (matrix_update(v->argm[1], dt, v->update_tag, force) != 0)
-        return 1;
+    for (int i = 0; i < 2; ++i)
+        if (matrix_update(v->argm[i], dt, v->update_tag, force))
+            return 1;
     m0 = v->argm[0]->value;
     m1 = v->argm[1]->value;
     return physics_wld_cast(v->cast_wldi, v->cast_csi, m0, m1, v->value);
@@ -772,7 +747,7 @@ int vector_update(struct vector_t *v, float dt, int update_tag, int force)
 {
     if (v->type == VECTOR_CONST)
         return 0;
-    if (force == 0 && v->update_tag == update_tag)
+    if (!force && v->update_tag == update_tag)
         return 0;
     v->update_tag = update_tag;
     if (v->type == VECTOR_RUBBER)
