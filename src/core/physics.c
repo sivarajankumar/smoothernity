@@ -129,7 +129,7 @@ static int api_physics_wld_gravity(lua_State *lua)
     wldi = lua_tointeger(lua, 1);
     v = vector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
-    if (v == 0)
+    if (!v)
     {
         lua_pushstring(lua, "api_physics_wld_gravity: invalid vector");
         lua_error(lua);
@@ -160,7 +160,7 @@ static int api_physics_wld_move(lua_State *lua)
     wldi = lua_tointeger(lua, 1);
     v = vector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
-    if (v == 0)
+    if (!v)
     {
         lua_pushstring(lua, "api_physics_wld_move: invalid vector");
         lua_error(lua);
@@ -216,7 +216,7 @@ static int api_physics_cs_alloc_box(lua_State *lua)
     size = vector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (size == 0)
+    if (!size)
     {
         lua_pushstring(lua, "api_physics_cs_alloc_box: invalid vector");
         lua_error(lua);
@@ -294,7 +294,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua)
     scale = vector_get(lua_tointeger(lua, 7));
     lua_pop(lua, 7);
 
-    if (scale == 0)
+    if (!scale)
     {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: invalid vector");
         lua_error(lua);
@@ -378,7 +378,7 @@ static int api_physics_cs_comp_add(lua_State *lua)
     childi = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_physics_cs_comp_add: invalid matrix");
         lua_error(lua);
@@ -443,7 +443,7 @@ static int api_physics_rb_alloc(lua_State *lua)
     roll_frict = (float)lua_tonumber(lua, 7);
     lua_pop(lua, 7);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_physics_rb_alloc: invalid matrix");
         lua_error(lua);
@@ -536,7 +536,7 @@ static int api_physics_veh_alloc(lua_State *lua)
     slip_frict = (float)lua_tonumber(lua, 14);
     lua_pop(lua, 14);
 
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_physics_veh_alloc: invalid matrix");
         lua_error(lua);
@@ -618,10 +618,10 @@ static int api_physics_veh_add_wheel(lua_State *lua)
     sus_rest = (float)lua_tonumber(lua, 5);
     roll = (float)lua_tonumber(lua, 6);
     radius = (float)lua_tonumber(lua, 7);
-    front = lua_tointeger(lua, 8);
+    front = !!lua_tointeger(lua, 8);
     lua_pop(lua, 8);
 
-    if (pos == 0 || dir == 0 || axl == 0)
+    if (!pos || !dir || !axl)
     {
         lua_pushstring(lua, "api_physics_veh_add_wheel: invalid vector");
         lua_error(lua);
@@ -631,13 +631,6 @@ static int api_physics_veh_add_wheel(lua_State *lua)
     if (radius <= 0.0f)
     {
         lua_pushstring(lua, "api_physics_veh_add_wheel: radius not positive");
-        lua_error(lua);
-        return 0;
-    }
-    
-    if (front != 0 && front != 1)
-    {
-        lua_pushstring(lua, "api_physics_veh_add_wheel: front out of range");
         lua_error(lua);
         return 0;
     }
@@ -707,7 +700,7 @@ static int api_physics_veh_transform(lua_State *lua)
     vehi = lua_tointeger(lua, 1);
     matrix = matrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
-    if (matrix == 0)
+    if (!matrix)
     {
         lua_pushstring(lua, "api_physics_veh_transform: invalid matrix");
         lua_error(lua);
@@ -753,7 +746,7 @@ int physics_init(lua_State *lua, int wld_count, int cs_count,
                  const int msizes[], const int mcounts[], int mlen)
 {
     g_physics.mpool = mpool_create(msizes, mcounts, mlen);
-    if (g_physics.mpool == 0)
+    if (!g_physics.mpool)
         return 1;
     if (physcpp_init(physics_malloc, mpool_free, wld_count,
                      cs_count, rb_count, veh_count) != PHYSRES_OK)
