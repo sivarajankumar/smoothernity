@@ -26,7 +26,7 @@ int world_init(int count)
         return PHYSRES_CANNOT_INIT;
     }
     g_worlds.pool = (char*)util_malloc(WORLD_SIZE, WORLD_SIZE * count);
-    if (g_worlds.pool == 0)
+    if (!g_worlds.pool)
         return PHYSRES_CANNOT_INIT;
     memset(g_worlds.pool, 0, WORLD_SIZE * count);
     g_worlds.count = count;
@@ -78,7 +78,7 @@ void world_done(void)
 {
     int i;
     world_t *wld;
-    if (g_worlds.pool == 0)
+    if (!g_worlds.pool)
         return;
     for (i = 0; i < g_worlds.count; ++i)
     {
@@ -191,7 +191,7 @@ int world_move(world_t *wld, float *offset)
 int world_cast(world_t *wld, colshape_t *cs, float *mfrom,
                float *mto, float *vout)
 {
-    if (cs->shape_convex == 0)
+    if (!cs->shape_convex)
         return PHYSRES_INVALID_CS;
     try
     {
