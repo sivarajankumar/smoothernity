@@ -136,13 +136,13 @@ static int api_buf_get(lua_State *lua) {
 void buf_reg_thread(lua_State *lua) {
     lua_register(lua, "api_buf_set", api_buf_set);
     lua_register(lua, "api_buf_get", api_buf_get);
-    #define LUA_PUBLISH(x) \
+    #define REG(x) \
         lua_pushinteger(lua, x); \
         lua_setglobal(lua, "API_"#x);
-    LUA_PUBLISH(BUF_IPL_NEAREST);
-    LUA_PUBLISH(BUF_IPL_LINEAR);
-    LUA_PUBLISH(BUF_IPL_SPLINE);
-    #undef LUA_PUBLISH
+    REG(BUF_IPL_NEAREST);
+    REG(BUF_IPL_LINEAR);
+    REG(BUF_IPL_SPLINE);
+    #undef REG
 }
 
 int buf_init(lua_State *lua, int size) {

@@ -3,8 +3,7 @@
 
 #include "lua.h"
 
-struct bufs_t
-{
+struct bufs_t {
     int size;
     float *data;
 };
