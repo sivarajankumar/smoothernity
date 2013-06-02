@@ -23,7 +23,7 @@ function M.run()
         prg.use()
         blink.update(FRAME_TIME, tag)
         api_render_clear_color(blink.color_id())
-        api_render_clear(API_RENDER_CLEAR_COLOR)
+        api_render_clear(API_RENDER_COLOR_BUFFER_BIT)
         api_render_swap()
     end
     collectgarbage('restart')
