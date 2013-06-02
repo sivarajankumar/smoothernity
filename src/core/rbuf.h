@@ -4,15 +4,11 @@
 #include "GL/glew.h"
 #include "lua.h"
 
-struct rbuf_t
-{
+struct rbuf_t {
     GLuint buf_id;
-    int size;
-    int mapped_ofs;
-    int mapped_len;
+    int size, mapped_ofs, mapped_len;
     GLvoid *mapped;
-    GLenum target;
-    GLenum item;
+    GLenum target, item;
 };
 
 int rbuf_init(lua_State *lua, int count);
