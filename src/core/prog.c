@@ -8,24 +8,22 @@
 static const size_t PROG_SIZE = 4;
 static const int PROG_NONE = -1;
 
-struct progs_t
-{
+struct progs_t {
     int count;
     char *pool;
 };
 
 static struct progs_t g_progs;
 
-struct prog_t * prog_get(int iprog)
-{
+struct prog_t * prog_get(int iprog) {
     if (iprog >= 0 && iprog < g_progs.count)
         return (struct prog_t*)(g_progs.pool + PROG_SIZE * iprog);
     else
         return 0;
 }
 
-static int prog_attach(struct prog_t *prog, GLenum type, size_t data_len, const char *data)
-{
+static int prog_attach
+(struct prog_t *prog, GLenum type, size_t data_len, const char *data) {
     static char log[LOG_SIZE];
     GLuint shader;
     GLint gldata_len, res, log_len;
@@ -35,13 +33,11 @@ static int prog_attach(struct prog_t *prog, GLenum type, size_t data_len, const 
     glShaderSource(shader, 1, &data, &gldata_len);
     glCompileShader(shader);
     glGetShaderiv(shader, GL_COMPILE_STATUS, &res);
-    if (res == GL_FALSE)
-    {
+    if (res == GL_FALSE) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
         if (log_len >= LOG_SIZE)
             fprintf(stderr, "Log size is too small: %i\n", (int)log_len);
-        else
-        {
+        else {
             glGetShaderInfoLog(shader, log_len, &res, log);
             fprintf(stderr, "Log:\n%s\n", log);
         }
@@ -55,8 +51,7 @@ static int prog_attach(struct prog_t *prog, GLenum type, size_t data_len, const 
     return 0;
 }
 
-static int api_prog_alloc(lua_State *lua)
-{
+static int api_prog_alloc(lua_State *lua) {
     /*
      * OpenGL ES 3.0 supports only 1 shader executable of each type.
      * For the sake of portability, enforce every program to contain
@@ -68,9 +63,8 @@ static int api_prog_alloc(lua_State *lua)
     static char log[LOG_SIZE];
     GLint res, len;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1)
-    || !lua_isstring(lua, 2) || !lua_isstring(lua, 3))
-    {
+    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
+    !lua_isstring(lua, 2) || !lua_isstring(lua, 3)) {
         lua_pushstring(lua, "api_prog_alloc: incorrect argument");
         lua_error(lua);
         return 0;
@@ -80,30 +74,25 @@ static int api_prog_alloc(lua_State *lua)
     frag = lua_tolstring(lua, 3, &frag_len);
     lua_pop(lua, 3);
 
-    if (!prog || prog->prog_id)
-    {
+    if (!prog || prog->prog_id) {
         lua_pushstring(lua, "api_prog_alloc: invalid prog");
         lua_error(lua);
         return 0;
     }
-
     prog->prog_id = glCreateProgram();
-    if (prog_attach(prog, GL_VERTEX_SHADER, vert_len, vert)
-    ||  prog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag))
-    {
+    if (prog_attach(prog, GL_VERTEX_SHADER, vert_len, vert) ||
+    prog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag)) {
         lua_pushstring(lua, "api_prog_alloc: cannot attach shaders");
         lua_error(lua);
         return 0;
     }
     glLinkProgram(prog->prog_id);
     glGetProgramiv(prog->prog_id, GL_LINK_STATUS, &res);
-    if (res == GL_FALSE)
-    {
+    if (res == GL_FALSE) {
         glGetProgramiv(prog->prog_id, GL_INFO_LOG_LENGTH, &len);
         if (len >= LOG_SIZE)
             fprintf(stderr, "Log size is too small: %i\n", (int)len);
-        else
-        {
+        else {
             glGetProgramInfoLog(prog->prog_id, len, &res, log);
             fprintf(stderr, "Log:\n%s\n", log);
         }
@@ -114,19 +103,16 @@ static int api_prog_alloc(lua_State *lua)
     return 0;
 }
 
-static int api_prog_free(lua_State *lua)
-{
+static int api_prog_free(lua_State *lua) {
     struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_prog_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
     prog = prog_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    if (!prog || !prog->prog_id)
-    {
+    if (!prog || !prog->prog_id) {
         lua_pushstring(lua, "api_prog_free: invalid prog");
         lua_error(lua);
         return 0;
@@ -136,12 +122,10 @@ static int api_prog_free(lua_State *lua)
     return 0;
 }
 
-static int api_prog_use(lua_State *lua)
-{
+static int api_prog_use(lua_State *lua) {
     int iprog;
     struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_prog_use: incorrect argument");
         lua_error(lua);
         return 0;
@@ -150,11 +134,9 @@ static int api_prog_use(lua_State *lua)
     lua_pop(lua, 1);
     if (iprog == PROG_NONE)
         glUseProgram(0);
-    else
-    {
+    else {
         prog = prog_get(iprog);
-        if (!prog || !prog->prog_id)
-        {
+        if (!prog || !prog->prog_id) {
             lua_pushstring(lua, "api_prog_use: invalid prog");
             lua_error(lua);
             return 0;
@@ -164,10 +146,8 @@ static int api_prog_use(lua_State *lua)
     return 0;
 }
 
-int prog_init(lua_State *lua, int count)
-{
-    if (sizeof(struct prog_t) > PROG_SIZE)
-    {
+int prog_init(lua_State *lua, int count) {
+    if (sizeof(struct prog_t) > PROG_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(struct prog_t) == %i\n",
                 (int)sizeof(struct prog_t));
         return 1;
@@ -190,19 +170,14 @@ int prog_init(lua_State *lua, int count)
     return 0;
 }
 
-void prog_done(void)
-{
-    int i;
+void prog_done(void) {
     if (!g_progs.pool)
         return;
-    for (i = 0; i < g_progs.count; ++i)
-    {
-        if (prog_get(i)->prog_id)
-        {
+    for (int i = 0; i < g_progs.count; ++i)
+        if (prog_get(i)->prog_id) {
             fprintf(stderr, "prog_done: some progs are still active\n");
             break;
         }
-    }
     util_free(g_progs.pool);
     g_progs.pool = 0;
 }
