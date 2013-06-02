@@ -6,8 +6,7 @@
 #define MATRIX_ARGVS 3
 #define MATRIX_ARGMS 2
 
-enum matrix_e
-{
+enum matrix_e {
     MATRIX_CONST,
     MATRIX_MUL,
     MATRIX_INV,
@@ -20,26 +19,18 @@ enum matrix_e
     MATRIX_VEHICLE_WHEEL
 };
 
-enum matrix_axis_e
-{
-    MATRIX_AXIS_X = 0,
-    MATRIX_AXIS_Y = 1,
-    MATRIX_AXIS_Z = 2,
-    MATRIX_AXES_TOTAL = 3
+enum matrix_axis_e {
+    MATRIX_AXIS_X,
+    MATRIX_AXIS_Y,
+    MATRIX_AXIS_Z,
+    MATRIX_AXES_TOTAL
 };
 
-struct matrix_t
-{
+struct matrix_t {
     float value[16]; /* must go first to ensure alignment */
     enum matrix_e type;
-    int update_tag;
     enum matrix_axis_e rotaxis;
-    int rotanglei;
-    int zneari;
-    int zfari;
-    int rigid_body;
-    int vehicle;
-    int wheel;
+    int update_tag, rotanglei, zneari, zfari, rigid_body, vehicle, wheel;
     struct vector_t *argv[MATRIX_ARGVS];
     struct matrix_t *argm[MATRIX_ARGMS];
 };

@@ -136,9 +136,7 @@ static int api_buf_get(lua_State *lua) {
 void buf_reg_thread(lua_State *lua) {
     lua_register(lua, "api_buf_set", api_buf_set);
     lua_register(lua, "api_buf_get", api_buf_get);
-    #define REG(x) \
-        lua_pushinteger(lua, x); \
-        lua_setglobal(lua, "API_"#x);
+    #define REG(x) lua_pushinteger(lua, x); lua_setglobal(lua, "API_"#x);
     REG(BUF_IPL_NEAREST);
     REG(BUF_IPL_LINEAR);
     REG(BUF_IPL_SPLINE);
