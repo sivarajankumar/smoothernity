@@ -1,7 +1,6 @@
 #include "interp.h"
 
-float interp_spline(float t, float v0, float v1, float v2, float v3)
-{
+float interp_spline(float t, float v0, float v1, float v2, float v3) {
     float v, tt, ttt;
     tt = t * t;
     ttt = tt * t;
@@ -13,8 +12,7 @@ float interp_spline(float t, float v0, float v1, float v2, float v3)
     return v;
 }
 
-float interp_linear(float t, float v0, float v1)
-{
+float interp_linear(float t, float v0, float v1) {
     return v0 + (t * (v1 - v0));
 }
 
