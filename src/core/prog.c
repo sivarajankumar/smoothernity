@@ -162,11 +162,8 @@ int prog_init(lua_State *lua, int count) {
     lua_register(lua, "api_prog_free", api_prog_free);
     lua_register(lua, "api_prog_use", api_prog_use);
 
-    #define LUA_PUBLISH(x, y) \
-        lua_pushinteger(lua, x); \
-        lua_setglobal(lua, y);
-
-    LUA_PUBLISH(PROG_NONE, "API_PROG_NONE");
+    lua_pushinteger(lua, PROG_NONE);
+    lua_setglobal(lua, "API_PROG_NONE");
     return 0;
 }
 

@@ -4,8 +4,7 @@
 #include "lua.h"
 #include "GL/glew.h"
 
-struct prog_t
-{
+struct prog_t {
     GLuint prog_id;
 };
 
