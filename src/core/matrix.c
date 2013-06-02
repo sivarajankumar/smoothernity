@@ -493,8 +493,7 @@ int matrix_init(lua_State *lua, int count, int nesting) {
     g_matrices.count = count;
     g_matrices.nesting = nesting;
 
-    #define REGF(x) lua_register(lua, "api_"#x, x);
-    #define REGN(x) lua_pushinteger(lua, x); lua_setglobal(lua, "API_"#x);
+    #define REGF(x) lua_register(lua, #x, x)
     REGF(api_matrix_copy);
     REGF(api_matrix_stop);
     REGF(api_matrix_update);
@@ -508,11 +507,12 @@ int matrix_init(lua_State *lua, int count, int nesting) {
     REGF(api_matrix_rigid_body);
     REGF(api_matrix_vehicle_chassis);
     REGF(api_matrix_vehicle_wheel);
+    #undef REGF
+    #define REGN(x) lua_pushinteger(lua, x); lua_setglobal(lua, "API_"#x)
     REGN(MATRIX_AXIS_X);
     REGN(MATRIX_AXIS_Y);
     REGN(MATRIX_AXIS_Z);
     REGN(MATRIX_FORCED_UPDATE);
-    #undef REGF
     #undef REGN
     return 0;
 }
