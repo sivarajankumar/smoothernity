@@ -13,29 +13,23 @@
 
 static const GLint MIN_GL_VERSION = 3;
 
-struct render_t
-{
-    int init;
-    int width;
-    int height;
+struct render_t {
+    int init, width, height;
 };
 
 static struct render_t g_render;
 
-static int api_render_clear_color(lua_State *lua)
-{
+static int api_render_clear_color(lua_State *lua) {
     GLfloat *v;
     struct vector_t *vec;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_render_clear_color: incorrect argument");
         lua_error(lua);
         return 0;
     }
     vec = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
-    if (!vec)
-    {
+    if (!vec) {
         lua_pushstring(lua, "api_render_clear_color: invalid vector");
         lua_error(lua);
         return 0;
@@ -45,10 +39,8 @@ static int api_render_clear_color(lua_State *lua)
     return 0;
 }
 
-static int api_render_clear_depth(lua_State *lua)
-{
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
+static int api_render_clear_depth(lua_State *lua) {
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_render_clear_depth: incorrect argument");
         lua_error(lua);
         return 0;
@@ -58,11 +50,9 @@ static int api_render_clear_depth(lua_State *lua)
     return 0;
 }
 
-static int api_render_clear(lua_State *lua)
-{
+static int api_render_clear(lua_State *lua) {
     int flags;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1))
-    {
+    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_render_clear: incorrect argument");
         lua_error(lua);
         return 0;
@@ -73,10 +63,8 @@ static int api_render_clear(lua_State *lua)
     return 0;
 }
 
-static int api_render_swap(lua_State *lua)
-{
-    if (lua_gettop(lua))
-    {
+static int api_render_swap(lua_State *lua) {
+    if (lua_gettop(lua)) {
         lua_pushstring(lua, "api_render_swap: incorrect argument");
         lua_error(lua);
         return 0;
@@ -85,24 +73,19 @@ static int api_render_swap(lua_State *lua)
     return 0;
 }
 
-int render_init(lua_State *lua, int width, int height, int full_screen)
-{
+int render_init(lua_State *lua, int width, int height, int full_screen) {
     int bpp, flags;
     const SDL_VideoInfo *info;
     GLint version;
 
-    if (sizeof(float) != sizeof(GLfloat))
-    {
+    if (sizeof(float) != sizeof(GLfloat)) {
         fprintf(stderr, "render_init: float<->GLfloat is not supported\n");
         goto cleanup;
     }
-
-    if (sizeof(int) != sizeof(GLint))
-    {
+    if (sizeof(int) != sizeof(GLint)) {
         fprintf(stderr, "render_init: int<->GLint is not supported\n");
         goto cleanup;
     }
-
     info = SDL_GetVideoInfo();
     if (!info)
         goto cleanup;
@@ -115,8 +98,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     flags = SDL_OPENGL | SDL_DOUBLEBUF;
-    if (full_screen)
-    {
+    if (full_screen) {
         SDL_ShowCursor(SDL_DISABLE);
         flags |= SDL_FULLSCREEN;
     }
@@ -139,18 +121,17 @@ int render_init(lua_State *lua, int width, int height, int full_screen)
     g_render.height = height;
     g_render.init = 1;
 
-    lua_register(lua, "api_render_clear_color", api_render_clear_color);
-    lua_register(lua, "api_render_clear_depth", api_render_clear_depth);
-    lua_register(lua, "api_render_clear", api_render_clear);
-    lua_register(lua, "api_render_swap", api_render_swap);
-
-    #define LUA_PUBLISH(x, y) \
-        lua_pushinteger(lua, x); \
-        lua_setglobal(lua, y);
-
-    LUA_PUBLISH(GL_COLOR_BUFFER_BIT, "API_RENDER_CLEAR_COLOR");
-    LUA_PUBLISH(GL_DEPTH_BUFFER_BIT, "API_RENDER_CLEAR_DEPTH");
-
+    #define REGF(x) lua_register(lua, #x, x)
+    REGF(api_render_clear_color);
+    REGF(api_render_clear_depth);
+    REGF(api_render_clear);
+    REGF(api_render_swap);
+    #undef REGF
+    #define REGN(x) lua_pushinteger(lua, GL_##x); \
+                    lua_setglobal(lua, "API_RENDER_"#x);
+    REGN(COLOR_BUFFER_BIT);
+    REGN(DEPTH_BUFFER_BIT);
+    #undef REGN
     return 0;
 cleanup:
     SDL_ShowCursor(SDL_ENABLE);
@@ -158,8 +139,7 @@ cleanup:
     return 1;
 }
 
-void render_done(void)
-{
+void render_done(void) {
     if (!g_render.init)
         return;
     SDL_ShowCursor(SDL_ENABLE);
