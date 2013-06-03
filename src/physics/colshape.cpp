@@ -6,18 +6,15 @@
 
 static const size_t COLSHAPE_SIZE = 128;
 
-struct colshapes_t
-{
+struct colshapes_t {
     int count;
     char *pool;
 };
 
 static colshapes_t g_colshapes;
 
-int colshape_init(int count)
-{
+int colshape_init(int count) {
     size_t size_max, align_max;
-    int i;
     colshape_t *cs;
 
     #define FIND_SIZES(t) \
@@ -28,9 +25,9 @@ int colshape_init(int count)
     FIND_SIZES(btHeightfieldTerrainShape);
     FIND_SIZES(btCompoundShape);
     FIND_SIZES(btSphereShape);
+    #undef FIND_SIZES
 
-    if (sizeof(colshape_t) > COLSHAPE_SIZE)
-    {
+    if (sizeof(colshape_t) > COLSHAPE_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(colshape_t) == %i\n",
                 (int)sizeof(colshape_t));
         return PHYSRES_CANNOT_INIT;
@@ -40,8 +37,7 @@ int colshape_init(int count)
         return PHYSRES_CANNOT_INIT;
     memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
     g_colshapes.count = count;
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         cs = colshape_get(i);
         cs->vacant = 1;
         cs->data = (char*)util_malloc(align_max, size_max);
@@ -50,8 +46,7 @@ int colshape_init(int count)
     }
     return PHYSRES_OK;
 cleanup:
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         cs = colshape_get(i);
         if (cs->data)
             util_free(cs->data);
@@ -60,14 +55,11 @@ cleanup:
     return PHYSRES_CANNOT_INIT;
 }
 
-void colshape_done(void)
-{
-    int i;
+void colshape_done(void) {
     colshape_t *cs;
     if (!g_colshapes.pool)
         return;
-    for (i = 0; i < g_colshapes.count; ++i)
-    {
+    for (int i = 0; i < g_colshapes.count; ++i) {
         cs = colshape_get(i);
         colshape_free(cs);
         util_free(cs->data);
@@ -76,23 +68,20 @@ void colshape_done(void)
     g_colshapes.pool = 0;
 }
 
-colshape_t * colshape_get(int colshapei)
-{
+colshape_t * colshape_get(int colshapei) {
     if (colshapei >= 0 && colshapei < g_colshapes.count)
         return (colshape_t*)(g_colshapes.pool + COLSHAPE_SIZE * colshapei);
     else
         return 0;
 }
 
-int colshape_free(colshape_t *cs)
-{
+int colshape_free(colshape_t *cs) {
     if (cs->vacant == 1)
         return PHYSRES_INVALID_CS;
     if (cs->comp_children || cs->vehs || cs->rbs)
         return PHYSRES_CS_HAS_REFS;
     cs->vacant = 1;
-    if (cs->comp)
-    {
+    if (cs->comp) {
         try {
             cs->comp->shape_comp->removeChildShape(cs->shape);
         } catch (...) {
@@ -108,8 +97,7 @@ int colshape_free(colshape_t *cs)
         cs->comp_prev = 0;
         cs->comp_next = 0;
     }
-    if (cs->shape)
-    {
+    if (cs->shape) {
         try {
             cs->shape->~btCollisionShape();
         } catch (...) {
@@ -124,8 +112,7 @@ int colshape_free(colshape_t *cs)
     return PHYSRES_OK;
 }
 
-int colshape_alloc_box(colshape_t *cs, float *size)
-{
+int colshape_alloc_box(colshape_t *cs, float *size) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -140,8 +127,7 @@ int colshape_alloc_box(colshape_t *cs, float *size)
     return PHYSRES_OK;
 }
 
-int colshape_alloc_sphere(colshape_t *cs, float r)
-{
+int colshape_alloc_sphere(colshape_t *cs, float r) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -155,9 +141,8 @@ int colshape_alloc_sphere(colshape_t *cs, float r)
     return PHYSRES_OK;
 }
 
-int colshape_alloc_hmap(colshape_t *cs, float *hmap, int width, int length,
-                       float hmin, float hmax, float *scale)
-{
+int colshape_alloc_hmap(colshape_t *cs, float *hmap,
+int width, int length, float hmin, float hmax, float *scale) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -173,8 +158,7 @@ int colshape_alloc_hmap(colshape_t *cs, float *hmap, int width, int length,
     return PHYSRES_OK;
 }
 
-int colshape_alloc_comp(colshape_t *cs)
-{
+int colshape_alloc_comp(colshape_t *cs) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -187,27 +171,21 @@ int colshape_alloc_comp(colshape_t *cs)
     return PHYSRES_OK;
 }
 
-int colshape_comp_add(colshape_t *parent, float *matrix, colshape_t *child)
-{
-    if (!parent->shape_comp || !child->shape
-    || child->shape_comp || child->comp)
-    {
+int colshape_comp_add(colshape_t *prt, float *matrix, colshape_t *chd) {
+    if (!prt->shape_comp || !chd->shape || chd->shape_comp || chd->comp)
         return PHYSRES_INVALID_CS;
-    }
-
-    child->comp = parent;
-    child->comp_next = parent->comp_children;
-    if (parent->comp_children)
-        parent->comp_children->comp_prev = child;
-    parent->comp_children = child;
+    chd->comp = prt;
+    chd->comp_next = prt->comp_children;
+    if (prt->comp_children)
+        prt->comp_children->comp_prev = chd;
+    prt->comp_children = chd;
 
     try {
         btTransform tm;
         tm.setFromOpenGLMatrix(matrix);
-        parent->shape_comp->addChildShape(tm, child->shape);
+        prt->shape_comp->addChildShape(tm, chd->shape);
     } catch (...) {
         return PHYSRES_INTERNAL;
     }
-
     return PHYSRES_OK;
 }
