@@ -3,8 +3,7 @@
 
 #include "btBulletDynamicsCommon.h"
 
-class mstate_c: public btMotionState
-{
+class mstate_c: public btMotionState {
 public:
     mstate_c();
     virtual ~mstate_c();
