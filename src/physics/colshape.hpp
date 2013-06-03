@@ -7,8 +7,7 @@
 struct rigidbody_t;
 struct vehicle_t;
 
-struct colshape_t
-{
+struct colshape_t {
     btBoxShape *shape_box;
     btSphereShape *shape_sphere;
     btHeightfieldTerrainShape *shape_hmap;
