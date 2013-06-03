@@ -1,7 +1,6 @@
 #include "util.h"
 
-void * util_malloc(size_t align, size_t size)
-{
+void * util_malloc(size_t align, size_t size) {
     void *mem;
     void **ptr;
     size_t addr;
@@ -15,8 +14,7 @@ void * util_malloc(size_t align, size_t size)
     return ptr;
 }
 
-void util_free(void *ptr)
-{
+void util_free(void *ptr) {
     free(((void**)ptr)[-1]);
 }
 

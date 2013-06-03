@@ -2,14 +2,12 @@
 
 static struct timeval g_pfm_timer;
 
-int pfm_timer_init(void)
-{
+int pfm_timer_init(void) {
     gettimeofday(&g_pfm_timer, 0);
     return 0;
 }
 
-float pfm_timer_get(void)
-{
+float pfm_timer_get(void) {
     struct timeval cur;
     gettimeofday(&cur, 0);
     return 0.000001f *
