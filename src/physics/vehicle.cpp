@@ -9,20 +9,16 @@
 
 static const size_t VEHICLE_SIZE = 256;
 
-struct vehicles_t
-{
+struct vehicles_t {
     int count;
     char *pool;
 };
 
 static vehicles_t g_vehicles;
 
-int vehicle_init(int count)
-{
-    int i;
+int vehicle_init(int count) {
     vehicle_t *veh;
-    if (sizeof(vehicle_t) > VEHICLE_SIZE)
-    {
+    if (sizeof(vehicle_t) > VEHICLE_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(vehicle_t) == %i\n",
                 (int)sizeof(vehicle_t));
         return PHYSRES_CANNOT_INIT;
@@ -32,8 +28,7 @@ int vehicle_init(int count)
         return PHYSRES_CANNOT_INIT;
     memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
     g_vehicles.count = count;
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         veh = vehicle_get(i);
         veh->vacant = 1;
         try {
@@ -51,8 +46,7 @@ int vehicle_init(int count)
     }
     return PHYSRES_OK;
 cleanup:
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         veh = vehicle_get(i);
         if (veh->chassis_data)
             util_free(veh->chassis_data);
@@ -70,14 +64,11 @@ cleanup:
     return PHYSRES_CANNOT_INIT;
 }
 
-void vehicle_done(void)
-{
-    int i;
+void vehicle_done(void) {
     vehicle_t *veh;
     if (!g_vehicles.pool)
         return;
-    for (i = 0; i < g_vehicles.count; ++i)
-    {
+    for (int i = 0; i < g_vehicles.count; ++i) {
         veh = vehicle_get(i);
         vehicle_free(veh);
         try {
@@ -94,16 +85,14 @@ void vehicle_done(void)
     g_vehicles.pool = 0;
 }
 
-vehicle_t * vehicle_get(int vehi)
-{
+vehicle_t * vehicle_get(int vehi) {
     if (vehi >= 0 && vehi < g_vehicles.count)
         return (vehicle_t*)(g_vehicles.pool + VEHICLE_SIZE * vehi);
     else
         return 0;
 }
 
-int vehicle_free(vehicle_t *veh)
-{
+int vehicle_free(vehicle_t *veh) {
     if (veh->vacant == 1)
         return PHYSRES_INVALID_VEH;
     veh->vacant = 1;
@@ -128,10 +117,8 @@ int vehicle_free(vehicle_t *veh)
     veh->inert_prev = 0;
     veh->inert_next = 0;
 
-    try
-    {
-        if (veh->wld)
-        {
+    try {
+        if (veh->wld) {
             if (veh->veh)
                 veh->wld->world->removeAction(veh->veh);
             if (veh->chassis)
@@ -143,12 +130,9 @@ int vehicle_free(vehicle_t *veh)
             veh->ray->~btDefaultVehicleRaycaster();
         if (veh->veh)
             veh->veh->~btRaycastVehicle();
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
-
     veh->wld = 0;
     veh->chassis = 0;
     veh->ray = 0;
@@ -158,11 +142,9 @@ int vehicle_free(vehicle_t *veh)
 }
 
 int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
-                  colshape_t *inert, float *matrix, float mass, float ch_frict,
-                  float ch_roll_frict, float sus_stif, float sus_comp,
-                  float sus_damp, float sus_trav, float sus_force,
-                  float slip_frict)
-{
+colshape_t *inert, float *matrix, float mass, float ch_frict,
+float ch_roll_frict, float sus_stif, float sus_comp, float sus_damp,
+float sus_trav, float sus_force, float slip_frict) {
     if (!veh->vacant)
         return PHYSRES_INVALID_VEH;
     if (!shape->shape || !inert->shape)
@@ -190,8 +172,7 @@ int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
     veh->tuning->m_maxSuspensionForce = sus_force;
     veh->tuning->m_frictionSlip = slip_frict;
 
-    try
-    {
+    try {
         btVector3 vinert;
         veh->mstate->m.setFromOpenGLMatrix(matrix);
         inert->shape->calculateLocalInertia(mass, vinert);
@@ -210,54 +191,42 @@ int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
         wld->world->addRigidBody(veh->chassis);
         wld->world->addAction(veh->veh);
         veh->wld = wld;
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
 int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
-                      float *axl, float sus_rest, float roll, float radius,
-                      int front)
-{
-    try
-    {
+float *axl, float sus_rest, float roll, float radius, int front) {
+    try {
         *wheeli = veh->veh->getNumWheels();
         veh->veh->addWheel(btVector3(pos[0], pos[1], pos[2]),
                            btVector3(dir[0], dir[1], dir[2]),
                            btVector3(axl[0], axl[1], axl[2]),
                            sus_rest, radius, *veh->tuning, front);
         veh->veh->getWheelInfo(*wheeli).m_rollInfluence = roll;
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int vehicle_set_wheel(vehicle_t *veh, int wheel, float engine,
-                      float brake, float steer)
-{
-    try
-    {
+int vehicle_set_wheel(vehicle_t *veh, int wheel,
+float engine, float brake, float steer) {
+    try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
             return PHYSRES_INVALID_VEH_WHEEL;
         veh->veh->applyEngineForce(engine, wheel);
         veh->veh->setBrake(brake, wheel);
         veh->veh->setSteeringValue(steer, wheel);
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
-{
+int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix) {
     try {
         veh->mstate->m.getOpenGLMatrix(matrix);
     } catch (...) {
@@ -266,49 +235,38 @@ int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix)
     return PHYSRES_OK;
 }
 
-int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *matrix)
-{
-    try
-    {
+int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *m) {
+    try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
             return PHYSRES_INVALID_VEH_WHEEL;
         veh->veh->updateWheelTransform(wheel, true);
-        veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(matrix);
-    }
-    catch (...)
-    {
+        veh->veh->getWheelInfo(wheel).m_worldTransform.getOpenGLMatrix(m);
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int vehicle_transform(vehicle_t *veh, float *matrix)
-{
-    try
-    {
+int vehicle_transform(vehicle_t *veh, float *matrix) {
+    try {
         btTransform tm;
         tm.setFromOpenGLMatrix(matrix);
         veh->chassis->setWorldTransform(tm);
         veh->chassis->setInterpolationWorldTransform(tm);
         veh->mstate->m = tm;
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_contact)
-{
-    try
-    {
+int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_cont) {
+    try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
             return PHYSRES_INVALID_VEH_WHEEL;
-        *in_contact = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
+        *in_cont = veh->veh->getWheelInfo(wheel).m_raycastInfo.m_isInContact;
     }
-    catch (...)
-    {
+    catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;

@@ -6,24 +6,17 @@
 struct world_t;
 struct colshape_t;
 
-struct vehicle_t
-{
+struct vehicle_t {
     btRigidBody *chassis;
     mstate_c *mstate;
     btDefaultVehicleRaycaster *ray;
     btRaycastVehicle *veh;
     btRaycastVehicle::btVehicleTuning *tuning;
-    char *chassis_data;
-    char *ray_data;
-    char *veh_data;
+    char *chassis_data, *ray_data, *veh_data;
     int vacant;
     world_t *wld;
-    colshape_t *shape;
-    colshape_t *inert;
-    vehicle_t *shape_prev;
-    vehicle_t *shape_next;
-    vehicle_t *inert_prev;
-    vehicle_t *inert_next;
+    colshape_t *shape, *inert;
+    vehicle_t *shape_prev, *shape_next, *inert_prev, *inert_next;
 };
 
 int vehicle_init(int count);
