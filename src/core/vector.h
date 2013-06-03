@@ -6,15 +6,13 @@
 #define VECTOR_ARGVS 5
 #define VECTOR_ARGMS 2
 
-enum vector_ipl_e
-{
-    VECTOR_IPL_LINEAR = 0,
-    VECTOR_IPL_SPLINE = 1,
-    VECTOR_IPLS_TOTAL = 2
+enum vector_ipl_e {
+    VECTOR_IPL_LINEAR,
+    VECTOR_IPL_SPLINE,
+    VECTOR_IPLS_TOTAL
 };
 
-enum vector_e
-{
+enum vector_e {
     VECTOR_CONST,
     VECTOR_RUBBER,
     VECTOR_WSUM,
@@ -25,23 +23,14 @@ enum vector_e
     VECTOR_CAST
 };
 
-struct vector_t
-{
+struct vector_t {
     float value[4]; /* must go first to ensure alignment */
     enum vector_e type;
-    int update_tag;
     struct vector_t *argv[VECTOR_ARGVS];
     struct matrix_t *argm[VECTOR_ARGMS];
 
-    int cast_wldi;
-    int cast_csi;
-    float cord_min;
-    float cord_max;
-    float seq_t;
-    int seq_cur;
-    int seq_start;
-    int seq_len;
-    int seq_loop;
+    int update_tag, cast_wldi, cast_csi, seq_cur, seq_start, seq_len, seq_loop;
+    float cord_min, cord_max, seq_t;
     enum vector_ipl_e seq_ipl;
 };
 
