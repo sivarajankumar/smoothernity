@@ -9,20 +9,16 @@
 
 static const size_t RIGIDBODY_SIZE = 128;
 
-struct rigidbodies_t
-{
+struct rigidbodies_t {
     int count;
     char *pool;
 };
 
 static rigidbodies_t g_rigidbodies;
 
-int rigidbody_init(int count)
-{
-    int i;
+int rigidbody_init(int count) {
     rigidbody_t *rb;
-    if (sizeof(rigidbody_t) > RIGIDBODY_SIZE)
-    {
+    if (sizeof(rigidbody_t) > RIGIDBODY_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(rigidbody_t) == %i\n",
                 (int)sizeof(rigidbody_t));
         return PHYSRES_CANNOT_INIT;
@@ -32,8 +28,7 @@ int rigidbody_init(int count)
         return PHYSRES_CANNOT_INIT;
     memset(g_rigidbodies.pool, 0, RIGIDBODY_SIZE * count);
     g_rigidbodies.count = count;
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
         rb->vacant = 1;
         try {
@@ -45,8 +40,7 @@ int rigidbody_init(int count)
     }
     return PHYSRES_OK;
 cleanup:
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
         if (rb->mstate)
             delete rb->mstate;
@@ -58,14 +52,12 @@ cleanup:
     return PHYSRES_CANNOT_INIT;
 }
 
-void rigidbody_done(void)
-{
+void rigidbody_done(void) {
     int i;
     rigidbody_t *rb;
     if (!g_rigidbodies.pool)
         return;
-    for (i = 0; i < g_rigidbodies.count; ++i)
-    {
+    for (int i = 0; i < g_rigidbodies.count; ++i) {
         rb = rigidbody_get(i);
         rigidbody_free(rb);
         try {
@@ -79,16 +71,14 @@ void rigidbody_done(void)
     g_rigidbodies.pool = 0;
 }
 
-rigidbody_t * rigidbody_get(int rbi)
-{
+rigidbody_t * rigidbody_get(int rbi) {
     if (rbi >= 0 && rbi < g_rigidbodies.count)
         return (rigidbody_t*)(g_rigidbodies.pool + RIGIDBODY_SIZE * rbi);
     else
         return 0;
 }
 
-int rigidbody_free(rigidbody_t *rb)
-{
+int rigidbody_free(rigidbody_t *rb) {
     if (rb->vacant == 1)
         return PHYSRES_INVALID_RB;
     rb->vacant = 1;
@@ -101,15 +91,12 @@ int rigidbody_free(rigidbody_t *rb)
     rb->cs = 0;
     rb->cs_prev = 0;
     rb->cs_next = 0;
-    try
-    {
+    try {
         if (rb->body && rb->wld)
             rb->wld->world->removeCollisionObject(rb->body);
         if (rb->body)
             rb->body->~btRigidBody();
-    }
-    catch (...)
-    {
+    } catch (...) {
         rb->body = 0;
         return PHYSRES_INTERNAL;
     }
@@ -118,9 +105,8 @@ int rigidbody_free(rigidbody_t *rb)
     return PHYSRES_OK;
 }
 
-int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs, float *matrix,
-                    float mass, float frict, float roll_frict)
-{
+int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs,
+float *matrix, float mass, float frict, float roll_frict) {
     if (!rb->vacant)
         return PHYSRES_INVALID_RB;
     if (!cs->shape)
@@ -134,8 +120,7 @@ int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs, float *matrix
     rb->cs_prev = 0;
     cs->rbs = rb;
 
-    try
-    {
+    try {
         btVector3 inertia;
         rb->mstate->m.setFromOpenGLMatrix(matrix);
 
@@ -153,16 +138,13 @@ int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs, float *matrix
 
         wld->world->addRigidBody(rb->body);
         rb->wld = wld;
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix)
-{
+int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix) {
     try {
         rb->mstate->m.getOpenGLMatrix(matrix);
     } catch (...) {
