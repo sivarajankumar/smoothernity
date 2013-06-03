@@ -6,8 +6,7 @@
 struct world_t;
 struct colshape_t;
 
-struct rigidbody_t
-{
+struct rigidbody_t {
     btRigidBody *body;
     mstate_c *mstate;
     char *data;

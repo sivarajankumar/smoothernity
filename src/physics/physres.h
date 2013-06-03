@@ -1,9 +1,8 @@
 #ifndef PHYSICS_PHYSRES_H
 #define PHYSICS_PHYSRES_H
 
-enum physres_e
-{
-    PHYSRES_OK = 0,
+enum physres_e {
+    PHYSRES_OK,
     PHYSRES_CANNOT_INIT,
     PHYSRES_OUT_OF_RB,
     PHYSRES_OUT_OF_CS,
