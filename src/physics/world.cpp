@@ -7,20 +7,16 @@
 
 static const size_t WORLD_SIZE = 128;
 
-struct worlds_t
-{
+struct worlds_t {
     int count;
     char *pool;
 };
 
 static worlds_t g_worlds;
 
-int world_init(int count)
-{
-    int i;
+int world_init(int count) {
     world_t *wld;
-    if (sizeof(world_t) > WORLD_SIZE)
-    {
+    if (sizeof(world_t) > WORLD_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(world_t) == %i\n",
                 (int)sizeof(world_t));
         return PHYSRES_CANNOT_INIT;
@@ -30,11 +26,9 @@ int world_init(int count)
         return PHYSRES_CANNOT_INIT;
     memset(g_worlds.pool, 0, WORLD_SIZE * count);
     g_worlds.count = count;
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         wld = world_get(i);
-        try
-        {
+        try {
             wld->colcfg = new btDefaultCollisionConfiguration();
             wld->dispatcher = new btCollisionDispatcher(wld->colcfg);
             wld->broadphase = new btDbvtBroadphase();
@@ -45,16 +39,13 @@ int world_init(int count)
                                                      wld->colcfg);
             wld->ddraw = new ddraw_c();
             wld->world->setDebugDrawer(wld->ddraw);
-        }
-        catch (...)
-        {
+        } catch (...) {
             goto cleanup;
         }
     }
     return PHYSRES_OK;
 cleanup:
-    for (i = 0; i < count; ++i)
-    {
+    for (int i = 0; i < count; ++i) {
         wld = world_get(i);
         if (wld->colcfg)
             delete wld->colcfg;
@@ -74,28 +65,22 @@ cleanup:
     return PHYSRES_CANNOT_INIT;
 }
 
-void world_done(void)
-{
-    int i;
+void world_done(void) {
     world_t *wld;
     if (!g_worlds.pool)
         return;
-    for (i = 0; i < g_worlds.count; ++i)
-    {
+    for (int i = 0; i < g_worlds.count; ++i) {
         wld = world_get(i);
         if (wld->world->getNumCollisionObjects() > 0)
             fprintf(stderr, "world_done: world still has refs\n");
-        try
-        {
+        try {
             delete wld->world;
             delete wld->solver;
             delete wld->broadphase;
             delete wld->dispatcher;
             delete wld->colcfg;
             delete wld->ddraw;
-        }
-        catch (...)
-        {
+        } catch (...) {
             fprintf(stderr, "world_done: exception\n");
         }
     }
@@ -103,8 +88,7 @@ void world_done(void)
     g_worlds.pool = 0;
 }
 
-int world_update(world_t *wld, float dt)
-{
+int world_update(world_t *wld, float dt) {
     try {
         wld->world->stepSimulation(dt);
     } catch (...) {
@@ -113,16 +97,14 @@ int world_update(world_t *wld, float dt)
     return PHYSRES_OK;
 }
 
-world_t * world_get(int worldi)
-{
+world_t * world_get(int worldi) {
     if (worldi >= 0 && worldi < g_worlds.count)
         return (world_t*)(g_worlds.pool + WORLD_SIZE * worldi);
     else
         return 0;
 }
 
-int world_ddraw(world_t *wld)
-{
+int world_ddraw(world_t *wld) {
     try {
         wld->world->debugDrawWorld();
     } catch (...) {
@@ -131,8 +113,7 @@ int world_ddraw(world_t *wld)
     return PHYSRES_OK;
 }
 
-int world_ddraw_mode(world_t *wld, int mode)
-{
+int world_ddraw_mode(world_t *wld, int mode) {
     try {
         wld->ddraw->setDebugMode(mode);
     } catch (...) {
@@ -141,8 +122,7 @@ int world_ddraw_mode(world_t *wld, int mode)
     return PHYSRES_OK;
 }
 
-int world_gravity(world_t *wld, float *v)
-{
+int world_gravity(world_t *wld, float *v) {
     try {
         wld->world->setGravity(btVector3(v[0], v[1], v[2]));
     } catch (...) {
@@ -151,17 +131,13 @@ int world_gravity(world_t *wld, float *v)
     return PHYSRES_OK;
 }
 
-int world_move(world_t *wld, float *offset)
-{
-    try
-    {
-        int i;
+int world_move(world_t *wld, float *offset) {
+    try {
         btCollisionObject *obj;
         btRigidBody *rb;
         btTransform tm;
         btVector3 ofs(offset[0], offset[1], offset[2]);
-        for (i = 0; i < wld->world->getNumCollisionObjects(); ++i)
-        {
+        for (int i = 0; i < wld->world->getNumCollisionObjects(); ++i) {
             obj = wld->world->getCollisionObjectArray()[i];
 
             tm = obj->getWorldTransform();
@@ -173,28 +149,23 @@ int world_move(world_t *wld, float *offset)
             obj->setInterpolationWorldTransform(tm);
 
             rb = btRigidBody::upcast(obj);
-            if (rb && rb->getMotionState())
-            {
+            if (rb && rb->getMotionState()) {
                 rb->getMotionState()->getWorldTransform(tm);
                 tm.setOrigin(tm.getOrigin() + ofs);
                 rb->getMotionState()->setWorldTransform(tm);
             }
         }
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;
 }
 
-int world_cast(world_t *wld, colshape_t *cs, float *mfrom,
-               float *mto, float *vout)
-{
+int world_cast(world_t *wld, colshape_t *cs,
+float *mfrom, float *mto, float *vout) {
     if (!cs->shape_convex)
         return PHYSRES_INVALID_CS;
-    try
-    {
+    try {
         btTransform tmfrom, tmto;
         tmfrom.setFromOpenGLMatrix(mfrom);
         tmto.setFromOpenGLMatrix(mto);
@@ -206,9 +177,7 @@ int world_cast(world_t *wld, colshape_t *cs, float *mfrom,
         vout[0] = out.m_floats[0];
         vout[1] = out.m_floats[1];
         vout[2] = out.m_floats[2];
-    }
-    catch (...)
-    {
+    } catch (...) {
         return PHYSRES_INTERNAL;
     }
     return PHYSRES_OK;

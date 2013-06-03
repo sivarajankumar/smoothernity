@@ -13,8 +13,7 @@ struct rigidbody_t {
     int vacant;
     world_t *wld;
     colshape_t *cs;
-    rigidbody_t *cs_prev;
-    rigidbody_t *cs_next;
+    rigidbody_t *cs_prev, *cs_next;
 };
 
 int rigidbody_init(int count);

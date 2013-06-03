@@ -15,10 +15,7 @@ struct colshape_t {
     btConvexShape *shape_convex;
     btCollisionShape *shape;
     char *data;
-    colshape_t *comp;
-    colshape_t *comp_children;
-    colshape_t *comp_next;
-    colshape_t *comp_prev;
+    colshape_t *comp, *comp_children, *comp_next, *comp_prev;
     int vacant;
     vehicle_t *vehs;
     rigidbody_t *rbs;

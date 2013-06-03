@@ -6,8 +6,7 @@
 
 struct colshape_t;
 
-struct world_t
-{
+struct world_t {
     btDbvtBroadphase *broadphase;
     btCollisionDispatcher *dispatcher;
     btSequentialImpulseConstraintSolver *solver;
