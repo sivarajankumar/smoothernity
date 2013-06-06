@@ -1,7 +1,6 @@
 #include "rbuf.h"
 #include "vao.h"
 #include "../util/util.h"
-#include "../thread/thread.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -10,7 +9,6 @@ static const size_t RBUF_SIZE = 32;
 struct rbufs_t {
     int count;
     char *pool;
-    struct thread_mutex_t *mutex;
 };
 
 struct rbufs_t g_rbufs;
@@ -56,7 +54,6 @@ static int api_rbuf_map(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_rbufs.mutex);
     rbuf->mapped_ofs = ofs;
     rbuf->mapped_len = len;
     if (safe_bind_buf(rbuf)) {
@@ -80,7 +77,6 @@ static int api_rbuf_map(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_unlock(g_rbufs.mutex);
     return 0;
 }
 
@@ -100,7 +96,6 @@ static int api_rbuf_unmap(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_rbufs.mutex);
     rbuf->mapped = 0;
     rbuf->mapped_ofs = 0;
     rbuf->mapped_len = 0;
@@ -110,7 +105,6 @@ static int api_rbuf_unmap(lua_State *lua) {
         return 0;
     }
     glUnmapBuffer(rbuf->target);
-    thread_mutex_unlock(g_rbufs.mutex);
     return 0;
 }
 
@@ -128,23 +122,19 @@ static int api_rbuf_set(lua_State *lua) {
     ofs = lua_tointeger(lua, 2);
     len = lua_gettop(lua) - 2;
 
-    thread_mutex_lock(g_rbufs.mutex);
     if (!rbuf || !rbuf->buf_id || !rbuf->mapped) {
-        thread_mutex_unlock(g_rbufs.mutex);
         lua_pushstring(lua, "api_rbuf_set: invalid rbuf");
         lua_error(lua);
         return 0;
     }
     if (ofs < rbuf->mapped_ofs ||
     ofs > rbuf->mapped_ofs + rbuf->mapped_len - len) {
-        thread_mutex_unlock(g_rbufs.mutex);
         lua_pushstring(lua, "api_rbuf_set: data out of range");
         lua_error(lua);
         return 0;
     }
     for (int i = 0; i < len; ++i) {
         if (!lua_isnumber(lua, 3 + i)) {
-            thread_mutex_unlock(g_rbufs.mutex);
             lua_pushstring(lua, "api_rbuf_set: incorrect data type");
             lua_error(lua);
             return 0;
@@ -155,7 +145,6 @@ static int api_rbuf_set(lua_State *lua) {
         else /* rbuf->item == GL_INT */
             ((GLint*)rbuf->mapped)[index] = (GLint)lua_tointeger(lua, 3 + i);
     }
-    thread_mutex_unlock(g_rbufs.mutex);
     lua_pop(lua, lua_gettop(lua));
     return 0;
 }
@@ -207,7 +196,6 @@ static int api_rbuf_alloc(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_rbufs.mutex);
     rbuf->size = size;
     rbuf->target = (GLenum)target;
     rbuf->item = (GLenum)item;
@@ -227,7 +215,6 @@ static int api_rbuf_alloc(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_unlock(g_rbufs.mutex);
     return 0;
 }
 
@@ -247,10 +234,8 @@ static int api_rbuf_free(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(g_rbufs.mutex);
     glDeleteBuffers(1, &rbuf->buf_id);
     rbuf->buf_id = 0;
-    thread_mutex_unlock(g_rbufs.mutex);
     return 0;
 }
 
@@ -269,9 +254,6 @@ int rbuf_init(lua_State *lua, int count) {
         return 1;
     memset(g_rbufs.pool, 0, RBUF_SIZE * count);
     g_rbufs.count = count;
-    g_rbufs.mutex = thread_mutex_create();
-    if (!g_rbufs.mutex)
-        goto cleanup;
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_rbuf_alloc);
     REGF(api_rbuf_free);
@@ -310,8 +292,6 @@ void rbuf_done(void) {
         }
     util_free(g_rbufs.pool);
     g_rbufs.pool = 0;
-    if (g_rbufs.mutex)
-        thread_mutex_destroy(g_rbufs.mutex);
 }
 
 struct rbuf_t * rbuf_get(int rbufi) {
