@@ -1,9 +1,7 @@
 #include "thread.h"
 #include "mpool.h"
-#include "buf.h"
 #include "timer.h"
-#include "rbuf.h"
-#include "../thread/thread.h"
+#include "../mp/thread.h"
 #include "../platform/timer.h"
 #include "../util/util.h"
 #include <stdio.h>
@@ -291,9 +289,7 @@ static void thread_reg_main(lua_State *lua) {
 
 static void thread_reg(lua_State *lua) {
     lua_register(lua, "api_thread_respond", api_thread_respond);
-    buf_reg_thread(lua);
     timer_reg_thread(lua);
-    rbuf_reg_thread(lua);
 }
 
 int thread_init

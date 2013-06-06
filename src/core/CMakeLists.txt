@@ -13,10 +13,7 @@ add_executable(main
                vector.c input.c matrix.c buf.c interp.c prog.c vao.c)
 
 target_link_libraries(main
-                      physics
-                      platform
-                      thread
-                      util
+                      physics platform mp util
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
                       ${GLEW_LIBRARIES}
