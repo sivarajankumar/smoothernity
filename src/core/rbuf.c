@@ -276,10 +276,6 @@ int rbuf_init(lua_State *lua, int count) {
     REGN(DYNAMIC_COPY);
     #undef REGN
     return 0;
-cleanup:
-    util_free(g_rbufs.pool);
-    g_rbufs.pool = 0;
-    return 1;
 }
 
 void rbuf_done(void) {
