@@ -1,6 +1,6 @@
 #include "thread.h"
 #include "mpool.h"
-#include "timer.h"
+#include "../mp/atomic.h"
 #include "../mp/thread.h"
 #include "../platform/timer.h"
 #include "../util/util.h"
@@ -13,70 +13,67 @@ static const size_t THREAD_DATA_SIZE = 128;
 
 enum thread_state_e {
     THREAD_IDLE,
+    THREAD_STARTING,
     THREAD_RUNNING,
+    THREAD_REQUESTING,
     THREAD_RESPONDING,
-    THREAD_ERROR
+    THREAD_RECEIVING,
+    THREAD_ERROR,
+    THREAD_DONE
 };
 
 struct thread_data_t {
-    float time, time_begin;
     struct thread_mutex_t *mutex;
     struct thread_cond_t *engage;
     struct thread_t *thread;
     lua_State *lua;
     struct mpool_t *mpool;
-    const char *fn, *req, *resp;
-    size_t fnsize, reqsize, respsize;
-    enum thread_state_e state;
+    const char *resp;
+    size_t respsize;
+    struct atomic_int_t *state;
 };
 
 struct threads_t {
-    int count, quit;
+    int count;
     char *pool;
-    struct thread_mutex_t *mutex;
-    struct thread_cond_t *engage;
+    const char *fn, *req;
+    size_t fnsize, reqsize;
+    struct atomic_int_t *quit;
 };
 
 static struct threads_t g_threads;
 
 static void thread_loop(void *data) {
-    int res;
+    /*
+     * Wait until main thread sends Lua chunk.
+     * Execute received Lua chunk in local environment.
+     * Repeat until quit was requested.
+     */
     struct thread_data_t *thread = data;
-    thread_mutex_unlock(thread->mutex);
+    atomic_int_store(thread->state, THREAD_IDLE);
     thread_mutex_lock(thread->mutex);
-    while (!g_threads.quit) {
+    while (!atomic_int_load(g_threads.quit)) {
         thread_cond_wait(thread->engage, thread->mutex);
-        if (thread->state == THREAD_IDLE && thread->fn) {
-            if (luaL_loadbuffer(thread->lua, thread->fn,
-            thread->fnsize, "threadfn")) {
+        if (atomic_int_load(thread->state) == THREAD_STARTING) {
+            if (luaL_loadbuffer(thread->lua, g_threads.fn,
+            g_threads.fnsize, "threadfn")) {
                 fprintf(stderr, "thread_loop load: %s\n",
                         lua_tostring(thread->lua, -1));
-                thread->state = THREAD_ERROR;
+                atomic_int_store(thread->state, THREAD_ERROR);
             }
             else
-                thread->state = THREAD_RUNNING;
-            thread->fn = 0;
-            thread->fnsize = 0;
-            thread_mutex_lock(g_threads.mutex);
-            thread_mutex_unlock(g_threads.mutex);
-            thread_cond_signal(g_threads.engage);
-
-            thread->time_begin = pfm_timer_get();
-            thread_mutex_unlock(thread->mutex);
-            res = lua_pcall(thread->lua, 0, LUA_MULTRET, 0);
-            thread_mutex_lock(thread->mutex);
-            thread->time += pfm_timer_get() - thread->time_begin;
-
-            if (!res)
-                thread->state = THREAD_IDLE;
+                atomic_int_store(thread->state, THREAD_RUNNING);
+            if (!lua_pcall(thread->lua, 0, LUA_MULTRET, 0))
+                atomic_int_store(thread->state, THREAD_IDLE);
             else {
                 fprintf(stderr, "thread_loop call: %s\n",
                         lua_tostring(thread->lua, -1));
-                thread->state = THREAD_ERROR;
+                atomic_int_store(thread->state, THREAD_ERROR);
             }
         }
     }
     thread_mutex_unlock(thread->mutex);
+    atomic_int_store(thread->state, THREAD_DONE);
 }
 
 static struct thread_data_t * thread_get(int ti) {
@@ -117,6 +114,7 @@ static int thread_lua_panic(lua_State *lua) {
 }
 
 static int api_thread_run(lua_State *lua) {
+    /* Send Lua chunk to blocked worker thread. */
     struct thread_data_t *thread;
     if (lua_gettop(lua) != 2 ||
     !lua_isnumber(lua, 1) || !lua_isstring(lua, 2)) {
@@ -125,27 +123,23 @@ static int api_thread_run(lua_State *lua) {
         return 0;
     }
     if (!(thread = thread_get(lua_tointeger(lua, 1)))) {
-        lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_run: invalid thread");
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(thread->mutex);
-    if (thread->state != THREAD_IDLE) {
-        thread_mutex_unlock(thread->mutex);
-        lua_pop(lua, 2);
+    if (atomic_int_load(thread->state) != THREAD_IDLE) {
         lua_pushstring(lua, "api_thread_run: invalid state");
         lua_error(lua);
         return 0;
     }
-    thread->fn = lua_tolstring(lua, 2, &thread->fnsize);
-    thread_mutex_unlock(thread->mutex);
-    thread_mutex_lock(g_threads.mutex);
-    thread_cond_signal(thread->engage);
-    thread_cond_wait(g_threads.engage, g_threads.mutex);
-    thread_mutex_unlock(g_threads.mutex);
+    g_threads.fn = lua_tolstring(lua, 2, &g_threads.fnsize);
+    atomic_int_store(thread->state, THREAD_STARTING);
+    while (atomic_int_load(thread->state) == THREAD_STARTING)
+        thread_cond_signal(thread->engage);
+    g_threads.fn = 0;
+    g_threads.fnsize = 0;
     lua_pop(lua, 2);
-    if (thread->state == THREAD_ERROR) {
+    if (atomic_int_load(thread->state) == THREAD_ERROR) {
         lua_pushstring(lua, "api_thread_run: thread error");
         lua_error(lua);
         return 0;
@@ -153,27 +147,8 @@ static int api_thread_run(lua_State *lua) {
     return 0;
 }
 
-static int api_thread_timings(lua_State *lua) {
-    struct thread_data_t *thread;
-    if (lua_gettop(lua)) {
-        lua_pushstring(lua, "api_thread_timings: incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    for (int i = 0; i < g_threads.count; ++i) {
-        thread = thread_get(i);
-        thread_mutex_lock(thread->mutex);
-        if (thread->state == THREAD_RUNNING)
-            thread->time += pfm_timer_get() - thread->time_begin;
-        lua_pushnumber(lua, thread->time);
-        thread->time = 0;
-        thread->time_begin = pfm_timer_get();
-        thread_mutex_unlock(thread->mutex);
-    }
-    return g_threads.count;
-}
-
 static int api_thread_request(lua_State *lua) {
+    /* Send a string to blocked worker thread, return its response. */
     struct thread_data_t *thread;
     if (lua_gettop(lua) != 2 ||
     !lua_isnumber(lua, 1) || !lua_isstring(lua, 2)) {
@@ -182,31 +157,28 @@ static int api_thread_request(lua_State *lua) {
         return 0;
     }
     if (!(thread = thread_get(lua_tointeger(lua, 1)))) {
-        lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_request: invalid thread");
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(thread->mutex);
-    if (thread->state != THREAD_RESPONDING) {
-        thread_mutex_unlock(thread->mutex);
-        lua_pop(lua, 2);
+    if (atomic_int_load(thread->state) != THREAD_RESPONDING) {
         lua_pushstring(lua, "api_thread_request: invalid state");
         lua_error(lua);
         return 0;
     }
-    thread->req = lua_tolstring(lua, 2, &thread->reqsize);
+    g_threads.req = lua_tolstring(lua, 2, &g_threads.reqsize);
     lua_pushlstring(lua, thread->resp, thread->respsize);
-    thread_mutex_unlock(thread->mutex);
-
-    thread_mutex_lock(g_threads.mutex);
-    thread_cond_signal(thread->engage);
-    thread_cond_wait(g_threads.engage, g_threads.mutex);
-    thread_mutex_unlock(g_threads.mutex);
+    atomic_int_store(thread->state, THREAD_REQUESTING);
+    while (atomic_int_load(thread->state) == THREAD_REQUESTING)
+        thread_cond_signal(thread->engage);
+    while (atomic_int_load(thread->state) == THREAD_RECEIVING);
+    g_threads.req = 0;
+    g_threads.reqsize = 0;
     return 1;
 }
 
 static int api_thread_respond(lua_State *lua) {
+    /* Wait for the main thread, send a string to it, return response. */
     struct thread_data_t *thread;
     if (lua_gettop(lua) != 2 ||
     !lua_isnumber(lua, 1) || !lua_isstring(lua, 2)) {
@@ -215,60 +187,43 @@ static int api_thread_respond(lua_State *lua) {
         return 0;
     }
     if (!(thread = thread_get(lua_tointeger(lua, 1)))) {
-        lua_pop(lua, 2);
         lua_pushstring(lua, "api_thread_respond: invalid thread");
         lua_error(lua);
         return 0;
     }
-    thread_mutex_lock(thread->mutex);
-    if (thread->state != THREAD_RUNNING) {
-        thread_mutex_unlock(thread->mutex);
-        lua_pop(lua, 2);
+    if (atomic_int_load(thread->state) != THREAD_RUNNING) {
         lua_pushstring(lua, "api_thread_respond: invalid state");
         lua_error(lua);
         return 0;
     }
     thread->resp = lua_tolstring(lua, 2, &thread->respsize);
-    thread->state = THREAD_RESPONDING;
-    thread->time += pfm_timer_get() - thread->time_begin;
+    atomic_int_store(thread->state, THREAD_RESPONDING);
     thread_cond_wait(thread->engage, thread->mutex);
+    while (atomic_int_load(thread->state) != THREAD_REQUESTING);
+    atomic_int_store(thread->state, THREAD_RECEIVING);
     lua_pop(lua, 2);
     thread->resp = 0;
     thread->respsize = 0;
-    if (!thread->req) {
-        thread_mutex_unlock(thread->mutex);
-        lua_pushstring(lua, "api_thread_respond: invalid request");
-        lua_error(lua);
-        return 0;
-    }
-    lua_pushlstring(thread->lua, thread->req, thread->reqsize);
-    thread->req = 0;
-    thread->reqsize = 0;
-    thread->state = THREAD_RUNNING;
-    thread->time_begin = pfm_timer_get();
-    thread_mutex_unlock(thread->mutex);
-
-    thread_mutex_lock(g_threads.mutex);
-    thread_mutex_unlock(g_threads.mutex);
-    thread_cond_signal(g_threads.engage);
+    lua_pushlstring(thread->lua, g_threads.req, g_threads.reqsize);
+    atomic_int_store(thread->state, THREAD_RUNNING);
     return 1;
 }
 
 static int api_thread_state(lua_State *lua) {
+    /* Returns worker thread state. */
     struct thread_data_t *thread;
     if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
         lua_pushstring(lua, "api_thread_state: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    thread = thread_get(lua_tointeger(lua, 1));
-    lua_pop(lua, 1);
-    if (!thread) {
+    if (!(thread = thread_get(lua_tointeger(lua, 1)))) {
         lua_pushstring(lua, "api_thread_state: invalid thread");
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, thread->state);
+    lua_pop(lua, 1);
+    lua_pushinteger(lua, atomic_int_load(thread->state));
     return 1;
 }
 
@@ -276,7 +231,6 @@ static void thread_reg_main(lua_State *lua) {
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_thread_run);
     REGF(api_thread_request);
-    REGF(api_thread_timings);
     REGF(api_thread_state);
     #undef REGF
     #define REGN(x) lua_pushinteger(lua, x); lua_setglobal(lua, "API_"#x);
@@ -289,7 +243,6 @@ static void thread_reg_main(lua_State *lua) {
 
 static void thread_reg(lua_State *lua) {
     lua_register(lua, "api_thread_respond", api_thread_respond);
-    timer_reg_thread(lua);
 }
 
 int thread_init
@@ -300,86 +253,63 @@ int thread_init
                 (int)sizeof(struct thread_data_t));
         return 1;
     }
+    g_threads.count = count;
     g_threads.pool = util_malloc(THREAD_DATA_SIZE, THREAD_DATA_SIZE * count);
     if (!g_threads.pool)
         return 1;
     memset(g_threads.pool, 0, THREAD_DATA_SIZE * count);
-    g_threads.count = count;
+    if (!(g_threads.quit = atomic_int_create()))
+        return 1;
+    atomic_int_store(g_threads.quit, 0);
     for (int i = 0; i < count; ++i) {
         thread = thread_get(i);
-        thread->mpool = mpool_create(msizes, mcounts, mlen);
-        if (!thread->mpool)
-            goto cleanup;
-        thread->lua = lua_newstate(thread_lua_alloc, thread->mpool);
-        if (!thread->lua)
-            goto cleanup;
+        if (!(thread->mpool = mpool_create(msizes, mcounts, mlen)) ||
+        !(thread->lua = lua_newstate(thread_lua_alloc, thread->mpool)))
+            return 1;
         lua_atpanic(thread->lua, thread_lua_panic);
         luaL_openlibs(thread->lua);
-        thread->state = THREAD_IDLE;
-        thread->mutex = thread_mutex_create();
-        if (!thread->mutex)
-            goto cleanup;
-        thread->engage = thread_cond_create();
-        if (!thread->engage)
-            goto cleanup;
-        thread_mutex_lock(thread->mutex);
-        thread->thread = thread_create(thread_loop, thread);
-        if (!thread)
-            goto cleanup;
+        if (!(thread->mutex = thread_mutex_create()) ||
+        !(thread->engage = thread_cond_create()) ||
+        !(thread->state = atomic_int_create()) ||
+        !(thread->thread = thread_create(thread_loop, thread)))
+            return 1;
         thread_reg(thread->lua);
     }
-    g_threads.mutex = thread_mutex_create();
-    if (!g_threads.mutex)
-        goto cleanup;
-    g_threads.engage = thread_cond_create();
-    if (!g_threads.engage)
-        goto cleanup;
     thread_reg_main(lua);
     return 0;
-cleanup:
-    g_threads.quit = 1;
-    for (int i = 0; i < count; ++i) {
-        thread = thread_get(i);
-        if (thread->engage)
-            thread_cond_signal(thread->engage);
-        if (thread->thread)
-            thread_destroy(thread->thread);
-        if (thread->mutex)
-            thread_mutex_destroy(thread->mutex);
-        if (thread->engage)
-            thread_cond_destroy(thread->engage);
-        if (thread->lua)
-            lua_close(thread->lua);
-        if (thread->mpool)
-            mpool_destroy(thread->mpool);
-    }
-    util_free(g_threads.pool);
-    g_threads.pool = 0;
-    if (g_threads.mutex)
-        thread_mutex_destroy(g_threads.mutex);
-    if (g_threads.engage)
-        thread_cond_destroy(g_threads.engage);
-    return 1;
 }
 
 void thread_done(void) {
     struct thread_data_t *thread;
-    if (!g_threads.pool)
-        return;
-    g_threads.quit = 1;
-    for (int i = 0; i < g_threads.count; ++i) {
-        thread = thread_get(i);
-        thread_cond_signal(thread->engage);
-        thread_destroy(thread->thread);
-        thread_mutex_destroy(thread->mutex);
-        thread_cond_destroy(thread->engage);
-        lua_close(thread->lua);
-        fprintf(stderr, "\nThread %i memory pool:\n", i);
-        mpool_destroy(thread->mpool);
+    if (g_threads.pool) {
+        if (g_threads.quit)
+            atomic_int_store(g_threads.quit, 1);
+        for (int i = 0; i < g_threads.count; ++i) {
+            thread = thread_get(i);
+            if (thread->thread) {
+                if (thread->engage)
+                    while (atomic_int_load(thread->state) != THREAD_DONE)
+                        thread_cond_signal(thread->engage);
+                thread_destroy(thread->thread);
+            }
+            if (thread->mutex)
+                thread_mutex_destroy(thread->mutex);
+            if (thread->engage)
+                thread_cond_destroy(thread->engage);
+            if (thread->lua)
+                lua_close(thread->lua);
+            if (thread->mpool) {
+                fprintf(stdout, "\nThread %i memory pool:\n", i);
+                mpool_destroy(thread->mpool);
+            }
+            if (thread->state)
+                atomic_int_destroy(thread->state);
+        }
+        util_free(g_threads.pool);
+        g_threads.pool = 0;
     }
-    util_free(g_threads.pool);
-    g_threads.pool = 0;
-    thread_mutex_destroy(g_threads.mutex);
-    thread_cond_destroy(g_threads.engage);
+    if (g_threads.quit)
+        atomic_int_destroy(g_threads.quit);
+    g_threads.quit = 0;
 }
 
