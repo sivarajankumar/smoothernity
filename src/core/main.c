@@ -133,7 +133,7 @@ static int main_configure(char *script) {
     lua_State *lua;
     lua = luaL_newstate();
     if (!lua)
-        return -1;
+        return 1;
     lua_atpanic(lua, main_panic);
     luaL_openlibs(lua);
     if (luaL_dofile(lua, script)) {
@@ -168,18 +168,6 @@ static int main_configure(char *script) {
     lua_close(lua);
     return 0;
 cleanup:
-    if (g_main.main_mpool) {
-        util_free(g_main.main_mpool);
-        g_main.main_mpool = 0;
-    }
-    if (g_main.physics_mpool) {
-        util_free(g_main.physics_mpool);
-        g_main.physics_mpool = 0;
-    }
-    if (g_main.thread_mpool) {
-        util_free(g_main.thread_mpool);
-        g_main.thread_mpool = 0;
-    }
     lua_close(lua);
     return 1;
 }
