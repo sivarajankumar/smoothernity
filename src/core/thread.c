@@ -4,10 +4,11 @@
 #include "../mp/thread.h"
 #include "../platform/timer.h"
 #include "../util/util.h"
-#include <stdio.h>
-#include <string.h>
 #include "lauxlib.h"
 #include "lualib.h"
+#include <stdio.h>
+#include <string.h>
+#include <setjmp.h>
 
 static const size_t THREAD_DATA_SIZE = 128;
 
@@ -39,6 +40,7 @@ struct threads_t {
     const char *fn, *req;
     size_t fnsize, reqsize;
     struct atomic_int_t *quit;
+    jmp_buf panic;
 };
 
 static struct threads_t g_threads;
@@ -61,14 +63,15 @@ static void thread_loop(void *data) {
                         lua_tostring(thread->lua, -1));
                 atomic_int_store(thread->state, THREAD_ERROR);
             }
-            else
-                atomic_int_store(thread->state, THREAD_RUNNING);
-            if (!lua_pcall(thread->lua, 0, LUA_MULTRET, 0))
-                atomic_int_store(thread->state, THREAD_IDLE);
             else {
-                fprintf(stderr, "thread_loop call: %s\n",
-                        lua_tostring(thread->lua, -1));
-                atomic_int_store(thread->state, THREAD_ERROR);
+                atomic_int_store(thread->state, THREAD_RUNNING);
+                if (!lua_pcall(thread->lua, 0, LUA_MULTRET, 0))
+                    atomic_int_store(thread->state, THREAD_IDLE);
+                else {
+                    fprintf(stderr, "thread_loop call: %s\n",
+                            lua_tostring(thread->lua, -1));
+                    atomic_int_store(thread->state, THREAD_ERROR);
+                }
             }
         }
     }
@@ -109,8 +112,7 @@ static void * thread_lua_alloc
 
 static int thread_lua_panic(lua_State *lua) {
     fprintf(stderr, "Thread lua panic: %s\n", lua_tostring(lua, -1));
-    /* TODO: do jump and conclude gracefully */
-    return 0;
+    longjmp(g_threads.panic, 1);
 }
 
 static int api_thread_run(lua_State *lua) {
@@ -196,6 +198,8 @@ static int api_thread_respond(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
+    if (atomic_int_load(g_threads.quit))
+        return 0;
     thread->resp = lua_tolstring(lua, 2, &thread->respsize);
     atomic_int_store(thread->state, THREAD_RESPONDING);
     thread_cond_wait(thread->engage, thread->mutex);
@@ -248,6 +252,7 @@ static void thread_reg(lua_State *lua) {
 int thread_init
 (lua_State *lua, int count, const int msizes[], const int mcounts[], int mlen) {
     struct thread_data_t *thread;
+    lua_CFunction old_panic;
     if (sizeof(struct thread_data_t) > THREAD_DATA_SIZE) {
         fprintf(stderr, "Invalid sizes:\nsizeof(struct thread_data_t) == %i\n",
                 (int)sizeof(struct thread_data_t));
@@ -266,8 +271,11 @@ int thread_init
         if (!(thread->mpool = mpool_create(msizes, mcounts, mlen)) ||
         !(thread->lua = lua_newstate(thread_lua_alloc, thread->mpool)))
             return 1;
-        lua_atpanic(thread->lua, thread_lua_panic);
+        if (setjmp(g_threads.panic))
+            return 1;
+        old_panic = lua_atpanic(thread->lua, thread_lua_panic);
         luaL_openlibs(thread->lua);
+        lua_atpanic(thread->lua, old_panic);
         if (!(thread->mutex = thread_mutex_create()) ||
         !(thread->engage = thread_cond_create()) ||
         !(thread->state = atomic_int_create()) ||
@@ -299,7 +307,7 @@ void thread_done(void) {
             if (thread->lua)
                 lua_close(thread->lua);
             if (thread->mpool) {
-                fprintf(stdout, "\nThread %i memory pool:\n", i);
+                fprintf(stderr, "\nThread %i memory pool:\n", i);
                 mpool_destroy(thread->mpool);
             }
             if (thread->state)
