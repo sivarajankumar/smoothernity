@@ -1,6 +1,5 @@
 local M = {}
 
-local game = require 'game.game'
 local cfg = require 'config'
 local buf = require 'core.pool.buf'
 
@@ -34,12 +33,7 @@ function M.configure()
 end
 
 function M.run()
-    io.output(io.stderr)
-    xpcall(game.run,
-        function(msg)
-            io.write(string.format('Main run\n%s\nError: %s\n',
-                                   debug.traceback(), msg))
-        end)
+    require('core.run').run('game.game', 'run')
 end
 
 return M
