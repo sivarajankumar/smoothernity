@@ -200,13 +200,12 @@ static int api_thread_request(lua_State *lua) {
 
 static int api_thread_respond(lua_State *lua) {
     /* Wait for the main thread, send a string to it, return response. */
-    struct thread_data_t *thread;
+    struct thread_data_t *thread = thread_current(lua);
     if (lua_gettop(lua) != 1 || !lua_isstring(lua, 1)) {
         lua_pushstring(lua, "api_thread_respond: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    thread = thread_current(lua);
     if (atomic_int_load(thread->state) != THREAD_RUNNING) {
         lua_pushstring(lua, "api_thread_respond: invalid state");
         lua_error(lua);
