@@ -53,7 +53,6 @@ cleanup:
 }
 
 void rigidbody_done(void) {
-    int i;
     rigidbody_t *rb;
     if (!g_rigidbodies.pool)
         return;
