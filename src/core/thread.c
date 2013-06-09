@@ -14,7 +14,7 @@
  * Worker threads.
  * Every worker thread has its own Lua state.
  * Main thread sends Lua chunk to run in worker thread.
- * Main thread communicates with worker thread by sending/receiving strings.
+ * Main and worker thread communicate with each other by exchanging strings.
  * Main thread can query current state of worker thread.
  */
 
