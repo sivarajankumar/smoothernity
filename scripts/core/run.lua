@@ -1,8 +1,8 @@
 local M = {}
 
 function M.run(mod, func)
-    io.output(io.stderr)
     local errmsg
+    io.output(io.stderr)
     xpcall(require(mod)[func],
         function(msg)
             io.write(string.format('\n"%s.%s" execution failed%s\n',
