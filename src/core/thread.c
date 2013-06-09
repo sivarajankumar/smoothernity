@@ -24,8 +24,8 @@ enum thread_state_e {
     THREAD_IDLE,        /* Waiting for main thread to send a new Lua chunk. */
     THREAD_STARTING,
     THREAD_RUNNING,     /* Running current Lua chunk. */
-    THREAD_REQUESTING,
     THREAD_RESPONDING,  /* Waiting for main thread to receive response. */
+    THREAD_REQUESTING,
     THREAD_RECEIVING,
     THREAD_ERROR,
     THREAD_DONE
