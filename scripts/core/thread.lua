@@ -55,7 +55,7 @@ function M.left()
     return left
 end
 
-function M.alloc(mod)
+function M.alloc(mod, func)
     if left == 0 then
         error('out of threads')
     end
@@ -64,8 +64,8 @@ function M.alloc(mod)
         allocs = allocs + 1
         left = left - 1
         left_min = math.min(left, left_min)
-        api_thread_run(i, string.format('(require "%s").thread_run(%i)',
-                                        mod, i))
+        api_thread_run(i, string.format('(require "core.run").run("%s", "%s")',
+                                        mod, func))
         return thread
     end
 end
