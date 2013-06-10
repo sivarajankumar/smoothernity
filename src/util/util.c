@@ -1,4 +1,9 @@
 #include "util.h"
+#include <assert.h>
+#include <stddef.h>
+
+static_assert(sizeof(size_t) == sizeof(ptrdiff_t),
+              "size_t must be able to store a pointer.");
 
 void * util_malloc(size_t align, size_t size) {
     void *mem, **ptr;
