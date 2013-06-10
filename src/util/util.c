@@ -1,8 +1,7 @@
 #include "util.h"
 
 void * util_malloc(size_t align, size_t size) {
-    void *mem;
-    void **ptr;
+    void *mem, **ptr;
     size_t addr;
     if (align & (align - 1) ||
     (mem = malloc(size + align + sizeof(void*))) == NULL)
