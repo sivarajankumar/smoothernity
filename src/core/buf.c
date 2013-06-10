@@ -1,5 +1,6 @@
 #include "buf.h"
 #include "interp.h"
+#include "util.h"
 #include "../util/util.h"
 #include <math.h>
 #include <stdio.h>
@@ -74,7 +75,7 @@ static float buf_get_interp
 static int api_buf_set(lua_State *lua) {
     int ofs, len;
 
-    if (lua_gettop(lua) < 2 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) < 2 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_buf_set: incorrect argument");
         lua_error(lua);
         return 0;
@@ -88,7 +89,7 @@ static int api_buf_set(lua_State *lua) {
         return 0;
     }
     for (int i = 0; i < len; ++i) {
-        if (!lua_isnumber(lua, i + 2)) {
+        if (!util_isfloat(lua, i + 2)) {
             lua_pushstring(lua, "api_buf_set: incorrect data type");
             lua_error(lua);
             return 0;
@@ -105,8 +106,8 @@ static int api_buf_get(lua_State *lua) {
     float x, y;
 
     if (lua_gettop(lua) < 6 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5) || !lua_isnumber(lua, 6)) {
+    !util_isint(lua, 1) || !util_isint(lua, 2) || !util_isint(lua, 3) ||
+    !util_isint(lua, 4) || !util_isfloat(lua, 5) || !util_isfloat(lua, 6)) {
         lua_pushstring(lua, "api_buf_get: incorrect argument");
         lua_error(lua);
         return 0;
