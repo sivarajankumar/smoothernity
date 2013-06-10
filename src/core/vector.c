@@ -3,6 +3,7 @@
 #include "buf.h"
 #include "physics.h"
 #include "interp.h"
+#include "util.h"
 #include "../util/util.h"
 #include <math.h>
 #include <string.h>
@@ -31,7 +32,7 @@ static void vector_clear_args(struct vector_t *vector) {
 static int api_vector_get(lua_State *lua) {
     struct vector_t *vector;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_vector_get: incorrect argument");
         lua_error(lua);
         return 0;
@@ -56,8 +57,8 @@ static int api_vector_update(lua_State *lua) {
     int update_tag, force;
     float dt;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isfloat(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_vector_update: incorrect argument");
         lua_error(lua);
         return 0;
@@ -85,9 +86,9 @@ static int api_vector_const(lua_State *lua) {
     struct vector_t *vector;
     float value[4];
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) ||
+    !util_isfloat(lua, 2) || !util_isfloat(lua, 3) ||
+    !util_isfloat(lua, 4) || !util_isfloat(lua, 5)) {
         lua_pushstring(lua, "api_vector_const: incorrect argument");
         lua_error(lua);
         return 0;
@@ -119,8 +120,8 @@ static int api_vector_const(lua_State *lua) {
 static int api_vector_rubber(lua_State *lua) {
     struct vector_t *vector, *v0, *v1;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isint(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_vector_rubber: incorrect argument");
         lua_error(lua);
         return 0;
@@ -154,8 +155,8 @@ static int api_vector_cord(lua_State *lua) {
     struct vector_t *vector, *v0;
     float min, max;
 
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) || !lua_isnumber(lua, 4)) {
+    if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isfloat(lua, 3) || !util_isfloat(lua, 4)) {
         lua_pushstring(lua, "api_vector_cord: incorrect argument");
         lua_error(lua);
         return 0;
@@ -201,8 +202,7 @@ static int api_vector_mpos(lua_State *lua) {
     struct vector_t *vector;
     struct matrix_t *m0;
 
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_vector_mpos: incorrect argument");
         lua_error(lua);
         return 0;
@@ -239,8 +239,8 @@ static int api_vector_wsum(lua_State *lua) {
     struct vector_t *vector, *v0, *v1, *v2, *v3, *v4;
 
     if (lua_gettop(lua) != 6 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5) || !lua_isnumber(lua, 6)) {
+    !util_isint(lua, 1) || !util_isint(lua, 2) || !util_isint(lua, 3) ||
+    !util_isint(lua, 4) || !util_isint(lua, 5) || !util_isint(lua, 6)) {
         lua_pushstring(lua, "api_vector_wsum: incorrect argument");
         lua_error(lua);
         return 0;
@@ -279,9 +279,8 @@ static int api_vector_wsum(lua_State *lua) {
 static int api_vector_pick(lua_State *lua) {
     struct vector_t *vector, *v0, *v1, *v2, *v3;
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
         lua_pushstring(lua, "api_vector_pick: incorrect argument");
         lua_error(lua);
         return 0;
@@ -319,9 +318,8 @@ static int api_vector_seq(lua_State *lua) {
     struct vector_t *vector;
     int start, len, loop, ipl;
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
         lua_pushstring(lua, "api_vector_seq: incorrect argument");
         lua_error(lua);
         return 0;
@@ -372,9 +370,8 @@ static int api_vector_cast(lua_State *lua) {
     struct matrix_t *m0, *m1;
     int wldi, csi;
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
         lua_pushstring(lua, "api_vector_cast: incorrect argument");
         lua_error(lua);
         return 0;
