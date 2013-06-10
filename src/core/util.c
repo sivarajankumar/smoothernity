@@ -1,9 +1,10 @@
 #include "util.h"
+#include <float.h>
 
 int util_isfloat(lua_State *lua, int i) {
     lua_Number n;
     return lua_isnumber(lua, i) &&
-        (n = lua_tonumber(lua, i), (lua_Number)(float)n == n);
+        (n = lua_tonumber(lua, i), n > -FLT_MAX && n < FLT_MAX);
 }
 
 int util_isint(lua_State *lua, int i) {
