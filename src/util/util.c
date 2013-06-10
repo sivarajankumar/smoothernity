@@ -7,6 +7,8 @@ void * util_malloc(size_t align, size_t size) {
     if (align & (align - 1))
         return 0;
     mem = malloc(size + align + sizeof(void*));
+    if (mem == NULL)
+        return 0;
     addr = (char*)mem - (char*)0;
     addr = (addr + align + sizeof(void*)) & ~(align - 1);
     ptr = (void**)((char*)0 + addr);
