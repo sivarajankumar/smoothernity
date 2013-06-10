@@ -288,10 +288,11 @@ int thread_init
         !(thread->lua = lua_newstate(thread_lua_alloc, thread->mpool)))
             return 1;
 
-        /* Load libraries, save current thread pointer to Lua registry. */
+        /* Register API, load libraries, save thread pointer to Lua registry. */
         if (setjmp(g_threads.panic))
             return 1;
         old_panic = lua_atpanic(thread->lua, thread_lua_panic);
+        thread_reg(thread->lua);
         luaL_openlibs(thread->lua);
         lua_pushlightuserdata(thread->lua, &g_threads);
         lua_pushlightuserdata(thread->lua, thread);
@@ -303,7 +304,6 @@ int thread_init
         !(thread->state = atomic_int_create()) ||
         !(thread->thread = thread_create(thread_loop, thread)))
             return 1;
-        thread_reg(thread->lua);
     }
     thread_reg_main(lua);
     return 0;
