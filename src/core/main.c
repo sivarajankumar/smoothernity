@@ -312,6 +312,6 @@ int main(int argc, char **argv) {
             main_loop();
     main_done();
     fprintf(stderr, "Engine finish\n");
-    return 0;
+    return EXIT_SUCCESS;
 }
 
