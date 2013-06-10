@@ -1,4 +1,5 @@
 #include "input.h"
+#include "util.h"
 #include "SDL.h"
 
 #define KEYS(op) \
@@ -27,7 +28,7 @@ static struct input_t g_input;
 
 static int api_input_key(lua_State *lua) {
     int key;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_input_key: incorrect argument");
         lua_error(lua);
         return 0;

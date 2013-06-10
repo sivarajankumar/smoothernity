@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "util.h"
 #include "../platform/timer.h"
 #include "SDL.h"
 
@@ -13,7 +14,7 @@ static int api_timer(lua_State *lua) {
 }
 
 static int api_timer_delay(lua_State *lua) {
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isfloat(lua, 1)) {
         lua_pushstring(lua, "api_timer_delay: incorrect argument");
         lua_error(lua);
         return 0;

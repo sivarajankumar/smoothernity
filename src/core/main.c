@@ -2,6 +2,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
+#include "util.h"
 #include "../util/util.h"
 #include "mpool.h"
 #include "timer.h"
@@ -100,7 +101,7 @@ static int main_get_int_array
     }
     memset(*array, 0, *len * sizeof(int));
     for (int i = 0; i < *len; ++i) {
-        if (!lua_isnumber(lua, -(*len) + i)) {
+        if (!util_isint(lua, -(*len) + i)) {
             fprintf(stderr, "configure()[\"%s\"]()[%i] not num\n", field, i);
             return 1;
         }
@@ -112,7 +113,7 @@ static int main_get_int_array
 
 static int main_get_float(lua_State *lua, const char *field, float *dest) {
     lua_getfield(lua, -1, field);
-    if (!lua_isnumber(lua, -1)) {
+    if (!util_isfloat(lua, -1)) {
         fprintf(stderr, "configure()[\"%s\"] value is not a number\n", field);
         return 1;
     }
