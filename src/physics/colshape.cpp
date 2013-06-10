@@ -32,27 +32,28 @@ int colshape_init(int count) {
                 (int)sizeof(colshape_t));
         return PHYSRES_CANNOT_INIT;
     }
+    g_colshapes.count = count;
     g_colshapes.pool = (char*)util_malloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
     if (!g_colshapes.pool)
         return PHYSRES_CANNOT_INIT;
-    memset(g_colshapes.pool, 0, COLSHAPE_SIZE * count);
-    g_colshapes.count = count;
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; ++i ) {
         cs = colshape_get(i);
         cs->vacant = 1;
-        cs->data = (char*)util_malloc(align_max, size_max);
-        if (!cs->data)
-            goto cleanup;
+        cs->shape_box = 0;
+        cs->shape_sphere = 0;
+        cs->shape_hmap = 0;
+        cs->shape_comp = 0;
+        cs->shape_convex = 0;
+        cs->shape = 0;
+        cs->data = 0;
+        cs->comp = cs->comp_children = cs->comp_next = cs->comp_prev = 0;
+        cs->vehs = 0;
+        cs->rbs = 0;
     }
+    for (int i = 0; i < count; ++i)
+        if (!(colshape_get(i)->data = (char*)util_malloc(align_max, size_max)))
+            return PHYSRES_CANNOT_INIT;
     return PHYSRES_OK;
-cleanup:
-    for (int i = 0; i < count; ++i) {
-        cs = colshape_get(i);
-        if (cs->data)
-            util_free(cs->data);
-    }
-    util_free(g_colshapes.pool);
-    return PHYSRES_CANNOT_INIT;
 }
 
 void colshape_done(void) {
@@ -61,8 +62,10 @@ void colshape_done(void) {
         return;
     for (int i = 0; i < g_colshapes.count; ++i) {
         cs = colshape_get(i);
-        colshape_free(cs);
-        util_free(cs->data);
+        if (cs->data) {
+            colshape_free(cs);
+            util_free(cs->data);
+        }
     }
     util_free(g_colshapes.pool);
     g_colshapes.pool = 0;

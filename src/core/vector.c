@@ -6,7 +6,6 @@
 #include "util.h"
 #include "../util/util.h"
 #include <math.h>
-#include <string.h>
 #include <stdio.h>
 
 static const size_t VECTOR_SIZE = 256;
@@ -411,16 +410,22 @@ static int api_vector_cast(lua_State *lua) {
 }
 
 int vector_init(lua_State *lua, int count, int nesting) {
+    struct vector_t *vec;
     if (sizeof(struct vector_t) > VECTOR_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(struct vector_t) == %i\n",
                 (int)sizeof(struct vector_t));
         return 1;
     }
+    g_vectors.count = count;
     g_vectors.pool = util_malloc(VECTOR_SIZE, VECTOR_SIZE * count);
     if (!g_vectors.pool)
         return 1;
-    memset(g_vectors.pool, 0, VECTOR_SIZE * count);
-    g_vectors.count = count;
+    for (int i = 0; i < count; ++i) {
+        vec = vector_get(i);
+        for (int j = 0; j < 4; ++j)
+            vec->value[j] = 0;
+        vec->type = VECTOR_CONST;
+    }
     g_vectors.nesting = nesting;
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_vector_get);

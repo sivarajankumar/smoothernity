@@ -24,7 +24,7 @@ enum vector_e {
 };
 
 struct vector_t {
-    float value[4]; /* must go first to ensure alignment */
+    float value[4]; /* Must go first to ensure alignment. */
     enum vector_e type;
     struct vector_t *argv[VECTOR_ARGVS];
     struct matrix_t *argm[VECTOR_ARGMS];

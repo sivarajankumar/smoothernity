@@ -8,8 +8,8 @@
 #include "lauxlib.h"
 #include "lualib.h"
 #include <stdio.h>
-#include <string.h>
 #include <setjmp.h>
+#include <string.h>
 
 /*
  * Worker threads.
@@ -277,7 +277,15 @@ int thread_init
     g_threads.pool = util_malloc(THREAD_DATA_SIZE, THREAD_DATA_SIZE * count);
     if (!g_threads.pool)
         return 1;
-    memset(g_threads.pool, 0, THREAD_DATA_SIZE * count);
+    for (int i = 0; i < count; ++i) {
+        thread = thread_get(i);
+        thread->mutex = 0;
+        thread->engage = 0;
+        thread->thread = 0;
+        thread->lua = 0;
+        thread->mpool = 0;
+        thread->state = 0;
+    }
     if (!(g_threads.quit = atomic_int_create()))
         return 1;
     atomic_int_store(g_threads.quit, 0);

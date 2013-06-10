@@ -1,6 +1,5 @@
 #include "ddraw.hpp"
 #include <stdio.h>
-#include <string.h>
 #include "GL/glew.h"
 
 ddraw_c::ddraw_c() : mode(0) {

@@ -27,7 +27,7 @@ enum matrix_axis_e {
 };
 
 struct matrix_t {
-    float value[16]; /* must go first to ensure alignment */
+    float value[16]; /* Must go first to ensure alignment. */
     enum matrix_e type;
     enum matrix_axis_e rotaxis;
     int update_tag, rotanglei, zneari, zfari, rigid_body, vehicle, wheel;

@@ -4,7 +4,6 @@
 #include "../util/util.h"
 #include <math.h>
 #include <stdio.h>
-#include <string.h>
 
 static const size_t BUF_DATA_ALIGN = 16;
 
@@ -153,7 +152,8 @@ int buf_init(lua_State *lua, int size) {
     g_bufs.data = util_malloc(BUF_DATA_ALIGN, sizeof(float) * size);
     if (!g_bufs.data)
         return 1;
-    memset(g_bufs.data, 0, sizeof(float) * size);
+    for (int i = 0; i < size; ++i)
+        g_bufs.data[i] = 0;
     buf_reg_thread(lua);
     return 0;
 }

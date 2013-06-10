@@ -3,7 +3,6 @@
 #include "physres.h"
 #include "../util/util.hpp"
 #include <stdio.h>
-#include <string.h>
 
 static const size_t WORLD_SIZE = 128;
 
@@ -21,11 +20,19 @@ int world_init(int count) {
                 (int)sizeof(world_t));
         return PHYSRES_CANNOT_INIT;
     }
+    g_worlds.count = count;
     g_worlds.pool = (char*)util_malloc(WORLD_SIZE, WORLD_SIZE * count);
     if (!g_worlds.pool)
         return PHYSRES_CANNOT_INIT;
-    memset(g_worlds.pool, 0, WORLD_SIZE * count);
-    g_worlds.count = count;
+    for (int i = 0; i < count; ++i) {
+        wld = world_get(i);
+        wld->broadphase = 0;
+        wld->dispatcher = 0;
+        wld->solver = 0;
+        wld->colcfg = 0;
+        wld->world = 0;
+        wld->ddraw = 0;
+    }
     for (int i = 0; i < count; ++i) {
         wld = world_get(i);
         try {
@@ -40,29 +47,10 @@ int world_init(int count) {
             wld->ddraw = new ddraw_c();
             wld->world->setDebugDrawer(wld->ddraw);
         } catch (...) {
-            goto cleanup;
+            return PHYSRES_CANNOT_INIT;
         }
     }
     return PHYSRES_OK;
-cleanup:
-    for (int i = 0; i < count; ++i) {
-        wld = world_get(i);
-        if (wld->colcfg)
-            delete wld->colcfg;
-        if (wld->dispatcher)
-            delete wld->dispatcher;
-        if (wld->broadphase)
-            delete wld->broadphase;
-        if (wld->solver)
-            delete wld->solver;
-        if (wld->world)
-            delete wld->world;
-        if (wld->ddraw)
-            delete wld->ddraw;
-    }
-    util_free(g_worlds.pool);
-    g_worlds.pool = 0;
-    return PHYSRES_CANNOT_INIT;
 }
 
 void world_done(void) {
@@ -71,15 +59,21 @@ void world_done(void) {
         return;
     for (int i = 0; i < g_worlds.count; ++i) {
         wld = world_get(i);
-        if (wld->world->getNumCollisionObjects() > 0)
+        if (wld->world && wld->world->getNumCollisionObjects() > 0)
             fprintf(stderr, "world_done: world still has refs\n");
         try {
-            delete wld->world;
-            delete wld->solver;
-            delete wld->broadphase;
-            delete wld->dispatcher;
-            delete wld->colcfg;
-            delete wld->ddraw;
+            if (wld->world)
+                delete wld->world;
+            if (wld->solver)
+                delete wld->solver;
+            if (wld->broadphase)
+                delete wld->broadphase;
+            if (wld->dispatcher)
+                delete wld->dispatcher;
+            if (wld->colcfg)
+                delete wld->colcfg;
+            if (wld->ddraw)
+                delete wld->ddraw;
         } catch (...) {
             fprintf(stderr, "world_done: exception\n");
         }

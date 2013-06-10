@@ -17,7 +17,6 @@
 #include "rbuf.h"
 #include "vao.h"
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 #include <setjmp.h>
 
@@ -99,7 +98,6 @@ static int main_get_int_array
         fprintf(stderr, "Out of memory loading configure()[\"%s\"]\n", field);
         return 1;
     }
-    memset(*array, 0, *len * sizeof(int));
     for (int i = 0; i < *len; ++i) {
         if (!util_isint(lua, -(*len) + i)) {
             fprintf(stderr, "configure()[\"%s\"]()[%i] not num\n", field, i);

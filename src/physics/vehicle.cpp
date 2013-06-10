@@ -5,7 +5,6 @@
 #include "../util/util.hpp"
 #include "../platform/memory.h"
 #include <stdio.h>
-#include <string.h>
 
 static const size_t VEHICLE_SIZE = 256;
 
@@ -23,45 +22,42 @@ int vehicle_init(int count) {
                 (int)sizeof(vehicle_t));
         return PHYSRES_CANNOT_INIT;
     }
+    g_vehicles.count = count;
     g_vehicles.pool = (char*)util_malloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
     if (!g_vehicles.pool)
         return PHYSRES_CANNOT_INIT;
-    memset(g_vehicles.pool, 0, VEHICLE_SIZE * count);
-    g_vehicles.count = count;
     for (int i = 0; i < count; ++i) {
         veh = vehicle_get(i);
         veh->vacant = 1;
+        veh->chassis = 0;
+        veh->mstate = 0;
+        veh->ray = 0;
+        veh->veh = 0;
+        veh->tuning = 0;
+        veh->chassis_data = veh->ray_data = veh->veh_data = 0;
+        veh->wld = 0;
+        veh->shape = veh->inert = 0;
+        veh->shape_prev = veh->shape_next = 0;
+        veh->inert_prev = veh->inert_next = 0;
+    }
+    for (int i = 0; i < count; ++i) {
+        veh = vehicle_get(i);
         try {
-            veh->chassis_data = (char*)util_malloc(ALIGNOF(btRigidBody),
-                                                   sizeof(btRigidBody));
-            veh->ray_data = (char*)util_malloc(ALIGNOF(btDefaultVehicleRaycaster),
-                                               sizeof(btDefaultVehicleRaycaster));
-            veh->veh_data = (char*)util_malloc(ALIGNOF(btRaycastVehicle),
-                                               sizeof(btRaycastVehicle));
             veh->mstate = new mstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
         } catch (...) {
-            goto cleanup;
+            return PHYSRES_CANNOT_INIT;
         }
+        veh->chassis_data = (char*)util_malloc(ALIGNOF(btRigidBody),
+                                               sizeof(btRigidBody));
+        veh->ray_data = (char*)util_malloc(ALIGNOF(btDefaultVehicleRaycaster),
+                                           sizeof(btDefaultVehicleRaycaster));
+        veh->veh_data = (char*)util_malloc(ALIGNOF(btRaycastVehicle),
+                                           sizeof(btRaycastVehicle));
+        if (!veh->chassis_data || !veh->ray_data || !veh->veh_data)
+            return PHYSRES_CANNOT_INIT;
     }
     return PHYSRES_OK;
-cleanup:
-    for (int i = 0; i < count; ++i) {
-        veh = vehicle_get(i);
-        if (veh->chassis_data)
-            util_free(veh->chassis_data);
-        if (veh->ray_data)
-            util_free(veh->ray_data);
-        if (veh->veh_data)
-            util_free(veh->veh_data);
-        if (veh->mstate)
-            delete veh->mstate;
-        if (veh->tuning)
-            delete veh->tuning;
-    }
-    util_free(g_vehicles.pool);
-    g_vehicles.pool = 0;
-    return PHYSRES_CANNOT_INIT;
 }
 
 void vehicle_done(void) {
@@ -72,14 +68,19 @@ void vehicle_done(void) {
         veh = vehicle_get(i);
         vehicle_free(veh);
         try {
-            util_free(veh->chassis_data);
-            util_free(veh->ray_data);
-            util_free(veh->veh_data);
-            delete veh->mstate;
-            delete veh->tuning;
+            if (veh->mstate)
+                delete veh->mstate;
+            if (veh->tuning)
+                delete veh->tuning;
         } catch (...) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
+        if (veh->chassis_data)
+            util_free(veh->chassis_data);
+        if (veh->ray_data)
+            util_free(veh->ray_data);
+        if (veh->veh_data)
+            util_free(veh->veh_data);
     }
     util_free(g_vehicles.pool);
     g_vehicles.pool = 0;
