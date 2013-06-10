@@ -1,5 +1,6 @@
 #include "thread.h"
 #include "mpool.h"
+#include "util.h"
 #include "../mp/atomic.h"
 #include "../mp/thread.h"
 #include "../platform/timer.h"
@@ -137,8 +138,7 @@ static struct thread_data_t * thread_current(lua_State *lua) {
 static int api_thread_run(lua_State *lua) {
     /* Send Lua chunk to run in blocked worker thread. */
     struct thread_data_t *thread;
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isstring(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
         lua_pushstring(lua, "api_thread_run: incorrect argument");
         lua_error(lua);
         return 0;
@@ -171,8 +171,7 @@ static int api_thread_run(lua_State *lua) {
 static int api_thread_request(lua_State *lua) {
     /* Send a string to blocked worker thread, return its response. */
     struct thread_data_t *thread;
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isstring(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
         lua_pushstring(lua, "api_thread_request: incorrect argument");
         lua_error(lua);
         return 0;
@@ -231,7 +230,7 @@ static int api_thread_respond(lua_State *lua) {
 static int api_thread_state(lua_State *lua) {
     /* Returns worker thread state. */
     struct thread_data_t *thread;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_thread_state: incorrect argument");
         lua_error(lua);
         return 0;

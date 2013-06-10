@@ -1,6 +1,7 @@
 #include "vao.h"
 #include "prog.h"
 #include "rbuf.h"
+#include "util.h"
 
 struct vao_t {
     GLint vao_id;
@@ -28,8 +29,8 @@ static int api_vao_alloc(lua_State *lua) {
     struct prog_t *prog;
     struct rbuf_t *vbuf, *ibuf;
 
-    if (lua_gettop(lua) < 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) || !lua_isnumber(lua, 4)) {
+    if (lua_gettop(lua) < 5 || !util_isint(lua, 1) ||
+    !util_isint(lua, 2) || !util_isint(lua, 3) || !util_isint(lua, 4)) {
         lua_pushstring(lua, "api_vao_alloc: incorrect argument");
         lua_error(lua);
         return 0;

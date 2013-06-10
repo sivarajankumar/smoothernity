@@ -1,4 +1,5 @@
 #include "prog.h"
+#include "util.h"
 #include "../util/util.h"
 #include <string.h>
 #include <stdio.h>
@@ -63,7 +64,7 @@ static int api_prog_alloc(lua_State *lua) {
     static char log[LOG_SIZE];
     GLint res, len;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !lua_isstring(lua, 2) || !lua_isstring(lua, 3)) {
         lua_pushstring(lua, "api_prog_alloc: incorrect argument");
         lua_error(lua);
@@ -105,7 +106,7 @@ static int api_prog_alloc(lua_State *lua) {
 
 static int api_prog_free(lua_State *lua) {
     struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_prog_free: incorrect argument");
         lua_error(lua);
         return 0;
@@ -125,7 +126,7 @@ static int api_prog_free(lua_State *lua) {
 static int api_prog_use(lua_State *lua) {
     int iprog;
     struct prog_t *prog;
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_prog_use: incorrect argument");
         lua_error(lua);
         return 0;
