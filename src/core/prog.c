@@ -1,7 +1,6 @@
 #include "prog.h"
 #include "util.h"
 #include "../util/util.h"
-#include <string.h>
 #include <stdio.h>
 
 #define LOG_SIZE 2048
@@ -153,11 +152,12 @@ int prog_init(lua_State *lua, int count) {
                 (int)sizeof(struct prog_t));
         return 1;
     }
+    g_progs.count = count;
     g_progs.pool = util_malloc(PROG_SIZE, PROG_SIZE * count);
     if (!g_progs.pool)
         return 1;
-    memset(g_progs.pool, 0, PROG_SIZE * count);
-    g_progs.count = count;
+    for (int i = 0; i < count; ++i)
+        prog_get(i)->prog_id = 0;
 
     lua_register(lua, "api_prog_alloc", api_prog_alloc);
     lua_register(lua, "api_prog_free", api_prog_free);

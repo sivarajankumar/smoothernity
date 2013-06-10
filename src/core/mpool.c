@@ -1,7 +1,6 @@
 #include "mpool.h"
 #include "../util/util.h"
 #include <stdio.h>
-#include <string.h>
 
 static const size_t MPOOL_SIZE = 32;
 static const size_t MPOOL_CHUNK_SIZE = 32;
@@ -11,7 +10,7 @@ static const size_t MPOOL_DATA_ALIGN = 16;
 struct mpool_chunk_t {
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *next;
-    void *data; /* store pointer to chunk, then actual data */
+    void *data; /* Store pointer to chunk, then actual data. */
 };
 
 struct mpool_shelf_t {
@@ -103,12 +102,13 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
     mpool = util_malloc(MPOOL_SIZE, MPOOL_SIZE);
     if (!mpool)
         return 0;
-    memset(mpool, 0, MPOOL_SIZE);
+    mpool->shelves_len = len;
+    mpool->largest_size = 0;
     mpool->shelves = util_malloc(MPOOL_SHELF_SIZE, MPOOL_SHELF_SIZE * len);
     if (!mpool->shelves)
         goto cleanup;
-    memset(mpool->shelves, 0, MPOOL_SHELF_SIZE * len);
-    mpool->shelves_len = len;
+    for (int i = 0; i < len; ++i)
+        mpool_get_shelf(mpool, i)->chunks = 0;
     for (int i = 0; i < len; ++i) {
         if (i > 0 && sizes[i-1] >= sizes[i])
             goto cleanup;
@@ -123,15 +123,18 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
         shelf->count = count;
         shelf->left = count;
         shelf->left_min = count;
+        shelf->allocs = shelf->frees = shelf->alloc_fails = 0;
         shelf->chunks = util_malloc(MPOOL_CHUNK_SIZE, MPOOL_CHUNK_SIZE * count);
         if (!shelf->chunks)
             goto cleanup;
-        memset(shelf->chunks, 0, MPOOL_CHUNK_SIZE * count);
-        for (int j = 0; j < counts[i]; ++j) {
+        for (int j = 0; j < count; ++j)
+            mpool_get_chunk(j, shelf)->data = 0;
+        for (int j = 0; j < count; ++j) {
             chunk = mpool_get_chunk(j, shelf);
             chunk->shelf = shelf;
             chunk->next = mpool_get_chunk(j + 1, shelf);
-            /* preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk */
+            /* TODO: align in the way util_malloc does */
+            /* Preserve first MPOOL_DATA_ALIGN bytes for pointer to chunk. */
             chunk->data = util_malloc(MPOOL_DATA_ALIGN, MPOOL_DATA_ALIGN + (size_t)size);
             if (!chunk->data)
                 goto cleanup;

@@ -1,7 +1,7 @@
 #ifndef CORE_MPOOL_H
 #define CORE_MPOOL_H
 
-#include <string.h>
+#include <stddef.h>
 
 struct mpool_t;
 

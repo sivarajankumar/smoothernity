@@ -3,9 +3,9 @@
 #include "physics.h"
 #include "util.h"
 #include "../util/util.h"
-#include <string.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 static const size_t MATRIX_SIZE = 256;
 
@@ -476,16 +476,22 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
 }
 
 int matrix_init(lua_State *lua, int count, int nesting) {
+    struct matrix_t *m;
     if (sizeof(struct matrix_t) > MATRIX_SIZE) {
         fprintf(stderr, "Invalid size:\nsizeof(struct matrix_t) == %i\n",
                 (int)sizeof(struct matrix_t));
         return 1;
     }
+    g_matrices.count = count;
     g_matrices.pool = util_malloc(MATRIX_SIZE, MATRIX_SIZE * count);
     if (!g_matrices.pool)
         return 1;
-    memset(g_matrices.pool, 0, MATRIX_SIZE * count);
-    g_matrices.count = count;
+    for (int i = 0; i < count; ++i) {
+        m = matrix_get(i);
+        for (int j = 0; j < 16; ++j)
+            m->value[j] = 0;
+        m->type = MATRIX_CONST;
+    }
     g_matrices.nesting = nesting;
 
     #define REGF(x) lua_register(lua, #x, x)

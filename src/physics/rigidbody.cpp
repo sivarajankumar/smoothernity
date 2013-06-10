@@ -5,7 +5,6 @@
 #include "../util/util.hpp"
 #include "../platform/memory.h"
 #include <stdio.h>
-#include <string.h>
 
 static const size_t RIGIDBODY_SIZE = 128;
 
@@ -23,33 +22,32 @@ int rigidbody_init(int count) {
                 (int)sizeof(rigidbody_t));
         return PHYSRES_CANNOT_INIT;
     }
+    g_rigidbodies.count = count;
     g_rigidbodies.pool = (char*)util_malloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
     if (!g_rigidbodies.pool)
         return PHYSRES_CANNOT_INIT;
-    memset(g_rigidbodies.pool, 0, RIGIDBODY_SIZE * count);
-    g_rigidbodies.count = count;
     for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
         rb->vacant = 1;
-        try {
-            rb->mstate = new mstate_c();
-            rb->data = (char*)util_malloc(ALIGNOF(btRigidBody), sizeof(btRigidBody));
-        } catch (...) {
-            goto cleanup;
-        }
+        rb->body = 0;
+        rb->mstate = 0;
+        rb->data = 0;
+        rb->wld = 0;
+        rb->cs = 0;
+        rb->cs_prev = rb->cs_next = 0;
     }
-    return PHYSRES_OK;
-cleanup:
     for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
-        if (rb->mstate)
-            delete rb->mstate;
-        if (rb->data)
-            util_free(rb->data);
+        try {
+            rb->mstate = new mstate_c();
+        } catch (...) {
+            return PHYSRES_CANNOT_INIT;
+        }
+        rb->data = (char*)util_malloc(ALIGNOF(btRigidBody), sizeof(btRigidBody));
+        if (!rb->data)
+            return PHYSRES_CANNOT_INIT;
     }
-    util_free(g_rigidbodies.pool);
-    g_rigidbodies.pool = 0;
-    return PHYSRES_CANNOT_INIT;
+    return PHYSRES_OK;
 }
 
 void rigidbody_done(void) {
@@ -60,11 +58,13 @@ void rigidbody_done(void) {
         rb = rigidbody_get(i);
         rigidbody_free(rb);
         try {
-            delete rb->mstate;
-            util_free(rb->data);
+            if (rb->mstate)
+                delete rb->mstate;
         } catch (...) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
+        if (rb->data)
+            util_free(rb->data);
     }
     util_free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;

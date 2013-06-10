@@ -3,7 +3,6 @@
 #include "util.h"
 #include "../util/util.h"
 #include <stdio.h>
-#include <string.h>
 
 static const size_t RBUF_SIZE = 32;
 
@@ -199,6 +198,7 @@ static int api_rbuf_alloc(lua_State *lua) {
     rbuf->size = size;
     rbuf->target = (GLenum)target;
     rbuf->item = (GLenum)item;
+    rbuf->mapped = 0;
     glGenBuffers(1, &rbuf->buf_id);
     if (safe_bind_buf(rbuf)) {
         lua_pushstring(lua, "api_rbuf_alloc: cannot bind buffer");
@@ -244,16 +244,20 @@ void rbuf_reg_thread(lua_State *lua) {
 }
 
 int rbuf_init(lua_State *lua, int count) {
+    struct rbuf_t *rbuf;
     if (sizeof(struct rbuf_t) > RBUF_SIZE) {
         fprintf(stderr, "Invalid sizes:\nsizeof(struct rbuf_t) == %i\n",
                 (int)sizeof(struct rbuf_t));
         return 1;
     }
+    g_rbufs.count = count;
     g_rbufs.pool = util_malloc(RBUF_SIZE, RBUF_SIZE * count);
     if (!g_rbufs.pool)
         return 1;
-    memset(g_rbufs.pool, 0, RBUF_SIZE * count);
-    g_rbufs.count = count;
+    for (int i = 0; i < count; ++i) {
+        rbuf = rbuf_get(i);
+        rbuf->buf_id = 0;
+    }
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_rbuf_alloc);
     REGF(api_rbuf_free);
