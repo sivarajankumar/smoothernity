@@ -1,6 +1,7 @@
 #include "matrix.h"
 #include "vector.h"
 #include "physics.h"
+#include "util.h"
 #include "../util/util.h"
 #include <string.h>
 #include <math.h>
@@ -29,8 +30,7 @@ static void matrix_clear_args(struct matrix_t *matrix) {
 static int api_matrix_copy(lua_State *lua) {
     struct matrix_t *matrix, *msrc;
 
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_copy: incorrect argument");
         lua_error(lua);
         return 0;
@@ -51,7 +51,7 @@ static int api_matrix_copy(lua_State *lua) {
 static int api_matrix_stop(lua_State *lua) {
     struct matrix_t *matrix;
 
-    if (lua_gettop(lua) != 1 || !lua_isnumber(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_matrix_stop: incorrect argument");
         lua_error(lua);
         return 0;
@@ -76,8 +76,8 @@ static int api_matrix_update(lua_State *lua) {
     int update_tag, force;
     float dt;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isfloat(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_matrix_update: incorrect argument");
         lua_error(lua);
         return 0;
@@ -104,8 +104,8 @@ static int api_matrix_update(lua_State *lua) {
 static int api_matrix_mul(lua_State *lua) {
     struct matrix_t *matrix, *m0, *m1;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isint(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_matrix_mul: incorrect argument");
         lua_error(lua);
         return 0;
@@ -139,8 +139,8 @@ static int api_matrix_mul_stop(lua_State *lua) {
     struct matrix_t *matrix, *m0, *m1;
     float m[16];
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isint(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_matrix_mul_stop: incorrect argument");
         lua_error(lua);
         return 0;
@@ -168,8 +168,7 @@ static int api_matrix_mul_stop(lua_State *lua) {
 static int api_matrix_inv(lua_State *lua) {
     struct matrix_t *matrix, *m0;
 
-    if (lua_gettop(lua) != 2 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_inv: incorrect argument");
         lua_error(lua);
         return 0;
@@ -202,9 +201,8 @@ static int api_matrix_frustum(lua_State *lua) {
     struct vector_t *v0, *v1;
     int zneari, zfari;
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
         lua_pushstring(lua, "api_matrix_frustum: incorrect argument");
         lua_error(lua);
         return 0;
@@ -248,9 +246,8 @@ static int api_matrix_ortho(lua_State *lua) {
     struct vector_t *v0, *v1;
     int zneari, zfari;
 
-    if (lua_gettop(lua) != 5 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) ||
-    !lua_isnumber(lua, 4) || !lua_isnumber(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
         lua_pushstring(lua, "api_matrix_ortho: incorrect argument");
         lua_error(lua);
         return 0;
@@ -294,9 +291,9 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
     struct vector_t *v0, *v1, *v2;
     int rotaxis, rotanglei;
 
-    if (lua_gettop(lua) != 6 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) || !lua_isnumber(lua, 4) ||
-    !lua_isnumber(lua, 5) || !lua_isnumber(lua, 6)) {
+    if (lua_gettop(lua) != 6 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4) ||
+    !util_isint(lua, 5) || !util_isint(lua, 6)) {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: incorrect argument");
         lua_error(lua);
         return 0;
@@ -346,8 +343,8 @@ static int api_matrix_from_to_up(lua_State *lua) {
     struct matrix_t *matrix;
     struct vector_t *v0, *v1, *v2;
 
-    if (lua_gettop(lua) != 4 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3) || !lua_isnumber(lua, 4)) {
+    if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
+    !util_isint(lua, 3) || !util_isint(lua, 4)) {
         lua_pushstring(lua, "api_matrix_from_to_up: incorrect argument");
         lua_error(lua);
         return 0;
@@ -383,8 +380,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
     struct matrix_t *matrix;
     int rbi;
 
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_rigid_body: incorrect argument");
         lua_error(lua);
         return 0;
@@ -416,8 +412,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
     struct matrix_t *matrix;
     int vehi;
 
-    if (lua_gettop(lua) != 2 ||
-    !lua_isnumber(lua, 1) || !lua_isnumber(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_vehicle_chassis: incorrect argument");
         lua_error(lua);
         return 0;
@@ -449,8 +444,8 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
     struct matrix_t *matrix;
     int vehi, wheel;
 
-    if (lua_gettop(lua) != 3 || !lua_isnumber(lua, 1) ||
-    !lua_isnumber(lua, 2) || !lua_isnumber(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    !util_isint(lua, 2) || !util_isint(lua, 3)) {
         lua_pushstring(lua, "api_matrix_vehicle_wheel: incorrect argument");
         lua_error(lua);
         return 0;
