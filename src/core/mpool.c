@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 static const size_t MPOOL_SIZE = 32;
-static const size_t MPOOL_CHUNK_SIZE = 16;
+static const size_t MPOOL_CHUNK_ALIGN = 16;
 static const size_t MPOOL_SHELF_SIZE = 64;
 
 struct mpool_chunk_t {
@@ -85,7 +85,7 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *chunk;
     int size, count;
-    if (sizeof(struct mpool_chunk_t) > MPOOL_CHUNK_SIZE ||
+    if (sizeof(struct mpool_chunk_t) > MPOOL_CHUNK_ALIGN ||
     sizeof(struct mpool_shelf_t) > MPOOL_SHELF_SIZE ||
     sizeof(struct mpool_t) > MPOOL_SIZE) {
         fprintf(stderr, "Invalid size:\n"
@@ -118,8 +118,8 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
         shelf->left = count;
         shelf->left_min = count;
         shelf->allocs = shelf->frees = shelf->alloc_fails = 0;
-        shelf->chunks = util_malloc(MPOOL_CHUNK_SIZE,
-            (sizeof(struct mpool_chunk_t) + (size_t)size) * count);
+        shelf->chunks = util_malloc(MPOOL_CHUNK_ALIGN,
+            ((int)sizeof(struct mpool_chunk_t) + size) * count);
         if (!shelf->chunks)
             goto cleanup;
         for (int j = 0; j < count; ++j) {
