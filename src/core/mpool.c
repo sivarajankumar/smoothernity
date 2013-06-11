@@ -30,10 +30,13 @@ static struct mpool_shelf_t * mpool_get_shelf(struct mpool_t *mpool, int i) {
         return 0;
 }
 
+static int mpool_chunk_size(struct mpool_shelf_t *sh) {
+    return (int)sizeof(struct mpool_chunk_t) + sh->size;
+}
+
 static struct mpool_chunk_t * mpool_get_chunk(int i, struct mpool_shelf_t *sh) {
-    int size = (int)sizeof(struct mpool_chunk_t) + sh->size;
     if (i >= 0 && i < sh->count)
-        return (struct mpool_chunk_t*)(sh->chunks + size * i);
+        return (struct mpool_chunk_t*)(sh->chunks + mpool_chunk_size(sh) * i);
     else
         return 0;
 }
@@ -119,7 +122,7 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
         shelf->left_min = count;
         shelf->allocs = shelf->frees = shelf->alloc_fails = 0;
         shelf->chunks = util_malloc(MPOOL_CHUNK_ALIGN,
-            ((int)sizeof(struct mpool_chunk_t) + size) * count);
+                                    mpool_chunk_size(shelf) * count);
         if (!shelf->chunks)
             goto cleanup;
         for (int j = 0; j < count; ++j) {
