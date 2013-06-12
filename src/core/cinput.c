@@ -1,4 +1,4 @@
-#include "input.h"
+#include "cinput.h"
 #include "util.h"
 #include "SDL.h"
 
@@ -13,18 +13,18 @@
     op(j) op(k) op(l) op(m) op(n) op(o) op(p) op(q) op(r) \
     op(s) op(t) op(u) op(v) op(w) op(x) op(y) op(z)
 
-enum input_key_e {
-    #define DECL(x) INPUT_KEY_##x,
+enum cinput_key_e {
+    #define DECL(x) CINPUT_KEY_##x,
     KEYS(DECL)
     #undef DECL
-    INPUT_KEYS_TOTAL
+    CINPUT_KEYS_TOTAL
 };
 
-struct input_t {
-    int keys[INPUT_KEYS_TOTAL];
+struct cinput_t {
+    int keys[CINPUT_KEYS_TOTAL];
 };
 
-static struct input_t g_input;
+static struct cinput_t g_cinput;
 
 static int api_input_key(lua_State *lua) {
     int key;
@@ -36,12 +36,12 @@ static int api_input_key(lua_State *lua) {
     key = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
 
-    if (key < 0 || key >= INPUT_KEYS_TOTAL) {
+    if (key < 0 || key >= CINPUT_KEYS_TOTAL) {
         lua_pushstring(lua, "api_input_key: invalid key code");
         lua_error(lua);
         return 0;
     }
-    lua_pushinteger(lua, g_input.keys[key]);
+    lua_pushinteger(lua, g_cinput.keys[key]);
     return 1;
 }
 
@@ -57,7 +57,7 @@ static int api_input_update(lua_State *lua) {
         value = event.type == SDL_KEYDOWN;
         #define HANDLE(x) \
             if (event.key.keysym.sym == SDLK_##x) { \
-                g_input.keys[INPUT_KEY_##x] = value; \
+                g_cinput.keys[CINPUT_KEY_##x] = value; \
                 continue; \
             }
         KEYS(HANDLE)
@@ -66,11 +66,11 @@ static int api_input_update(lua_State *lua) {
     return 0;
 }
 
-void input_init(lua_State *lua) {
+void cinput_init(lua_State *lua) {
     lua_register(lua, "api_input_key", api_input_key);
     lua_register(lua, "api_input_update", api_input_update);
     #define REG(x) \
-        lua_pushinteger(lua, INPUT_KEY_##x); \
+        lua_pushinteger(lua, CINPUT_KEY_##x); \
         lua_setglobal(lua, "API_INPUT_KEY_"#x);
     KEYS(REG)
     #undef REG

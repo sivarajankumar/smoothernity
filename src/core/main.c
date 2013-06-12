@@ -6,7 +6,7 @@
 #include "mpool.h"
 #include "timer.h"
 #include "render.h"
-#include "input.h"
+#include "cinput.h"
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
@@ -234,7 +234,7 @@ static int main_init(int argc, char **argv) {
     lua_atpanic(g_main.lua, main_panic);
     luaL_openlibs(g_main.lua);
 
-    input_init(g_main.lua);
+    cinput_init(g_main.lua);
 
     if (timer_init(g_main.lua)) {
         fprintf(stderr, "Cannot init timer\n"); 
