@@ -2,7 +2,7 @@
 #include "rigidbody.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include "../platform/mem.hpp"
+#include "pmem.hpp"
 #include <stdio.h>
 
 static const size_t RIGIDBODY_SIZE = 128;
@@ -20,8 +20,8 @@ static rigidbodies_t g_rigidbodies;
 int rigidbody_init(int count) {
     rigidbody_t *rb;
     g_rigidbodies.count = count;
-    g_rigidbodies.pool = (char*)mem_alloc(MEM_ALIGNOF(rigidbody_t),
-                                          RIGIDBODY_SIZE * count);
+    g_rigidbodies.pool = (char*)pmem_alloc(PMEM_ALIGNOF(rigidbody_t),
+                                           RIGIDBODY_SIZE * count);
     if (!g_rigidbodies.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -41,7 +41,8 @@ int rigidbody_init(int count) {
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
         }
-        rb->data = (char*)mem_alloc(MEM_ALIGNOF(btRigidBody), sizeof(btRigidBody));
+        rb->data = (char*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
+                                     sizeof(btRigidBody));
         if (!rb->data)
             return PHYSRES_CANNOT_INIT;
     }
@@ -62,9 +63,9 @@ void rigidbody_done(void) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
         if (rb->data)
-            mem_free(rb->data);
+            pmem_free(rb->data);
     }
-    mem_free(g_rigidbodies.pool);
+    pmem_free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
 }
 

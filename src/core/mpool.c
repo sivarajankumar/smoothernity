@@ -1,5 +1,5 @@
 #include "mpool.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <stdio.h>
 
 #define MPOOL_CHUNK_SIZE 16
@@ -92,13 +92,13 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
     struct mpool_shelf_t *shelf;
     struct mpool_chunk_t *chunk;
     int size, count;
-    mpool = mem_alloc(MEM_ALIGNOF(struct mpool_t), sizeof(struct mpool_t));
+    mpool = pmem_alloc(PMEM_ALIGNOF(struct mpool_t), sizeof(struct mpool_t));
     if (!mpool)
         return 0;
     mpool->shelves_len = len;
     mpool->largest_size = 0;
-    mpool->shelves = mem_alloc(MEM_ALIGNOF(struct mpool_shelf_t),
-                               MPOOL_SHELF_SIZE * len);
+    mpool->shelves = pmem_alloc(PMEM_ALIGNOF(struct mpool_shelf_t),
+                                MPOOL_SHELF_SIZE * len);
     if (!mpool->shelves)
         goto cleanup;
     for (int i = 0; i < len; ++i)
@@ -119,8 +119,8 @@ struct mpool_t * mpool_create(const int sizes[], const int counts[], int len) {
         shelf->left = count;
         shelf->left_min = count;
         shelf->allocs = shelf->frees = shelf->alloc_fails = 0;
-        shelf->chunks = mem_alloc(MEM_ALIGNOF(struct mpool_chunk_t),
-                                  mpool_chunk_size(shelf) * count);
+        shelf->chunks = pmem_alloc(PMEM_ALIGNOF(struct mpool_chunk_t),
+                                   mpool_chunk_size(shelf) * count);
         if (!shelf->chunks)
             goto cleanup;
         for (int j = 0; j < count; ++j) {
@@ -136,11 +136,11 @@ cleanup:
         for (int i = 0; i < mpool->shelves_len; ++i) {
             shelf = mpool_get_shelf(mpool, i);
             if (shelf->chunks)
-                mem_free(shelf->chunks);
+                pmem_free(shelf->chunks);
         }
-        mem_free(mpool->shelves);
+        pmem_free(mpool->shelves);
     }
-    mem_free(mpool);
+    pmem_free(mpool);
     return 0;
 } 
 
@@ -157,9 +157,9 @@ void mpool_destroy(struct mpool_t *mpool) {
                 shelf->size,
                 shelf->count - shelf->left_min, shelf->count,
                 shelf->allocs, shelf->frees, shelf->alloc_fails);
-        mem_free(shelf->chunks);
+        pmem_free(shelf->chunks);
     }
-    mem_free(mpool->shelves);
-    mem_free(mpool);
+    pmem_free(mpool->shelves);
+    pmem_free(mpool);
 }
 

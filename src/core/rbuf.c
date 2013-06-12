@@ -1,7 +1,7 @@
 #include "rbuf.h"
 #include "vao.h"
 #include "util.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <stdio.h>
 
 #define RBUF_SIZE 32
@@ -249,7 +249,7 @@ int rbuf_init(lua_State *lua, int count) {
     struct rbuf_t *rbuf;
 
     g_rbufs.count = count;
-    g_rbufs.pool = mem_alloc(MEM_ALIGNOF(struct rbuf_t), RBUF_SIZE * count);
+    g_rbufs.pool = pmem_alloc(PMEM_ALIGNOF(struct rbuf_t), RBUF_SIZE * count);
     if (!g_rbufs.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -288,7 +288,7 @@ void rbuf_done(void) {
             fprintf(stderr, "rbuf_done: some buffers are still active\n");
             break;
         }
-    mem_free(g_rbufs.pool);
+    pmem_free(g_rbufs.pool);
     g_rbufs.pool = 0;
 }
 

@@ -3,7 +3,7 @@
 #include "util.h"
 #include "uatomic.h"
 #include "uthread.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include "lauxlib.h"
 #include "lualib.h"
 #include <stdio.h>
@@ -271,8 +271,8 @@ int cthread_init
     lua_CFunction old_panic;
 
     g_cthreads.count = count;
-    g_cthreads.pool = mem_alloc(MEM_ALIGNOF(struct cthread_t),
-                               CTHREAD_SIZE * count);
+    g_cthreads.pool = pmem_alloc(PMEM_ALIGNOF(struct cthread_t),
+                                 CTHREAD_SIZE * count);
     if (!g_cthreads.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -343,7 +343,7 @@ void cthread_done(void) {
             if (thread->state)
                 uatomic_int_destroy(thread->state);
         }
-        mem_free(g_cthreads.pool);
+        pmem_free(g_cthreads.pool);
         g_cthreads.pool = 0;
     }
     if (g_cthreads.quit)

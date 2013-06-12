@@ -2,7 +2,7 @@
 #include "vehicle.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include "../platform/mem.hpp"
+#include "pmem.hpp"
 #include <stdio.h>
 
 static const size_t VEHICLE_SIZE = 256;
@@ -19,8 +19,8 @@ static vehicles_t g_vehicles;
 int vehicle_init(int count) {
     vehicle_t *veh;
     g_vehicles.count = count;
-    g_vehicles.pool = (char*)mem_alloc(MEM_ALIGNOF(vehicle_t),
-                                       VEHICLE_SIZE * count);
+    g_vehicles.pool = (char*)pmem_alloc(PMEM_ALIGNOF(vehicle_t),
+                                        VEHICLE_SIZE * count);
     if (!g_vehicles.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -45,12 +45,12 @@ int vehicle_init(int count) {
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
         }
-        veh->chassis_data = (char*)mem_alloc(MEM_ALIGNOF(btRigidBody),
-                                             sizeof(btRigidBody));
-        veh->ray_data = (char*)mem_alloc(MEM_ALIGNOF(btDefaultVehicleRaycaster),
-                                         sizeof(btDefaultVehicleRaycaster));
-        veh->veh_data = (char*)mem_alloc(MEM_ALIGNOF(btRaycastVehicle),
-                                         sizeof(btRaycastVehicle));
+        veh->chassis_data = (char*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
+                                              sizeof(btRigidBody));
+        veh->ray_data = (char*)pmem_alloc(PMEM_ALIGNOF(btDefaultVehicleRaycaster),
+                                          sizeof(btDefaultVehicleRaycaster));
+        veh->veh_data = (char*)pmem_alloc(PMEM_ALIGNOF(btRaycastVehicle),
+                                          sizeof(btRaycastVehicle));
         if (!veh->chassis_data || !veh->ray_data || !veh->veh_data)
             return PHYSRES_CANNOT_INIT;
     }
@@ -73,13 +73,13 @@ void vehicle_done(void) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
         if (veh->chassis_data)
-            mem_free(veh->chassis_data);
+            pmem_free(veh->chassis_data);
         if (veh->ray_data)
-            mem_free(veh->ray_data);
+            pmem_free(veh->ray_data);
         if (veh->veh_data)
-            mem_free(veh->veh_data);
+            pmem_free(veh->veh_data);
     }
-    mem_free(g_vehicles.pool);
+    pmem_free(g_vehicles.pool);
     g_vehicles.pool = 0;
 }
 

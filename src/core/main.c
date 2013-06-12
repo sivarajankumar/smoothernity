@@ -15,7 +15,7 @@
 #include "prog.h"
 #include "rbuf.h"
 #include "vao.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <setjmp.h>
@@ -93,7 +93,7 @@ static int main_get_int_array
         fprintf(stderr, "Invalid configure()[\"%s\"]() return value\n", field);
         return 1;
     }
-    *array = mem_alloc(MEM_ALIGNOF(int), *len * sizeof(int));
+    *array = pmem_alloc(PMEM_ALIGNOF(int), *len * sizeof(int));
     if (!*array) {
         fprintf(stderr, "Out of memory loading configure()[\"%s\"]\n", field);
         return 1;
@@ -180,15 +180,15 @@ static void main_done(void) {
     if (g_main.lua)
         lua_close(g_main.lua);
     if (g_main.main_mpool) {
-        mem_free(g_main.main_mpool);
+        pmem_free(g_main.main_mpool);
         g_main.main_mpool = 0;
     }
     if (g_main.physics_mpool) {
-        mem_free(g_main.physics_mpool);
+        pmem_free(g_main.physics_mpool);
         g_main.physics_mpool = 0;
     }
     if (g_main.thread_mpool) {
-        mem_free(g_main.thread_mpool);
+        pmem_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
     }
     buf_done();

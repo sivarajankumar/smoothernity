@@ -2,7 +2,8 @@ find_package(GLEW REQUIRED)
 find_package(Bullet REQUIRED)
 
 include_directories(${GLEW_INCLUDE_DIRS}
-                    ${BULLET_INCLUDE_DIRS})
+                    ${BULLET_INCLUDE_DIRS}
+                    ${CMAKE_SOURCE_DIR}/platform)
 
 add_library(physics physcpp.cpp colshape.cpp mstate.cpp physdbg.cpp
             rigidbody.cpp ddraw.cpp vehicle.cpp world.cpp)

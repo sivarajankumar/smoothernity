@@ -4,7 +4,7 @@
 #include "physics.h"
 #include "interp.h"
 #include "util.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -414,8 +414,8 @@ static int api_vector_cast(lua_State *lua) {
 int vector_init(lua_State *lua, int count, int nesting) {
     struct vector_t *vec;
     g_vectors.count = count;
-    g_vectors.pool = mem_alloc(MEM_ALIGNOF(struct vector_t),
-                               VECTOR_SIZE * count);
+    g_vectors.pool = pmem_alloc(PMEM_ALIGNOF(struct vector_t),
+                                VECTOR_SIZE * count);
     if (!g_vectors.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -448,7 +448,7 @@ int vector_init(lua_State *lua, int count, int nesting) {
 void vector_done(void) {
     if (!g_vectors.pool)
         return;
-    mem_free(g_vectors.pool);
+    pmem_free(g_vectors.pool);
     g_vectors.pool = 0;
 }
 

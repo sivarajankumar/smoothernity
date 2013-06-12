@@ -1,6 +1,6 @@
 #include "timer.h"
 #include "util.h"
-#include "../platform/timer.h"
+#include "ptimer.h"
 #include "SDL.h"
 
 static int api_timer(lua_State *lua) {
@@ -9,7 +9,7 @@ static int api_timer(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    lua_pushnumber(lua, pfm_timer_get());
+    lua_pushnumber(lua, ptimer_get());
     return 1;
 }
 
@@ -31,6 +31,6 @@ void timer_reg_thread(lua_State *lua) {
 
 int timer_init(lua_State *lua) {
     timer_reg_thread(lua);
-    return pfm_timer_init();
+    return ptimer_init();
 }
 

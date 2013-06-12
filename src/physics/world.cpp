@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "physres.h"
-#include "../platform/mem.hpp"
+#include "pmem.hpp"
 #include <stdio.h>
 
 static const size_t WORLD_SIZE = 128;
@@ -18,7 +18,8 @@ static worlds_t g_worlds;
 int world_init(int count) {
     world_t *wld;
     g_worlds.count = count;
-    g_worlds.pool = (char*)mem_alloc(MEM_ALIGNOF(world_t), WORLD_SIZE * count);
+    g_worlds.pool = (char*)pmem_alloc(PMEM_ALIGNOF(world_t),
+                                      WORLD_SIZE * count);
     if (!g_worlds.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -75,7 +76,7 @@ void world_done(void) {
             fprintf(stderr, "world_done: exception\n");
         }
     }
-    mem_free(g_worlds.pool);
+    pmem_free(g_worlds.pool);
     g_worlds.pool = 0;
 }
 
