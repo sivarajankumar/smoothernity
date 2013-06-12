@@ -98,7 +98,7 @@ static int cmain_get_int_array
     }
     for (int i = 0; i < *len; ++i) {
         if (!util_isint(lua, -(*len) + i)) {
-            fprintf(stderr, "configure()[\"%s\"]()[%i] not num\n", field, i);
+            fprintf(stderr, "configure()[\"%s\"]()[%i] not int\n", field, i);
             return 1;
         }
         (*array)[i] = lua_tointeger(lua, -(*len) + i);
