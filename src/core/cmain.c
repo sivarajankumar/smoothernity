@@ -34,9 +34,7 @@
     #error "Lua number must have type double"
 #endif
 
-static const size_t ARRAY_ALIGN = 16;
-
-struct main_t {
+struct cmain_t {
     int *main_mpool, main_mpool_len;
     int *physics_mpool, physics_mpool_len;
     int *thread_mpool, thread_mpool_len;
@@ -49,26 +47,26 @@ struct main_t {
     struct mpool_t *mpool;
 };
 
-static struct main_t g_main;
+static struct cmain_t g_cmain;
 
-static int main_panic(lua_State *lua) {
+static int cmain_panic(lua_State *lua) {
     fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
-    longjmp(g_main.panic, 1);
+    longjmp(g_cmain.panic, 1);
 }
 
-static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize) {
+static void * cmain_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize) {
     void *newptr;
     if (ud)
         return 0;
     else if (!osize && !nsize)
         return 0;
     else if (!osize && nsize)
-        return mpool_alloc(g_main.mpool, nsize);
+        return mpool_alloc(g_cmain.mpool, nsize);
     else if (osize && !nsize) {
         mpool_free(ptr);
         return 0;
     }
-    if (!(newptr = mpool_alloc(g_main.mpool, nsize)))
+    if (!(newptr = mpool_alloc(g_cmain.mpool, nsize)))
         return 0;
     else if (ptr) {
         if (osize <= nsize)
@@ -80,7 +78,7 @@ static void * main_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize) {
     return newptr;
 }
 
-static int main_get_int_array
+static int cmain_get_int_array
 (lua_State *lua, const char *field, int *len, int **array) {
     int oldtop = lua_gettop(lua);
     lua_getfield(lua, -1, field);
@@ -109,31 +107,23 @@ static int main_get_int_array
     return 0;
 }
 
-static int main_get_float(lua_State *lua, const char *field, float *dest) {
+static int cmain_get_int(lua_State *lua, const char *field, int *dest) {
     lua_getfield(lua, -1, field);
-    if (!util_isfloat(lua, -1)) {
-        fprintf(stderr, "configure()[\"%s\"] value is not a number\n", field);
+    if (!util_isint(lua, -1)) {
+        fprintf(stderr, "configure()[\"%s\"] value is not an integer\n", field);
         return 1;
     }
-    *dest = (float)lua_tonumber(lua, -1);
+    *dest = lua_tointeger(lua, -1);
     lua_pop(lua, 1);
     return 0;
 }
 
-static int main_get_int(lua_State *lua, const char *field, int *dest) {
-    float f;
-    if (main_get_float(lua, field, &f))
-        return 1;
-    *dest = (int)f;
-    return 0;
-}
-
-static int main_configure(char *script) {
+static int cmain_configure(char *script) {
     lua_State *lua;
     lua = luaL_newstate();
     if (!lua)
         return 1;
-    lua_atpanic(lua, main_panic);
+    lua_atpanic(lua, cmain_panic);
     luaL_openlibs(lua);
     if (luaL_dofile(lua, script)) {
         fprintf(stderr, "Cannot run script: %s\n", lua_tostring(lua, -1));
@@ -145,15 +135,16 @@ static int main_configure(char *script) {
     }
     lua_getfield(lua, -1, "configure");
     if (!lua_isfunction(lua, -1) || lua_pcall(lua, 0, LUA_MULTRET, 0)) {
-        fprintf(stderr, "Cannot run configure() function: %s\n", lua_tostring(lua, -1));
+        fprintf(stderr, "Cannot run configure() function: %s\n",
+                lua_tostring(lua, -1));
         goto cleanup;
     }
     if (!lua_istable(lua, -1)) {
         fprintf(stderr, "Invalid return value of configure() function\n");
         goto cleanup;
     }
-    #define GETI(x) main_get_int(lua, #x, &g_main.x)
-    #define GETA(x) main_get_int_array(lua, #x, &g_main.x##_len, &g_main.x)
+    #define GETI(x) cmain_get_int(lua, #x, &g_cmain.x)
+    #define GETA(x) cmain_get_int_array(lua, #x, &g_cmain.x##_len, &g_cmain.x)
     if (GETI(screen_width) || GETI(screen_height) || GETI(full_screen) ||
     GETI(thread_count) || GETI(vector_count) || GETI(vector_nesting) ||
     GETI(matrix_count) || GETI(matrix_nesting) || GETI(world_count) ||
@@ -171,47 +162,47 @@ cleanup:
     return 1;
 }
 
-static void main_done(void) {
+static void cmain_done(void) {
     vao_done();
     prog_done();
     rbuf_done();
     render_done();
 
-    if (g_main.lua)
-        lua_close(g_main.lua);
-    if (g_main.main_mpool) {
-        pmem_free(g_main.main_mpool);
-        g_main.main_mpool = 0;
+    if (g_cmain.lua)
+        lua_close(g_cmain.lua);
+    if (g_cmain.main_mpool) {
+        pmem_free(g_cmain.main_mpool);
+        g_cmain.main_mpool = 0;
     }
-    if (g_main.physics_mpool) {
-        pmem_free(g_main.physics_mpool);
-        g_main.physics_mpool = 0;
+    if (g_cmain.physics_mpool) {
+        pmem_free(g_cmain.physics_mpool);
+        g_cmain.physics_mpool = 0;
     }
-    if (g_main.thread_mpool) {
-        pmem_free(g_main.thread_mpool);
-        g_main.thread_mpool = 0;
+    if (g_cmain.thread_mpool) {
+        pmem_free(g_cmain.thread_mpool);
+        g_cmain.thread_mpool = 0;
     }
     cbuf_done();
     vector_done();
     matrix_done();
     physics_done();
-    if (g_main.mpool) {
+    if (g_cmain.mpool) {
         fprintf(stderr, "\nMain memory pool:\n");
-        mpool_destroy(g_main.mpool);
+        mpool_destroy(g_cmain.mpool);
     }
     cthread_done();
 
     SDL_Quit();
 }
 
-static int main_init(int argc, char **argv) {
+static int cmain_init(int argc, char **argv) {
     char *script;
     if (argc < 2) {
         fprintf(stderr, "Usage: %s <script.lua>\n", argv[0]);
         return 1;
     }
     script = argv[1];
-    if (main_configure(script)) {
+    if (cmain_configure(script)) {
         fprintf(stderr, "Cannot configure engine\n");
         return 1;
     }
@@ -219,97 +210,97 @@ static int main_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init SDL\n");
         return 1;
     }
-    g_main.mpool = mpool_create(g_main.main_mpool,
-                                g_main.main_mpool + g_main.main_mpool_len / 2,
-                                g_main.main_mpool_len / 2);
-    if (!g_main.mpool) {
+    g_cmain.mpool = mpool_create(g_cmain.main_mpool,
+                                g_cmain.main_mpool + g_cmain.main_mpool_len / 2,
+                                g_cmain.main_mpool_len / 2);
+    if (!g_cmain.mpool) {
         fprintf(stderr, "Cannot create main memory pool\n");
         return 1;
     }
-    g_main.lua = lua_newstate(main_lua_alloc, 0);
-    if (!g_main.lua) {
+    g_cmain.lua = lua_newstate(cmain_lua_alloc, 0);
+    if (!g_cmain.lua) {
         fprintf(stderr, "Cannot create Lua state\n");
         return 1;
     }
-    lua_atpanic(g_main.lua, main_panic);
-    luaL_openlibs(g_main.lua);
+    lua_atpanic(g_cmain.lua, cmain_panic);
+    luaL_openlibs(g_cmain.lua);
 
-    cinput_init(g_main.lua);
+    cinput_init(g_cmain.lua);
 
-    if (timer_init(g_main.lua)) {
+    if (timer_init(g_cmain.lua)) {
         fprintf(stderr, "Cannot init timer\n"); 
         return 1;
     }
-    if (cthread_init(g_main.lua, g_main.thread_count, g_main.thread_mpool,
-    g_main.thread_mpool + g_main.thread_mpool_len / 2,
-    g_main.thread_mpool_len / 2)) {
+    if (cthread_init(g_cmain.lua, g_cmain.thread_count, g_cmain.thread_mpool,
+    g_cmain.thread_mpool + g_cmain.thread_mpool_len / 2,
+    g_cmain.thread_mpool_len / 2)) {
         fprintf(stderr, "Cannot init threads\n"); 
         return 1;
     } 
-    if (physics_init(g_main.lua, g_main.world_count, g_main.colshape_count,
-    g_main.rigidbody_count, g_main.vehicle_count, g_main.physics_mpool,
-    g_main.physics_mpool + g_main.physics_mpool_len / 2,
-    g_main.physics_mpool_len / 2)) {
+    if (physics_init(g_cmain.lua, g_cmain.world_count, g_cmain.colshape_count,
+    g_cmain.rigidbody_count, g_cmain.vehicle_count, g_cmain.physics_mpool,
+    g_cmain.physics_mpool + g_cmain.physics_mpool_len / 2,
+    g_cmain.physics_mpool_len / 2)) {
         fprintf(stderr, "Cannot init physics\n"); 
         return 1;
     } 
-    if (cbuf_init(g_main.lua, g_main.buf_size)) {
+    if (cbuf_init(g_cmain.lua, g_cmain.buf_size)) {
         fprintf(stderr, "Cannot init buffers\n");
         return 1;
     }
-    if (vector_init(g_main.lua, g_main.vector_count, g_main.vector_nesting)) {
+    if (vector_init(g_cmain.lua, g_cmain.vector_count, g_cmain.vector_nesting)) {
         fprintf(stderr, "Cannot init vectors\n");
         return 1;
     }
-    if (matrix_init(g_main.lua, g_main.matrix_count, g_main.matrix_nesting)) {
+    if (matrix_init(g_cmain.lua, g_cmain.matrix_count, g_cmain.matrix_nesting)) {
         fprintf(stderr, "Cannot init matrices\n");
         return 1;
     }
-    if (render_init(g_main.lua, g_main.screen_width,
-    g_main.screen_height, g_main.full_screen)) {
+    if (render_init(g_cmain.lua, g_cmain.screen_width,
+    g_cmain.screen_height, g_cmain.full_screen)) {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
-    if (prog_init(g_main.lua, g_main.prog_count)) {
+    if (prog_init(g_cmain.lua, g_cmain.prog_count)) {
         fprintf(stderr, "Cannot init shader programs\n"); 
         return 1;
     }
-    if (rbuf_init(g_main.lua, g_main.rbuf_count)) {
+    if (rbuf_init(g_cmain.lua, g_cmain.rbuf_count)) {
         fprintf(stderr, "Cannot init render buffers\n"); 
         return 1;
     }
-    if (vao_init(g_main.lua, g_main.vao_count)) {
+    if (vao_init(g_cmain.lua, g_cmain.vao_count)) {
         fprintf(stderr, "Cannot init vertex array objects\n");
         return 1;
     }
-    if (luaL_dofile(g_main.lua, script)) {
-        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_main.lua, -1));
+    if (luaL_dofile(g_cmain.lua, script)) {
+        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_cmain.lua, -1));
         return 1;
     }
     return 0;
 }
 
-static void main_loop(void) {
+static void cmain_run(void) {
     fprintf(stderr, "Game loop start\n");
-    if (!lua_istable(g_main.lua, -1))
+    if (!lua_istable(g_cmain.lua, -1))
         fprintf(stderr, "Invalid return value of main module\n");
     else {
-        lua_getfield(g_main.lua, -1, "run");
-        if (!lua_isfunction(g_main.lua, -1))
+        lua_getfield(g_cmain.lua, -1, "run");
+        if (!lua_isfunction(g_cmain.lua, -1))
             fprintf(stderr, "Cannot find run() function\n");
-        else if (lua_pcall(g_main.lua, 0, LUA_MULTRET, 0))
+        else if (lua_pcall(g_cmain.lua, 0, LUA_MULTRET, 0))
             fprintf(stderr, "Error while executing run() function: %s\n",
-                    lua_tostring(g_main.lua, -1));
+                    lua_tostring(g_cmain.lua, -1));
     }
     fprintf(stderr, "Game loop finish\n");
 }
 
 int main(int argc, char **argv) {
     fprintf(stderr, "Engine start\n");
-    if (!setjmp(g_main.panic))
-        if (!main_init(argc, argv))
-            main_loop();
-    main_done();
+    if (!setjmp(g_cmain.panic))
+        if (!cmain_init(argc, argv))
+            cmain_run();
+    cmain_done();
     fprintf(stderr, "Engine finish\n");
     return EXIT_SUCCESS;
 }
