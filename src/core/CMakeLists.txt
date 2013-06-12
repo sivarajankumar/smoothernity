@@ -6,10 +6,11 @@ find_package(GLEW REQUIRED)
 include_directories(${LUA_INCLUDE_DIR}
                     ${SDL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
-                    ${OPENGL_INCLUDE_DIR})
+                    ${OPENGL_INCLUDE_DIR}
+                    ${CMAKE_SOURCE_DIR}/util)
 
 add_executable(main
-               main.c mpool.c timer.c render.c physics.c thread.c rbuf.c
+               main.c mpool.c timer.c render.c physics.c cthread.c rbuf.c
                vector.c input.c matrix.c buf.c interp.c prog.c vao.c util.c)
 
 target_link_libraries(main
