@@ -11,7 +11,7 @@
 #include "matrix.h"
 #include "physics.h"
 #include "buf.h"
-#include "thread.h"
+#include "cthread.h"
 #include "prog.h"
 #include "rbuf.h"
 #include "vao.h"
@@ -199,7 +199,7 @@ static void main_done(void) {
         fprintf(stderr, "\nMain memory pool:\n");
         mpool_destroy(g_main.mpool);
     }
-    thread_done();
+    cthread_done();
 
     SDL_Quit();
 }
@@ -240,7 +240,7 @@ static int main_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init timer\n"); 
         return 1;
     }
-    if (thread_init(g_main.lua, g_main.thread_count, g_main.thread_mpool,
+    if (cthread_init(g_main.lua, g_main.thread_count, g_main.thread_mpool,
     g_main.thread_mpool + g_main.thread_mpool_len / 2,
     g_main.thread_mpool_len / 2)) {
         fprintf(stderr, "Cannot init threads\n"); 
