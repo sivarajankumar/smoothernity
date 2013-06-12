@@ -22,41 +22,31 @@ static float cbuf_get_nearest(int ofs, int sx, int sy, int x, int y) {
     return g_cbufs.data[ofs + x + (y * sx)];
 }
 
+#define SETUP \
+    float fx = floorf(x); \
+    float fy = floorf(y); \
+    int ix = (int)fx; \
+    int iy = (int)fy;
+#define V(dx,dy) cbuf_get_nearest(ofs, sx, sy, ix + dx, iy + dy)
+
 static float cbuf_get_linear(int ofs, int sx, int sy, float x, float y) {
-    float fx, fy, cx, cy, v00, v01, v10, v11, v0y, v1y;
-    fx = floorf(x);
-    fy = floorf(y);
-    cx = ceilf(x);
-    cy = ceilf(y);
-    v00 = cbuf_get_nearest(ofs, sx, sy, (int)fx, (int)fy);
-    v01 = cbuf_get_nearest(ofs, sx, sy, (int)fx, (int)cy);
-    v10 = cbuf_get_nearest(ofs, sx, sy, (int)cx, (int)fy);
-    v11 = cbuf_get_nearest(ofs, sx, sy, (int)cx, (int)cy);
-    v0y = cinterp_linear(y - fy, v00, v01);
-    v1y = cinterp_linear(y - fy, v10, v11);
+    SETUP
+    float v0y = cinterp_linear(y - fy, V(0, 0), V(0, 1));
+    float v1y = cinterp_linear(y - fy, V(1, 0), V(1, 1));
     return cinterp_linear(x - fx, v0y, v1y);
 }
 
 static float cbuf_get_spline(int ofs, int sx, int sy, float x, float y) {
-    int ix, iy;
-    float v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23;
-    float v30, v31, v32, v33, v0y, v1y, v2y, v3y, fx, fy;
-    fx = floorf(x);
-    fy = floorf(y);
-    ix = (int)fx;
-    iy = (int)fy;
-    #define GET(dx,dy) cbuf_get_nearest(ofs, sx, sy, ix + dx, iy + dy)
-    v00 = GET(-1, -1); v01 = GET(-1, 0); v02 = GET(-1, 1); v03 = GET(-1, 2);
-    v10 = GET( 0, -1); v11 = GET( 0, 0); v12 = GET( 0, 1); v13 = GET( 0, 2);
-    v20 = GET( 1, -1); v21 = GET( 1, 0); v22 = GET( 1, 1); v23 = GET( 1, 2);
-    v30 = GET( 2, -1); v31 = GET( 2, 0); v32 = GET( 2, 1); v33 = GET( 2, 2);
-    #undef GET
-    v0y = cinterp_spline(y - fy, v00, v01, v02, v03);
-    v1y = cinterp_spline(y - fy, v10, v11, v12, v13);
-    v2y = cinterp_spline(y - fy, v20, v21, v22, v23);
-    v3y = cinterp_spline(y - fy, v30, v31, v32, v33);
+    SETUP
+    float v0y = cinterp_spline(y - fy, V(-1, -1), V(-1, 0), V(-1, 1), V(-1, 2));
+    float v1y = cinterp_spline(y - fy, V( 0, -1), V( 0, 0), V( 0, 1), V( 0, 2));
+    float v2y = cinterp_spline(y - fy, V( 1, -1), V( 1, 0), V( 1, 1), V( 1, 2));
+    float v3y = cinterp_spline(y - fy, V( 2, -1), V( 2, 0), V( 2, 1), V( 2, 2));
     return cinterp_spline(x - fx, v0y, v1y, v2y, v3y);
 }
+
+#undef SETUP
+#undef V
 
 static float cbuf_get_interp
 (int ofs, enum cbuf_interp_e interp, int sx, int sy, float x, float y) {
