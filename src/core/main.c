@@ -10,7 +10,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "physics.h"
-#include "buf.h"
+#include "cbuf.h"
 #include "cthread.h"
 #include "prog.h"
 #include "rbuf.h"
@@ -191,7 +191,7 @@ static void main_done(void) {
         pmem_free(g_main.thread_mpool);
         g_main.thread_mpool = 0;
     }
-    buf_done();
+    cbuf_done();
     vector_done();
     matrix_done();
     physics_done();
@@ -253,7 +253,7 @@ static int main_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init physics\n"); 
         return 1;
     } 
-    if (buf_init(g_main.lua, g_main.buf_size)) {
+    if (cbuf_init(g_main.lua, g_main.buf_size)) {
         fprintf(stderr, "Cannot init buffers\n");
         return 1;
     }
