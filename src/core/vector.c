@@ -1,6 +1,6 @@
 #include "vector.h"
 #include "matrix.h"
-#include "buf.h"
+#include "cbuf.h"
 #include "physics.h"
 #include "interp.h"
 #include "util.h"
@@ -337,12 +337,12 @@ static int api_vector_seq(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    if (start < 0 || start >= g_bufs.size - 5) {
+    if (start < 0 || start >= g_cbufs.size - 5) {
         lua_pushstring(lua, "api_vector_seq: start index out of range");
         lua_error(lua);
         return 0;
     }
-    if (len < 2 || len > (g_bufs.size - start) / 5) {
+    if (len < 2 || len > (g_cbufs.size - start) / 5) {
         lua_pushstring(lua, "api_vector_seq: len out of range");
         lua_error(lua);
         return 0;
@@ -484,11 +484,11 @@ int vector_nesting(struct vector_t *vector, int limit) {
 }
 
 static float vector_seq_dt(int i) {
-    return g_bufs.data[i + 4];
+    return g_cbufs.data[i + 4];
 }
 
 static float * vector_seq_value(int i) {
-    return g_bufs.data + i;
+    return g_cbufs.data + i;
 }
 
 static int vector_seq_next(struct vector_t *v, int i) {

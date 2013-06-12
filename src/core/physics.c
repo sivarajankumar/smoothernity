@@ -2,7 +2,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "mpool.h"
-#include "buf.h"
+#include "cbuf.h"
 #include "util.h"
 #include "../physics/physcpp.h"
 #include "../physics/physdbg.h"
@@ -241,7 +241,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    if (start < 0 || start >= g_bufs.size - (width * length)) {
+    if (start < 0 || start >= g_cbufs.size - (width * length)) {
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: start out of range");
         lua_error(lua);
         return 0;
@@ -256,7 +256,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    res = physcpp_cs_alloc_hmap(csi, g_bufs.data + start, width,
+    res = physcpp_cs_alloc_hmap(csi, g_cbufs.data + start, width,
                                 length, hmin, hmax, scale->value);
     if (res != PHYSRES_OK) {
         fprintf(stderr, "api_physics_cs_alloc_hmap: %s\n", physics_error(res));
