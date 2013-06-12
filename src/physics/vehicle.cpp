@@ -2,8 +2,7 @@
 #include "vehicle.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include "../util/util.hpp"
-#include "../platform/memory.h"
+#include "../platform/mem.hpp"
 #include <stdio.h>
 
 static const size_t VEHICLE_SIZE = 256;
@@ -13,17 +12,15 @@ struct vehicles_t {
     char *pool;
 };
 
+static_assert(sizeof(vehicle_t) <= VEHICLE_SIZE, "Invalid vehicle_t size");
+
 static vehicles_t g_vehicles;
 
 int vehicle_init(int count) {
     vehicle_t *veh;
-    if (sizeof(vehicle_t) > VEHICLE_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(vehicle_t) == %i\n",
-                (int)sizeof(vehicle_t));
-        return PHYSRES_CANNOT_INIT;
-    }
     g_vehicles.count = count;
-    g_vehicles.pool = (char*)util_malloc(VEHICLE_SIZE, VEHICLE_SIZE * count);
+    g_vehicles.pool = (char*)mem_alloc(MEM_ALIGNOF(vehicle_t),
+                                       VEHICLE_SIZE * count);
     if (!g_vehicles.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -48,12 +45,12 @@ int vehicle_init(int count) {
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
         }
-        veh->chassis_data = (char*)util_malloc(ALIGNOF(btRigidBody),
-                                               sizeof(btRigidBody));
-        veh->ray_data = (char*)util_malloc(ALIGNOF(btDefaultVehicleRaycaster),
-                                           sizeof(btDefaultVehicleRaycaster));
-        veh->veh_data = (char*)util_malloc(ALIGNOF(btRaycastVehicle),
-                                           sizeof(btRaycastVehicle));
+        veh->chassis_data = (char*)mem_alloc(MEM_ALIGNOF(btRigidBody),
+                                             sizeof(btRigidBody));
+        veh->ray_data = (char*)mem_alloc(MEM_ALIGNOF(btDefaultVehicleRaycaster),
+                                         sizeof(btDefaultVehicleRaycaster));
+        veh->veh_data = (char*)mem_alloc(MEM_ALIGNOF(btRaycastVehicle),
+                                         sizeof(btRaycastVehicle));
         if (!veh->chassis_data || !veh->ray_data || !veh->veh_data)
             return PHYSRES_CANNOT_INIT;
     }
@@ -76,13 +73,13 @@ void vehicle_done(void) {
             fprintf(stderr, "vehicle_done: exception\n");
         }
         if (veh->chassis_data)
-            util_free(veh->chassis_data);
+            mem_free(veh->chassis_data);
         if (veh->ray_data)
-            util_free(veh->ray_data);
+            mem_free(veh->ray_data);
         if (veh->veh_data)
-            util_free(veh->veh_data);
+            mem_free(veh->veh_data);
     }
-    util_free(g_vehicles.pool);
+    mem_free(g_vehicles.pool);
     g_vehicles.pool = 0;
 }
 

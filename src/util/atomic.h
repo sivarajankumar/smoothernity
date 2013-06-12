@@ -1,5 +1,5 @@
-#ifndef MP_ATOMIC_H
-#define MP_ATOMIC_H
+#ifndef UTIL_ATOMIC_H
+#define UTIL_ATOMIC_H
 
 struct atomic_int_t;
 
@@ -10,4 +10,4 @@ void atomic_int_store(struct atomic_int_t*, int);
 void atomic_int_add(struct atomic_int_t*, int);
 void atomic_int_sub(struct atomic_int_t*, int);
 
-#endif /* MP_ATOMIC.H */
+#endif /* UTIL_ATOMIC.H */

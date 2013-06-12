@@ -1,11 +1,9 @@
 #include "buf.h"
 #include "interp.h"
 #include "util.h"
-#include "../util/util.h"
+#include "../platform/mem.h"
 #include <math.h>
 #include <stdio.h>
-
-static const size_t BUF_DATA_ALIGN = 16;
 
 enum buf_interp_e {
     BUF_IPL_NEAREST,
@@ -149,7 +147,7 @@ int buf_init(lua_State *lua, int size) {
         return 1;
     }
     g_bufs.size = size;
-    g_bufs.data = util_malloc(BUF_DATA_ALIGN, sizeof(float) * size);
+    g_bufs.data = mem_alloc(MEM_ALIGNOF(float), sizeof(float) * size);
     if (!g_bufs.data)
         return 1;
     for (int i = 0; i < size; ++i)
@@ -161,7 +159,7 @@ int buf_init(lua_State *lua, int size) {
 void buf_done(void) {
     if (!g_bufs.data)
         return;
-    util_free(g_bufs.data);
+    mem_free(g_bufs.data);
     g_bufs.data = 0;
 }
 

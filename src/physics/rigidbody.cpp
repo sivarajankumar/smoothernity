@@ -2,8 +2,7 @@
 #include "rigidbody.hpp"
 #include "world.hpp"
 #include "colshape.hpp"
-#include "../util/util.hpp"
-#include "../platform/memory.h"
+#include "../platform/mem.hpp"
 #include <stdio.h>
 
 static const size_t RIGIDBODY_SIZE = 128;
@@ -13,17 +12,16 @@ struct rigidbodies_t {
     char *pool;
 };
 
+static_assert(sizeof(rigidbody_t) <= RIGIDBODY_SIZE,
+              "Invalid rigidbody_t size");
+
 static rigidbodies_t g_rigidbodies;
 
 int rigidbody_init(int count) {
     rigidbody_t *rb;
-    if (sizeof(rigidbody_t) > RIGIDBODY_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(rigidbody_t) == %i\n",
-                (int)sizeof(rigidbody_t));
-        return PHYSRES_CANNOT_INIT;
-    }
     g_rigidbodies.count = count;
-    g_rigidbodies.pool = (char*)util_malloc(RIGIDBODY_SIZE, RIGIDBODY_SIZE * count);
+    g_rigidbodies.pool = (char*)mem_alloc(MEM_ALIGNOF(rigidbody_t),
+                                          RIGIDBODY_SIZE * count);
     if (!g_rigidbodies.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -43,7 +41,7 @@ int rigidbody_init(int count) {
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
         }
-        rb->data = (char*)util_malloc(ALIGNOF(btRigidBody), sizeof(btRigidBody));
+        rb->data = (char*)mem_alloc(MEM_ALIGNOF(btRigidBody), sizeof(btRigidBody));
         if (!rb->data)
             return PHYSRES_CANNOT_INIT;
     }
@@ -64,9 +62,9 @@ void rigidbody_done(void) {
             fprintf(stderr, "rigidbody_done: exception\n");
         }
         if (rb->data)
-            util_free(rb->data);
+            mem_free(rb->data);
     }
-    util_free(g_rigidbodies.pool);
+    mem_free(g_rigidbodies.pool);
     g_rigidbodies.pool = 0;
 }
 

@@ -2,12 +2,12 @@
 #include "vector.h"
 #include "physics.h"
 #include "util.h"
-#include "../util/util.h"
+#include "../platform/mem.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 
-static const size_t MATRIX_SIZE = 256;
+#define MATRIX_SIZE 256
 
 enum matrices_e {
     MATRIX_FORCED_UPDATE = -1 /* special update_tag */
@@ -17,6 +17,8 @@ struct matrices_t {
     int count, nesting;
     char *pool;
 };
+
+_Static_assert(sizeof(struct matrix_t) <= MATRIX_SIZE, "Invalid matrix_t size");
 
 static struct matrices_t g_matrices;
 
@@ -477,13 +479,9 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
 
 int matrix_init(lua_State *lua, int count, int nesting) {
     struct matrix_t *m;
-    if (sizeof(struct matrix_t) > MATRIX_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(struct matrix_t) == %i\n",
-                (int)sizeof(struct matrix_t));
-        return 1;
-    }
     g_matrices.count = count;
-    g_matrices.pool = util_malloc(MATRIX_SIZE, MATRIX_SIZE * count);
+    g_matrices.pool = mem_alloc(MEM_ALIGNOF(struct matrix_t),
+                                MATRIX_SIZE * count);
     if (!g_matrices.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -521,7 +519,7 @@ int matrix_init(lua_State *lua, int count, int nesting) {
 void matrix_done(void) {
     if (!g_matrices.pool)
         return;
-    util_free(g_matrices.pool);
+    mem_free(g_matrices.pool);
     g_matrices.pool = 0;
 }
 

@@ -1,7 +1,6 @@
 #include "physres.h"
 #include "colshape.hpp"
-#include "../util/util.hpp"
-#include "../platform/memory.h"
+#include "../platform/mem.hpp"
 #include <stdio.h>
 
 static const size_t COLSHAPE_SIZE = 128;
@@ -11,6 +10,8 @@ struct colshapes_t {
     char *pool;
 };
 
+static_assert(sizeof(colshape_t) <= COLSHAPE_SIZE, "Invalid colshape_t size");
+
 static colshapes_t g_colshapes;
 
 int colshape_init(int count) {
@@ -19,7 +20,7 @@ int colshape_init(int count) {
 
     #define FIND_SIZES(t) \
         if (sizeof(t) > size_max) size_max = sizeof(t); \
-        if (ALIGNOF(t) > align_max) align_max = ALIGNOF(t);
+        if (MEM_ALIGNOF(t) > align_max) align_max = MEM_ALIGNOF(t);
     size_max = align_max = 0;
     FIND_SIZES(btBoxShape);
     FIND_SIZES(btHeightfieldTerrainShape);
@@ -27,13 +28,9 @@ int colshape_init(int count) {
     FIND_SIZES(btSphereShape);
     #undef FIND_SIZES
 
-    if (sizeof(colshape_t) > COLSHAPE_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(colshape_t) == %i\n",
-                (int)sizeof(colshape_t));
-        return PHYSRES_CANNOT_INIT;
-    }
     g_colshapes.count = count;
-    g_colshapes.pool = (char*)util_malloc(COLSHAPE_SIZE, COLSHAPE_SIZE * count);
+    g_colshapes.pool = (char*)mem_alloc(MEM_ALIGNOF(colshape_t),
+                                        COLSHAPE_SIZE * count);
     if (!g_colshapes.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i ) {
@@ -51,7 +48,7 @@ int colshape_init(int count) {
         cs->rbs = 0;
     }
     for (int i = 0; i < count; ++i)
-        if (!(colshape_get(i)->data = (char*)util_malloc(align_max, size_max)))
+        if (!(colshape_get(i)->data = (char*)mem_alloc(align_max, size_max)))
             return PHYSRES_CANNOT_INIT;
     return PHYSRES_OK;
 }
@@ -64,10 +61,10 @@ void colshape_done(void) {
         cs = colshape_get(i);
         if (cs->data) {
             colshape_free(cs);
-            util_free(cs->data);
+            mem_free(cs->data);
         }
     }
-    util_free(g_colshapes.pool);
+    mem_free(g_colshapes.pool);
     g_colshapes.pool = 0;
 }
 

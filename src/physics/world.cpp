@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "physres.h"
-#include "../util/util.hpp"
+#include "../platform/mem.hpp"
 #include <stdio.h>
 
 static const size_t WORLD_SIZE = 128;
@@ -11,17 +11,14 @@ struct worlds_t {
     char *pool;
 };
 
+static_assert(sizeof(world_t) <= WORLD_SIZE, "Invalid world_t size");
+
 static worlds_t g_worlds;
 
 int world_init(int count) {
     world_t *wld;
-    if (sizeof(world_t) > WORLD_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(world_t) == %i\n",
-                (int)sizeof(world_t));
-        return PHYSRES_CANNOT_INIT;
-    }
     g_worlds.count = count;
-    g_worlds.pool = (char*)util_malloc(WORLD_SIZE, WORLD_SIZE * count);
+    g_worlds.pool = (char*)mem_alloc(MEM_ALIGNOF(world_t), WORLD_SIZE * count);
     if (!g_worlds.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -78,7 +75,7 @@ void world_done(void) {
             fprintf(stderr, "world_done: exception\n");
         }
     }
-    util_free(g_worlds.pool);
+    mem_free(g_worlds.pool);
     g_worlds.pool = 0;
 }
 

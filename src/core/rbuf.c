@@ -1,15 +1,17 @@
 #include "rbuf.h"
 #include "vao.h"
 #include "util.h"
-#include "../util/util.h"
+#include "../platform/mem.h"
 #include <stdio.h>
 
-static const size_t RBUF_SIZE = 32;
+#define RBUF_SIZE 32
 
 struct rbufs_t {
     int count;
     char *pool;
 };
+
+_Static_assert(sizeof(struct rbuf_t) <= RBUF_SIZE, "Invalid rbuf_t size");
 
 struct rbufs_t g_rbufs;
 
@@ -245,13 +247,9 @@ void rbuf_reg_thread(lua_State *lua) {
 
 int rbuf_init(lua_State *lua, int count) {
     struct rbuf_t *rbuf;
-    if (sizeof(struct rbuf_t) > RBUF_SIZE) {
-        fprintf(stderr, "Invalid sizes:\nsizeof(struct rbuf_t) == %i\n",
-                (int)sizeof(struct rbuf_t));
-        return 1;
-    }
+
     g_rbufs.count = count;
-    g_rbufs.pool = util_malloc(RBUF_SIZE, RBUF_SIZE * count);
+    g_rbufs.pool = mem_alloc(MEM_ALIGNOF(struct rbuf_t), RBUF_SIZE * count);
     if (!g_rbufs.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -290,7 +288,7 @@ void rbuf_done(void) {
             fprintf(stderr, "rbuf_done: some buffers are still active\n");
             break;
         }
-    util_free(g_rbufs.pool);
+    mem_free(g_rbufs.pool);
     g_rbufs.pool = 0;
 }
 
