@@ -1,6 +1,6 @@
 #include "prog.h"
 #include "util.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <stdio.h>
 
 #define LOG_SIZE 2048
@@ -150,7 +150,7 @@ static int api_prog_use(lua_State *lua) {
 
 int prog_init(lua_State *lua, int count) {
     g_progs.count = count;
-    g_progs.pool = mem_alloc(MEM_ALIGNOF(struct prog_t), PROG_SIZE * count);
+    g_progs.pool = pmem_alloc(PMEM_ALIGNOF(struct prog_t), PROG_SIZE * count);
     if (!g_progs.pool)
         return 1;
     for (int i = 0; i < count; ++i)
@@ -173,7 +173,7 @@ void prog_done(void) {
             fprintf(stderr, "prog_done: some progs are still active\n");
             break;
         }
-    mem_free(g_progs.pool);
+    pmem_free(g_progs.pool);
     g_progs.pool = 0;
 }
 

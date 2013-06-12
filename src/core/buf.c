@@ -1,7 +1,7 @@
 #include "buf.h"
 #include "interp.h"
 #include "util.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -147,7 +147,7 @@ int buf_init(lua_State *lua, int size) {
         return 1;
     }
     g_bufs.size = size;
-    g_bufs.data = mem_alloc(MEM_ALIGNOF(float), sizeof(float) * size);
+    g_bufs.data = pmem_alloc(PMEM_ALIGNOF(float), sizeof(float) * size);
     if (!g_bufs.data)
         return 1;
     for (int i = 0; i < size; ++i)
@@ -159,7 +159,7 @@ int buf_init(lua_State *lua, int size) {
 void buf_done(void) {
     if (!g_bufs.data)
         return;
-    mem_free(g_bufs.data);
+    pmem_free(g_bufs.data);
     g_bufs.data = 0;
 }
 

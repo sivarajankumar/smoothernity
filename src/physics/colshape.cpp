@@ -1,6 +1,6 @@
 #include "physres.h"
 #include "colshape.hpp"
-#include "../platform/mem.hpp"
+#include "pmem.hpp"
 #include <stdio.h>
 
 static const size_t COLSHAPE_SIZE = 128;
@@ -20,7 +20,7 @@ int colshape_init(int count) {
 
     #define FIND_SIZES(t) \
         if (sizeof(t) > size_max) size_max = sizeof(t); \
-        if (MEM_ALIGNOF(t) > align_max) align_max = MEM_ALIGNOF(t);
+        if (PMEM_ALIGNOF(t) > align_max) align_max = PMEM_ALIGNOF(t);
     size_max = align_max = 0;
     FIND_SIZES(btBoxShape);
     FIND_SIZES(btHeightfieldTerrainShape);
@@ -29,8 +29,8 @@ int colshape_init(int count) {
     #undef FIND_SIZES
 
     g_colshapes.count = count;
-    g_colshapes.pool = (char*)mem_alloc(MEM_ALIGNOF(colshape_t),
-                                        COLSHAPE_SIZE * count);
+    g_colshapes.pool = (char*)pmem_alloc(PMEM_ALIGNOF(colshape_t),
+                                         COLSHAPE_SIZE * count);
     if (!g_colshapes.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i ) {
@@ -48,7 +48,7 @@ int colshape_init(int count) {
         cs->rbs = 0;
     }
     for (int i = 0; i < count; ++i)
-        if (!(colshape_get(i)->data = (char*)mem_alloc(align_max, size_max)))
+        if (!(colshape_get(i)->data = (char*)pmem_alloc(align_max, size_max)))
             return PHYSRES_CANNOT_INIT;
     return PHYSRES_OK;
 }
@@ -61,10 +61,10 @@ void colshape_done(void) {
         cs = colshape_get(i);
         if (cs->data) {
             colshape_free(cs);
-            mem_free(cs->data);
+            pmem_free(cs->data);
         }
     }
-    mem_free(g_colshapes.pool);
+    pmem_free(g_colshapes.pool);
     g_colshapes.pool = 0;
 }
 

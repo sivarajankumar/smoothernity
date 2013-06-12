@@ -7,7 +7,8 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${SDL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
                     ${OPENGL_INCLUDE_DIR}
-                    ${CMAKE_SOURCE_DIR}/util)
+                    ${CMAKE_SOURCE_DIR}/util
+                    ${CMAKE_SOURCE_DIR}/platform)
 
 add_executable(main
                main.c mpool.c timer.c render.c physics.c cthread.c rbuf.c

@@ -2,7 +2,7 @@
 #include "vector.h"
 #include "physics.h"
 #include "util.h"
-#include "../platform/mem.h"
+#include "pmem.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -480,8 +480,8 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
 int matrix_init(lua_State *lua, int count, int nesting) {
     struct matrix_t *m;
     g_matrices.count = count;
-    g_matrices.pool = mem_alloc(MEM_ALIGNOF(struct matrix_t),
-                                MATRIX_SIZE * count);
+    g_matrices.pool = pmem_alloc(PMEM_ALIGNOF(struct matrix_t),
+                                 MATRIX_SIZE * count);
     if (!g_matrices.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -519,7 +519,7 @@ int matrix_init(lua_State *lua, int count, int nesting) {
 void matrix_done(void) {
     if (!g_matrices.pool)
         return;
-    mem_free(g_matrices.pool);
+    pmem_free(g_matrices.pool);
     g_matrices.pool = 0;
 }
 
