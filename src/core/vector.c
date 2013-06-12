@@ -4,11 +4,11 @@
 #include "physics.h"
 #include "interp.h"
 #include "util.h"
-#include "../util/util.h"
+#include "../platform/mem.h"
 #include <math.h>
 #include <stdio.h>
 
-static const size_t VECTOR_SIZE = 256;
+#define VECTOR_SIZE 256
 
 enum vectors_e {
     VECTOR_FORCED_UPDATE = -1 /* special update_tag */
@@ -18,6 +18,8 @@ struct vectors_t {
     int count, nesting;
     char *pool;
 };
+
+_Static_assert(sizeof(struct vector_t) <= VECTOR_SIZE, "Invalid vector_t size");
 
 static struct vectors_t g_vectors;
 
@@ -411,13 +413,9 @@ static int api_vector_cast(lua_State *lua) {
 
 int vector_init(lua_State *lua, int count, int nesting) {
     struct vector_t *vec;
-    if (sizeof(struct vector_t) > VECTOR_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(struct vector_t) == %i\n",
-                (int)sizeof(struct vector_t));
-        return 1;
-    }
     g_vectors.count = count;
-    g_vectors.pool = util_malloc(VECTOR_SIZE, VECTOR_SIZE * count);
+    g_vectors.pool = mem_alloc(MEM_ALIGNOF(struct vector_t),
+                               VECTOR_SIZE * count);
     if (!g_vectors.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -450,7 +448,7 @@ int vector_init(lua_State *lua, int count, int nesting) {
 void vector_done(void) {
     if (!g_vectors.pool)
         return;
-    util_free(g_vectors.pool);
+    mem_free(g_vectors.pool);
     g_vectors.pool = 0;
 }
 

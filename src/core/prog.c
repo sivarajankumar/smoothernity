@@ -1,17 +1,19 @@
 #include "prog.h"
 #include "util.h"
-#include "../util/util.h"
+#include "../platform/mem.h"
 #include <stdio.h>
 
 #define LOG_SIZE 2048
+#define PROG_SIZE 4
 
-static const size_t PROG_SIZE = 4;
 static const int PROG_NONE = -1;
 
 struct progs_t {
     int count;
     char *pool;
 };
+
+_Static_assert(sizeof(struct prog_t) <= PROG_SIZE, "Invalid prog_t size");
 
 static struct progs_t g_progs;
 
@@ -147,13 +149,8 @@ static int api_prog_use(lua_State *lua) {
 }
 
 int prog_init(lua_State *lua, int count) {
-    if (sizeof(struct prog_t) > PROG_SIZE) {
-        fprintf(stderr, "Invalid size:\nsizeof(struct prog_t) == %i\n",
-                (int)sizeof(struct prog_t));
-        return 1;
-    }
     g_progs.count = count;
-    g_progs.pool = util_malloc(PROG_SIZE, PROG_SIZE * count);
+    g_progs.pool = mem_alloc(MEM_ALIGNOF(struct prog_t), PROG_SIZE * count);
     if (!g_progs.pool)
         return 1;
     for (int i = 0; i < count; ++i)
@@ -176,7 +173,7 @@ void prog_done(void) {
             fprintf(stderr, "prog_done: some progs are still active\n");
             break;
         }
-    util_free(g_progs.pool);
+    mem_free(g_progs.pool);
     g_progs.pool = 0;
 }
 

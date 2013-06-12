@@ -1,10 +1,9 @@
 #include "thread.h"
 #include "mpool.h"
 #include "util.h"
-#include "../mp/atomic.h"
-#include "../mp/thread.h"
-#include "../platform/timer.h"
-#include "../util/util.h"
+#include "../util/atomic.h"
+#include "../util/thread.h"
+#include "../platform/mem.h"
 #include "lauxlib.h"
 #include "lualib.h"
 #include <stdio.h>
@@ -19,7 +18,7 @@
  * Main thread can query current state of worker thread.
  */
 
-static const size_t THREAD_DATA_SIZE = 512;
+#define THREAD_DATA_SIZE 512
 
 enum thread_state_e {
     THREAD_IDLE,        /* Waiting for main thread to send a new Lua chunk. */
@@ -52,6 +51,9 @@ struct threads_t {
     struct atomic_int_t *quit;
     jmp_buf panic;
 };
+
+_Static_assert(sizeof(struct thread_data_t) <= THREAD_DATA_SIZE,
+               "Invalid thread_data_t size");
 
 static struct threads_t g_threads;
 
@@ -268,13 +270,9 @@ int thread_init
     struct thread_data_t *thread;
     lua_CFunction old_panic;
 
-    if (sizeof(struct thread_data_t) > THREAD_DATA_SIZE) {
-        fprintf(stderr, "Invalid sizes:\nsizeof(struct thread_data_t) == %i\n",
-                (int)sizeof(struct thread_data_t));
-        return 1;
-    }
     g_threads.count = count;
-    g_threads.pool = util_malloc(THREAD_DATA_SIZE, THREAD_DATA_SIZE * count);
+    g_threads.pool = mem_alloc(MEM_ALIGNOF(struct thread_data_t),
+                               THREAD_DATA_SIZE * count);
     if (!g_threads.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -345,7 +343,7 @@ void thread_done(void) {
             if (thread->state)
                 atomic_int_destroy(thread->state);
         }
-        util_free(g_threads.pool);
+        mem_free(g_threads.pool);
         g_threads.pool = 0;
     }
     if (g_threads.quit)
