@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "cmatrix.h"
 #include "vector.h"
 #include "physics.h"
 #include "util.h"
@@ -7,38 +7,39 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MATRIX_SIZE 256
+#define CMATRIX_SIZE 256
 
-enum matrices_e {
-    MATRIX_FORCED_UPDATE = -1 /* special update_tag */
+enum cmatrices_e {
+    CMATRIX_FORCED_UPDATE = -1 /* special update_tag */
 };
 
-struct matrices_t {
+struct cmatrices_t {
     int count, nesting;
     char *pool;
 };
 
-_Static_assert(sizeof(struct matrix_t) <= MATRIX_SIZE, "Invalid matrix_t size");
+_Static_assert(sizeof(struct cmatrix_t) <= CMATRIX_SIZE,
+               "Invalid cmatrix_t size");
 
-static struct matrices_t g_matrices;
+static struct cmatrices_t g_cmatrices;
 
-static void matrix_clear_args(struct matrix_t *matrix) {
-    for (int i = 0; i < MATRIX_ARGVS; ++i)
+static void cmatrix_clear_args(struct cmatrix_t *matrix) {
+    for (int i = 0; i < CMATRIX_ARGVS; ++i)
         matrix->argv[i] = 0;
-    for (int i = 0; i < MATRIX_ARGMS; ++i)
+    for (int i = 0; i < CMATRIX_ARGMS; ++i)
         matrix->argm[i] = 0;
 }
 
 static int api_matrix_copy(lua_State *lua) {
-    struct matrix_t *matrix, *msrc;
+    struct cmatrix_t *matrix, *msrc;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_copy: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    msrc = matrix_get(lua_tointeger(lua, 2));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
+    msrc = cmatrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (!matrix || !msrc) {
@@ -46,19 +47,19 @@ static int api_matrix_copy(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    memcpy(matrix, msrc, MATRIX_SIZE);
+    memcpy(matrix, msrc, CMATRIX_SIZE);
     return 0;
 }
 
 static int api_matrix_stop(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_matrix_stop: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (!matrix) {
@@ -66,15 +67,15 @@ static int api_matrix_stop(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
     matrix->update_tag = 0;
-    matrix->type = MATRIX_CONST;
+    matrix->type = CMATRIX_CONST;
 
     return 0;
 }
 
 static int api_matrix_update(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int update_tag, force;
     float dt;
 
@@ -84,7 +85,7 @@ static int api_matrix_update(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     dt = (float)lua_tonumber(lua, 2);
     update_tag = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
@@ -94,8 +95,8 @@ static int api_matrix_update(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    force = update_tag == MATRIX_FORCED_UPDATE;
-    if (matrix_update(matrix, dt, update_tag, force)) {
+    force = update_tag == CMATRIX_FORCED_UPDATE;
+    if (cmatrix_update(matrix, dt, update_tag, force)) {
         lua_pushstring(lua, "api_matrix_update: update error");
         lua_error(lua);
         return 0;
@@ -104,7 +105,7 @@ static int api_matrix_update(lua_State *lua) {
 }
 
 static int api_matrix_mul(lua_State *lua) {
-    struct matrix_t *matrix, *m0, *m1;
+    struct cmatrix_t *matrix, *m0, *m1;
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
@@ -112,9 +113,9 @@ static int api_matrix_mul(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    m0 = matrix_get(lua_tointeger(lua, 2));
-    m1 = matrix_get(lua_tointeger(lua, 3));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
+    m0 = cmatrix_get(lua_tointeger(lua, 2));
+    m1 = cmatrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
     if (!matrix || !m0 || !m1) {
@@ -122,14 +123,14 @@ static int api_matrix_mul(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_MUL;
+    matrix->type = CMATRIX_MUL;
     matrix->argm[0] = m0;
     matrix->argm[1] = m1;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_mul: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -138,7 +139,7 @@ static int api_matrix_mul(lua_State *lua) {
 }
 
 static int api_matrix_mul_stop(lua_State *lua) {
-    struct matrix_t *matrix, *m0, *m1;
+    struct cmatrix_t *matrix, *m0, *m1;
     float m[16];
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
@@ -147,9 +148,9 @@ static int api_matrix_mul_stop(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    m0 = matrix_get(lua_tointeger(lua, 2));
-    m1 = matrix_get(lua_tointeger(lua, 3));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
+    m0 = cmatrix_get(lua_tointeger(lua, 2));
+    m1 = cmatrix_get(lua_tointeger(lua, 3));
     lua_pop(lua, 3);
 
     if (!matrix || !m0 || !m1) {
@@ -157,26 +158,26 @@ static int api_matrix_mul_stop(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_mul(m, m0->value, m1->value);
+    cmatrix_mul(m, m0->value, m1->value);
 
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
     matrix->update_tag = 0;
-    matrix->type = MATRIX_CONST;
+    matrix->type = CMATRIX_CONST;
     memcpy(matrix->value, m, 16 * sizeof(float));
 
     return 0;
 }
 
 static int api_matrix_inv(lua_State *lua) {
-    struct matrix_t *matrix, *m0;
+    struct cmatrix_t *matrix, *m0;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_matrix_inv: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
-    m0 = matrix_get(lua_tointeger(lua, 2));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
+    m0 = cmatrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (!matrix || !m0) {
@@ -184,13 +185,13 @@ static int api_matrix_inv(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_INV;
+    matrix->type = CMATRIX_INV;
     matrix->argm[0] = m0;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_inv: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -199,7 +200,7 @@ static int api_matrix_inv(lua_State *lua) {
 }
 
 static int api_matrix_frustum(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     struct vector_t *v0, *v1;
     int zneari, zfari;
 
@@ -209,7 +210,7 @@ static int api_matrix_frustum(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     v0 = vector_get(lua_tointeger(lua, 2));
     v1 = vector_get(lua_tointeger(lua, 3));
     zneari = lua_tointeger(lua, 4);
@@ -226,16 +227,16 @@ static int api_matrix_frustum(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_FRUSTUM;
+    matrix->type = CMATRIX_FRUSTUM;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
     matrix->zneari = zneari;
     matrix->zfari = zfari;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_frustum: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -244,7 +245,7 @@ static int api_matrix_frustum(lua_State *lua) {
 }
 
 static int api_matrix_ortho(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     struct vector_t *v0, *v1;
     int zneari, zfari;
 
@@ -254,7 +255,7 @@ static int api_matrix_ortho(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     v0 = vector_get(lua_tointeger(lua, 2));
     v1 = vector_get(lua_tointeger(lua, 3));
     zneari = lua_tointeger(lua, 4);
@@ -271,16 +272,16 @@ static int api_matrix_ortho(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_ORTHO;
+    matrix->type = CMATRIX_ORTHO;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
     matrix->zneari = zneari;
     matrix->zfari = zfari;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_ortho: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -289,7 +290,7 @@ static int api_matrix_ortho(lua_State *lua) {
 }
 
 static int api_matrix_pos_scl_rot(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     struct vector_t *v0, *v1, *v2;
     int rotaxis, rotanglei;
 
@@ -300,7 +301,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     v0 = vector_get(lua_tointeger(lua, 2));
     v1 = vector_get(lua_tointeger(lua, 3));
     v2 = vector_get(lua_tointeger(lua, 4));
@@ -313,7 +314,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    if (rotaxis < 0 || rotaxis >= MATRIX_AXES_TOTAL) {
+    if (rotaxis < 0 || rotaxis >= CMATRIX_AXES_TOTAL) {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: invalid rotation axis");
         lua_error(lua);
         return 0;
@@ -323,17 +324,17 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_POS_SCL_ROT;
+    matrix->type = CMATRIX_POS_SCL_ROT;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
     matrix->argv[2] = v2;
-    matrix->rotaxis = (enum matrix_axis_e)rotaxis;
+    matrix->rotaxis = (enum cmatrix_axis_e)rotaxis;
     matrix->rotanglei = rotanglei;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_pos_scl_rot: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -342,7 +343,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
 }
 
 static int api_matrix_from_to_up(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     struct vector_t *v0, *v1, *v2;
 
     if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
@@ -351,7 +352,7 @@ static int api_matrix_from_to_up(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     v0 = vector_get(lua_tointeger(lua, 2));
     v1 = vector_get(lua_tointeger(lua, 3));
     v2 = vector_get(lua_tointeger(lua, 4));
@@ -362,15 +363,15 @@ static int api_matrix_from_to_up(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_FROM_TO_UP;
+    matrix->type = CMATRIX_FROM_TO_UP;
     matrix->argv[0] = v0;
     matrix->argv[1] = v1;
     matrix->argv[2] = v2;
 
-    if (!matrix_nesting(matrix, g_matrices.nesting)) {
+    if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
         lua_pushstring(lua, "api_matrix_from_to_up: nesting is too deep");
         lua_error(lua);
         return 0;
@@ -379,7 +380,7 @@ static int api_matrix_from_to_up(lua_State *lua) {
 }
 
 static int api_matrix_rigid_body(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int rbi;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
@@ -387,7 +388,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     rbi = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
@@ -396,10 +397,10 @@ static int api_matrix_rigid_body(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_RIGID_BODY;
+    matrix->type = CMATRIX_RIGID_BODY;
     matrix->rigid_body = rbi;
 
     if (physics_rb_fetch_tm(rbi, matrix->value)) {
@@ -411,7 +412,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
 }
 
 static int api_matrix_vehicle_chassis(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int vehi;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
@@ -419,7 +420,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     vehi = lua_tointeger(lua, 2);
     lua_pop(lua, 2);
 
@@ -428,10 +429,10 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_VEHICLE_CHASSIS;
+    matrix->type = CMATRIX_VEHICLE_CHASSIS;
     matrix->vehicle = vehi;
 
     if (physics_veh_fetch_chassis_tm(vehi, matrix->value)) {
@@ -443,7 +444,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
 }
 
 static int api_matrix_vehicle_wheel(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int vehi, wheel;
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
@@ -452,7 +453,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix = matrix_get(lua_tointeger(lua, 1));
+    matrix = cmatrix_get(lua_tointeger(lua, 1));
     vehi = lua_tointeger(lua, 2);
     wheel = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
@@ -462,10 +463,10 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    matrix_clear_args(matrix);
+    cmatrix_clear_args(matrix);
 
     matrix->update_tag = 0;
-    matrix->type = MATRIX_VEHICLE_WHEEL;
+    matrix->type = CMATRIX_VEHICLE_WHEEL;
     matrix->vehicle = vehi;
     matrix->wheel = wheel;
 
@@ -477,20 +478,20 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
     return 0;
 }
 
-int matrix_init(lua_State *lua, int count, int nesting) {
-    struct matrix_t *m;
-    g_matrices.count = count;
-    g_matrices.pool = pmem_alloc(PMEM_ALIGNOF(struct matrix_t),
-                                 MATRIX_SIZE * count);
-    if (!g_matrices.pool)
+int cmatrix_init(lua_State *lua, int count, int nesting) {
+    struct cmatrix_t *m;
+    g_cmatrices.count = count;
+    g_cmatrices.pool = pmem_alloc(PMEM_ALIGNOF(struct cmatrix_t),
+                                 CMATRIX_SIZE * count);
+    if (!g_cmatrices.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
-        m = matrix_get(i);
+        m = cmatrix_get(i);
         for (int j = 0; j < 16; ++j)
             m->value[j] = 0;
-        m->type = MATRIX_CONST;
+        m->type = CMATRIX_CONST;
     }
-    g_matrices.nesting = nesting;
+    g_cmatrices.nesting = nesting;
 
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_matrix_copy);
@@ -507,7 +508,7 @@ int matrix_init(lua_State *lua, int count, int nesting) {
     REGF(api_matrix_vehicle_chassis);
     REGF(api_matrix_vehicle_wheel);
     #undef REGF
-    #define REGN(x) lua_pushinteger(lua, x); lua_setglobal(lua, "API_"#x)
+    #define REGN(x) lua_pushinteger(lua, C##x); lua_setglobal(lua, "API_"#x)
     REGN(MATRIX_AXIS_X);
     REGN(MATRIX_AXIS_Y);
     REGN(MATRIX_AXIS_Z);
@@ -516,35 +517,35 @@ int matrix_init(lua_State *lua, int count, int nesting) {
     return 0;
 }
 
-void matrix_done(void) {
-    if (!g_matrices.pool)
+void cmatrix_done(void) {
+    if (!g_cmatrices.pool)
         return;
-    pmem_free(g_matrices.pool);
-    g_matrices.pool = 0;
+    pmem_free(g_cmatrices.pool);
+    g_cmatrices.pool = 0;
 }
 
-struct matrix_t * matrix_get(int i) {
-    if (i >= 0 && i < g_matrices.count)
-        return (struct matrix_t*)(g_matrices.pool + MATRIX_SIZE * i);
+struct cmatrix_t * cmatrix_get(int i) {
+    if (i >= 0 && i < g_cmatrices.count)
+        return (struct cmatrix_t*)(g_cmatrices.pool + CMATRIX_SIZE * i);
     else
         return 0;
 }
 
-int matrix_nesting(struct matrix_t *matrix, int limit) {
+int cmatrix_nesting(struct cmatrix_t *matrix, int limit) {
     int min, cur;
     if (limit > 0) {
         min = limit;
-        for (int i = 0; i < MATRIX_ARGVS; ++i) {
+        for (int i = 0; i < CMATRIX_ARGVS; ++i) {
             if (!matrix->argv[i])
                 continue;
             cur = vector_nesting(matrix->argv[i], limit - 1);
             if (cur < min)
                 min = cur;
         }
-        for (int i = 0; i < MATRIX_ARGMS; ++i) {
+        for (int i = 0; i < CMATRIX_ARGMS; ++i) {
             if (!matrix->argm[i])
                 continue;
-            cur = matrix_nesting(matrix->argm[i], limit - 1);
+            cur = cmatrix_nesting(matrix->argm[i], limit - 1);
             if (cur < min)
                 min = cur;
         }
@@ -554,51 +555,51 @@ int matrix_nesting(struct matrix_t *matrix, int limit) {
         return limit;
 }
 
-static int matrix_update_mul(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_mul(struct cmatrix_t *m, float dt, int force) {
     float *m0, *m1;
     for (int i = 0; i < 2; ++i)
-        if (matrix_update(m->argm[i], dt, m->update_tag, force))
+        if (cmatrix_update(m->argm[i], dt, m->update_tag, force))
             return 1;
     m0 = m->argm[0]->value;
     m1 = m->argm[1]->value;
-    matrix_mul(m->value, m0, m1);
+    cmatrix_mul(m->value, m0, m1);
     return 0;
 }
 
-static int matrix_update_inv(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_inv(struct cmatrix_t *m, float dt, int force) {
     float *m0;
-    if (matrix_update(m->argm[0], dt, m->update_tag, force))
+    if (cmatrix_update(m->argm[0], dt, m->update_tag, force))
         return 1;
     m0 = m->argm[0]->value;
-    matrix_inv(m->value, m0);
+    cmatrix_inv(m->value, m0);
     return 0;
 }
 
-static int matrix_update_frustum(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_frustum(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1;
     for (int i = 0; i < 2; ++i)
         if (vector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
-    matrix_frustum(m->value, v0[0], v0[1], v0[2], v0[3],
-                   v1[m->zneari], v1[m->zfari]);
+    cmatrix_frustum(m->value, v0[0], v0[1], v0[2], v0[3],
+                    v1[m->zneari], v1[m->zfari]);
     return 0;
 }
 
-static int matrix_update_ortho(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_ortho(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1;
     for (int i = 0; i < 2; ++i)
         if (vector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
-    matrix_ortho(m->value, v0[0], v0[1], v0[2], v0[3],
-                 v1[m->zneari], v1[m->zfari]);
+    cmatrix_ortho(m->value, v0[0], v0[1], v0[2], v0[3],
+                  v1[m->zneari], v1[m->zfari]);
     return 0;
 }
 
-static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_pos_scl_rot(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1, *v2;
     for (int i = 0; i < 3; ++i)
         if (vector_update(m->argv[i], dt, m->update_tag, force))
@@ -606,12 +607,11 @@ static int matrix_update_pos_scl_rot(struct matrix_t *m, float dt, int force) {
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
     v2 = m->argv[2]->value;
-    matrix_pos_scl_rot(m->value, v0, v1,
-                       m->rotaxis, v2[m->rotanglei]);
+    cmatrix_pos_scl_rot(m->value, v0, v1, m->rotaxis, v2[m->rotanglei]);
     return 0;
 }
 
-static int matrix_update_from_to_up(struct matrix_t *m, float dt, int force) {
+static int cmatrix_update_from_to_up(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1, *v2;
     for (int i = 0; i < 3; ++i)
         if (vector_update(m->argv[i], dt, m->update_tag, force))
@@ -619,38 +619,38 @@ static int matrix_update_from_to_up(struct matrix_t *m, float dt, int force) {
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
     v2 = m->argv[2]->value;
-    matrix_from_to_up(m->value, v0, v1, v2);
+    cmatrix_from_to_up(m->value, v0, v1, v2);
     return 0;
 }
 
-int matrix_update(struct matrix_t *m, float dt, int update_tag, int force) {
-    if (m->type == MATRIX_CONST)
+int cmatrix_update(struct cmatrix_t *m, float dt, int update_tag, int force) {
+    if (m->type == CMATRIX_CONST)
         return 0;
     if (!force && m->update_tag == update_tag)
         return 0;
     m->update_tag = update_tag;
-    if (m->type == MATRIX_MUL)
-        return matrix_update_mul(m, dt, force);
-    else if (m->type == MATRIX_INV)
-        return matrix_update_inv(m, dt, force);
-    else if (m->type == MATRIX_FRUSTUM)
-        return matrix_update_frustum(m, dt, force);
-    else if (m->type == MATRIX_ORTHO)
-        return matrix_update_ortho(m, dt, force);
-    else if (m->type == MATRIX_POS_SCL_ROT)
-        return matrix_update_pos_scl_rot(m, dt, force);
-    else if (m->type == MATRIX_FROM_TO_UP)
-        return matrix_update_from_to_up(m, dt, force);
-    else if (m->type == MATRIX_RIGID_BODY)
+    if (m->type == CMATRIX_MUL)
+        return cmatrix_update_mul(m, dt, force);
+    else if (m->type == CMATRIX_INV)
+        return cmatrix_update_inv(m, dt, force);
+    else if (m->type == CMATRIX_FRUSTUM)
+        return cmatrix_update_frustum(m, dt, force);
+    else if (m->type == CMATRIX_ORTHO)
+        return cmatrix_update_ortho(m, dt, force);
+    else if (m->type == CMATRIX_POS_SCL_ROT)
+        return cmatrix_update_pos_scl_rot(m, dt, force);
+    else if (m->type == CMATRIX_FROM_TO_UP)
+        return cmatrix_update_from_to_up(m, dt, force);
+    else if (m->type == CMATRIX_RIGID_BODY)
         return physics_rb_fetch_tm(m->rigid_body, m->value);
-    else if (m->type == MATRIX_VEHICLE_CHASSIS)
+    else if (m->type == CMATRIX_VEHICLE_CHASSIS)
         return physics_veh_fetch_chassis_tm(m->vehicle, m->value);
-    else if (m->type == MATRIX_VEHICLE_WHEEL)
+    else if (m->type == CMATRIX_VEHICLE_WHEEL)
         return physics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value);
     return 0;
 }
 
-void matrix_mul(float *out, float *m1, float *m2) {
+void cmatrix_mul(float *out, float *m1, float *m2) {
     out[0] = m1[0]*m2[0] + m1[4]*m2[1] + m1[ 8]*m2[2] + m1[12]*m2[3];
     out[1] = m1[1]*m2[0] + m1[5]*m2[1] + m1[ 9]*m2[2] + m1[13]*m2[3];
     out[2] = m1[2]*m2[0] + m1[6]*m2[1] + m1[10]*m2[2] + m1[14]*m2[3];
@@ -672,7 +672,7 @@ void matrix_mul(float *out, float *m1, float *m2) {
     out[15] = m1[3]*m2[12] + m1[7]*m2[13] + m1[11]*m2[14] + m1[15]*m2[15];
 }
 
-void matrix_from_to_up(float *out, float *from, float *to, float *up) {
+void cmatrix_from_to_up(float *out, float *from, float *to, float *up) {
     static const float THRESHOLD = 0.1f;
     float diff[4], az[4], ax[4], ay[4], len;
     vector_wsum(diff, 1, to, -1, from);
@@ -682,33 +682,33 @@ void matrix_from_to_up(float *out, float *from, float *to, float *up) {
     vector_wsum(az, -1.0f / len, diff, 0, diff);
     vector_cross(ax, up, az);
     vector_cross(ay, az, ax);
-    matrix_pos_axes(out, from, ax, ay, az);
+    cmatrix_pos_axes(out, from, ax, ay, az);
 }
 
-void matrix_pos_axes(float *out, float *pos, float *ax, float *ay, float *az) {
+void cmatrix_pos_axes(float *out, float *pos, float *ax, float *ay, float *az) {
     out[ 0] =  ax[0]; out[ 1] =  ax[1]; out[ 2] =  ax[2]; out[ 3] = 0;
     out[ 4] =  ay[0]; out[ 5] =  ay[1]; out[ 6] =  ay[2]; out[ 7] = 0;
     out[ 8] =  az[0]; out[ 9] =  az[1]; out[10] =  az[2]; out[11] = 0;
     out[12] = pos[0]; out[13] = pos[1]; out[14] = pos[2]; out[15] = 1;
 }
 
-void matrix_pos_scl_rot(float *out, float *pos, float *scl,
-enum matrix_axis_e rotaxis, float rotangle) {
+void cmatrix_pos_scl_rot(float *out, float *pos, float *scl,
+enum cmatrix_axis_e rotaxis, float rotangle) {
     float axisx[3], axisy[3], axisz[3], rcos, rsin;
 
     rcos = cosf(rotangle);
     rsin = sinf(rotangle);
-    if (rotaxis == MATRIX_AXIS_X) {
+    if (rotaxis == CMATRIX_AXIS_X) {
         axisx[0] = 1; axisx[1] =     0; axisx[2] =    0; 
         axisy[0] = 0; axisy[1] =  rcos; axisy[2] = rsin; 
         axisz[0] = 0; axisz[1] = -rsin; axisz[2] = rcos; 
     }
-    else if (rotaxis == MATRIX_AXIS_Y) {
+    else if (rotaxis == CMATRIX_AXIS_Y) {
         axisx[0] = rcos; axisx[1] = 0; axisx[2] = -rsin; 
         axisy[0] =    0; axisy[1] = 1; axisy[2] =     0; 
         axisz[0] = rsin; axisz[1] = 0; axisz[2] =  rcos; 
     }
-    else if (rotaxis == MATRIX_AXIS_Z) {
+    else if (rotaxis == CMATRIX_AXIS_Z) {
         axisx[0] =  rcos; axisx[1] = rsin; axisx[2] = 0;
         axisy[0] = -rsin; axisy[1] = rcos; axisy[2] = 0;
         axisz[0] =     0; axisz[1] =    0; axisz[2] = 1;
@@ -717,10 +717,10 @@ enum matrix_axis_e rotaxis, float rotangle) {
     axisy[0] *= scl[1]; axisy[1] *= scl[1]; axisy[2] *= scl[1];
     axisz[0] *= scl[2]; axisz[1] *= scl[2]; axisz[2] *= scl[2];
 
-    matrix_pos_axes(out, pos, axisx, axisy, axisz);
+    cmatrix_pos_axes(out, pos, axisx, axisy, axisz);
 }
 
-void matrix_inv(float *out, float *m) {
+void cmatrix_inv(float *out, float *m) {
     float inv[16], det;
     int i;
 
@@ -844,7 +844,7 @@ void matrix_inv(float *out, float *m) {
         out[i] = inv[i] * det;
 }
 
-void matrix_frustum(float *out, float left, float right,
+void cmatrix_frustum(float *out, float left, float right,
 float bottom, float top, float znear, float zfar) {
     float temp, temp2, temp3, temp4;
     temp = 2.0f * znear;
@@ -873,7 +873,7 @@ float bottom, float top, float znear, float zfar) {
     out[15] = 0;
 }
 
-void matrix_ortho(float *out, float left, float right,
+void cmatrix_ortho(float *out, float left, float right,
 float bottom, float top, float znear, float zfar) {
     out[0] = 2.0f / (right - left);
     out[1] = 0;

@@ -1,6 +1,6 @@
 #include "physics.h"
 #include "vector.h"
-#include "matrix.h"
+#include "cmatrix.h"
 #include "mpool.h"
 #include "cbuf.h"
 #include "util.h"
@@ -289,7 +289,7 @@ static int api_physics_cs_alloc_comp(lua_State *lua) {
 
 static int api_physics_cs_comp_add(lua_State *lua) {
     int parenti, childi, res;
-    struct matrix_t *m;
+    struct cmatrix_t *m;
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
@@ -298,7 +298,7 @@ static int api_physics_cs_comp_add(lua_State *lua) {
         return 0;
     }
     parenti = lua_tointeger(lua, 1);
-    m = matrix_get(lua_tointeger(lua, 2));
+    m = cmatrix_get(lua_tointeger(lua, 2));
     childi = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
 
@@ -335,7 +335,7 @@ static int api_physics_cs_free(lua_State *lua) {
 }
 
 static int api_physics_rb_alloc(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int rbi, wldi, csi, res;
     float mass, fr, roll_fr;
 
@@ -349,7 +349,7 @@ static int api_physics_rb_alloc(lua_State *lua) {
     rbi = lua_tointeger(lua, 1);
     wldi = lua_tointeger(lua, 2);
     csi = lua_tointeger(lua, 3);
-    matrix = matrix_get(lua_tointeger(lua, 4));
+    matrix = cmatrix_get(lua_tointeger(lua, 4));
     mass = (float)lua_tonumber(lua, 5);
     fr = (float)lua_tonumber(lua, 6);
     roll_fr = (float)lua_tonumber(lua, 7);
@@ -399,7 +399,7 @@ static int api_physics_rb_free(lua_State *lua) {
 }
 
 static int api_physics_veh_alloc(lua_State *lua) {
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     int wldi, shapei, inerti, vehi, res;
     float mass, ch_frict, ch_roll_frict, sus_stif, sus_comp;
     float sus_damp, sus_trav, sus_force, slip_frict;
@@ -417,7 +417,7 @@ static int api_physics_veh_alloc(lua_State *lua) {
     wldi = lua_tointeger(lua, 2);
     shapei = lua_tointeger(lua, 3);
     inerti = lua_tointeger(lua, 4);
-    matrix = matrix_get(lua_tointeger(lua, 5));
+    matrix = cmatrix_get(lua_tointeger(lua, 5));
     mass = (float)lua_tonumber(lua, 6);
     ch_frict = (float)lua_tonumber(lua, 7);
     ch_roll_frict = (float)lua_tonumber(lua, 8);
@@ -546,14 +546,14 @@ static int api_physics_veh_set_wheel(lua_State *lua) {
 
 static int api_physics_veh_transform(lua_State *lua) {
     int vehi, res;
-    struct matrix_t *matrix;
+    struct cmatrix_t *matrix;
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_physics_veh_transform: incorrect argument");
         lua_error(lua);
         return 0;
     }
     vehi = lua_tointeger(lua, 1);
-    matrix = matrix_get(lua_tointeger(lua, 2));
+    matrix = cmatrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
     if (!matrix) {
         lua_pushstring(lua, "api_physics_veh_transform: invalid matrix");
