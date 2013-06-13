@@ -1,7 +1,7 @@
 #include "physics.h"
 #include "vector.h"
 #include "cmatrix.h"
-#include "mpool.h"
+#include "cmpool.h"
 #include "cbuf.h"
 #include "util.h"
 #include "../physics/physcpp.h"
@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 struct physics_t {
-    struct mpool_t *mpool;
+    struct cmpool_t *mpool;
 };
 
 static struct physics_t g_physics;
@@ -47,7 +47,7 @@ static const char * physics_error(int res) {
 }
 
 static void * physics_malloc(size_t size) {
-    return mpool_alloc(g_physics.mpool, size);
+    return cmpool_alloc(g_physics.mpool, size);
 }
 
 static int api_physics_wld_update(lua_State *lua) {
@@ -592,10 +592,10 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
 
 int physics_init(lua_State *lua, int wld_count, int cs_count, int rb_count,
 int veh_count, const int msizes[], const int mcounts[], int mlen) {
-    g_physics.mpool = mpool_create(msizes, mcounts, mlen);
+    g_physics.mpool = cmpool_create(msizes, mcounts, mlen);
     if (!g_physics.mpool)
         return 1;
-    if (physcpp_init(physics_malloc, mpool_free, wld_count,
+    if (physcpp_init(physics_malloc, cmpool_free, wld_count,
     cs_count, rb_count, veh_count) != PHYSRES_OK)
         return 1;
     #define REGF(x) lua_register(lua, #x, x)
@@ -630,7 +630,7 @@ void physics_done(void) {
     physcpp_done();
     fprintf(stderr, "\nPhysics memory pool:\n");
     if (g_physics.mpool)
-        mpool_destroy(g_physics.mpool);
+        cmpool_destroy(g_physics.mpool);
 }
 
 int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout) {

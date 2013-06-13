@@ -11,7 +11,7 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${CMAKE_SOURCE_DIR}/platform)
 
 add_executable(main
-               cmain.c mpool.c timer.c render.c physics.c cthread.c rbuf.c
+               cmain.c cmpool.c timer.c render.c physics.c cthread.c rbuf.c
                vector.c cinput.c cmatrix.c cbuf.c cinterp.c prog.c vao.c
                util.c)
 
