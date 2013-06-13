@@ -9,7 +9,7 @@
 #include "cinput.h"
 #include "vector.h"
 #include "cmatrix.h"
-#include "physics.h"
+#include "cphysics.h"
 #include "cbuf.h"
 #include "cthread.h"
 #include "prog.h"
@@ -185,7 +185,7 @@ static void cmain_done(void) {
     cbuf_done();
     vector_done();
     cmatrix_done();
-    physics_done();
+    cphysics_done();
     if (g_cmain.mpool) {
         fprintf(stderr, "\nMain memory pool:\n");
         cmpool_report(g_cmain.mpool);
@@ -238,7 +238,7 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init threads\n"); 
         return 1;
     } 
-    if (physics_init(g_cmain.lua, g_cmain.world_count, g_cmain.colshape_count,
+    if (cphysics_init(g_cmain.lua, g_cmain.world_count, g_cmain.colshape_count,
     g_cmain.rigidbody_count, g_cmain.vehicle_count, g_cmain.physics_mpool,
     g_cmain.physics_mpool + g_cmain.physics_mpool_len / 2,
     g_cmain.physics_mpool_len / 2)) {
