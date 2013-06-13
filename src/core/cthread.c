@@ -1,5 +1,5 @@
 #include "cthread.h"
-#include "mpool.h"
+#include "cmpool.h"
 #include "util.h"
 #include "uatomic.h"
 #include "uthread.h"
@@ -36,7 +36,7 @@ struct cthread_t {
     struct uthread_cond_t *engage;
     struct uthread_t *thread;
     lua_State *lua;
-    struct mpool_t *mpool;
+    struct cmpool_t *mpool;
     const char *resp;
     size_t respsize;
     struct uatomic_int_t *state;
@@ -101,24 +101,24 @@ static struct cthread_t * cthread_get(int ti) {
 
 static void * cthread_lua_alloc
 (void *ud, void *ptr, size_t osize, size_t nsize) {
-    struct mpool_t *mpool = ud;
+    struct cmpool_t *mpool = ud;
     void *newptr;
     if (!osize && !nsize)
         return 0;
     else if (!osize && nsize)
-        return mpool_alloc(mpool, nsize);
+        return cmpool_alloc(mpool, nsize);
     else if (osize && !nsize) {
-        mpool_free(ptr);
+        cmpool_free(ptr);
         return 0;
     }
-    if (!(newptr = mpool_alloc(mpool, nsize)))
+    if (!(newptr = cmpool_alloc(mpool, nsize)))
         return 0;
     else if (ptr) {
         if (osize <= nsize)
             memcpy(newptr, ptr, osize);
         else
             memcpy(newptr, ptr, nsize);
-        mpool_free(ptr);
+        cmpool_free(ptr);
     }
     return newptr;
 }
@@ -289,7 +289,7 @@ int cthread_init
     uatomic_int_store(g_cthreads.quit, 0);
     for (int i = 0; i < count; ++i) {
         thread = cthread_get(i);
-        if (!(thread->mpool = mpool_create(msizes, mcounts, mlen)) ||
+        if (!(thread->mpool = cmpool_create(msizes, mcounts, mlen)) ||
         !(thread->lua = lua_newstate(cthread_lua_alloc, thread->mpool)))
             return 1;
 
@@ -338,7 +338,7 @@ void cthread_done(void) {
                 lua_close(thread->lua);
             if (thread->mpool) {
                 fprintf(stderr, "\nThread %i memory pool:\n", i);
-                mpool_destroy(thread->mpool);
+                cmpool_destroy(thread->mpool);
             }
             if (thread->state)
                 uatomic_int_destroy(thread->state);

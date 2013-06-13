@@ -3,7 +3,7 @@
 #include "lauxlib.h"
 #include "lualib.h"
 #include "util.h"
-#include "mpool.h"
+#include "cmpool.h"
 #include "timer.h"
 #include "render.h"
 #include "cinput.h"
@@ -44,7 +44,7 @@ struct cmain_t {
     int buf_size, prog_count, rbuf_count, vao_count;
     lua_State *lua;
     jmp_buf panic;
-    struct mpool_t *mpool;
+    struct cmpool_t *mpool;
 };
 
 static struct cmain_t g_cmain;
@@ -61,19 +61,19 @@ static void * cmain_lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize) {
     else if (!osize && !nsize)
         return 0;
     else if (!osize && nsize)
-        return mpool_alloc(g_cmain.mpool, nsize);
+        return cmpool_alloc(g_cmain.mpool, nsize);
     else if (osize && !nsize) {
-        mpool_free(ptr);
+        cmpool_free(ptr);
         return 0;
     }
-    if (!(newptr = mpool_alloc(g_cmain.mpool, nsize)))
+    if (!(newptr = cmpool_alloc(g_cmain.mpool, nsize)))
         return 0;
     else if (ptr) {
         if (osize <= nsize)
             memcpy(newptr, ptr, osize);
         else
             memcpy(newptr, ptr, nsize);
-        mpool_free(ptr);
+        cmpool_free(ptr);
     }
     return newptr;
 }
@@ -188,7 +188,7 @@ static void cmain_done(void) {
     physics_done();
     if (g_cmain.mpool) {
         fprintf(stderr, "\nMain memory pool:\n");
-        mpool_destroy(g_cmain.mpool);
+        cmpool_destroy(g_cmain.mpool);
     }
     cthread_done();
 
@@ -210,9 +210,9 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init SDL\n");
         return 1;
     }
-    g_cmain.mpool = mpool_create(g_cmain.main_mpool,
-                                g_cmain.main_mpool + g_cmain.main_mpool_len / 2,
-                                g_cmain.main_mpool_len / 2);
+    g_cmain.mpool = cmpool_create(g_cmain.main_mpool,
+                                  g_cmain.main_mpool + g_cmain.main_mpool_len/2,
+                                  g_cmain.main_mpool_len / 2);
     if (!g_cmain.mpool) {
         fprintf(stderr, "Cannot create main memory pool\n");
         return 1;
