@@ -1,4 +1,4 @@
-#include "physics.h"
+#include "cphysics.h"
 #include "vector.h"
 #include "cmatrix.h"
 #include "cmpool.h"
@@ -9,13 +9,13 @@
 #include "../physics/physres.h"
 #include <stdio.h>
 
-struct physics_t {
+struct cphysics_t {
     struct cmpool_t *mpool;
 };
 
-static struct physics_t g_physics;
+static struct cphysics_t g_cphysics;
 
-static const char * physics_error(int res) {
+static const char * cphysics_error(int res) {
     switch (res) {
         case PHYSRES_OUT_OF_RB:
             return "out of rigid bodies";
@@ -46,8 +46,8 @@ static const char * physics_error(int res) {
     }
 }
 
-static void * physics_malloc(size_t size) {
-    return cmpool_alloc(g_physics.mpool, size);
+static void * cphysics_malloc(size_t size) {
+    return cmpool_alloc(g_cphysics.mpool, size);
 }
 
 static int api_physics_wld_update(lua_State *lua) {
@@ -67,7 +67,7 @@ static int api_physics_wld_update(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_wld_update(wldi, dt)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_wld_update: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_wld_update: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_wld_update: physics error");
         lua_error(lua);
         return 0;
@@ -85,7 +85,7 @@ static int api_physics_wld_ddraw(lua_State *lua) {
     wldi = lua_tointeger(lua, 1);
     lua_pop(lua, 1);
     if ((res = physcpp_wld_ddraw(wldi)) != PHYSRES_OK) {
-        fprintf(stderr, "physics_wld_ddraw: %s\n", physics_error(res));
+        fprintf(stderr, "physics_wld_ddraw: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_wld_ddraw: draw error");
         lua_error(lua);
         return 0;
@@ -110,7 +110,7 @@ static int api_physics_wld_gravity(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_wld_gravity(wldi, v->value)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_wld_gravity: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_wld_gravity: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_wld_gravity: error");
         lua_error(lua);
         return 0;
@@ -135,7 +135,7 @@ static int api_physics_wld_move(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_wld_move(wldi, v->value)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_wld_move: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_wld_move: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_wld_move: error");
         lua_error(lua);
         return 0;
@@ -153,7 +153,7 @@ static int api_physics_wld_ddraw_mode(lua_State *lua) {
     res = physcpp_wld_ddraw_mode(lua_tointeger(lua, 1), lua_tointeger(lua, 2));
     lua_pop(lua, 2);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_wld_ddraw_mode: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_wld_ddraw_mode: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_wld_ddraw_mode: error");
         lua_error(lua);
         return 0;
@@ -180,7 +180,7 @@ static int api_physics_cs_alloc_box(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_cs_alloc_box(csi, size->value)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_alloc_box: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_alloc_box: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_alloc_box: error");
         lua_error(lua);
         return 0;
@@ -207,7 +207,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_cs_alloc_sphere(csi, r)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_alloc_sphere: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_alloc_sphere: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_alloc_sphere: error");
         lua_error(lua);
         return 0;
@@ -259,7 +259,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
     res = physcpp_cs_alloc_hmap(csi, g_cbufs.data + start, width,
                                 length, hmin, hmax, scale->value);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_alloc_hmap: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_alloc_hmap: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_alloc_hmap: error");
         lua_error(lua);
         return 0;
@@ -279,7 +279,7 @@ static int api_physics_cs_alloc_comp(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_alloc_comp: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_alloc_comp: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_alloc_comp: error");
         lua_error(lua);
         return 0;
@@ -308,7 +308,7 @@ static int api_physics_cs_comp_add(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_cs_comp_add(parenti, m->value, childi)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_comp_add: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_comp_add: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_comp_add: error");
         lua_error(lua);
         return 0;
@@ -326,7 +326,7 @@ static int api_physics_cs_free(lua_State *lua) {
     res = physcpp_cs_free(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_cs_free: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_cs_free: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_cs_free: error");
         lua_error(lua);
         return 0;
@@ -372,7 +372,7 @@ static int api_physics_rb_alloc(lua_State *lua) {
     }
     res = physcpp_rb_alloc(rbi, wldi, csi, matrix->value, mass, fr, roll_fr);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_rb_alloc: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_rb_alloc: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_rb_alloc: error");
         lua_error(lua);
         return 0;
@@ -390,7 +390,7 @@ static int api_physics_rb_free(lua_State *lua) {
     res = physcpp_rb_free(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_rb_free: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_rb_free: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_rb_free: error");
         lua_error(lua);
         return 0;
@@ -448,7 +448,7 @@ static int api_physics_veh_alloc(lua_State *lua) {
                             ch_frict, ch_roll_frict, sus_stif, sus_comp,
                             sus_damp, sus_trav, sus_force, slip_frict);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_alloc: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_alloc: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_alloc: error");
         lua_error(lua);
         return 0;
@@ -466,7 +466,7 @@ static int api_physics_veh_free(lua_State *lua) {
     res = physcpp_veh_free(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_free: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_free: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_free: error");
         lua_error(lua);
         return 0;
@@ -509,7 +509,7 @@ static int api_physics_veh_add_wheel(lua_State *lua) {
                                 axl->value, sus_rest, roll, radius,
                                 front);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_add_wheel: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_add_wheel: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_add_wheel: error");
         lua_error(lua);
         return 0;
@@ -536,7 +536,7 @@ static int api_physics_veh_set_wheel(lua_State *lua) {
 
     res = physcpp_veh_set_wheel(vehi, wheel, engine, brake, steer);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_set_wheel: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_set_wheel: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_set_wheel: error");
         lua_error(lua);
         return 0;
@@ -561,7 +561,7 @@ static int api_physics_veh_transform(lua_State *lua) {
         return 0;
     }
     if ((res = physcpp_veh_transform(vehi, matrix->value)) != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_transform: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_transform: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_transform: error");
         lua_error(lua);
         return 0;
@@ -581,7 +581,7 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
                                     lua_tointeger(lua, 2), &in_contact);
     lua_pop(lua, 2);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "api_physics_veh_wheel_contact: %s\n", physics_error(res));
+        fprintf(stderr, "api_physics_veh_wheel_contact: %s\n", cphysics_error(res));
         lua_pushstring(lua, "api_physics_veh_wheel_contact: error");
         lua_error(lua);
         return 0;
@@ -590,12 +590,12 @@ static int api_physics_veh_wheel_contact(lua_State *lua)
     return 1;
 }
 
-int physics_init(lua_State *lua, int wld_count, int cs_count, int rb_count,
+int cphysics_init(lua_State *lua, int wld_count, int cs_count, int rb_count,
 int veh_count, const int msizes[], const int mcounts[], int mlen) {
-    g_physics.mpool = cmpool_create(msizes, mcounts, mlen);
-    if (!g_physics.mpool)
+    g_cphysics.mpool = cmpool_create(msizes, mcounts, mlen);
+    if (!g_cphysics.mpool)
         return 1;
-    if (physcpp_init(physics_malloc, cmpool_free, wld_count,
+    if (physcpp_init(cphysics_malloc, cmpool_free, wld_count,
     cs_count, rb_count, veh_count) != PHYSRES_OK)
         return 1;
     #define REGF(x) lua_register(lua, #x, x)
@@ -626,33 +626,33 @@ int veh_count, const int msizes[], const int mcounts[], int mlen) {
     return 0;
 }
 
-void physics_done(void) {
+void cphysics_done(void) {
     physcpp_done();
-    if (g_physics.mpool) {
+    if (g_cphysics.mpool) {
         fprintf(stderr, "\nPhysics memory pool:\n");
-        cmpool_report(g_physics.mpool);
-        cmpool_destroy(g_physics.mpool);
+        cmpool_report(g_cphysics.mpool);
+        cmpool_destroy(g_cphysics.mpool);
     }
 }
 
-int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout) {
+int cphysics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout) {
     int res = physcpp_wld_cast(wldi, csi, mfrom, mto, vout);
     if (res != PHYSRES_OK) {
-        fprintf(stderr, "physics_wld_cast: %s\n", physics_error(res));
+        fprintf(stderr, "cphysics_wld_cast: %s\n", cphysics_error(res));
         return 1;
     }
     return 0;
 }
 
-int physics_rb_fetch_tm(int rbi, float *matrix) {
+int cphysics_rb_fetch_tm(int rbi, float *matrix) {
     return physcpp_rb_fetch_tm(rbi, matrix);
 }
 
-int physics_veh_fetch_chassis_tm(int vehi, float *matrix) {
+int cphysics_veh_fetch_chassis_tm(int vehi, float *matrix) {
     return physcpp_veh_fetch_chassis_tm(vehi, matrix);
 }
 
-int physics_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix) {
+int cphysics_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix) {
     return physcpp_veh_fetch_wheel_tm(vehi, wheel, matrix);
 }
 

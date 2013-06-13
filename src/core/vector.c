@@ -1,7 +1,7 @@
 #include "vector.h"
 #include "cmatrix.h"
 #include "cbuf.h"
-#include "physics.h"
+#include "cphysics.h"
 #include "cinterp.h"
 #include "util.h"
 #include "pmem.h"
@@ -403,7 +403,7 @@ static int api_vector_cast(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    if (physics_wld_cast(wldi, csi, m0->value, m1->value, vector->value)) {
+    if (cphysics_wld_cast(wldi, csi, m0->value, m1->value, vector->value)) {
         lua_pushstring(lua, "api_vector_cast: invalid physics object");
         lua_error(lua);
         return 0;
@@ -596,7 +596,7 @@ static int vector_update_cast(struct vector_t *v, float dt, int force) {
             return 1;
     m0 = v->argm[0]->value;
     m1 = v->argm[1]->value;
-    return physics_wld_cast(v->cast_wldi, v->cast_csi, m0, m1, v->value);
+    return cphysics_wld_cast(v->cast_wldi, v->cast_csi, m0, m1, v->value);
 }
 
 static void vector_update_seq(struct vector_t *v, float dt) {

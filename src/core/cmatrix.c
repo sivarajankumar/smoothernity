@@ -1,6 +1,6 @@
 #include "cmatrix.h"
 #include "vector.h"
-#include "physics.h"
+#include "cphysics.h"
 #include "util.h"
 #include "pmem.h"
 #include <math.h>
@@ -403,7 +403,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
     matrix->type = CMATRIX_RIGID_BODY;
     matrix->rigid_body = rbi;
 
-    if (physics_rb_fetch_tm(rbi, matrix->value)) {
+    if (cphysics_rb_fetch_tm(rbi, matrix->value)) {
         lua_pushstring(lua, "api_matrix_rigid_body: invalid rigid body");
         lua_error(lua);
         return 0;
@@ -435,7 +435,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
     matrix->type = CMATRIX_VEHICLE_CHASSIS;
     matrix->vehicle = vehi;
 
-    if (physics_veh_fetch_chassis_tm(vehi, matrix->value)) {
+    if (cphysics_veh_fetch_chassis_tm(vehi, matrix->value)) {
         lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid vehicle");
         lua_error(lua);
         return 0;
@@ -470,7 +470,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
     matrix->vehicle = vehi;
     matrix->wheel = wheel;
 
-    if (physics_veh_fetch_wheel_tm(vehi, wheel, matrix->value)) {
+    if (cphysics_veh_fetch_wheel_tm(vehi, wheel, matrix->value)) {
         lua_pushstring(lua, "api_matrix_vehicle_wheel: invalid object");
         lua_error(lua);
         return 0;
@@ -642,11 +642,11 @@ int cmatrix_update(struct cmatrix_t *m, float dt, int update_tag, int force) {
     else if (m->type == CMATRIX_FROM_TO_UP)
         return cmatrix_update_from_to_up(m, dt, force);
     else if (m->type == CMATRIX_RIGID_BODY)
-        return physics_rb_fetch_tm(m->rigid_body, m->value);
+        return cphysics_rb_fetch_tm(m->rigid_body, m->value);
     else if (m->type == CMATRIX_VEHICLE_CHASSIS)
-        return physics_veh_fetch_chassis_tm(m->vehicle, m->value);
+        return cphysics_veh_fetch_chassis_tm(m->vehicle, m->value);
     else if (m->type == CMATRIX_VEHICLE_WHEEL)
-        return physics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value);
+        return cphysics_veh_fetch_wheel_tm(m->vehicle, m->wheel, m->value);
     return 0;
 }
 
