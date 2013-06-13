@@ -133,6 +133,12 @@ struct cmpool_t * cmpool_create(const int sizes[], const int counts[], int len){
     }
     return mpool;
 cleanup:
+    cmpool_destroy(mpool);
+    return 0;
+} 
+
+void cmpool_destroy(struct cmpool_t *mpool) {
+    struct cmpool_shelf_t *shelf;
     if (mpool->shelves) {
         for (int i = 0; i < mpool->shelves_len; ++i) {
             shelf = cmpool_get_shelf(mpool, i);
@@ -142,13 +148,10 @@ cleanup:
         pmem_free(mpool->shelves);
     }
     pmem_free(mpool);
-    return 0;
-} 
+}
 
-void cmpool_destroy(struct cmpool_t *mpool) {
+void cmpool_report(struct cmpool_t *mpool) {
     struct cmpool_shelf_t *shelf;
-    if (!mpool->shelves)
-        return;
     fprintf(stderr, "Largest requested memory chunk: %i B\n",
             mpool->largest_size);
     for (int i = 0; i < mpool->shelves_len; ++i) {
@@ -158,9 +161,6 @@ void cmpool_destroy(struct cmpool_t *mpool) {
                 shelf->size,
                 shelf->count - shelf->left_min, shelf->count,
                 shelf->allocs, shelf->frees, shelf->alloc_fails);
-        pmem_free(shelf->chunks);
     }
-    pmem_free(mpool->shelves);
-    pmem_free(mpool);
 }
 

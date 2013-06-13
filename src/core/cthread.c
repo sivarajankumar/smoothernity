@@ -338,6 +338,7 @@ void cthread_done(void) {
                 lua_close(thread->lua);
             if (thread->mpool) {
                 fprintf(stderr, "\nThread %i memory pool:\n", i);
+                cmpool_report(thread->mpool);
                 cmpool_destroy(thread->mpool);
             }
             if (thread->state)

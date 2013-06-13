@@ -188,6 +188,7 @@ static void cmain_done(void) {
     physics_done();
     if (g_cmain.mpool) {
         fprintf(stderr, "\nMain memory pool:\n");
+        cmpool_report(g_cmain.mpool);
         cmpool_destroy(g_cmain.mpool);
     }
     cthread_done();
