@@ -1,5 +1,5 @@
 #include "vao.h"
-#include "prog.h"
+#include "cprog.h"
 #include "rbuf.h"
 #include "util.h"
 
@@ -26,7 +26,7 @@ static int api_vao_alloc(lua_State *lua) {
      * First attribute is stored at the very beginning of the buffer.
      */
     struct vao_t *vao;
-    struct prog_t *prog;
+    struct cprog_t *prog;
     struct rbuf_t *vbuf, *ibuf;
 
     if (lua_gettop(lua) < 5 || !util_isint(lua, 1) ||
@@ -36,7 +36,7 @@ static int api_vao_alloc(lua_State *lua) {
         return 0;
     }
     vao = vao_get(lua_tointeger(lua, 1));
-    prog = prog_get(lua_tointeger(lua, 2));
+    prog = cprog_get(lua_tointeger(lua, 2));
     vbuf = rbuf_get(lua_tointeger(lua, 3));
     ibuf = rbuf_get(lua_tointeger(lua, 4));
 

@@ -12,7 +12,7 @@
 #include "cphysics.h"
 #include "cbuf.h"
 #include "cthread.h"
-#include "prog.h"
+#include "cprog.h"
 #include "rbuf.h"
 #include "vao.h"
 #include "pmem.h"
@@ -164,7 +164,7 @@ cleanup:
 
 static void cmain_done(void) {
     vao_done();
-    prog_done();
+    cprog_done();
     rbuf_done();
     render_done();
 
@@ -263,7 +263,7 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
     } 
-    if (prog_init(g_cmain.lua, g_cmain.prog_count)) {
+    if (cprog_init(g_cmain.lua, g_cmain.prog_count)) {
         fprintf(stderr, "Cannot init shader programs\n"); 
         return 1;
     }

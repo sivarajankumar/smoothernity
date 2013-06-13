@@ -11,9 +11,9 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${CMAKE_SOURCE_DIR}/platform)
 
 add_executable(main
-               cmain.c cmpool.c timer.c render.c cphysics.c cthread.c rbuf.c
-               vector.c cinput.c cmatrix.c cbuf.c cinterp.c prog.c vao.c
-               util.c)
+               cmain.c cmpool.c timer.c render.c cphysics.c
+               cthread.c rbuf.c vector.c cinput.c cmatrix.c
+               cbuf.c cinterp.c cprog.c vao.c util.c)
 
 target_link_libraries(main
                       physics platform util
