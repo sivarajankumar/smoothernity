@@ -628,9 +628,11 @@ int veh_count, const int msizes[], const int mcounts[], int mlen) {
 
 void physics_done(void) {
     physcpp_done();
-    fprintf(stderr, "\nPhysics memory pool:\n");
-    if (g_physics.mpool)
+    if (g_physics.mpool) {
+        fprintf(stderr, "\nPhysics memory pool:\n");
+        cmpool_report(g_physics.mpool);
         cmpool_destroy(g_physics.mpool);
+    }
 }
 
 int physics_wld_cast(int wldi, int csi, float *mfrom, float *mto, float *vout) {
