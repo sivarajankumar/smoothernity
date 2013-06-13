@@ -27,7 +27,7 @@ struct vector_t {
     float value[4]; /* Must go first to ensure alignment. */
     enum vector_e type;
     struct vector_t *argv[VECTOR_ARGVS];
-    struct matrix_t *argm[VECTOR_ARGMS];
+    struct cmatrix_t *argm[VECTOR_ARGMS];
 
     int update_tag, cast_wldi, cast_csi, seq_cur, seq_start, seq_len, seq_loop;
     float cord_min, cord_max, seq_t;

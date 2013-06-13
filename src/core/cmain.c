@@ -8,7 +8,7 @@
 #include "render.h"
 #include "cinput.h"
 #include "vector.h"
-#include "matrix.h"
+#include "cmatrix.h"
 #include "physics.h"
 #include "cbuf.h"
 #include "cthread.h"
@@ -184,7 +184,7 @@ static void cmain_done(void) {
     }
     cbuf_done();
     vector_done();
-    matrix_done();
+    cmatrix_done();
     physics_done();
     if (g_cmain.mpool) {
         fprintf(stderr, "\nMain memory pool:\n");
@@ -252,7 +252,8 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init vectors\n");
         return 1;
     }
-    if (matrix_init(g_cmain.lua, g_cmain.matrix_count, g_cmain.matrix_nesting)) {
+    if (cmatrix_init(g_cmain.lua, g_cmain.matrix_count,
+    g_cmain.matrix_nesting)) {
         fprintf(stderr, "Cannot init matrices\n");
         return 1;
     }

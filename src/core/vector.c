@@ -1,5 +1,5 @@
 #include "vector.h"
-#include "matrix.h"
+#include "cmatrix.h"
 #include "cbuf.h"
 #include "physics.h"
 #include "cinterp.h"
@@ -201,7 +201,7 @@ static int api_vector_cord(lua_State *lua) {
 
 static int api_vector_mpos(lua_State *lua) {
     struct vector_t *vector;
-    struct matrix_t *m0;
+    struct cmatrix_t *m0;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
         lua_pushstring(lua, "api_vector_mpos: incorrect argument");
@@ -209,7 +209,7 @@ static int api_vector_mpos(lua_State *lua) {
         return 0;
     }
     vector = vector_get(lua_tointeger(lua, 1));
-    m0 = matrix_get(lua_tointeger(lua, 2));
+    m0 = cmatrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (!vector) {
@@ -368,7 +368,7 @@ static int api_vector_seq(lua_State *lua) {
 
 static int api_vector_cast(lua_State *lua) {
     struct vector_t *vector;
-    struct matrix_t *m0, *m1;
+    struct cmatrix_t *m0, *m1;
     int wldi, csi;
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
@@ -380,8 +380,8 @@ static int api_vector_cast(lua_State *lua) {
     vector = vector_get(lua_tointeger(lua, 1));
     wldi = lua_tointeger(lua, 2);
     csi = lua_tointeger(lua, 3);
-    m0 = matrix_get(lua_tointeger(lua, 4));
-    m1 = matrix_get(lua_tointeger(lua, 5));
+    m0 = cmatrix_get(lua_tointeger(lua, 4));
+    m1 = cmatrix_get(lua_tointeger(lua, 5));
     lua_pop(lua, 5);
 
     if (!vector || !m0 || !m1) {
@@ -473,7 +473,7 @@ int vector_nesting(struct vector_t *vector, int limit) {
         for (int i = 0; i < VECTOR_ARGMS; ++i) {
             if (!vector->argm[i])
                 continue;
-            cur = matrix_nesting(vector->argm[i], limit - 1);
+            cur = cmatrix_nesting(vector->argm[i], limit - 1);
             if (cur < min)
                 min = cur;
         }
@@ -547,7 +547,7 @@ static int vector_update_cord(struct vector_t *v, float dt, int force) {
 
 static int vector_update_mpos(struct vector_t *v, float dt, int force) {
     float *m0;
-    if (matrix_update(v->argm[0], dt, v->update_tag, force))
+    if (cmatrix_update(v->argm[0], dt, v->update_tag, force))
         return 1;
     m0 = v->argm[0]->value;
     v->value[0] = m0[12];
@@ -592,7 +592,7 @@ static int vector_update_pick(struct vector_t *v, float dt, int force) {
 static int vector_update_cast(struct vector_t *v, float dt, int force) {
     float *m0, *m1;
     for (int i = 0; i < 2; ++i)
-        if (matrix_update(v->argm[i], dt, v->update_tag, force))
+        if (cmatrix_update(v->argm[i], dt, v->update_tag, force))
             return 1;
     m0 = v->argm[0]->value;
     m1 = v->argm[1]->value;
