@@ -1,21 +1,21 @@
-#include "rbuf.h"
+#include "crbuf.h"
 #include "vao.h"
 #include "util.h"
 #include "pmem.h"
 #include <stdio.h>
 
-#define RBUF_SIZE 32
+#define CRBUF_SIZE 32
 
-struct rbufs_t {
+struct crbufs_t {
     int count;
     char *pool;
 };
 
-_Static_assert(sizeof(struct rbuf_t) <= RBUF_SIZE, "Invalid rbuf_t size");
+_Static_assert(sizeof(struct crbuf_t) <= CRBUF_SIZE, "Invalid crbuf_t size");
 
-struct rbufs_t g_rbufs;
+struct crbufs_t g_crbufs;
 
-static int safe_bind_buf(struct rbuf_t *rbuf) {
+static int crbuf_save_bind(struct crbuf_t *rbuf) {
     /*
      * If there's a VAO currently bound, we can mess up its state by calling
      * glBindBuffer with target GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER.
@@ -30,7 +30,7 @@ static int safe_bind_buf(struct rbuf_t *rbuf) {
 }
 
 static int api_rbuf_map(lua_State *lua) {
-    struct rbuf_t *rbuf;
+    struct crbuf_t *rbuf;
     int ofs, len;
     GLintptr glofs;
     GLsizeiptr gllen;
@@ -41,7 +41,7 @@ static int api_rbuf_map(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    rbuf = rbuf_get(lua_tointeger(lua, 1));
+    rbuf = crbuf_get(lua_tointeger(lua, 1));
     ofs = lua_tointeger(lua, 2);
     len = lua_tointeger(lua, 3);
     lua_pop(lua, 3);
@@ -58,7 +58,7 @@ static int api_rbuf_map(lua_State *lua) {
     }
     rbuf->mapped_ofs = ofs;
     rbuf->mapped_len = len;
-    if (safe_bind_buf(rbuf)) {
+    if (crbuf_save_bind(rbuf)) {
         lua_pushstring(lua, "api_rbuf_map: cannot bind buffer");
         lua_error(lua);
         return 0;
@@ -83,14 +83,14 @@ static int api_rbuf_map(lua_State *lua) {
 }
 
 static int api_rbuf_unmap(lua_State *lua) {
-    struct rbuf_t *rbuf;
+    struct crbuf_t *rbuf;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_rbuf_unmap: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    rbuf = rbuf_get(lua_tointeger(lua, 1));
+    rbuf = crbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (!rbuf || !rbuf->buf_id || !rbuf->mapped) {
@@ -101,7 +101,7 @@ static int api_rbuf_unmap(lua_State *lua) {
     rbuf->mapped = 0;
     rbuf->mapped_ofs = 0;
     rbuf->mapped_len = 0;
-    if (safe_bind_buf(rbuf)) {
+    if (crbuf_save_bind(rbuf)) {
         lua_pushstring(lua, "api_rbuf_unmap: cannot bind buffer");
         lua_error(lua);
         return 0;
@@ -111,7 +111,7 @@ static int api_rbuf_unmap(lua_State *lua) {
 }
 
 static int api_rbuf_set(lua_State *lua) {
-    struct rbuf_t *rbuf;
+    struct crbuf_t *rbuf;
     int ofs, len, index;
 
     if (lua_gettop(lua) < 3 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
@@ -119,7 +119,7 @@ static int api_rbuf_set(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    rbuf = rbuf_get(lua_tointeger(lua, 1));
+    rbuf = crbuf_get(lua_tointeger(lua, 1));
     ofs = lua_tointeger(lua, 2);
     len = lua_gettop(lua) - 2;
 
@@ -152,7 +152,7 @@ static int api_rbuf_set(lua_State *lua) {
 }
 
 static int api_rbuf_alloc(lua_State *lua) {
-    struct rbuf_t *rbuf;
+    struct crbuf_t *rbuf;
     int size, target, item, usage;
     GLsizeiptr glsize;
 
@@ -162,7 +162,7 @@ static int api_rbuf_alloc(lua_State *lua) {
         lua_error(lua);
         return 0;
     }
-    rbuf = rbuf_get(lua_tointeger(lua, 1));
+    rbuf = crbuf_get(lua_tointeger(lua, 1));
     size = lua_tointeger(lua, 2);
     target = lua_tointeger(lua, 3);
     item = lua_tointeger(lua, 4);
@@ -202,7 +202,7 @@ static int api_rbuf_alloc(lua_State *lua) {
     rbuf->item = (GLenum)item;
     rbuf->mapped = 0;
     glGenBuffers(1, &rbuf->buf_id);
-    if (safe_bind_buf(rbuf)) {
+    if (crbuf_save_bind(rbuf)) {
         lua_pushstring(lua, "api_rbuf_alloc: cannot bind buffer");
         lua_error(lua);
         return 0;
@@ -221,14 +221,14 @@ static int api_rbuf_alloc(lua_State *lua) {
 }
 
 static int api_rbuf_free(lua_State *lua) {
-    struct rbuf_t *rbuf;
+    struct crbuf_t *rbuf;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
         lua_pushstring(lua, "api_rbuf_free: incorrect argument");
         lua_error(lua);
         return 0;
     }
-    rbuf = rbuf_get(lua_tointeger(lua, 1));
+    rbuf = crbuf_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
 
     if (!rbuf || !rbuf->buf_id || rbuf->mapped) {
@@ -241,19 +241,19 @@ static int api_rbuf_free(lua_State *lua) {
     return 0;
 }
 
-void rbuf_reg_thread(lua_State *lua) {
+void crbuf_reg_thread(lua_State *lua) {
     lua_register(lua, "api_rbuf_set", api_rbuf_set);
 }
 
-int rbuf_init(lua_State *lua, int count) {
-    struct rbuf_t *rbuf;
+int crbuf_init(lua_State *lua, int count) {
+    struct crbuf_t *rbuf;
 
-    g_rbufs.count = count;
-    g_rbufs.pool = pmem_alloc(PMEM_ALIGNOF(struct rbuf_t), RBUF_SIZE * count);
-    if (!g_rbufs.pool)
+    g_crbufs.count = count;
+    g_crbufs.pool = pmem_alloc(PMEM_ALIGNOF(struct crbuf_t), CRBUF_SIZE * count);
+    if (!g_crbufs.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
-        rbuf = rbuf_get(i);
+        rbuf = crbuf_get(i);
         rbuf->buf_id = 0;
     }
     #define REGF(x) lua_register(lua, #x, x)
@@ -280,21 +280,21 @@ int rbuf_init(lua_State *lua, int count) {
     return 0;
 }
 
-void rbuf_done(void) {
-    if (!g_rbufs.pool)
+void crbuf_done(void) {
+    if (!g_crbufs.pool)
         return;
-    for (int i = 0; i < g_rbufs.count; ++i)
-        if (rbuf_get(i)->buf_id) {
-            fprintf(stderr, "rbuf_done: some buffers are still active\n");
+    for (int i = 0; i < g_crbufs.count; ++i)
+        if (crbuf_get(i)->buf_id) {
+            fprintf(stderr, "crbuf_done: some buffers are still active\n");
             break;
         }
-    pmem_free(g_rbufs.pool);
-    g_rbufs.pool = 0;
+    pmem_free(g_crbufs.pool);
+    g_crbufs.pool = 0;
 }
 
-struct rbuf_t * rbuf_get(int rbufi) {
-    if (rbufi >= 0 && rbufi < g_rbufs.count)
-        return (struct rbuf_t*)(g_rbufs.pool + RBUF_SIZE * rbufi);
+struct crbuf_t * crbuf_get(int rbufi) {
+    if (rbufi >= 0 && rbufi < g_crbufs.count)
+        return (struct crbuf_t*)(g_crbufs.pool + CRBUF_SIZE * rbufi);
     else
         return 0;
 }
