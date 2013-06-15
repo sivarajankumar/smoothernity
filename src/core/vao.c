@@ -1,6 +1,6 @@
 #include "vao.h"
 #include "cprog.h"
-#include "rbuf.h"
+#include "crbuf.h"
 #include "util.h"
 
 struct vao_t {
@@ -27,7 +27,7 @@ static int api_vao_alloc(lua_State *lua) {
      */
     struct vao_t *vao;
     struct cprog_t *prog;
-    struct rbuf_t *vbuf, *ibuf;
+    struct crbuf_t *vbuf, *ibuf;
 
     if (lua_gettop(lua) < 5 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3) || !util_isint(lua, 4)) {
@@ -37,8 +37,8 @@ static int api_vao_alloc(lua_State *lua) {
     }
     vao = vao_get(lua_tointeger(lua, 1));
     prog = cprog_get(lua_tointeger(lua, 2));
-    vbuf = rbuf_get(lua_tointeger(lua, 3));
-    ibuf = rbuf_get(lua_tointeger(lua, 4));
+    vbuf = crbuf_get(lua_tointeger(lua, 3));
+    ibuf = crbuf_get(lua_tointeger(lua, 4));
 
     if (!vao || vao->vao_id) {
         lua_pushstring(lua, "api_vao_alloc: invalid vao");

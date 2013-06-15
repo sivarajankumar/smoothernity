@@ -13,7 +13,7 @@
 #include "cbuf.h"
 #include "cthread.h"
 #include "cprog.h"
-#include "rbuf.h"
+#include "crbuf.h"
 #include "vao.h"
 #include "pmem.h"
 #include <stdlib.h>
@@ -165,7 +165,7 @@ cleanup:
 static void cmain_done(void) {
     vao_done();
     cprog_done();
-    rbuf_done();
+    crbuf_done();
     render_done();
 
     if (g_cmain.lua)
@@ -267,7 +267,7 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init shader programs\n"); 
         return 1;
     }
-    if (rbuf_init(g_cmain.lua, g_cmain.rbuf_count)) {
+    if (crbuf_init(g_cmain.lua, g_cmain.rbuf_count)) {
         fprintf(stderr, "Cannot init render buffers\n"); 
         return 1;
     }
