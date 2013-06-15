@@ -3,7 +3,6 @@
 #include "util.h"
 #include "pmem.h"
 #include <math.h>
-#include <stdio.h>
 
 enum cbuf_interp_e {
     CBUF_IPL_NEAREST,
@@ -132,10 +131,6 @@ void cbuf_reg_thread(lua_State *lua) {
 }
 
 int cbuf_init(lua_State *lua, int size) {
-    if (size & (size - 1)) {
-        fprintf(stderr, "Invalid size:\nsize == %i\n", size);
-        return 1;
-    }
     g_cbufs.size = size;
     g_cbufs.data = pmem_alloc(PMEM_ALIGNOF(float), sizeof(float) * size);
     if (!g_cbufs.data)
