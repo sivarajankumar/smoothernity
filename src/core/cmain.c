@@ -15,6 +15,7 @@
 #include "cprog.h"
 #include "crbuf.h"
 #include "vao.h"
+#include "vlog.h"
 #include "pmem.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -298,12 +299,14 @@ static void cmain_run(void) {
 }
 
 int main(int argc, char **argv) {
-    fprintf(stderr, "Engine start\n");
+    vlog_init(stderr);
+    VLOG_INFO("Engine start");
     if (!setjmp(g_cmain.panic))
         if (!cmain_init(argc, argv))
             cmain_run();
     cmain_done();
-    fprintf(stderr, "Engine finish\n");
+    VLOG_INFO("Engine finish");
+    vlog_done();
     return EXIT_SUCCESS;
 }
 

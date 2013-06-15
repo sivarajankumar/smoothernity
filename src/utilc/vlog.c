@@ -1,7 +1,6 @@
 #include "vlog.h"
 #include "uthread.h"
 #include "uatomic.h"
-#include "ptimer.h"
 #include <stdarg.h>
 
 struct vlog_t {
@@ -33,11 +32,13 @@ static const char * vlog_level_text(enum vlog_level_e level) {
 
 void vlog_out
 (enum vlog_level_e level, const char *src, int line, const char *msg, ...) {
+    /* Hackish way to get short file name. */
+    for (const char *c = __FILE__; *c && *src && *c == *src; ++c, ++src);
+
     va_list ap;
     va_start(ap, msg);
     uthread_mutex_lock(g_vlog.mutex);
-    fprintf(g_vlog.file, "[%7.3f] %s (%s:%i) ", (double)ptimer_get(),
-            vlog_level_text(level), src, line);
+    fprintf(g_vlog.file, "%s (%s:%i) ", vlog_level_text(level), src, line);
     vfprintf(g_vlog.file, msg, ap);
     fprintf(g_vlog.file, "\n");
     uthread_mutex_unlock(g_vlog.mutex);
