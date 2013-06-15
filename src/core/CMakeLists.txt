@@ -7,7 +7,8 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${SDL_INCLUDE_DIR}
                     ${GLEW_INCLUDE_DIRS}
                     ${OPENGL_INCLUDE_DIR}
-                    ${CMAKE_SOURCE_DIR}/util
+                    ${CMAKE_SOURCE_DIR}/utilc
+                    ${CMAKE_SOURCE_DIR}/utilcpp
                     ${CMAKE_SOURCE_DIR}/platform)
 
 add_executable(main
@@ -16,7 +17,7 @@ add_executable(main
                cbuf.c cinterp.c cprog.c vao.c util.c)
 
 target_link_libraries(main
-                      physics platform util
+                      physics platform utilc utilcpp
                       ${LUA_LIBRARIES}
                       ${SDL_LIBRARY}
                       ${GLEW_LIBRARIES}
