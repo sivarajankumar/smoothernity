@@ -1,6 +1,6 @@
 #include "cmpool.h"
+#include "vlog.h"
 #include "pmem.h"
-#include <stdio.h>
 
 #define CMPOOL_CHUNK_SIZE 16
 #define CMPOOL_SHELF_SIZE 64
@@ -57,11 +57,11 @@ void * cmpool_alloc(struct cmpool_t *mpool, size_t size) {
             break;
     }
     if ((size_t)shelf->size < size) {
-        fprintf(stderr, "cmpool_alloc: no shelf for size %i\n", (int)size);
+        VLOG_ERROR("no shelf for size %i", (int)size);
         return 0;
     }
     if (!shelf->vacant) {
-        fprintf(stderr, "cmpool_alloc: no chunks in shelf %i\n", shelf->size);
+        VLOG_ERROR("no chunks in shelf %i", shelf->size);
         ++shelf->alloc_fails;
         return 0;
     }
@@ -152,15 +152,16 @@ void cmpool_destroy(struct cmpool_t *mpool) {
 
 void cmpool_report(struct cmpool_t *mpool) {
     struct cmpool_shelf_t *shelf;
-    fprintf(stderr, "Largest requested memory chunk: %i B\n",
-            mpool->largest_size);
+    VLOG_INFO("Largest requested memory chunk: %i B", mpool->largest_size);
     for (int i = 0; i < mpool->shelves_len; ++i) {
         shelf = cmpool_get_shelf(mpool, i);
-        fprintf(stderr, "Memory pool %i B chunks usage: %i/%i, "
-                "allocs/frees: %i/%i (%i fails)\n",
-                shelf->size,
-                shelf->count - shelf->left_min, shelf->count,
-                shelf->allocs, shelf->frees, shelf->alloc_fails);
+        VLOG_INFO("Memory pool %i B chunks usage: %i/%i, "
+                  "allocs/frees: %i/%i (%i fails)",
+                  shelf->size,
+                  shelf->count - shelf->left_min, shelf->count,
+                  shelf->allocs, shelf->frees, shelf->alloc_fails);
+        if (shelf->allocs != shelf->frees)
+            VLOG_ERROR("Allocs/frees mismatch");
     }
 }
 
