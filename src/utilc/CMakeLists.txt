@@ -1,5 +1,4 @@
-include_directories(${CMAKE_SOURCE_DIR}/utilcpp
-                    ${CMAKE_SOURCE_DIR}/platform)
+include_directories(${CMAKE_SOURCE_DIR}/utilcpp)
 
 add_library(utilc vlog.c)
 
