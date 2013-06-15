@@ -5,7 +5,7 @@
 #include "util.h"
 #include "cmpool.h"
 #include "timer.h"
-#include "render.h"
+#include "crender.h"
 #include "cinput.h"
 #include "vector.h"
 #include "cmatrix.h"
@@ -166,7 +166,7 @@ static void cmain_done(void) {
     vao_done();
     cprog_done();
     crbuf_done();
-    render_done();
+    crender_done();
 
     if (g_cmain.lua)
         lua_close(g_cmain.lua);
@@ -258,7 +258,7 @@ static int cmain_init(int argc, char **argv) {
         fprintf(stderr, "Cannot init matrices\n");
         return 1;
     }
-    if (render_init(g_cmain.lua, g_cmain.screen_width,
+    if (crender_init(g_cmain.lua, g_cmain.screen_width,
     g_cmain.screen_height, g_cmain.full_screen)) {
         fprintf(stderr, "Cannot init render\n"); 
         return 1;
