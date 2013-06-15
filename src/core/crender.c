@@ -1,4 +1,4 @@
-#include "render.h"
+#include "crender.h"
 #include "vector.h"
 #include "util.h"
 #include "SDL.h"
@@ -14,11 +14,11 @@
 
 static const GLint MIN_GL_VERSION = 3;
 
-struct render_t {
+struct crender_t {
     int init, width, height;
 };
 
-static struct render_t g_render;
+static struct crender_t g_crender;
 
 static int api_render_clear_color(lua_State *lua) {
     GLfloat *v;
@@ -74,17 +74,17 @@ static int api_render_swap(lua_State *lua) {
     return 0;
 }
 
-int render_init(lua_State *lua, int width, int height, int full_screen) {
+int crender_init(lua_State *lua, int width, int height, int full_screen) {
     int bpp, flags;
     const SDL_VideoInfo *info;
     GLint version;
 
     if (sizeof(float) != sizeof(GLfloat)) {
-        fprintf(stderr, "render_init: float<->GLfloat is not supported\n");
+        fprintf(stderr, "crender_init: float<->GLfloat is not supported\n");
         goto cleanup;
     }
     if (sizeof(int) != sizeof(GLint)) {
-        fprintf(stderr, "render_init: int<->GLint is not supported\n");
+        fprintf(stderr, "crender_init: int<->GLint is not supported\n");
         goto cleanup;
     }
     info = SDL_GetVideoInfo();
@@ -110,7 +110,7 @@ int render_init(lua_State *lua, int width, int height, int full_screen) {
     if (glewInit() != GLEW_OK)
         goto cleanup;
 
-    fprintf(stderr, "render_init: GL: %s, GLSL: %s\n",
+    fprintf(stderr, "crender_init: GL: %s, GLSL: %s\n",
             glGetString(GL_VERSION),
             glGetString(GL_SHADING_LANGUAGE_VERSION));
 
@@ -118,9 +118,9 @@ int render_init(lua_State *lua, int width, int height, int full_screen) {
     if (version < MIN_GL_VERSION)
         goto cleanup;
 
-    g_render.width = width;
-    g_render.height = height;
-    g_render.init = 1;
+    g_crender.width = width;
+    g_crender.height = height;
+    g_crender.init = 1;
 
     #define REGF(x) lua_register(lua, #x, x)
     REGF(api_render_clear_color);
@@ -136,14 +136,14 @@ int render_init(lua_State *lua, int width, int height, int full_screen) {
     return 0;
 cleanup:
     SDL_ShowCursor(SDL_ENABLE);
-    g_render.init = 0;
+    g_crender.init = 0;
     return 1;
 }
 
-void render_done(void) {
-    if (!g_render.init)
+void crender_done(void) {
+    if (!g_crender.init)
         return;
     SDL_ShowCursor(SDL_ENABLE);
-    g_render.init = 0;
+    g_crender.init = 0;
 }
 
