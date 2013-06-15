@@ -51,7 +51,7 @@ struct cmain_t {
 static struct cmain_t g_cmain;
 
 static int cmain_panic(lua_State *lua) {
-    fprintf(stderr, "Lua panic: %s\n", lua_tostring(lua, -1));
+    VLOG_ERROR("Lua panic: %s", lua_tostring(lua, -1));
     longjmp(g_cmain.panic, 1);
 }
 
@@ -84,22 +84,22 @@ static int cmain_get_int_array
     int oldtop = lua_gettop(lua);
     lua_getfield(lua, -1, field);
     if (!lua_isfunction(lua, -1) || lua_pcall(lua, 0, LUA_MULTRET, 0)) {
-        fprintf(stderr, "Cannot call configure()[\"%s\"]()\n", field);
+        VLOG_ERROR("Cannot call configure()[\"%s\"]()", field);
         return 1;
     }
     *len = lua_gettop(lua) - oldtop;
     if (*len <= 0) {
-        fprintf(stderr, "Invalid configure()[\"%s\"]() return value\n", field);
+        VLOG_ERROR("Invalid configure()[\"%s\"]() return value", field);
         return 1;
     }
     *array = pmem_alloc(PMEM_ALIGNOF(int), *len * sizeof(int));
     if (!*array) {
-        fprintf(stderr, "Out of memory loading configure()[\"%s\"]\n", field);
+        VLOG_ERROR("Out of memory loading configure()[\"%s\"]", field);
         return 1;
     }
     for (int i = 0; i < *len; ++i) {
         if (!util_isint(lua, -(*len) + i)) {
-            fprintf(stderr, "configure()[\"%s\"]()[%i] not int\n", field, i);
+            VLOG_ERROR("configure()[\"%s\"]()[%i] not int", field, i);
             return 1;
         }
         (*array)[i] = lua_tointeger(lua, -(*len) + i);
@@ -111,7 +111,7 @@ static int cmain_get_int_array
 static int cmain_get_int(lua_State *lua, const char *field, int *dest) {
     lua_getfield(lua, -1, field);
     if (!util_isint(lua, -1)) {
-        fprintf(stderr, "configure()[\"%s\"] value is not an integer\n", field);
+        VLOG_ERROR("configure()[\"%s\"] value is not an integer", field);
         return 1;
     }
     *dest = lua_tointeger(lua, -1);
@@ -127,21 +127,21 @@ static int cmain_configure(char *script) {
     lua_atpanic(lua, cmain_panic);
     luaL_openlibs(lua);
     if (luaL_dofile(lua, script)) {
-        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(lua, -1));
+        VLOG_ERROR("Cannot run script: %s", lua_tostring(lua, -1));
         goto cleanup;
     }
     if (!lua_istable(lua, -1)) {
-        fprintf(stderr, "Invalid return value of main module\n");
+        VLOG_ERROR("Invalid return value of main module");
         goto cleanup;
     }
     lua_getfield(lua, -1, "configure");
     if (!lua_isfunction(lua, -1) || lua_pcall(lua, 0, LUA_MULTRET, 0)) {
-        fprintf(stderr, "Cannot run configure() function: %s\n",
-                lua_tostring(lua, -1));
+        VLOG_ERROR("Cannot run configure() function: %s",
+                   lua_tostring(lua, -1));
         goto cleanup;
     }
     if (!lua_istable(lua, -1)) {
-        fprintf(stderr, "Invalid return value of configure() function\n");
+        VLOG_ERROR("Invalid return value of configure() function");
         goto cleanup;
     }
     #define GETI(x) cmain_get_int(lua, #x, &g_cmain.x)
@@ -188,7 +188,8 @@ static void cmain_done(void) {
     cmatrix_done();
     cphysics_done();
     if (g_cmain.mpool) {
-        fprintf(stderr, "\nMain memory pool:\n");
+        VLOG_INFO("");
+        VLOG_INFO("Main memory pool:");
         cmpool_report(g_cmain.mpool);
         cmpool_destroy(g_cmain.mpool);
     }
@@ -200,28 +201,28 @@ static void cmain_done(void) {
 static int cmain_init(int argc, char **argv) {
     char *script;
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s <script.lua>\n", argv[0]);
+        VLOG_INFO("Usage: %s <script.lua>", argv[0]);
         return 1;
     }
     script = argv[1];
     if (cmain_configure(script)) {
-        fprintf(stderr, "Cannot configure engine\n");
+        VLOG_ERROR("Cannot configure engine");
         return 1;
     }
     if (SDL_Init(SDL_INIT_EVERYTHING)) {
-        fprintf(stderr, "Cannot init SDL\n");
+        VLOG_ERROR("Cannot init SDL");
         return 1;
     }
     g_cmain.mpool = cmpool_create(g_cmain.main_mpool,
                                   g_cmain.main_mpool + g_cmain.main_mpool_len/2,
                                   g_cmain.main_mpool_len / 2);
     if (!g_cmain.mpool) {
-        fprintf(stderr, "Cannot create main memory pool\n");
+        VLOG_ERROR("Cannot create main memory pool");
         return 1;
     }
     g_cmain.lua = lua_newstate(cmain_lua_alloc, 0);
     if (!g_cmain.lua) {
-        fprintf(stderr, "Cannot create Lua state\n");
+        VLOG_ERROR("Cannot create Lua state");
         return 1;
     }
     lua_atpanic(g_cmain.lua, cmain_panic);
@@ -230,72 +231,72 @@ static int cmain_init(int argc, char **argv) {
     cinput_init(g_cmain.lua);
 
     if (timer_init(g_cmain.lua)) {
-        fprintf(stderr, "Cannot init timer\n"); 
+        VLOG_ERROR("Cannot init timer"); 
         return 1;
     }
     if (cthread_init(g_cmain.lua, g_cmain.thread_count, g_cmain.thread_mpool,
     g_cmain.thread_mpool + g_cmain.thread_mpool_len / 2,
     g_cmain.thread_mpool_len / 2)) {
-        fprintf(stderr, "Cannot init threads\n"); 
+        VLOG_ERROR("Cannot init threads"); 
         return 1;
     } 
     if (cphysics_init(g_cmain.lua, g_cmain.world_count, g_cmain.colshape_count,
     g_cmain.rigidbody_count, g_cmain.vehicle_count, g_cmain.physics_mpool,
     g_cmain.physics_mpool + g_cmain.physics_mpool_len / 2,
     g_cmain.physics_mpool_len / 2)) {
-        fprintf(stderr, "Cannot init physics\n"); 
+        VLOG_ERROR("Cannot init physics"); 
         return 1;
     } 
     if (cbuf_init(g_cmain.lua, g_cmain.buf_size)) {
-        fprintf(stderr, "Cannot init buffers\n");
+        VLOG_ERROR("Cannot init buffers");
         return 1;
     }
     if (vector_init(g_cmain.lua, g_cmain.vector_count, g_cmain.vector_nesting)) {
-        fprintf(stderr, "Cannot init vectors\n");
+        VLOG_ERROR("Cannot init vectors");
         return 1;
     }
     if (cmatrix_init(g_cmain.lua, g_cmain.matrix_count,
     g_cmain.matrix_nesting)) {
-        fprintf(stderr, "Cannot init matrices\n");
+        VLOG_ERROR("Cannot init matrices");
         return 1;
     }
     if (crender_init(g_cmain.lua, g_cmain.screen_width,
     g_cmain.screen_height, g_cmain.full_screen)) {
-        fprintf(stderr, "Cannot init render\n"); 
+        VLOG_ERROR("Cannot init render"); 
         return 1;
     } 
     if (cprog_init(g_cmain.lua, g_cmain.prog_count)) {
-        fprintf(stderr, "Cannot init shader programs\n"); 
+        VLOG_ERROR("Cannot init shader programs"); 
         return 1;
     }
     if (crbuf_init(g_cmain.lua, g_cmain.rbuf_count)) {
-        fprintf(stderr, "Cannot init render buffers\n"); 
+        VLOG_ERROR("Cannot init render buffers"); 
         return 1;
     }
     if (vao_init(g_cmain.lua, g_cmain.vao_count)) {
-        fprintf(stderr, "Cannot init vertex array objects\n");
+        VLOG_ERROR("Cannot init vertex array objects");
         return 1;
     }
     if (luaL_dofile(g_cmain.lua, script)) {
-        fprintf(stderr, "Cannot run script: %s\n", lua_tostring(g_cmain.lua, -1));
+        VLOG_ERROR("Cannot run script: %s", lua_tostring(g_cmain.lua, -1));
         return 1;
     }
     return 0;
 }
 
 static void cmain_run(void) {
-    fprintf(stderr, "Game loop start\n");
+    VLOG_INFO("Game loop start");
     if (!lua_istable(g_cmain.lua, -1))
-        fprintf(stderr, "Invalid return value of main module\n");
+        VLOG_ERROR("Invalid return value of main module");
     else {
         lua_getfield(g_cmain.lua, -1, "run");
         if (!lua_isfunction(g_cmain.lua, -1))
-            fprintf(stderr, "Cannot find run() function\n");
+            VLOG_ERROR("Cannot find run() function");
         else if (lua_pcall(g_cmain.lua, 0, LUA_MULTRET, 0))
-            fprintf(stderr, "Error while executing run() function: %s\n",
+            VLOG_ERROR("Error while executing run() function: %s",
                     lua_tostring(g_cmain.lua, -1));
     }
-    fprintf(stderr, "Game loop finish\n");
+    VLOG_INFO("Game loop finish");
 }
 
 int main(int argc, char **argv) {
