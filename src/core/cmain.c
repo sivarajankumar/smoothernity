@@ -189,7 +189,7 @@ static void cmain_done(void) {
     cphysics_done();
     if (g_cmain.mpool) {
         VLOG_INFO("");
-        VLOG_INFO("Main memory pool:");
+        VLOG_INFO("Main");
         cmpool_report(g_cmain.mpool);
         cmpool_destroy(g_cmain.mpool);
     }
