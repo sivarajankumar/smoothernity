@@ -1,6 +1,6 @@
 local M = {}
 
-function log(level, ...)
+local function log(level, ...)
     local d = debug.getinfo(3)
     api_log_out(level, d.short_src, d.currentline, string.format(...))
 end
