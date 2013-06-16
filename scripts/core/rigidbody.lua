@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local rigidbodies = {}
 local left, left_min
@@ -13,7 +14,8 @@ local function make_rigidbody(ri)
         allocs = allocs + 1
         left = left - 1
         left_min = math.min(left, left_min)
-        api_physics_rb_alloc(ri, wld.id(), cs.id(), tm.id(), mass, frict, roll_frict)
+        api_physics_rb_alloc(ri, wld.id(), cs.id(), tm.id(),
+                             mass, frict, roll_frict)
     end
     function self.free()
         frees = frees + 1
@@ -36,9 +38,11 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Rigid bodies usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.RIGIDBODY_COUNT - left_min, cfg.RIGIDBODY_COUNT,
-                           allocs, frees))
+    log.info('Rigid bodies usage: %i/%i, allocs/frees: %i/%i',
+             cfg.RIGIDBODY_COUNT - left_min, cfg.RIGIDBODY_COUNT, allocs, frees)
+    if allocs ~= frees then
+        error('Allocs/frees mismatch')
+    end
 end
 
 function M.alloc(wld, cs, tm, mass, frict, roll_frict)
