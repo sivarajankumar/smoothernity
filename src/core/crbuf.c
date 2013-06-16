@@ -2,7 +2,7 @@
 #include "vao.h"
 #include "util.h"
 #include "pmem.h"
-#include <stdio.h>
+#include "vlog.h"
 
 #define CRBUF_SIZE 32
 
@@ -285,7 +285,7 @@ void crbuf_done(void) {
         return;
     for (int i = 0; i < g_crbufs.count; ++i)
         if (crbuf_get(i)->buf_id) {
-            fprintf(stderr, "crbuf_done: some buffers are still active\n");
+            VLOG_ERROR("some buffers are still active");
             break;
         }
     pmem_free(g_crbufs.pool);
