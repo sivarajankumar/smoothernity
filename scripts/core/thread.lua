@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local ths = {}
 local allocs = 0
@@ -46,9 +47,11 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Threads usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.THREAD_COUNT - left_min, cfg.THREAD_COUNT,
-                           allocs, frees))
+    log.info('Threads usage: %i/%i, allocs/frees: %i/%i',
+             cfg.THREAD_COUNT - left_min, cfg.THREAD_COUNT, allocs, frees)
+    if allocs ~= frees then
+        error('Allocs/frees mismatch')
+    end
 end
 
 function M.left()
