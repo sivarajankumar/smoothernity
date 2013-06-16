@@ -5,12 +5,13 @@ local quit = require 'game.quit'
 local util = require 'core.util'
 local blinker = require 'game.blinker'
 local thread = require 'core.thread'
+local log = require 'core.log'
 
 GC_STEP = 10
 FRAME_TIME = 1 / 60
 
 function M.thread_run()
-    io.write('Hello world from thread!\n')
+    log.info('Hello world from thread!')
 end
 
 function M.run()
