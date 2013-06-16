@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local colshapes = {}
 local left, left_min
@@ -50,9 +51,12 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Collision shapes usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.COLSHAPE_COUNT - left_min, cfg.COLSHAPE_COUNT,
-                           allocs, frees))
+    log.info('Collision shapes usage: %i/%i, allocs/frees: %i/%i',
+             cfg.COLSHAPE_COUNT - left_min, cfg.COLSHAPE_COUNT,
+             allocs, frees)
+    if allocs ~= frees then
+        log.err('Allocs/frees mismatch')
+    end
 end
 
 local function alloc()
