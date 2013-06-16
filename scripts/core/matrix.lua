@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local matrices = {}
 local left, left_min
@@ -73,9 +74,12 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Matrices usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.MATRIX_COUNT - left_min, cfg.MATRIX_COUNT,
-                           allocs, frees))
+    log.info('Matrices usage: %i/%i, allocs/frees: %i/%i',
+             cfg.MATRIX_COUNT - left_min, cfg.MATRIX_COUNT,
+             allocs, frees)
+    if allocs ~= frees then
+        log.err('Allocs/frees mismatch')
+    end
 end
 
 function M.alloc()
