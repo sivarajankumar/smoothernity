@@ -55,7 +55,7 @@ function M.done()
              cfg.COLSHAPE_COUNT - left_min, cfg.COLSHAPE_COUNT,
              allocs, frees)
     if allocs ~= frees then
-        log.err('Allocs/frees mismatch')
+        error('Allocs/frees mismatch')
     end
 end
 
