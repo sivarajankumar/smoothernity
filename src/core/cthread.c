@@ -1,12 +1,13 @@
 #include "cthread.h"
 #include "cmpool.h"
+#include "clog.h"
 #include "util.h"
 #include "uatomic.h"
 #include "uthread.h"
+#include "vlog.h"
 #include "pmem.h"
 #include "lauxlib.h"
 #include "lualib.h"
-#include "vlog.h"
 #include <setjmp.h>
 #include <string.h>
 
@@ -261,6 +262,7 @@ static void cthread_reg_main(lua_State *lua) {
 
 static void cthread_reg(lua_State *lua) {
     lua_register(lua, "api_thread_respond", api_thread_respond);
+    clog_reg_thread(lua);
 }
 
 int cthread_init

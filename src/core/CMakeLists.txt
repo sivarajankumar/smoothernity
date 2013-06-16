@@ -14,7 +14,7 @@ include_directories(${LUA_INCLUDE_DIR}
 add_executable(main
                cmain.c cmpool.c timer.c crender.c cphysics.c
                cthread.c crbuf.c vector.c cinput.c cmatrix.c
-               cbuf.c cinterp.c cprog.c vao.c util.c)
+               cbuf.c cinterp.c cprog.c vao.c util.c clog.c)
 
 target_link_libraries(main
                       physics platform utilc utilcpp
