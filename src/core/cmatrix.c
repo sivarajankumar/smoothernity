@@ -4,7 +4,6 @@
 #include "util.h"
 #include "pmem.h"
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #define CMATRIX_SIZE 256
