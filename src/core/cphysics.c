@@ -630,7 +630,7 @@ void cphysics_done(void) {
     physcpp_done();
     if (g_cphysics.mpool) {
         VLOG_INFO("");
-        VLOG_INFO("Physics memory pool:");
+        VLOG_INFO("Physics");
         cmpool_report(g_cphysics.mpool);
         cmpool_destroy(g_cphysics.mpool);
     }
