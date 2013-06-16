@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local vehicles = {}
 local left, left_min
@@ -57,9 +58,11 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Rigid bodies usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.VEHICLE_COUNT - left_min, cfg.VEHICLE_COUNT,
-                           allocs, frees))
+    log.info('Vehicles usage: %i/%i, allocs/frees: %i/%i',
+             cfg.VEHICLE_COUNT - left_min, cfg.VEHICLE_COUNT, allocs, frees)
+    if allocs ~= frees then
+        error('Allocs/frees mismatch')
+    end
 end
 
 function M.alloc(wld, ch_cs, ch_inert, tm, mass, ch_frict, ch_roll_frict,
