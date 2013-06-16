@@ -1,9 +1,9 @@
 #include "crender.h"
 #include "vector.h"
 #include "util.h"
+#include "vlog.h"
 #include "SDL.h"
 #include "GL/glew.h"
-#include <stdio.h>
 
 /*
  * Wherever possible, target non-depricated functionality
@@ -17,6 +17,11 @@ static const GLint MIN_GL_VERSION = 3;
 struct crender_t {
     int init, width, height;
 };
+
+_Static_assert(sizeof(float) == sizeof(GLfloat),
+               "float<->GLfloat is not supported");
+_Static_assert(sizeof(int) == sizeof(GLint),
+               "int<->GLint is not supported");
 
 static struct crender_t g_crender;
 
@@ -79,14 +84,6 @@ int crender_init(lua_State *lua, int width, int height, int full_screen) {
     const SDL_VideoInfo *info;
     GLint version;
 
-    if (sizeof(float) != sizeof(GLfloat)) {
-        fprintf(stderr, "crender_init: float<->GLfloat is not supported\n");
-        goto cleanup;
-    }
-    if (sizeof(int) != sizeof(GLint)) {
-        fprintf(stderr, "crender_init: int<->GLint is not supported\n");
-        goto cleanup;
-    }
     info = SDL_GetVideoInfo();
     if (!info)
         goto cleanup;
@@ -110,9 +107,9 @@ int crender_init(lua_State *lua, int width, int height, int full_screen) {
     if (glewInit() != GLEW_OK)
         goto cleanup;
 
-    fprintf(stderr, "crender_init: GL: %s, GLSL: %s\n",
-            glGetString(GL_VERSION),
-            glGetString(GL_SHADING_LANGUAGE_VERSION));
+    VLOG_INFO("GL: %s, GLSL: %s",
+              glGetString(GL_VERSION),
+              glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     glGetIntegerv(GL_MAJOR_VERSION, &version);
     if (version < MIN_GL_VERSION)
