@@ -52,8 +52,7 @@ end
 
 function M.done()
     log.info('Collision shapes usage: %i/%i, allocs/frees: %i/%i',
-             cfg.COLSHAPE_COUNT - left_min, cfg.COLSHAPE_COUNT,
-             allocs, frees)
+             cfg.COLSHAPE_COUNT - left_min, cfg.COLSHAPE_COUNT, allocs, frees)
     if allocs ~= frees then
         error('Allocs/frees mismatch')
     end

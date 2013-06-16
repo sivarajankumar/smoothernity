@@ -75,8 +75,7 @@ end
 
 function M.done()
     log.info('Matrices usage: %i/%i, allocs/frees: %i/%i',
-             cfg.MATRIX_COUNT - left_min, cfg.MATRIX_COUNT,
-             allocs, frees)
+             cfg.MATRIX_COUNT - left_min, cfg.MATRIX_COUNT, allocs, frees)
     if allocs ~= frees then
         error('Allocs/frees mismatch')
     end
