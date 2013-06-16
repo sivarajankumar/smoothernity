@@ -321,8 +321,7 @@ void cthread_done(void) {
         if (g_cthreads.quit)
             uatomic_int_store(g_cthreads.quit, 1);
         for (int i = 0; i < g_cthreads.count; ++i) {
-            VLOG_INFO("");
-            VLOG_INFO("Thread %i", i);
+            VLOG_INFO("Thread %i:", i);
             thread = cthread_get(i);
             if (thread->thread) {
                 if (uatomic_int_load(thread->state) != CTHREAD_IDLE)

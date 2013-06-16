@@ -629,8 +629,7 @@ int veh_count, const int msizes[], const int mcounts[], int mlen) {
 void cphysics_done(void) {
     physcpp_done();
     if (g_cphysics.mpool) {
-        VLOG_INFO("");
-        VLOG_INFO("Physics");
+        VLOG_INFO("Physics:");
         cmpool_report(g_cphysics.mpool);
         cmpool_destroy(g_cphysics.mpool);
     }
