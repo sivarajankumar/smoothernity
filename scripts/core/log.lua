@@ -5,7 +5,7 @@ function log(level, ...)
     api_log_out(level, d.short_src, d.currentline, string.format(...))
 end
 
-function M.error(...)
+function M.err(...)
     log(API_LOG_ERROR, ...)
 end
 
