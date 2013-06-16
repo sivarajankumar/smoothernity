@@ -5,6 +5,9 @@
 #include "physres.h"
 #include <exception>
 
+static_assert(sizeof(float) == sizeof(btScalar),
+              "float<->btScalar is not supported");
+
 struct physcpp_t {
     void *(*memalloc)(size_t);
 };
@@ -21,10 +24,6 @@ static void * physcpp_memalloc(size_t size) {
 extern "C" int physcpp_init(void *(*memalloc)(size_t), void (*memfree)(void*),
 int wld_count, int cs_count, int rb_count, int veh_count) {
     int res;
-    if (sizeof(float) != sizeof(btScalar)) {
-        fprintf(stderr, "physcpp_init: float<->btScalar is not supported\n");
-        return PHYSRES_CANNOT_INIT;
-    }
     g_physcpp.memalloc = memalloc;
     btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     if ((res = world_init(wld_count)) != PHYSRES_OK)
