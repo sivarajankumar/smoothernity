@@ -1,5 +1,5 @@
 #include "ddraw.hpp"
-#include <stdio.h>
+#include "vlog.hpp"
 #include "GL/glew.h"
 
 ddraw_c::ddraw_c() : mode(0) {
@@ -23,7 +23,7 @@ const btVector3 &norm, btScalar dist, int, const btVector3 &color) {
 }
 
 void ddraw_c::reportErrorWarning(const char *text) {
-    fprintf(stderr, "physics: %s\n", text);
+    VLOG_ERROR(text);
 }
 
 void ddraw_c::draw3dText(const btVector3&, const char*) {
