@@ -1,6 +1,7 @@
 local M = {}
 
 local cfg = require 'config'
+local log = require 'core.log'
 
 local vectors = {}
 local left, left_min
@@ -64,9 +65,11 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Vectors usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.VECTOR_COUNT - left_min, cfg.VECTOR_COUNT,
-                           allocs, frees))
+    log.info('Vectors usage: %i/%i, allocs/frees: %i/%i',
+             cfg.VECTOR_COUNT - left_min, cfg.VECTOR_COUNT, allocs, frees)
+    if allocs ~= frees then
+        error('Allocs/frees mismatch')
+    end
 end
 
 function M.alloc()
