@@ -5,6 +5,7 @@ local thread = require 'core.thread'
 local matrix = require 'core.matrix'
 local vector = require 'core.vector'
 local prog = require 'core.prog'
+local log = require 'core.log'
 
 local MAX_WAIT_TIME = 10
 
@@ -97,7 +98,7 @@ function M.sync_write(uid, data)
             f:write(data)
             f:close()
         else
-            io.write(string.format('cannot write "%s"\n', uid))
+            log.err('Cannot write "%s"', uid)
         end
     end
 end
