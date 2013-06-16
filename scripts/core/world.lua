@@ -2,6 +2,7 @@ local M = {}
 
 local cfg = require 'config'
 local util = require 'core.util'
+local log = require 'core.log'
 
 local worlds = {}
 local left, left_min
@@ -58,9 +59,11 @@ function M.init()
 end
 
 function M.done()
-    io.write(string.format('Worlds usage: %i/%i, allocs/frees: %i/%i\n',
-                           cfg.WORLD_COUNT - left_min, cfg.WORLD_COUNT,
-                           allocs, frees))
+    log.info('Worlds usage: %i/%i, allocs/frees: %i/%i',
+             cfg.WORLD_COUNT - left_min, cfg.WORLD_COUNT, allocs, frees)
+    if allocs ~= frees then
+        error('Allocs/frees mismatch')
+    end
 end
 
 function M.alloc()
