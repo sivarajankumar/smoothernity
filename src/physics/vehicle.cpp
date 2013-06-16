@@ -3,7 +3,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "pmem.hpp"
-#include <stdio.h>
+#include "vlog.hpp"
 
 static const size_t VEHICLE_SIZE = 256;
 
@@ -70,7 +70,7 @@ void vehicle_done(void) {
             if (veh->tuning)
                 delete veh->tuning;
         } catch (...) {
-            fprintf(stderr, "vehicle_done: exception\n");
+            VLOG_ERROR("exception");
         }
         if (veh->chassis_data)
             pmem_free(veh->chassis_data);
