@@ -3,7 +3,7 @@
 #include "world.hpp"
 #include "colshape.hpp"
 #include "pmem.hpp"
-#include <stdio.h>
+#include "vlog.hpp"
 
 static const size_t RIGIDBODY_SIZE = 128;
 
@@ -60,7 +60,7 @@ void rigidbody_done(void) {
             if (rb->mstate)
                 delete rb->mstate;
         } catch (...) {
-            fprintf(stderr, "rigidbody_done: exception\n");
+            VLOG_ERROR("exception");
         }
         if (rb->data)
             pmem_free(rb->data);
