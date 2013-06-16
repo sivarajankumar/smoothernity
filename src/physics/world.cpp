@@ -2,7 +2,7 @@
 #include "colshape.hpp"
 #include "physres.h"
 #include "pmem.hpp"
-#include <stdio.h>
+#include "vlog.hpp"
 
 static const size_t WORLD_SIZE = 128;
 
@@ -58,7 +58,7 @@ void world_done(void) {
     for (int i = 0; i < g_worlds.count; ++i) {
         wld = world_get(i);
         if (wld->world && wld->world->getNumCollisionObjects() > 0)
-            fprintf(stderr, "world_done: world still has refs\n");
+            VLOG_ERROR("world still has refs");
         try {
             if (wld->world)
                 delete wld->world;
@@ -73,7 +73,7 @@ void world_done(void) {
             if (wld->ddraw)
                 delete wld->ddraw;
         } catch (...) {
-            fprintf(stderr, "world_done: exception\n");
+            VLOG_ERROR("exception");
         }
     }
     pmem_free(g_worlds.pool);
