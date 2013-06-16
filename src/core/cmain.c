@@ -189,8 +189,7 @@ static void cmain_done(void) {
     cmatrix_done();
     cphysics_done();
     if (g_cmain.mpool) {
-        VLOG_INFO("");
-        VLOG_INFO("Main");
+        VLOG_INFO("Main:");
         cmpool_report(g_cmain.mpool);
         cmpool_destroy(g_cmain.mpool);
     }
