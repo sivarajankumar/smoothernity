@@ -1,7 +1,7 @@
 #include "cprog.h"
 #include "util.h"
 #include "pmem.h"
-#include <stdio.h>
+#include "vlog.h"
 
 #define CPROG_LOG_SIZE 2048
 #define CPROG_SIZE 4
@@ -38,10 +38,10 @@ static int cprog_attach
     if (res == GL_FALSE) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
         if (log_len >= CPROG_LOG_SIZE)
-            fprintf(stderr, "Log size is too small: %i\n", (int)log_len);
+            VLOG_ERROR("Log size is too small: %i", (int)log_len);
         else {
             glGetShaderInfoLog(shader, log_len, &res, log);
-            fprintf(stderr, "Log:\n%s\n", log);
+            VLOG_ERROR("Log:\n%s", log);
         }
         glDeleteShader(shader);
         return 1;
@@ -93,10 +93,10 @@ static int api_prog_alloc(lua_State *lua) {
     if (res == GL_FALSE) {
         glGetProgramiv(prog->prog_id, GL_INFO_LOG_LENGTH, &len);
         if (len >= CPROG_LOG_SIZE)
-            fprintf(stderr, "Log size is too small: %i\n", (int)len);
+            VLOG_ERROR("Log size is too small: %i", (int)len);
         else {
             glGetProgramInfoLog(prog->prog_id, len, &res, log);
-            fprintf(stderr, "Log:\n%s\n", log);
+            VLOG_ERROR("Log:\n%s", log);
         }
         lua_pushstring(lua, "api_prog_alloc: link error");
         lua_error(lua);
@@ -170,7 +170,7 @@ void cprog_done(void) {
         return;
     for (int i = 0; i < g_cprogs.count; ++i)
         if (cprog_get(i)->prog_id) {
-            fprintf(stderr, "cprog_done: some progs are still active\n");
+            VLOG_ERROR("some progs are still active");
             break;
         }
     pmem_free(g_cprogs.pool);
