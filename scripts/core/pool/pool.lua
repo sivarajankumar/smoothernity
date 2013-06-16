@@ -1,3 +1,5 @@
+local log = require 'core.log'
+
 local M = {}
 
 local function make_base_chunk(size, start, res)
@@ -84,11 +86,15 @@ function M.alloc(title, res_size, res_start, res_count, pool_dims)
         local sizes = {}
         for s in pairs(shelves) do table.insert(sizes, s) end
         table.sort(sizes)
-        io.write(string.format('%s largest requested chunk: %i\n', title, largest_size))
+        log.info('%s largest requested chunk: %i', title, largest_size)
         for si, s in ipairs(sizes) do
             local shelf = shelves[s]
-            io.write(string.format('%s pool %i chunks usage: %i/%i, allocs/frees: %i/%i\n',
-                title, s, shelf.count - shelf.left_min, shelf.count, shelf.allocs, shelf.frees))
+            log.info('%s pool %i chunks usage: %i/%i, allocs/frees: %i/%i',
+                     title, s, shelf.count - shelf.left_min, shelf.count,
+                     shelf.allocs, shelf.frees)
+            if shelf.allocs ~= shelf.frees then
+                error('Allocs/frees mismatch')
+            end
         end
     end
 
