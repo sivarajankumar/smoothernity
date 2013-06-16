@@ -6,7 +6,7 @@
 #include "pmem.h"
 #include "lauxlib.h"
 #include "lualib.h"
-#include <stdio.h>
+#include "vlog.h"
 #include <setjmp.h>
 #include <string.h>
 
@@ -72,8 +72,7 @@ static void cthread_loop(void *data) {
         if (uatomic_int_load(thread->state) == CTHREAD_STARTING) {
             if (luaL_loadbuffer(thread->lua, g_cthreads.fn,
             g_cthreads.fnsize, "threadfn")) {
-                fprintf(stderr, "cthread_loop load: %s\n",
-                        lua_tostring(thread->lua, -1));
+                VLOG_ERROR("load: %s", lua_tostring(thread->lua, -1));
                 uatomic_int_store(thread->state, CTHREAD_ERROR);
             }
             else {
@@ -81,8 +80,7 @@ static void cthread_loop(void *data) {
                 if (!lua_pcall(thread->lua, 0, LUA_MULTRET, 0))
                     uatomic_int_store(thread->state, CTHREAD_IDLE);
                 else {
-                    fprintf(stderr, "cthread_loop call: %s\n",
-                            lua_tostring(thread->lua, -1));
+                    VLOG_ERROR("call: %s", lua_tostring(thread->lua, -1));
                     uatomic_int_store(thread->state, CTHREAD_ERROR);
                 }
             }
@@ -124,7 +122,7 @@ static void * cthread_lua_alloc
 }
 
 static int cthread_lua_panic(lua_State *lua) {
-    fprintf(stderr, "Thread lua panic: %s\n", lua_tostring(lua, -1));
+    VLOG_ERROR("Lua panic: %s", lua_tostring(lua, -1));
     longjmp(g_cthreads.panic, 1);
 }
 
@@ -321,10 +319,12 @@ void cthread_done(void) {
         if (g_cthreads.quit)
             uatomic_int_store(g_cthreads.quit, 1);
         for (int i = 0; i < g_cthreads.count; ++i) {
+            VLOG_INFO("");
+            VLOG_INFO("Thread %i", i);
             thread = cthread_get(i);
             if (thread->thread) {
                 if (uatomic_int_load(thread->state) != CTHREAD_IDLE)
-                    fprintf(stderr, "\nThread %i is still active\n", i);
+                    VLOG_ERROR("Thread is still active");
                 if (thread->engage)
                     while (uatomic_int_load(thread->state) != CTHREAD_DONE)
                         uthread_cond_signal(thread->engage);
@@ -337,7 +337,6 @@ void cthread_done(void) {
             if (thread->lua)
                 lua_close(thread->lua);
             if (thread->mpool) {
-                fprintf(stderr, "\nThread %i memory pool:\n", i);
                 cmpool_report(thread->mpool);
                 cmpool_destroy(thread->mpool);
             }
