@@ -14,6 +14,7 @@
 #include "cthread.h"
 #include "cprog.h"
 #include "crbuf.h"
+#include "clog.h"
 #include "vao.h"
 #include "vlog.h"
 #include "pmem.h"
@@ -228,6 +229,7 @@ static int cmain_init(int argc, char **argv) {
     lua_atpanic(g_cmain.lua, cmain_panic);
     luaL_openlibs(g_cmain.lua);
 
+    clog_reg_thread(g_cmain.lua);
     cinput_init(g_cmain.lua);
 
     if (timer_init(g_cmain.lua)) {
@@ -294,13 +296,14 @@ static void cmain_run(void) {
             VLOG_ERROR("Cannot find run() function");
         else if (lua_pcall(g_cmain.lua, 0, LUA_MULTRET, 0))
             VLOG_ERROR("Error while executing run() function: %s",
-                    lua_tostring(g_cmain.lua, -1));
+                       lua_tostring(g_cmain.lua, -1));
     }
     VLOG_INFO("Game loop finish");
 }
 
 int main(int argc, char **argv) {
-    vlog_init(stderr);
+    if (vlog_init(stderr))
+        return EXIT_FAILURE;
     VLOG_INFO("Engine start");
     if (!setjmp(g_cmain.panic))
         if (!cmain_init(argc, argv))
