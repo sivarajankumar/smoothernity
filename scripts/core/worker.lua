@@ -1,5 +1,6 @@
 local M = {}
 local util = require 'core.util'
+local log = require 'core.log'
 
 function M.alloc()
     local self = {}
@@ -22,7 +23,7 @@ function M.alloc()
                         cs[k] = nil
                     end
                 else
-                    io.write('Worker coroutine\n', debug.traceback(v), '\n')
+                    log.err('Worker coroutine\n%s', debug.traceback(v))
                     error(arg)
                 end
                 coroutine.yield(false)
