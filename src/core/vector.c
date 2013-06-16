@@ -6,7 +6,6 @@
 #include "util.h"
 #include "pmem.h"
 #include <math.h>
-#include <stdio.h>
 
 #define VECTOR_SIZE 256
 

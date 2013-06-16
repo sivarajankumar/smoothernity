@@ -1,7 +1,6 @@
 #include "physres.h"
 #include "colshape.hpp"
 #include "pmem.hpp"
-#include <stdio.h>
 
 static const size_t COLSHAPE_SIZE = 128;
 
