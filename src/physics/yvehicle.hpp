@@ -1,5 +1,5 @@
-#ifndef PHYSICS_VEHICLE_HPP
-#define PHYSICS_VEHICLE_HPP
+#ifndef YVEHICLE_HPP
+#define YVEHICLE_HPP
 
 #include "btBulletDynamicsCommon.h"
 
@@ -7,7 +7,7 @@ class ymstate_c;
 struct world_t;
 struct ycolshape_t;
 
-struct vehicle_t {
+struct yvehicle_t {
     btRigidBody *chassis;
     ymstate_c *mstate;
     btDefaultVehicleRaycaster *ray;
@@ -17,26 +17,26 @@ struct vehicle_t {
     int vacant;
     world_t *wld;
     ycolshape_t *shape, *inert;
-    vehicle_t *shape_prev, *shape_next, *inert_prev, *inert_next;
+    yvehicle_t *shape_prev, *shape_next, *inert_prev, *inert_next;
 };
 
-int vehicle_init(int count);
-void vehicle_done(void);
-int vehicle_alloc(vehicle_t *veh, world_t*, ycolshape_t *shape,
+int yvehicle_init(int count);
+void yvehicle_done(void);
+int yvehicle_alloc(yvehicle_t *veh, world_t*, ycolshape_t *shape,
                   ycolshape_t *inert, float *matrix, float mass,
                   float ch_frict, float ch_rfrict, float sus_stif,
                   float sus_comp, float sus_damp, float sus_trav,
                   float sus_force, float slip_frict);
-int vehicle_free(vehicle_t*);
-vehicle_t * vehicle_get(int);
-int vehicle_add_wheel(vehicle_t*, int*, float *pos, float *dir, float *axl,
+int yvehicle_free(yvehicle_t*);
+yvehicle_t * yvehicle_get(int);
+int yvehicle_add_wheel(yvehicle_t*, int*, float *pos, float *dir, float *axl,
                       float sus_rest, float roll, float radius, int front);
-int vehicle_set_wheel(vehicle_t*, int, float engine,
+int yvehicle_set_wheel(yvehicle_t*, int, float engine,
                       float brake, float steer);
-int vehicle_fetch_chassis_tm(vehicle_t*, float*);
-int vehicle_fetch_wheel_tm(vehicle_t*, int, float*);
-int vehicle_transform(vehicle_t*, float*);
-int vehicle_wheel_contact(vehicle_t*, int, int *in_contact);
+int yvehicle_fetch_chassis_tm(yvehicle_t*, float*);
+int yvehicle_fetch_wheel_tm(yvehicle_t*, int, float*);
+int yvehicle_transform(yvehicle_t*, float*);
+int yvehicle_wheel_contact(yvehicle_t*, int, int *in_contact);
 
-#endif /* PHYSICS_VEHICLE_HPP */
+#endif /* YVEHICLE_HPP */
 
