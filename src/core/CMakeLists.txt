@@ -9,6 +9,7 @@ include_directories(${LUA_INCLUDE_DIR}
                     ${OPENGL_INCLUDE_DIR}
                     ${CMAKE_SOURCE_DIR}/utilc
                     ${CMAKE_SOURCE_DIR}/utilcpp
+                    ${CMAKE_SOURCE_DIR}/physics
                     ${CMAKE_SOURCE_DIR}/platform)
 
 add_executable(main
