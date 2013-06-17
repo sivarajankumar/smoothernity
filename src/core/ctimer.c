@@ -1,4 +1,4 @@
-#include "timer.h"
+#include "ctimer.h"
 #include "util.h"
 #include "ptimer.h"
 #include "SDL.h"
@@ -24,13 +24,13 @@ static int api_timer_delay(lua_State *lua) {
     return 0;
 }
 
-void timer_reg_thread(lua_State *lua) {
+void ctimer_reg_thread(lua_State *lua) {
     lua_register(lua, "api_timer", api_timer);
     lua_register(lua, "api_timer_delay", api_timer_delay);
 }
 
-int timer_init(lua_State *lua) {
-    timer_reg_thread(lua);
+int ctimer_init(lua_State *lua) {
+    ctimer_reg_thread(lua);
     return ptimer_init();
 }
 
