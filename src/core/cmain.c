@@ -2,7 +2,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
-#include "util.h"
+#include "cutil.h"
 #include "cmpool.h"
 #include "ctimer.h"
 #include "crender.h"
@@ -99,7 +99,7 @@ static int cmain_get_int_array
         return 1;
     }
     for (int i = 0; i < *len; ++i) {
-        if (!util_isint(lua, -(*len) + i)) {
+        if (!cutil_isint(lua, -(*len) + i)) {
             VLOG_ERROR("configure()[\"%s\"]()[%i] not int", field, i);
             return 1;
         }
@@ -111,7 +111,7 @@ static int cmain_get_int_array
 
 static int cmain_get_int(lua_State *lua, const char *field, int *dest) {
     lua_getfield(lua, -1, field);
-    if (!util_isint(lua, -1)) {
+    if (!cutil_isint(lua, -1)) {
         VLOG_ERROR("configure()[\"%s\"] value is not an integer", field);
         return 1;
     }

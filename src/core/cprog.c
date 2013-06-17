@@ -1,5 +1,5 @@
 #include "cprog.h"
-#include "util.h"
+#include "cutil.h"
 #include "pmem.h"
 #include "vlog.h"
 
@@ -65,7 +65,7 @@ static int api_prog_alloc(lua_State *lua) {
     static char log[CPROG_LOG_SIZE];
     GLint res, len;
 
-    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
+    if (lua_gettop(lua) != 3 || !cutil_isint(lua, 1) ||
     !lua_isstring(lua, 2) || !lua_isstring(lua, 3)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
@@ -107,7 +107,7 @@ static int api_prog_alloc(lua_State *lua) {
 
 static int api_prog_free(lua_State *lua) {
     struct cprog_t *prog;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -127,7 +127,7 @@ static int api_prog_free(lua_State *lua) {
 static int api_prog_use(lua_State *lua) {
     int iprog;
     struct cprog_t *prog;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

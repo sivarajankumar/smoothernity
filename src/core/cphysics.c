@@ -3,7 +3,7 @@
 #include "cmatrix.h"
 #include "cmpool.h"
 #include "cbuf.h"
-#include "util.h"
+#include "cutil.h"
 #include "vlog.h"
 #include "../physics/physcpp.h"
 #include "../physics/physdbg.h"
@@ -53,7 +53,7 @@ static void * cphysics_malloc(size_t size) {
 static int api_physics_wld_update(lua_State *lua) {
     float dt;
     int wldi, res;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isfloat(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isfloat(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -76,7 +76,7 @@ static int api_physics_wld_update(lua_State *lua) {
 
 static int api_physics_wld_ddraw(lua_State *lua) {
     int wldi, res;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -94,7 +94,7 @@ static int api_physics_wld_ddraw(lua_State *lua) {
 static int api_physics_wld_gravity(lua_State *lua) {
     int res, wldi;
     struct vector_t *v;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -118,7 +118,7 @@ static int api_physics_wld_gravity(lua_State *lua) {
 static int api_physics_wld_move(lua_State *lua) {
     int res, wldi;
     struct vector_t *v;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -141,7 +141,7 @@ static int api_physics_wld_move(lua_State *lua) {
 
 static int api_physics_wld_ddraw_mode(lua_State *lua) {
     int res;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -160,7 +160,7 @@ static int api_physics_cs_alloc_box(lua_State *lua) {
     struct vector_t *size;
     int csi, res;
 
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -186,7 +186,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua) {
     float r;
     int csi, res;
 
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isfloat(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isfloat(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -213,9 +213,9 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
     int start, width, length, csi, res;
     float hmin, hmax;
 
-    if (lua_gettop(lua) != 7 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isfloat(lua, 5) ||
-    !util_isfloat(lua, 6) || !util_isint(lua, 7)) {
+    if (lua_gettop(lua) != 7 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4) || !cutil_isfloat(lua, 5) ||
+    !cutil_isfloat(lua, 6) || !cutil_isint(lua, 7)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -262,7 +262,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
 static int api_physics_cs_alloc_comp(lua_State *lua) {
     int res;
 
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -282,8 +282,8 @@ static int api_physics_cs_comp_add(lua_State *lua) {
     int parenti, childi, res;
     struct cmatrix_t *m;
 
-    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
-    !util_isint(lua, 2) || !util_isint(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !cutil_isint(lua, 1) ||
+    !cutil_isint(lua, 2) || !cutil_isint(lua, 3)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -308,7 +308,7 @@ static int api_physics_cs_comp_add(lua_State *lua) {
 
 static int api_physics_cs_free(lua_State *lua) {
     int res;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -328,9 +328,9 @@ static int api_physics_rb_alloc(lua_State *lua) {
     int rbi, wldi, csi, res;
     float mass, fr, roll_fr;
 
-    if (lua_gettop(lua) != 7 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isfloat(lua, 5) ||
-    !util_isfloat(lua, 6) || !util_isfloat(lua, 7)) {
+    if (lua_gettop(lua) != 7 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4) || !cutil_isfloat(lua, 5) ||
+    !cutil_isfloat(lua, 6) || !cutil_isfloat(lua, 7)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -370,7 +370,7 @@ static int api_physics_rb_alloc(lua_State *lua) {
 
 static int api_physics_rb_free(lua_State *lua) {
     int res;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -391,11 +391,11 @@ static int api_physics_veh_alloc(lua_State *lua) {
     float mass, ch_frict, ch_roll_frict, sus_stif, sus_comp;
     float sus_damp, sus_trav, sus_force, slip_frict;
 
-    if (lua_gettop(lua) != 14 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5) ||
-    !util_isfloat(lua, 6) || !util_isfloat(lua, 7) || !util_isfloat(lua, 8) ||
-    !util_isfloat(lua, 9) || !util_isfloat(lua, 10) || !util_isfloat(lua, 11) ||
-    !util_isfloat(lua, 12) || !util_isfloat(lua, 13) || !util_isfloat(lua, 14)){
+    if (lua_gettop(lua) != 14 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4) || !cutil_isint(lua, 5) ||
+    !cutil_isfloat(lua, 6) || !cutil_isfloat(lua, 7) || !cutil_isfloat(lua, 8) ||
+    !cutil_isfloat(lua, 9) || !cutil_isfloat(lua, 10) || !cutil_isfloat(lua, 11) ||
+    !cutil_isfloat(lua, 12) || !cutil_isfloat(lua, 13) || !cutil_isfloat(lua, 14)){
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -444,7 +444,7 @@ static int api_physics_veh_alloc(lua_State *lua) {
 
 static int api_physics_veh_free(lua_State *lua) {
     int res;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -463,9 +463,9 @@ static int api_physics_veh_add_wheel(lua_State *lua) {
     struct vector_t *pos, *dir, *axl;
     float sus_rest, roll, radius;
     int vehi, front, wheel, res;
-    if (lua_gettop(lua) != 8 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isfloat(lua, 5) ||
-    !util_isfloat(lua, 6) || !util_isfloat(lua, 7) || !util_isint(lua, 8)) {
+    if (lua_gettop(lua) != 8 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4) || !cutil_isfloat(lua, 5) ||
+    !cutil_isfloat(lua, 6) || !cutil_isfloat(lua, 7) || !cutil_isint(lua, 8)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -505,8 +505,8 @@ static int api_physics_veh_add_wheel(lua_State *lua) {
 static int api_physics_veh_set_wheel(lua_State *lua) {
     int vehi, wheel, res;
     float engine, brake, steer;
-    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isfloat(lua, 3) || !util_isfloat(lua, 4) || !util_isfloat(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isfloat(lua, 3) || !cutil_isfloat(lua, 4) || !cutil_isfloat(lua, 5)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -530,7 +530,7 @@ static int api_physics_veh_set_wheel(lua_State *lua) {
 static int api_physics_veh_transform(lua_State *lua) {
     int vehi, res;
     struct cmatrix_t *matrix;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -554,7 +554,7 @@ static int api_physics_veh_transform(lua_State *lua) {
 static int api_physics_veh_wheel_contact(lua_State *lua)
 {
     int in_contact, res;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

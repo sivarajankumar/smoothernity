@@ -1,6 +1,6 @@
 #include "crbuf.h"
 #include "vao.h"
-#include "util.h"
+#include "cutil.h"
 #include "pmem.h"
 #include "vlog.h"
 
@@ -35,8 +35,8 @@ static int api_rbuf_map(lua_State *lua) {
     GLintptr glofs;
     GLsizeiptr gllen;
 
-    if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
-    !util_isint(lua, 2) || !util_isint(lua, 3)) {
+    if (lua_gettop(lua) != 3 || !cutil_isint(lua, 1) ||
+    !cutil_isint(lua, 2) || !cutil_isint(lua, 3)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -85,7 +85,7 @@ static int api_rbuf_map(lua_State *lua) {
 static int api_rbuf_unmap(lua_State *lua) {
     struct crbuf_t *rbuf;
 
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -114,7 +114,7 @@ static int api_rbuf_set(lua_State *lua) {
     struct crbuf_t *rbuf;
     int ofs, len, index;
 
-    if (lua_gettop(lua) < 3 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
+    if (lua_gettop(lua) < 3 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -135,8 +135,8 @@ static int api_rbuf_set(lua_State *lua) {
         return 0;
     }
     for (int i = 0; i < len; ++i) {
-        if ((rbuf->item == GL_FLOAT && !util_isfloat(lua, 3 + i)) ||
-        (/* rbuf->item == GL_INT && */ !util_isint(lua, 3 + i))) {
+        if ((rbuf->item == GL_FLOAT && !cutil_isfloat(lua, 3 + i)) ||
+        (/* rbuf->item == GL_INT && */ !cutil_isint(lua, 3 + i))) {
             lua_pushstring(lua, "incorrect data type");
             lua_error(lua);
             return 0;
@@ -156,8 +156,8 @@ static int api_rbuf_alloc(lua_State *lua) {
     int size, target, item, usage;
     GLsizeiptr glsize;
 
-    if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
-    !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
+    if (lua_gettop(lua) != 5 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4) || !cutil_isint(lua, 5)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -223,7 +223,7 @@ static int api_rbuf_alloc(lua_State *lua) {
 static int api_rbuf_free(lua_State *lua) {
     struct crbuf_t *rbuf;
 
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

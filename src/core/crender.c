@@ -1,6 +1,6 @@
 #include "crender.h"
 #include "vector.h"
-#include "util.h"
+#include "cutil.h"
 #include "vlog.h"
 #include "SDL.h"
 #include "GL/glew.h"
@@ -28,7 +28,7 @@ static struct crender_t g_crender;
 static int api_render_clear_color(lua_State *lua) {
     GLfloat *v;
     struct vector_t *vec;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -46,7 +46,7 @@ static int api_render_clear_color(lua_State *lua) {
 }
 
 static int api_render_clear_depth(lua_State *lua) {
-    if (lua_gettop(lua) != 1 || !util_isfloat(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isfloat(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -58,7 +58,7 @@ static int api_render_clear_depth(lua_State *lua) {
 
 static int api_render_clear(lua_State *lua) {
     int flags;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

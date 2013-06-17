@@ -1,7 +1,7 @@
 #include "vao.h"
 #include "cprog.h"
 #include "crbuf.h"
-#include "util.h"
+#include "cutil.h"
 
 struct vao_t {
     GLint vao_id;
@@ -29,8 +29,8 @@ static int api_vao_alloc(lua_State *lua) {
     struct cprog_t *prog;
     struct crbuf_t *vbuf, *ibuf;
 
-    if (lua_gettop(lua) < 5 || !util_isint(lua, 1) ||
-    !util_isint(lua, 2) || !util_isint(lua, 3) || !util_isint(lua, 4)) {
+    if (lua_gettop(lua) < 5 || !cutil_isint(lua, 1) ||
+    !cutil_isint(lua, 2) || !cutil_isint(lua, 3) || !cutil_isint(lua, 4)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
