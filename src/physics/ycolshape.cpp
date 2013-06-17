@@ -1,4 +1,4 @@
-#include "physres.h"
+#include "yphysres.h"
 #include "ycolshape.hpp"
 #include "pmem.hpp"
 
@@ -32,7 +32,7 @@ int ycolshape_init(int count) {
     g_ycolshapes.pool = (char*)pmem_alloc(PMEM_ALIGNOF(ycolshape_t),
                                           YCOLSHAPE_SIZE * count);
     if (!g_ycolshapes.pool)
-        return PHYSRES_CANNOT_INIT;
+        return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i ) {
         cs = ycolshape_get(i);
         cs->vacant = 1;
@@ -49,8 +49,8 @@ int ycolshape_init(int count) {
     }
     for (int i = 0; i < count; ++i)
         if (!(ycolshape_get(i)->data = (char*)pmem_alloc(align_max, size_max)))
-            return PHYSRES_CANNOT_INIT;
-    return PHYSRES_OK;
+            return YPHYSRES_CANNOT_INIT;
+    return YPHYSRES_OK;
 }
 
 void ycolshape_done(void) {
@@ -77,15 +77,15 @@ ycolshape_t * ycolshape_get(int colshapei) {
 
 int ycolshape_free(ycolshape_t *cs) {
     if (cs->vacant == 1)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     if (cs->comp_children || cs->vehs || cs->rbs)
-        return PHYSRES_CS_HAS_REFS;
+        return YPHYSRES_CS_HAS_REFS;
     cs->vacant = 1;
     if (cs->comp) {
         try {
             cs->comp->shape_comp->removeChildShape(cs->shape);
         } catch (...) {
-            return PHYSRES_INTERNAL;
+            return YPHYSRES_INTERNAL;
         }
         if (cs->comp->comp_children == cs)
             cs->comp->comp_children = cs->comp_next;
@@ -101,7 +101,7 @@ int ycolshape_free(ycolshape_t *cs) {
         try {
             cs->shape->~btCollisionShape();
         } catch (...) {
-            return PHYSRES_INTERNAL;
+            return YPHYSRES_INTERNAL;
         }
     }
     cs->shape = 0;
@@ -109,71 +109,71 @@ int ycolshape_free(ycolshape_t *cs) {
     cs->shape_box = 0;
     cs->shape_hmap = 0;
     cs->shape_comp = 0;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int ycolshape_alloc_box(ycolshape_t *cs, float *size) {
     if (!cs->vacant)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
         cs->shape_box = new (cs->data)
             btBoxShape(btVector3(size[0], size[1], size[2]));
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
     cs->shape = cs->shape_box;
     cs->shape_convex = cs->shape_box;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int ycolshape_alloc_sphere(ycolshape_t *cs, float r) {
     if (!cs->vacant)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
         cs->shape_sphere = new (cs->data) btSphereShape(r);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
     cs->shape = cs->shape_sphere;
     cs->shape_convex = cs->shape_sphere;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int ycolshape_alloc_hmap(ycolshape_t *cs, float *hmap,
 int width, int length, float hmin, float hmax, float *scale) {
     if (!cs->vacant)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
         cs->shape_hmap = new (cs->data)
             btHeightfieldTerrainShape(width, length, hmap, 1,
                                       hmin, hmax, 1, PHY_FLOAT, false);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
     cs->shape_hmap->setLocalScaling(btVector3(scale[0], scale[1], scale[2]));
     cs->shape = cs->shape_hmap;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int ycolshape_alloc_comp(ycolshape_t *cs) {
     if (!cs->vacant)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     cs->vacant = 0;
     try {
         cs->shape_comp = new (cs->data) btCompoundShape();
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
     cs->shape = cs->shape_comp;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int ycolshape_comp_add(ycolshape_t *prt, float *matrix, ycolshape_t *chd) {
     if (!prt->shape_comp || !chd->shape || chd->shape_comp || chd->comp)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     chd->comp = prt;
     chd->comp_next = prt->comp_children;
     if (prt->comp_children)
@@ -185,7 +185,7 @@ int ycolshape_comp_add(ycolshape_t *prt, float *matrix, ycolshape_t *chd) {
         tm.setFromOpenGLMatrix(matrix);
         prt->shape_comp->addChildShape(tm, chd->shape);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }

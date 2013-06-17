@@ -1,5 +1,5 @@
 #include "rigidbody.hpp"
-#include "physres.h"
+#include "yphysres.h"
 #include "ymstate.hpp"
 #include "world.hpp"
 #include "ycolshape.hpp"
@@ -24,7 +24,7 @@ int rigidbody_init(int count) {
     g_rigidbodies.pool = (char*)pmem_alloc(PMEM_ALIGNOF(rigidbody_t),
                                            RIGIDBODY_SIZE * count);
     if (!g_rigidbodies.pool)
-        return PHYSRES_CANNOT_INIT;
+        return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
         rb->vacant = 1;
@@ -40,14 +40,14 @@ int rigidbody_init(int count) {
         try {
             rb->mstate = new ymstate_c();
         } catch (...) {
-            return PHYSRES_CANNOT_INIT;
+            return YPHYSRES_CANNOT_INIT;
         }
         rb->data = (char*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
                                      sizeof(btRigidBody));
         if (!rb->data)
-            return PHYSRES_CANNOT_INIT;
+            return YPHYSRES_CANNOT_INIT;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 void rigidbody_done(void) {
@@ -79,7 +79,7 @@ rigidbody_t * rigidbody_get(int rbi) {
 
 int rigidbody_free(rigidbody_t *rb) {
     if (rb->vacant == 1)
-        return PHYSRES_INVALID_RB;
+        return YPHYSRES_INVALID_RB;
     rb->vacant = 1;
     if (rb->cs->rbs == rb)
         rb->cs->rbs = rb->cs_next;
@@ -97,19 +97,19 @@ int rigidbody_free(rigidbody_t *rb) {
             rb->body->~btRigidBody();
     } catch (...) {
         rb->body = 0;
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
     rb->body = 0;
     rb->wld = 0;
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int rigidbody_alloc(rigidbody_t *rb, world_t *wld, ycolshape_t *cs,
 float *matrix, float mass, float frict, float roll_frict) {
     if (!rb->vacant)
-        return PHYSRES_INVALID_RB;
+        return YPHYSRES_INVALID_RB;
     if (!cs->shape)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     rb->vacant = 0;
 
     rb->cs = cs;
@@ -138,16 +138,16 @@ float *matrix, float mass, float frict, float roll_frict) {
         wld->world->addRigidBody(rb->body);
         rb->wld = wld;
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix) {
     try {
         rb->mstate->m.getOpenGLMatrix(matrix);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
