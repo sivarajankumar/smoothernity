@@ -6,7 +6,7 @@ include_directories(${GLEW_INCLUDE_DIRS}
                     ${CMAKE_SOURCE_DIR}/utilc
                     ${CMAKE_SOURCE_DIR}/platform)
 
-add_library(physics physcpp.cpp ycolshape.cpp ymstate.cpp physdbg.cpp
+add_library(physics yphyscpp.cpp ycolshape.cpp ymstate.cpp physdbg.cpp
             rigidbody.cpp yddraw.cpp vehicle.cpp world.cpp)
 
 target_link_libraries(physics util ${BULLET_LIBRARIES})
