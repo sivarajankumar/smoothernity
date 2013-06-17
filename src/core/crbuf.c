@@ -1,5 +1,5 @@
 #include "crbuf.h"
-#include "vao.h"
+#include "cvao.h"
 #include "cutil.h"
 #include "pmem.h"
 #include "vlog.h"
@@ -23,7 +23,7 @@ static int crbuf_save_bind(struct crbuf_t *rbuf) {
      */
     if (rbuf->target == GL_ARRAY_BUFFER ||
     rbuf->target == GL_ELEMENT_ARRAY_BUFFER)
-        if (vao_bound())
+        if (cvao_bound())
             return 1;
     glBindBuffer(rbuf->target, rbuf->buf_id);
     return 0;

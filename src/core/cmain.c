@@ -1,7 +1,3 @@
-#include "SDL.h"
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
 #include "cutil.h"
 #include "cmpool.h"
 #include "ctimer.h"
@@ -15,9 +11,13 @@
 #include "cprog.h"
 #include "crbuf.h"
 #include "clog.h"
-#include "vao.h"
+#include "cvao.h"
 #include "vlog.h"
 #include "pmem.h"
+#include "SDL.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <setjmp.h>
@@ -165,7 +165,7 @@ cleanup:
 }
 
 static void cmain_done(void) {
-    vao_done();
+    cvao_done();
     cprog_done();
     crbuf_done();
     crender_done();
@@ -274,7 +274,7 @@ static int cmain_init(int argc, char **argv) {
         VLOG_ERROR("Cannot init render buffers"); 
         return 1;
     }
-    if (vao_init(g_cmain.lua, g_cmain.vao_count)) {
+    if (cvao_init(g_cmain.lua, g_cmain.vao_count)) {
         VLOG_ERROR("Cannot init vertex array objects");
         return 1;
     }

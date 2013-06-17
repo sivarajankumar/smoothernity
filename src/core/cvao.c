@@ -1,19 +1,19 @@
-#include "vao.h"
+#include "cvao.h"
 #include "cprog.h"
 #include "crbuf.h"
 #include "cutil.h"
 
-struct vao_t {
+struct cvao_t {
     GLint vao_id;
 };
 
-int vao_bound(void) {
+int cvao_bound(void) {
     GLint vao_id;
     glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vao_id);
     return !!vao_id;
 }
 
-static struct vao_t * vao_get(int ivao) {
+static struct cvao_t * cvao_get(int ivao) {
     return 0; /* TODO */
 }
 
@@ -25,17 +25,17 @@ static int api_vao_alloc(lua_State *lua) {
      * in the same order as attribute names arguments.
      * First attribute is stored at the very beginning of the buffer.
      */
-    struct vao_t *vao;
+    struct cvao_t *vao;
     struct cprog_t *prog;
     struct crbuf_t *vbuf, *ibuf;
 
-    if (lua_gettop(lua) < 5 || !cutil_isint(lua, 1) ||
-    !cutil_isint(lua, 2) || !cutil_isint(lua, 3) || !cutil_isint(lua, 4)) {
+    if (lua_gettop(lua) < 5 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
+    !cutil_isint(lua, 3) || !cutil_isint(lua, 4)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
-    vao = vao_get(lua_tointeger(lua, 1));
+    vao = cvao_get(lua_tointeger(lua, 1));
     prog = cprog_get(lua_tointeger(lua, 2));
     vbuf = crbuf_get(lua_tointeger(lua, 3));
     ibuf = crbuf_get(lua_tointeger(lua, 4));
@@ -66,7 +66,7 @@ static int api_vao_alloc(lua_State *lua) {
      * If there's a VAO currently bound, we'll definitely mess up its state.
      * So, to be on a safe side, it's better to ensure that no VAO is bound.
      */
-    if (vao_bound()) {
+    if (cvao_bound()) {
         lua_pushstring(lua, "vao is currently bound");
         lua_error(lua);
         return 0;
@@ -92,13 +92,13 @@ static int api_vao_use(lua_State *lua) {
     return 0;
 }
 
-int vao_init(lua_State *lua, int count) {
+int cvao_init(lua_State *lua, int count) {
     lua_register(lua, "api_vao_alloc", api_vao_alloc);
     lua_register(lua, "api_vao_free", api_vao_free);
     lua_register(lua, "api_vao_use", api_vao_use);
     return 0;
 }
 
-void vao_done(void) {
+void cvao_done(void) {
 }
 
