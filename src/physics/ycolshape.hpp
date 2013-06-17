@@ -4,7 +4,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
-struct rigidbody_t;
+struct yrigidbody_t;
 struct vehicle_t;
 
 struct ycolshape_t {
@@ -18,7 +18,7 @@ struct ycolshape_t {
     ycolshape_t *comp, *comp_children, *comp_next, *comp_prev;
     int vacant;
     vehicle_t *vehs;
-    rigidbody_t *rbs;
+    yrigidbody_t *rbs;
 };
 
 int ycolshape_init(int count);

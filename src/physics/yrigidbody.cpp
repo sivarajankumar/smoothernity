@@ -1,4 +1,4 @@
-#include "rigidbody.hpp"
+#include "yrigidbody.hpp"
 #include "yphysres.h"
 #include "ymstate.hpp"
 #include "world.hpp"
@@ -6,27 +6,27 @@
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t RIGIDBODY_SIZE = 128;
+static const size_t YRIGIDBODY_SIZE = 128;
 
-struct rigidbodies_t {
+struct yrigidbodies_t {
     int count;
     char *pool;
 };
 
-static_assert(sizeof(rigidbody_t) <= RIGIDBODY_SIZE,
-              "Invalid rigidbody_t size");
+static_assert(sizeof(yrigidbody_t) <= YRIGIDBODY_SIZE,
+              "Invalid yrigidbody_t size");
 
-static rigidbodies_t g_rigidbodies;
+static yrigidbodies_t g_yrigidbodies;
 
-int rigidbody_init(int count) {
-    rigidbody_t *rb;
-    g_rigidbodies.count = count;
-    g_rigidbodies.pool = (char*)pmem_alloc(PMEM_ALIGNOF(rigidbody_t),
-                                           RIGIDBODY_SIZE * count);
-    if (!g_rigidbodies.pool)
+int yrigidbody_init(int count) {
+    yrigidbody_t *rb;
+    g_yrigidbodies.count = count;
+    g_yrigidbodies.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yrigidbody_t),
+                                           YRIGIDBODY_SIZE * count);
+    if (!g_yrigidbodies.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
-        rb = rigidbody_get(i);
+        rb = yrigidbody_get(i);
         rb->vacant = 1;
         rb->body = 0;
         rb->mstate = 0;
@@ -36,7 +36,7 @@ int rigidbody_init(int count) {
         rb->cs_prev = rb->cs_next = 0;
     }
     for (int i = 0; i < count; ++i) {
-        rb = rigidbody_get(i);
+        rb = yrigidbody_get(i);
         try {
             rb->mstate = new ymstate_c();
         } catch (...) {
@@ -50,13 +50,13 @@ int rigidbody_init(int count) {
     return YPHYSRES_OK;
 }
 
-void rigidbody_done(void) {
-    rigidbody_t *rb;
-    if (!g_rigidbodies.pool)
+void yrigidbody_done(void) {
+    yrigidbody_t *rb;
+    if (!g_yrigidbodies.pool)
         return;
-    for (int i = 0; i < g_rigidbodies.count; ++i) {
-        rb = rigidbody_get(i);
-        rigidbody_free(rb);
+    for (int i = 0; i < g_yrigidbodies.count; ++i) {
+        rb = yrigidbody_get(i);
+        yrigidbody_free(rb);
         try {
             if (rb->mstate)
                 delete rb->mstate;
@@ -66,18 +66,18 @@ void rigidbody_done(void) {
         if (rb->data)
             pmem_free(rb->data);
     }
-    pmem_free(g_rigidbodies.pool);
-    g_rigidbodies.pool = 0;
+    pmem_free(g_yrigidbodies.pool);
+    g_yrigidbodies.pool = 0;
 }
 
-rigidbody_t * rigidbody_get(int rbi) {
-    if (rbi >= 0 && rbi < g_rigidbodies.count)
-        return (rigidbody_t*)(g_rigidbodies.pool + RIGIDBODY_SIZE * rbi);
+yrigidbody_t * yrigidbody_get(int rbi) {
+    if (rbi >= 0 && rbi < g_yrigidbodies.count)
+        return (yrigidbody_t*)(g_yrigidbodies.pool + YRIGIDBODY_SIZE * rbi);
     else
         return 0;
 }
 
-int rigidbody_free(rigidbody_t *rb) {
+int yrigidbody_free(yrigidbody_t *rb) {
     if (rb->vacant == 1)
         return YPHYSRES_INVALID_RB;
     rb->vacant = 1;
@@ -104,7 +104,7 @@ int rigidbody_free(rigidbody_t *rb) {
     return YPHYSRES_OK;
 }
 
-int rigidbody_alloc(rigidbody_t *rb, world_t *wld, ycolshape_t *cs,
+int yrigidbody_alloc(yrigidbody_t *rb, world_t *wld, ycolshape_t *cs,
 float *matrix, float mass, float frict, float roll_frict) {
     if (!rb->vacant)
         return YPHYSRES_INVALID_RB;
@@ -143,7 +143,7 @@ float *matrix, float mass, float frict, float roll_frict) {
     return YPHYSRES_OK;
 }
 
-int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix) {
+int yrigidbody_fetch_tm(yrigidbody_t *rb, float *matrix) {
     try {
         rb->mstate->m.getOpenGLMatrix(matrix);
     } catch (...) {
@@ -151,3 +151,4 @@ int rigidbody_fetch_tm(rigidbody_t *rb, float *matrix) {
     }
     return YPHYSRES_OK;
 }
+
