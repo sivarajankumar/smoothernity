@@ -1,5 +1,5 @@
 #include "crender.h"
-#include "vector.h"
+#include "cvector.h"
 #include "cutil.h"
 #include "vlog.h"
 #include "SDL.h"
@@ -27,13 +27,13 @@ static struct crender_t g_crender;
 
 static int api_render_clear_color(lua_State *lua) {
     GLfloat *v;
-    struct vector_t *vec;
+    struct cvector_t *vec;
     if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
-    vec = vector_get(lua_tointeger(lua, 1));
+    vec = cvector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (!vec) {
         lua_pushstring(lua, "invalid vector");

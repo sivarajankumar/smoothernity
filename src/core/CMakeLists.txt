@@ -13,7 +13,7 @@ include_directories(${LUA_INCLUDE_DIR}
 
 add_executable(main
                cmain.c cmpool.c ctimer.c crender.c cphysics.c
-               cthread.c crbuf.c vector.c cinput.c cmatrix.c
+               cthread.c crbuf.c cvector.c cinput.c cmatrix.c
                cbuf.c cinterp.c cprog.c cvao.c cutil.c clog.c)
 
 target_link_libraries(main

@@ -1,5 +1,5 @@
 #include "cmatrix.h"
-#include "vector.h"
+#include "cvector.h"
 #include "cphysics.h"
 #include "cutil.h"
 #include "pmem.h"
@@ -200,7 +200,7 @@ static int api_matrix_inv(lua_State *lua) {
 
 static int api_matrix_frustum(lua_State *lua) {
     struct cmatrix_t *matrix;
-    struct vector_t *v0, *v1;
+    struct cvector_t *v0, *v1;
     int zneari, zfari;
 
     if (lua_gettop(lua) != 5 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
@@ -210,8 +210,8 @@ static int api_matrix_frustum(lua_State *lua) {
         return 0;
     }
     matrix = cmatrix_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
+    v0 = cvector_get(lua_tointeger(lua, 2));
+    v1 = cvector_get(lua_tointeger(lua, 3));
     zneari = lua_tointeger(lua, 4);
     zfari = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
@@ -245,7 +245,7 @@ static int api_matrix_frustum(lua_State *lua) {
 
 static int api_matrix_ortho(lua_State *lua) {
     struct cmatrix_t *matrix;
-    struct vector_t *v0, *v1;
+    struct cvector_t *v0, *v1;
     int zneari, zfari;
 
     if (lua_gettop(lua) != 5 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
@@ -255,8 +255,8 @@ static int api_matrix_ortho(lua_State *lua) {
         return 0;
     }
     matrix = cmatrix_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
+    v0 = cvector_get(lua_tointeger(lua, 2));
+    v1 = cvector_get(lua_tointeger(lua, 3));
     zneari = lua_tointeger(lua, 4);
     zfari = lua_tointeger(lua, 5);
     lua_pop(lua, 5);
@@ -290,7 +290,7 @@ static int api_matrix_ortho(lua_State *lua) {
 
 static int api_matrix_pos_scl_rot(lua_State *lua) {
     struct cmatrix_t *matrix;
-    struct vector_t *v0, *v1, *v2;
+    struct cvector_t *v0, *v1, *v2;
     int rotaxis, rotanglei;
 
     if (lua_gettop(lua) != 6 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
@@ -301,9 +301,9 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
         return 0;
     }
     matrix = cmatrix_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
-    v2 = vector_get(lua_tointeger(lua, 4));
+    v0 = cvector_get(lua_tointeger(lua, 2));
+    v1 = cvector_get(lua_tointeger(lua, 3));
+    v2 = cvector_get(lua_tointeger(lua, 4));
     rotaxis = lua_tointeger(lua, 5);
     rotanglei = lua_tointeger(lua, 6);
     lua_pop(lua, 6);
@@ -343,7 +343,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
 
 static int api_matrix_from_to_up(lua_State *lua) {
     struct cmatrix_t *matrix;
-    struct vector_t *v0, *v1, *v2;
+    struct cvector_t *v0, *v1, *v2;
 
     if (lua_gettop(lua) != 4 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
     !cutil_isint(lua, 3) || !cutil_isint(lua, 4)) {
@@ -352,9 +352,9 @@ static int api_matrix_from_to_up(lua_State *lua) {
         return 0;
     }
     matrix = cmatrix_get(lua_tointeger(lua, 1));
-    v0 = vector_get(lua_tointeger(lua, 2));
-    v1 = vector_get(lua_tointeger(lua, 3));
-    v2 = vector_get(lua_tointeger(lua, 4));
+    v0 = cvector_get(lua_tointeger(lua, 2));
+    v1 = cvector_get(lua_tointeger(lua, 3));
+    v2 = cvector_get(lua_tointeger(lua, 4));
     lua_pop(lua, 4);
 
     if (!matrix || !v0 || !v1 || !v2) {
@@ -537,7 +537,7 @@ int cmatrix_nesting(struct cmatrix_t *matrix, int limit) {
         for (int i = 0; i < CMATRIX_ARGVS; ++i) {
             if (!matrix->argv[i])
                 continue;
-            cur = vector_nesting(matrix->argv[i], limit - 1);
+            cur = cvector_nesting(matrix->argv[i], limit - 1);
             if (cur < min)
                 min = cur;
         }
@@ -577,7 +577,7 @@ static int cmatrix_update_inv(struct cmatrix_t *m, float dt, int force) {
 static int cmatrix_update_frustum(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1;
     for (int i = 0; i < 2; ++i)
-        if (vector_update(m->argv[i], dt, m->update_tag, force))
+        if (cvector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -589,7 +589,7 @@ static int cmatrix_update_frustum(struct cmatrix_t *m, float dt, int force) {
 static int cmatrix_update_ortho(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1;
     for (int i = 0; i < 2; ++i)
-        if (vector_update(m->argv[i], dt, m->update_tag, force))
+        if (cvector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -601,7 +601,7 @@ static int cmatrix_update_ortho(struct cmatrix_t *m, float dt, int force) {
 static int cmatrix_update_pos_scl_rot(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1, *v2;
     for (int i = 0; i < 3; ++i)
-        if (vector_update(m->argv[i], dt, m->update_tag, force))
+        if (cvector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -613,7 +613,7 @@ static int cmatrix_update_pos_scl_rot(struct cmatrix_t *m, float dt, int force) 
 static int cmatrix_update_from_to_up(struct cmatrix_t *m, float dt, int force) {
     float *v0, *v1, *v2;
     for (int i = 0; i < 3; ++i)
-        if (vector_update(m->argv[i], dt, m->update_tag, force))
+        if (cvector_update(m->argv[i], dt, m->update_tag, force))
             return 1;
     v0 = m->argv[0]->value;
     v1 = m->argv[1]->value;
@@ -674,13 +674,13 @@ void cmatrix_mul(float *out, float *m1, float *m2) {
 void cmatrix_from_to_up(float *out, float *from, float *to, float *up) {
     static const float THRESHOLD = 0.1f;
     float diff[4], az[4], ax[4], ay[4], len;
-    vector_wsum(diff, 1, to, -1, from);
-    len = vector_len(diff);
+    cvector_wsum(diff, 1, to, -1, from);
+    len = cvector_len(diff);
     if (len < THRESHOLD)
         return;
-    vector_wsum(az, -1.0f / len, diff, 0, diff);
-    vector_cross(ax, up, az);
-    vector_cross(ay, az, ax);
+    cvector_wsum(az, -1.0f / len, diff, 0, diff);
+    cvector_cross(ax, up, az);
+    cvector_cross(ay, az, ax);
     cmatrix_pos_axes(out, from, ax, ay, az);
 }
 
