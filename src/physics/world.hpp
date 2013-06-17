@@ -1,9 +1,9 @@
 #ifndef PHYSICS_WORLD_HPP
 #define PHYSICS_WORLD_HPP
 
-#include "ddraw.hpp"
 #include "btBulletDynamicsCommon.h"
 
+class yddraw_c;
 struct ycolshape_t;
 
 struct world_t {
@@ -12,7 +12,7 @@ struct world_t {
     btSequentialImpulseConstraintSolver *solver;
     btDefaultCollisionConfiguration *colcfg;
     btDiscreteDynamicsWorld *world;
-    ddraw_c *ddraw;
+    yddraw_c *ddraw;
 };
 
 int world_init(int count);

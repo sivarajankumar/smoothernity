@@ -1,12 +1,12 @@
-#ifndef PHYSICS_DDRAW_HPP
-#define PHYSICS_DDRAW_HPP
+#ifndef YDDRAW_HPP
+#define YDDRAW_HPP
 
 #include "btBulletDynamicsCommon.h"
 
-class ddraw_c: public btIDebugDraw {
+class yddraw_c: public btIDebugDraw {
 public:
-    ddraw_c();
-    virtual ~ddraw_c();
+    yddraw_c();
+    virtual ~yddraw_c();
     virtual void drawLine(const btVector3&, const btVector3&, const btVector3&);
     virtual void drawContactPoint(const btVector3&, const btVector3&,
                                   btScalar, int, const btVector3&);
@@ -18,5 +18,5 @@ private:
     int mode;
 };
 
-#endif /* PHYSICS_DDRAW_HPP */
+#endif /* YDDRAW_HPP */
 
