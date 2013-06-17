@@ -4,7 +4,7 @@
 #include "mstate.hpp"
 
 struct world_t;
-struct colshape_t;
+struct ycolshape_t;
 
 struct vehicle_t {
     btRigidBody *chassis;
@@ -15,14 +15,14 @@ struct vehicle_t {
     char *chassis_data, *ray_data, *veh_data;
     int vacant;
     world_t *wld;
-    colshape_t *shape, *inert;
+    ycolshape_t *shape, *inert;
     vehicle_t *shape_prev, *shape_next, *inert_prev, *inert_next;
 };
 
 int vehicle_init(int count);
 void vehicle_done(void);
-int vehicle_alloc(vehicle_t *veh, world_t*, colshape_t *shape,
-                  colshape_t *inert, float *matrix, float mass,
+int vehicle_alloc(vehicle_t *veh, world_t*, ycolshape_t *shape,
+                  ycolshape_t *inert, float *matrix, float mass,
                   float ch_frict, float ch_rfrict, float sus_stif,
                   float sus_comp, float sus_damp, float sus_trav,
                   float sus_force, float slip_frict);

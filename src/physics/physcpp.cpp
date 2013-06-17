@@ -1,5 +1,5 @@
 #include "world.hpp"
-#include "colshape.hpp"
+#include "ycolshape.hpp"
 #include "rigidbody.hpp"
 #include "vehicle.hpp"
 #include "physres.h"
@@ -28,7 +28,7 @@ int wld_count, int cs_count, int rb_count, int veh_count) {
     btAlignedAllocSetCustom(physcpp_memalloc, memfree);
     if ((res = world_init(wld_count)) != PHYSRES_OK)
         return res;
-    if ((res = colshape_init(cs_count)) != PHYSRES_OK)
+    if ((res = ycolshape_init(cs_count)) != PHYSRES_OK)
         return res;
     if ((res = rigidbody_init(rb_count)) != PHYSRES_OK)
         return res;
@@ -38,7 +38,7 @@ int wld_count, int cs_count, int rb_count, int veh_count) {
 extern "C" void physcpp_done(void) {
     rigidbody_done();
     vehicle_done();
-    colshape_done();
+    ycolshape_done();
     world_done();
 }
 
@@ -73,65 +73,65 @@ extern "C" int physcpp_wld_move(int wldi, float *offset) {
 extern "C" int physcpp_wld_cast
 (int wldi, int csi, float *mfrom, float *mto, float *vout) {
     world_t *wld;
-    colshape_t *cs;
+    ycolshape_t *cs;
     if (!(wld = world_get(wldi)))
         return PHYSRES_INVALID_WLD;
-    if (!(cs = colshape_get(csi)))
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
     return world_cast(wld, cs, mfrom, mto, vout);
 }
 
 extern "C" int physcpp_cs_alloc_box(int csi, float *size) {
-    colshape_t *cs;
-    if (!(cs = colshape_get(csi)))
+    ycolshape_t *cs;
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
-    return colshape_alloc_box(cs, size);
+    return ycolshape_alloc_box(cs, size);
 }
 
 extern "C" int physcpp_cs_alloc_sphere(int csi, float r) {
-    colshape_t *cs;
-    if (!(cs = colshape_get(csi)))
+    ycolshape_t *cs;
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
-    return colshape_alloc_sphere(cs, r);
+    return ycolshape_alloc_sphere(cs, r);
 }
 
 extern "C" int physcpp_cs_alloc_hmap(int csi, float *hmap,
 int width, int length, float hmin, float hmax, float *scale) {
-    colshape_t *cs;
-    if (!(cs = colshape_get(csi)))
+    ycolshape_t *cs;
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
-    return colshape_alloc_hmap(cs, hmap, width, length, hmin, hmax, scale);
+    return ycolshape_alloc_hmap(cs, hmap, width, length, hmin, hmax, scale);
 }
 
 extern "C" int physcpp_cs_alloc_comp(int csi) {
-    colshape_t *cs;
-    if (!(cs = colshape_get(csi)))
+    ycolshape_t *cs;
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
-    return colshape_alloc_comp(cs);
+    return ycolshape_alloc_comp(cs);
 }
 
 extern "C" int physcpp_cs_comp_add(int parenti, float *matrix, int childi) {
-    colshape_t *parent, *child;
-    if (!(parent = colshape_get(parenti)) || !(child = colshape_get(childi)))
+    ycolshape_t *parent, *child;
+    if (!(parent = ycolshape_get(parenti)) || !(child = ycolshape_get(childi)))
         return PHYSRES_INVALID_CS;
-    return colshape_comp_add(parent, matrix, child);
+    return ycolshape_comp_add(parent, matrix, child);
 }
 
 extern "C" int physcpp_cs_free(int csi) {
-    colshape_t *cs;
-    if (!(cs = colshape_get(csi)))
+    ycolshape_t *cs;
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
-    return colshape_free(cs);
+    return ycolshape_free(cs);
 }
 
 extern "C" int physcpp_rb_alloc(int rbi, int wldi, int csi,
 float *matrix, float mass, float frict, float roll_frict) {
     world_t *wld;
-    colshape_t *cs;
+    ycolshape_t *cs;
     rigidbody_t *rb;
     if (!(wld = world_get(wldi)))
         return PHYSRES_INVALID_WLD;
-    if (!(cs = colshape_get(csi)))
+    if (!(cs = ycolshape_get(csi)))
         return PHYSRES_INVALID_CS;
     if (!(rb = rigidbody_get(rbi)))
         return PHYSRES_INVALID_RB;
@@ -165,11 +165,11 @@ int inerti, float *tm, float mass, float ch_frict, float ch_roll_frict,
 float sus_stif, float sus_comp, float sus_damp, float sus_trav,
 float sus_force, float slip_frict) {
     world_t *wld;
-    colshape_t *shape, *inert;
+    ycolshape_t *shape, *inert;
     vehicle_t *veh;
     if (!(wld = world_get(wldi)))
         return PHYSRES_INVALID_WLD;
-    if (!(shape = colshape_get(shapei)) || !(inert = colshape_get(inerti)))
+    if (!(shape = ycolshape_get(shapei)) || !(inert = ycolshape_get(inerti)))
         return PHYSRES_INVALID_CS;
     if (!(veh = vehicle_get(vehi)))
         return PHYSRES_INVALID_VEH;

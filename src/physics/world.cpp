@@ -1,5 +1,5 @@
 #include "world.hpp"
-#include "colshape.hpp"
+#include "ycolshape.hpp"
 #include "physres.h"
 #include "pmem.hpp"
 #include "vlog.hpp"
@@ -153,7 +153,7 @@ int world_move(world_t *wld, float *offset) {
     return PHYSRES_OK;
 }
 
-int world_cast(world_t *wld, colshape_t *cs,
+int world_cast(world_t *wld, ycolshape_t *cs,
 float *mfrom, float *mto, float *vout) {
     if (!cs->shape_convex)
         return PHYSRES_INVALID_CS;

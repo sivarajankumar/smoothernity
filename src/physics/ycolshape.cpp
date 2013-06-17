@@ -1,21 +1,22 @@
 #include "physres.h"
-#include "colshape.hpp"
+#include "ycolshape.hpp"
 #include "pmem.hpp"
 
-static const size_t COLSHAPE_SIZE = 128;
+static const size_t YCOLSHAPE_SIZE = 128;
 
-struct colshapes_t {
+struct ycolshapes_t {
     int count;
     char *pool;
 };
 
-static_assert(sizeof(colshape_t) <= COLSHAPE_SIZE, "Invalid colshape_t size");
+static_assert(sizeof(ycolshape_t) <= YCOLSHAPE_SIZE,
+              "Invalid ycolshape_t size");
 
-static colshapes_t g_colshapes;
+static ycolshapes_t g_ycolshapes;
 
-int colshape_init(int count) {
+int ycolshape_init(int count) {
     size_t size_max, align_max;
-    colshape_t *cs;
+    ycolshape_t *cs;
 
     #define FIND_SIZES(t) \
         if (sizeof(t) > size_max) size_max = sizeof(t); \
@@ -27,13 +28,13 @@ int colshape_init(int count) {
     FIND_SIZES(btSphereShape);
     #undef FIND_SIZES
 
-    g_colshapes.count = count;
-    g_colshapes.pool = (char*)pmem_alloc(PMEM_ALIGNOF(colshape_t),
-                                         COLSHAPE_SIZE * count);
-    if (!g_colshapes.pool)
+    g_ycolshapes.count = count;
+    g_ycolshapes.pool = (char*)pmem_alloc(PMEM_ALIGNOF(ycolshape_t),
+                                          YCOLSHAPE_SIZE * count);
+    if (!g_ycolshapes.pool)
         return PHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i ) {
-        cs = colshape_get(i);
+        cs = ycolshape_get(i);
         cs->vacant = 1;
         cs->shape_box = 0;
         cs->shape_sphere = 0;
@@ -47,34 +48,34 @@ int colshape_init(int count) {
         cs->rbs = 0;
     }
     for (int i = 0; i < count; ++i)
-        if (!(colshape_get(i)->data = (char*)pmem_alloc(align_max, size_max)))
+        if (!(ycolshape_get(i)->data = (char*)pmem_alloc(align_max, size_max)))
             return PHYSRES_CANNOT_INIT;
     return PHYSRES_OK;
 }
 
-void colshape_done(void) {
-    colshape_t *cs;
-    if (!g_colshapes.pool)
+void ycolshape_done(void) {
+    ycolshape_t *cs;
+    if (!g_ycolshapes.pool)
         return;
-    for (int i = 0; i < g_colshapes.count; ++i) {
-        cs = colshape_get(i);
+    for (int i = 0; i < g_ycolshapes.count; ++i) {
+        cs = ycolshape_get(i);
         if (cs->data) {
-            colshape_free(cs);
+            ycolshape_free(cs);
             pmem_free(cs->data);
         }
     }
-    pmem_free(g_colshapes.pool);
-    g_colshapes.pool = 0;
+    pmem_free(g_ycolshapes.pool);
+    g_ycolshapes.pool = 0;
 }
 
-colshape_t * colshape_get(int colshapei) {
-    if (colshapei >= 0 && colshapei < g_colshapes.count)
-        return (colshape_t*)(g_colshapes.pool + COLSHAPE_SIZE * colshapei);
+ycolshape_t * ycolshape_get(int colshapei) {
+    if (colshapei >= 0 && colshapei < g_ycolshapes.count)
+        return (ycolshape_t*)(g_ycolshapes.pool + YCOLSHAPE_SIZE * colshapei);
     else
         return 0;
 }
 
-int colshape_free(colshape_t *cs) {
+int ycolshape_free(ycolshape_t *cs) {
     if (cs->vacant == 1)
         return PHYSRES_INVALID_CS;
     if (cs->comp_children || cs->vehs || cs->rbs)
@@ -111,7 +112,7 @@ int colshape_free(colshape_t *cs) {
     return PHYSRES_OK;
 }
 
-int colshape_alloc_box(colshape_t *cs, float *size) {
+int ycolshape_alloc_box(ycolshape_t *cs, float *size) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -126,7 +127,7 @@ int colshape_alloc_box(colshape_t *cs, float *size) {
     return PHYSRES_OK;
 }
 
-int colshape_alloc_sphere(colshape_t *cs, float r) {
+int ycolshape_alloc_sphere(ycolshape_t *cs, float r) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -140,7 +141,7 @@ int colshape_alloc_sphere(colshape_t *cs, float r) {
     return PHYSRES_OK;
 }
 
-int colshape_alloc_hmap(colshape_t *cs, float *hmap,
+int ycolshape_alloc_hmap(ycolshape_t *cs, float *hmap,
 int width, int length, float hmin, float hmax, float *scale) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
@@ -157,7 +158,7 @@ int width, int length, float hmin, float hmax, float *scale) {
     return PHYSRES_OK;
 }
 
-int colshape_alloc_comp(colshape_t *cs) {
+int ycolshape_alloc_comp(ycolshape_t *cs) {
     if (!cs->vacant)
         return PHYSRES_INVALID_CS;
     cs->vacant = 0;
@@ -170,7 +171,7 @@ int colshape_alloc_comp(colshape_t *cs) {
     return PHYSRES_OK;
 }
 
-int colshape_comp_add(colshape_t *prt, float *matrix, colshape_t *chd) {
+int ycolshape_comp_add(ycolshape_t *prt, float *matrix, ycolshape_t *chd) {
     if (!prt->shape_comp || !chd->shape || chd->shape_comp || chd->comp)
         return PHYSRES_INVALID_CS;
     chd->comp = prt;
