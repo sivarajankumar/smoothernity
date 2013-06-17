@@ -37,7 +37,7 @@ static int api_rbuf_map(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_rbuf_map: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -47,19 +47,19 @@ static int api_rbuf_map(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!rbuf || !rbuf->buf_id || rbuf->mapped) {
-        lua_pushstring(lua, "api_rbuf_map: invalid rbuf");
+        lua_pushstring(lua, "invalid rbuf");
         lua_error(lua);
         return 0;
     }
     if (len <= 0 || ofs < 0 || ofs > rbuf->size - len) {
-        lua_pushstring(lua, "api_rbuf_map: invalid range");
+        lua_pushstring(lua, "invalid range");
         lua_error(lua);
         return 0;
     }
     rbuf->mapped_ofs = ofs;
     rbuf->mapped_len = len;
     if (crbuf_save_bind(rbuf)) {
-        lua_pushstring(lua, "api_rbuf_map: cannot bind buffer");
+        lua_pushstring(lua, "cannot bind buffer");
         lua_error(lua);
         return 0;
     }
@@ -75,7 +75,7 @@ static int api_rbuf_map(lua_State *lua) {
         GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT |
         GL_MAP_INVALIDATE_RANGE_BIT);
     if (!rbuf->mapped) {
-        lua_pushstring(lua, "api_rbuf_map: cannot map buffer");
+        lua_pushstring(lua, "cannot map buffer");
         lua_error(lua);
         return 0;
     }
@@ -86,7 +86,7 @@ static int api_rbuf_unmap(lua_State *lua) {
     struct crbuf_t *rbuf;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_rbuf_unmap: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -94,7 +94,7 @@ static int api_rbuf_unmap(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (!rbuf || !rbuf->buf_id || !rbuf->mapped) {
-        lua_pushstring(lua, "api_rbuf_unmap: invalid rbuf");
+        lua_pushstring(lua, "invalid rbuf");
         lua_error(lua);
         return 0;
     }
@@ -102,7 +102,7 @@ static int api_rbuf_unmap(lua_State *lua) {
     rbuf->mapped_ofs = 0;
     rbuf->mapped_len = 0;
     if (crbuf_save_bind(rbuf)) {
-        lua_pushstring(lua, "api_rbuf_unmap: cannot bind buffer");
+        lua_pushstring(lua, "cannot bind buffer");
         lua_error(lua);
         return 0;
     }
@@ -115,7 +115,7 @@ static int api_rbuf_set(lua_State *lua) {
     int ofs, len, index;
 
     if (lua_gettop(lua) < 3 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_rbuf_set: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -124,20 +124,20 @@ static int api_rbuf_set(lua_State *lua) {
     len = lua_gettop(lua) - 2;
 
     if (!rbuf || !rbuf->buf_id || !rbuf->mapped) {
-        lua_pushstring(lua, "api_rbuf_set: invalid rbuf");
+        lua_pushstring(lua, "invalid rbuf");
         lua_error(lua);
         return 0;
     }
     if (ofs < rbuf->mapped_ofs ||
     ofs > rbuf->mapped_ofs + rbuf->mapped_len - len) {
-        lua_pushstring(lua, "api_rbuf_set: data out of range");
+        lua_pushstring(lua, "data out of range");
         lua_error(lua);
         return 0;
     }
     for (int i = 0; i < len; ++i) {
         if ((rbuf->item == GL_FLOAT && !util_isfloat(lua, 3 + i)) ||
         (/* rbuf->item == GL_INT && */ !util_isint(lua, 3 + i))) {
-            lua_pushstring(lua, "api_rbuf_set: incorrect data type");
+            lua_pushstring(lua, "incorrect data type");
             lua_error(lua);
             return 0;
         }
@@ -158,7 +158,7 @@ static int api_rbuf_alloc(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_rbuf_alloc: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -170,30 +170,30 @@ static int api_rbuf_alloc(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!rbuf || rbuf->buf_id) {
-        lua_pushstring(lua, "api_rbuf_alloc: invalid rbuf");
+        lua_pushstring(lua, "invalid rbuf");
         lua_error(lua);
         return 0;
     }
     if (size <= 0) {
-        lua_pushstring(lua, "api_rbuf_alloc: invalid size");
+        lua_pushstring(lua, "invalid size");
         lua_error(lua);
         return 0;
     }
     if (target != GL_ARRAY_BUFFER && target != GL_ELEMENT_ARRAY_BUFFER &&
     target != GL_PIXEL_UNPACK_BUFFER) {
-        lua_pushstring(lua, "api_rbuf_alloc: invalid target");
+        lua_pushstring(lua, "invalid target");
         lua_error(lua);
         return 0;
     }
     if (item != GL_FLOAT && item != GL_INT) {
-        lua_pushstring(lua, "api_rbuf_alloc: invalid item");
+        lua_pushstring(lua, "invalid item");
         lua_error(lua);
         return 0;
     }
     if (usage != GL_STREAM_DRAW && usage != GL_STREAM_COPY &&
     usage != GL_STATIC_DRAW && usage != GL_STATIC_COPY &&
     usage != GL_DYNAMIC_DRAW && usage != GL_DYNAMIC_COPY) {
-        lua_pushstring(lua, "api_rbuf_alloc: invalid usage");
+        lua_pushstring(lua, "invalid usage");
         lua_error(lua);
         return 0;
     }
@@ -203,7 +203,7 @@ static int api_rbuf_alloc(lua_State *lua) {
     rbuf->mapped = 0;
     glGenBuffers(1, &rbuf->buf_id);
     if (crbuf_save_bind(rbuf)) {
-        lua_pushstring(lua, "api_rbuf_alloc: cannot bind buffer");
+        lua_pushstring(lua, "cannot bind buffer");
         lua_error(lua);
         return 0;
     }
@@ -213,7 +213,7 @@ static int api_rbuf_alloc(lua_State *lua) {
         glsize = (GLsizeiptr)sizeof(GLint) * (GLsizeiptr)size;
     glBufferData(rbuf->target, glsize, 0, (GLenum)usage);
     if (glGetError() != GL_NO_ERROR) {
-        lua_pushstring(lua, "api_rbuf_alloc: cannot alloc buffer data");
+        lua_pushstring(lua, "cannot alloc buffer data");
         lua_error(lua);
         return 0;
     }
@@ -224,7 +224,7 @@ static int api_rbuf_free(lua_State *lua) {
     struct crbuf_t *rbuf;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_rbuf_free: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -232,7 +232,7 @@ static int api_rbuf_free(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (!rbuf || !rbuf->buf_id || rbuf->mapped) {
-        lua_pushstring(lua, "api_rbuf_free: invalid rbuf");
+        lua_pushstring(lua, "invalid rbuf");
         lua_error(lua);
         return 0;
     }

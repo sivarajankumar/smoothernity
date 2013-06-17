@@ -29,14 +29,14 @@ static int api_render_clear_color(lua_State *lua) {
     GLfloat *v;
     struct vector_t *vec;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_render_clear_color: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     vec = vector_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (!vec) {
-        lua_pushstring(lua, "api_render_clear_color: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -47,7 +47,7 @@ static int api_render_clear_color(lua_State *lua) {
 
 static int api_render_clear_depth(lua_State *lua) {
     if (lua_gettop(lua) != 1 || !util_isfloat(lua, 1)) {
-        lua_pushstring(lua, "api_render_clear_depth: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -59,7 +59,7 @@ static int api_render_clear_depth(lua_State *lua) {
 static int api_render_clear(lua_State *lua) {
     int flags;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_render_clear: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -71,7 +71,7 @@ static int api_render_clear(lua_State *lua) {
 
 static int api_render_swap(lua_State *lua) {
     if (lua_gettop(lua)) {
-        lua_pushstring(lua, "api_render_swap: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }

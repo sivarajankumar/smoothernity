@@ -22,8 +22,6 @@
 #include <stdio.h>
 #include <setjmp.h>
 
-/* TODO: remove all function names from api errors. */
-
 /*
  * SDL declares main().
  * Without the following #undef, compilation on Windows fails.
