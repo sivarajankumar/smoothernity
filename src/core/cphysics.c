@@ -1,5 +1,5 @@
 #include "cphysics.h"
-#include "vector.h"
+#include "cvector.h"
 #include "cmatrix.h"
 #include "cmpool.h"
 #include "cbuf.h"
@@ -93,14 +93,14 @@ static int api_physics_wld_ddraw(lua_State *lua) {
 
 static int api_physics_wld_gravity(lua_State *lua) {
     int res, wldi;
-    struct vector_t *v;
+    struct cvector_t *v;
     if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     wldi = lua_tointeger(lua, 1);
-    v = vector_get(lua_tointeger(lua, 2));
+    v = cvector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
     if (!v) {
         lua_pushstring(lua, "invalid vector");
@@ -117,14 +117,14 @@ static int api_physics_wld_gravity(lua_State *lua) {
 
 static int api_physics_wld_move(lua_State *lua) {
     int res, wldi;
-    struct vector_t *v;
+    struct cvector_t *v;
     if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     wldi = lua_tointeger(lua, 1);
-    v = vector_get(lua_tointeger(lua, 2));
+    v = cvector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
     if (!v) {
         lua_pushstring(lua, "invalid vector");
@@ -157,7 +157,7 @@ static int api_physics_wld_ddraw_mode(lua_State *lua) {
 }
 
 static int api_physics_cs_alloc_box(lua_State *lua) {
-    struct vector_t *size;
+    struct cvector_t *size;
     int csi, res;
 
     if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
@@ -166,7 +166,7 @@ static int api_physics_cs_alloc_box(lua_State *lua) {
         return 0;
     }
     csi = lua_tointeger(lua, 1);
-    size = vector_get(lua_tointeger(lua, 2));
+    size = cvector_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
     if (!size) {
@@ -209,7 +209,7 @@ static int api_physics_cs_alloc_sphere(lua_State *lua) {
 }
 
 static int api_physics_cs_alloc_hmap(lua_State *lua) {
-    struct vector_t *scale;
+    struct cvector_t *scale;
     int start, width, length, csi, res;
     float hmin, hmax;
 
@@ -226,7 +226,7 @@ static int api_physics_cs_alloc_hmap(lua_State *lua) {
     length = lua_tointeger(lua, 4);
     hmin = (float)lua_tonumber(lua, 5);
     hmax = (float)lua_tonumber(lua, 6);
-    scale = vector_get(lua_tointeger(lua, 7));
+    scale = cvector_get(lua_tointeger(lua, 7));
     lua_pop(lua, 7);
 
     if (!scale) {
@@ -460,7 +460,7 @@ static int api_physics_veh_free(lua_State *lua) {
 }
 
 static int api_physics_veh_add_wheel(lua_State *lua) {
-    struct vector_t *pos, *dir, *axl;
+    struct cvector_t *pos, *dir, *axl;
     float sus_rest, roll, radius;
     int vehi, front, wheel, res;
     if (lua_gettop(lua) != 8 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2) ||
@@ -471,9 +471,9 @@ static int api_physics_veh_add_wheel(lua_State *lua) {
         return 0;
     }
     vehi = lua_tointeger(lua, 1);
-    pos = vector_get(lua_tointeger(lua, 2));
-    dir = vector_get(lua_tointeger(lua, 3));
-    axl = vector_get(lua_tointeger(lua, 4));
+    pos = cvector_get(lua_tointeger(lua, 2));
+    dir = cvector_get(lua_tointeger(lua, 3));
+    axl = cvector_get(lua_tointeger(lua, 4));
     sus_rest = (float)lua_tonumber(lua, 5);
     roll = (float)lua_tonumber(lua, 6);
     radius = (float)lua_tonumber(lua, 7);

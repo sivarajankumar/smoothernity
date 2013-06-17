@@ -3,7 +3,7 @@
 #include "ctimer.h"
 #include "crender.h"
 #include "cinput.h"
-#include "vector.h"
+#include "cvector.h"
 #include "cmatrix.h"
 #include "cphysics.h"
 #include "cbuf.h"
@@ -185,7 +185,7 @@ static void cmain_done(void) {
         g_cmain.thread_mpool = 0;
     }
     cbuf_done();
-    vector_done();
+    cvector_done();
     cmatrix_done();
     cphysics_done();
     if (g_cmain.mpool) {
@@ -252,7 +252,8 @@ static int cmain_init(int argc, char **argv) {
         VLOG_ERROR("Cannot init buffers");
         return 1;
     }
-    if (vector_init(g_cmain.lua, g_cmain.vector_count, g_cmain.vector_nesting)) {
+    if (cvector_init(g_cmain.lua, g_cmain.vector_count,
+    g_cmain.vector_nesting)) {
         VLOG_ERROR("Cannot init vectors");
         return 1;
     }

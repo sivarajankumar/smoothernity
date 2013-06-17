@@ -31,7 +31,7 @@ struct cmatrix_t {
     enum cmatrix_e type;
     enum cmatrix_axis_e rotaxis;
     int update_tag, rotanglei, zneari, zfari, rigid_body, vehicle, wheel;
-    struct vector_t *argv[CMATRIX_ARGVS];
+    struct cvector_t *argv[CMATRIX_ARGVS];
     struct cmatrix_t *argm[CMATRIX_ARGMS];
 };
 
