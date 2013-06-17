@@ -33,7 +33,7 @@ static int api_vector_get(lua_State *lua) {
     struct vector_t *vector;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_vector_get: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -41,7 +41,7 @@ static int api_vector_get(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (!vector) {
-        lua_pushstring(lua, "api_vector_get: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -59,7 +59,7 @@ static int api_vector_update(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isfloat(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_vector_update: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -69,13 +69,13 @@ static int api_vector_update(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!vector) {
-        lua_pushstring(lua, "api_vector_update: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
     force = update_tag == VECTOR_FORCED_UPDATE;
     if (vector_update(vector, dt, update_tag, force)) {
-        lua_pushstring(lua, "api_vector_update: update error");
+        lua_pushstring(lua, "update error");
         lua_error(lua);
         return 0;
     }
@@ -89,7 +89,7 @@ static int api_vector_const(lua_State *lua) {
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) ||
     !util_isfloat(lua, 2) || !util_isfloat(lua, 3) ||
     !util_isfloat(lua, 4) || !util_isfloat(lua, 5)) {
-        lua_pushstring(lua, "api_vector_const: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -101,7 +101,7 @@ static int api_vector_const(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!vector) {
-        lua_pushstring(lua, "api_vector_const: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -122,7 +122,7 @@ static int api_vector_rubber(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_vector_rubber: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -132,7 +132,7 @@ static int api_vector_rubber(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!vector || !v0 || !v1) {
-        lua_pushstring(lua, "api_vector_rubber: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -144,7 +144,7 @@ static int api_vector_rubber(lua_State *lua) {
     vector->argv[1] = v1;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_rubber: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -157,7 +157,7 @@ static int api_vector_cord(lua_State *lua) {
 
     if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isfloat(lua, 3) || !util_isfloat(lua, 4)) {
-        lua_pushstring(lua, "api_vector_cord: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -168,17 +168,17 @@ static int api_vector_cord(lua_State *lua) {
     lua_pop(lua, 4);
 
     if (!vector || !v0) {
-        lua_pushstring(lua, "api_vector_cord: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
     if (min < 0.0f || max < 0.0f) {
-        lua_pushstring(lua, "api_vector_cord: limits are out of range");
+        lua_pushstring(lua, "limits are out of range");
         lua_error(lua);
         return 0;
     }
     if (min > max) {
-        lua_pushstring(lua, "api_vector_cord: min > max");
+        lua_pushstring(lua, "min > max");
         lua_error(lua);
         return 0;
     }
@@ -191,7 +191,7 @@ static int api_vector_cord(lua_State *lua) {
     vector->argv[0] = v0;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_cord: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -203,7 +203,7 @@ static int api_vector_mpos(lua_State *lua) {
     struct cmatrix_t *m0;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_vector_mpos: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -212,12 +212,12 @@ static int api_vector_mpos(lua_State *lua) {
     lua_pop(lua, 2);
 
     if (!vector) {
-        lua_pushstring(lua, "api_vector_mpos: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
     if (!m0) {
-        lua_pushstring(lua, "api_vector_mpos: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -228,7 +228,7 @@ static int api_vector_mpos(lua_State *lua) {
     vector->argm[0] = m0;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_mpos: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -241,7 +241,7 @@ static int api_vector_wsum(lua_State *lua) {
     if (lua_gettop(lua) != 6 ||
     !util_isint(lua, 1) || !util_isint(lua, 2) || !util_isint(lua, 3) ||
     !util_isint(lua, 4) || !util_isint(lua, 5) || !util_isint(lua, 6)) {
-        lua_pushstring(lua, "api_vector_wsum: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -254,7 +254,7 @@ static int api_vector_wsum(lua_State *lua) {
     lua_pop(lua, 6);
 
     if (!vector || !v0 || !v1 || !v2 || !v3 || !v4) {
-        lua_pushstring(lua, "api_vector_wsum: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -269,7 +269,7 @@ static int api_vector_wsum(lua_State *lua) {
     vector->argv[4] = v4;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_wsum: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -281,7 +281,7 @@ static int api_vector_pick(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_vector_pick: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -293,7 +293,7 @@ static int api_vector_pick(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!vector || !v0 || !v1 || !v2 || !v3) {
-        lua_pushstring(lua, "api_vector_pick: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
@@ -307,7 +307,7 @@ static int api_vector_pick(lua_State *lua) {
     vector->argv[3] = v3;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_pick: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -320,7 +320,7 @@ static int api_vector_seq(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_vector_seq: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -332,22 +332,22 @@ static int api_vector_seq(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!vector) {
-        lua_pushstring(lua, "api_vector_seq: invalid vector");
+        lua_pushstring(lua, "invalid vector");
         lua_error(lua);
         return 0;
     }
     if (start < 0 || start >= g_cbufs.size - 5) {
-        lua_pushstring(lua, "api_vector_seq: start index out of range");
+        lua_pushstring(lua, "start index out of range");
         lua_error(lua);
         return 0;
     }
     if (len < 2 || len > (g_cbufs.size - start) / 5) {
-        lua_pushstring(lua, "api_vector_seq: len out of range");
+        lua_pushstring(lua, "len out of range");
         lua_error(lua);
         return 0;
     }
     if (ipl < 0 || ipl >= VECTOR_IPLS_TOTAL) {
-        lua_pushstring(lua, "api_vector_seq: interpolation type out of range");
+        lua_pushstring(lua, "interpolation type out of range");
         lua_error(lua);
         return 0;
     }
@@ -372,7 +372,7 @@ static int api_vector_cast(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_vector_cast: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -384,7 +384,7 @@ static int api_vector_cast(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!vector || !m0 || !m1) {
-        lua_pushstring(lua, "api_vector_cast: invalid object");
+        lua_pushstring(lua, "invalid object");
         lua_error(lua);
         return 0;
     }
@@ -398,12 +398,12 @@ static int api_vector_cast(lua_State *lua) {
     vector->cast_csi = csi;
 
     if (!vector_nesting(vector, g_vectors.nesting)) {
-        lua_pushstring(lua, "api_vector_cast: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
     if (cphysics_wld_cast(wldi, csi, m0->value, m1->value, vector->value)) {
-        lua_pushstring(lua, "api_vector_cast: invalid physics object");
+        lua_pushstring(lua, "invalid physics object");
         lua_error(lua);
         return 0;
     }

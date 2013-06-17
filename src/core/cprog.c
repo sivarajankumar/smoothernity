@@ -67,7 +67,7 @@ static int api_prog_alloc(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !lua_isstring(lua, 2) || !lua_isstring(lua, 3)) {
-        lua_pushstring(lua, "api_prog_alloc: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -77,14 +77,14 @@ static int api_prog_alloc(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!prog || prog->prog_id) {
-        lua_pushstring(lua, "api_prog_alloc: invalid prog");
+        lua_pushstring(lua, "invalid prog");
         lua_error(lua);
         return 0;
     }
     prog->prog_id = glCreateProgram();
     if (cprog_attach(prog, GL_VERTEX_SHADER, vert_len, vert) ||
     cprog_attach(prog, GL_FRAGMENT_SHADER, frag_len, frag)) {
-        lua_pushstring(lua, "api_prog_alloc: cannot attach shaders");
+        lua_pushstring(lua, "cannot attach shaders");
         lua_error(lua);
         return 0;
     }
@@ -98,7 +98,7 @@ static int api_prog_alloc(lua_State *lua) {
             glGetProgramInfoLog(prog->prog_id, len, &res, log);
             VLOG_ERROR("Log:\n%s", log);
         }
-        lua_pushstring(lua, "api_prog_alloc: link error");
+        lua_pushstring(lua, "link error");
         lua_error(lua);
         return 0;
     }
@@ -108,14 +108,14 @@ static int api_prog_alloc(lua_State *lua) {
 static int api_prog_free(lua_State *lua) {
     struct cprog_t *prog;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_prog_free: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     prog = cprog_get(lua_tointeger(lua, 1));
     lua_pop(lua, 1);
     if (!prog || !prog->prog_id) {
-        lua_pushstring(lua, "api_prog_free: invalid prog");
+        lua_pushstring(lua, "invalid prog");
         lua_error(lua);
         return 0;
     }
@@ -128,7 +128,7 @@ static int api_prog_use(lua_State *lua) {
     int iprog;
     struct cprog_t *prog;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_prog_use: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -139,7 +139,7 @@ static int api_prog_use(lua_State *lua) {
     else {
         prog = cprog_get(iprog);
         if (!prog || !prog->prog_id) {
-            lua_pushstring(lua, "api_prog_use: invalid prog");
+            lua_pushstring(lua, "invalid prog");
             lua_error(lua);
             return 0;
         }

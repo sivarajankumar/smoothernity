@@ -33,7 +33,7 @@ static int api_matrix_copy(lua_State *lua) {
     struct cmatrix_t *matrix, *msrc;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_matrix_copy: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -42,7 +42,7 @@ static int api_matrix_copy(lua_State *lua) {
     lua_pop(lua, 2);
 
     if (!matrix || !msrc) {
-        lua_pushstring(lua, "api_matrix_copy: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -54,7 +54,7 @@ static int api_matrix_stop(lua_State *lua) {
     struct cmatrix_t *matrix;
 
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_matrix_stop: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -62,7 +62,7 @@ static int api_matrix_stop(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (!matrix) {
-        lua_pushstring(lua, "api_matrix_stop: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -80,7 +80,7 @@ static int api_matrix_update(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isfloat(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_matrix_update: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -90,13 +90,13 @@ static int api_matrix_update(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!matrix) {
-        lua_pushstring(lua, "api_matrix_update: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
     force = update_tag == CMATRIX_FORCED_UPDATE;
     if (cmatrix_update(matrix, dt, update_tag, force)) {
-        lua_pushstring(lua, "api_matrix_update: update error");
+        lua_pushstring(lua, "update error");
         lua_error(lua);
         return 0;
     }
@@ -108,7 +108,7 @@ static int api_matrix_mul(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_matrix_mul: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -118,7 +118,7 @@ static int api_matrix_mul(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!matrix || !m0 || !m1) {
-        lua_pushstring(lua, "api_matrix_mul: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -130,7 +130,7 @@ static int api_matrix_mul(lua_State *lua) {
     matrix->argm[1] = m1;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_mul: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -143,7 +143,7 @@ static int api_matrix_mul_stop(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_matrix_mul_stop: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -153,7 +153,7 @@ static int api_matrix_mul_stop(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!matrix || !m0 || !m1) {
-        lua_pushstring(lua, "api_matrix_mul_stop: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -171,7 +171,7 @@ static int api_matrix_inv(lua_State *lua) {
     struct cmatrix_t *matrix, *m0;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_matrix_inv: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -180,7 +180,7 @@ static int api_matrix_inv(lua_State *lua) {
     lua_pop(lua, 2);
 
     if (!matrix || !m0) {
-        lua_pushstring(lua, "api_matrix_inv: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -191,7 +191,7 @@ static int api_matrix_inv(lua_State *lua) {
     matrix->argm[0] = m0;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_inv: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -205,7 +205,7 @@ static int api_matrix_frustum(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_matrix_frustum: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -217,12 +217,12 @@ static int api_matrix_frustum(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!matrix || !v0 || !v1) {
-        lua_pushstring(lua, "api_matrix_frustum: invalid objects");
+        lua_pushstring(lua, "invalid objects");
         lua_error(lua);
         return 0;
     }
     if (zneari < 0 || zneari > 3 || zfari < 0 || zfari > 3) {
-        lua_pushstring(lua, "api_matrix_frustum: znear/zfar out of range");
+        lua_pushstring(lua, "znear/zfar out of range");
         lua_error(lua);
         return 0;
     }
@@ -236,7 +236,7 @@ static int api_matrix_frustum(lua_State *lua) {
     matrix->zfari = zfari;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_frustum: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -250,7 +250,7 @@ static int api_matrix_ortho(lua_State *lua) {
 
     if (lua_gettop(lua) != 5 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) || !util_isint(lua, 5)) {
-        lua_pushstring(lua, "api_matrix_ortho: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -262,12 +262,12 @@ static int api_matrix_ortho(lua_State *lua) {
     lua_pop(lua, 5);
 
     if (!matrix || !v0 || !v1) {
-        lua_pushstring(lua, "api_matrix_ortho: invalid objects");
+        lua_pushstring(lua, "invalid objects");
         lua_error(lua);
         return 0;
     }
     if (zneari < 0 || zneari > 3 || zfari < 0 || zfari > 3) {
-        lua_pushstring(lua, "api_matrix_ortho: znear/zfar out of range");
+        lua_pushstring(lua, "znear/zfar out of range");
         lua_error(lua);
         return 0;
     }
@@ -281,7 +281,7 @@ static int api_matrix_ortho(lua_State *lua) {
     matrix->zfari = zfari;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_ortho: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -296,7 +296,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
     if (lua_gettop(lua) != 6 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4) ||
     !util_isint(lua, 5) || !util_isint(lua, 6)) {
-        lua_pushstring(lua, "api_matrix_pos_scl_rot: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -309,17 +309,17 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
     lua_pop(lua, 6);
 
     if (!matrix || !v0 || !v1 || !v2) {
-        lua_pushstring(lua, "api_matrix_pos_scl_rot: invalid objects");
+        lua_pushstring(lua, "invalid objects");
         lua_error(lua);
         return 0;
     }
     if (rotaxis < 0 || rotaxis >= CMATRIX_AXES_TOTAL) {
-        lua_pushstring(lua, "api_matrix_pos_scl_rot: invalid rotation axis");
+        lua_pushstring(lua, "invalid rotation axis");
         lua_error(lua);
         return 0;
     }
     if (rotanglei < 0 || rotanglei > 3) {
-        lua_pushstring(lua, "api_matrix_pos_scl_rot: rot angle out of range");
+        lua_pushstring(lua, "rot angle out of range");
         lua_error(lua);
         return 0;
     }
@@ -334,7 +334,7 @@ static int api_matrix_pos_scl_rot(lua_State *lua) {
     matrix->rotanglei = rotanglei;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_pos_scl_rot: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -347,7 +347,7 @@ static int api_matrix_from_to_up(lua_State *lua) {
 
     if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !util_isint(lua, 2) ||
     !util_isint(lua, 3) || !util_isint(lua, 4)) {
-        lua_pushstring(lua, "api_matrix_from_to_up: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -358,7 +358,7 @@ static int api_matrix_from_to_up(lua_State *lua) {
     lua_pop(lua, 4);
 
     if (!matrix || !v0 || !v1 || !v2) {
-        lua_pushstring(lua, "api_matrix_from_to_up: invalid objects");
+        lua_pushstring(lua, "invalid objects");
         lua_error(lua);
         return 0;
     }
@@ -371,7 +371,7 @@ static int api_matrix_from_to_up(lua_State *lua) {
     matrix->argv[2] = v2;
 
     if (!cmatrix_nesting(matrix, g_cmatrices.nesting)) {
-        lua_pushstring(lua, "api_matrix_from_to_up: nesting is too deep");
+        lua_pushstring(lua, "nesting is too deep");
         lua_error(lua);
         return 0;
     }
@@ -383,7 +383,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
     int rbi;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_matrix_rigid_body: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -392,7 +392,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
     lua_pop(lua, 2);
 
     if (!matrix) {
-        lua_pushstring(lua, "api_matrix_rigid_body: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -403,7 +403,7 @@ static int api_matrix_rigid_body(lua_State *lua) {
     matrix->rigid_body = rbi;
 
     if (cphysics_rb_fetch_tm(rbi, matrix->value)) {
-        lua_pushstring(lua, "api_matrix_rigid_body: invalid rigid body");
+        lua_pushstring(lua, "invalid rigid body");
         lua_error(lua);
         return 0;
     }
@@ -415,7 +415,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
     int vehi;
 
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !util_isint(lua, 2)) {
-        lua_pushstring(lua, "api_matrix_vehicle_chassis: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -424,7 +424,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
     lua_pop(lua, 2);
 
     if (!matrix) {
-        lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -435,7 +435,7 @@ static int api_matrix_vehicle_chassis(lua_State *lua) {
     matrix->vehicle = vehi;
 
     if (cphysics_veh_fetch_chassis_tm(vehi, matrix->value)) {
-        lua_pushstring(lua, "api_matrix_vehicle_chassis: invalid vehicle");
+        lua_pushstring(lua, "invalid vehicle");
         lua_error(lua);
         return 0;
     }
@@ -448,7 +448,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
 
     if (lua_gettop(lua) != 3 || !util_isint(lua, 1) ||
     !util_isint(lua, 2) || !util_isint(lua, 3)) {
-        lua_pushstring(lua, "api_matrix_vehicle_wheel: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -458,7 +458,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
     lua_pop(lua, 3);
 
     if (!matrix) {
-        lua_pushstring(lua, "api_matrix_vehicle_wheel: invalid matrix");
+        lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
@@ -470,7 +470,7 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
     matrix->wheel = wheel;
 
     if (cphysics_veh_fetch_wheel_tm(vehi, wheel, matrix->value)) {
-        lua_pushstring(lua, "api_matrix_vehicle_wheel: invalid object");
+        lua_pushstring(lua, "invalid object");
         lua_error(lua);
         return 0;
     }

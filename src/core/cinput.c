@@ -29,7 +29,7 @@ static struct cinput_t g_cinput;
 static int api_input_key(lua_State *lua) {
     int key;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_input_key: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -37,7 +37,7 @@ static int api_input_key(lua_State *lua) {
     lua_pop(lua, 1);
 
     if (key < 0 || key >= CINPUT_KEYS_TOTAL) {
-        lua_pushstring(lua, "api_input_key: invalid key code");
+        lua_pushstring(lua, "invalid key code");
         lua_error(lua);
         return 0;
     }
@@ -49,7 +49,7 @@ static int api_input_update(lua_State *lua) {
     int value;
     SDL_Event event;
     if (lua_gettop(lua)) {
-        lua_pushstring(lua, "api_input_update: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }

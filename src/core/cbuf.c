@@ -62,7 +62,7 @@ static int api_buf_set(lua_State *lua) {
     int ofs, len;
 
     if (lua_gettop(lua) < 2 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_buf_set: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -70,13 +70,13 @@ static int api_buf_set(lua_State *lua) {
     len = lua_gettop(lua) - 1;
 
     if (ofs < 0 || ofs >= g_cbufs.size - len) {
-        lua_pushstring(lua, "api_buf_set: ofs index out of range");
+        lua_pushstring(lua, "ofs index out of range");
         lua_error(lua);
         return 0;
     }
     for (int i = 0; i < len; ++i) {
         if (!util_isfloat(lua, i + 2)) {
-            lua_pushstring(lua, "api_buf_set: incorrect data type");
+            lua_pushstring(lua, "incorrect data type");
             lua_error(lua);
             return 0;
         }
@@ -94,7 +94,7 @@ static int api_buf_get(lua_State *lua) {
     if (lua_gettop(lua) < 6 ||
     !util_isint(lua, 1) || !util_isint(lua, 2) || !util_isint(lua, 3) ||
     !util_isint(lua, 4) || !util_isfloat(lua, 5) || !util_isfloat(lua, 6)) {
-        lua_pushstring(lua, "api_buf_get: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -107,12 +107,12 @@ static int api_buf_get(lua_State *lua) {
     lua_pop(lua, 6);
 
     if (ofs < 0 || ofs >= g_cbufs.size - (sx * sy)) {
-        lua_pushstring(lua, "api_buf_get: invalid range");
+        lua_pushstring(lua, "invalid range");
         lua_error(lua);
         return 0;
     }
     if (interp < 0 || interp >= CBUF_IPL_TOTAL) {
-        lua_pushstring(lua, "api_buf_get: invalid interp");
+        lua_pushstring(lua, "invalid interp");
         lua_error(lua);
         return 0;
     }

@@ -140,17 +140,17 @@ static int api_thread_run(lua_State *lua) {
     /* Send Lua chunk to run in blocked worker thread. */
     struct cthread_t *thread;
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
-        lua_pushstring(lua, "api_thread_run: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     if (!(thread = cthread_get(lua_tointeger(lua, 1)))) {
-        lua_pushstring(lua, "api_thread_run: invalid thread");
+        lua_pushstring(lua, "invalid thread");
         lua_error(lua);
         return 0;
     }
     if (uatomic_int_load(thread->state) != CTHREAD_IDLE) {
-        lua_pushstring(lua, "api_thread_run: invalid state");
+        lua_pushstring(lua, "invalid state");
         lua_error(lua);
         return 0;
     }
@@ -162,7 +162,7 @@ static int api_thread_run(lua_State *lua) {
     g_cthreads.fnsize = 0;
     lua_pop(lua, 2);
     if (uatomic_int_load(thread->state) == CTHREAD_ERROR) {
-        lua_pushstring(lua, "api_thread_run: thread error");
+        lua_pushstring(lua, "thread error");
         lua_error(lua);
         return 0;
     }
@@ -173,17 +173,17 @@ static int api_thread_request(lua_State *lua) {
     /* Send a string to blocked worker thread, return its response. */
     struct cthread_t *thread;
     if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
-        lua_pushstring(lua, "api_thread_request: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     if (!(thread = cthread_get(lua_tointeger(lua, 1)))) {
-        lua_pushstring(lua, "api_thread_request: invalid thread");
+        lua_pushstring(lua, "invalid thread");
         lua_error(lua);
         return 0;
     }
     if (uatomic_int_load(thread->state) != CTHREAD_RESPONDING) {
-        lua_pushstring(lua, "api_thread_request: invalid state");
+        lua_pushstring(lua, "invalid state");
         lua_error(lua);
         return 0;
     }
@@ -202,12 +202,12 @@ static int api_thread_respond(lua_State *lua) {
     /* Wait for the main thread, send a string to it, return response. */
     struct cthread_t *thread = cthread_current(lua);
     if (lua_gettop(lua) != 1 || !lua_isstring(lua, 1)) {
-        lua_pushstring(lua, "api_thread_respond: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     if (uatomic_int_load(thread->state) != CTHREAD_RUNNING) {
-        lua_pushstring(lua, "api_thread_respond: invalid state");
+        lua_pushstring(lua, "invalid state");
         lua_error(lua);
         return 0;
     }
@@ -232,12 +232,12 @@ static int api_thread_state(lua_State *lua) {
     /* Returns worker thread state. */
     struct cthread_t *thread;
     if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
-        lua_pushstring(lua, "api_thread_state: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
     if (!(thread = cthread_get(lua_tointeger(lua, 1)))) {
-        lua_pushstring(lua, "api_thread_state: invalid thread");
+        lua_pushstring(lua, "invalid thread");
         lua_error(lua);
         return 0;
     }

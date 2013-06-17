@@ -7,7 +7,7 @@ static int api_log_out(lua_State *lua) {
     const char *src, *msg;
     if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !lua_isstring(lua, 2) ||
     !util_isint(lua, 3) || !lua_isstring(lua, 4)) {
-        lua_pushstring(lua, "api_log_out: incorrect argument");
+        lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
     }
@@ -16,7 +16,7 @@ static int api_log_out(lua_State *lua) {
     line = lua_tointeger(lua, 3);
     msg = lua_tostring(lua, 4);
     if (level < 0 || level >= VLOG_LEVELS_TOTAL) {
-        lua_pushstring(lua, "api_log_out: invalid log level");
+        lua_pushstring(lua, "invalid log level");
         lua_error(lua);
         return 0;
     }
