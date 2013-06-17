@@ -1,7 +1,7 @@
 #include "cthread.h"
 #include "cmpool.h"
 #include "clog.h"
-#include "util.h"
+#include "cutil.h"
 #include "uatomic.h"
 #include "uthread.h"
 #include "vlog.h"
@@ -139,7 +139,7 @@ static struct cthread_t * cthread_current(lua_State *lua) {
 static int api_thread_run(lua_State *lua) {
     /* Send Lua chunk to run in blocked worker thread. */
     struct cthread_t *thread;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !lua_isstring(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -172,7 +172,7 @@ static int api_thread_run(lua_State *lua) {
 static int api_thread_request(lua_State *lua) {
     /* Send a string to blocked worker thread, return its response. */
     struct cthread_t *thread;
-    if (lua_gettop(lua) != 2 || !util_isint(lua, 1) || !lua_isstring(lua, 2)) {
+    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !lua_isstring(lua, 2)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -231,7 +231,7 @@ static int api_thread_respond(lua_State *lua) {
 static int api_thread_state(lua_State *lua) {
     /* Returns worker thread state. */
     struct cthread_t *thread;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

@@ -1,5 +1,5 @@
 #include "ctimer.h"
-#include "util.h"
+#include "cutil.h"
 #include "ptimer.h"
 #include "SDL.h"
 
@@ -14,7 +14,7 @@ static int api_timer(lua_State *lua) {
 }
 
 static int api_timer_delay(lua_State *lua) {
-    if (lua_gettop(lua) != 1 || !util_isfloat(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isfloat(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

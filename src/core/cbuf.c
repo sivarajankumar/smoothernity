@@ -1,6 +1,6 @@
 #include "cbuf.h"
 #include "cinterp.h"
-#include "util.h"
+#include "cutil.h"
 #include "pmem.h"
 #include <math.h>
 
@@ -61,7 +61,7 @@ static float cbuf_get_interp
 static int api_buf_set(lua_State *lua) {
     int ofs, len;
 
-    if (lua_gettop(lua) < 2 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) < 2 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
@@ -75,7 +75,7 @@ static int api_buf_set(lua_State *lua) {
         return 0;
     }
     for (int i = 0; i < len; ++i) {
-        if (!util_isfloat(lua, i + 2)) {
+        if (!cutil_isfloat(lua, i + 2)) {
             lua_pushstring(lua, "incorrect data type");
             lua_error(lua);
             return 0;
@@ -92,8 +92,8 @@ static int api_buf_get(lua_State *lua) {
     float x, y;
 
     if (lua_gettop(lua) < 6 ||
-    !util_isint(lua, 1) || !util_isint(lua, 2) || !util_isint(lua, 3) ||
-    !util_isint(lua, 4) || !util_isfloat(lua, 5) || !util_isfloat(lua, 6)) {
+    !cutil_isint(lua, 1) || !cutil_isint(lua, 2) || !cutil_isint(lua, 3) ||
+    !cutil_isint(lua, 4) || !cutil_isfloat(lua, 5) || !cutil_isfloat(lua, 6)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

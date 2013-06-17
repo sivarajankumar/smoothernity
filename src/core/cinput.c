@@ -1,5 +1,5 @@
 #include "cinput.h"
-#include "util.h"
+#include "cutil.h"
 #include "SDL.h"
 
 #define KEYS(op) \
@@ -28,7 +28,7 @@ static struct cinput_t g_cinput;
 
 static int api_input_key(lua_State *lua) {
     int key;
-    if (lua_gettop(lua) != 1 || !util_isint(lua, 1)) {
+    if (lua_gettop(lua) != 1 || !cutil_isint(lua, 1)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;

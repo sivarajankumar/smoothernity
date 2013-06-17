@@ -1,12 +1,12 @@
 #include "clog.h"
-#include "util.h"
+#include "cutil.h"
 #include "vlog.h"
 
 static int api_log_out(lua_State *lua) {
     int level, line;
     const char *src, *msg;
-    if (lua_gettop(lua) != 4 || !util_isint(lua, 1) || !lua_isstring(lua, 2) ||
-    !util_isint(lua, 3) || !lua_isstring(lua, 4)) {
+    if (lua_gettop(lua) != 4 || !cutil_isint(lua, 1) || !lua_isstring(lua, 2) ||
+    !cutil_isint(lua, 3) || !lua_isstring(lua, 4)) {
         lua_pushstring(lua, "incorrect argument");
         lua_error(lua);
         return 0;
