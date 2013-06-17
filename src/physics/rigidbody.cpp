@@ -1,7 +1,7 @@
 #include "physres.h"
 #include "rigidbody.hpp"
 #include "world.hpp"
-#include "colshape.hpp"
+#include "ycolshape.hpp"
 #include "pmem.hpp"
 #include "vlog.hpp"
 
@@ -103,7 +103,7 @@ int rigidbody_free(rigidbody_t *rb) {
     return PHYSRES_OK;
 }
 
-int rigidbody_alloc(rigidbody_t *rb, world_t *wld, colshape_t *cs,
+int rigidbody_alloc(rigidbody_t *rb, world_t *wld, ycolshape_t *cs,
 float *matrix, float mass, float frict, float roll_frict) {
     if (!rb->vacant)
         return PHYSRES_INVALID_RB;

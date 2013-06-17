@@ -1,7 +1,7 @@
 #include "physres.h"
 #include "vehicle.hpp"
 #include "world.hpp"
-#include "colshape.hpp"
+#include "ycolshape.hpp"
 #include "pmem.hpp"
 #include "vlog.hpp"
 
@@ -139,8 +139,8 @@ int vehicle_free(vehicle_t *veh) {
     return PHYSRES_OK;
 }
 
-int vehicle_alloc(vehicle_t *veh, world_t *wld, colshape_t *shape,
-colshape_t *inert, float *matrix, float mass, float ch_frict,
+int vehicle_alloc(vehicle_t *veh, world_t *wld, ycolshape_t *shape,
+ycolshape_t *inert, float *matrix, float mass, float ch_frict,
 float ch_roll_frict, float sus_stif, float sus_comp, float sus_damp,
 float sus_trav, float sus_force, float slip_frict) {
     if (!veh->vacant)
