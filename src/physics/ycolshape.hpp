@@ -5,7 +5,7 @@
 #include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 struct yrigidbody_t;
-struct vehicle_t;
+struct yvehicle_t;
 
 struct ycolshape_t {
     btBoxShape *shape_box;
@@ -17,7 +17,7 @@ struct ycolshape_t {
     char *data;
     ycolshape_t *comp, *comp_children, *comp_next, *comp_prev;
     int vacant;
-    vehicle_t *vehs;
+    yvehicle_t *vehs;
     yrigidbody_t *rbs;
 };
 

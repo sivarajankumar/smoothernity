@@ -1,4 +1,4 @@
-#include "vehicle.hpp"
+#include "yvehicle.hpp"
 #include "yphysres.h"
 #include "ymstate.hpp"
 #include "world.hpp"
@@ -6,26 +6,26 @@
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t VEHICLE_SIZE = 256;
+static const size_t YVEHICLE_SIZE = 256;
 
-struct vehicles_t {
+struct yvehicles_t {
     int count;
     char *pool;
 };
 
-static_assert(sizeof(vehicle_t) <= VEHICLE_SIZE, "Invalid vehicle_t size");
+static_assert(sizeof(yvehicle_t) <= YVEHICLE_SIZE, "Invalid yvehicle_t size");
 
-static vehicles_t g_vehicles;
+static yvehicles_t g_yvehicles;
 
-int vehicle_init(int count) {
-    vehicle_t *veh;
-    g_vehicles.count = count;
-    g_vehicles.pool = (char*)pmem_alloc(PMEM_ALIGNOF(vehicle_t),
-                                        VEHICLE_SIZE * count);
-    if (!g_vehicles.pool)
+int yvehicle_init(int count) {
+    yvehicle_t *veh;
+    g_yvehicles.count = count;
+    g_yvehicles.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yvehicle_t),
+                                        YVEHICLE_SIZE * count);
+    if (!g_yvehicles.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
-        veh = vehicle_get(i);
+        veh = yvehicle_get(i);
         veh->vacant = 1;
         veh->chassis = 0;
         veh->mstate = 0;
@@ -39,7 +39,7 @@ int vehicle_init(int count) {
         veh->inert_prev = veh->inert_next = 0;
     }
     for (int i = 0; i < count; ++i) {
-        veh = vehicle_get(i);
+        veh = yvehicle_get(i);
         try {
             veh->mstate = new ymstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
@@ -58,13 +58,13 @@ int vehicle_init(int count) {
     return YPHYSRES_OK;
 }
 
-void vehicle_done(void) {
-    vehicle_t *veh;
-    if (!g_vehicles.pool)
+void yvehicle_done(void) {
+    yvehicle_t *veh;
+    if (!g_yvehicles.pool)
         return;
-    for (int i = 0; i < g_vehicles.count; ++i) {
-        veh = vehicle_get(i);
-        vehicle_free(veh);
+    for (int i = 0; i < g_yvehicles.count; ++i) {
+        veh = yvehicle_get(i);
+        yvehicle_free(veh);
         try {
             if (veh->mstate)
                 delete veh->mstate;
@@ -80,18 +80,18 @@ void vehicle_done(void) {
         if (veh->veh_data)
             pmem_free(veh->veh_data);
     }
-    pmem_free(g_vehicles.pool);
-    g_vehicles.pool = 0;
+    pmem_free(g_yvehicles.pool);
+    g_yvehicles.pool = 0;
 }
 
-vehicle_t * vehicle_get(int vehi) {
-    if (vehi >= 0 && vehi < g_vehicles.count)
-        return (vehicle_t*)(g_vehicles.pool + VEHICLE_SIZE * vehi);
+yvehicle_t * yvehicle_get(int vehi) {
+    if (vehi >= 0 && vehi < g_yvehicles.count)
+        return (yvehicle_t*)(g_yvehicles.pool + YVEHICLE_SIZE * vehi);
     else
         return 0;
 }
 
-int vehicle_free(vehicle_t *veh) {
+int yvehicle_free(yvehicle_t *veh) {
     if (veh->vacant == 1)
         return YPHYSRES_INVALID_VEH;
     veh->vacant = 1;
@@ -140,7 +140,7 @@ int vehicle_free(vehicle_t *veh) {
     return YPHYSRES_OK;
 }
 
-int vehicle_alloc(vehicle_t *veh, world_t *wld, ycolshape_t *shape,
+int yvehicle_alloc(yvehicle_t *veh, world_t *wld, ycolshape_t *shape,
 ycolshape_t *inert, float *matrix, float mass, float ch_frict,
 float ch_roll_frict, float sus_stif, float sus_comp, float sus_damp,
 float sus_trav, float sus_force, float slip_frict) {
@@ -196,7 +196,7 @@ float sus_trav, float sus_force, float slip_frict) {
     return YPHYSRES_OK;
 }
 
-int vehicle_add_wheel(vehicle_t *veh, int *wheeli, float *pos, float *dir,
+int yvehicle_add_wheel(yvehicle_t *veh, int *wheeli, float *pos, float *dir,
 float *axl, float sus_rest, float roll, float radius, int front) {
     try {
         *wheeli = veh->veh->getNumWheels();
@@ -211,7 +211,7 @@ float *axl, float sus_rest, float roll, float radius, int front) {
     return YPHYSRES_OK;
 }
 
-int vehicle_set_wheel(vehicle_t *veh, int wheel,
+int yvehicle_set_wheel(yvehicle_t *veh, int wheel,
 float engine, float brake, float steer) {
     try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
@@ -225,7 +225,7 @@ float engine, float brake, float steer) {
     return YPHYSRES_OK;
 }
 
-int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix) {
+int yvehicle_fetch_chassis_tm(yvehicle_t *veh, float *matrix) {
     try {
         veh->mstate->m.getOpenGLMatrix(matrix);
     } catch (...) {
@@ -234,7 +234,7 @@ int vehicle_fetch_chassis_tm(vehicle_t *veh, float *matrix) {
     return YPHYSRES_OK;
 }
 
-int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *m) {
+int yvehicle_fetch_wheel_tm(yvehicle_t *veh, int wheel, float *m) {
     try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
             return YPHYSRES_INVALID_VEH_WHEEL;
@@ -246,7 +246,7 @@ int vehicle_fetch_wheel_tm(vehicle_t *veh, int wheel, float *m) {
     return YPHYSRES_OK;
 }
 
-int vehicle_transform(vehicle_t *veh, float *matrix) {
+int yvehicle_transform(yvehicle_t *veh, float *matrix) {
     try {
         btTransform tm;
         tm.setFromOpenGLMatrix(matrix);
@@ -259,7 +259,7 @@ int vehicle_transform(vehicle_t *veh, float *matrix) {
     return YPHYSRES_OK;
 }
 
-int vehicle_wheel_contact(vehicle_t *veh, int wheel, int *in_cont) {
+int yvehicle_wheel_contact(yvehicle_t *veh, int wheel, int *in_cont) {
     try {
         if (wheel < 0 || wheel >= veh->veh->getNumWheels())
             return YPHYSRES_INVALID_VEH_WHEEL;

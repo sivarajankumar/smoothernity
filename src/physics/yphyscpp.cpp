@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "ycolshape.hpp"
 #include "yrigidbody.hpp"
-#include "vehicle.hpp"
+#include "yvehicle.hpp"
 #include "yphysres.h"
 #include <exception>
 
@@ -32,12 +32,12 @@ int wld_count, int cs_count, int rb_count, int veh_count) {
         return res;
     if ((res = yrigidbody_init(rb_count)) != YPHYSRES_OK)
         return res;
-    return vehicle_init(veh_count);
+    return yvehicle_init(veh_count);
 }
 
 extern "C" void yphyscpp_done(void) {
     yrigidbody_done();
-    vehicle_done();
+    yvehicle_done();
     ycolshape_done();
     world_done();
 }
@@ -166,66 +166,66 @@ float sus_stif, float sus_comp, float sus_damp, float sus_trav,
 float sus_force, float slip_frict) {
     world_t *wld;
     ycolshape_t *shape, *inert;
-    vehicle_t *veh;
+    yvehicle_t *veh;
     if (!(wld = world_get(wldi)))
         return YPHYSRES_INVALID_WLD;
     if (!(shape = ycolshape_get(shapei)) || !(inert = ycolshape_get(inerti)))
         return YPHYSRES_INVALID_CS;
-    if (!(veh = vehicle_get(vehi)))
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_alloc(veh, wld, shape, inert, tm, mass,
+    return yvehicle_alloc(veh, wld, shape, inert, tm, mass,
                          ch_frict, ch_roll_frict, sus_stif, sus_comp,
                          sus_damp, sus_trav, sus_force, slip_frict);
 }
 
 extern "C" int yphyscpp_veh_free(int vehi) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_free(veh);
+    return yvehicle_free(veh);
 }
 
 extern "C" int yphyscpp_veh_add_wheel(int *wheel, int vehi, float *pos,
 float *dir, float *axl, float sus_rest, float roll, float radius, int front) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_add_wheel(veh, wheel, pos, dir, axl, sus_rest,
+    return yvehicle_add_wheel(veh, wheel, pos, dir, axl, sus_rest,
                              roll, radius, front);
 }
 
 extern "C" int yphyscpp_veh_set_wheel
 (int vehi, int wheel, float engine, float brake, float steer) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_set_wheel(veh, wheel, engine, brake, steer);
+    return yvehicle_set_wheel(veh, wheel, engine, brake, steer);
 }
 
 extern "C" int yphyscpp_veh_fetch_chassis_tm(int vehi, float *matrix) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_fetch_chassis_tm(veh, matrix);
+    return yvehicle_fetch_chassis_tm(veh, matrix);
 }
 
 extern "C" int yphyscpp_veh_fetch_wheel_tm(int vehi, int wheel, float *matrix) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_fetch_wheel_tm(veh, wheel, matrix);
+    return yvehicle_fetch_wheel_tm(veh, wheel, matrix);
 }
 
 extern "C" int yphyscpp_veh_transform(int vehi, float *matrix) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_transform(veh, matrix);
+    return yvehicle_transform(veh, matrix);
 }
 
 extern "C" int yphyscpp_veh_wheel_contact(int vehi, int wheel, int *in_contact) {
-    vehicle_t *veh;
-    if (!(veh = vehicle_get(vehi)))
+    yvehicle_t *veh;
+    if (!(veh = yvehicle_get(vehi)))
         return YPHYSRES_INVALID_VEH;
-    return vehicle_wheel_contact(veh, wheel, in_contact);
+    return yvehicle_wheel_contact(veh, wheel, in_contact);
 }
