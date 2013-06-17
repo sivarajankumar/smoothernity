@@ -1,7 +1,7 @@
 #include "world.hpp"
 #include "yddraw.hpp"
 #include "ycolshape.hpp"
-#include "physres.h"
+#include "yphysres.h"
 #include "pmem.hpp"
 #include "vlog.hpp"
 
@@ -22,7 +22,7 @@ int world_init(int count) {
     g_worlds.pool = (char*)pmem_alloc(PMEM_ALIGNOF(world_t),
                                       WORLD_SIZE * count);
     if (!g_worlds.pool)
-        return PHYSRES_CANNOT_INIT;
+        return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
         wld = world_get(i);
         wld->broadphase = 0;
@@ -46,10 +46,10 @@ int world_init(int count) {
             wld->ddraw = new yddraw_c();
             wld->world->setDebugDrawer(wld->ddraw);
         } catch (...) {
-            return PHYSRES_CANNOT_INIT;
+            return YPHYSRES_CANNOT_INIT;
         }
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 void world_done(void) {
@@ -85,9 +85,9 @@ int world_update(world_t *wld, float dt) {
     try {
         wld->world->stepSimulation(dt);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 world_t * world_get(int worldi) {
@@ -101,27 +101,27 @@ int world_ddraw(world_t *wld) {
     try {
         wld->world->debugDrawWorld();
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int world_ddraw_mode(world_t *wld, int mode) {
     try {
         wld->ddraw->setDebugMode(mode);
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int world_gravity(world_t *wld, float *v) {
     try {
         wld->world->setGravity(btVector3(v[0], v[1], v[2]));
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int world_move(world_t *wld, float *offset) {
@@ -149,15 +149,15 @@ int world_move(world_t *wld, float *offset) {
             }
         }
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
 
 int world_cast(world_t *wld, ycolshape_t *cs,
 float *mfrom, float *mto, float *vout) {
     if (!cs->shape_convex)
-        return PHYSRES_INVALID_CS;
+        return YPHYSRES_INVALID_CS;
     try {
         btTransform tmfrom, tmto;
         tmfrom.setFromOpenGLMatrix(mfrom);
@@ -171,7 +171,7 @@ float *mfrom, float *mto, float *vout) {
         vout[1] = out.m_floats[1];
         vout[2] = out.m_floats[2];
     } catch (...) {
-        return PHYSRES_INTERNAL;
+        return YPHYSRES_INTERNAL;
     }
-    return PHYSRES_OK;
+    return YPHYSRES_OK;
 }
