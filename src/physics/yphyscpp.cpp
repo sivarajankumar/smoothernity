@@ -1,6 +1,6 @@
 #include "world.hpp"
 #include "ycolshape.hpp"
-#include "rigidbody.hpp"
+#include "yrigidbody.hpp"
 #include "vehicle.hpp"
 #include "yphysres.h"
 #include <exception>
@@ -30,13 +30,13 @@ int wld_count, int cs_count, int rb_count, int veh_count) {
         return res;
     if ((res = ycolshape_init(cs_count)) != YPHYSRES_OK)
         return res;
-    if ((res = rigidbody_init(rb_count)) != YPHYSRES_OK)
+    if ((res = yrigidbody_init(rb_count)) != YPHYSRES_OK)
         return res;
     return vehicle_init(veh_count);
 }
 
 extern "C" void yphyscpp_done(void) {
-    rigidbody_done();
+    yrigidbody_done();
     vehicle_done();
     ycolshape_done();
     world_done();
@@ -128,29 +128,29 @@ extern "C" int yphyscpp_rb_alloc(int rbi, int wldi, int csi,
 float *matrix, float mass, float frict, float roll_frict) {
     world_t *wld;
     ycolshape_t *cs;
-    rigidbody_t *rb;
+    yrigidbody_t *rb;
     if (!(wld = world_get(wldi)))
         return YPHYSRES_INVALID_WLD;
     if (!(cs = ycolshape_get(csi)))
         return YPHYSRES_INVALID_CS;
-    if (!(rb = rigidbody_get(rbi)))
+    if (!(rb = yrigidbody_get(rbi)))
         return YPHYSRES_INVALID_RB;
-    return rigidbody_alloc(rb, wld, cs, matrix,
+    return yrigidbody_alloc(rb, wld, cs, matrix,
                            mass, frict, roll_frict);
 }
 
 extern "C" int yphyscpp_rb_free(int rbi) {
-    rigidbody_t *rb;
-    if (!(rb = rigidbody_get(rbi)))
+    yrigidbody_t *rb;
+    if (!(rb = yrigidbody_get(rbi)))
         return YPHYSRES_INVALID_RB;
-    return rigidbody_free(rb);
+    return yrigidbody_free(rb);
 }
 
 extern "C" int yphyscpp_rb_fetch_tm(int rbi, float *matrix) {
-    rigidbody_t *rb;
-    if (!(rb = rigidbody_get(rbi)))
+    yrigidbody_t *rb;
+    if (!(rb = yrigidbody_get(rbi)))
         return YPHYSRES_INVALID_RB;
-    return rigidbody_fetch_tm(rb, matrix);
+    return yrigidbody_fetch_tm(rb, matrix);
 }
 
 extern "C" int yphyscpp_wld_gravity(int wldi, float *v) {
