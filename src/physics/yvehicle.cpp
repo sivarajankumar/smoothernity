@@ -1,7 +1,7 @@
 #include "yvehicle.hpp"
 #include "yphysres.h"
 #include "ymstate.hpp"
-#include "world.hpp"
+#include "yworld.hpp"
 #include "ycolshape.hpp"
 #include "pmem.hpp"
 #include "vlog.hpp"
@@ -140,7 +140,7 @@ int yvehicle_free(yvehicle_t *veh) {
     return YPHYSRES_OK;
 }
 
-int yvehicle_alloc(yvehicle_t *veh, world_t *wld, ycolshape_t *shape,
+int yvehicle_alloc(yvehicle_t *veh, yworld_t *wld, ycolshape_t *shape,
 ycolshape_t *inert, float *matrix, float mass, float ch_frict,
 float ch_roll_frict, float sus_stif, float sus_comp, float sus_damp,
 float sus_trav, float sus_force, float slip_frict) {

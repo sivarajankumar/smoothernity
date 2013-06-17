@@ -1,4 +1,4 @@
-#include "world.hpp"
+#include "yworld.hpp"
 #include "ycolshape.hpp"
 #include "yrigidbody.hpp"
 #include "yvehicle.hpp"
@@ -26,7 +26,7 @@ int wld_count, int cs_count, int rb_count, int veh_count) {
     int res;
     g_yphyscpp.memalloc = memalloc;
     btAlignedAllocSetCustom(yphyscpp_memalloc, memfree);
-    if ((res = world_init(wld_count)) != YPHYSRES_OK)
+    if ((res = yworld_init(wld_count)) != YPHYSRES_OK)
         return res;
     if ((res = ycolshape_init(cs_count)) != YPHYSRES_OK)
         return res;
@@ -39,46 +39,46 @@ extern "C" void yphyscpp_done(void) {
     yrigidbody_done();
     yvehicle_done();
     ycolshape_done();
-    world_done();
+    yworld_done();
 }
 
 extern "C" int yphyscpp_wld_update(int wldi, float dt) {
-    world_t *wld;
-    if (!(wld = world_get(wldi)))
+    yworld_t *wld;
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
-    return world_update(wld, dt);
+    return yworld_update(wld, dt);
 }
 
 extern "C" int yphyscpp_wld_ddraw(int wldi) {
-    world_t *wld;
-    if (!(wld = world_get(wldi)))
+    yworld_t *wld;
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
-    return world_ddraw(wld);
+    return yworld_ddraw(wld);
 }
 
 extern "C" int yphyscpp_wld_ddraw_mode(int wldi, int mode) {
-    world_t *wld;
-    if (!(wld = world_get(wldi)))
+    yworld_t *wld;
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
-    return world_ddraw_mode(wld, mode);
+    return yworld_ddraw_mode(wld, mode);
 }
 
 extern "C" int yphyscpp_wld_move(int wldi, float *offset) {
-    world_t *wld;
-    if (!(wld = world_get(wldi)))
+    yworld_t *wld;
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
-    return world_move(wld, offset);
+    return yworld_move(wld, offset);
 }
 
 extern "C" int yphyscpp_wld_cast
 (int wldi, int csi, float *mfrom, float *mto, float *vout) {
-    world_t *wld;
+    yworld_t *wld;
     ycolshape_t *cs;
-    if (!(wld = world_get(wldi)))
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
     if (!(cs = ycolshape_get(csi)))
         return YPHYSRES_INVALID_CS;
-    return world_cast(wld, cs, mfrom, mto, vout);
+    return yworld_cast(wld, cs, mfrom, mto, vout);
 }
 
 extern "C" int yphyscpp_cs_alloc_box(int csi, float *size) {
@@ -126,10 +126,10 @@ extern "C" int yphyscpp_cs_free(int csi) {
 
 extern "C" int yphyscpp_rb_alloc(int rbi, int wldi, int csi,
 float *matrix, float mass, float frict, float roll_frict) {
-    world_t *wld;
+    yworld_t *wld;
     ycolshape_t *cs;
     yrigidbody_t *rb;
-    if (!(wld = world_get(wldi)))
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
     if (!(cs = ycolshape_get(csi)))
         return YPHYSRES_INVALID_CS;
@@ -154,20 +154,20 @@ extern "C" int yphyscpp_rb_fetch_tm(int rbi, float *matrix) {
 }
 
 extern "C" int yphyscpp_wld_gravity(int wldi, float *v) {
-    world_t *wld;
-    if (!(wld = world_get(wldi)))
+    yworld_t *wld;
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
-    return world_gravity(wld, v);
+    return yworld_gravity(wld, v);
 }
 
 extern "C" int yphyscpp_veh_alloc(int vehi, int wldi, int shapei,
 int inerti, float *tm, float mass, float ch_frict, float ch_roll_frict,
 float sus_stif, float sus_comp, float sus_damp, float sus_trav,
 float sus_force, float slip_frict) {
-    world_t *wld;
+    yworld_t *wld;
     ycolshape_t *shape, *inert;
     yvehicle_t *veh;
-    if (!(wld = world_get(wldi)))
+    if (!(wld = yworld_get(wldi)))
         return YPHYSRES_INVALID_WLD;
     if (!(shape = ycolshape_get(shapei)) || !(inert = ycolshape_get(inerti)))
         return YPHYSRES_INVALID_CS;

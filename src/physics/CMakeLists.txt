@@ -7,7 +7,7 @@ include_directories(${GLEW_INCLUDE_DIRS}
                     ${CMAKE_SOURCE_DIR}/platform)
 
 add_library(physics yphyscpp.cpp ycolshape.cpp ymstate.cpp yphysdbg.cpp
-            yrigidbody.cpp yddraw.cpp yvehicle.cpp world.cpp)
+            yrigidbody.cpp yddraw.cpp yvehicle.cpp yworld.cpp)
 
 target_link_libraries(physics util ${BULLET_LIBRARIES})
 

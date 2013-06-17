@@ -4,7 +4,7 @@
 #include "btBulletDynamicsCommon.h"
 
 class ymstate_c;
-struct world_t;
+struct yworld_t;
 struct ycolshape_t;
 
 struct yvehicle_t {
@@ -15,14 +15,14 @@ struct yvehicle_t {
     btRaycastVehicle::btVehicleTuning *tuning;
     char *chassis_data, *ray_data, *veh_data;
     int vacant;
-    world_t *wld;
+    yworld_t *wld;
     ycolshape_t *shape, *inert;
     yvehicle_t *shape_prev, *shape_next, *inert_prev, *inert_next;
 };
 
 int yvehicle_init(int count);
 void yvehicle_done(void);
-int yvehicle_alloc(yvehicle_t *veh, world_t*, ycolshape_t *shape,
+int yvehicle_alloc(yvehicle_t *veh, yworld_t*, ycolshape_t *shape,
                   ycolshape_t *inert, float *matrix, float mass,
                   float ch_frict, float ch_rfrict, float sus_stif,
                   float sus_comp, float sus_damp, float sus_trav,
