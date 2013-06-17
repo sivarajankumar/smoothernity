@@ -4,7 +4,7 @@
 #include "lualib.h"
 #include "util.h"
 #include "cmpool.h"
-#include "timer.h"
+#include "ctimer.h"
 #include "crender.h"
 #include "cinput.h"
 #include "vector.h"
@@ -231,7 +231,7 @@ static int cmain_init(int argc, char **argv) {
     clog_reg_thread(g_cmain.lua);
     cinput_init(g_cmain.lua);
 
-    if (timer_init(g_cmain.lua)) {
+    if (ctimer_init(g_cmain.lua)) {
         VLOG_ERROR("Cannot init timer"); 
         return 1;
     }
