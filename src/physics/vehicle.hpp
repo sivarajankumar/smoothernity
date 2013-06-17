@@ -1,14 +1,15 @@
 #ifndef PHYSICS_VEHICLE_HPP
 #define PHYSICS_VEHICLE_HPP
 
-#include "mstate.hpp"
+#include "btBulletDynamicsCommon.h"
 
+class ymstate_c;
 struct world_t;
 struct ycolshape_t;
 
 struct vehicle_t {
     btRigidBody *chassis;
-    mstate_c *mstate;
+    ymstate_c *mstate;
     btDefaultVehicleRaycaster *ray;
     btRaycastVehicle *veh;
     btRaycastVehicle::btVehicleTuning *tuning;
