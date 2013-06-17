@@ -6,7 +6,7 @@
 #include "cutil.h"
 #include "vlog.h"
 #include "yphyscpp.h"
-#include "../physics/physdbg.h"
+#include "yphysdbg.h"
 #include "../physics/physres.h"
 
 struct cphysics_t {
@@ -600,9 +600,9 @@ int veh_count, const int msizes[], const int mcounts[], int mlen) {
     REGF(api_physics_veh_transform);
     REGF(api_physics_veh_wheel_contact);
     #undef REGF
-    #define REGN(x) lua_pushinteger(lua, PHYSDBG_##x); \
+    #define REGN(x) lua_pushinteger(lua, YPHYSDBG_##x); \
                     lua_setglobal(lua, "API_PHYSICS_"#x);
-    PHYSDBG(REGN)
+    YPHYSDBG(REGN)
     #undef REGN
     return 0;
 }
