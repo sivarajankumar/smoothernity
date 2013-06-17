@@ -1,5 +1,6 @@
-#include "physres.h"
 #include "vehicle.hpp"
+#include "physres.h"
+#include "ymstate.hpp"
 #include "world.hpp"
 #include "ycolshape.hpp"
 #include "pmem.hpp"
@@ -40,7 +41,7 @@ int vehicle_init(int count) {
     for (int i = 0; i < count; ++i) {
         veh = vehicle_get(i);
         try {
-            veh->mstate = new mstate_c();
+            veh->mstate = new ymstate_c();
             veh->tuning = new btRaycastVehicle::btVehicleTuning();
         } catch (...) {
             return PHYSRES_CANNOT_INIT;

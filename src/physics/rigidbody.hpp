@@ -1,14 +1,15 @@
 #ifndef PHYSICS_RIGIDBODY_HPP
 #define PHYSICS_RIGIDBODY_HPP
 
-#include "mstate.hpp"
+#include "btBulletDynamicsCommon.h"
 
+class ymstate_c;
 struct world_t;
 struct ycolshape_t;
 
 struct rigidbody_t {
     btRigidBody *body;
-    mstate_c *mstate;
+    ymstate_c *mstate;
     char *data;
     int vacant;
     world_t *wld;

@@ -1,5 +1,6 @@
-#include "physres.h"
 #include "rigidbody.hpp"
+#include "physres.h"
+#include "ymstate.hpp"
 #include "world.hpp"
 #include "ycolshape.hpp"
 #include "pmem.hpp"
@@ -37,7 +38,7 @@ int rigidbody_init(int count) {
     for (int i = 0; i < count; ++i) {
         rb = rigidbody_get(i);
         try {
-            rb->mstate = new mstate_c();
+            rb->mstate = new ymstate_c();
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
         }
