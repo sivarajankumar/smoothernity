@@ -1,7 +1,7 @@
 #include "yrigidbody.hpp"
 #include "yphysres.h"
 #include "ymstate.hpp"
-#include "world.hpp"
+#include "yworld.hpp"
 #include "ycolshape.hpp"
 #include "pmem.hpp"
 #include "vlog.hpp"
@@ -104,7 +104,7 @@ int yrigidbody_free(yrigidbody_t *rb) {
     return YPHYSRES_OK;
 }
 
-int yrigidbody_alloc(yrigidbody_t *rb, world_t *wld, ycolshape_t *cs,
+int yrigidbody_alloc(yrigidbody_t *rb, yworld_t *wld, ycolshape_t *cs,
 float *matrix, float mass, float frict, float roll_frict) {
     if (!rb->vacant)
         return YPHYSRES_INVALID_RB;

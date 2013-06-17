@@ -1,30 +1,30 @@
-#include "world.hpp"
+#include "yworld.hpp"
 #include "yddraw.hpp"
 #include "ycolshape.hpp"
 #include "yphysres.h"
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t WORLD_SIZE = 128;
+static const size_t YWORLD_SIZE = 128;
 
-struct worlds_t {
+struct yworlds_t {
     int count;
     char *pool;
 };
 
-static_assert(sizeof(world_t) <= WORLD_SIZE, "Invalid world_t size");
+static_assert(sizeof(yworld_t) <= YWORLD_SIZE, "Invalid yworld_t size");
 
-static worlds_t g_worlds;
+static yworlds_t g_worlds;
 
-int world_init(int count) {
-    world_t *wld;
+int yworld_init(int count) {
+    yworld_t *wld;
     g_worlds.count = count;
-    g_worlds.pool = (char*)pmem_alloc(PMEM_ALIGNOF(world_t),
-                                      WORLD_SIZE * count);
+    g_worlds.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yworld_t),
+                                      YWORLD_SIZE * count);
     if (!g_worlds.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
-        wld = world_get(i);
+        wld = yworld_get(i);
         wld->broadphase = 0;
         wld->dispatcher = 0;
         wld->solver = 0;
@@ -33,7 +33,7 @@ int world_init(int count) {
         wld->ddraw = 0;
     }
     for (int i = 0; i < count; ++i) {
-        wld = world_get(i);
+        wld = yworld_get(i);
         try {
             wld->colcfg = new btDefaultCollisionConfiguration();
             wld->dispatcher = new btCollisionDispatcher(wld->colcfg);
@@ -52,12 +52,12 @@ int world_init(int count) {
     return YPHYSRES_OK;
 }
 
-void world_done(void) {
-    world_t *wld;
+void yworld_done(void) {
+    yworld_t *wld;
     if (!g_worlds.pool)
         return;
     for (int i = 0; i < g_worlds.count; ++i) {
-        wld = world_get(i);
+        wld = yworld_get(i);
         if (wld->world && wld->world->getNumCollisionObjects() > 0)
             VLOG_ERROR("world still has refs");
         try {
@@ -81,7 +81,7 @@ void world_done(void) {
     g_worlds.pool = 0;
 }
 
-int world_update(world_t *wld, float dt) {
+int yworld_update(yworld_t *wld, float dt) {
     try {
         wld->world->stepSimulation(dt);
     } catch (...) {
@@ -90,14 +90,14 @@ int world_update(world_t *wld, float dt) {
     return YPHYSRES_OK;
 }
 
-world_t * world_get(int worldi) {
+yworld_t * yworld_get(int worldi) {
     if (worldi >= 0 && worldi < g_worlds.count)
-        return (world_t*)(g_worlds.pool + WORLD_SIZE * worldi);
+        return (yworld_t*)(g_worlds.pool + YWORLD_SIZE * worldi);
     else
         return 0;
 }
 
-int world_ddraw(world_t *wld) {
+int yworld_ddraw(yworld_t *wld) {
     try {
         wld->world->debugDrawWorld();
     } catch (...) {
@@ -106,7 +106,7 @@ int world_ddraw(world_t *wld) {
     return YPHYSRES_OK;
 }
 
-int world_ddraw_mode(world_t *wld, int mode) {
+int yworld_ddraw_mode(yworld_t *wld, int mode) {
     try {
         wld->ddraw->setDebugMode(mode);
     } catch (...) {
@@ -115,7 +115,7 @@ int world_ddraw_mode(world_t *wld, int mode) {
     return YPHYSRES_OK;
 }
 
-int world_gravity(world_t *wld, float *v) {
+int yworld_gravity(yworld_t *wld, float *v) {
     try {
         wld->world->setGravity(btVector3(v[0], v[1], v[2]));
     } catch (...) {
@@ -124,7 +124,7 @@ int world_gravity(world_t *wld, float *v) {
     return YPHYSRES_OK;
 }
 
-int world_move(world_t *wld, float *offset) {
+int yworld_move(yworld_t *wld, float *offset) {
     try {
         btCollisionObject *obj;
         btRigidBody *rb;
@@ -154,7 +154,7 @@ int world_move(world_t *wld, float *offset) {
     return YPHYSRES_OK;
 }
 
-int world_cast(world_t *wld, ycolshape_t *cs,
+int yworld_cast(yworld_t *wld, ycolshape_t *cs,
 float *mfrom, float *mto, float *vout) {
     if (!cs->shape_convex)
         return YPHYSRES_INVALID_CS;
