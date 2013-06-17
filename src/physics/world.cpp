@@ -1,4 +1,5 @@
 #include "world.hpp"
+#include "yddraw.hpp"
 #include "ycolshape.hpp"
 #include "physres.h"
 #include "pmem.hpp"
@@ -42,7 +43,7 @@ int world_init(int count) {
                                                      wld->broadphase,
                                                      wld->solver,
                                                      wld->colcfg);
-            wld->ddraw = new ddraw_c();
+            wld->ddraw = new yddraw_c();
             wld->world->setDebugDrawer(wld->ddraw);
         } catch (...) {
             return PHYSRES_CANNOT_INIT;
