@@ -7,21 +7,14 @@
 #include "pmem.h"
 #include <math.h>
 
-/* TODO: ensure proper alignment for SSE */
-
-#define CVECTOR_SIZE 256
-
 enum cvectors_e {
     CVECTOR_FORCED_UPDATE = -1 /* special update_tag */
 };
 
 struct cvectors_t {
     int count, nesting;
-    char *pool;
+    struct cvector_t **pool;
 };
-
-_Static_assert(sizeof(struct cvector_t) <= CVECTOR_SIZE,
-               "Invalid cvector_t size");
 
 static struct cvectors_t g_cvectors;
 
@@ -416,12 +409,18 @@ static int api_vector_cast(lua_State *lua) {
 int cvector_init(lua_State *lua, int count, int nesting) {
     struct cvector_t *vec;
     g_cvectors.count = count;
-    g_cvectors.pool = pmem_alloc(PMEM_ALIGNOF(struct cvector_t),
-                                CVECTOR_SIZE * count);
+    g_cvectors.pool = pmem_alloc(PMEM_ALIGNOF(struct cvector_t*),
+                                 sizeof(struct cvector_t*) * count);
     if (!g_cvectors.pool)
         return 1;
+    for (int i = 0; i < count; ++i)
+        g_cvectors.pool[i] = 0;
     for (int i = 0; i < count; ++i) {
-        vec = cvector_get(i);
+        g_cvectors.pool[i] = pmem_alloc(
+            MAX(PMEM_SIMD_ALIGN, PMEM_ALIGNOF(struct cvector_t)),
+            sizeof(struct cvector_t));
+        if (!(vec = cvector_get(i)))
+            return 1;
         for (int j = 0; j < 4; ++j)
             vec->value[j] = 0;
         vec->type = CVECTOR_CONST;
@@ -450,13 +449,16 @@ int cvector_init(lua_State *lua, int count, int nesting) {
 void cvector_done(void) {
     if (!g_cvectors.pool)
         return;
+    for (int i = 0; i < g_cvectors.count; ++i)
+        if (cvector_get(i))
+            pmem_free(cvector_get(i));
     pmem_free(g_cvectors.pool);
     g_cvectors.pool = 0;
 }
 
 struct cvector_t * cvector_get(int i) {
     if (i >= 0 && i < g_cvectors.count)
-        return (struct cvector_t*)(g_cvectors.pool + CVECTOR_SIZE * i);
+        return g_cvectors.pool[i];
     else
         return 0;
 }
