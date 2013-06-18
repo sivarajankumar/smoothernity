@@ -6,6 +6,8 @@
 #include <math.h>
 #include <string.h>
 
+/* TODO: ensure proper alignment for SSE */
+
 #define CMATRIX_SIZE 256
 
 enum cmatrices_e {
