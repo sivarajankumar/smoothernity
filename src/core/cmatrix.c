@@ -6,21 +6,14 @@
 #include <math.h>
 #include <string.h>
 
-/* TODO: ensure proper alignment for SSE */
-
-#define CMATRIX_SIZE 256
-
 enum cmatrices_e {
     CMATRIX_FORCED_UPDATE = -1 /* special update_tag */
 };
 
 struct cmatrices_t {
     int count, nesting;
-    char *pool;
+    struct cmatrix_t **pool;
 };
-
-_Static_assert(sizeof(struct cmatrix_t) <= CMATRIX_SIZE,
-               "Invalid cmatrix_t size");
 
 static struct cmatrices_t g_cmatrices;
 
@@ -43,12 +36,12 @@ static int api_matrix_copy(lua_State *lua) {
     msrc = cmatrix_get(lua_tointeger(lua, 2));
     lua_pop(lua, 2);
 
-    if (!matrix || !msrc) {
+    if (!matrix || !msrc || matrix == msrc) {
         lua_pushstring(lua, "invalid matrix");
         lua_error(lua);
         return 0;
     }
-    memcpy(matrix, msrc, CMATRIX_SIZE);
+    memcpy(matrix, msrc, sizeof(struct cmatrix_t));
     return 0;
 }
 
@@ -71,7 +64,6 @@ static int api_matrix_stop(lua_State *lua) {
     cmatrix_clear_args(matrix);
     matrix->update_tag = 0;
     matrix->type = CMATRIX_CONST;
-
     return 0;
 }
 
@@ -482,12 +474,18 @@ static int api_matrix_vehicle_wheel(lua_State *lua) {
 int cmatrix_init(lua_State *lua, int count, int nesting) {
     struct cmatrix_t *m;
     g_cmatrices.count = count;
-    g_cmatrices.pool = pmem_alloc(PMEM_ALIGNOF(struct cmatrix_t),
-                                 CMATRIX_SIZE * count);
+    g_cmatrices.pool = pmem_alloc(PMEM_ALIGNOF(struct cmatrix_t*),
+                                  sizeof(struct cmatrix_t*) * count);
     if (!g_cmatrices.pool)
         return 1;
+    for (int i = 0; i < count; ++i)
+        g_cmatrices.pool[i] = 0;
     for (int i = 0; i < count; ++i) {
-        m = cmatrix_get(i);
+        g_cmatrices.pool[i] = pmem_alloc(
+            MAX(PMEM_SIMD_ALIGN, PMEM_ALIGNOF(struct cmatrix_t)),
+            sizeof(struct cmatrix_t));
+        if (!(m = cmatrix_get(i)))
+            return 1;
         for (int j = 0; j < 16; ++j)
             m->value[j] = 0;
         m->type = CMATRIX_CONST;
@@ -521,13 +519,16 @@ int cmatrix_init(lua_State *lua, int count, int nesting) {
 void cmatrix_done(void) {
     if (!g_cmatrices.pool)
         return;
+    for (int i = 0; i < g_cmatrices.count; ++i)
+        if (cmatrix_get(i))
+            pmem_free(cmatrix_get(i));
     pmem_free(g_cmatrices.pool);
     g_cmatrices.pool = 0;
 }
 
 struct cmatrix_t * cmatrix_get(int i) {
     if (i >= 0 && i < g_cmatrices.count)
-        return (struct cmatrix_t*)(g_cmatrices.pool + CMATRIX_SIZE * i);
+        return g_cmatrices.pool[i];
     else
         return 0;
 }
