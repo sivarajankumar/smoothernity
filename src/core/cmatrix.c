@@ -4,7 +4,6 @@
 #include "cutil.h"
 #include "pmem.h"
 #include <math.h>
-#include <string.h>
 
 enum cmatrices_e {
     CMATRIX_FORCED_UPDATE = -1 /* special update_tag */
@@ -22,27 +21,6 @@ static void cmatrix_clear_args(struct cmatrix_t *matrix) {
         matrix->argv[i] = 0;
     for (int i = 0; i < CMATRIX_ARGMS; ++i)
         matrix->argm[i] = 0;
-}
-
-static int api_matrix_copy(lua_State *lua) {
-    struct cmatrix_t *matrix, *msrc;
-
-    if (lua_gettop(lua) != 2 || !cutil_isint(lua, 1) || !cutil_isint(lua, 2)) {
-        lua_pushstring(lua, "incorrect argument");
-        lua_error(lua);
-        return 0;
-    }
-    matrix = cmatrix_get(lua_tointeger(lua, 1));
-    msrc = cmatrix_get(lua_tointeger(lua, 2));
-    lua_pop(lua, 2);
-
-    if (!matrix || !msrc || matrix == msrc) {
-        lua_pushstring(lua, "invalid matrix");
-        lua_error(lua);
-        return 0;
-    }
-    memcpy(matrix, msrc, sizeof(struct cmatrix_t));
-    return 0;
 }
 
 static int api_matrix_stop(lua_State *lua) {
@@ -156,7 +134,8 @@ static int api_matrix_mul_stop(lua_State *lua) {
     cmatrix_clear_args(matrix);
     matrix->update_tag = 0;
     matrix->type = CMATRIX_CONST;
-    memcpy(matrix->value, m, 16 * sizeof(float));
+    for (int i = 0; i < 16; ++i)
+        matrix->value[i] = m[i];
 
     return 0;
 }
@@ -493,7 +472,6 @@ int cmatrix_init(lua_State *lua, int count, int nesting) {
     g_cmatrices.nesting = nesting;
 
     #define REGF(x) lua_register(lua, #x, x)
-    REGF(api_matrix_copy);
     REGF(api_matrix_stop);
     REGF(api_matrix_update);
     REGF(api_matrix_inv);
