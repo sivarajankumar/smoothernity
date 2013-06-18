@@ -7,6 +7,8 @@
 #include "pmem.h"
 #include <math.h>
 
+/* TODO: ensure proper alignment for SSE */
+
 #define CVECTOR_SIZE 256
 
 enum cvectors_e {
