@@ -4,14 +4,10 @@
 #include "pmem.h"
 #include "vlog.h"
 
-#define CRBUF_SIZE 32
-
 struct crbufs_t {
     int count;
-    char *pool;
+    struct crbuf_t *pool;
 };
-
-_Static_assert(sizeof(struct crbuf_t) <= CRBUF_SIZE, "Invalid crbuf_t size");
 
 struct crbufs_t g_crbufs;
 
@@ -249,7 +245,8 @@ int crbuf_init(lua_State *lua, int count) {
     struct crbuf_t *rbuf;
 
     g_crbufs.count = count;
-    g_crbufs.pool = pmem_alloc(PMEM_ALIGNOF(struct crbuf_t), CRBUF_SIZE * count);
+    g_crbufs.pool = pmem_alloc(PMEM_ALIGNOF(struct crbuf_t),
+                               sizeof(struct crbuf_t) * count);
     if (!g_crbufs.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
@@ -294,7 +291,7 @@ void crbuf_done(void) {
 
 struct crbuf_t * crbuf_get(int rbufi) {
     if (rbufi >= 0 && rbufi < g_crbufs.count)
-        return (struct crbuf_t*)(g_crbufs.pool + CRBUF_SIZE * rbufi);
+        return g_crbufs.pool + rbufi;
     else
         return 0;
 }
