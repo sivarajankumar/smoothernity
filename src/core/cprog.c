@@ -4,22 +4,19 @@
 #include "vlog.h"
 
 #define CPROG_LOG_SIZE 2048
-#define CPROG_SIZE 4
 
 static const int CPROG_NONE = -1;
 
 struct cprogs_t {
     int count;
-    char *pool;
+    struct cprog_t *pool;
 };
-
-_Static_assert(sizeof(struct cprog_t) <= CPROG_SIZE, "Invalid cprog_t size");
 
 static struct cprogs_t g_cprogs;
 
 struct cprog_t * cprog_get(int iprog) {
     if (iprog >= 0 && iprog < g_cprogs.count)
-        return (struct cprog_t*)(g_cprogs.pool + CPROG_SIZE * iprog);
+        return g_cprogs.pool + iprog;
     else
         return 0;
 }
@@ -150,7 +147,8 @@ static int api_prog_use(lua_State *lua) {
 
 int cprog_init(lua_State *lua, int count) {
     g_cprogs.count = count;
-    g_cprogs.pool = pmem_alloc(PMEM_ALIGNOF(struct cprog_t), CPROG_SIZE * count);
+    g_cprogs.pool = pmem_alloc(PMEM_ALIGNOF(struct cprog_t),
+                               sizeof(struct cprog_t) * count);
     if (!g_cprogs.pool)
         return 1;
     for (int i = 0; i < count; ++i)
