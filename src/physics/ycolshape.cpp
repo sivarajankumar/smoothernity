@@ -2,15 +2,10 @@
 #include "ycolshape.hpp"
 #include "pmem.hpp"
 
-static const size_t YCOLSHAPE_SIZE = 128;
-
 struct ycolshapes_t {
     int count;
-    char *pool;
+    ycolshape_t *pool;
 };
-
-static_assert(sizeof(ycolshape_t) <= YCOLSHAPE_SIZE,
-              "Invalid ycolshape_t size");
 
 static ycolshapes_t g_ycolshapes;
 
@@ -29,8 +24,8 @@ int ycolshape_init(int count) {
     #undef FIND_SIZES
 
     g_ycolshapes.count = count;
-    g_ycolshapes.pool = (char*)pmem_alloc(PMEM_ALIGNOF(ycolshape_t),
-                                          YCOLSHAPE_SIZE * count);
+    g_ycolshapes.pool = (ycolshape_t*)pmem_alloc(PMEM_ALIGNOF(ycolshape_t),
+                                                 sizeof(ycolshape_t) * count);
     if (!g_ycolshapes.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i ) {
@@ -70,7 +65,7 @@ void ycolshape_done(void) {
 
 ycolshape_t * ycolshape_get(int colshapei) {
     if (colshapei >= 0 && colshapei < g_ycolshapes.count)
-        return (ycolshape_t*)(g_ycolshapes.pool + YCOLSHAPE_SIZE * colshapei);
+        return g_ycolshapes.pool + colshapei;
     else
         return 0;
 }
