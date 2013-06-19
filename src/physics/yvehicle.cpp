@@ -6,22 +6,18 @@
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t YVEHICLE_SIZE = 256;
-
 struct yvehicles_t {
     int count;
-    char *pool;
+    yvehicle_t *pool;
 };
-
-static_assert(sizeof(yvehicle_t) <= YVEHICLE_SIZE, "Invalid yvehicle_t size");
 
 static yvehicles_t g_yvehicles;
 
 int yvehicle_init(int count) {
     yvehicle_t *veh;
     g_yvehicles.count = count;
-    g_yvehicles.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yvehicle_t),
-                                        YVEHICLE_SIZE * count);
+    g_yvehicles.pool = (yvehicle_t*)pmem_alloc(PMEM_ALIGNOF(yvehicle_t),
+                                               sizeof(yvehicle_t) * count);
     if (!g_yvehicles.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -86,7 +82,7 @@ void yvehicle_done(void) {
 
 yvehicle_t * yvehicle_get(int vehi) {
     if (vehi >= 0 && vehi < g_yvehicles.count)
-        return (yvehicle_t*)(g_yvehicles.pool + YVEHICLE_SIZE * vehi);
+        return g_yvehicles.pool + vehi;
     else
         return 0;
 }
