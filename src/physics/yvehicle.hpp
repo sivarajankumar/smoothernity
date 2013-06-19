@@ -8,12 +8,11 @@ struct yworld_t;
 struct ycolshape_t;
 
 struct yvehicle_t {
-    btRigidBody *chassis;
+    btRigidBody *chassis, *chassis_data;
     ymstate_c *mstate;
-    btDefaultVehicleRaycaster *ray;
-    btRaycastVehicle *veh;
+    btDefaultVehicleRaycaster *ray, *ray_data;
+    btRaycastVehicle *veh, *veh_data;
     btRaycastVehicle::btVehicleTuning *tuning;
-    char *chassis_data, *ray_data, *veh_data;
     int vacant;
     yworld_t *wld;
     ycolshape_t *shape, *inert;
