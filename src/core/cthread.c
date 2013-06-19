@@ -19,8 +19,6 @@
  * Main thread can query current state of worker thread.
  */
 
-#define CTHREAD_SIZE 512
-
 enum cthread_e {
     CTHREAD_IDLE,        /* Waiting for main thread to send a new Lua chunk. */
     CTHREAD_STARTING,
@@ -46,15 +44,12 @@ struct cthread_t {
 
 struct cthreads_t {
     int count;
-    char *pool;
+    struct cthread_t *pool;
     const char *fn, *req;
     size_t fnsize, reqsize;
     struct uatomic_int_t *quit;
     jmp_buf panic;
 };
-
-_Static_assert(sizeof(struct cthread_t) <= CTHREAD_SIZE,
-               "Invalid cthread_t size");
 
 static struct cthreads_t g_cthreads;
 
@@ -93,7 +88,7 @@ static void cthread_loop(void *data) {
 
 static struct cthread_t * cthread_get(int ti) {
     if (ti >= 0 && ti < g_cthreads.count)
-        return (struct cthread_t*)(g_cthreads.pool + CTHREAD_SIZE * ti);
+        return g_cthreads.pool + ti;
     else
         return 0;
 }
@@ -272,7 +267,7 @@ int cthread_init
 
     g_cthreads.count = count;
     g_cthreads.pool = pmem_alloc(PMEM_ALIGNOF(struct cthread_t),
-                                 CTHREAD_SIZE * count);
+                                 sizeof(struct cthread_t) * count);
     if (!g_cthreads.pool)
         return 1;
     for (int i = 0; i < count; ++i) {
