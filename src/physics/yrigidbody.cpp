@@ -37,8 +37,8 @@ int yrigidbody_init(int count) {
         } catch (...) {
             return YPHYSRES_CANNOT_INIT;
         }
-        rb->data = (char*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
-                                     sizeof(btRigidBody));
+        rb->data = (btRigidBody*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
+                                            sizeof(btRigidBody));
         if (!rb->data)
             return YPHYSRES_CANNOT_INIT;
     }
@@ -73,7 +73,7 @@ yrigidbody_t * yrigidbody_get(int rbi) {
 }
 
 int yrigidbody_free(yrigidbody_t *rb) {
-    if (rb->vacant == 1)
+    if (rb->vacant)
         return YPHYSRES_INVALID_RB;
     rb->vacant = 1;
     if (rb->cs->rbs == rb)

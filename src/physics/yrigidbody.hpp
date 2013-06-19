@@ -10,7 +10,7 @@ struct ycolshape_t;
 struct yrigidbody_t {
     btRigidBody *body;
     ymstate_c *mstate;
-    char *data;
+    btRigidBody *data;
     int vacant;
     yworld_t *wld;
     ycolshape_t *cs;
