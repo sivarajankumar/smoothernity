@@ -2,6 +2,7 @@
 #define CMATRIX_H
 
 #include "lua.h"
+#include "pmem.h"
 
 #define CMATRIX_ARGVS 3
 #define CMATRIX_ARGMS 2
@@ -27,7 +28,7 @@ enum cmatrix_axis_e {
 };
 
 struct cmatrix_t {
-    float value[16]; /* Must go first to ensure alignment. */
+    PMEM_ALIGNAS(PMEM_ALIGN_SIMD) float value[16];
     enum cmatrix_e type;
     enum cmatrix_axis_e rotaxis;
     int update_tag, rotanglei, zneari, zfari, rigid_body, vehicle, wheel;
