@@ -6,23 +6,18 @@
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t YRIGIDBODY_SIZE = 128;
-
 struct yrigidbodies_t {
     int count;
-    char *pool;
+    yrigidbody_t *pool;
 };
-
-static_assert(sizeof(yrigidbody_t) <= YRIGIDBODY_SIZE,
-              "Invalid yrigidbody_t size");
 
 static yrigidbodies_t g_yrigidbodies;
 
 int yrigidbody_init(int count) {
     yrigidbody_t *rb;
     g_yrigidbodies.count = count;
-    g_yrigidbodies.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yrigidbody_t),
-                                           YRIGIDBODY_SIZE * count);
+    g_yrigidbodies.pool = (yrigidbody_t*)
+        pmem_alloc(PMEM_ALIGNOF(yrigidbody_t), sizeof(yrigidbody_t) * count);
     if (!g_yrigidbodies.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -72,7 +67,7 @@ void yrigidbody_done(void) {
 
 yrigidbody_t * yrigidbody_get(int rbi) {
     if (rbi >= 0 && rbi < g_yrigidbodies.count)
-        return (yrigidbody_t*)(g_yrigidbodies.pool + YRIGIDBODY_SIZE * rbi);
+        return g_yrigidbodies.pool + rbi;
     else
         return 0;
 }
