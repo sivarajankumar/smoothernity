@@ -5,22 +5,18 @@
 #include "pmem.hpp"
 #include "vlog.hpp"
 
-static const size_t YWORLD_SIZE = 128;
-
 struct yworlds_t {
     int count;
-    char *pool;
+    yworld_t *pool;
 };
-
-static_assert(sizeof(yworld_t) <= YWORLD_SIZE, "Invalid yworld_t size");
 
 static yworlds_t g_worlds;
 
 int yworld_init(int count) {
     yworld_t *wld;
     g_worlds.count = count;
-    g_worlds.pool = (char*)pmem_alloc(PMEM_ALIGNOF(yworld_t),
-                                      YWORLD_SIZE * count);
+    g_worlds.pool = (yworld_t*)pmem_alloc(PMEM_ALIGNOF(yworld_t),
+                                          sizeof(yworld_t) * count);
     if (!g_worlds.pool)
         return YPHYSRES_CANNOT_INIT;
     for (int i = 0; i < count; ++i) {
@@ -92,7 +88,7 @@ int yworld_update(yworld_t *wld, float dt) {
 
 yworld_t * yworld_get(int worldi) {
     if (worldi >= 0 && worldi < g_worlds.count)
-        return (yworld_t*)(g_worlds.pool + YWORLD_SIZE * worldi);
+        return g_worlds.pool + worldi;
     else
         return 0;
 }
