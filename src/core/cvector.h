@@ -2,6 +2,7 @@
 #define CVECTOR_H
 
 #include "lua.h"
+#include "pmem.h"
 
 #define CVECTOR_ARGVS 5
 #define CVECTOR_ARGMS 2
@@ -24,7 +25,7 @@ enum cvector_e {
 };
 
 struct cvector_t {
-    float value[4]; /* Must go first to ensure alignment. */
+    PMEM_ALIGNAS(PMEM_ALIGN_SIMD) float value[4];
     enum cvector_e type;
     struct cvector_t *argv[CVECTOR_ARGVS];
     struct cmatrix_t *argm[CVECTOR_ARGMS];
