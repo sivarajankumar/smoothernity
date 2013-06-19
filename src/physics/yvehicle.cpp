@@ -23,12 +23,11 @@ int yvehicle_init(int count) {
     for (int i = 0; i < count; ++i) {
         veh = yvehicle_get(i);
         veh->vacant = 1;
-        veh->chassis = 0;
+        veh->chassis = veh->chassis_data = 0;
+        veh->ray = veh->ray_data = 0;
+        veh->veh = veh->veh_data = 0;
         veh->mstate = 0;
-        veh->ray = 0;
-        veh->veh = 0;
         veh->tuning = 0;
-        veh->chassis_data = veh->ray_data = veh->veh_data = 0;
         veh->wld = 0;
         veh->shape = veh->inert = 0;
         veh->shape_prev = veh->shape_next = 0;
@@ -42,12 +41,14 @@ int yvehicle_init(int count) {
         } catch (...) {
             return YPHYSRES_CANNOT_INIT;
         }
-        veh->chassis_data = (char*)pmem_alloc(PMEM_ALIGNOF(btRigidBody),
-                                              sizeof(btRigidBody));
-        veh->ray_data = (char*)pmem_alloc(PMEM_ALIGNOF(btDefaultVehicleRaycaster),
-                                          sizeof(btDefaultVehicleRaycaster));
-        veh->veh_data = (char*)pmem_alloc(PMEM_ALIGNOF(btRaycastVehicle),
-                                          sizeof(btRaycastVehicle));
+        veh->chassis_data = (btRigidBody*)
+            pmem_alloc(PMEM_ALIGNOF(btRigidBody), sizeof(btRigidBody));
+        veh->ray_data = (btDefaultVehicleRaycaster*)
+            pmem_alloc(PMEM_ALIGNOF(btDefaultVehicleRaycaster),
+                       sizeof(btDefaultVehicleRaycaster));
+        veh->veh_data = (btRaycastVehicle*)
+            pmem_alloc(PMEM_ALIGNOF(btRaycastVehicle),
+                       sizeof(btRaycastVehicle));
         if (!veh->chassis_data || !veh->ray_data || !veh->veh_data)
             return YPHYSRES_CANNOT_INIT;
     }
