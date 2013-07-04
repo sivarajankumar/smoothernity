@@ -6,44 +6,51 @@
 #define DEVICE CL_DEVICE_TYPE_CPU
 
 #define SRC(n) \
-    "__kernel void dp_sqr(__global float"n" *a, __global float"n" *b) {\n" \
+    "__kernel void mykern(__global float"n" *a, __global float"n" *b) {\n" \
     "   int id = get_global_id(0);\n" \
     "   b[id] = a[id] * a[id];\n" \
     "}\n"
 
 int main(void) {
-    cl_uint psn;
-    cl_platform_id ps[MAX_PLATFORMS];
+    cl_uint pfms_len, devs_len;
+    cl_platform_id pfms[MAX_PLATFORMS];
+    cl_device_id devs[MAX_DEVICES];
     cl_context ctx;
-    const char *src[] = {SRC(""), SRC("2"), SRC("3"), SRC("4"),
-                         SRC("8"), SRC("16"), ""};
-    const int comps[] = {1, 2, 3, 4, 8, 16, 0};
+    const char *src[] = {SRC(""), SRC("2"), SRC("4"), SRC("8"), SRC("16"), ""};
+    const int comps[] = {1, 2, 4, 8, 16, 0};
 
-    if (CL_SUCCESS != clGetPlatformIDs(MAX_PLATFORMS, ps, &psn)) {
-        fprintf(stderr, "Cannot find any platforms\n");
+    if (CL_SUCCESS != clGetPlatformIDs(MAX_PLATFORMS, pfms, &pfms_len)) {
+        fprintf(stderr, "Cannot get platforms\n");
         return 1;
     }
-    for (int pi = 0; pi < (int)psn; ++pi) {
+    for (int pi = 0; pi < (int)pfms_len; ++pi) {
         cl_context_properties props[] = 
-            {CL_CONTEXT_PLATFORM, (cl_context_properties)(ps[pi]), 0};
-        ctx = clCreateContextFromType(props, DEVICE, 0, 0, 0);
+            {CL_CONTEXT_PLATFORM, (cl_context_properties)(pfms[pi]), 0};
+        if (CL_SUCCESS !=
+        clGetDeviceIDs(pfms[pi], DEVICE, MAX_DEVICES, devs, &devs_len)) {
+            fprintf(stderr, "Cannot get devices\n");
+            return 1;
+        }
+        if (!!(ctx = clCreateContext(props, devs_len, devs, 0, 0, 0)))
+            goto ctx_created;
     }
-    if (!ctx) {
-        fprintf(stderr, "Cannot create context\n");
-        return 1;
-    }
+    fprintf(stderr, "Cannot create context\n");
+    return 1;
+
+ctx_created:
     for (int compi = 0; comps[compi]; ++compi) {
-        fprintf(stderr, "Components %i\n", comps[compi]);
         cl_program prog;
-        if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0))) {
+        cl_kernel kern;
+
+        fprintf(stderr, "Components %i\n", comps[compi]);
+        if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0)) ||
+        CL_SUCCESS != clBuildProgram(prog, 0, 0, "-cl-std=CL1.1", 0, 0) ||
+        !(kern = clCreateKernel(prog, "mykern", 0))) {
             fprintf(stderr, "Cannot create program\n");
             return 1;
         }
-        if (CL_SUCCESS != clBuildProgram(prog, 0, 0, "-cl-std=CL1.1", 0, 0)) {
-            fprintf(stderr, "Cannot build program\n");
-            return 1;
-        }
-        if (CL_SUCCESS != clReleaseProgram(prog)) {
+        if (CL_SUCCESS != clReleaseKernel(kern) ||
+        CL_SUCCESS != clReleaseProgram(prog)) {
             fprintf(stderr, "Cannot release program\n");
             return 1;
         }
