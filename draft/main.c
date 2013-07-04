@@ -6,7 +6,7 @@
 #define DEVICE CL_DEVICE_TYPE_CPU
 
 #define SRC(n) \
-    "__kernel void dp_sqr(__global float"#n" *a, __global float"#n" *b) {\n" \
+    "__kernel void dp_sqr(__global float"n" *a, __global float"n" *b) {\n" \
     "   int id = get_global_id(0);\n" \
     "   b[id] = a[id] * a[id];\n" \
     "}\n"
@@ -15,7 +15,8 @@ int main(void) {
     cl_uint psn;
     cl_platform_id ps[MAX_PLATFORMS];
     cl_context ctx;
-    const char *src[] = {SRC(1), SRC(2), SRC(3), SRC(4), SRC(8), SRC(16), ""};
+    const char *src[] = {SRC(""), SRC("2"), SRC("3"), SRC("4"),
+                         SRC("8"), SRC("16"), ""};
     const int comps[] = {1, 2, 3, 4, 8, 16, 0};
 
     if (CL_SUCCESS != clGetPlatformIDs(MAX_PLATFORMS, ps, &psn)) {
@@ -32,9 +33,14 @@ int main(void) {
         return 1;
     }
     for (int compi = 0; comps[compi]; ++compi) {
+        fprintf(stderr, "Components %i\n", comps[compi]);
         cl_program prog;
         if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0))) {
             fprintf(stderr, "Cannot create program\n");
+            return 1;
+        }
+        if (CL_SUCCESS != clBuildProgram(prog, 0, 0, "-cl-std=CL1.1", 0, 0)) {
+            fprintf(stderr, "Cannot build program\n");
             return 1;
         }
         if (CL_SUCCESS != clReleaseProgram(prog)) {
