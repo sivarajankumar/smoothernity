@@ -16,6 +16,7 @@ int main(void) {
     cl_platform_id pfms[MAX_PLATFORMS];
     cl_device_id devs[MAX_DEVICES];
     cl_context ctx;
+    cl_command_queue que;
     const char *src[] = {SRC(""), SRC("2"), SRC("4"), SRC("8"), SRC("16"), ""};
     const int comps[] = {1, 2, 4, 8, 16, 0};
 
@@ -38,6 +39,11 @@ int main(void) {
     return 1;
 
 ctx_created:
+    fprintf(stderr, "Using device 1 out of %i\n", (int)devs_len);
+    if (!(que = clCreateCommandQueue(ctx, devs[0], 0, 0))) {
+        fprintf(stderr, "Cannot create command queue\n");
+        return 1;
+    }
     for (int compi = 0; comps[compi]; ++compi) {
         cl_program prog;
         cl_kernel kern;
@@ -55,7 +61,8 @@ ctx_created:
             return 1;
         }
     }
-    if (CL_SUCCESS != clReleaseContext(ctx)) {
+    if (CL_SUCCESS != clReleaseCommandQueue(que) ||
+    CL_SUCCESS != clReleaseContext(ctx)) {
         fprintf(stderr, "Cannot release context\n");
         return 1;
     }
