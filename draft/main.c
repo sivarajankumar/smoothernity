@@ -50,7 +50,8 @@ int main(void) {
     return 1;
 
 ctx_created:
-    fprintf(stderr, "Using device 1 out of %i\n", (int)devs_len);
+    fprintf(stderr, "Using %s device 1 out of %i\n",
+            DEVICE == CL_DEVICE_TYPE_CPU ? "CPU" : "GPU", (int)devs_len);
     if (!(que=clCreateCommandQueue(ctx,devs[0],CL_QUEUE_PROFILING_ENABLE,0)) ||
     !(memr = clCreateBuffer(ctx, CL_MEM_READ_ONLY, BUF_SIZE, 0, 0)) ||
     !(memw = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, BUF_SIZE, 0, 0)) ||
