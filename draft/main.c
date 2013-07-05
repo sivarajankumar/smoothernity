@@ -1,12 +1,13 @@
 #include "CL/cl.h"
 #include <stdio.h>
 #include <math.h>
+#include <limits.h>
 
 #define MAX_RUNS 10
 #define MAX_DEVICES 10
 #define MAX_PLATFORMS 10
-#define REPORT_FLOATS 10
-#define MAX_FLOATS (1 << 27)
+#define REPORT_FLOATS 0
+#define MAX_FLOATS (1 << 20)
 #define WG_SIZE (1 << 8)
 #define BUF_SIZE (sizeof(float)*MAX_FLOATS)
 #define DEVICE CL_DEVICE_TYPE_CPU
@@ -14,7 +15,8 @@
 #define SRC(n) \
     "__kernel void mykern(__global float"n" *a, __global float"n" *b) {\n" \
     "   int id = get_global_id(0);\n" \
-    "   b[id] = a[id] * a[id];\n" \
+    "   for (int i = 0; i < 1000; ++i)\n" \
+    "       b[id] = a[id] * a[id];\n" \
     "}\n"
 
 int main(void) {
@@ -58,6 +60,7 @@ ctx_created:
         cl_kernel kern;
         cl_event evt_end, evt_kern[MAX_RUNS];
         float *mapr, *mapw;
+        int time_min = INT_MAX, time_max = 0, time_sum = 0;
 
         fprintf(stderr, "Components %i\n", comps[compi]);
         if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0)) ||
@@ -95,6 +98,7 @@ ctx_created:
             return 1;
         }
         for (int i = 0; i < MAX_RUNS; ++i) {
+            int t;
             cl_ulong time_start, time_end;
             if (CL_SUCCESS != clGetEventProfilingInfo(evt_kern[i],
             CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &time_start, 0)
@@ -103,9 +107,15 @@ ctx_created:
                 fprintf(stderr, "Cannot get profiling info\n");
                 return 1;
             }
-            fprintf(stderr, "Run %i: %i us\n", i, (int)(time_end - time_start));
+            t = (int)((time_end - time_start) / 1000);
+            if (time_min > t)
+                time_min = t;
+            if (time_max < t)
+                time_max = t;
+            time_sum += t;
         }
-
+        fprintf(stderr, "Time(us) min=%i, max=%i, avg=%i\n",
+                time_min, time_max, time_sum / MAX_RUNS);
         if (!(mapr = clEnqueueMapBuffer(que, memr, CL_TRUE, CL_MAP_READ,
                                         0, BUF_SIZE, 0, 0, 0, 0)) ||
         !(mapw = clEnqueueMapBuffer(que, memw, CL_TRUE, CL_MAP_READ,
