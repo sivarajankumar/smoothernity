@@ -17,7 +17,7 @@
     "   int id = get_global_id(0);\n" \
     "   float"n" aa = a[id], bb;\n" \
     "   for (int i = 0; i < 10000; ++i)\n" \
-    "       bb = 2*bb + aa;\n" \
+    "       bb = 1.0001*bb + aa;\n" \
     "   b[id] = bb;\n" \
     "}\n"
 
