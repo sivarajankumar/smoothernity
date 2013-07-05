@@ -7,7 +7,7 @@
 #define MAX_DEVICES 10
 #define MAX_PLATFORMS 10
 #define REPORT_FLOATS 0
-#define MAX_FLOATS (1 << 20)
+#define MAX_FLOATS (1 << 18)
 #define WG_SIZE (1 << 8)
 #define BUF_SIZE (sizeof(float)*MAX_FLOATS)
 #define DEVICE CL_DEVICE_TYPE_CPU
@@ -15,12 +15,14 @@
 #define SRC(n) \
     "__kernel void mykern(__global float"n" *a, __global float"n" *b) {\n" \
     "   int id = get_global_id(0);\n" \
-    "   for (int i = 0; i < 1000; ++i)\n" \
-    "       b[id] = a[id] * a[id];\n" \
+    "   float"n" aa = a[id], bb;\n" \
+    "   for (int i = 0; i < 10000; ++i)\n" \
+    "       bb = 2*bb + aa;\n" \
+    "   b[id] = bb;\n" \
     "}\n"
 
 int main(void) {
-    cl_uint pfms_len, devs_len;
+    cl_uint pfms_len, devs_len, comp_nat, comp_pref;
     cl_platform_id pfms[MAX_PLATFORMS];
     cl_device_id devs[MAX_DEVICES];
     cl_context ctx;
@@ -51,10 +53,16 @@ ctx_created:
     fprintf(stderr, "Using device 1 out of %i\n", (int)devs_len);
     if (!(que=clCreateCommandQueue(ctx,devs[0],CL_QUEUE_PROFILING_ENABLE,0)) ||
     !(memr = clCreateBuffer(ctx, CL_MEM_READ_ONLY, BUF_SIZE, 0, 0)) ||
-    !(memw = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, BUF_SIZE, 0, 0))) {
+    !(memw = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, BUF_SIZE, 0, 0)) ||
+    CL_SUCCESS!=clGetDeviceInfo(devs[0], CL_DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT,
+                                sizeof(cl_uint), &comp_pref, 0) ||
+    CL_SUCCESS!=clGetDeviceInfo(devs[0], CL_DEVICE_NATIVE_VECTOR_WIDTH_FLOAT,
+                                sizeof(cl_uint), &comp_nat, 0)) {
         fprintf(stderr, "Cannot create command queue\n");
         return 1;
     }
+    fprintf(stderr, "Float vector width: native %i, preferred %i\n",
+            (int)comp_nat, (int)comp_pref);
     for (int compi = 0; comps[compi]; ++compi) {
         cl_program prog;
         cl_kernel kern;
@@ -62,7 +70,6 @@ ctx_created:
         float *mapr, *mapw;
         int time_min = INT_MAX, time_max = 0, time_sum = 0;
 
-        fprintf(stderr, "Components %i\n", comps[compi]);
         if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0)) ||
         CL_SUCCESS != clBuildProgram(prog, 0, 0, "-cl-std=CL1.1", 0, 0) ||
         !(kern = clCreateKernel(prog, "mykern", 0)) ||
@@ -114,8 +121,9 @@ ctx_created:
                 time_max = t;
             time_sum += t;
         }
-        fprintf(stderr, "Time(us) min=%i, max=%i, avg=%i\n",
-                time_min, time_max, time_sum / MAX_RUNS);
+        time_sum /= MAX_RUNS;
+        fprintf(stderr, "Components: %i, time: %i us (+-%i%%)\n", comps[compi],
+                time_sum, (50 * (time_max - time_min)) / time_sum);
         if (!(mapr = clEnqueueMapBuffer(que, memr, CL_TRUE, CL_MAP_READ,
                                         0, BUF_SIZE, 0, 0, 0, 0)) ||
         !(mapw = clEnqueueMapBuffer(que, memw, CL_TRUE, CL_MAP_READ,
