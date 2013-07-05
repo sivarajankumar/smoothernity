@@ -44,12 +44,12 @@ int main(void) {
             return 1;
         }
         if (!!(ctx = clCreateContext(props, devs_len, devs, 0, 0, 0)))
-            goto ctx_created;
+            break;
     }
-    fprintf(stderr, "Cannot create context\n");
-    return 1;
-
-ctx_created:
+    if (!ctx) {
+        fprintf(stderr, "Cannot create context\n");
+        return 1;
+    }
     fprintf(stderr, "Using %s device 1 out of %i\n",
             DEVICE == CL_DEVICE_TYPE_CPU ? "CPU" : "GPU", (int)devs_len);
     if (!(que=clCreateCommandQueue(ctx,devs[0],CL_QUEUE_PROFILING_ENABLE,0)) ||
