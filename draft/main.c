@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <math.h>
 
+#define MAX_RUNS 10
 #define MAX_DEVICES 10
 #define MAX_PLATFORMS 10
 #define REPORT_FLOATS 10
-#define MAX_FLOATS (1 << 20)
+#define MAX_FLOATS (1 << 27)
 #define WG_SIZE (1 << 8)
 #define BUF_SIZE (sizeof(float)*MAX_FLOATS)
 #define DEVICE CL_DEVICE_TYPE_CPU
@@ -46,7 +47,7 @@ int main(void) {
 
 ctx_created:
     fprintf(stderr, "Using device 1 out of %i\n", (int)devs_len);
-    if (!(que = clCreateCommandQueue(ctx, devs[0], 0, 0)) ||
+    if (!(que=clCreateCommandQueue(ctx,devs[0],CL_QUEUE_PROFILING_ENABLE,0)) ||
     !(memr = clCreateBuffer(ctx, CL_MEM_READ_ONLY, BUF_SIZE, 0, 0)) ||
     !(memw = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, BUF_SIZE, 0, 0))) {
         fprintf(stderr, "Cannot create command queue\n");
@@ -55,10 +56,8 @@ ctx_created:
     for (int compi = 0; comps[compi]; ++compi) {
         cl_program prog;
         cl_kernel kern;
-        cl_event evt;
+        cl_event evt_end, evt_kern[MAX_RUNS];
         float *mapr, *mapw;
-        size_t glob_size = MAX_FLOATS / (size_t)comps[compi];
-        size_t local_size = WG_SIZE;
 
         fprintf(stderr, "Components %i\n", comps[compi]);
         if (!(prog = clCreateProgramWithSource(ctx, 1, src + compi, 0, 0)) ||
@@ -80,16 +79,31 @@ ctx_created:
             fprintf(stderr, "Cannot unmap read buffer\n");
             return 1;
         }
+        for (int i = 0; i < MAX_RUNS; ++i) {
+            size_t glob_size = MAX_FLOATS / (size_t)comps[compi];
+            size_t local_size = WG_SIZE;
 
-        if (CL_SUCCESS != clEnqueueNDRangeKernel(que, kern, 1, 0, &glob_size,
-                                                 &local_size, 0, 0, 0)) {
-            fprintf(stderr, "Cannot execute kernel\n");
-            return 1;
+            if (CL_SUCCESS != clEnqueueNDRangeKernel(
+            que, kern, 1, 0, &glob_size, &local_size, 0, 0, evt_kern + i)){
+                fprintf(stderr, "Cannot execute kernel\n");
+                return 1;
+            }
         }
-        if (CL_SUCCESS != clEnqueueMarker(que, &evt) ||
-        CL_SUCCESS != clWaitForEvents(1, &evt)) {
+        if (CL_SUCCESS != clEnqueueMarker(que, &evt_end) ||
+        CL_SUCCESS != clWaitForEvents(1, &evt_end)) {
             fprintf(stderr, "Cannot wait for event\n");
             return 1;
+        }
+        for (int i = 0; i < MAX_RUNS; ++i) {
+            cl_ulong time_start, time_end;
+            if (CL_SUCCESS != clGetEventProfilingInfo(evt_kern[i],
+            CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &time_start, 0)
+            || CL_SUCCESS != clGetEventProfilingInfo(evt_kern[i],
+            CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &time_end, 0)) {
+                fprintf(stderr, "Cannot get profiling info\n");
+                return 1;
+            }
+            fprintf(stderr, "Run %i: %i us\n", i, (int)(time_end - time_start));
         }
 
         if (!(mapr = clEnqueueMapBuffer(que, memr, CL_TRUE, CL_MAP_READ,
