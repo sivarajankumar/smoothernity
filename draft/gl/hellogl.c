@@ -67,7 +67,7 @@ int main()
 	}; //we love you vertices!
 	
 	GLuint theShaderProgram;
-	theShaderProgram = BuildShaderProgram("vs1.glsl", "fs1.glsl");
+	theShaderProgram = BuildShaderProgram("shader.vert", "shader.frag");
 	if (theShaderProgram == -1)
 	{
 		SDL_Quit();
