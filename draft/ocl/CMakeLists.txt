@@ -1,8 +1,0 @@
-cmake_minimum_required(VERSION 2.6)
-project(DRAFT)
-set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}")
-find_package(OpenCL REQUIRED)
-include_directories(${OPENCL_INCLUDE_DIR})
-add_executable(main main.c)
-target_link_libraries(main ${OPENCL_LIBRARIES})
-add_definitions(-std=c11 -pedantic-errors -Wall -Wextra)
