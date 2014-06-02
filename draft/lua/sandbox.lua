@@ -1,14 +1,6 @@
 local env = {myrequire = require}
 local index = 0
 
-local runfile = function(name)
-    local fn, msg = loadfile(name, 't', env)
-    if not fn then
-        return nil, msg
-    end
-    return pcall(fn)
-end
-
 local run = function(code)
     code = string.format("myrequire 'luacov'\n%s", code)
     index = index + 1
@@ -16,7 +8,11 @@ local run = function(code)
     f = io.open(name, 'w')
     f:write(code)
     f:close()
-    return runfile(name)
+    local fn, msg = loadfile(name, 't', env)
+    if not fn then
+        return nil, msg
+    end
+    return pcall(fn)
 end
 
 -- test
