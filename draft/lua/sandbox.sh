@@ -1,3 +1,5 @@
-lua -lluacov sandbox.lua
+cmake .
+make
+./sandbox
 luacov *
 cat luacov.report.out
