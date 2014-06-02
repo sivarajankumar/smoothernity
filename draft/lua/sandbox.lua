@@ -1,3 +1,5 @@
+require 'luacov'
+
 local env = {myrequire = require}
 local index = 0
 
@@ -22,3 +24,5 @@ assert(env[x] == nil)
 assert(run [[x = 1]])
 assert(env.x == 1)
 assert(run [[x = 1; y = 2]])
+
+print 'all ok'
