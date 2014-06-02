@@ -20,11 +20,9 @@ local run = function(code)
 end
 
 -- test
+assert(not run [[asdf]])
 assert(not run [[print(debug.getinfo(1))]])
 assert(env[x] == nil)
 assert(run [[x = 1]])
 assert(env.x == 1)
-assert(run [[
-x = 1
-y = 2
-]])
+assert(run [[x = 1; y = 2]])
