@@ -1,5 +1,3 @@
-require 'luacov'
-
 local env = {myrequire = require}
 local index = 0
 
