@@ -1,8 +1,7 @@
-local env = {myrequire=require, myprint=print}
+local env = {}
 local index = 0
 
 local run = function(code)
-    code = string.format("myrequire 'luacov'\n%s", code)
     index = index + 1
     local name = string.format('untrusted_string%i.lua', index)
     f = io.open(name, 'w')
@@ -21,7 +20,8 @@ assert(not run [[print(debug.getinfo(1))]])
 assert(env['x'] == nil)
 assert(run [[x = 1]])
 assert(env.x == 1)
-assert(run [[x = 1; y = 2]])
+assert(run "x = 2\ny = 3")
+assert(env.x == 2)
 assert(run "function f()\n    return 123\nend")
 assert(env.f() == 123)
 
