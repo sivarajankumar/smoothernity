@@ -1,4 +1,4 @@
-local env = {myrequire = require}
+local env = {myrequire=require, myprint=print}
 local index = 0
 
 local run = function(code)
@@ -22,5 +22,7 @@ assert(env[x] == nil)
 assert(run [[x = 1]])
 assert(env.x == 1)
 assert(run [[x = 1; y = 2]])
+assert(run "function f()\n    return 123\nend")
+assert(env.f() == 123)
 
 print 'all ok'
