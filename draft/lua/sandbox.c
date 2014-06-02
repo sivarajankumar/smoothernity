@@ -9,6 +9,9 @@ int main(int argc, char **argv) {
     lua = luaL_newstate();
     if (lua) {
         luaL_openlibs(lua);
+        if (luaL_dostring(lua, "require 'luacov'")) {
+            fprintf(stderr, "Cannot run string: %s", lua_tostring(lua, -1));
+        }
         if (luaL_dofile(lua, "sandbox.lua")) {
             fprintf(stderr, "Cannot run script: %s", lua_tostring(lua, -1));
         }
