@@ -1,0 +1,390 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{fullpage}
+\usepackage{listings}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
+\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+
+\lstset{frame=single,basicstyle=\ttfamily}
+
+\newcommand{\mylstinline}[2]{\fbox{\lstinline[language=#1]{#2}}}
+
+\title{Smoothernity}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Idea}
+
+The idea is to create a program which sports the following features:
+
+\begin{enumerate}
+    \item
+        Huge immersive virtual universe\footnote{
+            E.g. from the scale of stars down to planets, buildings and rooms.}.
+    \item
+        Low physical storage space consumption\footnote{
+            E.g. space on hard drive(s) of local or remote machine(s).
+            Essentially, this means low \emph{Kolmogorov's comlpexity}
+            of the program.}.
+    \item
+        Real-time universe generation\footnote{
+            The world seamlessly generates on-the-fly as player moves through
+            the universe.
+        }.
+    \item
+        Constant frame rate\footnote{
+            Smooth visual animation without interruptions during the whole
+            time the program is running.
+        }.
+    \item
+        Ports for different platforms\footnote{
+            Both desktop and mobile.}.
+    \item
+        Effective utilization of the available resources on each
+        platform\footnote{
+            That is, it should yield ``better picture'' on
+            ``faster platforms''.}.
+    \item
+        Interactive universe editor\footnote{
+            The designer can navigate through the universe, make changes
+            and see the result as soon as possible.}.
+    \item
+        Small platform-dependent code part\footnote{
+            Let's say, \(\le 10,000\) lines of code for each port.
+            E.g. it's OK to have many ports with large \emph{cumulative}
+            size as long as none of them exceeds this limit when counted
+            separately.}.
+\end{enumerate}
+
+\section{Generation\label{SecSmoothernityGen}}
+
+Whole generation process can be split into several levels of abstraction.
+
+\subsection{Primitives Level\label{SecSmoothernityPrim}}
+
+Generates reusable low-level building blocks.
+Implemented in code, optimized for each platform.
+Heaviest computations should be performed on this level.
+The examples of primitives are: ``marching cubes of function \(f(x,y,z)\)'',
+``perlin noise landscape'', ``spline surface'', etc.
+It operates with such entities as ``triangles'', ``meshes'', ``lights'',
+``shaders'', ``OpenCL kernels'', ``collision objects'', ``rigid bodies'',
+``sound waves data'', etc.
+
+\subsection{Concepts Level\label{SecSmoothernityConcept}}
+
+Generates reusable high-level building blocks from other reusable building
+blocks (both high- and low-level).
+Implemented in platform-independent code.
+It composes primitives and other concepts into higher-level structures,
+such as ``character'', ``vehicle'', ``building'', ``city'', etc.
+
+\subsection{World Level\label{SecSmoothernityWorld}}
+
+Generates unique content from high-level building blocks.
+Implemented as data.
+Connects concepts into directed acyclic graph of dependencies and specifies
+attribute values\footnote{
+    E.g. city of 20 buildings with 3\ldots5 rooms each.}.
+This graph can be edited either interactively by the designer or
+programmatically through ``game script''\footnote{
+    E.g. add city \(C\) to planet \(P\) after the player had picked up
+    item \(I\).}.
+
+Concepts implementation code is itself a dependency for every
+instance of this concept in the dependency graph.
+Thus, when concept code is changed, all the affected instances and their
+dependents can be regenerated.
+Implementation-wise, one possible way to do this may be by tracking
+all primitives created by the particular concept, so that when this
+concept is changed, all primitives can be disposed automatically.
+
+This reloading idea in general case is applicable for static objects only.
+That is, object state must depend only on other objects' states, but
+not on the self state in a previous moment in time.
+It won't work for dynamic case, e.g. because relative phase between
+objects' states is changed due to reload.
+
+For dynamic case, we can edit the initial state with frozen time\footnote{
+    ``Frozen time'' means that frame updates still occur, but
+    time increments are 0.
+    It's necessary to let generation go on, while dynamic processes, like
+    physics and AI, are halted.
+} at 0-time.
+Then start simulation by clicking ``play'' button.
+To continue editing, we ``pause'' again, reset to 0-time.
+
+Game scenario state can be represented by a vector with integer components.
+This vector is essentially an input for world generation.
+Some nodes behave conditionally to the game scenario state.
+To check game at various stages it's sufficient to change this vector.
+Affected nodes can be regenerated on-the-fly, just as regular dependencies.
+
+\section{Runtime}
+
+Runtime state is the most volatile part of game state.
+It's not persistent, it exists only while game runs.
+Generation part (\Cref{SecSmoothernityGen}) defines a shape of the universe.
+Runtime part defines its behavior.
+
+Runtime part depends on generation part\footnote{
+    Runtime part can ask, which objects should be placed in given
+    bounding box of the universe, what is the geometry of these objects,
+    etc.
+}.
+Every resource generated by generation part, is owned by generation part.
+Whenever generation part changes\footnote{
+    Because game scenario vector has been changed, or
+    because of some editor command.
+}, runtime part restarts.
+That is, all game entities spawned in runtime part\footnote{
+    E.g. mesh instances: characters, projectiles, etc.
+} are discarded, memory is cleared and runtime script is restarted from scratch.
+After restart, runtime part can quickly retrieve resources that were
+already generated before restart\footnote{
+    Generated resources are owned by generation part, and therefore are
+    not affected by runtime restart.
+}.
+
+Runtime part can change game scenario vector, thereby effectively
+restarting itself.
+This is how game script is implemented.
+It should be possible to do this restart seamlessly, within single frame update,
+so that player wouldn't notice that it occured at all\footnote{
+    Because already generated resources will be retrieved instantaneously
+    after restart, without regeneration.
+}.
+
+\section{Editing}
+
+World level (\Cref{SecSmoothernityWorld}) of generation can be edited
+interactively.
+Changes propagate through directed acyclic graph of dependencies, so
+that only affected parts are regenerated.
+For desktop computers, interactive editing can be implemented in two
+windows: the game (3D scene) and the editor (GUI).
+
+Edited data is valuable, and must be preserved at all costs.
+It's desirable to minimize amount of code that can potentially lead to
+data corruption.
+One way to do this is to separate the game and the editor.
+The game is volatile, it should crash as early as possible to diagnose
+malfunctions.
+The editor should store its data after modification ASAP, to minimize loss
+in case if the editor crashes.
+
+The editor consists of two parts: front-end and back-end.
+Front-end is essentially a GUI: JavaScript application running in web
+browser, that user interacts with.
+Front-end is communicating only with back-end.
+Back-end is responsible for data persistance and synchronizing with the game.
+Back-end communicates with the game and with front-end.
+It's preferable to have back-end as a standalone application\footnote{
+    E.g. using Nodejs.
+}.
+This way data should be less likely to get lost or corrupted.
+The communication protocol between the game and editor back-end can be
+as simple as sending script code to execute on either part.
+
+\section{Scale}
+
+The game universe should be large.
+The challenge is that real-time computations\footnote{
+    Such as affine transformations, physics simulation, etc.
+} require using of floating point numbers, and these have finite precision.
+Only a small portion of the universe is immediately visible to the observer,
+though.
+Thus, one way to mitigate this challenge is to use ``local'' coordinate system,
+``centered'' on the observer\footnote{
+    That is, all objects near observer will have coordinates near \(0\),
+    providing full floating-point precision for computations.
+}.
+To represent observer's global position in the universe, another set of
+coordinates can be used\footnote{
+    These coordinates specify observer's ``offset'' from the center of the
+    universe.
+    If we use double-precision floating point numbers to encode integer
+    global coordinates in meters, this gives us a cube with a side of
+    \(\approx 2^{15}\) meters, which is \(\approx 1,000\) times larger than
+    Solar system.
+}.
+
+Due to the limitations of floating-point precision of Z-buffering, there's an
+upper limit of the size of the scene, after which Z-fighting appears.
+To mitigate this problem one can render scene in multiple passes:
+\emph{levels of detail}\footnote{
+    For example, render largest scene first (planets, stars).
+    Then render smaller scene (landscape up to the horizon, mountains, clouds).
+    Finally, render scene closest to the observer
+    (grass, characters, buildings).
+}.
+
+To navigate through the universe, one can ``shift'' between levels of detail.
+Only levels of detail larger or equal to the one the observer is currently in,
+are rendered\footnote{
+    E.g. if the observer is on the level of ``planets'' and ``stars'',
+    he shouldn't see ``grass'' and ``buildings''.
+    Only ``planets'' and ``stars'' should be visible.}.
+Observer's movement speed is adjusted according to the current level of
+detail\footnote{
+    Observer should move faster through the level of detail of planets,
+    than he moves through the level of detail of grass.
+}.
+
+\section{Grid}
+
+Only a small part of the universe is in the immediate vicinity of the observer
+in each moment of time.
+To split the universe into parts, one may use a \emph{spatial grid}.
+Then, the query to the generation algorithm might look like:
+``generate the scene in local coordinates, corresponding to the part of the
+universe in a box with one corner in \((x_1, y_1, z_1)\) and another in
+\((x_2, y_2, z_2)\)''.
+The algorithm can figure out how detailed the scene should be from the size of
+the query box.
+
+\section{Implementation}
+
+One of the requirements is portability and small platform-dependent code size.
+This means putting as much code as possible to the platform-independend part.
+Here is how these two parts may look like.
+
+\subsection{Platform-Dependent Part}
+
+The examples of tasks handled by this part are:
+window creation, render context creation, generating and rendering primitives
+(\Cref{SecSmoothernityPrim}), working with network and filesystem, capturing
+user input, etc.
+
+As all of these tasks are low-level, natural choice is to use native low-level
+language for the target platform.
+As of 2014, current bindings of OpenGL and OpenCL to scripting languages are
+somewhat limited and outdated.
+So in order to use latest available standards, best bet is to use a native
+language.
+
+Possible choices are:
+
+\begin{itemize}
+    \item In case of Windows or Linux it's C++.
+    \item In case of Mac OS X or iOS it might be a mixture of C++ and
+        Objective C.
+    \item In case of Android OS it's Java.
+\end{itemize}
+
+\subsection{Platform-Independent Part}
+
+The examples of tasks handled by this part are:
+concepts generation (\Cref{SecSmoothernityConcept}),
+world generation (\Cref{SecSmoothernityWorld}),
+handling user input, tracking global coordinates,
+interacting with the editor, scripts reloading, etc.
+
+Most of the code will be in this part.
+Thus, the language must allow for writing compact programs, and also
+be fast enough, so that there's little incentive to rewrite this part to
+low-level language.
+The language must be highly portable and well-adopted in the industry as well.
+
+Possible choices are:
+JavaScript\footnote{
+    E.g. V8 implementation, as it sports JIT compilation.
+    Although V8 isn't cross-platform, so portability might be an issue.
+}, LuaJIT, C\#.
+
+\subsection{Scripts Sandboxing}
+
+It might be possible to do scripts reloading entirely from Lua.
+\emph{Host} Lua script will load \emph{guest} scripts and run them in
+protected mode.
+If any of guest scripts throw error, host script intercepts it,
+shows notification, asks user to modify offending script and then
+reloads it.
+It's entirely possible to sandbox guest scripts from within
+host script by using \mylstinline{bash}{load} function with custom
+environment.
+It's also possible to setup a callback firing every \(N\) instructions
+using \mylstinline{bash}{debug.sethook}, which'd allow to break
+infinite loops.
+
+Remaining reasons to reload host script are:
+
+\begin{enumerate}
+    \item Error in host script.
+    \item Out-of-memory.
+\end{enumerate}
+
+\section{Assorted Notes}
+
+\begin{enumerate}
+    \item
+        \href{http://gamedev.stackexchange.com/questions/46424/try-catch-or-%
+ifs-for-error-handling-in-c}%
+        {Discussion}, whether to use or not exceptions in C++ for game clients.
+    \item
+        Think of a program execution in terms of possible histories of
+        changes in the environment\footnote{
+            Environment can be a keyboard, display, memory, hard drive, etc.
+        }.
+        Validity of a program is a constraint on these possible
+        histories\footnote{
+            E.g. all possible histories for a game should contain states where
+            each combination of keys can be pressed or released at any moment
+            of time, while no game resource files are modified, and
+            there's enough memory.
+        }.
+    \item
+        For networking purposes, one can use ZeroMQ.
+        It's small, flexible, mature, portable and well supported.
+        There are bindings for Lua and NodeJs.
+    \item
+        There's a way in NodeJs to monitor file changes in runtime:
+        functions \mylstinline{bash}{fs.watch} and
+        \mylstinline{bash}{fs.watchFile}.
+    \item
+        Memory pools should always grow automatically and then report
+        resulting sizes in the log.
+        The goal is to avoid growing by adjusting initial sizes, but also
+        to avoid crashing when these initial sizes are off the mark.
+    \item
+        There's a code coverage tool for Lua, called
+        \href{https://github.com/keplerproject/luacov}{LuaCov}.
+    \item
+        To verify if the game scenario is passable, one may use automated bots.
+        Ideally, when bot is activated, at any point in the game,
+        it controls player to complete the story line.
+        Bot perceives current state of the game universe and emulates
+        player controls\footnote{
+            E.g. keyboard, joystick signals, etc.
+        }.
+        To allow bot to perceive everything that it needs, it may be a good
+        idea to design the game around the idea of bot from the very
+        beginning.
+\end{enumerate}
+
+\end{document}
