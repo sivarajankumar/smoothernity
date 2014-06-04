@@ -268,6 +268,45 @@ universe in a box with one corner in \((x_1, y_1, z_1)\) and another in
 The algorithm can figure out how detailed the scene should be from the size of
 the query box.
 
+\section{Multiplayer}
+
+Gameplay should be hardcore, relying on player's skill rather than
+farming\footnote{
+    Like Mortal Kombat, Cave Story, Side Scroller, etc.}.
+This requires immediate reaction to player's actions.
+Hot-seat multiplayer\footnote{
+    Where all players are playing on the same system, sharing
+    the screen.
+} fits well with this scheme.
+Distributed multiplayer in some way should be implemented as well.
+It's desirable to use peer-to-peer communication for multiplayer
+to avoid spending resources on servers.
+There are two modes of multiplayer interactions: active and passive.
+
+In passive mode players just see each other's position\footnote{
+    Like in Dark Souls: show a ghostly form of other players only.
+    This approach saves the neccessity to synchronize game worlds
+    between players, and softens the annoyance of remote players
+    going through things.
+} and chat with each other\footnote{
+    Perhaps it's a good idea is to somehow utilize an established chat
+    service, like Closed Circles, Facebook, etc.
+}.
+Passive mode should be able to function with any connection quality.
+
+In active mode players actually play together as in hot-seat mode.
+Every player should see the same state of the game universe.
+One way to achieve this is to perform the same deterministic game
+state updates on each client: collect all players inputs, then
+update game state on every client using these same inputs.
+This scheme puts all players in the same advantage position:
+updates run as fast as slowest client does.
+Thus, it's desirable to play only with players having a good network connection.
+Players should be able to choose with whom they want to play
+actively\footnote{
+    E.g. by sending and accepting invitations.
+}, and to kick out players with slow connection.
+
 \section{Implementation}
 
 One of the requirements is portability and small platform-dependent code size.
@@ -385,27 +424,6 @@ ifs-for-error-handling-in-c}%
         To allow bot to perceive everything that it needs, it may be a good
         idea to design the game around the concept of bot from the very
         beginning.
-    \item
-        Gameplay should be hardcore, relying on player's skill rather than
-        farming\footnote{
-            Like Mortal Kombat, Cave Story, Side Scroller, etc.}.
-        This requires immediate reaction to player's actions.
-        Hot-seat multiplayer\footnote{
-            Where all players are playing on the same system, sharing
-            the screen.
-        } fits well with this scheme.
-        Distributed multiplayer is impossible, because of unpredictable
-        latency.
-        One way to engage remote players anyways is to let them see each
-        other's position\footnote{
-            Like in Dark Souls: show a ghostly form of other players only.
-            This approach saves the neccessity to synchronize game worlds
-            between players, and softens the annoyance of remote players
-            going through things.
-        } and chat with each other\footnote{
-            Perhaps it's a good idea is to somehow utilize an established chat
-            service, like Closed Circles, Facebook, etc.
-        }.
         
 \end{enumerate}
 
