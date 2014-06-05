@@ -81,11 +81,11 @@ The idea is to create a program which sports the following features:
             separately.}.
 \end{enumerate}
 
-\section{Generation\label{SecSmoothernityGen}}
+\section{Generation\label{Gen}}
 
 Whole generation process can be split into several levels of abstraction.
 
-\subsection{Primitives Level\label{SecSmoothernityPrim}}
+\subsection{Primitives Level\label{Prim}}
 
 Generates reusable low-level building blocks.
 Implemented in code, optimized for each platform.
@@ -96,7 +96,7 @@ It operates with such entities as ``triangles'', ``meshes'', ``lights'',
 ``shaders'', ``OpenCL kernels'', ``collision objects'', ``rigid bodies'',
 ``sound waves data'', etc.
 
-\subsection{Concepts Level\label{SecSmoothernityConcept}}
+\subsection{Concepts Level\label{Concept}}
 
 Generates reusable high-level building blocks from other reusable building
 blocks (both high- and low-level).
@@ -104,7 +104,7 @@ Implemented in platform-independent code.
 It composes primitives and other concepts into higher-level structures,
 such as ``character'', ``vehicle'', ``building'', ``city'', etc.
 
-\subsection{World Level\label{SecSmoothernityWorld}}
+\subsection{World Level\label{World}}
 
 Generates unique content from high-level building blocks.
 Implemented as data.
@@ -149,7 +149,7 @@ Affected nodes can be regenerated on-the-fly, just as regular dependencies.
 
 Runtime state is the most volatile part of game state.
 It's not persistent, it exists only while game runs.
-Generation part (\Cref{SecSmoothernityGen}) defines a shape of the universe.
+Generation part (\Cref{Gen}) defines a shape of the universe.
 Runtime part defines its behavior.
 
 Runtime part depends on generation part\footnote{
@@ -182,7 +182,7 @@ so that player wouldn't notice that it occured at all\footnote{
 
 \section{Editing}
 
-World level (\Cref{SecSmoothernityWorld}) of generation can be edited
+World level (\Cref{World}) of generation can be edited
 interactively.
 Changes propagate through directed acyclic graph of dependencies, so
 that only affected parts are regenerated.
@@ -283,18 +283,47 @@ It's desirable to use peer-to-peer communication for multiplayer
 to avoid spending resources on servers.
 There are two modes of multiplayer interactions: active and passive.
 
+\subsection{Passive Mode}
+
 In passive mode players just see each other's position\footnote{
     Like in Dark Souls: show a ghostly form of other players only.
     This approach saves the neccessity to synchronize game worlds
     between players, and softens the annoyance of remote players
     walking through things.
 } and chat with each other\footnote{
+    \label{Chat}
     Perhaps it's a good idea is to somehow utilize an established chat
     software/service, like IRC, Closed Circles, Facebook, etc.
     This same chat service can serve as an out-of-game mean of
     communication.
+    There's an IRC client library in C called
+    \href{http://www.ulduzsoft.com/libircclient/index.html}%
+    {libircclient}.
 }.
 Passive mode should be able to function with any connection quality.
+
+There must be a way for clients to discover each other.
+Clients maintain a list of other clients they're connected to,
+and communicate with them to discover more clients.
+Clients ignore clients whose players are too far away, and there must
+be a limit of how many other players can be seen by one player\footnote{
+    To avoid crowds.
+}.
+To start discovery, there must be a persistent clients at key
+locations\footnote{
+    Like towns, portals, dungeon entrances, etc.
+}, who are always online, whose sole purpose is to help discovering other
+clients.
+Each client also maintains a friend list - clients listed there are
+prioritized over other clients in discovery process and appear first,
+which lets players pick their social circle.
+The consequence is that there's no way to discover a client if
+they're not near a persistent client or not in a friend list of the
+discovering client.
+For identity and IP discovery it might be possible to use a chat
+system\cref{Chat}.
+
+\subsection{Active Mode}
 
 In active mode players actually play together as in hot-seat mode.
 Every player should see the same state of the game universe.
@@ -319,7 +348,7 @@ Here is how these two parts may look like.
 
 The examples of tasks handled by this part are:
 window creation, render context creation, generating and rendering primitives
-(\Cref{SecSmoothernityPrim}), working with network and filesystem, capturing
+(\Cref{Prim}), working with network and filesystem, capturing
 user input, etc.
 
 As all of these tasks are low-level, natural choice is to use native low-level
@@ -341,8 +370,8 @@ Possible choices are:
 \subsection{Platform-Independent Part}
 
 The examples of tasks handled by this part are:
-concepts generation (\Cref{SecSmoothernityConcept}),
-world generation (\Cref{SecSmoothernityWorld}),
+concepts generation (\Cref{Concept}),
+world generation (\Cref{World}),
 handling user input, tracking global coordinates,
 interacting with the editor, scripts reloading, etc.
 
