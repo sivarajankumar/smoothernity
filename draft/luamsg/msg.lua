@@ -50,7 +50,7 @@ const = script([[
 ]])
 
 --
--- Directed acyclic graph.
+-- Dependency graph.
 --
 
 c1 = const(10)
@@ -58,6 +58,10 @@ c2 = const(20)
 c3 = const(30)
 a23 = add(c2, c3)
 m123 = mul(c1, a23)
+
+--
+-- Runtime
+--
 
 check = coroutine.wrap(function()
     assert(c1() == 10)
