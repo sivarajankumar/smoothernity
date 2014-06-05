@@ -332,6 +332,11 @@ state updates on each client: collect all players inputs, then
 update game state on every client using these same inputs.
 This scheme puts all players in the same advantage position:
 updates run as fast as slowest client does.
+Game logic is computed redundantly in each client, which effectively
+eliminates opportunities to cheat by altering game client\footnote{
+    E.g. if some client is altered to deal more damage than others,
+    it'll only lead to desynchronization: in one client monster
+    will be dead, in other - still alive.}.
 Thus, it's desirable to play only with players having a good network connection.
 Players should be able to choose with whom they want to play
 actively\footnote{
