@@ -83,6 +83,44 @@ The idea is to create a program which sports the following features:
 
 \section{Generation\label{Gen}}
 
+\emph{Procedural generation} means the production of output data by some
+algorithm which consumes some input data.
+The end result\footnote{
+    Either of a single algorithm, or of multiple algorithms chained together.
+} of visual procedural generation is visible contents expressed in terms of
+triangles and textures.
+
+The generation algorithms must satisfy following requirements:
+
+\begin{enumerate}
+    \item
+        Output data must be orders of magnitude larger than the input
+        data\footnote{
+            Otherwise a simple copying of inputs to outputs will do.
+        }.
+    \item
+        There must be many possible outputs\footnote{
+            Otherwise a constant output data set will do.
+        }.
+    \item
+        Same input must always yield the same output.
+    \item
+        Output data must be aesthetically appealing at least for some
+        inputs\footnote{
+            Otherwise just white noise will do.
+        }.
+    \item
+        Algorithm must finish in a matter of seconds on commodity hardware.
+    \item
+        Algorithm must be capable of yielding better results if using
+        more computational resources\footnote{
+            E.g. yield low detail picture on low-end machine and
+            high detail on high-end.
+        }.
+    \item
+        Program code implementing the algorithm should be compact.
+\end{enumerate}
+
 Whole generation process can be split into several levels of abstraction.
 
 \subsection{Primitives Level\label{Prim}}
